@@ -1,4 +1,4 @@
-# Comparador MFF
+# TA GUIANAEL MFF
 
 App standalone (HTML/JS sin dependencias, sin build) para consultar y comparar personajes de
 MARVEL Future Fight, armar equipos y trabajar sobre tier lists. 290 personajes, 596 uniformes,

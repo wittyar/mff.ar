@@ -1,4 +1,4 @@
-/* Comparador MFF — app standalone en JS vanilla. Sin build: corre desde file:// o cualquier host estático.
+/* TA GUIANAEL MFF — app standalone en JS vanilla. Sin build: corre desde file:// o cualquier host estático.
  *
  * Reglas de datos (importante):
  *   - data.js es la ÚNICA fuente de personajes, uniformes, skills, imágenes y tier lists importadas.
@@ -782,7 +782,7 @@ function renderNav () {
   return `<nav class="topnav">
     <span class="brand" data-a="back">${U.images['brand-logo']
       ? `<img src="${U.images['brand-logo']}" style="height:26px">`
-      : `<span class="dot"></span>COMPARADOR <span style="color:var(--accent)">MFF</span>`}</span>
+      : `<span class="dot"></span>TA GUIANAEL <span style="color:var(--accent)">MFF</span>`}</span>
     ${link('roster','Roster','back')}
     ${link('tierlist','Tier lists','goTier')}
     ${link('teams','Equipos','goTeams')}

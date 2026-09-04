@@ -25,7 +25,7 @@ SEED = {
  'CLASS_ADVANTAGE': {'Combate':'Velocidad','Velocidad':'Detonación','Detonación':'Combate','Universal':None}
 }
 hoy = datetime.date.today().isoformat()
-header = f"""// data.js — Comparador MFF (generado por scripts/build.py el {hoy}; juego {gv})
+header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes/uniformes/retratos/íconos/tier list) y
 // future-fight.fandom.com (skills e instintos). Cada skill trae 'fx' (efectos por objetivo).
 // Crédito: THANO$VIB$ y Future Fight Wiki. Uso personal.

@@ -1,4 +1,4 @@
-// data.js — Comparador MFF (generado por scripts/build.py el 2026-09-04; juego 12.2)
+// data.js — TA GUIANAEL MFF (generado por scripts/build.py el 2026-09-04; juego 12.2)
 // Fuentes: thanosvibs.money (personajes/uniformes/retratos/íconos/tier list) y
 // future-fight.fandom.com (skills e instintos). Cada skill trae 'fx' (efectos por objetivo).
 // Crédito: THANO$VIB$ y Future Fight Wiki. Uso personal.
