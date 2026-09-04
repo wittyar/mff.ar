@@ -16330,7 +16330,29 @@
      "tier": "T4",
      "year": "",
      "cost": "500000 Gold",
-     "skills": []
+     "skills": [
+      {
+       "slot": "Activa 1",
+       "n": "Sensory Array",
+       "d": "A sí mismo: Super Armor, All Defense +10% (10 Seconds) / Summon an illusion that has 20% of summonner's stats. (10 Sec.)",
+       "fx": {
+        "self": [
+         "Super Armor, All Defense +10% (10 Seconds)",
+         "Summon an illusion that has 20% of summonner's stats. (10 Sec.)"
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [
+        "Buff DEF"
+       ],
+       "cd": 25,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      }
+     ]
     },
     {
      "id": "winter-soldier-10200031",
@@ -26768,7 +26790,117 @@
      "tier": "T3",
      "year": "",
      "cost": "500000 Gold",
-     "skills": []
+     "skills": [
+      {
+       "slot": "Activa 1",
+       "n": "Stunning Slash",
+       "d": "61% daño Físico (+68) · Dashes into target, 3 golpes, área chica.",
+       "fx": {
+        "general": [
+         "61% daño Físico (+68)",
+         "Dashes into target, 3 golpes, área chica."
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [],
+       "cd": 6,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 2",
+       "n": "Asgardian Grace",
+       "d": "% Physical Damage, Add Physical Damage 68 · Cuerpo a cuerpo, 4 golpes.",
+       "fx": {
+        "general": [
+         "% Physical Damage, Add Physical Damage 68",
+         "Cuerpo a cuerpo, 4 golpes."
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [],
+       "cd": 7,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 3",
+       "n": "Attack Edge",
+       "d": "147% daño Físico (+135) · A distancia, 1 golpe, Line área. · A sí mismo: Inmune a todo daño 3s / Accumulates 100% of the True Damage not accounting for Defense and Dodge stats. / The true total damage cannot exceed 10% of HP (5 Sec.) / Attack +1% Increase per Accumulated 1% Damage (5 Sec.)",
+       "fx": {
+        "general": [
+         "147% daño Físico (+135)",
+         "A distancia, 1 golpe, Line área."
+        ],
+        "self": [
+         "Inmune a todo daño 3s",
+         "Accumulates 100% of the True Damage not accounting for Defense and Dodge stats.",
+         "The true total damage cannot exceed 10% of HP (5 Sec.)",
+         "Attack +1% Increase per Accumulated 1% Damage (5 Sec.)"
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [
+        "Invencibilidad",
+        "Buff ATQ"
+       ],
+       "cd": 10,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 4",
+       "n": "Goddess of War!",
+       "d": "31% daño Físico (+135) · Cuerpo a cuerpo, 6 golpes, Jumps into air. · Al oponente: Aturde 3s",
+       "fx": {
+        "general": [
+         "31% daño Físico (+135)",
+         "Cuerpo a cuerpo, 6 golpes, Jumps into air."
+        ],
+        "enemy": [
+         "Aturde 3s"
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [
+        "Aturdir"
+       ],
+       "cd": 12,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 5",
+       "n": "For Honor!",
+       "d": "73% daño Físico (+34) · A distancia, 6 golpes, Line área.",
+       "fx": {
+        "general": [
+         "73% daño Físico (+34)",
+         "A distancia, 6 golpes, Line área."
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [],
+       "cd": 14,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      }
+     ]
     },
     {
      "id": "sif-10200057",
@@ -33988,7 +34120,11 @@
    "name": "Hyperion",
    "c": "Universal",
    "f": "Superhéroe",
-   "r": [],
+   "r": [
+    "Control",
+    "Soporte",
+    "Daño"
+   ],
    "ins": "Orden",
    "race": "Alienígena",
    "gender": "Masculino",
@@ -34009,7 +34145,250 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Cosmic Fusion",
+     "d": "→ All team members · +45% ATQ total",
+     "fx": {
+      "general": [
+       "→ All team members",
+       "+45% ATQ total"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Buff ATQ"
+     ],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Solar Power",
+     "d": "Se activa: When hit · A sí mismo: Immunity to SNARE Effect. (2 Sec.) / Recupera 4% de vida máx. (1s) / Guards against 1 hits. (2 Sec.)",
+     "fx": {
+      "general": [
+       "Se activa: When hit"
+      ],
+      "self": [
+       "Immunity to SNARE Effect. (2 Sec.)",
+       "Recupera 4% de vida máx. (1s)",
+       "Guards against 1 hits. (2 Sec.)"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Curación"
+     ],
+     "cd": 15,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Sun Spark",
+     "d": "A sí mismo: Super Armor, All Defenses +5% ↑ / 40% de perforar escudos/barreras/invencibilidad / +35% Skill damage",
+     "fx": {
+      "self": [
+       "Super Armor, All Defenses +5% ↑",
+       "40% de perforar escudos/barreras/invencibilidad",
+       "+35% Skill damage"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": true,
+     "tags": [
+      "Escudo",
+      "Perfora Inmunidad"
+     ],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Soaring Uppercut",
+     "d": "Physical Damage, Super Guard Break, Ignore Targeting · Has a chance to counterattack when attacked · Al oponente: Aturde 2s / Physical Damage 160% of Energy Attack / Additional 1067 Physical Damage",
+     "fx": {
+      "general": [
+       "Physical Damage, Super Guard Break, Ignore Targeting",
+       "Has a chance to counterattack when attacked"
+      ],
+      "enemy": [
+       "Aturde 2s",
+       "Physical Damage 160% of Energy Attack",
+       "Additional 1067 Physical Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir"
+     ],
+     "cd": 6,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Heat Blast",
+     "d": "Energy Damage, Super Guard Break, Ignore Targeting · Energy Damage 40% of Energy Attack · Additional 356 Energy Damage",
+     "fx": {
+      "general": [
+       "Energy Damage, Super Guard Break, Ignore Targeting",
+       "Energy Damage 40% of Energy Attack",
+       "Additional 356 Energy Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [],
+     "cd": 9,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Sun-God",
+     "d": "Energy Damage, Ignore Targeting · A sí mismo: Limpia todos los debuffs / Recupera 20% de vida máx. / Energy Damage 20% of Energy Attack / Additional 107 Energy Damage / Skill Needed: Lv.3 or higher",
+     "fx": {
+      "general": [
+       "Energy Damage, Ignore Targeting"
+      ],
+      "self": [
+       "Limpia todos los debuffs",
+       "Recupera 20% de vida máx.",
+       "Energy Damage 20% of Energy Attack",
+       "Additional 107 Energy Damage",
+       "Skill Needed: Lv.3 or higher"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Curación",
+      "Limpia Debuffs"
+     ],
+     "cd": 20,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Solar Flare",
+     "d": "Energy Damage, Ignore Targeting · Energy Damage 100% of Energy Attack · Additional 356 Energy Damage · Skill Needed: Lv.5 or higher",
+     "fx": {
+      "general": [
+       "Energy Damage, Ignore Targeting",
+       "Energy Damage 100% of Energy Attack",
+       "Additional 356 Energy Damage",
+       "Skill Needed: Lv.5 or higher"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [],
+     "cd": 15,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Atomic Vision",
+     "d": "Physical Damage, Super Guard Break · Tapping and holding the skill icon will charge the skill and releasing it will commence the attack.</br> · A sí mismo: +20% all Basic Attack (8s) / 10% Ignore Defense (8 Sec.) / Ignora 40% de la evasión del objetivo / Invencible 4s / +10% ataques básicos / Accumulate 150% of True Damage regardless of Defense and Dodge Rate stats. / The total true damage accumulated cannot exceed 15% of HP. (8 Sec.) / Physical Damage 210% of Energy Attack / Additional 1067 Physical Damage / Skill Needed: Lv.6 or higher · Al oponente: Aturde 3s",
+     "fx": {
+      "general": [
+       "Physical Damage, Super Guard Break",
+       "Tapping and holding the skill icon will charge the skill and releasing it will commence the attack.</br>"
+      ],
+      "self": [
+       "+20% all Basic Attack (8s)",
+       "10% Ignore Defense (8 Sec.)",
+       "Ignora 40% de la evasión del objetivo",
+       "Invencible 4s",
+       "+10% ataques básicos",
+       "Accumulate 150% of True Damage regardless of Defense and Dodge Rate stats.",
+       "The total true damage accumulated cannot exceed 15% of HP. (8 Sec.)",
+       "Physical Damage 210% of Energy Attack",
+       "Additional 1067 Physical Damage",
+       "Skill Needed: Lv.6 or higher"
+      ],
+      "enemy": [
+       "Aturde 3s"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Invencibilidad",
+      "Ignora Evasión",
+      "Perfora DEF",
+      "Buff ATQ"
+     ],
+     "cd": 25,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Definitiva",
+     "n": "Meteor Strike",
+     "d": "Energy Damage · A sí mismo: Critical Damage increases by +50% (5 Sec.) / 40% Ignore Defense (10 Sec.) / 100% chance for Immunity to All Damage (7 Sec.) / +50% Basic Damage / Energy Damage 100% of Energy Attack / Additional 142 Energy Damage · Al oponente: Deals 30% Burn damage every 1 Sec. (4 Sec.) / Aturde 2s / Inmoviliza 3s / -10% all Basic Defences",
+     "fx": {
+      "general": [
+       "Energy Damage"
+      ],
+      "self": [
+       "Critical Damage increases by +50% (5 Sec.)",
+       "40% Ignore Defense (10 Sec.)",
+       "100% chance for Immunity to All Damage (7 Sec.)",
+       "+50% Basic Damage",
+       "Energy Damage 100% of Energy Attack",
+       "Additional 142 Energy Damage"
+      ],
+      "enemy": [
+       "Deals 30% Burn damage every 1 Sec. (4 Sec.)",
+       "Aturde 2s",
+       "Inmoviliza 3s",
+       "-10% all Basic Defences"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Inmovilizar",
+      "DoT",
+      "Perfora DEF",
+      "Buff Crítico"
+     ],
+     "cd": null,
+     "perm": false,
+     "iframe": true,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": [
     {
      "id": "hyperion-10100080",
@@ -34483,7 +34862,122 @@
      "tier": "T4",
      "year": "",
      "cost": "500000 Gold",
-     "skills": []
+     "skills": [
+      {
+       "slot": "Activa 1",
+       "n": "Counter Offensive",
+       "d": "80%% Physical Damage, Add Physical Damage 50 · A distancia, 1 golpe, Ricochets 4 times to nearby targets. · A distancia, 3 golpes, Line área.",
+       "fx": {
+        "general": [
+         "80%% Physical Damage, Add Physical Damage 50",
+         "A distancia, 1 golpe, Ricochets 4 times to nearby targets.",
+         "A distancia, 3 golpes, Line área."
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [],
+       "cd": 6,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 2",
+       "n": "Sky Dragoon",
+       "d": "129% daño Físico (+149) · Jumps to target, 3 golpes, área chica.",
+       "fx": {
+        "general": [
+         "129% daño Físico (+149)",
+         "Jumps to target, 3 golpes, área chica."
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [],
+       "cd": 9,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 3",
+       "n": "Energy Blast",
+       "d": "231% daño de Energía (+149) · A distancia, 1 golpe, Line área. · A sí mismo: Inmune a todo daño 5s / Accumulates 100% of the True Damage not accounting for Defense and Dodge stats. / The true total damage accumulated cannot exceed 15% of HP. (10 Sec.) / Attack +10% Increase per Accumulated 1% Damage (10 Sec.)",
+       "fx": {
+        "general": [
+         "231% daño de Energía (+149)",
+         "A distancia, 1 golpe, Line área."
+        ],
+        "self": [
+         "Inmune a todo daño 5s",
+         "Accumulates 100% of the True Damage not accounting for Defense and Dodge stats.",
+         "The true total damage accumulated cannot exceed 15% of HP. (10 Sec.)",
+         "Attack +10% Increase per Accumulated 1% Damage (10 Sec.)"
+        ]
+       },
+       "dmg": "Energía",
+       "ii": false,
+       "tags": [
+        "Invencibilidad",
+        "Buff ATQ"
+       ],
+       "cd": 15,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 4",
+       "n": "Paladin Blast",
+       "d": "88% daño Físico (+38) · Dashes through target, 4 golpes, área chica, Draws nearby enemies in. · Jumps in air, 6 golpes, área grande, Energy Attack.",
+       "fx": {
+        "general": [
+         "88% daño Físico (+38)",
+         "Dashes through target, 4 golpes, área chica, Draws nearby enemies in.",
+         "Jumps in air, 6 golpes, área grande, Energy Attack."
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [],
+       "cd": 11,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      },
+      {
+       "slot": "Activa 5",
+       "n": "Freedom Strike",
+       "d": "123% daño de Energía (+149) · A distancia, 14 golpes, Draws nearby targets in. · A sí mismo: 100% chance to penetrate with SUPER ARMOR effect. (1 Sec.) · Al oponente: Aturde 3s",
+       "fx": {
+        "general": [
+         "123% daño de Energía (+149)",
+         "A distancia, 14 golpes, Draws nearby targets in."
+        ],
+        "self": [
+         "100% chance to penetrate with SUPER ARMOR effect. (1 Sec.)"
+        ],
+        "enemy": [
+         "Aturde 3s"
+        ]
+       },
+       "dmg": "Energía",
+       "ii": false,
+       "tags": [
+        "Aturdir"
+       ],
+       "cd": 13,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      }
+     ]
     },
     {
      "id": "captain-america-sharon-rogers-10200082",
@@ -35814,7 +36308,10 @@
    "name": "Gwenpool",
    "c": "Velocidad",
    "f": "Superhéroe",
-   "r": [],
+   "r": [
+    "Soporte",
+    "Daño"
+   ],
    "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
@@ -35833,7 +36330,221 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Nimble",
+     "d": "→ All team members · +1% All Speed",
+     "fx": {
+      "general": [
+       "→ All team members",
+       "+1% All Speed"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Buff VEL"
+     ],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Adventurous",
+     "d": "Activate Ratio: when HP is below 90% · A sí mismo: Recupera 1% de vida máx. (1s)",
+     "fx": {
+      "general": [
+       "Activate Ratio: when HP is below 90%"
+      ],
+      "self": [
+       "Recupera 1% de vida máx. (1s)"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Curación"
+     ],
+     "cd": 2,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Lady Mercenary",
+     "d": "Activate Ratio: 50% when attacking · A sí mismo: 52% increase to Skill Damage, 40% increase to bonus damage (5 Sec.) / 100% chance to Pierce with Super Armor, Immune to all damage effect (5 Sec.) / Requires Hero Advancement",
+     "fx": {
+      "general": [
+       "Activate Ratio: 50% when attacking"
+      ],
+      "self": [
+       "52% increase to Skill Damage, 40% increase to bonus damage (5 Sec.)",
+       "100% chance to Pierce with Super Armor, Immune to all damage effect (5 Sec.)",
+       "Requires Hero Advancement"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Invencibilidad",
+      "Perfora DEF"
+     ],
+     "cd": 10,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Katana Kick",
+     "d": "55% daño Físico (+34) · Cuerpo a cuerpo, 4 golpes, área chica, Dashes into target. · Cuerpo a cuerpo, 1 golpe, empuje.",
+     "fx": {
+      "general": [
+       "55% daño Físico (+34)",
+       "Cuerpo a cuerpo, 4 golpes, área chica, Dashes into target.",
+       "Cuerpo a cuerpo, 1 golpe, empuje."
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Empuje"
+     ],
+     "cd": 6,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Figure Skate",
+     "d": "71% daño Físico (+135) · Cuerpo a cuerpo, 2 golpes. · Cuerpo a cuerpo, 9 golpes, área chica, Strafes around target.",
+     "fx": {
+      "general": [
+       "71% daño Físico (+135)",
+       "Cuerpo a cuerpo, 2 golpes.",
+       "Cuerpo a cuerpo, 9 golpes, área chica, Strafes around target."
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [],
+     "cd": 9,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Bombs 'N Bullets",
+     "d": "118% daño Físico (+135) · A distancia, 2 golpes.",
+     "fx": {
+      "general": [
+       "118% daño Físico (+135)",
+       "A distancia, 2 golpes."
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [],
+     "cd": 10,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Bullet Rain",
+     "d": "83% daño Físico (+135) · A distancia, 1 golpe, Piercing. · Cuerpo a cuerpo, 2 golpes, Dashes to next target. · A distancia, 10 golpes, área chica.",
+     "fx": {
+      "general": [
+       "83% daño Físico (+135)",
+       "A distancia, 1 golpe, Piercing.",
+       "Cuerpo a cuerpo, 2 golpes, Dashes to next target.",
+       "A distancia, 10 golpes, área chica."
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [],
+     "cd": 11,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Gift Special",
+     "d": "92% daño Físico (+34) · A distancia, 4 golpes. · 3 Bombs, área chica. · Al oponente: Aturde 3s",
+     "fx": {
+      "general": [
+       "92% daño Físico (+34)",
+       "A distancia, 4 golpes.",
+       "3 Bombs, área chica."
+      ],
+      "enemy": [
+       "Aturde 3s"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Aturdir"
+     ],
+     "cd": 13,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Definitiva",
+     "n": "Splendid Showtime",
+     "d": "130% daño Físico (+135) · A sí mismo: Ignora 80% de la evasión del objetivo / Invencible 6s / Limpia todos los debuffs / +30% all Basic Attacks and Basic Defenses / +100% basic damage · Al oponente: Deals 40% Burn damage every 1 sec. (5 Sec.) / Aturde 3s",
+     "fx": {
+      "general": [
+       "130% daño Físico (+135)"
+      ],
+      "self": [
+       "Ignora 80% de la evasión del objetivo",
+       "Invencible 6s",
+       "Limpia todos los debuffs",
+       "+30% all Basic Attacks and Basic Defenses",
+       "+100% basic damage"
+      ],
+      "enemy": [
+       "Deals 40% Burn damage every 1 sec. (5 Sec.)",
+       "Aturde 3s"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "DoT",
+      "Invencibilidad",
+      "Ignora Evasión",
+      "Limpia Debuffs",
+      "Buff VEL"
+     ],
+     "cd": null,
+     "perm": false,
+     "iframe": true,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": [
     {
      "id": "gwenpool-10100088",
@@ -35841,7 +36552,31 @@
      "tier": "T4",
      "year": "",
      "cost": "500000 Gold",
-     "skills": []
+     "skills": [
+      {
+       "slot": "Activa 1",
+       "n": "Bombs 'N Blades",
+       "d": "180% daño Físico (+135) · Al oponente: Aturde 3s",
+       "fx": {
+        "general": [
+         "180% daño Físico (+135)"
+        ],
+        "enemy": [
+         "Aturde 3s"
+        ]
+       },
+       "dmg": "Físico",
+       "ii": false,
+       "tags": [
+        "Aturdir"
+       ],
+       "cd": 10,
+       "perm": false,
+       "iframe": false,
+       "gb": false,
+       "sgb": false
+      }
+     ]
     },
     {
      "id": "gwenpool-10200088",
@@ -35874,7 +36609,10 @@
    "name": "Shang-Chi",
    "c": "Combate",
    "f": "Superhéroe",
-   "r": [],
+   "r": [
+    "Soporte",
+    "Daño"
+   ],
    "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
@@ -35894,7 +36632,268 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Master of Kung-fu",
+     "d": "Al equipo: +4% • Increases all Basic Attacks by",
+     "fx": {
+      "allies": [
+       "+4% • Increases all Basic Attacks by"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Chi Reflect",
+     "d": "A Clone blocks enemy attack and counterattacks. · Se activa: 30% rate when hit · Se activa: when skill Flying Kick is used · A sí mismo: • Guard against 3 hits (3 Sec.) / 30px Marvel Studios' Shang Chi / Flowing Strikes / • Resets Cooldown for skill, Staff of Punishment",
+     "fx": {
+      "general": [
+       "A Clone blocks enemy attack and counterattacks.",
+       "Se activa: 30% rate when hit",
+       "Se activa: when skill Flying Kick is used"
+      ],
+      "self": [
+       "• Guard against 3 hits (3 Sec.)",
+       "30px Marvel Studios' Shang Chi",
+       "Flowing Strikes",
+       "• Resets Cooldown for skill, Staff of Punishment"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": 10,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Rising Spirit",
+     "d": "Enhances effect of the skill, Chi Reflect. · Se activa: 50% chance when attacking · Se activa: 70% rate when hit · A sí mismo: • Accumulates 10% of true damage dealt to enemy regardless of Defense and Dodge. / • The total accumulated true damage cannot pass 10000. (10 Sec.) / • +0.3% Increase of Critical-Rate, All Attacks each 1% / Accumulated Damage proportional to max accumulated Damage. (10 Sec.) / Increased effect of the Chi Reflect skill: / Guard 4 hits (4 Sec.)",
+     "fx": {
+      "general": [
+       "Enhances effect of the skill, Chi Reflect.",
+       "Se activa: 50% chance when attacking",
+       "Se activa: 70% rate when hit"
+      ],
+      "self": [
+       "• Accumulates 10% of true damage dealt to enemy regardless of Defense and Dodge.",
+       "• The total accumulated true damage cannot pass 10000. (10 Sec.)",
+       "• +0.3% Increase of Critical-Rate, All Attacks each 1%",
+       "Accumulated Damage proportional to max accumulated Damage. (10 Sec.)",
+       "Increased effect of the Chi Reflect skill:",
+       "Guard 4 hits (4 Sec.)"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": 20,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Nunchaku Knockout",
+     "d": "Physical Damage · • Physical Damage 60% of Physical Attack. · Additional 1067 Physical Damage · 30px Marvel Studios' Shang Chi · Flying Kick · Physical Damage, Ignore Targeting · • Physical Damage 95% of Physical Attack",
+     "fx": {
+      "general": [
+       "Physical Damage",
+       "• Physical Damage 60% of Physical Attack.",
+       "Additional 1067 Physical Damage",
+       "30px Marvel Studios' Shang Chi",
+       "Flying Kick",
+       "Physical Damage, Ignore Targeting",
+       "• Physical Damage 95% of Physical Attack"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [],
+     "cd": 6,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Mystic Clone",
+     "d": "Physical Damage, Guard Break · • Physical Damage 69% of Physical Attack · Additional 1067 Physical Damage · 30px Marvel Studios' Shang Chi · Bo Staff Strike · Physical Damage, Guard Break, Ignore Targeting · Al oponente: • Paralysis (Ignores immunity) (1 Sec) / • Physical Damage 125% of Physical At / tack",
+     "fx": {
+      "general": [
+       "Physical Damage, Guard Break",
+       "• Physical Damage 69% of Physical Attack",
+       "Additional 1067 Physical Damage",
+       "30px Marvel Studios' Shang Chi",
+       "Bo Staff Strike",
+       "Physical Damage, Guard Break, Ignore Targeting"
+      ],
+      "enemy": [
+       "• Paralysis (Ignores immunity) (1 Sec)",
+       "• Physical Damage 125% of Physical At",
+       "tack"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [],
+     "cd": 7,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Chi Charge",
+     "d": "A sí mismo: • +24% increase of Physical Attack (20 Sec.) / 30px Marvel Studios' Shang Chi / Master's Counterattack / Physical Damage / Enables attacking enemies who have activated the \"Ignore Targeting\" effect / • 50% recovery of Max HP (1 Sec) / • Invincible (4 Sec) / • Super Armor, increases all Basic Defences by +10% (5 Sec) / • Reflects 80% of damage received, regardless of the attacker's defence effects (80% of Max Attack) (3 Sec) / • Physical Damage 175% of Physical Attack / Additional 356 Physical Damage / Skill Needed: Lv.3 or higher",
+     "fx": {
+      "self": [
+       "• +24% increase of Physical Attack (20 Sec.)",
+       "30px Marvel Studios' Shang Chi",
+       "Master's Counterattack",
+       "Physical Damage",
+       "Enables attacking enemies who have activated the \"Ignore Targeting\" effect",
+       "• 50% recovery of Max HP (1 Sec)",
+       "• Invincible (4 Sec)",
+       "• Super Armor, increases all Basic Defences by +10% (5 Sec)",
+       "• Reflects 80% of damage received, regardless of the attacker's defence effects (80% of Max Attack) (3 Sec)",
+       "• Physical Damage 175% of Physical Attack",
+       "Additional 356 Physical Damage",
+       "Skill Needed: Lv.3 or higher"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Curación",
+      "Invencibilidad"
+     ],
+     "cd": 30,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Mystic Barrage",
+     "d": "Physical Damage, Guard Break · • Physical Damage 47% of Physical Attack · Additional 534 Physical Damage · 30px Marvel Studios' Shang Chi · Endless Attack · A sí mismo: • Ignores target's Dodge Rate by 100% (6 Sec) / • 100% chance for Immunity to All Damage (4 Sec) / • Physical Damage 205% of Physical Attack / Additional 267 Physical Damage / Skill Needed: Lv.5 or higher · Al oponente: • Incapacitation (Removes Active Buff from target) (3 Sec)",
+     "fx": {
+      "general": [
+       "Physical Damage, Guard Break",
+       "• Physical Damage 47% of Physical Attack",
+       "Additional 534 Physical Damage",
+       "30px Marvel Studios' Shang Chi",
+       "Endless Attack"
+      ],
+      "self": [
+       "• Ignores target's Dodge Rate by 100% (6 Sec)",
+       "• 100% chance for Immunity to All Damage (4 Sec)",
+       "• Physical Damage 205% of Physical Attack",
+       "Additional 267 Physical Damage",
+       "Skill Needed: Lv.5 or higher"
+      ],
+      "enemy": [
+       "• Incapacitation (Removes Active Buff from target) (3 Sec)"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Ignora Evasión"
+     ],
+     "cd": 9,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Mystic Army",
+     "d": "Physical Damage · • Physical Damage 52% of Physical Attack · Additional 119 Physical Damage · 30px Marvel Studios' Shang Chi · Staff of Punishment · Physical Damage, Ignore Targeting · A sí mismo: • Increases all Basic Attacks and Basic Defences by +30%, all Speeds by +1%, Critical Rate by +30%, removes Incapacitation (6 Sec) / • Physical Damage 132% of Physical Attack / Additional 1067 Physical Damage / Skill Needed: Lv.6 or higher · Al oponente: • Deals 30% Burn damage every 1 sec (4 Sec) / • Stun (2 Sec) / • Incapacitation (Removes Active Buff from target) (3 Sec)",
+     "fx": {
+      "general": [
+       "Physical Damage",
+       "• Physical Damage 52% of Physical Attack",
+       "Additional 119 Physical Damage",
+       "30px Marvel Studios' Shang Chi",
+       "Staff of Punishment",
+       "Physical Damage, Ignore Targeting"
+      ],
+      "self": [
+       "• Increases all Basic Attacks and Basic Defences by +30%, all Speeds by +1%, Critical Rate by +30%, removes Incapacitation (6 Sec)",
+       "• Physical Damage 132% of Physical Attack",
+       "Additional 1067 Physical Damage",
+       "Skill Needed: Lv.6 or higher"
+      ],
+      "enemy": [
+       "• Deals 30% Burn damage every 1 sec (4 Sec)",
+       "• Stun (2 Sec)",
+       "• Incapacitation (Removes Active Buff from target) (3 Sec)"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "DoT",
+      "Buff VEL"
+     ],
+     "cd": 14,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Definitiva",
+     "n": "Tranquil Focus",
+     "d": "Super Guard Break, Ignore Targeting · A sí mismo: • 100% recovery of MAX HP (1 Sec) / • Increases Chain Hit damage by 90% when attacking (13 sec) / • 80% chance to penetrate with SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE effect (13 sec) / • Invincible (8 Sec) / • Increases basic damage by 150% for 1 attack(s)(13 Sec) / • Enables attacking enemies who have activated the \"Ignore Targeting\" effect (13 Sec) / • Increases all Basic Attacks by 90% (13 Sec)",
+     "fx": {
+      "general": [
+       "Super Guard Break, Ignore Targeting"
+      ],
+      "self": [
+       "• 100% recovery of MAX HP (1 Sec)",
+       "• Increases Chain Hit damage by 90% when attacking (13 sec)",
+       "• 80% chance to penetrate with SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE effect (13 sec)",
+       "• Invincible (8 Sec)",
+       "• Increases basic damage by 150% for 1 attack(s)(13 Sec)",
+       "• Enables attacking enemies who have activated the \"Ignore Targeting\" effect (13 Sec)",
+       "• Increases all Basic Attacks by 90% (13 Sec)"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": true,
+     "tags": [
+      "Curación",
+      "Escudo",
+      "Invencibilidad",
+      "Perfora Inmunidad"
+     ],
+     "cd": null,
+     "perm": false,
+     "iframe": true,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": [
     {
      "id": "shang-chi-10100089",
@@ -60622,7 +61621,11 @@
    "name": "Ghost",
    "c": "Velocidad",
    "f": "Supervillano",
-   "r": [],
+   "r": [
+    "Control",
+    "Soporte",
+    "Daño"
+   ],
    "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
@@ -60642,7 +61645,193 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Proficient Scientist",
+     "d": "Al equipo: + 50% increase of All Attacks.",
+     "fx": {
+      "allies": [
+       "+ 50% increase of All Attacks."
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Invisible Ghost",
+     "d": "Se activa: When Hit · A sí mismo: 60% chance to become immune to Physical Damage. (2 Sec.)",
+     "fx": {
+      "general": [
+       "Se activa: When Hit"
+      ],
+      "self": [
+       "60% chance to become immune to Physical Damage. (2 Sec.)"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": 10,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "GhostTech",
+     "d": "→ Villain Allies · +10% ATQ de energía · Requires Hero Advancement",
+     "fx": {
+      "general": [
+       "→ Villain Allies",
+       "+10% ATQ de energía",
+       "Requires Hero Advancement"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Ghost's Touch",
+     "d": "Al oponente: Deals 10% Bleed damage every 1 sec. (3 Sec.) / Energy Damage 35% of Energy Attack. / Additional 48 Energy Damage",
+     "fx": {
+      "enemy": [
+       "Deals 10% Bleed damage every 1 sec. (3 Sec.)",
+       "Energy Damage 35% of Energy Attack.",
+       "Additional 48 Energy Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Sangrado",
+      "DoT"
+     ],
+     "cd": 7,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Shocking Invasion",
+     "d": "Al oponente: Mind Control (3 Sec.) / Deals 10% Shock damage every 1 sec. (3 Sec.) / Energy Damage 24% of Energy Attack. / Additional 36 Energy Damage",
+     "fx": {
+      "enemy": [
+       "Mind Control (3 Sec.)",
+       "Deals 10% Shock damage every 1 sec. (3 Sec.)",
+       "Energy Damage 24% of Energy Attack.",
+       "Additional 36 Energy Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "DoT"
+     ],
+     "cd": 8,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Trace of Ghost",
+     "d": "Al oponente: -10% decrease of All Defenses. (5 Sec.) / Deals 10% Shock damage every 1 sec. (3 Sec.) / Energy Damage 55% of Energy Attack. / Additional 18 Energy Damage / Move using the V-Pad while using a Skill",
+     "fx": {
+      "enemy": [
+       "-10% decrease of All Defenses. (5 Sec.)",
+       "Deals 10% Shock damage every 1 sec. (3 Sec.)",
+       "Energy Damage 55% of Energy Attack.",
+       "Additional 18 Energy Damage",
+       "Move using the V-Pad while using a Skill"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "DoT"
+     ],
+     "cd": 10,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Intel Gathering",
+     "d": "A sí mismo: +5% All Attacks · Al oponente: -10% decrease of All Defenses. (Stacks up to -35%)(2 Sec.) / -10% todas las velocidades (2s) / 100% chance to revove the area where an enemy has placed a special effect. / Removes effect(s): HP RECOVERY, TIME FREEZING, SHIELD, BARRIER, ALL DAMAGE IMMUNE, REFLECT ALL ATTACKS (2 Sec.) · Al equipo: Guards against 1 hits. (2 Sec.)",
+     "fx": {
+      "self": [
+       "+5% All Attacks"
+      ],
+      "enemy": [
+       "-10% decrease of All Defenses. (Stacks up to -35%)(2 Sec.)",
+       "-10% todas las velocidades (2s)",
+       "100% chance to revove the area where an enemy has placed a special effect.",
+       "Removes effect(s): HP RECOVERY, TIME FREEZING, SHIELD, BARRIER, ALL DAMAGE IMMUNE, REFLECT ALL ATTACKS (2 Sec.)"
+      ],
+      "allies": [
+       "Guards against 1 hits. (2 Sec.)"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Ralentizar",
+      "Curación",
+      "Escudo",
+      "Buff VEL"
+     ],
+     "cd": 14,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Ghost Sabotage",
+     "d": "Al oponente: Deals 20% Shock damage every 1 sec. (5 Sec.) / Miedo 5s / Energy Damage 43% of Energy Attack. / Additional 48 Energy Damage",
+     "fx": {
+      "enemy": [
+       "Deals 20% Shock damage every 1 sec. (5 Sec.)",
+       "Miedo 5s",
+       "Energy Damage 43% of Energy Attack.",
+       "Additional 48 Energy Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Miedo",
+      "DoT"
+     ],
+     "cd": 16,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": [
     {
      "id": "ghost-10100162",
@@ -84168,7 +85357,11 @@
    "name": "Ikaris",
    "c": "Universal",
    "f": "Superhéroe",
-   "r": [],
+   "r": [
+    "Control",
+    "Soporte",
+    "Daño"
+   ],
    "ins": "Orden",
    "race": "Alienígena",
    "gender": "Masculino",
@@ -84189,7 +85382,257 @@
     "poison_resist": "0.05",
     "mind_resist": "0.05"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Guardian of Humanity",
+     "d": "→ All Eternals Allies · +60% All Attacks",
+     "fx": {
+      "general": [
+       "→ All Eternals Allies",
+       "+60% All Attacks"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": 20,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Eternal Rebirth",
+     "d": "Se activa: when HP is below 99% · A sí mismo: Super Armor, All Defenses +25% ↑ / Recupera 4% de vida máx.",
+     "fx": {
+      "general": [
+       "Se activa: when HP is below 99%"
+      ],
+      "self": [
+       "Super Armor, All Defenses +25% ↑",
+       "Recupera 4% de vida máx."
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Curación"
+     ],
+     "cd": 1,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Cosmic Endurance",
+     "d": "A sí mismo: +45% Skill damage / +30% Decreases all damage received by / Requires Hero Advancement",
+     "fx": {
+      "self": [
+       "+45% Skill damage",
+       "+30% Decreases all damage received by",
+       "Requires Hero Advancement"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Warrior's Fist",
+     "d": "Al oponente: Aturde 2s / Silencia 2s / Incapacita 3s (quita buffs activos) / Energy Damage 120% of Energy Attack / Additional 1067 Energy Damage",
+     "fx": {
+      "enemy": [
+       "Aturde 2s",
+       "Silencia 2s",
+       "Incapacita 3s (quita buffs activos)",
+       "Energy Damage 120% of Energy Attack",
+       "Additional 1067 Energy Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Silencio"
+     ],
+     "cd": 7,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Hero's Advance",
+     "d": "A sí mismo: Ignora 30% de la evasión del objetivo / Energy Damage 140% of Energy Attack / Additional 1067 Energy Damage · Al oponente: Deals 35% Burn damage everey 1 sec. (5 Sec.) / Aturde 2s",
+     "fx": {
+      "self": [
+       "Ignora 30% de la evasión del objetivo",
+       "Energy Damage 140% of Energy Attack",
+       "Additional 1067 Energy Damage"
+      ],
+      "enemy": [
+       "Deals 35% Burn damage everey 1 sec. (5 Sec.)",
+       "Aturde 2s"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "DoT",
+      "Ignora Evasión"
+     ],
+     "cd": 9,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Salvation Blow",
+     "d": "A sí mismo: 100% chance for Immunity to All Damage. (5 Sec.) / Accumulates 10% of true damage dealt to enemy regardless of Defense and Dodge Rate. / The total accumulated true damage cannot pass 10000. (7 Sec.) / +0.6% Increase of ALL ATKS each 1% Accumulated Damage proportional to max accumulated Damage. (7 Sec.) / Energy Damage 125% of Energy Attack / Additional 1067 Energy Damage · Al oponente: Deals 35% Burn damage everey 1 sec. (5 Sec.) / Aturde 2s / Silencia 2s / Incapacita 5s (quita buffs activos)",
+     "fx": {
+      "self": [
+       "100% chance for Immunity to All Damage. (5 Sec.)",
+       "Accumulates 10% of true damage dealt to enemy regardless of Defense and Dodge Rate.",
+       "The total accumulated true damage cannot pass 10000. (7 Sec.)",
+       "+0.6% Increase of ALL ATKS each 1% Accumulated Damage proportional to max accumulated Damage. (7 Sec.)",
+       "Energy Damage 125% of Energy Attack",
+       "Additional 1067 Energy Damage"
+      ],
+      "enemy": [
+       "Deals 35% Burn damage everey 1 sec. (5 Sec.)",
+       "Aturde 2s",
+       "Silencia 2s",
+       "Incapacita 5s (quita buffs activos)"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Silencio",
+      "DoT"
+     ],
+     "cd": 18,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Eternal Blast",
+     "d": "Enables attacking enemies who have activated the \"Ignore Targeting\" effect. · Move using the V-Pad while using a Skill. · A sí mismo: Invencible 4s / Energy Damage 100% of Energy Attack / Additional 178 Energy Damage · Al oponente: Aturde 2s / Paralysis (Ignores immunity) (2 Sec.) / -10% decrease of All Defenses. (Stack up to -50%, ignores immunity) (7 Sec.)",
+     "fx": {
+      "general": [
+       "Enables attacking enemies who have activated the \"Ignore Targeting\" effect.",
+       "Move using the V-Pad while using a Skill."
+      ],
+      "self": [
+       "Invencible 4s",
+       "Energy Damage 100% of Energy Attack",
+       "Additional 178 Energy Damage"
+      ],
+      "enemy": [
+       "Aturde 2s",
+       "Paralysis (Ignores immunity) (2 Sec.)",
+       "-10% decrease of All Defenses. (Stack up to -50%, ignores immunity) (7 Sec.)"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Invencibilidad"
+     ],
+     "cd": 13,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Surging Anger",
+     "d": "A sí mismo: 50% de perforar escudos/barreras/invencibilidad (7s) / Energy Damage 65% of Energy Attack / Additional 214 Energy Damage · Al oponente: Deals 45% Burn damage everey 1 sec. (5 Sec.) / Aturde 3s / Miedo 3s / Incapacita 3s (quita buffs activos) / -10% decrease of All Defenses. (Stack up to -50%, ignores immunity) (7 Sec.)",
+     "fx": {
+      "self": [
+       "50% de perforar escudos/barreras/invencibilidad (7s)",
+       "Energy Damage 65% of Energy Attack",
+       "Additional 214 Energy Damage"
+      ],
+      "enemy": [
+       "Deals 45% Burn damage everey 1 sec. (5 Sec.)",
+       "Aturde 3s",
+       "Miedo 3s",
+       "Incapacita 3s (quita buffs activos)",
+       "-10% decrease of All Defenses. (Stack up to -50%, ignores immunity) (7 Sec.)"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": true,
+     "tags": [
+      "Aturdir",
+      "Miedo",
+      "DoT",
+      "Escudo",
+      "Invencibilidad",
+      "Perfora Inmunidad"
+     ],
+     "cd": 18,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Definitiva",
+     "n": "Fated Precision",
+     "d": "A sí mismo: 80% de perforar escudos/barreras/invencibilidad (7s) / Invencible 7s / +50% basic damage / Energy Damage 65% of Energy Attack / Additional 214 Energy Damage · Al oponente: Deals 50% Burn damage everey 1 sec. (4 Sec.) / Aturde 2s / Silencia 2s",
+     "fx": {
+      "self": [
+       "80% de perforar escudos/barreras/invencibilidad (7s)",
+       "Invencible 7s",
+       "+50% basic damage",
+       "Energy Damage 65% of Energy Attack",
+       "Additional 214 Energy Damage"
+      ],
+      "enemy": [
+       "Deals 50% Burn damage everey 1 sec. (4 Sec.)",
+       "Aturde 2s",
+       "Silencia 2s"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": true,
+     "tags": [
+      "Aturdir",
+      "Silencio",
+      "DoT",
+      "Escudo",
+      "Invencibilidad",
+      "Perfora Inmunidad"
+     ],
+     "cd": 18,
+     "perm": false,
+     "iframe": true,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": [
     {
      "id": "ikaris-10100242",
@@ -85613,7 +87056,10 @@
    "name": "Wenwu",
    "c": "Detonación",
    "f": "Supervillano",
-   "r": [],
+   "r": [
+    "Soporte",
+    "Daño"
+   ],
    "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
@@ -85633,7 +87079,202 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Ancient Leader",
+     "d": "→ Villain Allies · Se activa: when debuffed · Limpia todos los debuffs · Recupera 10% de vida máx.",
+     "fx": {
+      "general": [
+       "→ Villain Allies",
+       "Se activa: when debuffed",
+       "Limpia todos los debuffs",
+       "Recupera 10% de vida máx."
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Curación",
+      "Limpia Debuffs"
+     ],
+     "cd": 20,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Legendary Power",
+     "d": "→ Villain Allies · +25% vida",
+     "fx": {
+      "general": [
+       "→ Villain Allies",
+       "+25% vida"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Will of the Ten Rings",
+     "d": "A sí mismo: Super Armor, All Defenses +5% ↑ / +30% Skill damage",
+     "fx": {
+      "self": [
+       "Super Armor, All Defenses +5% ↑",
+       "+30% Skill damage"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Sinister Strike (Energy Damage)",
+     "d": "A sí mismo: Energy Damage 100% of Energy Attack / Additional 1067 Energy Damage · Al oponente: Aturde 1s",
+     "fx": {
+      "self": [
+       "Energy Damage 100% of Energy Attack",
+       "Additional 1067 Energy Damage"
+      ],
+      "enemy": [
+       "Aturde 1s"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir"
+     ],
+     "cd": 6,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Dark Violence (Energy Damage)",
+     "d": "Energy Damage 75% of Energy Attack · Additional 1067 Energy Damage",
+     "fx": {
+      "general": [
+       "Energy Damage 75% of Energy Attack",
+       "Additional 1067 Energy Damage"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [],
+     "cd": 6,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Ten Rings Power (Energy Damage)",
+     "d": "Tapping and holding the skill icon will charge the skill and releasing it will commence the attack. · A sí mismo: Recupera 15% de vida máx. (1s) / Guards against 8 hits. (6 Sec.) / Energy Damage 80% of Energy Attack / Additional 214 Energy Damage / Skill Needed: Lv.3 or higher} · Al oponente: Aturde 2s",
+     "fx": {
+      "general": [
+       "Tapping and holding the skill icon will charge the skill and releasing it will commence the attack."
+      ],
+      "self": [
+       "Recupera 15% de vida máx. (1s)",
+       "Guards against 8 hits. (6 Sec.)",
+       "Energy Damage 80% of Energy Attack",
+       "Additional 214 Energy Damage",
+       "Skill Needed: Lv.3 or higher}"
+      ],
+      "enemy": [
+       "Aturde 2s"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Curación"
+     ],
+     "cd": 15,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Warlord's Threat (Energy Damage)",
+     "d": "A sí mismo: +45% all Basic Attacks and Basic Defenses / Energy Damage 155% of Energy Attack / Additional 1067 Energy Damage / Skill Needed: Lv.5 or higher · Al oponente: -10% all Basic Defenses",
+     "fx": {
+      "self": [
+       "+45% all Basic Attacks and Basic Defenses",
+       "Energy Damage 155% of Energy Attack",
+       "Additional 1067 Energy Damage",
+       "Skill Needed: Lv.5 or higher"
+      ],
+      "enemy": [
+       "-10% all Basic Defenses"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": false,
+     "tags": [
+      "Buff VEL"
+     ],
+     "cd": 17,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Absolute Control (Energy Damage)",
+     "d": "Move using the V-Pad while using a Skill. · A sí mismo: 80% de perforar escudos/barreras/invencibilidad (2s) / Invencible 5s / Energy Damage 145% of Energy Attack / Additional 1067 Energy Damage / Skill Needed: Lv.6 or higher · Al oponente: Incapacita 2s (quita buffs activos)",
+     "fx": {
+      "general": [
+       "Move using the V-Pad while using a Skill."
+      ],
+      "self": [
+       "80% de perforar escudos/barreras/invencibilidad (2s)",
+       "Invencible 5s",
+       "Energy Damage 145% of Energy Attack",
+       "Additional 1067 Energy Damage",
+       "Skill Needed: Lv.6 or higher"
+      ],
+      "enemy": [
+       "Incapacita 2s (quita buffs activos)"
+      ]
+     },
+     "dmg": "Energía",
+     "ii": true,
+     "tags": [
+      "Escudo",
+      "Invencibilidad",
+      "Perfora Inmunidad"
+     ],
+     "cd": 16,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": [
     {
      "id": "wenwu-10100248",
@@ -85650,7 +87291,9 @@
    "name": "Katy",
    "c": "Velocidad",
    "f": "Superhéroe",
-   "r": [],
+   "r": [
+    "Daño"
+   ],
    "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
@@ -85670,7 +87313,203 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "baseSkills": [],
+   "baseSkills": [
+    {
+     "slot": "Liderazgo",
+     "n": "Perfect Teamwork",
+     "d": "→ SHANG-CHI · +60% ataques básicos · Al equipo: Critical Rate Increases by +18%.",
+     "fx": {
+      "general": [
+       "→ SHANG-CHI",
+       "+60% ataques básicos"
+      ],
+      "allies": [
+       "Critical Rate Increases by +18%."
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Buff Crítico"
+     ],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Robe of Justice",
+     "d": "Al equipo: Critical Damage increases by +30%. / Ignora 30% de la evasión del objetivo",
+     "fx": {
+      "allies": [
+       "Critical Damage increases by +30%.",
+       "Ignora 30% de la evasión del objetivo"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Ignora Evasión",
+      "Buff Crítico"
+     ],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Pasiva",
+     "n": "Never Missing Arrow",
+     "d": "A sí mismo: +30% evasión garantizada / +20% Guaranteed Critical Rate / +30% Skill damage",
+     "fx": {
+      "self": [
+       "+30% evasión garantizada",
+       "+20% Guaranteed Critical Rate",
+       "+30% Skill damage"
+      ]
+     },
+     "dmg": "Ninguno",
+     "ii": false,
+     "tags": [
+      "Buff Crítico"
+     ],
+     "cd": null,
+     "perm": true,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 1",
+     "n": "Quick Blow (Physical Damage)",
+     "d": "Al oponente: Aturde 2s / Physical Damage 173% of Physical Attack / Additional 1067 Physical Damage",
+     "fx": {
+      "enemy": [
+       "Aturde 2s",
+       "Physical Damage 173% of Physical Attack",
+       "Additional 1067 Physical Damage"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Aturdir"
+     ],
+     "cd": 7,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 2",
+     "n": "Countless Arrows (Physical Damage)",
+     "d": "Al oponente: Deals 30% Bleed damage every 1 sec. Removes Elasticity (4 Sec.) / Aturde 3s / Physical Damage 140% of Physical Attack / Additional 1067 Physical Damage",
+     "fx": {
+      "enemy": [
+       "Deals 30% Bleed damage every 1 sec. Removes Elasticity (4 Sec.)",
+       "Aturde 3s",
+       "Physical Damage 140% of Physical Attack",
+       "Additional 1067 Physical Damage"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Aturdir",
+      "Sangrado",
+      "DoT"
+     ],
+     "cd": 8,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 3",
+     "n": "Promice if Justice (Physical Damage)",
+     "d": "A sí mismo: 100% for Immunity to All Damage. (6 Sec.) / +50% ataques básicos (7s) / Physical Damage 100% of Physical Attack / Additional 1067 Physical Damage / Skill Needed: Lv.3 or higher}",
+     "fx": {
+      "self": [
+       "100% for Immunity to All Damage. (6 Sec.)",
+       "+50% ataques básicos (7s)",
+       "Physical Damage 100% of Physical Attack",
+       "Additional 1067 Physical Damage",
+       "Skill Needed: Lv.3 or higher}"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [],
+     "cd": 15,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 4",
+     "n": "Anti-Matter Pistol (Physical Damage)",
+     "d": "Tapping and holding the skill icon will charge the skill and releasing it will commence the attack. · A sí mismo: 50% de perforar escudos/barreras/invencibilidad (5s) / +50% all Basic Attacks and Basic Defenses / Physical Damage 160% of Physical Attack / Additional 214 Physical Damage / Skill Needed: Lv.5 or higher · Al oponente: Paralysis (Ignores immunity) (2 Sec.)",
+     "fx": {
+      "general": [
+       "Tapping and holding the skill icon will charge the skill and releasing it will commence the attack."
+      ],
+      "self": [
+       "50% de perforar escudos/barreras/invencibilidad (5s)",
+       "+50% all Basic Attacks and Basic Defenses",
+       "Physical Damage 160% of Physical Attack",
+       "Additional 214 Physical Damage",
+       "Skill Needed: Lv.5 or higher"
+      ],
+      "enemy": [
+       "Paralysis (Ignores immunity) (2 Sec.)"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": true,
+     "tags": [
+      "Escudo",
+      "Invencibilidad",
+      "Perfora Inmunidad",
+      "Buff VEL"
+     ],
+     "cd": 13,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    },
+    {
+     "slot": "Activa 5",
+     "n": "Storm Shooting (Physical Damage)",
+     "d": "Al oponente: Deals 50% Bleed damage every 1 sec. Removes Elasticity (5 Sec.) / -8% all Basic Defenses / Physical Damage 160% of Physical Attack / Additional 134 Physical Damage / Skill Needed: Lv.6 or higher",
+     "fx": {
+      "enemy": [
+       "Deals 50% Bleed damage every 1 sec. Removes Elasticity (5 Sec.)",
+       "-8% all Basic Defenses",
+       "Physical Damage 160% of Physical Attack",
+       "Additional 134 Physical Damage",
+       "Skill Needed: Lv.6 or higher"
+      ]
+     },
+     "dmg": "Físico",
+     "ii": false,
+     "tags": [
+      "Sangrado",
+      "DoT"
+     ],
+     "cd": 12,
+     "perm": false,
+     "iframe": false,
+     "gb": false,
+     "sgb": false
+    }
+   ],
    "uniforms": []
   },
   {
