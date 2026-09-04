@@ -168,7 +168,24 @@ def mk_skill(slot, name, body, dmg_hint):
             'tags':effects_to_tags(body),'cd':int(cdm.group(1)) if cdm else None,
             'perm':slot in ('Pasiva','Liderazgo'),'iframe':slot=='Definitiva','gb':False,'sgb':False}
 
+# La fila del nombre de la skill viene en tres plantillas distintas segun la pagina:
+#   | class="header2" |Nombre   -> cuerpo en la fila siguiente
+#   |<center>NOMBRE-EN-NEGRITA  -> cuerpo en la fila siguiente
+#   |NOMBRE-EN-NEGRITA + cuerpo -> nombre y cuerpo en la misma fila
+NAME_H2 = re.compile(r'\|\s*class="header2"\s*\|(.+)')
+NAME_BOLD = re.compile(r"\|\s*(?:<center>\s*)?'''(.+)")
+
 def parse_fmt1(sec, dmg_hint):
+    # Cada seccion usa una sola de las tres plantillas de fila-nombre:
+    #   class="header2"          -> el nombre es esa fila; las negritas son cuerpo resaltado
+    #   negrita en fila propia   -> el nombre ocupa su fila; toda fila multilinea es cuerpo
+    #   negrita + cuerpo debajo  -> el nombre es la primera linea de la fila
+    entries = [e.strip() for e in re.split(r'\n\|-\n', sec)]
+    if 'class="header2"' in sec:
+        name_re, solo = NAME_H2, False
+    else:
+        name_re = NAME_BOLD
+        solo = any('\n' not in e and NAME_BOLD.match(e) for e in entries)
     skills, slot_ctx, active_n = [], None, 0
     cur_name, cur_body = None, []
     def flush():
@@ -182,17 +199,20 @@ def parse_fmt1(sec, dmg_hint):
             else: active_n+=1; slot=f'Activa {active_n}'
         skills.append(mk_skill(slot, cur_name, body, dmg_hint))
         cur_name, cur_body = None, []
-    for e in re.split(r'\n\|-\n', sec):
-        e = e.strip()
+    for e in entries:
         hm = re.match(r'!\s*(.+)', e)
         if hm:
             flush()
             h = hm.group(1).strip()
             slot_ctx = 'Liderazgo' if 'Leader' in h else ('Pasiva' if 'Passive' in h else 'Activa')
             continue
-        nm = re.match(r'\|\s*class="header2"\s*\|(.+)', e)
+        head, _, rest = e.partition('\n')
+        nm = None if (solo and rest) else name_re.match(head)
         if nm:
-            flush(); cur_name = re.sub(r"'''|''",'',nm.group(1)).strip(); continue
+            flush()
+            cur_name = re.sub(r"'''|''|</?center>", '', nm.group(1)).strip()
+            cur_body = [rest] if rest else []
+            continue
         if cur_name is not None: cur_body.append(e)
     flush()
     return skills
@@ -240,6 +260,24 @@ def parse_fmt2(wt, dmg_hint):
         if sks: per_uni[m.group(1)] = sks
     return base, per_uni
 
+# La seccion de skills es una pestana del tabber ("Skills =", "Skills (Uniforme)=")
+# o un encabezado normal ("==Skill==" / "==Skills=="). La primera seccion es la base;
+# las siguientes, rotuladas con el nombre de un uniforme, son skills propias de ese uniforme.
+SEC_RE = re.compile(r'(?:^|\n)(?:[ \t]*Skills?[ \t]*(?:\(([^)\n]*)\))?[ \t]*=[ \t]*\n|==[ \t]*Skills?[ \t]*==[ \t]*\n)')
+SEC_END = re.compile(r'\n\|-\||\n==[^=]')
+# discrimina fmt1 (tabla con filas de encabezado) de fmt2 (subsecciones ====Leadership====)
+TABLE_HDR = re.compile(r"(?:^|\n)!\s*'*\s*(?:Leader|Passive|Active|Ultimate)", re.I)
+
+def skill_sections(wt):
+    """[(etiqueta|None, texto)] de cada seccion de skills con tabla estilo fmt1."""
+    out = []
+    for m in SEC_RE.finditer(wt):
+        rest = wt[m.end():]
+        e = SEC_END.search(rest)
+        sec = rest[:e.start()] if e else rest
+        if TABLE_HDR.search(sec): out.append((m.group(1), sec))
+    return out
+
 results = {}
 for fn in glob.glob('work/wikitext/*.json'):
     dd = json.load(open(fn)); name, wt = dd['name'], dd['wt']
@@ -248,10 +286,15 @@ for fn in glob.glob('work/wikitext/*.json'):
     inst = im.group(1) if im else ''
     atk = am.group(1) if am else ''
     hint = 'Energía' if atk=='Energy' else ('Físico' if atk=='Physical' else None)
-    m = re.search(r'(?:^|\n)\s*Skills\s*=\s*\n', wt)
-    if m:
-        rest = wt[m.end():]; end = rest.find('\n|-|')
-        results[name] = {'instinct':inst,'atk':atk,'base':parse_fmt1(rest[:end] if end!=-1 else rest, hint),'per_uni':{}}
+    sections = skill_sections(wt)
+    if sections:
+        base, per_uni = [], {}
+        for label, sec in sections:
+            sks = parse_fmt1(sec, hint)
+            if not sks: continue
+            if not base: base = sks
+            elif label: per_uni[label] = sks
+        results[name] = {'instinct':inst,'atk':atk,'base':base,'per_uni':per_uni}
     elif re.search(r'==\s*Skills\s*==', wt):
         b, pu = parse_fmt2(wt, hint)
         results[name] = {'instinct':inst,'atk':atk,'base':b,'per_uni':pu}
