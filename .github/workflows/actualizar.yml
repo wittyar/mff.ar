@@ -14,8 +14,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Bajar datos (sin imágenes; no van al repo)
-        run: python scripts/fetch_all.py --no-images
+      - name: Bajar datos (sin retratos; los íconos sí, son insumo del build)
+        run: python scripts/fetch_all.py --no-portraits
       - name: Parsear skills
         run: python scripts/parse_skills.py
       - name: Reconstruir data.js e import

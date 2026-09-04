@@ -43,6 +43,9 @@ def derive_roles(skills):
     if 'Provocar' in tags: roles.append('Tanque')
     roles.append('Daño')
     return roles
+nuevas = sorted({a for r in d for a in r['ability']} - set(ABIL))
+if nuevas:
+    raise SystemExit(f'habilidades sin traducir en ABIL: {nuevas} — agregalas a scripts/_core.py')
 byid = {}
 for x in d: byid.setdefault(x['id'], []).append(x)
 characters, images, uindex, seen = [], {}, {}, set()
@@ -80,7 +83,7 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         'id': cid, 'name': base['character'], 'c': TYPE[base['type']], 'f': SIDE[base['side']],
         'r': derive_roles(all_sk) if all_sk else [], 'ins': ins, 'race': ALLIES[base['allies']],
         'gender': GENDER[base['gender']], 't': tier_of(base), 'modes': [],
-        'abilities': [ABIL.get(a, a) for a in base['ability']], 'origin': ORIGIN[base['original']],
+        'abilities': [ABIL[a] for a in base['ability']], 'origin': ORIGIN[base['original']],
         'tuc': base.get('tuc', []), 'stats': base.get('stats', {}),
         'baseSkills': base_skills, 'uniforms': uniforms})
     images['portrait-'+cid] = 'images/' + base['base_portrait'] + '.png'
@@ -96,14 +99,18 @@ for cellkey, items in ver['cellContents'].items():
         if not pair: continue
         cid, uid = pair
         assign[(f"{cid}::{uid}" if uid else f"{cid}::base")] = rank
-# íconos: derivar mapa valor-ES -> archivo desde images/icons/ usando el mapa inverso
+# íconos: el mapa valor-ES -> archivo es fijo; los archivos los baja fetch_all y son
+# insumo del build. Si falta alguno el build corta: un data.js sin íconos sería una
+# regresión silenciosa (la app simplemente dejaría de mostrarlos).
 import os as _os
 ICON_ES = {**{v: re.sub(r'[^a-z0-9]','',k.lower()) for k,v in ABIL.items()},
  'Combate':'combat','Detonación':'blast','Velocidad':'speed','Universal':'universal',
  'Humano':'human','Mutante':'mutant','Inhumano':'inhuman','Alienígena':'alien','Criatura':'creature','Otro':'other',
  'Masculino':'male','Femenino':'female','Neutro':'neutral','Superhéroe':'hero','Supervillano':'villain'}
+faltan = sorted({s for s in ICON_ES.values() if not _os.path.exists(f'images/icons/{s}.png')})
+if faltan:
+    raise SystemExit(f'faltan {len(faltan)} iconos en images/icons/ {faltan} — corre scripts/fetch_all.py')
 for val, s in ICON_ES.items():
-    p = f'images/icons/{s}.png'
-    if _os.path.exists(p): images['icon-'+val] = p
+    images['icon-'+val] = f'images/icons/{s}.png'
 json.dump({'characters':characters,'images':images,'assign':assign}, open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images), '| tiers:', len(assign))

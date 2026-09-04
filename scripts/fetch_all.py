@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Baja todo lo necesario desde thanosvibs.money y la wiki de Future Fight.
-Uso: python scripts/fetch_all.py [--no-images]
+Uso: python scripts/fetch_all.py [--no-portraits]
 Deja: work/characters.json, work/gen_versions.json, work/wikitext/*.json,
-      images/*.png e images/icons/*.png (salvo --no-images)."""
+      images/icons/*.png (siempre: son insumo del build) e images/*.png
+      (los retratos, salvo --no-portraits)."""
 import json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
 TV = 'https://thanosvibs.money'
 WIKI = 'https://future-fight.fandom.com'
-NO_IMAGES = '--no-images' in sys.argv
+NO_PORTRAITS = '--no-portraits' in sys.argv
 os.makedirs('work/wikitext', exist_ok=True)
 os.makedirs('images/icons', exist_ok=True)
 
@@ -71,8 +72,8 @@ for name, title in resolved.items():
     time.sleep(0.1)
 print('wikitexts:', len(os.listdir('work/wikitext')))
 
-# 5) imagenes
-if not NO_IMAGES:
+# 5) retratos: arte de terceros, gitignoreado y ajeno al build; se omiten en CI
+if not NO_PORTRAITS:
     ports = sorted({r['portrait'] for r in chars} | {r['base_portrait'] for r in chars})
     def getp(p):
         fn = f'images/{p}.png'
@@ -81,17 +82,20 @@ if not NO_IMAGES:
         except Exception as e: print('AVISO retrato fallo:', p, e)
     with ThreadPoolExecutor(6) as ex: list(ex.map(getp, ports))
     print('retratos:', len([f for f in os.listdir('images') if f.endswith('.png')]))
-    # iconos: tipos + razas + generos + bandos + habilidades (slug del nombre en ingles)
-    fixed = ['combat','blast','speed','universal','human','mutant','inhuman','alien','creature','other',
-             'male','female','neutral','hero','villain']
-    abil = sorted({a for r in chars for a in r['ability']})
-    slugs = fixed + [re.sub(r'[^a-z0-9]', '', a.lower()) for a in abil]
-    def geti(s):
-        fn = f'images/icons/{s}.png'
-        if os.path.exists(fn): return
-        try:
-            data = get(f'{TV}/images/attributes/{s}.png')
-            if data[:4] == b'\x89PNG': open(fn, 'wb').write(data)
-        except Exception: pass
-    with ThreadPoolExecutor(6) as ex: list(ex.map(geti, slugs))
-    print('iconos:', len(os.listdir('images/icons')))
+
+# 6) iconos: tipos + razas + generos + bandos + habilidades (slug del nombre en ingles).
+# _core.py arma el mapa de iconos leyendo images/icons/, asi que son insumo del build y
+# se bajan siempre: sin ellos data.js saldria sin iconos.
+fixed = ['combat','blast','speed','universal','human','mutant','inhuman','alien','creature','other',
+         'male','female','neutral','hero','villain']
+abil = sorted({a for r in chars for a in r['ability']})
+slugs = fixed + [re.sub(r'[^a-z0-9]', '', a.lower()) for a in abil]
+def geti(s):
+    fn = f'images/icons/{s}.png'
+    if os.path.exists(fn): return
+    try:
+        data = get(f'{TV}/images/attributes/{s}.png')
+        if data[:4] == b'\x89PNG': open(fn, 'wb').write(data)
+    except Exception as e: print('AVISO icono fallo:', s, e)
+with ThreadPoolExecutor(6) as ex: list(ex.map(geti, slugs))
+print('iconos:', len(os.listdir('images/icons')))
