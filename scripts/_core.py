@@ -76,7 +76,15 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'
         uindex[(numid, r.get('uniform_id'))] = (cid, uid)
     leftovers = [j for j in range(len(per_uni)) if j not in used]
-    if leftovers: base_skills += per_uni[leftovers[0]][1]
+    # En las paginas donde las activas viven por uniforme, la base no trae ninguna y el
+    # primer grupo sin cruzar es el traje base: ese se mergea. Si la base ya trae activas,
+    # el grupo es de un uniforme que no supimos cruzar y mergearlo inventaria atribucion.
+    if leftovers and not any(sk['slot'].startswith('Activa') for sk in base_skills):
+        base_skills += per_uni[leftovers[0]][1]
+        leftovers = leftovers[1:]
+    for j in leftovers:
+        print(f"AVISO: {base['character']}: skills de '{per_uni[j][0]}' sin uniforme que cruce"
+              f" ({len(per_uni[j][1])} skills, quedan fuera del snapshot)")
     base_skills = sort_sk(base_skills)
     all_sk = base_skills + [s for u in uniforms for s in u['skills']]
     characters.append({
