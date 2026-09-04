@@ -4,7 +4,7 @@ import json, os, datetime
 exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())  # deja work/build2.json
 
 b = json.load(open('work/build2.json'))
-chars, images, assign = b['characters'], b['images'], b['assign']
+chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
 gv = json.load(open('work/gen_versions.json'))[0]['gameVersion']
 ABIL_VALUES = sorted({a for c in chars for a in c['abilities']})
 SEED = {
@@ -30,7 +30,10 @@ header = f"""// data.js — Comparador MFF (generado por scripts/build.py el {ho
 // future-fight.fandom.com (skills e instintos). Cada skill trae 'fx' (efectos por objetivo).
 // Crédito: THANO$VIB$ y Future Fight Wiki. Uso personal.
 """
-tl = [{"id": "tv-general", "name": f"THANO$VIB$ General {gv} (aprox.)"}]
+# Las listas llegan con las filas rotuladas de la fuente; el rango S-D solo se usa
+# como plantilla para las listas que arme el usuario dentro de la app.
+DEFAULT_ROWS = [{'id': r, 'label': r} for r in ['S', 'A', 'B', 'C', 'D']]
+tl = tierlists
 parts = [header,
  'window.MFF_SEED = ' + json.dumps(SEED, ensure_ascii=False, indent=1) + ';\n',
  """
@@ -50,8 +53,9 @@ window.MFF_sk = sk;
  'window.MFF_SEED_CHARACTERS = ' + json.dumps(chars, ensure_ascii=False) + ';\n',
  'window.MFF_TEAM_SUGGESTIONS = [];\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
+ 'window.MFF_DEFAULT_TIER_ROWS = ' + json.dumps(DEFAULT_ROWS, ensure_ascii=False) + ';\n',
  'window.MFF_SEED_TIERLISTS = ' + json.dumps(tl, ensure_ascii=False) + ';\n',
- 'window.MFF_SEED_TIER_ASSIGNMENTS = ' + json.dumps({'tv-general': assign}, ensure_ascii=False) + ';\n',
+ 'window.MFF_SEED_TIER_ASSIGNMENTS = ' + json.dumps(assign, ensure_ascii=False) + ';\n',
  """
 window.MFF_skillTiming = function (skill) {
   if (skill.perm) return 'Permanente';
@@ -63,7 +67,7 @@ window.MFF_skillTiming = function (skill) {
 open('data.js','w').write('\n'.join(parts))
 state = {
   'characters': chars, 'teams': [], 'modes': SEED['MODES'],
-  'customTierLists': tl, 'tierAssignments': {'tv-general': assign},
+  'customTierLists': tl, 'tierAssignments': assign,
   'taxonomies': {
     'factions': [{'value':v,'icon':images.get('icon-'+v,'')} for v in SEED['FACTIONS']],
     'instincts': [{'value':v,'icon':''} for v in SEED['INSTINCTS']],
@@ -73,4 +77,5 @@ state = {
   },
   'images': images, 'logo': ''}
 json.dump(state, open('mff-thanosvibs-import.json','w'), ensure_ascii=False, indent=1)
-print(f"data.js {os.path.getsize('data.js')//1024} KB | import {os.path.getsize('mff-thanosvibs-import.json')//1024} KB | juego {gv}")
+print(f"data.js {os.path.getsize('data.js')//1024} KB | import {os.path.getsize('mff-thanosvibs-import.json')//1024} KB"
+      f" | juego {gv} | listas {len(tl)}")

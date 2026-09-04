@@ -28,12 +28,33 @@ chars = get_json(TV + '/api/characters')
 json.dump(chars, open('work/characters.json', 'w'))
 print('characters:', len(chars), 'filas')
 
-# 2) tier list general (por titulo, no por id hardcodeado)
+# 2) tier lists (por titulo, no por id hardcodeado). La general va aparte por
+# compatibilidad con work/gen_versions.json; las demas quedan en work/tierlists/.
+# Son listas de autor: cada una trae sus propias filas rotuladas, que se respetan
+# tal cual (ver _core.py). Si alguna cambia de titulo, el fetch avisa y sigue.
+TIERLISTS = [
+    ('tv-general',  'THANO$VIB$ General Tier List',   'General'),
+    ('tv-alianza',  'Alliance Battle',                'Batalla de Alianza'),
+    ('tv-arena',    'Team Battle Arena',              'Arena de Equipos'),
+    ('tv-wbl',      'World Boss Legend (+)',          'World Boss Legend (+)'),
+    ('tv-soportes', 'THANO$VIB$ Supports Tier List',  'Soportes'),
+]
 projects = get_json(TV + '/api/tierlists/projects')
-gen = next(p for p in projects if 'General Tier List' in p['title'])
-vers = get_json(TV + f"/api/tierlists/projects/{urllib.parse.quote(gen['id'])}/versions")
-json.dump(vers, open('work/gen_versions.json', 'w'))
-print('tier list:', gen['title'], '| version de juego:', vers[0]['gameVersion'])
+by_title = {p['title']: p['id'] for p in projects}
+os.makedirs('work/tierlists', exist_ok=True)
+for i, (slug, title, es) in enumerate(TIERLISTS):
+    pid = by_title.get(title)
+    if not pid:
+        print('AVISO: tier list sin encontrar (cambio de titulo?):', title)
+        continue
+    vers = get_json(TV + f'/api/tierlists/projects/{urllib.parse.quote(pid)}/versions')
+    v0 = vers[0]
+    json.dump({'slug': slug, 'title': title, 'name_es': es, 'order': i, 'version': v0},
+              open(f'work/tierlists/{slug}.json', 'w'))
+    if slug == 'tv-general':
+        json.dump(vers, open('work/gen_versions.json', 'w'))
+    print('tier list:', title, '| juego', v0['gameVersion'], '| autor', v0.get('author'),
+          '| filas', len(v0.get('tiers', [])))
 
 # 3) resolucion de titulos de wiki (lotes + busqueda de rescate + overrides)
 OVERRIDES = {'Kraven The Hunter': 'Kraven the Hunter', 'Morgan le Fay': 'Morgan Le Fay',

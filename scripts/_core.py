@@ -1,7 +1,11 @@
-import json, re, unicodedata
+import glob, json, os, re, unicodedata
 d = json.load(open('work/characters.json'))
 wiki = json.load(open('work/wiki_parsed.json'))
 ver = json.load(open('work/gen_versions.json'))[0]
+# Cada lista de thanosvibs define sus propias filas rotuladas ("Meta", "T4 / s",
+# "strikers"...). No son rangos S-D: aplastarlas a S-D renombraba un striker top
+# como "D". Se importan con sus filas tal cual y el orden de la fuente.
+TL_FILES = sorted(glob.glob('work/tierlists/*.json'))
 TYPE = {'Combat':'Combate','Blast':'Detonación','Speed':'Velocidad','Universal':'Universal'}
 ALLIES = {'Alien':'Alienígena','Creature':'Criatura','Human':'Humano','Inhuman':'Inhumano','Mutant':'Mutante','Other':'Otro'}
 GENDER = {'Male':'Masculino','Female':'Femenino','Neutral':'Neutro'}
@@ -103,17 +107,36 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         'baseSkills': base_skills, 'uniforms': uniforms})
     images['portrait-'+cid] = 'images/' + base['base_portrait'] + '.png'
     uindex[(numid, None)] = (cid, None)
-RANK = {'tier-s':'S','tier-a':'A','tier-b':'B','tier-c':'C','tier-d':'D',
-        'tier-1786666916600':'D','tier-1786667217191':'D','tier-1786666818513':'D'}
-assign = {}
-for cellkey, items in ver['cellContents'].items():
-    rank = RANK.get(cellkey.split(':',1)[1])
-    if not rank: continue
-    for it in items:
-        pair = uindex.get((it['id'], it.get('uniform_id') if it['uniformed']=='True' else None))
-        if not pair: continue
-        cid, uid = pair
-        assign[(f"{cid}::{uid}" if uid else f"{cid}::base")] = rank
+tierlists, assign = [], {}
+for fn in TL_FILES:
+    tl = json.load(open(fn))
+    v, slug = tl['version'], tl['slug']
+    # Las filas "Landing" son el area de descarte del editor de thanosvibs, no un nivel.
+    rows = [{'id': t['id'], 'label': t['label'].strip()} for t in v.get('tiers', [])
+            if not t['id'].startswith('tier-landing')]
+    valid = {r['id'] for r in rows}
+    a = {}
+    for cellkey, items in v['cellContents'].items():
+        row = cellkey.split(':', 1)[1]
+        if row not in valid: continue
+        for it in items:
+            pair = uindex.get((it['id'], it.get('uniform_id') if it['uniformed']=='True' else None))
+            if not pair: continue
+            cid, uid = pair
+            key = f"{cid}::{uid}" if uid else f"{cid}::base"
+            # La fuente a veces coloca la misma entrada en dos filas: se avisa y gana
+            # la primera, en vez de pisarla en silencio.
+            if key in a and a[key] != row:
+                print(f"AVISO {slug}: {it.get('character')} / {it.get('uniform')} aparece"
+                      f" en '{a[key]}' y en '{row}'; queda en la primera")
+                continue
+            a[key] = row
+    tierlists.append({'id': slug, 'order': tl.get('order', 99), 'name': tl['name_es'], 'source': tl['title'],
+                      'author': v.get('author', ''), 'gameVersion': v.get('gameVersion', ''),
+                      'rows': rows})
+    assign[slug] = a
+    print(f"tier list {slug}: {len(rows)} filas, {len(a)} asignaciones"
+          f" ({len([i for c in v['cellContents'].values() for i in c])} celdas en la fuente)")
 # íconos: el mapa valor-ES -> archivo es fijo; los archivos los baja fetch_all y son
 # insumo del build. Si falta alguno el build corta: un data.js sin íconos sería una
 # regresión silenciosa (la app simplemente dejaría de mostrarlos).
@@ -127,5 +150,8 @@ if faltan:
     raise SystemExit(f'faltan {len(faltan)} iconos en images/icons/ {faltan} — corre scripts/fetch_all.py')
 for val, s in ICON_ES.items():
     images['icon-'+val] = f'images/icons/{s}.png'
-json.dump({'characters':characters,'images':images,'assign':assign}, open('work/build2.json','w'), ensure_ascii=False)
-print('chars:', len(characters), '| imágenes:', len(images), '| tiers:', len(assign))
+tierlists.sort(key=lambda t: t['order'])   # el orden de fetch_all manda: la general primero
+json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists},
+          open('work/build2.json','w'), ensure_ascii=False)
+print('chars:', len(characters), '| imágenes:', len(images),
+      '| listas:', len(tierlists), '| asignaciones:', sum(len(a) for a in assign.values()))
