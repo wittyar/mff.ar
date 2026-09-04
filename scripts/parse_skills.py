@@ -1,100 +1,55 @@
-import json, re, glob
+import json, os, re, sys, glob
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import traducir
 
-STAT = {
- 'All Attack':'ATQ total','Physical Attack':'ATQ físico','Energy Attack':'ATQ de energía',
- 'All Defense':'DEF total','Physical Defense':'DEF física','Energy Defense':'DEF de energía',
- 'All Speeds':'todas las velocidades','Attack Speed':'vel. de ataque','Movement Speed':'vel. de movimiento',
- 'Dodge Rate':'evasión','Guaranteed Dodge Rate':'evasión garantizada','Critical Rate':'prob. de crítico',
- 'Critical Damage':'daño crítico','Max HP':'vida máx.','MAX HP':'vida máx.','HP':'vida',
- 'Skill Cooldown':'recarga de skills','Recovery Rate':'tasa de recuperación','Defense Penetration':'perforación de DEF',
- 'Ignore Defense':'ignorar DEF','All Basic Attacks':'ataques básicos','Crowd Control Time':'duración de control',
- 'Debuff Duration':'duración de debuffs','Lightning Damage':'daño eléctrico','Fire Damage':'daño de fuego',
- 'Additional Pierce Damage':'daño perforante adicional','Damage Rate':'tasa de daño','damage':'daño',
-}
-ELEM = {'Fire':'Fuego','Shock':'Electro','Chill':'Hielo','Poison':'Veneno','Lightning':'Rayo'}
-def stat_es(s):
-    s = s.strip()
-    for k in sorted(STAT, key=len, reverse=True):
-        if k.lower() == s.lower(): return STAT[k]
-    return s
-def secs(x): return x.replace('Sec.','s').replace('Sec','s').replace(' ','')
-def hits(n): return f"{n} golpe" + ('' if n=='1' else 's')
+# El parser NO traduce: decide la estructura de cada skill (qué línea le pega a quién)
+# y guarda el inglés de la wiki tal cual. La traducción vive en traducir.py, para que
+# data.js pueda llevar los dos idiomas y la app alternar entre ellos.
 
-RULES = [
- (re.compile(r"^(\d+)% (Energy|Physical) Damage(?:, Add \w+ Damage (\d+))?", re.I),
-  lambda m: f"{m.group(1)}% daño {'de Energía' if m.group(2).lower()=='energy' else 'Físico'}" + (f" (+{m.group(3)})" if m.group(3) else '')),
- (re.compile(r"^Appl(?:y|ies) to\s*:?\s*(.+)", re.I),
-  lambda m: '→ ' + {'self':'sí mismo','enemy':'enemigo','enemies':'enemigos','all allies':'todos los aliados','allies':'aliados','villains in team':'villanos del equipo','heroes in team':'héroes del equipo','all enemies':'todos los enemigos'}.get(m.group(1).strip().lower().rstrip('.'), m.group(1).strip())),
- (re.compile(r"^Activ?i?ation Rate\s*:?\s*(.+)", re.I), lambda m: 'Se activa: ' + m.group(1).strip()),
- (re.compile(r"^How to Apply\s*:?\s*(.+)", re.I), lambda m: 'Aplicación: ' + m.group(1).strip()),
- (re.compile(r"^Stun \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Aturde {secs(m.group(1))}"),
- (re.compile(r"^Bind \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Inmoviliza {secs(m.group(1))}"),
- (re.compile(r"^Fear \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Miedo {secs(m.group(1))}"),
- (re.compile(r"^Silence \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Silencia {secs(m.group(1))}"),
- (re.compile(r"^Provoke \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Provoca {secs(m.group(1))}"),
- (re.compile(r"^Incapacitation ?\(?([^)]*)\)? ?\(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Incapacita {secs(m.group(2))}" + (' (quita buffs activos)' if 'buff' in m.group(1).lower() else '')),
- (re.compile(r"^Immune to all damages? \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Inmune a todo daño {secs(m.group(1))}"),
- (re.compile(r"^Invincible \(([\d.]+ ?Sec\.?)\)", re.I), lambda m: f"Invencible {secs(m.group(1))}"),
- (re.compile(r"^(?:MAX HP Recovery|Recovery of MAX HP)\s*\+?(\d+)%(?: \(([\d.]+ ?Sec\.?)\))?", re.I),
-  lambda m: f"Recupera {m.group(1)}% de vida máx." + (f" ({secs(m.group(2))})" if m.group(2) else '')),
- (re.compile(r"^(\d+)% recovery of MA?X HP(?: \(([\d.]+ ?Sec\.?)\))?", re.I),
-  lambda m: f"Recupera {m.group(1)}% de vida máx." + (f" ({secs(m.group(2))})" if m.group(2) else '')),
- (re.compile(r"^It deals (\d+)% (\w+) damage every ([\d.]+) Sec\.? \(([\d.]+ ?Sec\.?)\)", re.I),
-  lambda m: f"DoT: {m.group(1)}% {ELEM.get(m.group(2), m.group(2))} c/{m.group(3)}s ({secs(m.group(4))})"),
- (re.compile(r"^Increases? damage by (\d+)% for (\d+) attack", re.I), lambda m: f"+{m.group(1)}% daño por {m.group(2)} ataque(s)"),
- (re.compile(r"^\+?(\d+)% increase of (.+?)\.?$", re.I), lambda m: f"+{m.group(1)}% {stat_es(m.group(2))}"),
- (re.compile(r"^Increases? (.+?) by \+?([\d.]+)%?\.? ?(?:\(([\d.]+ ?Sec\.?)\))?", re.I),
-  lambda m: f"+{m.group(2)}% {stat_es(m.group(1))}" + (f" ({secs(m.group(3))})" if m.group(3) else '')),
- (re.compile(r"^Decreases? (.+?) by \-?([\d.]+)%?\.? ?(?:\(([\d.]+ ?Sec\.?)\))?", re.I),
-  lambda m: f"-{m.group(2)}% {stat_es(m.group(1))}" + (f" ({secs(m.group(3))})" if m.group(3) else '')),
- (re.compile(r"^(.+?) \+([\d.]+)%$"), lambda m: f"+{m.group(2)}% {stat_es(m.group(1))}"),
- (re.compile(r"^(\d+)% chance to penetrate with .*?(?:INVINCIBLE|IMMUNE)[^.]*\.? ?(?:\(([\d.]+ ?Sec\.?)\))?", re.I),
-  lambda m: f"{m.group(1)}% de perforar escudos/barreras/invencibilidad" + (f" ({secs(m.group(2))})" if m.group(2) else '')),
- (re.compile(r"^Ig?nores? target'?s? Dodge Rate by (\d+)%", re.I),
-  lambda m: f"Ignora {m.group(1)}% de la evasión del objetivo"),
- (re.compile(r"^Remo[vb]es? all Debuffs?", re.I), lambda m: "Limpia todos los debuffs"),
- (re.compile(r"^Guaranteed Critical", re.I), lambda m: "Crítico garantizado"),
-]
-GEO = [ (r'\bRanged\b','A distancia'), (r'\bMelee\b','Cuerpo a cuerpo'), (r'(\d+) Hits?\b', lambda m: hits(m.group(1))),
-        (r'\bPushback\b','empuje'), (r'Draw in enemies','atrae enemigos'), (r'Large AOE','área grande'),
-        (r'Small AOE','área chica'), (r'\bAOE\b','área'), (r'Teleport to target','teletransporte al objetivo'),
-        (r'Teleport away from target','teletransporte lejos del objetivo'), (r'(\d+) way shot', r'disparo en \1 direcciones'),
-        (r'\bSplit\b','dividido') ]
-SKIP = re.compile(r"^[}{|]+$|Cooldown Time|Required (Hero )?Rank|Mastery Needed|Tier-\d Advancement|Applies to the following Uniforms|^\s*$|^\[\[File:|^<|^\{\{|^\}\}|^\{\||^\|\}|^class=|^style=", re.I)
+SKIP = re.compile(r"^[}{|]+$|Cooldown Time|Required (Hero )?Rank|Mastery Needed|Tier-\d Advancement|Applies to the following Uniforms|^\s*$|^\[\[File:|^<|^\{\{|^\}\}|^\{\||^\|\}|^class=|^style=|^[-–—_=]{2,}$|^:+$", re.I)
 
-# Los iconos de la wiki ([[File:x.png|left|frameless|60x60px]]) no aportan nada al
-# efecto y, si se dejan, ocupan lugar en el presupuesto de 14 lineas de translate_body.
+# Los íconos de la wiki ([[File:x.png|left|frameless|60x60px]]) no aportan nada al
+# efecto y, si se dejan, ocupan lugar en el presupuesto de 14 líneas de parse_body.
 FILE_LINK = re.compile(r'\[\[\s*(?:File|Image|Archivo)\s*:[^\[\]]*\]\]', re.I)
 # Restos de sintaxis de imagen sueltos: aparecen cuando el corchete de cierre falta.
-# Solo se aplica a la linea completa, para no borrar palabras de un efecto real.
+# Solo se aplica a la línea completa, para no borrar palabras de un efecto real.
 IMG_ONLY = re.compile(r'^(?:\s*(?:left|right|center|thumb|thumbnail|frame|frameless|border|baseline|top|middle|bottom'
                       r'|\d+x\d+px|\d+px|link=\S*|alt=\S*)\s*\|?)+', re.I)
+# Se sacan TODAS las etiquetas HTML, no solo <br> y <font>: un <span style="color:#0f0">
+# metía un '#' literal en el texto, que colisiona con el '#' que traducir.py usa como
+# marcador de número. Sin etiquetas, el marcador es inequívoco.
+WIKI_MARKUP = re.compile(r"'''|''|</?[a-zA-Z][^>]*/?>|\{\{[Ss]tar\}\}|\{\{MStar\}\}")
 
 def clean_line(l):
     l = l.strip()
-    l = re.sub(r'^\|+\s*', '', l)      # fmt1: filas de tabla empiezan con |
-    l = re.sub(r"'''|''|<br ?/?>|</?font[^>]*>|\{\{[Ss]tar\}\}|\{\{MStar\}\}", '', l)
-    l = FILE_LINK.sub(' ', l)          # el icono entero, antes del enlace generico
+    l = re.sub(r'^\|+\s*', '', l)      # fmt1: las filas de tabla empiezan con |
+    l = WIKI_MARKUP.sub('', l)
+    l = FILE_LINK.sub(' ', l)          # el ícono entero, antes del enlace genérico
     l = re.sub(r'\[\[([^\[\]]+)\]\]', lambda m: m.group(1).split('|')[-1], l)
-    l = IMG_ONLY.sub('', l)            # atributos huerfanos de un File: sin cerrar
+    l = IMG_ONLY.sub('', l)            # atributos huérfanos de un File: sin cerrar
     l = re.sub(r'\s{2,}', ' ', l)
     return l.strip(' *·|\t')
 
 def classify_target(raw):
     t = raw.strip().lower().rstrip('.')
     if t in ('self',): return 'self', None
-    if t in ('enemy','enemies','all enemies'): return 'enemy', None
-    if t in ('allies','all allies','team'): return 'allies', None
-    if t == 'villains in team': return 'allies', 'solo villanos del equipo'
-    if t == 'heroes in team': return 'allies', 'solo héroes del equipo'
+    if t in ('enemy','enemies','all enemies','all: enemies','eenmy','target','targets'): return 'enemy', None
+    if t in ('allies','all allies','team','all team','all team members','team members',
+             'all allies and self','self and allies'): return 'allies', None
+    if t == 'villains in team': return 'allies', 'villains in team'
+    if t == 'heroes in team': return 'allies', 'heroes in team'
     return None, raw.strip()
 
-GEO_WORDS = re.compile(r'golpe|área|distancia|Cuerpo a cuerpo|teletransporte|disparo|empuje|atrae', re.I)
 APPLY_RE = re.compile(r"^Appl(?:y|ies) to\s*:?\s*(.+)", re.I)
 META_RE = re.compile(r"^Activ?i?ation Rate\s*:?|^How to Apply\s*:?", re.I)
 DMGPCT_RE = re.compile(r"^\d+% (?:Energy|Physical) Damage", re.I)
+# Líneas que describen la geometría del golpe: van al bloque general aunque haya un
+# objetivo activo, porque describen la skill y no un efecto sobre alguien.
+GEO_RE = re.compile(r'\bRanged\b|\bMelee\b|\b\d+ Hits?\b|\bPushback\b|Draw in enemies|\bAOE\b'
+                    r'|Teleport (?:to|away from) target|\d+ way shot|\bSplit\b', re.I)
 
-def translate_body(body):
+def parse_body(body, nombre=''):
+    """Cuerpo de wikitext -> {bucket: [líneas en inglés]}. Sin traducir."""
     fx = {'general':[], 'self':[], 'enemy':[], 'allies':[]}
     scope = None
     seen = set()
@@ -115,25 +70,16 @@ def translate_body(body):
                 if note: add(tgt, '(' + note + ')')
             else:
                 scope = None
-                add('general', '→ ' + note)
+                add('general', 'Applies to: ' + note)
             continue
-        t, kind = None, 'fx'
-        if META_RE.match(l) or DMGPCT_RE.match(l): kind = 'gen'
-        for rx, fn in RULES:
-            m = rx.match(l)
-            if m: t = fn(m); break
-        if t is None:
-            t = l
-            for rx, rep in GEO: t = re.sub(rx, rep, t)
-            if GEO_WORDS.search(t): kind = 'gen'
-        if kind == 'gen' or scope is None: add('general', t)
-        else: add(scope, t)
-    fx = {k:v for k,v in fx.items() if v}
-    flat_parts = []
-    if 'general' in fx: flat_parts += fx['general']
-    for k, lbl in (('self','A sí mismo'),('enemy','Al oponente'),('allies','Al equipo')):
-        if k in fx: flat_parts.append(lbl + ': ' + ' / '.join(fx[k]))
-    return ' · '.join(flat_parts), fx
+        gen = bool(META_RE.match(l) or DMGPCT_RE.match(l) or GEO_RE.search(l))
+        add('general' if (gen or scope is None) else scope, l)
+    # La primera fila del cuerpo suele repetir el nombre de la skill (1.426 de 3.008):
+    # es el encabezado de la tabla de la wiki, no un efecto. La tarjeta ya muestra el
+    # nombre, así que se descarta en vez de quedar como una línea a traducir.
+    if fx['general'] and nombre and fx['general'][0].strip().lower() == nombre.strip().lower():
+        fx['general'].pop(0)
+    return {k:v for k,v in fx.items() if v}
 
 II_RE = re.compile(r'penetrate with .{0,80}(INVINCIBLE|ALL DAMAGE IMMUNE)|Ignores? Invincib', re.I|re.S)
 CD_RE = re.compile(r'Cooldown Time\s*:?\s*(\d+)\s*second', re.I)
@@ -174,8 +120,11 @@ def mk_skill(slot, name, body, dmg_hint):
         if m2: dmg = 'Energía' if m2.group(2)=='Energy' else 'Físico'
         elif dmg_hint: dmg = dmg_hint
     cdm = CD_RE.search(body)
-    d, fx = translate_body(body)
-    return {'slot':slot,'n':name,'d':d,'fx':fx,'dmg':dmg,'ii':bool(II_RE.search(body)),
+    fx = parse_body(body, name)
+    fx_es = traducir.traducir_fx(fx)
+    return {'slot':slot,'n':name,'nEs':traducir.traducir_skill(name),
+            'd':traducir.aplanar(fx, traducir.ETIQ_EN),'fx':fx,'fxEs':fx_es,
+            'dmg':dmg,'ii':bool(II_RE.search(body)),
             'tags':effects_to_tags(body),'cd':int(cdm.group(1)) if cdm else None,
             'perm':slot in ('Pasiva','Liderazgo'),'iframe':slot=='Definitiva','gb':False,'sgb':False}
 
@@ -313,9 +262,16 @@ for fn in glob.glob('work/wikitext/*.json'):
         results[name] = {'instinct':inst,'atk':atk,'base':[],'per_uni':{}}
 
 json.dump(results, open('work/wiki_parsed.json','w'), ensure_ascii=False)
-th = results['Thanos']['base']
-for s in [th[1], th[2], th[-1]]:
-    print(f"[{s['slot']}] {s['n']} :: {s['d'][:230]}")
-tot = sum(len(r['base'])+sum(len(v) for v in r['per_uni'].values()) for r in results.values())
-con_d = sum(1 for r in results.values() for grp in [r['base']]+list(r['per_uni'].values()) for s in grp if s['d'])
-print('skills totales:', tot, '| con descripción:', con_d)
+todas = [s for r in results.values() for grp in [r['base']]+list(r['per_uni'].values()) for s in grp]
+lineas = [(l, es) for s in todas for k in s['fx'] for l, es in zip(s['fx'][k], s['fxEs'][k])]
+sin = sorted({l for l, es in lineas if es is None})
+nombres_sin = sorted({s['n'] for s in todas if s['nEs'] is None})
+json.dump(sin, open('work/sin_traducir.json','w'), ensure_ascii=False, indent=1)
+json.dump(nombres_sin, open('work/skills_sin_traducir.json','w'), ensure_ascii=False, indent=1)
+distintas = {l for l, _ in lineas}
+print('skills:', len(todas), '| líneas de efecto:', len(lineas), f'({len(distintas)} distintas)')
+print(f"traducidas: {len(lineas)-sum(1 for _, es in lineas if es is None)}/{len(lineas)}"
+      f" líneas — sin traducir {len(sin)} distintas (work/sin_traducir.json)")
+distintos_n = {s['n'] for s in todas}
+print(f"nombres de skill: {len(distintos_n)-len(nombres_sin)}/{len(distintos_n)} distintos con traducción"
+      f" ({len(nombres_sin)} sin ella, work/skills_sin_traducir.json)")

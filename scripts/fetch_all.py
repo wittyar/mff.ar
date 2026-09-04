@@ -32,24 +32,25 @@ print('characters:', len(chars), 'filas')
 # compatibilidad con work/gen_versions.json; las demas quedan en work/tierlists/.
 # Son listas de autor: cada una trae sus propias filas rotuladas, que se respetan
 # tal cual (ver _core.py). Si alguna cambia de titulo, el fetch avisa y sigue.
+# (slug, título en thanosvibs, nombre ES en la app, nombre EN en la app)
 TIERLISTS = [
-    ('tv-general',  'THANO$VIB$ General Tier List',   'General'),
-    ('tv-alianza',  'Alliance Battle',                'Batalla de Alianza'),
-    ('tv-arena',    'Team Battle Arena',              'Arena de Equipos'),
-    ('tv-wbl',      'World Boss Legend (+)',          'World Boss Legend (+)'),
-    ('tv-soportes', 'THANO$VIB$ Supports Tier List',  'Soportes'),
+    ('tv-general',  'THANO$VIB$ General Tier List',   'General',               'General'),
+    ('tv-alianza',  'Alliance Battle',                'Batalla de Alianza',    'Alliance Battle'),
+    ('tv-arena',    'Team Battle Arena',              'Arena de Equipos',      'Team Battle Arena'),
+    ('tv-wbl',      'World Boss Legend (+)',          'World Boss Legend (+)', 'World Boss Legend (+)'),
+    ('tv-soportes', 'THANO$VIB$ Supports Tier List',  'Soportes',              'Supports'),
 ]
 projects = get_json(TV + '/api/tierlists/projects')
 by_title = {p['title']: p['id'] for p in projects}
 os.makedirs('work/tierlists', exist_ok=True)
-for i, (slug, title, es) in enumerate(TIERLISTS):
+for i, (slug, title, es, en) in enumerate(TIERLISTS):
     pid = by_title.get(title)
     if not pid:
         print('AVISO: tier list sin encontrar (cambio de titulo?):', title)
         continue
     vers = get_json(TV + f'/api/tierlists/projects/{urllib.parse.quote(pid)}/versions')
     v0 = vers[0]
-    json.dump({'slug': slug, 'title': title, 'name_es': es, 'order': i, 'version': v0},
+    json.dump({'slug': slug, 'title': title, 'name_es': es, 'name_en': en, 'order': i, 'version': v0},
               open(f'work/tierlists/{slug}.json', 'w'))
     if slug == 'tv-general':
         json.dump(vers, open('work/gen_versions.json', 'w'))

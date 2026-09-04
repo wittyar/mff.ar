@@ -33,6 +33,31 @@ O desde GitHub: pestaña **Actions → "Actualizar datos MFF" → Run workflow**
   editados, equipos, tier lists propias, cambios sobre las importadas, imágenes subidas y preferencias.
   Se exporta e importa desde **Ajustes**.
 
+## Idioma
+La app tiene un botón **ES / EN** en la barra superior. Cambia la interfaz completa y también
+el contenido: los efectos de las skills y los nombres de skill están traducidos al español, con
+el nombre original en inglés siempre a la vista al lado.
+
+Cómo funciona la traducción:
+- `scripts/parse_skills.py` **no traduce**: decide la estructura de cada skill (qué línea le pega a
+  quién) y guarda el inglés de la wiki tal cual, en `fx`.
+- `scripts/traducir.py` aplica la traducción y produce `fxEs`. Cada línea se normaliza reemplazando
+  los números por `#`; ese patrón se busca en `scripts/traducciones/efectos.json`, que mapea patrón
+  inglés → patrón español, y los números se reinyectan en orden. Una traducción cubre así todas las
+  variantes numéricas, incluidas las de futuras versiones del juego.
+- `scripts/traducciones/skills.json` traduce los nombres de skill.
+- Si aparece un patrón sin traducción cargada, `traducir_linea` devuelve `None`, el build lo reporta
+  y lo lista en `work/sin_traducir.json`, y la app muestra esa línea en inglés y marcada. **Nunca se
+  emite una traducción aproximada.**
+- El vocabulario de dominio (clases, roles, slots, etiquetas, razas, orígenes) viaja en `data.js`
+  como `MFF_VOCAB_EN`, generado por `_core.py` invirtiendo los mismos mapas con los que se tradujo.
+
+Cobertura actual: 13.151 de 13.151 líneas de efecto y 2.651 de 2.651 nombres de skill.
+
+**Los nombres de personaje y de uniforme quedan en inglés a propósito**: son el identificador con el
+que se cruza la app con el juego, con la wiki y con thanosvibs. Los rótulos de las filas de las tier
+lists tampoco se traducen, por la misma razón que se conservan tal cual (ver abajo).
+
 ## Tier lists
 Se importan cinco listas de thanosvibs con **las filas y los rótulos que les puso su autor**, no
 convertidas a S–D: en la general las filas son `Meta / niche meta / T4 s / T4 a / T4 b / T3tp A /
@@ -54,7 +79,8 @@ van una versión atrás de la general.
 ## Estructura
 - `index.html` / `app.js` / `styles.css` — la app (roster, ficha, comparación, tier lists, equipos, editor).
 - `data.js` — snapshot generado de los datos (autosuficiente; la app no necesita importar nada).
-- `scripts/` — pipeline de regeneración (`fetch_all` → `parse_skills` → `build`; `_core.py` es el transformador común).
+- `scripts/` — pipeline de regeneración (`fetch_all` → `parse_skills` → `build`; `_core.py` es el transformador común, `traducir.py` la capa de traducción).
+- `scripts/traducciones/` — las tablas de traducción (`efectos.json`, `skills.json`), editables a mano.
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual).
 
 ## Limitaciones conocidas
@@ -66,4 +92,6 @@ van una versión atrás de la general.
 - La sinergia de equipos es una heurística propia (bando, cobertura de roles, ventaja de clase),
   no un cálculo del juego.
 - Los números de skills reflejan la wiki, que puede atrasarse respecto de rebalanceos del juego.
+- La traducción es propia, no oficial: MFF no tiene cliente en español, así que no hay término
+  establecido contra el cual contrastarla. El original en inglés siempre queda a la vista.
 - La fuente ubica tres entradas en dos filas a la vez; `build.py` avisa y se queda con la primera.

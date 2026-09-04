@@ -34,7 +34,7 @@ function blankUser () {
     assign: {},                       // listId -> {clave: filaId | null}
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
     modes: JSON.parse(JSON.stringify(SEED.MODES)),
-    prefs: { view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
+    prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
   };
@@ -69,6 +69,8 @@ function commit () { saveUser(); rebuild(); render(); }
 
 function imgUrl (id) { return U.images[id] || IMAGES_SEED[id] || ''; }
 function listById (id) { return LISTS.find(l => l.id === id) || null; }
+/** Nombre de la lista en el idioma activo. Las listas propias solo tienen uno. */
+function listName (l) { return l ? ((LANG === 'en' && l.nameEn) || l.name) : ''; }
 function rowsOf (list) { return (list && list.rows && list.rows.length) ? list.rows : DEFAULT_ROWS; }
 /** Asignaciones efectivas de una lista: las de data.js con los cambios del usuario encima. */
 function assignOf (listId) {
@@ -82,6 +84,238 @@ function setAssign (listId, key, rowId) {
   U.assign[listId][key] = rowId;
   commit();
 }
+
+// ============================================================================
+// IDIOMA
+// ============================================================================
+// Una sola tabla con los dos idiomas por clave: así es imposible que una cadena
+// exista en uno y falte en el otro. El vocabulario del dominio (clases, roles,
+// slots, etiquetas) viaja en data.js, generado por el mismo pipeline que lo tradujo.
+const VOCAB_EN = window.MFF_VOCAB_EN || {};
+const T = {
+  nav_roster:        { es:'Roster',              en:'Roster' },
+  nav_tierlists:     { es:'Tier lists',          en:'Tier lists' },
+  nav_teams:         { es:'Equipos',             en:'Teams' },
+  nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
+  nav_settings:      { es:'Ajustes',             en:'Settings' },
+
+  search_ph:         { es:'Buscar personaje o uniforme…', en:'Search character or uniform…' },
+  filters:           { es:'Filtros',             en:'Filters' },
+  clear:             { es:'Limpiar',             en:'Clear' },
+  all:               { es:'Todo',                en:'All' },
+  bases:             { es:'Bases',               en:'Base' },
+  uniforms:          { es:'Uniformes',           en:'Uniforms' },
+  cards:             { es:'Tarjetas',            en:'Cards' },
+  compact:           { es:'Compacto',            en:'Compact' },
+  table:             { es:'Tabla',               en:'Table' },
+  sort:              { es:'Ordenar',             en:'Sort' },
+  invert:            { es:'Invertir orden',      en:'Reverse order' },
+  compare:           { es:'Comparar',            en:'Compare' },
+  comparing:         { es:'Comparando',          en:'Comparing' },
+  of:                { es:'de',                  en:'of' },
+
+  s_name:            { es:'Nombre',              en:'Name' },
+  s_tier:            { es:'Tier',                en:'Tier' },
+  s_class:           { es:'Clase',               en:'Class' },
+  s_side:            { es:'Bando',               en:'Side' },
+  s_rank:            { es:'Posición en la lista',en:'Position in list' },
+  s_skills:          { es:'Cantidad de skills',  en:'Skill count' },
+
+  f_class:           { es:'Clase',               en:'Class' },
+  f_role:            { es:'Rol',                 en:'Role' },
+  f_tier:            { es:'Tier',                en:'Tier' },
+  f_side:            { es:'Bando',               en:'Side' },
+  f_instinct:        { es:'Instinto',            en:'Instinct' },
+  f_race:            { es:'Raza',                en:'Race' },
+  f_origin:          { es:'Origen',              en:'Origin' },
+  f_ability:         { es:'Habilidad',           en:'Ability' },
+  f_shortcuts:       { es:'Atajos',              en:'Shortcuts' },
+  f_only_t4:         { es:'Solo T4',             en:'T4 only' },
+  f_transcended:     { es:'Trascendidos',        en:'Transcended' },
+  f_new:             { es:'Nuevos',              en:'New' },
+  f_reflist:         { es:'Lista de referencia (define la posición que se muestra)',
+                       en:'Reference list (sets the position shown)' },
+  none_f:            { es:'— ninguna —',         en:'— none —' },
+
+  no_match:          { es:'Ningún personaje o uniforme coincide con estos filtros.',
+                       en:'No character or uniform matches these filters.' },
+  clear_filters:     { es:'Limpiar filtros',     en:'Clear filters' },
+
+  c_character:       { es:'Personaje',           en:'Character' },
+  c_instinct:        { es:'Instinto',            en:'Instinct' },
+  c_roles:           { es:'Roles',               en:'Roles' },
+  c_striker:         { es:'Striker',             en:'Striker' },
+  c_worldboss:       { es:'World Boss',          en:'World Boss' },
+  c_skills:          { es:'Skills',              en:'Skills' },
+  c_list:            { es:'Lista',               en:'List' },
+  base:              { es:'Base',                en:'Base' },
+  transcended_tag:   { es:'TRASCENDIDO',         en:'TRANSCENDED' },
+  new_tag:           { es:'NUEVO',               en:'NEW' },
+
+  back_roster:       { es:'← Roster',            en:'← Roster' },
+  compare_this:      { es:'+ Comparar esta versión', en:'+ Compare this version' },
+  edit:              { es:'Editar',              en:'Edit' },
+  d_current_uniform: { es:'Uniforme actual',     en:'Current uniform' },
+  d_race:            { es:'Raza',                en:'Race' },
+  d_gender:          { es:'Género',              en:'Gender' },
+  d_origin:          { es:'Origen',              en:'Origin' },
+  d_cost:            { es:'Costo del uniforme',  en:'Uniform cost' },
+  d_uniforms:        { es:'Uniformes',           en:'Uniforms' },
+  d_abilities:       { es:'Habilidades:',        en:'Abilities:' },
+  d_tuc:             { es:'Cartas TUC:',         en:'TUC cards:' },
+  d_uni_section:     { es:'Uniformes',           en:'Uniforms' },
+  d_uni_note:        { es:'Se muestran las skills de la base más las propias del uniforme elegido.',
+                       en:'Shows the base skills plus the ones specific to the selected uniform.' },
+  d_uni_noskills:    { es:'Este uniforme no tiene skills propias en la wiki.',
+                       en:'This uniform has no skills of its own on the wiki.' },
+  d_no_skills:       { es:'La wiki no publica skills para este personaje todavía.',
+                       en:'The wiki does not publish skills for this character yet.' },
+  d_teams:           { es:'Equipos donde aparece', en:'Teams it appears in' },
+  d_portraits:       { es:'Retratos propios',    en:'Custom portraits' },
+  d_portraits_note:  { es:'Si subís una imagen reemplaza la de thanosvibs solo en este navegador.',
+                       en:'Uploading an image replaces the thanosvibs one in this browser only.' },
+  d_upload:          { es:'Subir retrato',       en:'Upload portrait' },
+  d_revert_img:      { es:'Volver al original',  en:'Back to original' },
+
+  cmp_title:         { es:'Comparativa',         en:'Comparison' },
+  cmp_note:          { es:'Las celdas resaltadas marcan coincidencias entre las columnas.',
+                       en:'Highlighted cells mark matches across columns.' },
+  cmp_remove:        { es:'Quitar',              en:'Remove' },
+  cmp_unplaced:      { es:'sin ubicar',          en:'unplaced' },
+  cmp_missing_slot:  { es:'— no tiene —',        en:'— none —' },
+  cmp_synergy:       { es:'Sinergia estimada',   en:'Estimated synergy' },
+  cmp_pts:           { es:'pts',                 en:'pts' },
+  cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
+                       en:'No strong synergy signals in this selection.' },
+  cmp_heuristic:     { es:'Heurística propia (bando, cobertura de roles y ventaja de clase), no un cálculo del juego.',
+                       en:'Our own heuristic (side, role coverage and class advantage), not a game calculation.' },
+  cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
+  cmp_cost:          { es:'Costo',               en:'Cost' },
+
+  tl_title:          { es:'Tier lists',          en:'Tier lists' },
+  tl_note:           { es:'Cada lista importada conserva las filas y los rótulos que le puso su autor. No son rangos S–D.',
+                       en:'Each imported list keeps the rows and labels its author wrote. They are not S–D ranks.' },
+  tl_new_ph:         { es:'Nombre de una lista nueva', en:'Name for a new list' },
+  tl_create:         { es:'+ Crear lista',       en:'+ Create list' },
+  tl_source:         { es:'Fuente:',             en:'Source:' },
+  tl_author:         { es:'autor:',              en:'author:' },
+  tl_game:           { es:'juego',               en:'game' },
+  tl_placed:         { es:'ubicados',            en:'placed' },
+  tl_own:            { es:'Lista propia',        en:'Your own list' },
+  tl_delete:         { es:'Borrar lista',        en:'Delete list' },
+  tl_undo:           { es:'Deshacer mis cambios', en:'Undo my changes' },
+  tl_drop_here:      { es:'Arrastrá acá',        en:'Drop here' },
+  tl_show_pool:      { es:'Mostrar sin ubicar',  en:'Show unplaced' },
+  tl_hide_pool:      { es:'Ocultar sin ubicar',  en:'Hide unplaced' },
+  tl_filter:         { es:'Filtrar…',            en:'Filter…' },
+  tl_nothing:        { es:'Nada coincide.',      en:'Nothing matches.' },
+  tl_more:           { es:'más: filtrá para acotar.', en:'more: filter to narrow it down.' },
+  tl_confirm_del:    { es:'¿Borrar esta lista y sus asignaciones?', en:'Delete this list and its placements?' },
+
+  tm_title:          { es:'Equipos',             en:'Teams' },
+  tm_note:           { es:'Los que armás vos, con la sinergia estimada por la app.',
+                       en:'The ones you build, with the synergy the app estimates.' },
+  tm_build:          { es:'+ Armar equipo',      en:'+ Build team' },
+  tm_name_ph:        { es:'Nombre del equipo',   en:'Team name' },
+  tm_nomode:         { es:'Sin modo (3)',        en:'No mode (3)' },
+  tm_members:        { es:'Miembros',            en:'Members' },
+  tm_sorted_by:      { es:'ordenados por',       en:'sorted by' },
+  tm_search:         { es:'Buscar…',             en:'Search…' },
+  tm_reason_ph:      { es:'Por qué funciona (opcional)', en:'Why it works (optional)' },
+  tm_cancel:         { es:'Cancelar',            en:'Cancel' },
+  tm_save:           { es:'Guardar',             en:'Save' },
+  tm_synergy_pts:    { es:'pts de sinergia',     en:'synergy pts' },
+  tm_empty:          { es:'Todavía no armaste ningún equipo.', en:'You have not built any team yet.' },
+
+  ed_edit:           { es:'Editar personaje',    en:'Edit character' },
+  ed_new:            { es:'Nuevo personaje',     en:'New character' },
+  ed_note:           { es:'Se guarda en tu navegador, aparte de data.js. Regenerar los datos no lo pisa.',
+                       en:'Saved in your browser, separate from data.js. Regenerating the data does not overwrite it.' },
+  ed_step_data:      { es:'Datos',               en:'Details' },
+  ed_step_unis:      { es:'Uniformes',           en:'Uniforms' },
+  ed_step_review:    { es:'Revisar',             en:'Review' },
+  ed_name:           { es:'Nombre',              en:'Name' },
+  ed_striker:        { es:'Striker (número de skill)', en:'Striker (skill number)' },
+  ed_uni_name:       { es:'Nombre del uniforme', en:'Uniform name' },
+  ed_cost:           { es:'Costo',               en:'Cost' },
+  ed_add_skill:      { es:'+ Skill',             en:'+ Skill' },
+  ed_add_uni:        { es:'+ Agregar uniforme',  en:'+ Add uniform' },
+  ed_skill_name:     { es:'Nombre',              en:'Name' },
+  ed_desc:           { es:'Descripción',         en:'Description' },
+  ed_back:           { es:'Atrás',               en:'Back' },
+  ed_next:           { es:'Siguiente',           en:'Next' },
+  ed_save:           { es:'Guardar',             en:'Save' },
+  ed_discard:        { es:'Descartar mi edición', en:'Discard my edit' },
+  ed_need_name:      { es:'Poné un nombre.',     en:'Enter a name.' },
+  ed_own_skills:     { es:'skills propias',      en:'own skills' },
+
+  st_title:          { es:'Ajustes',             en:'Settings' },
+  st_note:           { es:'Los datos del juego salen de data.js y no se guardan acá. Esto es solo lo tuyo.',
+                       en:'Game data comes from data.js and is not stored here. This is only your own layer.' },
+  st_layer:          { es:'Tu capa guardada',    en:'Your saved layer' },
+  st_own_chars:      { es:'Personajes propios o editados', en:'Own or edited characters' },
+  st_teams:          { es:'Equipos',             en:'Teams' },
+  st_own_lists:      { es:'Tier lists propias',  en:'Your own tier lists' },
+  st_list_changes:   { es:'Cambios sobre listas importadas', en:'Changes to imported lists' },
+  st_images:         { es:'Imágenes subidas',    en:'Uploaded images' },
+  st_export:         { es:'Exportar mi capa (JSON)', en:'Export my layer (JSON)' },
+  st_import:         { es:'Importar',            en:'Import' },
+  st_export_csv:     { es:'Exportar roster (CSV)', en:'Export roster (CSV)' },
+  st_reset:          { es:'Borrar todo lo mío',  en:'Delete everything of mine' },
+  st_brand:          { es:'Marca',               en:'Branding' },
+  st_no_logo:        { es:'Sin logo',            en:'No logo' },
+  st_upload_logo:    { es:'Subir logo',          en:'Upload logo' },
+  st_remove:         { es:'Quitar',              en:'Remove' },
+  st_modes:          { es:'Modos de juego (tamaño de equipo)', en:'Game modes (team size)' },
+  st_add_mode:       { es:'+ Agregar modo',      en:'+ Add mode' },
+  st_new_mode:       { es:'Modo nuevo',          en:'New mode' },
+  st_sources:        { es:'Fuentes',             en:'Sources' },
+  st_sources_txt:    { es:'Personajes, uniformes, retratos, íconos y tier lists: ',
+                       en:'Characters, uniforms, portraits, icons and tier lists: ' },
+  st_sources_txt2:   { es:'. Skills e instintos: ', en:'. Skills and instincts: ' },
+  st_sources_txt3:   { es:'. Uso personal, sin fin comercial.', en:'. Personal use, non-commercial.' },
+  st_confirm_reset:  { es:'Se borran tus equipos, listas, ediciones e imágenes. Los datos del juego no se tocan. ¿Seguimos?',
+                       en:'This deletes your teams, lists, edits and images. Game data is untouched. Continue?' },
+  st_bad_import:     { es:'Ese archivo no es una capa de usuario válida: ', en:'That file is not a valid user layer: ' },
+  st_translation:    { es:'Traducción',          en:'Translation' },
+  st_translation_txt:{ es:'Los efectos y los nombres de skill están traducidos por patrón, con el original a la vista. Los nombres de personaje y de uniforme quedan en inglés a propósito: son el identificador con el que se cruza el juego, la wiki y thanosvibs.',
+                       en:'Effects and skill names are translated by pattern, with the original in view. Character and uniform names stay in English on purpose: they are the identifier used to cross-reference the game, the wiki and thanosvibs.' },
+
+  lang_switch:       { es:'English',             en:'Español' },
+  lang_title:        { es:'Ver la app en inglés', en:'View the app in Spanish' },
+  untranslated:      { es:'sin traducir',        en:'untranslated' },
+  fx_general:        { es:'General',             en:'General' },
+  fx_self:           { es:'A sí mismo',          en:'Self' },
+  fx_enemy:          { es:'Al oponente',         en:'Enemy' },
+  fx_allies:         { es:'Al equipo',           en:'Allies' },
+  timing_permanent:  { es:'Permanente',          en:'Permanent' },
+  timing_ultimate:   { es:'Barra de habilidad llena', en:'Skill gauge full' },
+  timing_cd:         { es:'s de recarga',        en:'s cooldown' },
+  ignores_iframe:    { es:'Ignora iframe',       en:'Ignores iframe' },
+  has_iframe:        { es:'Tiene iframe',        en:'Has iframe' },
+  page_prev:         { es:'←',                   en:'←' },
+  page_next:         { es:'→',                   en:'→' }
+};
+function t (k) {
+  const e = T[k];
+  if (!e) throw new Error('cadena sin definir en la tabla de idioma: ' + k);
+  return e[LANG];
+}
+/** Valor del dominio (clase, rol, slot, etiqueta) en el idioma activo. */
+function dom (v) {
+  if (LANG === 'es' || v == null) return v;
+  const en = VOCAB_EN[v];
+  if (en === undefined) { console.warn('valor de dominio sin inglés en MFF_VOCAB_EN:', v); return v; }
+  return en;
+}
+/** Recarga en el idioma activo: 'Permanente' / '8s de recarga'. */
+function timing (sk) {
+  if (sk.perm) return t('timing_permanent');
+  if (sk.slot === 'Definitiva') return t('timing_ultimate');
+  if (sk.cd) return sk.cd + t('timing_cd');
+  return '—';
+}
+let LANG = U.prefs.lang;
 
 // ============================================================================
 // ESTADO DE UI (no persistido)
@@ -115,11 +349,12 @@ function tagGhost (label, color) { return `<span class="tag ghost" style="color:
 function icon (value) { const u = imgUrl('icon-' + value); return u ? `<img src="${u}" alt="" style="width:15px;height:15px;border-radius:3px;vertical-align:-3px">` : ''; }
 function shot (id, cls) { const u = imgUrl('portrait-' + id); return u ? `<img class="${cls||''}" src="${u}" alt="" loading="lazy">` : `<span class="ph">SIN RETRATO</span>`; }
 function slotClass (slot) { return slot === 'Liderazgo' ? 'lead' : slot === 'Pasiva' ? 'pass' : slot === 'Definitiva' ? 'ult' : ''; }
-function pluralUni (n) { return n + (n === 1 ? ' uniforme' : ' uniformes'); }
+function pluralUni (n) { return LANG === 'es' ? n + (n === 1 ? ' uniforme' : ' uniformes')
+                                                : n + (n === 1 ? ' uniform' : ' uniforms'); }
 /** La wiki no publica el instinto de todos: mostrar "Desconocido" es ruido, se omite. */
-function insTag (v) { return v && v !== 'Desconocido' ? `<span class="tag dim">${h(v)}</span>` : ''; }
+function insTag (v) { return v && v !== 'Desconocido' ? `<span class="tag dim">${h(dom(v))}</span>` : ''; }
 /** Marca de trascendido: glifo aparte porque no todas las fuentes de texto traen ✦. */
-function transTag (on) { return on ? `<span class="tag solid" style="background:var(--gold)" title="Trascendido">TR</span>` : ''; }
+function transTag (on) { return on ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('transcended_tag'))}">TR</span>` : ''; }
 
 function findUniform (ch, uid) { return ch && ch.uniforms.find(u => u.id === uid); }
 /** Vista efectiva de "personaje base" o "personaje con uniforme X": el uniforme pisa lo que redefine. */
@@ -148,46 +383,67 @@ function fullLabel (v) { return v.uid ? v.name + ' — ' + v.sub : v.name; }
 function synergy (vs) {
   if (vs.length < 2) return { score: 0, reasons: [] };
   const reasons = []; let score = 0;
-  if (vs.every(v => v.f === vs[0].f)) { score += 2; reasons.push('Mismo bando (' + vs[0].f + '): bonos de equipo activos.'); }
+  const ES = LANG === 'es';
+  if (vs.every(v => v.f === vs[0].f)) { score += 2;
+    reasons.push(ES ? 'Mismo bando (' + dom(vs[0].f) + '): bonos de equipo activos.'
+                    : 'Same side (' + dom(vs[0].f) + '): team bonuses active.'); }
   const roles = new Set(vs.flatMap(v => v.r));
   const covered = ['Tanque','Control','Daño','Soporte'].filter(r => roles.has(r));
-  if (covered.length >= 2) { score += covered.length; reasons.push('Roles cubiertos: ' + covered.join(' + ') + '.'); }
+  if (covered.length >= 2) { score += covered.length;
+    reasons.push((ES ? 'Roles cubiertos: ' : 'Roles covered: ') + covered.map(dom).join(' + ') + '.'); }
   const classes = new Set(vs.map(v => v.c));
-  if (classes.size === vs.length) { score += 1; reasons.push('Clases distintas: no comparten la misma debilidad.'); }
+  if (classes.size === vs.length) { score += 1;
+    reasons.push(ES ? 'Clases distintas: no comparten la misma debilidad.'
+                    : 'Different classes: they do not share the same weakness.'); }
   vs.forEach(a => vs.forEach(b => {
     if (a !== b && SEED.CLASS_ADVANTAGE[a.c] === b.c) {
       score += 1;
-      reasons.push(fullLabel(a) + ' (' + a.c + ') cubre la debilidad de clase de ' + fullLabel(b) + '.');
+      reasons.push(ES ? fullLabel(a) + ' (' + dom(a.c) + ') cubre la debilidad de clase de ' + fullLabel(b) + '.'
+                      : fullLabel(a) + ' (' + dom(a.c) + ') covers the class weakness of ' + fullLabel(b) + '.');
     }
   }));
   return { score, reasons: [...new Set(reasons)] };
 }
 
+/** Efectos en el idioma activo. En español, una línea sin traducción cargada se
+ *  muestra en inglés y marcada: nunca se inventa una traducción ni se oculta el dato. */
 function skillFx (sk) {
-  const L = { general:'General', self:'A sí mismo', enemy:'Al oponente', allies:'Al equipo' };
-  if (!sk.fx) return `<div class="fxline"><div class="fxitems"><span>${h(sk.d)}</span></div></div>`;
+  if (!sk.fx) return '';
   let out = '';
   for (const k of ['general','self','enemy','allies']) {
-    const arr = sk.fx[k];
-    if (!arr || !arr.length) continue;
-    out += `<div class="fxline"><span class="fxlabel fx-${k}">${L[k]}</span><div class="fxitems">${arr.map(x => `<span>${h(x)}</span>`).join('')}</div></div>`;
+    const en = sk.fx[k];
+    if (!en || !en.length) continue;
+    const es = (sk.fxEs && sk.fxEs[k]) || [];
+    const items = en.map((linea, i) => {
+      if (LANG === 'en') return `<span>${h(linea)}</span>`;
+      const tr = es[i];
+      return tr ? `<span>${h(tr)}</span>`
+                : `<span class="sintrad" title="${h(t('untranslated'))}">${h(linea)}</span>`;
+    }).join('');
+    out += `<div class="fxline"><span class="fxlabel fx-${k}">${t('fx_' + k)}</span><div class="fxitems">${items}</div></div>`;
   }
   return out;
+}
+/** Nombre de la skill: en español se muestra la traducción con el original al lado,
+ *  porque el nombre inglés es con lo que se busca en el juego y en la wiki. */
+function skillName (sk) {
+  if (LANG === 'en' || !sk.nEs) return `<span class="nm">${h(sk.n)}</span>`;
+  return `<span class="nm">${h(sk.nEs)}<span class="orig">${h(sk.n)}</span></span>`;
 }
 function skillCard (sk) {
   return `<div class="skill">
     <div class="top">
-      <span class="slotbadge ${slotClass(sk.slot)}">${h(sk.slot)}</span>
-      <span class="nm">${h(sk.n)}</span>
-      <span class="tag dim">${h(window.MFF_skillTiming(sk))}</span>
-      ${sk.dmg && sk.dmg !== 'Ninguno' ? tagGhost(sk.dmg, dmgColor(sk.dmg)) : ''}
+      <span class="slotbadge ${slotClass(sk.slot)}">${h(dom(sk.slot))}</span>
+      ${skillName(sk)}
+      <span class="tag dim">${h(timing(sk))}</span>
+      ${sk.dmg && sk.dmg !== 'Ninguno' ? tagGhost(dom(sk.dmg), dmgColor(sk.dmg)) : ''}
     </div>
     <div class="body">
       ${skillFx(sk)}
       ${(sk.tags && sk.tags.length) || sk.ii || sk.iframe ? `<div class="row" style="margin-top:3px">
-        ${(sk.tags || []).map(t => `<span class="tag dim">${h(t)}</span>`).join('')}
-        ${sk.ii ? tagGhost('Ignora iframe','var(--accent-2)') : ''}
-        ${sk.iframe ? tagGhost('Tiene iframe','var(--allies)') : ''}
+        ${(sk.tags || []).map(x => `<span class="tag dim">${h(dom(x))}</span>`).join('')}
+        ${sk.ii ? tagGhost(t('ignores_iframe'),'var(--accent-2)') : ''}
+        ${sk.iframe ? tagGhost(t('has_iframe'),'var(--allies)') : ''}
       </div>` : ''}
     </div>
   </div>`;
@@ -206,12 +462,12 @@ function readFile (file, cb) { const r = new FileReader(); r.onload = () => cb(r
 // ROSTER
 // ============================================================================
 const SORTS = {
-  name:   { label:'Nombre',  get: v => fullLabel(v).toLowerCase() },
-  tier:   { label:'Tier',    get: v => ({T4:0,T3:1,T2:2})[v.t] },
-  clase:  { label:'Clase',   get: v => v.c },
-  bando:  { label:'Bando',   get: v => v.f },
-  rank:   { label:'Posición en la lista', get: v => rankIndex(v.key) },
-  skills: { label:'Cantidad de skills',   get: v => -v.skills.length }
+  name:   { k:'s_name',   get: v => fullLabel(v).toLowerCase() },
+  tier:   { k:'s_tier',   get: v => ({T4:0,T3:1,T2:2})[v.t] },
+  clase:  { k:'s_class',  get: v => v.c },
+  bando:  { k:'s_side',   get: v => v.f },
+  rank:   { k:'s_rank',   get: v => rankIndex(v.key) },
+  skills: { k:'s_skills', get: v => -v.skills.length }
 };
 function rankIndex (key) {
   const list = listById(U.prefs.refList); if (!list) return 999;
@@ -259,46 +515,48 @@ function rosterData () {
 function toolbar (total, shown) {
   const P = U.prefs, F = P.filters, G = P.flags;
   const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length;
-  const group = (label, cat, values) => `<div class="filtergroup"><div class="lbl">${label}</div><div class="row">${
-    values.map(v => `<button class="chip ${F[cat].includes(v) ? 'on' : ''}" data-a="filter" data-cat="${cat}" data-v="${h(v)}">${icon(v)}${h(v)}</button>`).join('')
+  // El valor que viaja en data-v es siempre el del snapshot (español): el idioma solo
+  // cambia lo que se ve, nunca la clave con la que se filtra ni la del ícono.
+  const group = (clave, cat, values) => `<div class="filtergroup"><div class="lbl">${h(t(clave))}</div><div class="row">${
+    values.map(v => `<button class="chip ${F[cat].includes(v) ? 'on' : ''}" data-a="filter" data-cat="${cat}" data-v="${h(v)}">${icon(v)}${h(dom(v))}</button>`).join('')
   }</div></div>`;
   return `<div class="toolbar">
     <div class="line">
-      <div class="search"><input id="q" placeholder="Buscar personaje o uniforme…" value="${h(ui.search)}" data-a="search"></div>
-      <button class="btn ${U.prefs.filtersOpen ? 'primary' : ''}" data-a="toggleFilters">Filtros${active ? ' · ' + active : ''}</button>
-      ${active || ui.search ? `<button class="btn sm" data-a="clearFilters">Limpiar</button>` : ''}
+      <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search"></div>
+      <button class="btn ${U.prefs.filtersOpen ? 'primary' : ''}" data-a="toggleFilters">${h(t('filters'))}${active ? ' · ' + active : ''}</button>
+      ${active || ui.search ? `<button class="btn sm" data-a="clearFilters">${h(t('clear'))}</button>` : ''}
       <div class="seg">
-        <button class="${P.kind === 'todo' ? 'on' : ''}" data-a="kind" data-v="todo">Todo</button>
-        <button class="${P.kind === 'base' ? 'on' : ''}" data-a="kind" data-v="base">Bases</button>
-        <button class="${P.kind === 'uni' ? 'on' : ''}" data-a="kind" data-v="uni">Uniformes</button>
+        <button class="${P.kind === 'todo' ? 'on' : ''}" data-a="kind" data-v="todo">${h(t('all'))}</button>
+        <button class="${P.kind === 'base' ? 'on' : ''}" data-a="kind" data-v="base">${h(t('bases'))}</button>
+        <button class="${P.kind === 'uni' ? 'on' : ''}" data-a="kind" data-v="uni">${h(t('uniforms'))}</button>
       </div>
       <div class="seg">
-        <button class="${U.prefs.view === 'grid' ? 'on' : ''}" data-a="view" data-v="grid" title="Tarjetas">Tarjetas</button>
-        <button class="${U.prefs.view === 'dense' ? 'on' : ''}" data-a="view" data-v="dense" title="Compacto">Compacto</button>
-        <button class="${U.prefs.view === 'table' ? 'on' : ''}" data-a="view" data-v="table" title="Tabla">Tabla</button>
+        <button class="${U.prefs.view === 'grid' ? 'on' : ''}" data-a="view" data-v="grid">${h(t('cards'))}</button>
+        <button class="${U.prefs.view === 'dense' ? 'on' : ''}" data-a="view" data-v="dense">${h(t('compact'))}</button>
+        <button class="${U.prefs.view === 'table' ? 'on' : ''}" data-a="view" data-v="table">${h(t('table'))}</button>
       </div>
-      <select data-a="sort" title="Ordenar">${Object.entries(SORTS).map(([k, s]) => `<option value="${k}" ${k === U.prefs.sort ? 'selected' : ''}>${h(s.label)}</option>`).join('')}</select>
-      <button class="btn icon" data-a="dir" title="Invertir orden">${U.prefs.dir === 1 ? '↑' : '↓'}</button>
-      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `Comparando (${ui.picks.length}/4)` : 'Comparar'}</button>
-      <span class="count"><b>${shown}</b> de ${total}</span>
+      <select data-a="sort" title="${h(t('sort'))}">${Object.entries(SORTS).map(([k, o]) => `<option value="${k}" ${k === U.prefs.sort ? 'selected' : ''}>${h(t(o.k))}</option>`).join('')}</select>
+      <button class="btn icon" data-a="dir" title="${h(t('invert'))}">${U.prefs.dir === 1 ? '↑' : '↓'}</button>
+      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `${h(t('comparing'))} (${ui.picks.length}/4)` : h(t('compare'))}</button>
+      <span class="count"><b>${shown}</b> ${h(t('of'))} ${total}</span>
     </div>
     ${U.prefs.filtersOpen ? `<div class="filterpanel">
-      ${group('Clase','c',SEED.CLASSES)}
-      ${group('Rol','r',SEED.ROLES)}
-      ${group('Tier','t',SEED.TIERS)}
-      ${group('Bando','f',SEED.FACTIONS)}
-      ${group('Instinto','ins',SEED.INSTINCTS)}
-      ${group('Raza','race',SEED.RACES)}
-      ${group('Origen','origin',[...new Set(CHARS.map(c => c.origin).filter(Boolean))].sort())}
-      ${group('Habilidad','ab',SEED.SKILL_TAGS)}
-      <div class="filtergroup"><div class="lbl">Atajos</div><div class="row">
-        <button class="chip ${G.t4 ? 'on' : ''}" data-a="flag" data-v="t4">Solo T4</button>
-        <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">Trascendidos</button>
-        <button class="chip ${G.nuevo ? 'on' : ''}" data-a="flag" data-v="nuevo">Nuevos</button>
+      ${group('f_class','c',SEED.CLASSES)}
+      ${group('f_role','r',SEED.ROLES)}
+      ${group('f_tier','t',SEED.TIERS)}
+      ${group('f_side','f',SEED.FACTIONS)}
+      ${group('f_instinct','ins',SEED.INSTINCTS)}
+      ${group('f_race','race',SEED.RACES)}
+      ${group('f_origin','origin',[...new Set(CHARS.map(c => c.origin).filter(Boolean))].sort())}
+      ${group('f_ability','ab',SEED.SKILL_TAGS)}
+      <div class="filtergroup"><div class="lbl">${h(t('f_shortcuts'))}</div><div class="row">
+        <button class="chip ${G.t4 ? 'on' : ''}" data-a="flag" data-v="t4">${h(t('f_only_t4'))}</button>
+        <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">${h(t('f_transcended'))}</button>
+        <button class="chip ${G.nuevo ? 'on' : ''}" data-a="flag" data-v="nuevo">${h(t('f_new'))}</button>
       </div></div>
-      <div class="filtergroup"><div class="lbl">Lista de referencia (define la posición que se muestra)</div>
+      <div class="filtergroup"><div class="lbl">${h(t('f_reflist'))}</div>
         <select data-a="refList" style="width:100%">
-          <option value="">— ninguna —</option>
+          <option value="">${h(t('none_f'))}</option>
           ${LISTS.map(l => `<option value="${l.id}" ${l.id === U.prefs.refList ? 'selected' : ''}>${h(l.name)}</option>`).join('')}
         </select>
       </div>
@@ -327,28 +585,28 @@ function cardHtml (v) {
         ${v.nuevo ? tagSolid('NUEVO', 'var(--gold)') : ''}
         ${insTag(v.ins)}
       </div>
-      <div class="rolebar" title="${h(v.r.join(' · '))}">${SEED.ROLES.map(r => `<span style="background:${v.r.includes(r) ? roleColor(r) : 'var(--line)'}"></span>`).join('')}</div>
-      <div class="muted" style="font-size:11.5px">${h(v.f)} · ${v.skills.length} skills</div>
+      <div class="rolebar" title="${h(v.r.map(dom).join(' · '))}">${SEED.ROLES.map(r => `<span style="background:${v.r.includes(r) ? roleColor(r) : 'var(--line)'}"></span>`).join('')}</div>
+      <div class="muted" style="font-size:11.5px">${h(dom(v.f))} · ${v.skills.length} skills</div>
     </div>
   </div>`;
 }
 
 function tableHtml (rows) {
-  const cols = [['name','Personaje'],['c','Clase'],['t','Tier'],['f','Bando'],['ins','Instinto'],['r','Roles'],['striker','Striker'],['wba','World Boss'],['skills','Skills'],['rank','Lista']];
-  return `<div class="tablewrap"><table class="dt"><thead><tr>${cols.map(c => `<th>${h(c[1])}</th>`).join('')}</tr></thead><tbody>
+  const cols = ['c_character','f_class','f_tier','f_side','c_instinct','c_roles','c_striker','c_worldboss','c_skills','c_list'];
+  return `<div class="tablewrap"><table class="dt"><thead><tr>${cols.map(k => `<th>${h(t(k))}</th>`).join('')}</tr></thead><tbody>
     ${rows.map(v => {
       const rank = rankLabel(v.key);
       const u = imgUrl('portrait-' + v.id);
       return `<tr data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}">
         <td><div class="cellname">${u ? `<img class="thumb" src="${u}" alt="" loading="lazy">` : '<span class="thumb"></span>'}
-          <div><div style="font-weight:600">${h(v.uid ? v.sub : v.name)}</div>${v.uid ? `<div class="muted" style="font-size:11.5px">${h(v.name)}</div>` : '<div class="muted" style="font-size:11.5px">Base</div>'}</div></div></td>
-        <td>${tagGhost(v.c, classColor(v.c))}</td>
+          <div><div style="font-weight:600">${h(v.uid ? v.sub : v.name)}</div>${v.uid ? `<div class="muted" style="font-size:11.5px">${h(v.name)}</div>` : `<div class="muted" style="font-size:11.5px">${h(t('base'))}</div>`}</div></div></td>
+        <td>${tagGhost(dom(v.c), classColor(v.c))}</td>
         <td style="white-space:nowrap">${tagSolid(v.t, tierColor(v.t))}${transTag(v.trans)}</td>
-        <td class="muted">${h(v.f)}</td>
-        <td class="muted">${h(v.ins === 'Desconocido' ? '—' : v.ins)}</td>
-        <td>${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(r)}</span>`).join(' ')}</td>
+        <td class="muted">${h(dom(v.f))}</td>
+        <td class="muted">${h(v.ins === 'Desconocido' ? '—' : dom(v.ins))}</td>
+        <td>${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join(' ')}</td>
         <td class="mono">${v.striker != null ? h(v.striker) : '—'}</td>
-        <td class="muted">${h(v.wba || '—')}</td>
+        <td class="muted">${h(dom(v.wba) || '—')}</td>
         <td class="mono">${v.skills.length}</td>
         <td>${rank ? `<span class="tag solid" style="background:${rank.color}">${h(rank.label)}</span>` : '<span class="muted">—</span>'}</td>
       </tr>`;
@@ -364,15 +622,15 @@ function renderRoster () {
   ui.page = Math.min(Math.max(0, ui.page), pages - 1);
   const slice = rows.slice(ui.page * PAGE, (ui.page + 1) * PAGE);
   const body = rows.length === 0
-    ? `<div class="empty"><div class="big">∅</div><div>Ningún personaje o uniforme coincide con estos filtros.</div>
-       <button class="btn sm" style="margin-top:12px" data-a="clearFilters">Limpiar filtros</button></div>`
+    ? `<div class="empty"><div class="big">∅</div><div>${h(t('no_match'))}</div>
+       <button class="btn sm" style="margin-top:12px" data-a="clearFilters">${h(t('clear_filters'))}</button></div>`
     : U.prefs.view === 'table' ? tableHtml(slice)
     : `<div class="grid ${U.prefs.view === 'dense' ? 'dense' : ''}">${slice.map(cardHtml).join('')}</div>`;
   return toolbar(total, rows.length) + body + pager(pages) +
     (ui.pickMode && ui.picks.length >= 2
       ? `<div style="position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:16px;
            background:linear-gradient(to top,var(--bg) 62%,transparent);z-index:50">
-           <button class="btn primary" data-a="goCompare">Comparar ${ui.picks.length} →</button></div>` : '');
+           <button class="btn primary" data-a="goCompare">${h(t('compare'))} ${ui.picks.length} →</button></div>` : '');
 }
 function pager (pages) {
   if (pages <= 1) return '';
@@ -394,13 +652,14 @@ function pager (pages) {
 // ============================================================================
 const STAT_ES = { recovery_rate:'Recuperación', fire_resist:'Res. fuego', cold_resist:'Res. frío',
                   lightning_resist:'Res. rayo', poison_resist:'Res. veneno', mind_resist:'Res. mental' };
+function statLabel (k) { return LANG === 'es' ? (STAT_ES[k] || k) : dom(k); }
 function renderDetail () {
   const ch = CHAR_BY_ID[ui.charId];
   if (!ch) { ui.view = 'roster'; return renderRoster(); }
   const v = variant(ch.id, ui.uniformId);
   const rank = rankLabel(v.key);
   const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
-  const teams = U.teams.filter(t => t.members.some(k => k.split('::')[0] === ch.id));
+  const teams = U.teams.filter(eq => eq.members.some(k => k.split('::')[0] === ch.id));
   const byslot = {}; v.skills.forEach(sk => { (byslot[sk.slot] = byslot[sk.slot] || []).push(sk); });
   const ordered = SLOT_ORDER.filter(s => byslot[s]);
   const extra = Object.keys(byslot).filter(s => !SLOT_ORDER.includes(s));
@@ -408,9 +667,9 @@ function renderDetail () {
 
   return `
   <div class="row" style="margin-bottom:14px">
-    <button class="btn sm" data-a="back">← Roster</button>
-    <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}">+ Comparar esta versión</button>
-    <button class="btn sm" data-a="edit" data-cid="${ch.id}">Editar</button>
+    <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
+    <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}">${h(t('compare_this'))}</button>
+    <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
   </div>
   <div class="hero">
     <div class="glow" style="background:radial-gradient(60% 120% at 12% 0%, ${classColor(v.c)}22, transparent 70%)"></div>
@@ -418,63 +677,63 @@ function renderDetail () {
       <div class="face">${shot(v.id)}</div>
       <div class="meta">
         <h1>${h(ch.name)}</h1>
-        ${rank ? `<div class="row"><span class="muted">${h((listById(U.prefs.refList) || {}).name || '')}:</span>
+        ${rank ? `<div class="row"><span class="muted">${h(listName(listById(U.prefs.refList)))}:</span>
           <span class="tag solid" style="background:${rank.color}">${h(rank.label)}</span></div>` : ''}
         <div class="row">
-          ${tagGhost(v.c, classColor(v.c))}
-          ${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid('TRASCENDIDO', 'var(--gold)') : ''}
-          <span class="tag dim">${h(v.f)}</span>
+          ${tagGhost(dom(v.c), classColor(v.c))}
+          ${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid(t('transcended_tag'), 'var(--gold)') : ''}
+          <span class="tag dim">${h(dom(v.f))}</span>
           ${insTag(v.ins)}
-          ${v.nuevo ? tagSolid('NUEVO','var(--gold)') : ''}
-          ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(r)}</span>`).join('')}
+          ${v.nuevo ? tagSolid(t('new_tag'),'var(--gold)') : ''}
+          ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join('')}
         </div>
         <div class="statgrid">
-          ${box('Uniforme actual', h(v.uid ? v.sub : 'Base'))}
-          ${box('Raza', icon(ch.race) + h(ch.race || '—'))}
-          ${box('Género', icon(ch.gender) + h(ch.gender || '—'))}
-          ${box('Origen', h(ch.origin || '—'))}
-          ${box('Striker', v.striker != null ? 'Skill ' + h(v.striker) : '—')}
-          ${box('World Boss', icon(v.wba) + h(v.wba || '—'))}
-          ${v.cost ? box('Costo del uniforme', h(v.cost)) : ''}
-          ${box('Uniformes', h(String(ch.uniforms.length)))}
-          ${stats.map(([k, val]) => box(STAT_ES[k] || k, h(val))).join('')}
+          ${box(t('d_current_uniform'), h(v.uid ? v.sub : t('base')))}
+          ${box(t('d_race'), icon(ch.race) + h(dom(ch.race) || '—'))}
+          ${box(t('d_gender'), icon(ch.gender) + h(dom(ch.gender) || '—'))}
+          ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
+          ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
+          ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
+          ${v.cost ? box(t('d_cost'), h(v.cost)) : ''}
+          ${box(t('d_uniforms'), h(String(ch.uniforms.length)))}
+          ${stats.map(([k, val]) => box(statLabel(k), h(val))).join('')}
         </div>
         <div class="row">
-          <span class="muted">Habilidades:</span>
-          ${(v.ab || []).map(a => `<span class="tag dim">${icon(a)}${h(a)}</span>`).join('') || '<span class="muted">—</span>'}
+          <span class="muted">${h(t('d_abilities'))}</span>
+          ${(v.ab || []).map(a => `<span class="tag dim">${icon(a)}${h(dom(a))}</span>`).join('') || '<span class="muted">—</span>'}
         </div>
-        ${(ch.tuc || []).length ? `<div class="row"><span class="muted">Cartas TUC:</span>${ch.tuc.map(t => `<span class="tag dim">${h(t)}</span>`).join('')}</div>` : ''}
+        ${(ch.tuc || []).length ? `<div class="row"><span class="muted">${h(t('d_tuc'))}</span>${ch.tuc.map(x => `<span class="tag dim">${h(x)}</span>`).join('')}</div>` : ''}
       </div>
     </div>
   </div>
 
   <div class="section">
-    <h3>Uniformes · ${pluralUni(ch.uniforms.length)}</h3>
+    <h3>${h(t('d_uni_section'))} · ${pluralUni(ch.uniforms.length)}</h3>
     <div class="unitabs">
       <button class="unitab ${v.uid ? '' : 'on'}" data-a="uniform" data-uid="base">
-        ${imgUrl('portrait-' + ch.id) ? `<img src="${imgUrl('portrait-' + ch.id)}" alt="">` : ''}Base</button>
+        ${imgUrl('portrait-' + ch.id) ? `<img src="${imgUrl('portrait-' + ch.id)}" alt="">` : ''}${h(t('base'))}</button>
       ${ch.uniforms.map(u => `<button class="unitab ${v.uid === u.id ? 'on' : ''}" data-a="uniform" data-uid="${u.id}">
         ${imgUrl('portrait-' + u.id) ? `<img src="${imgUrl('portrait-' + u.id)}" alt="">` : ''}${h(u.name)}
         <span class="tag solid" style="background:${tierColor(u.tier)};font-size:9px">${h(u.tier)}</span></button>`).join('')}
     </div>
-    <p class="muted" style="margin-bottom:12px">Se muestran las skills de la base más las propias del uniforme elegido.
-      ${v.uid && (findUniform(ch, v.uid) || {}).skills.length === 0 ? '<b>Este uniforme no tiene skills propias en la wiki.</b>' : ''}</p>
+    <p class="muted" style="margin-bottom:12px">${h(t('d_uni_note'))}
+      ${v.uid && (findUniform(ch, v.uid) || {}).skills.length === 0 ? `<b>${h(t('d_uni_noskills'))}</b>` : ''}</p>
     ${v.skills.length
       ? ordered.concat(extra).map(slot => byslot[slot].map(skillCard).join('')).join('')
-      : `<div class="empty"><div class="big">?</div><div>La wiki no publica skills para este personaje todavía.</div></div>`}
+      : `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`}
   </div>
 
-  ${teams.length ? `<div class="section"><h3>Equipos donde aparece</h3><div class="grid">
-    ${teams.map(t => `<div class="card"><div style="font-weight:600">${h(t.name)}</div>
-      <div class="muted">${t.members.map(k => { const r = variant(...k.split('::')); return r ? fullLabel(r) : k; }).join(' + ')}</div>
-      <p class="muted" style="margin-top:6px">${h(t.reason)}</p></div>`).join('')}
+  ${teams.length ? `<div class="section"><h3>${h(t('d_teams'))}</h3><div class="grid">
+    ${teams.map(eq => `<div class="card"><div style="font-weight:600">${h(eq.name)}</div>
+      <div class="muted">${eq.members.map(k => { const r = variant(...k.split('::')); return r ? fullLabel(r) : k; }).join(' + ')}</div>
+      <p class="muted" style="margin-top:6px">${h(eq.reason)}</p></div>`).join('')}
   </div></div>` : ''}
 
-  <div class="section"><h3>Retratos propios</h3>
-    <p class="muted" style="margin-bottom:10px">Si subís una imagen reemplaza la de thanosvibs solo en este navegador.</p>
+  <div class="section"><h3>${h(t('d_portraits'))}</h3>
+    <p class="muted" style="margin-bottom:10px">${h(t('d_portraits_note'))}</p>
     <div class="row">
-      <label class="btn sm" style="cursor:pointer">Subir retrato<input type="file" accept="image/*" hidden data-a="upload" data-img="portrait-${v.id}"></label>
-      ${U.images['portrait-' + v.id] ? `<button class="btn sm danger" data-a="clearImg" data-img="portrait-${v.id}">Volver al original</button>` : ''}
+      <label class="btn sm" style="cursor:pointer">${h(t('d_upload'))}<input type="file" accept="image/*" hidden data-a="upload" data-img="portrait-${v.id}"></label>
+      ${U.images['portrait-' + v.id] ? `<button class="btn sm danger" data-a="clearImg" data-img="portrait-${v.id}">${h(t('d_revert_img'))}</button>` : ''}
     </div>
   </div>`;
 }
@@ -493,51 +752,51 @@ function renderCompare () {
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
 
   return `
-  <div class="row" style="margin-bottom:14px"><button class="btn sm" data-a="back">← Roster</button></div>
-  <div class="page-head"><div><h1>Comparativa</h1>
-    <div class="sub">Las celdas resaltadas marcan coincidencias entre las columnas.</div></div></div>
+  <div class="row" style="margin-bottom:14px"><button class="btn sm" data-a="back">${h(t('back_roster'))}</button></div>
+  <div class="page-head"><div><h1>${h(t('cmp_title'))}</h1>
+    <div class="sub">${h(t('cmp_note'))}</div></div></div>
   <div class="cmp"><table class="cmpt">
     <thead><tr><th></th>${vs.map(v => `<th><div class="cmphead">
       ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
       <div><div style="font-weight:700;font-size:14px">${h(v.uid ? v.sub : v.name)}</div>
-      <div class="muted">${h(v.uid ? v.name : 'Base')}</div></div>
-      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}">Quitar</button>
+      <div class="muted">${h(v.uid ? v.name : t('base'))}</div></div>
+      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}">${h(t('cmp_remove'))}</button>
     </div></th>`).join('')}</tr></thead>
     <tbody>
-      <tr><th>Clase</th>${vs.map(v => cell(v, tagGhost(v.c, classColor(v.c)), cC, v.c)).join('')}</tr>
-      <tr><th>Tier</th>${vs.map(v => cell(v, tagSolid(v.t, tierColor(v.t)) + transTag(v.trans), cT, v.t)).join('')}</tr>
-      <tr><th>Bando</th>${vs.map(v => cell(v, h(v.f), cF, v.f)).join('')}</tr>
-      <tr><th>Instinto</th>${vs.map(v => cell(v, h(v.ins === 'Desconocido' ? '—' : v.ins), cI, v.ins)).join('')}</tr>
-      ${attr('Roles', v => v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(r)}</span>`).join(' '))}
-      ${attr('Striker', v => v.striker != null ? 'Skill ' + h(v.striker) : '—')}
-      ${attr('World Boss', v => icon(v.wba) + h(v.wba || '—'))}
-      ${attr('Habilidades', v => (v.ab || []).map(a => `<span class="tag dim">${h(a)}</span>`).join(' ') || '—')}
-      ${attr('Costo', v => h(v.cost || '—'))}
+      <tr><th>${h(t('f_class'))}</th>${vs.map(v => cell(v, tagGhost(dom(v.c), classColor(v.c)), cC, v.c)).join('')}</tr>
+      <tr><th>${h(t('f_tier'))}</th>${vs.map(v => cell(v, tagSolid(v.t, tierColor(v.t)) + transTag(v.trans), cT, v.t)).join('')}</tr>
+      <tr><th>${h(t('f_side'))}</th>${vs.map(v => cell(v, h(dom(v.f)), cF, v.f)).join('')}</tr>
+      <tr><th>${h(t('c_instinct'))}</th>${vs.map(v => cell(v, h(v.ins === 'Desconocido' ? '—' : dom(v.ins)), cI, v.ins)).join('')}</tr>
+      ${attr(t('c_roles'), v => v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join(' '))}
+      ${attr(t('c_striker'), v => v.striker != null ? 'Skill ' + h(v.striker) : '—')}
+      ${attr(t('c_worldboss'), v => icon(v.wba) + h(dom(v.wba) || '—'))}
+      ${attr(t('cmp_abilities'), v => (v.ab || []).map(a => `<span class="tag dim">${h(dom(a))}</span>`).join(' ') || '—')}
+      ${attr(t('cmp_cost'), v => h(v.cost || '—'))}
       ${LISTS.filter(l => Object.keys(assignOf(l.id)).length).map(l => {
         const a = assignOf(l.id), rows = rowsOf(l);
-        return `<tr><th>${h(l.name)}</th>${vs.map(v => {
+        return `<tr><th>${h(listName(l))}</th>${vs.map(v => {
           const i = rows.findIndex(x => x.id === a[v.key]);
-          return `<td>${i === -1 ? '<span class="muted">sin ubicar</span>' : `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`}</td>`;
+          return `<td>${i === -1 ? `<span class="muted">${h(t('cmp_unplaced'))}</span>` : `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`}</td>`;
         }).join('')}</tr>`;
       }).join('')}
-      ${slots.map(slot => `<tr class="slotrow"><th>${h(slot)}</th>${vs.map(v => {
+      ${slots.map(slot => `<tr class="slotrow"><th>${h(dom(slot))}</th>${vs.map(v => {
         const sk = v.skills.find(s => s.slot === slot);
-        if (!sk) return `<td><span class="muted">— no tiene —</span></td>`;
-        return `<td><div style="font-weight:600;margin-bottom:4px">${h(sk.n)}</div>
-          ${sk.dmg !== 'Ninguno' ? tagGhost(sk.dmg, dmgColor(sk.dmg)) : ''}
-          <span class="tag dim">${h(window.MFF_skillTiming(sk))}</span>
+        if (!sk) return `<td><span class="muted">${h(t('cmp_missing_slot'))}</span></td>`;
+        return `<td><div style="font-weight:600;margin-bottom:4px">${skillName(sk)}</div>
+          ${sk.dmg !== 'Ninguno' ? tagGhost(dom(sk.dmg), dmgColor(sk.dmg)) : ''}
+          <span class="tag dim">${h(timing(sk))}</span>
           <div style="margin-top:6px">${skillFx(sk)}</div></td>`;
       }).join('')}</tr>`).join('')}
     </tbody>
   </table></div>
   <div class="card" style="margin-top:18px">
     <div class="row" style="justify-content:space-between;margin-bottom:8px">
-      <h3 style="margin:0">Sinergia estimada</h3><span class="muted">${syn.score} pts</span></div>
+      <h3 style="margin:0">${h(t('cmp_synergy'))}</h3><span class="muted">${syn.score} ${h(t('cmp_pts'))}</span></div>
     <div style="height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;margin-bottom:10px">
       <div style="height:100%;width:${Math.min(100, syn.score * 12)}%;background:linear-gradient(90deg,var(--accent),var(--gold))"></div></div>
     ${syn.reasons.length ? `<ul style="margin:0;padding-left:18px">${syn.reasons.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
-      : '<p class="muted">Sin señales fuertes de sinergia en esta selección.</p>'}
-    <p class="muted" style="margin-top:10px">Heurística propia (bando, cobertura de roles y ventaja de clase), no un cálculo del juego.</p>
+      : `<p class="muted">${h(t('cmp_no_synergy'))}</p>`}
+    <p class="muted" style="margin-top:10px">${h(t('cmp_heuristic'))}</p>
   </div>`;
 }
 
@@ -560,41 +819,41 @@ function renderTierList () {
       <span class="x" data-a="unassign" data-key="${v.key}">✕</span></span>`;
 
   return `
-  <div class="page-head"><div><h1>Tier lists</h1>
-    <div class="sub">Cada lista importada conserva las filas y los rótulos que le puso su autor. No son rangos S–D.</div></div>
+  <div class="page-head"><div><h1>${h(t('tl_title'))}</h1>
+    <div class="sub">${h(t('tl_note'))}</div></div>
     <div class="row">
-      <input placeholder="Nombre de una lista nueva" value="${h(ui.newListName)}" data-a="newListName" style="width:220px">
-      <button class="btn" data-a="addList">+ Crear lista</button>
+      <input placeholder="${h(t('tl_new_ph'))}" value="${h(ui.newListName)}" data-a="newListName" style="width:220px">
+      <button class="btn" data-a="addList">${h(t('tl_create'))}</button>
     </div>
   </div>
-  <div class="tlbar">${LISTS.map(l => `<button class="chip ${l.id === list.id ? 'on' : ''}" data-a="pickList" data-id="${l.id}">${h(l.name)}</button>`).join('')}</div>
+  <div class="tlbar">${LISTS.map(l => `<button class="chip ${l.id === list.id ? 'on' : ''}" data-a="pickList" data-id="${l.id}">${h(listName(l))}</button>`).join('')}</div>
   <div class="tlsource">
     ${imported
-      ? `<span>Fuente: <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a> · «${h(list.source)}»</span>
-         ${list.author ? `<span class="tag dim">autor: ${h(list.author)}</span>` : ''}
-         ${list.gameVersion ? `<span class="tag dim">juego ${h(list.gameVersion)}</span>` : ''}
-         <span class="tag dim">${Object.keys(a).length} ubicados</span>`
-      : `<span>Lista propia</span><span class="tag dim">${Object.keys(a).length} ubicados</span>
-         <button class="btn sm danger" data-a="removeList" data-id="${list.id}">Borrar lista</button>`}
+      ? `<span>${h(t('tl_source'))} <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a> · «${h(list.source)}»</span>
+         ${list.author ? `<span class="tag dim">${h(t('tl_author'))} ${h(list.author)}</span>` : ''}
+         ${list.gameVersion ? `<span class="tag dim">${h(t('tl_game'))} ${h(list.gameVersion)}</span>` : ''}
+         <span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}</span>`
+      : `<span>${h(t('tl_own'))}</span><span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}</span>
+         <button class="btn sm danger" data-a="removeList" data-id="${list.id}">${h(t('tl_delete'))}</button>`}
     ${U.assign[list.id] && Object.keys(U.assign[list.id]).length
-      ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">Deshacer mis cambios (${Object.keys(U.assign[list.id]).length})</button>` : ''}
+      ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">${h(t('tl_undo'))} (${Object.keys(U.assign[list.id]).length})</button>` : ''}
   </div>
   ${rows.map((r, i) => `<div class="tierrow" data-a="drop" data-row="${h(r.id)}">
     <div class="tierlabel" style="background:${rowColor(i, rows.length)}">${h(r.label)}</div>
-    <div class="tieritems">${byRow[r.id].map(chip).join('') || '<span class="muted" style="align-self:center">Arrastrá acá</span>'}</div>
+    <div class="tieritems">${byRow[r.id].map(chip).join('') || `<span class="muted" style="align-self:center">${h(t('tl_drop_here'))}</span>`}</div>
   </div>`).join('')}
   <div style="margin-top:18px">
     <div class="row">
-      <button class="btn sm" data-a="togglePool">${ui.poolOpen ? 'Ocultar' : 'Mostrar'} sin ubicar (${unset.length})</button>
-      ${ui.poolOpen ? `<input placeholder="Filtrar…" value="${h(ui.poolSearch)}" data-a="poolSearch" style="width:220px">` : ''}
+      <button class="btn sm" data-a="togglePool">${h(ui.poolOpen ? t('tl_hide_pool') : t('tl_show_pool'))} (${unset.length})</button>
+      ${ui.poolOpen ? `<input placeholder="${h(t('tl_filter'))}" value="${h(ui.poolSearch)}" data-a="poolSearch" style="width:220px">` : ''}
     </div>
     ${ui.poolOpen ? (() => {
       const q2 = ui.poolSearch.trim().toLowerCase();
       const pool = (q2 ? unset.filter(v => fullLabel(v).toLowerCase().includes(q2)) : unset);
       return `<div class="tieritems" data-a="drop" data-row="" style="margin-top:10px;max-height:360px;overflow-y:auto;
         border:1px dashed var(--line-2);border-radius:var(--r-md)">
-        ${pool.slice(0, 150).map(chip).join('') || '<span class="muted">Nada coincide.</span>'}
-        ${pool.length > 150 ? `<span class="muted" style="align-self:center">…y ${pool.length - 150} más: filtrá para acotar.</span>` : ''}
+        ${pool.slice(0, 150).map(chip).join('') || `<span class="muted">${h(t('tl_nothing'))}</span>`}
+        ${pool.length > 150 ? `<span class="muted" style="align-self:center">…${pool.length - 150} ${h(t('tl_more'))}</span>` : ''}
       </div>`;
     })() : ''}
   </div>`;
@@ -604,8 +863,8 @@ function renderTierList () {
 // EQUIPOS
 // ============================================================================
 function renderTeams () {
-  const t = ui.team;
-  const mode = U.modes.find(m => m.id === t.modeId);
+  const eq = ui.team;                 // 't' es la función de idioma: el equipo se llama 'eq'
+  const mode = U.modes.find(m => m.id === eq.modeId);
   const max = mode ? mode.teamSize : 3;
   const q = ui.teamSearch.trim().toLowerCase();
   const pool = allVariants().filter(v => !q || fullLabel(v).toLowerCase().includes(q)).sort((a, b) => rankIndex(a.key) - rankIndex(b.key));
@@ -613,37 +872,37 @@ function renderTeams () {
   ui.teamPage = Math.min(ui.teamPage, pages - 1);
   const slice = pool.slice(ui.teamPage * PS, (ui.teamPage + 1) * PS);
   return `
-  <div class="page-head"><div><h1>Equipos</h1>
-    <div class="sub">Los que armás vos, con la sinergia estimada por la app.</div></div>
-    <button class="btn primary" data-a="teamOpen">+ Armar equipo</button></div>
+  <div class="page-head"><div><h1>${h(t('tm_title'))}</h1>
+    <div class="sub">${h(t('tm_note'))}</div></div>
+    <button class="btn primary" data-a="teamOpen">${h(t('tm_build'))}</button></div>
   ${ui.teamOpen ? `<div class="card" style="margin-bottom:20px">
     <div class="row" style="margin-bottom:10px">
-      <input placeholder="Nombre del equipo" value="${h(t.name)}" data-a="teamName" style="flex:2;min-width:180px">
+      <input placeholder="${h(t('tm_name_ph'))}" value="${h(eq.name)}" data-a="teamName" style="flex:2;min-width:180px">
       <select data-a="teamMode" style="flex:1;min-width:160px">
-        <option value="">Sin modo (3)</option>
-        ${U.modes.map(m => `<option value="${m.id}" ${m.id === t.modeId ? 'selected' : ''}>${h(m.name)} (${m.teamSize})</option>`).join('')}
+        <option value="">${h(t('tm_nomode'))}</option>
+        ${U.modes.map(m => `<option value="${m.id}" ${m.id === eq.modeId ? 'selected' : ''}>${h(m.name)} (${m.teamSize})</option>`).join('')}
       </select>
     </div>
-    <div class="muted" style="margin-bottom:6px">Miembros ${t.members.length} / ${max} — ordenados por ${h((listById(U.prefs.refList) || {}).name || 'nombre')}</div>
-    <input placeholder="Buscar…" value="${h(ui.teamSearch)}" data-a="teamSearch" style="width:100%;margin-bottom:10px">
+    <div class="muted" style="margin-bottom:6px">${h(t('tm_members'))} ${eq.members.length} / ${max} — ${h(t('tm_sorted_by'))} ${h(listName(listById(U.prefs.refList)) || t('s_name'))}</div>
+    <input placeholder="${h(t('tm_search'))}" value="${h(ui.teamSearch)}" data-a="teamSearch" style="width:100%;margin-bottom:10px">
     <div class="row" style="gap:6px">
       ${slice.map(v => `<div title="${h(fullLabel(v))}" data-a="teamToggle" data-key="${v.key}"
         style="width:50px;height:50px;border-radius:9px;overflow:hidden;cursor:pointer;flex:none;
-        box-shadow:0 0 0 ${t.members.includes(v.key) ? '2px var(--accent)' : '1px var(--line-2)'}">
+        box-shadow:0 0 0 ${eq.members.includes(v.key) ? '2px var(--accent)' : '1px var(--line-2)'}">
         ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" style="width:100%;height:100%;object-fit:cover" loading="lazy">` : ''}
       </div>`).join('')}
     </div>
     ${pages > 1 ? `<div class="row" style="margin-top:10px">${Array.from({length: Math.min(pages, 12)}, (_, i) => `<button class="btn sm ${i === ui.teamPage ? 'primary' : ''}" data-a="teamPage" data-p="${i}">${i + 1}</button>`).join('')}</div>` : ''}
-    <textarea placeholder="Por qué funciona (opcional)" style="width:100%;margin-top:10px;min-height:54px" data-a="teamReason">${h(t.reason)}</textarea>
+    <textarea placeholder="${h(t('tm_reason_ph'))}" style="width:100%;margin-top:10px;min-height:54px" data-a="teamReason">${h(eq.reason)}</textarea>
     <div class="row" style="justify-content:flex-end;margin-top:10px">
-      <button class="btn" data-a="teamClose">Cancelar</button>
-      <button class="btn primary" data-a="teamSave" ${t.members.length < 2 ? 'disabled' : ''}>Guardar</button>
+      <button class="btn" data-a="teamClose">${h(t('tm_cancel'))}</button>
+      <button class="btn primary" data-a="teamSave" ${eq.members.length < 2 ? 'disabled' : ''}>${h(t('tm_save'))}</button>
     </div>
   </div>` : ''}
   ${U.teams.length ? `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
     ${U.teams.map(tt => {
       const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
-      const s = synergy(vs);
+      const sc = synergy(vs);
       return `<div class="card" style="position:relative">
         <button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>
         <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
@@ -651,10 +910,10 @@ function renderTeams () {
           ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
         <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
         ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
-        <div class="muted" style="margin-top:6px">${s.score} pts de sinergia</div>
+        <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))}</div>
       </div>`;
     }).join('')}</div>`
-  : `<div class="empty"><div class="big">◇</div><div>Todavía no armaste ningún equipo.</div></div>`}`;
+  : `<div class="empty"><div class="big">◇</div><div>${h(t('tm_empty'))}</div></div>`}`;
 }
 
 // ============================================================================
@@ -666,57 +925,57 @@ function blankDraft () {
            trans:false, new:false, baseSkills:[], uniforms:[] };
 }
 function renderEditor () {
-  const d = ui.edDraft, steps = ['Datos','Uniformes','Revisar'];
+  const d = ui.edDraft, steps = [t('ed_step_data'), t('ed_step_unis'), t('ed_step_review')];
   const pick = (opts, field, multi) => opts.map(v => {
     const on = multi ? d[field].includes(v) : d[field] === v;
-    return `<button class="chip ${on ? 'on' : ''}" data-a="edPick" data-f="${field}" data-v="${h(v)}" data-multi="${multi ? 1 : 0}">${icon(v)}${h(v)}</button>`;
+    return `<button class="chip ${on ? 'on' : ''}" data-a="edPick" data-f="${field}" data-v="${h(v)}" data-multi="${multi ? 1 : 0}">${icon(v)}${h(dom(v))}</button>`;
   }).join('');
   const field = (label, inner) => `<div style="margin-bottom:12px"><div class="lbl" style="font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);margin-bottom:6px;font-weight:700">${h(label)}</div>${inner}</div>`;
   let body = '';
   if (ui.edStep === 0) {
-    body = field('Nombre', `<input style="width:100%;max-width:420px" data-a="edField" data-f="name" value="${h(d.name)}">`)
-      + field('Clase', `<div class="row">${pick(SEED.CLASSES, 'c', false)}</div>`)
-      + field('Bando', `<div class="row">${pick(SEED.FACTIONS, 'f', false)}</div>`)
-      + field('Tier', `<div class="row">${pick(SEED.TIERS, 't', false)}</div>`)
-      + field('Instinto', `<div class="row">${pick(SEED.INSTINCTS, 'ins', false)}</div>`)
-      + field('Raza', `<div class="row">${pick(SEED.RACES, 'race', false)}</div>`)
-      + field('Género', `<div class="row">${pick(SEED.GENDERS, 'gender', false)}</div>`)
-      + field('Roles', `<div class="row">${pick(SEED.ROLES, 'r', true)}</div>`)
-      + field('Habilidades', `<div class="row">${pick(SEED.SKILL_TAGS, 'abilities', true)}</div>`)
-      + field('Striker (número de skill)', `<input type="number" min="1" max="6" style="width:90px" data-a="edField" data-f="striker" value="${h(d.striker)}">`);
+    body = field(t('ed_name'), `<input style="width:100%;max-width:420px" data-a="edField" data-f="name" value="${h(d.name)}">`)
+      + field(t('f_class'), `<div class="row">${pick(SEED.CLASSES, 'c', false)}</div>`)
+      + field(t('f_side'), `<div class="row">${pick(SEED.FACTIONS, 'f', false)}</div>`)
+      + field(t('f_tier'), `<div class="row">${pick(SEED.TIERS, 't', false)}</div>`)
+      + field(t('f_instinct'), `<div class="row">${pick(SEED.INSTINCTS, 'ins', false)}</div>`)
+      + field(t('f_race'), `<div class="row">${pick(SEED.RACES, 'race', false)}</div>`)
+      + field(t('d_gender'), `<div class="row">${pick(SEED.GENDERS, 'gender', false)}</div>`)
+      + field(t('c_roles'), `<div class="row">${pick(SEED.ROLES, 'r', true)}</div>`)
+      + field(t('cmp_abilities'), `<div class="row">${pick(SEED.SKILL_TAGS, 'abilities', true)}</div>`)
+      + field(t('ed_striker'), `<input type="number" min="1" max="6" style="width:90px" data-a="edField" data-f="striker" value="${h(d.striker)}">`);
   } else if (ui.edStep === 1) {
     body = d.uniforms.map((u, i) => `<div class="card" style="margin-bottom:12px">
       <div class="row">
-        <input placeholder="Nombre del uniforme" style="flex:2;min-width:180px" data-a="edUni" data-i="${i}" data-f="name" value="${h(u.name)}">
-        <select data-a="edUni" data-i="${i}" data-f="tier">${SEED.TIERS.map(t => `<option ${t === u.tier ? 'selected' : ''}>${t}</option>`).join('')}</select>
-        <input placeholder="Costo" style="flex:1;min-width:120px" data-a="edUni" data-i="${i}" data-f="cost" value="${h(u.cost || '')}">
+        <input placeholder="${h(t('ed_uni_name'))}" style="flex:2;min-width:180px" data-a="edUni" data-i="${i}" data-f="name" value="${h(u.name)}">
+        <select data-a="edUni" data-i="${i}" data-f="tier">${SEED.TIERS.map(x => `<option ${x === u.tier ? 'selected' : ''}>${x}</option>`).join('')}</select>
+        <input placeholder="${h(t('ed_cost'))}" style="flex:1;min-width:120px" data-a="edUni" data-i="${i}" data-f="cost" value="${h(u.cost || '')}">
         <button class="btn sm danger" data-a="edUniDel" data-i="${i}">✕</button>
       </div>
       ${u.skills.map((sk, si) => `<div class="card" style="margin-top:8px;background:var(--surface-2)">
         <div class="row">
-          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="slot">${SLOT_ORDER.map(s => `<option ${s === sk.slot ? 'selected' : ''}>${s}</option>`).join('')}</select>
-          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="dmg">${SEED.DAMAGE_TYPES.map(s => `<option ${s === sk.dmg ? 'selected' : ''}>${s}</option>`).join('')}</select>
-          <input placeholder="Nombre" style="flex:1;min-width:150px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="n" value="${h(sk.n)}">
+          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="slot">${SLOT_ORDER.map(x => `<option value="${h(x)}" ${x === sk.slot ? 'selected' : ''}>${h(dom(x))}</option>`).join('')}</select>
+          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="dmg">${SEED.DAMAGE_TYPES.map(x => `<option value="${h(x)}" ${x === sk.dmg ? 'selected' : ''}>${h(dom(x))}</option>`).join('')}</select>
+          <input placeholder="${h(t('ed_skill_name'))}" style="flex:1;min-width:150px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="n" value="${h(sk.n)}">
           <button class="btn sm danger" data-a="edSkDel" data-i="${i}" data-s="${si}">✕</button>
         </div>
-        <textarea placeholder="Descripción" style="width:100%;margin-top:6px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="d">${h(sk.d)}</textarea>
+        <textarea placeholder="${h(t('ed_desc'))}" style="width:100%;margin-top:6px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="d">${h(sk.d)}</textarea>
       </div>`).join('')}
-      <button class="btn sm" style="margin-top:8px" data-a="edSkAdd" data-i="${i}">+ Skill</button>
-    </div>`).join('') + `<button class="btn" data-a="edUniAdd">+ Agregar uniforme</button>`;
+      <button class="btn sm" style="margin-top:8px" data-a="edSkAdd" data-i="${i}">${h(t('ed_add_skill'))}</button>
+    </div>`).join('') + `<button class="btn" data-a="edUniAdd">${h(t('ed_add_uni'))}</button>`;
   } else {
     body = `<div class="card"><div style="font-weight:700;font-size:17px">${h(d.name || 'Sin nombre')}</div>
-      <div class="muted">${[d.c, d.f, d.t, d.ins, d.r.join('/')].filter(Boolean).join(' · ')}</div>
-      <div class="muted">${pluralUni(d.uniforms.length)} · ${d.uniforms.reduce((n, u) => n + u.skills.length, 0)} skills propias</div></div>`;
+      <div class="muted">${[dom(d.c), dom(d.f), d.t, dom(d.ins), d.r.map(dom).join('/')].filter(Boolean).join(' · ')}</div>
+      <div class="muted">${pluralUni(d.uniforms.length)} · ${d.uniforms.reduce((n, u) => n + u.skills.length, 0)} ${h(t('ed_own_skills'))}</div></div>`;
   }
-  return `<div class="page-head"><div><h1>${ui.edId ? 'Editar personaje' : 'Nuevo personaje'}</h1>
-    <div class="sub">Se guarda en tu navegador, aparte de data.js. Regenerar los datos no lo pisa.</div></div></div>
+  return `<div class="page-head"><div><h1>${h(ui.edId ? t('ed_edit') : t('ed_new'))}</h1>
+    <div class="sub">${h(t('ed_note'))}</div></div></div>
   <div class="row" style="margin-bottom:18px">${steps.map((s, i) => `<button class="chip ${i === ui.edStep ? 'on' : ''}" data-a="edStep" data-i="${i}">${i + 1}. ${s}</button>`).join('')}</div>
   ${body}
   <div class="row" style="justify-content:space-between;margin-top:22px">
-    <button class="btn" data-a="edPrev" ${ui.edStep === 0 ? 'disabled' : ''}>Atrás</button>
+    <button class="btn" data-a="edPrev" ${ui.edStep === 0 ? 'disabled' : ''}>${h(t('ed_back'))}</button>
     <div class="row">
-      ${ui.edId && U.charEdits[ui.edId] ? `<button class="btn danger" data-a="edRevert">Descartar mi edición</button>` : ''}
-      ${ui.edStep === 2 ? `<button class="btn primary" data-a="edSave">Guardar</button>` : `<button class="btn primary" data-a="edNext">Siguiente</button>`}
+      ${ui.edId && U.charEdits[ui.edId] ? `<button class="btn danger" data-a="edRevert">${h(t('ed_discard'))}</button>` : ''}
+      ${ui.edStep === 2 ? `<button class="btn primary" data-a="edSave">${h(t('ed_save'))}</button>` : `<button class="btn primary" data-a="edNext">${h(t('ed_next'))}</button>`}
     </div>
   </div>`;
 }
@@ -727,36 +986,36 @@ function renderEditor () {
 function renderSettings () {
   const mine = Object.keys(U.charEdits).length + U.charNew.length;
   const changed = Object.values(U.assign).reduce((n, o) => n + Object.keys(o).length, 0);
-  return `<div class="page-head"><div><h1>Ajustes</h1>
-    <div class="sub">Los datos del juego salen de data.js y no se guardan acá. Esto es solo lo tuyo.</div></div></div>
+  return `<div class="page-head"><div><h1>${h(t('st_title'))}</h1>
+    <div class="sub">${h(t('st_note'))}</div></div></div>
 
-  <div class="section"><h3>Tu capa guardada</h3>
+  <div class="section"><h3>${h(t('st_layer'))}</h3>
     <div class="statgrid">
-      <div class="stat"><div class="k">Personajes propios o editados</div><div class="v">${mine}</div></div>
-      <div class="stat"><div class="k">Equipos</div><div class="v">${U.teams.length}</div></div>
-      <div class="stat"><div class="k">Tier lists propias</div><div class="v">${U.lists.length}</div></div>
-      <div class="stat"><div class="k">Cambios sobre listas importadas</div><div class="v">${changed}</div></div>
-      <div class="stat"><div class="k">Imágenes subidas</div><div class="v">${Object.keys(U.images).length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_own_chars'))}</div><div class="v">${mine}</div></div>
+      <div class="stat"><div class="k">${h(t('st_teams'))}</div><div class="v">${U.teams.length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_own_lists'))}</div><div class="v">${U.lists.length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_list_changes'))}</div><div class="v">${changed}</div></div>
+      <div class="stat"><div class="k">${h(t('st_images'))}</div><div class="v">${Object.keys(U.images).length}</div></div>
     </div>
     <div class="row" style="margin-top:12px">
-      <button class="btn" data-a="exportUser">Exportar mi capa (JSON)</button>
-      <label class="btn" style="cursor:pointer">Importar<input type="file" accept=".json" hidden data-a="importUser"></label>
-      <button class="btn" data-a="exportCsv">Exportar roster (CSV)</button>
-      <button class="btn danger" data-a="resetUser">Borrar todo lo mío</button>
+      <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
+      <label class="btn" style="cursor:pointer">${h(t('st_import'))}<input type="file" accept=".json" hidden data-a="importUser"></label>
+      <button class="btn" data-a="exportCsv">${h(t('st_export_csv'))}</button>
+      <button class="btn danger" data-a="resetUser">${h(t('st_reset'))}</button>
     </div>
   </div>
 
-  <div class="section"><h3>Marca</h3>
+  <div class="section"><h3>${h(t('st_brand'))}</h3>
     <div style="width:200px;height:52px;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center">
-      ${U.images['brand-logo'] ? `<img src="${U.images['brand-logo']}" style="max-width:100%;max-height:100%">` : '<span class="muted">Sin logo</span>'}
+      ${U.images['brand-logo'] ? `<img src="${U.images['brand-logo']}" style="max-width:100%;max-height:100%">` : `<span class="muted">${h(t('st_no_logo'))}</span>`}
     </div>
     <div class="row" style="margin-top:10px">
-      <label class="btn sm" style="cursor:pointer">Subir logo<input type="file" accept="image/*" hidden data-a="upload" data-img="brand-logo"></label>
-      ${U.images['brand-logo'] ? `<button class="btn sm danger" data-a="clearImg" data-img="brand-logo">Quitar</button>` : ''}
+      <label class="btn sm" style="cursor:pointer">${h(t('st_upload_logo'))}<input type="file" accept="image/*" hidden data-a="upload" data-img="brand-logo"></label>
+      ${U.images['brand-logo'] ? `<button class="btn sm danger" data-a="clearImg" data-img="brand-logo">${h(t('st_remove'))}</button>` : ''}
     </div>
   </div>
 
-  <div class="section"><h3>Modos de juego (tamaño de equipo)</h3>
+  <div class="section"><h3>${h(t('st_modes'))}</h3>
     <div style="display:flex;flex-direction:column;gap:8px;max-width:520px">
       ${U.modes.map((m, i) => `<div class="row">
         <input value="${h(m.name)}" data-a="modeName" data-i="${i}" style="flex:1">
@@ -764,13 +1023,15 @@ function renderSettings () {
         <button class="btn sm danger" data-a="modeDel" data-i="${i}">✕</button>
       </div>`).join('')}
     </div>
-    <button class="btn sm" style="margin-top:10px" data-a="modeAdd">+ Agregar modo</button>
+    <button class="btn sm" style="margin-top:10px" data-a="modeAdd">${h(t('st_add_mode'))}</button>
   </div>
 
-  <div class="section"><h3>Fuentes</h3>
-    <p class="muted">Personajes, uniformes, retratos, íconos y tier lists: <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a>.
-      Skills e instintos: <a href="https://future-fight.fandom.com" target="_blank" rel="noopener">Future Fight Wiki</a>.
-      Uso personal, sin fin comercial.</p>
+  <div class="section"><h3>${h(t('st_translation'))}</h3>
+    <p class="muted">${h(t('st_translation_txt'))}</p>
+  </div>
+
+  <div class="section"><h3>${h(t('st_sources'))}</h3>
+    <p class="muted">${h(t('st_sources_txt'))}<a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a>${h(t('st_sources_txt2'))}<a href="https://future-fight.fandom.com" target="_blank" rel="noopener">Future Fight Wiki</a>${h(t('st_sources_txt3'))}</p>
   </div>`;
 }
 
@@ -778,18 +1039,21 @@ function renderSettings () {
 // NAV + DISPATCH
 // ============================================================================
 function renderNav () {
-  const link = (view, label, act) => `<button class="navlink ${ui.view === view ? 'on' : ''}" data-a="${act}">${label}</button>`;
+  const link = (view, clave, act) => `<button class="navlink ${ui.view === view ? 'on' : ''}" data-a="${act}">${h(t(clave))}</button>`;
   return `<nav class="topnav">
     <span class="brand" data-a="back">${U.images['brand-logo']
       ? `<img src="${U.images['brand-logo']}" style="height:26px">`
       : `<span class="dot"></span>TA GUIANAEL <span style="color:var(--accent)">MFF</span>`}</span>
-    ${link('roster','Roster','back')}
-    ${link('tierlist','Tier lists','goTier')}
-    ${link('teams','Equipos','goTeams')}
+    ${link('roster','nav_roster','back')}
+    ${link('tierlist','nav_tierlists','goTier')}
+    ${link('teams','nav_teams','goTeams')}
     <span class="navspace"></span>
     <div class="navtools">
-      ${link('editor','+ Personaje','goEditor')}
-      ${link('settings','Ajustes','goSettings')}
+      <button class="langbtn" data-a="lang" title="${h(t('lang_title'))}">
+        <span class="${LANG === 'es' ? 'on' : ''}">ES</span><span class="${LANG === 'en' ? 'on' : ''}">EN</span>
+      </button>
+      ${link('editor','nav_new_char','goEditor')}
+      ${link('settings','nav_settings','goSettings')}
     </div>
   </nav>`;
 }
@@ -818,6 +1082,7 @@ document.addEventListener('click', (e) => {
   const P = U.prefs;
   switch (a) {
     case 'back': ui.view = 'roster'; ui.charId = null; ui.focusSearch = false; render(); break;
+    case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] };
       P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; ui.search = ''; ui.page = 0; commit(); break;
@@ -850,7 +1115,7 @@ document.addEventListener('click', (e) => {
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
       const id = 'mia-' + Date.now();
       U.lists.push({ id, name, rows: DEFAULT_ROWS.slice() }); ui.newListName = ''; ui.tierList = id; commit(); break; }
-    case 'removeList': { if (!confirm('¿Borrar esta lista y sus asignaciones?')) break;
+    case 'removeList': { if (!confirm(t('tl_confirm_del'))) break;
       U.lists = U.lists.filter(l => l.id !== d.id); delete U.assign[d.id];
       ui.tierList = (LISTS[0] || {}).id || ''; commit(); break; }
     case 'resetList': delete U.assign[d.id]; commit(); break;
@@ -860,15 +1125,15 @@ document.addEventListener('click', (e) => {
     case 'goTeams': ui.view = 'teams'; render(); break;
     case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
     case 'teamClose': ui.teamOpen = false; render(); break;
-    case 'teamToggle': { const t = ui.team, mode = U.modes.find(m => m.id === t.modeId), max = mode ? mode.teamSize : 3;
-      const i = t.members.indexOf(d.key);
-      if (i > -1) t.members.splice(i, 1); else { t.members.push(d.key); if (t.members.length > max) t.members.shift(); }
+    case 'teamToggle': { const eq = ui.team, mode = U.modes.find(m => m.id === eq.modeId), max = mode ? mode.teamSize : 3;
+      const i = eq.members.indexOf(d.key);
+      if (i > -1) eq.members.splice(i, 1); else { eq.members.push(d.key); if (eq.members.length > max) eq.members.shift(); }
       render(); break; }
     case 'teamPage': ui.teamPage = parseInt(d.p, 10); render(); break;
-    case 'teamSave': { const t = ui.team; if (t.members.length < 2) break;
-      const vs = t.members.map(k => variant(...k.split('::'))).filter(Boolean);
-      U.teams.unshift({ id: 'eq-' + Date.now(), name: t.name || vs.map(fullLabel).join(' + '),
-                        members: t.members.slice(), reason: t.reason });
+    case 'teamSave': { const eq = ui.team; if (eq.members.length < 2) break;
+      const vs = eq.members.map(k => variant(...k.split('::'))).filter(Boolean);
+      U.teams.unshift({ id: 'eq-' + Date.now(), name: eq.name || vs.map(fullLabel).join(' + '),
+                        members: eq.members.slice(), reason: eq.reason });
       ui.teamOpen = false; commit(); break; }
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
 
@@ -888,7 +1153,7 @@ document.addEventListener('click', (e) => {
     case 'edSkDel': ui.edDraft.uniforms[parseInt(d.i, 10)].skills.splice(parseInt(d.s, 10), 1); render(); break;
     case 'edRevert': delete U.charEdits[ui.edId]; ui.view = 'detail'; ui.charId = ui.edId; ui.edId = null; commit(); break;
     case 'edSave': { const dr = ui.edDraft;
-      if (!dr.name.trim()) { alert('Poné un nombre.'); break; }
+      if (!dr.name.trim()) { alert(t('ed_need_name')); break; }
       const id = ui.edId || ('mio-' + dr.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now());
       const ch = Object.assign({}, dr, { id, uniforms: dr.uniforms.map((u, i) => Object.assign({}, u, { id: u.id || id + '-u' + i })) });
       if (ui.edId && CHARS_SEED.some(c => c.id === ui.edId)) U.charEdits[id] = ch;
@@ -897,10 +1162,10 @@ document.addEventListener('click', (e) => {
       ui.view = 'detail'; ui.charId = id; ui.uniformId = 'base'; ui.edId = null; commit(); break; }
 
     case 'goSettings': ui.view = 'settings'; render(); break;
-    case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:'Modo nuevo', teamSize:3 }); commit(); break;
+    case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:t('st_new_mode'), teamSize:3 }); commit(); break;
     case 'modeDel': U.modes.splice(parseInt(d.i, 10), 1); commit(); break;
     case 'clearImg': delete U.images[d.img]; commit(); break;
-    case 'resetUser': if (confirm('Se borran tus equipos, listas, ediciones e imágenes. Los datos del juego no se tocan. ¿Seguimos?')) {
+    case 'resetUser': if (confirm(t('st_confirm_reset'))) {
       U = blankUser(); commit(); } break;
     case 'exportUser': download('mff-mi-capa.json', JSON.stringify(U, null, 2), 'application/json'); break;
     case 'exportCsv': exportCsv(); break;
@@ -936,7 +1201,7 @@ document.addEventListener('change', (e) => {
   if (a === 'importUser') { const f = el.files[0]; if (!f) return;
     const r = new FileReader();
     r.onload = () => { try { U = Object.assign(blankUser(), JSON.parse(r.result)); commit(); }
-                       catch (err) { alert('Ese archivo no es una capa de usuario válida: ' + err.message); } };
+                       catch (err) { alert(t('st_bad_import') + err.message); } };
     r.readAsText(f); return; }
 });
 

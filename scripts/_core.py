@@ -131,7 +131,7 @@ for fn in TL_FILES:
                       f" en '{a[key]}' y en '{row}'; queda en la primera")
                 continue
             a[key] = row
-    tierlists.append({'id': slug, 'order': tl.get('order', 99), 'name': tl['name_es'], 'source': tl['title'],
+    tierlists.append({'id': slug, 'order': tl.get('order', 99), 'name': tl['name_es'], 'nameEn': tl['name_en'], 'source': tl['title'],
                       'author': v.get('author', ''), 'gameVersion': v.get('gameVersion', ''),
                       'rows': rows})
     assign[slug] = a
@@ -150,8 +150,40 @@ if faltan:
     raise SystemExit(f'faltan {len(faltan)} iconos en images/icons/ {faltan} — corre scripts/fetch_all.py')
 for val, s in ICON_ES.items():
     images['icon-'+val] = f'images/icons/{s}.png'
+# Vocabulario de dominio para el botón de idioma de la app: el snapshot guarda los
+# valores en español, así que se emite el inverso de los mismos mapas que se usaron
+# para traducirlos. Un solo lugar de verdad: si acá se agrega un valor, la app lo tiene.
+VOCAB_EN = {}
+for _mapa in (TYPE, ALLIES, GENDER, SIDE, ORIGIN, INSTINCT, ABIL):
+    for _en, _es in _mapa.items():
+        VOCAB_EN[_es] = _en
+VOCAB_EN.update({
+ 'Desconocido':'Unknown', 'Neutral':'Neutral',
+ # los tiers se escriben igual en los dos idiomas, pero se listan para que el mapa
+ # sea completo y la app no tenga que adivinar qué hacer con un valor ausente
+ 'T2':'T2', 'T3':'T3', 'T4':'T4',
+ # roles derivados por derive_roles
+ 'Daño':'Damage', 'Soporte':'Support', 'Control':'Control', 'Tanque':'Tank',
+ # slots que arma parse_skills
+ 'Liderazgo':'Leadership', 'Pasiva':'Passive', 'Definitiva':'Ultimate',
+ **{f'Activa {i}': f'Active {i}' for i in range(1, 12)},
+ # tipos de daño
+ 'Físico':'Physical', 'Energía':'Energy', 'PG':'Mind', 'Ninguno':'None',
+ # etiquetas de effects_to_tags
+ 'Aturdir':'Stun', 'Inmovilizar':'Bind', 'Miedo':'Fear', 'Silencio':'Silence',
+ 'Provocar':'Provoke', 'Ralentizar':'Slow', 'Sangrado':'Bleed', 'DoT':'DoT',
+ 'Curación':'Healing', 'Escudo':'Shield', 'Invencibilidad':'Invincibility',
+ 'Perfora Inmunidad':'Pierce Immunity', 'Ignora Evasión':'Ignore Dodge',
+ 'Perfora DEF':'Ignore Defense', 'Limpia Debuffs':'Cleanse', 'Buff Crítico':'Critical Buff',
+ 'Buff ATQ':'Attack Buff', 'Buff DEF':'Defense Buff', 'Buff VEL':'Speed Buff',
+ 'Buff Evasión':'Dodge Buff', 'Empuje':'Pushback', 'Derribo':'Knockdown',
+ # claves de stats del API
+ 'recovery_rate':'Recovery Rate', 'fire_resist':'Fire Resist', 'cold_resist':'Cold Resist',
+ 'lightning_resist':'Lightning Resist', 'poison_resist':'Poison Resist', 'mind_resist':'Mind Resist',
+})
+
 tierlists.sort(key=lambda t: t['order'])   # el orden de fetch_all manda: la general primero
-json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists},
+json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,'vocab':VOCAB_EN},
           open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images),
       '| listas:', len(tierlists), '| asignaciones:', sum(len(a) for a in assign.values()))

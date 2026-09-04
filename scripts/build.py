@@ -5,6 +5,7 @@ exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())  # deja w
 
 b = json.load(open('work/build2.json'))
 chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
+vocab = b['vocab']
 gv = json.load(open('work/gen_versions.json'))[0]['gameVersion']
 ABIL_VALUES = sorted({a for c in chars for a in c['abilities']})
 SEED = {
@@ -53,6 +54,7 @@ window.MFF_sk = sk;
  'window.MFF_SEED_CHARACTERS = ' + json.dumps(chars, ensure_ascii=False) + ';\n',
  'window.MFF_TEAM_SUGGESTIONS = [];\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
+ 'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',
  'window.MFF_DEFAULT_TIER_ROWS = ' + json.dumps(DEFAULT_ROWS, ensure_ascii=False) + ';\n',
  'window.MFF_SEED_TIERLISTS = ' + json.dumps(tl, ensure_ascii=False) + ';\n',
  'window.MFF_SEED_TIER_ASSIGNMENTS = ' + json.dumps(assign, ensure_ascii=False) + ';\n',
