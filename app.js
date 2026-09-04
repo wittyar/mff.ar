@@ -1,729 +1,980 @@
-/* Comparador MFF — standalone vanilla JS app (no build step, runs from file:// or any static host). */
-(function(){
+/* Comparador MFF — app standalone en JS vanilla. Sin build: corre desde file:// o cualquier host estático.
+ *
+ * Reglas de datos (importante):
+ *   - data.js es la ÚNICA fuente de personajes, uniformes, skills, imágenes y tier lists importadas.
+ *     Nunca se copia a localStorage: regenerar data.js se ve al recargar, sin borrar nada.
+ *   - localStorage guarda SOLO la capa del usuario: ediciones y personajes propios, equipos,
+ *     tier lists propias, cambios sobre las importadas, imágenes subidas y preferencias.
+ */
+(function () {
 'use strict';
-const SEED = window.MFF_SEED, CHARS_SEED = window.MFF_SEED_CHARACTERS, TEAMS_SEED = window.MFF_TEAM_SUGGESTIONS;
-const LS_KEY = 'mff_standalone_v2';
-const TIER_RANKS = ['S','A','B','C','D'];
-const SLOT_ORDER = ['Liderazgo','Pasiva','Activa 1','Activa 2','Activa 3','Activa 4','Activa 5','Definitiva'];
 
-function deepCopy(o){ return JSON.parse(JSON.stringify(o)); }
+// ============================================================================
+// DATOS DE data.js (solo lectura)
+// ============================================================================
+const SEED           = window.MFF_SEED;
+const CHARS_SEED     = window.MFF_SEED_CHARACTERS || [];
+const IMAGES_SEED    = window.MFF_SEED_IMAGES || {};
+const TIERLISTS_SEED = window.MFF_SEED_TIERLISTS || [];
+const ASSIGN_SEED    = window.MFF_SEED_TIER_ASSIGNMENTS || {};
+const DEFAULT_ROWS   = window.MFF_DEFAULT_TIER_ROWS || [{id:'S',label:'S'},{id:'A',label:'A'},{id:'B',label:'B'},{id:'C',label:'C'},{id:'D',label:'D'}];
+const SLOT_ORDER     = ['Liderazgo','Pasiva','Activa 1','Activa 2','Activa 3','Activa 4','Activa 5','Definitiva'];
+const REMOVED        = null; // marca explícita: entrada de una lista importada que el usuario quitó
 
-function defaultState(){
+// ============================================================================
+// CAPA DE USUARIO
+// ============================================================================
+const LS_KEY = 'mff_user_v1';
+function blankUser () {
   return {
-    characters: deepCopy(CHARS_SEED),
-    teams: deepCopy(TEAMS_SEED),
-    modes: deepCopy(SEED.MODES),
-    customTierLists: deepCopy(window.MFF_SEED_TIERLISTS || []),
-    tierAssignments: deepCopy(window.MFF_SEED_TIER_ASSIGNMENTS || {}),
-    taxonomies: {
-      factions: SEED.FACTIONS.map(v=>({value:v,icon:''})),
-      instincts: SEED.INSTINCTS.map(v=>({value:v,icon:''})),
-      races: SEED.RACES.map(v=>({value:v,icon:''})),
-      genders: SEED.GENDERS.map(v=>({value:v,icon:''})),
-      skillTags: SEED.SKILL_TAGS.map(v=>({value:v,icon:''}))
-    },
-    images: deepCopy(window.MFF_SEED_IMAGES || {}),
-    logo: ''
+    charEdits: {},                    // id de data.js -> personaje editado (reemplaza al del seed)
+    charNew: [],                      // personajes creados a mano
+    teams: [],
+    lists: [],                        // tier lists propias: {id,name,rows}
+    assign: {},                       // listId -> {clave: filaId | null}
+    images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
+    modes: JSON.parse(JSON.stringify(SEED.MODES)),
+    prefs: { view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
+             kind:'todo', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
+             flags:{ t4:false, trans:false, nuevo:false } }
   };
 }
-let state = load();
-function load(){
-  try { const raw = localStorage.getItem(LS_KEY); if (raw) return Object.assign(defaultState(), JSON.parse(raw)); } catch(e){}
-  return defaultState();
+let U = loadUser();
+function loadUser () {
+  const base = blankUser();
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return base;
+    const saved = JSON.parse(raw);
+    const u = Object.assign(base, saved);
+    u.prefs = Object.assign(base.prefs, saved.prefs || {});
+    u.prefs.filters = Object.assign(base.prefs.filters, (saved.prefs||{}).filters || {});
+    u.prefs.flags = Object.assign(base.prefs.flags, (saved.prefs||{}).flags || {});
+    return u;
+  } catch (e) { console.warn('capa de usuario ilegible, se arranca en limpio', e); return base; }
 }
-function save(){ try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e){ console.warn('save failed', e); } }
+function saveUser () {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(U)); }
+  catch (e) { alert('No se pudo guardar en este navegador: ' + e.message); }
+}
 
-// ---- transient UI state (not persisted) ----
+// ---- vistas derivadas (data.js + capa de usuario) ----
+let CHARS = [], CHAR_BY_ID = {}, LISTS = [];
+function rebuild () {
+  CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
+  CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
+  LISTS = TIERLISTS_SEED.concat(U.lists);
+}
+function commit () { saveUser(); rebuild(); render(); }
+
+function imgUrl (id) { return U.images[id] || IMAGES_SEED[id] || ''; }
+function listById (id) { return LISTS.find(l => l.id === id) || null; }
+function rowsOf (list) { return (list && list.rows && list.rows.length) ? list.rows : DEFAULT_ROWS; }
+/** Asignaciones efectivas de una lista: las de data.js con los cambios del usuario encima. */
+function assignOf (listId) {
+  const out = Object.assign({}, ASSIGN_SEED[listId] || {});
+  const mine = U.assign[listId] || {};
+  for (const k in mine) { if (mine[k] === REMOVED) delete out[k]; else out[k] = mine[k]; }
+  return out;
+}
+function setAssign (listId, key, rowId) {
+  U.assign[listId] = U.assign[listId] || {};
+  U.assign[listId][key] = rowId;
+  commit();
+}
+
+// ============================================================================
+// ESTADO DE UI (no persistido)
+// ============================================================================
 let ui = {
-  view: 'roster', search: '', filters: { c:[], r:[], f:[], t:[], ins:[], ab:[] }, filtersOpen: false, rosterPage: 0,
-  compareMode: false, compareSelection: [],
-  selectedCharId: null, viewUniformIds: [],
-  showTeamBuilder: false, teamBuilder: { name:'', memberIds:[], reason:'', modeId:'' }, teamBuilderSearch:'', teamBuilderPage:0,
-  tierListModeView: '', newTierListName: '',
-  adminStep: 0, adminDraft: null, adminEditId: null,
-  admin_field_dragKey: null
+  view: 'roster', search: '', page: 0,
+  pickMode: false, picks: [],
+  charId: null, uniformId: 'base',
+  tierList: (TIERLISTS_SEED[0] || {}).id || '',
+  teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
+  newListName: '', poolOpen: false, poolSearch: '',
+  edStep: 0, edDraft: null, edId: null,
+  dragKey: null
 };
 
-const $ = (sel, root) => (root||document).querySelector(sel);
-const $all = (sel, root) => Array.from((root||document).querySelectorAll(sel));
-function h(str){ const d=document.createElement('div'); d.textContent=str==null?'':String(str); return d.innerHTML; }
-
-// ---- color helpers ----
-function classColor(c){ return { 'Combate':'var(--class-combate)','Detonación':'var(--class-detonacion)','Velocidad':'var(--class-velocidad)','Universal':'var(--class-universal)' }[c] || 'var(--text-dim)'; }
-function dmgColor(d){ return { 'Físico':'var(--dmg-fisico)','Energía':'var(--dmg-energia)','PG':'var(--dmg-pg)' }[d] || 'var(--text-dim)'; }
-function tierColor(t){ return { 'T1':'var(--tier-t1)','T2':'var(--tier-t2)','T3':'var(--tier-t3)' }[t] || 'var(--text-dim)'; }
-function roleColor(r){ return { 'Daño':'var(--role-dano)','Soporte':'var(--role-soporte)','Control':'var(--role-control)','Tanque':'var(--role-tanque)' }[r] || 'var(--text-dim)'; }
-function tag(label, color, outline){ return `<span class="tag${outline?' outline':''}" style="${outline?`color:${color};border-color:${color}`:`background:${color};color:#111`}">${h(label)}</span>`; }
-
-function findChar(cid){ return state.characters.find(c=>c.id===cid); }
-function findUniform(ch, uid){ return ch && ch.uniforms.find(u=>u.id===uid); }
-function resolveMember(cid, uid){
-  const ch = findChar(cid); if (!ch) return null;
-  const base = ch.baseSkills || [];
-  if (!uid) return { id: ch.id, name: ch.name, c: ch.c, f: ch.f, t: ch.t, ins: ch.ins, r: ch.r, uniforms: ch.uniforms, rawSkills: base };
-  const u = findUniform(ch, uid); if (!u) return { id: ch.id, name: ch.name, c: ch.c, f: ch.f, t: ch.t, ins: ch.ins, r: ch.r, uniforms: ch.uniforms, rawSkills: base };
-  return { id: ch.id, name: ch.name+' ('+u.name+')', c: u.c||ch.c, f: ch.f, t: u.tier||ch.t, ins: u.ins||ch.ins, r: (u.r&&u.r.length)?u.r:ch.r, uniforms: ch.uniforms, rawSkills: base.concat(u.skills) };
+// ============================================================================
+// HELPERS
+// ============================================================================
+const $ = (s, r) => (r || document).querySelector(s);
+function h (v) { const d = document.createElement('div'); d.textContent = v == null ? '' : String(v); return d.innerHTML; }
+function classColor (c) { return ({'Combate':'var(--class-combate)','Detonación':'var(--class-detonacion)','Velocidad':'var(--class-velocidad)','Universal':'var(--class-universal)'})[c] || 'var(--text-3)'; }
+function dmgColor (d) { return ({'Físico':'var(--dmg-fisico)','Energía':'var(--dmg-energia)','PG':'var(--dmg-pg)'})[d] || 'var(--text-3)'; }
+function tierColor (t) { return ({'T2':'var(--tier-t2)','T3':'var(--tier-t3)','T4':'var(--tier-t4)'})[t] || 'var(--text-3)'; }
+function roleColor (r) { return ({'Daño':'var(--role-dano)','Soporte':'var(--role-soporte)','Control':'var(--role-control)','Tanque':'var(--role-tanque)'})[r] || 'var(--line-2)'; }
+function rowColor (i, n) {
+  const scale = ['#ff2d55','#ff6b3d','#ffb020','#7ed957','#4dd0e1','#7aa8ff','#a78bfa','#8a8f9c','#6b7080'];
+  return scale[Math.min(i, scale.length - 1)] || '#6b7080';
 }
-function synergyScore(chars){
-  if (chars.length < 2) return { score:0, reasons:[] };
+function tagSolid (label, color) { return `<span class="tag solid" style="background:${color}">${h(label)}</span>`; }
+function tagGhost (label, color) { return `<span class="tag ghost" style="color:${color}">${h(label)}</span>`; }
+function icon (value) { const u = imgUrl('icon-' + value); return u ? `<img src="${u}" alt="" style="width:15px;height:15px;border-radius:3px;vertical-align:-3px">` : ''; }
+function shot (id, cls) { const u = imgUrl('portrait-' + id); return u ? `<img class="${cls||''}" src="${u}" alt="" loading="lazy">` : `<span class="ph">SIN RETRATO</span>`; }
+function slotClass (slot) { return slot === 'Liderazgo' ? 'lead' : slot === 'Pasiva' ? 'pass' : slot === 'Definitiva' ? 'ult' : ''; }
+function pluralUni (n) { return n + (n === 1 ? ' uniforme' : ' uniformes'); }
+/** La wiki no publica el instinto de todos: mostrar "Desconocido" es ruido, se omite. */
+function insTag (v) { return v && v !== 'Desconocido' ? `<span class="tag dim">${h(v)}</span>` : ''; }
+/** Marca de trascendido: glifo aparte porque no todas las fuentes de texto traen ✦. */
+function transTag (on) { return on ? `<span class="tag solid" style="background:var(--gold)" title="Trascendido">TR</span>` : ''; }
+
+function findUniform (ch, uid) { return ch && ch.uniforms.find(u => u.id === uid); }
+/** Vista efectiva de "personaje base" o "personaje con uniforme X": el uniforme pisa lo que redefine. */
+function variant (cid, uid) {
+  const ch = CHAR_BY_ID[cid]; if (!ch) return null;
+  const base = ch.baseSkills || [];
+  const u = uid && uid !== 'base' ? findUniform(ch, uid) : null;
+  if (!u) return { cid: ch.id, uid: null, key: ch.id + '::base', id: ch.id, name: ch.name, sub: 'Base',
+                   c: ch.c, f: ch.f, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
+                   striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '',
+                   ch, skills: base };
+  return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
+           c: u.c || ch.c, f: u.f || ch.f, t: u.tier || ch.t, ins: ch.ins, r: ch.r, ab: u.ab || ch.abilities || [],
+           striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
+           trans: u.trans, nuevo: u.new, cost: u.cost || '',
+           ch, skills: base.concat(u.skills) };
+}
+function allVariants () {
+  const out = [];
+  CHARS.forEach(ch => { out.push(variant(ch.id, null)); ch.uniforms.forEach(u => out.push(variant(ch.id, u.id))); });
+  return out;
+}
+function fullLabel (v) { return v.uid ? v.name + ' — ' + v.sub : v.name; }
+
+/** Heurística propia: bando compartido, cobertura de roles y ventaja de clase. No sale del juego. */
+function synergy (vs) {
+  if (vs.length < 2) return { score: 0, reasons: [] };
   const reasons = []; let score = 0;
-  const factions = chars.map(c=>c.f);
-  if (factions.every(f=>f===factions[0])) { score+=2; reasons.push('Misma facción: bonos de equipo activos.'); }
-  const roles = new Set(chars.flatMap(c=>c.r));
-  const want = ['Tanque','Control','Daño']; const covered = want.filter(r=>roles.has(r));
-  if (covered.length>=2) { score+=covered.length; reasons.push('Roles complementarios: '+covered.join(' + ')+'.'); }
-  for (let i=0;i<chars.length;i++) for (let j=0;j<chars.length;j++){
-    if (i===j) continue;
-    if (SEED.CLASS_ADVANTAGE[chars[i].c]===chars[j].c) { score+=1; reasons.push(chars[i].name+' ('+chars[i].c+') cubre la debilidad de clase de '+chars[j].name+'.'); }
-  }
+  if (vs.every(v => v.f === vs[0].f)) { score += 2; reasons.push('Mismo bando (' + vs[0].f + '): bonos de equipo activos.'); }
+  const roles = new Set(vs.flatMap(v => v.r));
+  const covered = ['Tanque','Control','Daño','Soporte'].filter(r => roles.has(r));
+  if (covered.length >= 2) { score += covered.length; reasons.push('Roles cubiertos: ' + covered.join(' + ') + '.'); }
+  const classes = new Set(vs.map(v => v.c));
+  if (classes.size === vs.length) { score += 1; reasons.push('Clases distintas: no comparten la misma debilidad.'); }
+  vs.forEach(a => vs.forEach(b => {
+    if (a !== b && SEED.CLASS_ADVANTAGE[a.c] === b.c) {
+      score += 1;
+      reasons.push(fullLabel(a) + ' (' + a.c + ') cubre la debilidad de clase de ' + fullLabel(b) + '.');
+    }
+  }));
   return { score, reasons: [...new Set(reasons)] };
 }
 
-// ---- images ----
-function imgTag(id, w, ht, ph){
-  const url = state.images[id];
-  if (url) return `<div class="portrait" style="height:${ht||'100%'}"><img src="${url}"/></div>`;
-  return `<div class="portrait" style="height:${ht||'100%'}"><span class="ph">${h(ph||'RETRATO')}</span></div>`;
-}
-function iconImg(value){
-  const url = state.images['icon-'+value];
-  return url ? `<img class="taxicon" src="${url}" alt=""/>` : '';
-}
-function skillFx(sk){
-  if (!sk.fx) return h(sk.d);
-  const L = { self:'A sí mismo', enemy:'Al oponente', allies:'Al equipo' };
+function skillFx (sk) {
+  const L = { general:'General', self:'A sí mismo', enemy:'Al oponente', allies:'Al equipo' };
+  if (!sk.fx) return `<div class="fxline"><div class="fxitems"><span>${h(sk.d)}</span></div></div>`;
   let out = '';
-  if (sk.fx.general) out += `<div class="fxline">${sk.fx.general.map(h).join(' · ')}</div>`;
-  for (const k of ['self','enemy','allies']) if (sk.fx[k] && sk.fx[k].length)
-    out += `<div class="fxline"><span class="fxlabel fx-${k}">${L[k]}</span>${sk.fx[k].map(x=>`<span class="fxitem">${h(x)}</span>`).join('')}</div>`;
-  return out || h(sk.d);
+  for (const k of ['general','self','enemy','allies']) {
+    const arr = sk.fx[k];
+    if (!arr || !arr.length) continue;
+    out += `<div class="fxline"><span class="fxlabel fx-${k}">${L[k]}</span><div class="fxitems">${arr.map(x => `<span>${h(x)}</span>`).join('')}</div></div>`;
+  }
+  return out;
 }
-function readFileAsDataUrl(file, cb){
-  const r = new FileReader();
-  r.onload = () => cb(r.result);
-  r.readAsDataURL(file);
+function skillCard (sk) {
+  return `<div class="skill">
+    <div class="top">
+      <span class="slotbadge ${slotClass(sk.slot)}">${h(sk.slot)}</span>
+      <span class="nm">${h(sk.n)}</span>
+      <span class="tag dim">${h(window.MFF_skillTiming(sk))}</span>
+      ${sk.dmg && sk.dmg !== 'Ninguno' ? tagGhost(sk.dmg, dmgColor(sk.dmg)) : ''}
+    </div>
+    <div class="body">
+      ${skillFx(sk)}
+      ${(sk.tags && sk.tags.length) || sk.ii || sk.iframe ? `<div class="row" style="margin-top:3px">
+        ${(sk.tags || []).map(t => `<span class="tag dim">${h(t)}</span>`).join('')}
+        ${sk.ii ? tagGhost('Ignora iframe','var(--accent-2)') : ''}
+        ${sk.iframe ? tagGhost('Tiene iframe','var(--allies)') : ''}
+      </div>` : ''}
+    </div>
+  </div>`;
 }
+/** Máximo 4 columnas en la comparación: al agregar la quinta se descarta la más vieja. */
+function togglePick (cid, uid) {
+  const key = cid + '::' + (uid || 'base');
+  const i = ui.picks.findIndex(p => p.key === key);
+  if (i > -1) { ui.picks.splice(i, 1); return; }
+  ui.picks.push({ cid, uid: uid || null, key });
+  if (ui.picks.length > 4) ui.picks.shift();
+}
+function readFile (file, cb) { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); }
 
 // ============================================================================
 // ROSTER
 // ============================================================================
-function flatUniformEntries(){
-  return state.characters.flatMap(ch => ch.uniforms.map(u => ({
-    ch, u, effC: u.c||ch.c, effR: (u.r&&u.r.length)?u.r:ch.r, effIns: u.ins||ch.ins, effT: u.tier||ch.t
-  })));
+const SORTS = {
+  name:   { label:'Nombre',  get: v => fullLabel(v).toLowerCase() },
+  tier:   { label:'Tier',    get: v => ({T4:0,T3:1,T2:2})[v.t] },
+  clase:  { label:'Clase',   get: v => v.c },
+  bando:  { label:'Bando',   get: v => v.f },
+  rank:   { label:'Posición en la lista', get: v => rankIndex(v.key) },
+  skills: { label:'Cantidad de skills',   get: v => -v.skills.length }
+};
+function rankIndex (key) {
+  const list = listById(U.prefs.refList); if (!list) return 999;
+  const rows = rowsOf(list); const r = assignOf(list.id)[key];
+  const i = rows.findIndex(x => x.id === r);
+  return i === -1 ? 999 : i;
 }
-function rosterFiltered(){
+function rankLabel (key) {
+  const list = listById(U.prefs.refList); if (!list) return null;
+  const r = assignOf(list.id)[key]; if (!r) return null;
+  const rows = rowsOf(list); const i = rows.findIndex(x => x.id === r);
+  return i === -1 ? null : { label: rows[i].label, color: rowColor(i, rows.length) };
+}
+
+function rosterData () {
   const q = ui.search.trim().toLowerCase();
-  const F = ui.filters;
-  const variantsOf = (ch) => [{c:ch.c,r:ch.r,ins:ch.ins,t:ch.t}, ...ch.uniforms.map(u=>({c:u.c||ch.c,r:(u.r&&u.r.length)?u.r:ch.r,ins:u.ins||ch.ins,t:u.tier||ch.t}))];
-  const filteredChars = state.characters.filter(ch=>{
-    if (q && !ch.name.toLowerCase().includes(q) && !ch.uniforms.some(u=>u.name.toLowerCase().includes(q))) return false;
-    if (F.f.length && !F.f.includes(ch.f)) return false;
-    if (F.ab.length && !F.ab.some(a=>(ch.abilities||[]).includes(a))) return false;
-    const variants = variantsOf(ch);
-    return variants.some(v => (!F.c.length||F.c.includes(v.c)) && (!F.r.length||F.r.some(r=>v.r.includes(r))) && (!F.t.length||F.t.includes(v.t)) && (!F.ins.length||F.ins.includes(v.ins)));
-  });
-  const filteredUniEntries = flatUniformEntries().filter(({ch,u,effC,effR,effIns,effT})=>{
-    if (q && !ch.name.toLowerCase().includes(q) && !u.name.toLowerCase().includes(q)) return false;
-    if (F.f.length && !F.f.includes(ch.f)) return false;
-    if (F.ab.length && !F.ab.some(a=>(ch.abilities||[]).includes(a))) return false;
-    if (F.c.length && !F.c.includes(effC)) return false;
-    if (F.r.length && !F.r.some(r=>effR.includes(r))) return false;
-    if (F.t.length && !F.t.includes(effT)) return false;
-    if (F.ins.length && !F.ins.includes(effIns)) return false;
+  const P = U.prefs, F = P.filters, G = P.flags;
+  let list = allVariants().filter(v => {
+    if (P.kind === 'base' && v.uid) return false;
+    if (P.kind === 'uni' && !v.uid) return false;
+    if (q && !(v.name.toLowerCase().includes(q) || v.sub.toLowerCase().includes(q))) return false;
+    if (F.c.length && !F.c.includes(v.c)) return false;
+    if (F.t.length && !F.t.includes(v.t)) return false;
+    if (F.f.length && !F.f.includes(v.f)) return false;
+    if (F.ins.length && !F.ins.includes(v.ins)) return false;
+    if (F.race.length && !F.race.includes(v.ch.race)) return false;
+    if (F.origin.length && !F.origin.includes(v.ch.origin)) return false;
+    if (F.r.length && !F.r.some(r => v.r.includes(r))) return false;
+    if (F.ab.length && !F.ab.some(a => v.ab.includes(a))) return false;
+    if (G.t4 && v.t !== 'T4') return false;
+    if (G.trans && !v.trans) return false;
+    if (G.nuevo && !v.nuevo) return false;
     return true;
   });
-  const byChar = {}; filteredUniEntries.forEach(e=>{ (byChar[e.ch.id]=byChar[e.ch.id]||[]).push(e); });
-  const filteredIds = new Set(filteredChars.map(c=>c.id));
-  const cards = [];
-  state.characters.forEach(ch=>{
-    if (filteredIds.has(ch.id)) cards.push({ kind:'char', ch });
-    (byChar[ch.id]||[]).forEach(e=>cards.push({ kind:'uniform', e }));
+  const s = SORTS[U.prefs.sort] || SORTS.name;
+  list.sort((a, b) => {
+    const x = s.get(a), y = s.get(b);
+    if (x < y) return -1 * U.prefs.dir;
+    if (x > y) return 1 * U.prefs.dir;
+    return fullLabel(a).localeCompare(fullLabel(b));
   });
-  return { cards, totalChars: state.characters.length, filteredChars: filteredChars.length,
-    totalUnis: flatUniformEntries().length, filteredUnis: filteredUniEntries.length };
+  return list;
 }
 
-function renderRoster(){
-  const { cards, filteredChars, totalChars, filteredUnis, totalUnis } = rosterFiltered();
-  const PAGE=20; const totalPages = Math.max(1, Math.ceil(cards.length/PAGE));
-  ui.rosterPage = Math.min(ui.rosterPage, totalPages-1);
-  const pageCards = cards.slice(ui.rosterPage*PAGE, (ui.rosterPage+1)*PAGE);
-  const F = ui.filters;
-  const chipRow = (label, cat, values) => `<div style="margin-bottom:6px"><div class="hint" style="margin-bottom:4px;text-transform:uppercase;font-size:10px;letter-spacing:.06em">${label}</div><div class="row">${
-    values.map(v=>`<button class="chip ${F[cat].includes(v)?'active':''}" data-act="filter" data-cat="${cat}" data-val="${h(v)}">${iconImg(v)}${h(v)}</button>`).join('')
+function toolbar (total, shown) {
+  const P = U.prefs, F = P.filters, G = P.flags;
+  const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length;
+  const group = (label, cat, values) => `<div class="filtergroup"><div class="lbl">${label}</div><div class="row">${
+    values.map(v => `<button class="chip ${F[cat].includes(v) ? 'on' : ''}" data-a="filter" data-cat="${cat}" data-v="${h(v)}">${icon(v)}${h(v)}</button>`).join('')
   }</div></div>`;
-  const abilityOpts = state.taxonomies.skillTags.map(t=>t.value);
-  const factionOpts = state.taxonomies.factions.map(t=>t.value);
-  const instinctOpts = state.taxonomies.instincts.map(t=>t.value);
-  return `
-  <div class="row" style="margin-bottom:16px">
-    <input id="searchInput" placeholder="Buscar personaje o uniforme…" value="${h(ui.search)}" style="flex:1;min-width:220px" data-act="search"/>
-    <button class="btn ghost" data-act="toggleFilters">Filtros${(F.c.length+F.r.length+F.f.length+F.t.length+F.ins.length+F.ab.length)?` (${F.c.length+F.r.length+F.f.length+F.t.length+F.ins.length+F.ab.length})`:''}</button>
-    <button class="btn ghost" data-act="clearFilters">Limpiar filtros</button>
-  </div>
-  ${ui.filtersOpen ? `<div class="card" style="margin-bottom:16px;background:#0f1422">
-    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
-      <div>${chipRow('Clase','c',SEED.CLASSES)}</div>
-      <div>${chipRow('Rol','r',SEED.ROLES)}</div>
-      <div>${chipRow('Bando','f',factionOpts)}</div>
-      <div>${chipRow('Tier','t',SEED.TIERS)}</div>
-      <div>${chipRow('Habilidad','ab',abilityOpts)}</div>
-      <div>${chipRow('Instinto','ins',instinctOpts)}</div>
-    </div>
-  </div>` : ''}
-  <div class="hint">${filteredChars} de ${totalChars} personajes · ${filteredUnis} de ${totalUnis} uniformes</div>
-  <div class="grid">
-    ${pageCards.map(item=>{
-      if (item.kind==='char'){
-        const ch = item.ch;
-        const selected = ui.compareSelection.some(x=>x.cid===ch.id && !x.uid);
-        return `<div class="card" style="cursor:pointer;position:relative;${selected?'box-shadow:0 0 0 2px var(--red)':''}" data-act="openChar" data-cid="${ch.id}">
-          ${ui.compareMode?`<div class="check ${selected?'on':''}" data-act="toggleCompare" data-cid="${ch.id}">${selected?'✓':''}</div>`:''}
-          ${imgTag('portrait-'+ch.id,0,'130px')}
-          <div style="font-weight:600;font-size:16px">${h(ch.name)}</div>
-          <div class="row">${iconImg(ch.c)}${tag(ch.c, classColor(ch.c), true)}${tag(ch.t, tierColor(ch.t))}${tag(ch.ins, 'var(--text-dim)', true)}</div>
-          <div class="hint" style="margin:0">${h(ch.f)} · ${ch.r.join(' / ')}</div>
-        </div>`;
-      } else {
-        const {ch,u,effC,effR,effIns,effT} = item.e;
-        const selected = ui.compareSelection.some(x=>x.cid===ch.id && x.uid===u.id);
-        return `<div class="card dashed" style="cursor:pointer;position:relative;background:#0f1422;${selected?'box-shadow:0 0 0 2px var(--red)':''}" data-act="openUniform" data-cid="${ch.id}" data-uid="${u.id}">
-          ${ui.compareMode?`<div class="check ${selected?'on':''}" data-act="toggleCompare" data-cid="${ch.id}" data-uid="${u.id}">${selected?'✓':''}</div>`:''}
-          ${imgTag('portrait-'+u.id,0,'130px')}
-          <div style="font-weight:600;font-size:16px">${h(u.name)}</div>
-          <div class="hint" style="margin:0;color:var(--gold)">${h(ch.name)}</div>
-          <div class="row">${iconImg(effC)}${tag(effC, classColor(effC), true)}${tag(effT, tierColor(effT))}${tag(effIns, 'var(--text-dim)', true)}</div>
-          <div class="hint" style="margin:0">${h(ch.f)} · ${effR.join(' / ')}</div>
-        </div>`;
-      }
-    }).join('')}
-  </div>
-  ${cards.length===0?'<div class="hint" style="text-align:center;padding:40px 0">Ningún resultado coincide con estos filtros.</div>':''}
-  ${totalPages>1?`<div class="pagination">
-    <button class="btn small ghost" data-act="rosterPage" data-p="${Math.max(0,ui.rosterPage-1)}">← Anterior</button>
-    ${Array.from({length:totalPages},(_,i)=>`<button class="btn small ${i===ui.rosterPage?'primary':'ghost'}" data-act="rosterPage" data-p="${i}">${i+1}</button>`).join('')}
-    <button class="btn small ghost" data-act="rosterPage" data-p="${Math.min(totalPages-1,ui.rosterPage+1)}">Siguiente →</button>
-  </div>`:''}
-  ${ui.compareMode && ui.compareSelection.length>=2 ? `<div style="position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:14px;background:linear-gradient(to top,var(--bg) 70%,transparent)">
-    <button class="btn primary" data-act="goCompare">Comparar ${ui.compareSelection.length}</button>
-  </div>` : ''}
-  `;
-}
-
-// ============================================================================
-// DETAIL
-// ============================================================================
-function renderDetail(){
-  const ch = findChar(ui.selectedCharId); if (!ch) { ui.view='roster'; return renderRoster(); }
-  const sorted = ch.uniforms.slice().sort((a,b)=>(parseInt(b.year)||0)-(parseInt(a.year)||0));
-  const mkRows = (skills) => skills.map((sk,i)=>`<div class="skillrow">
-    <div class="name">${h(sk.slot)} — ${h(sk.n)}</div>
-    <div class="desc">${skillFx(sk)}</div>
-    <div class="row">
-      <span class="tag outline" style="color:var(--gold);border-color:var(--gold)">${h(window.MFF_skillTiming(sk))}</span>
-      ${sk.dmg&&sk.dmg!=='Ninguno'?`<span class="tag outline" style="color:${dmgColor(sk.dmg)};border-color:${dmgColor(sk.dmg)}">${h(sk.dmg)}</span>`:''}
-      ${sk.ii?'<span class="tag outline">Ignora iframe</span>':''}
-      ${sk.iframe?'<span class="tag outline">Tiene iframe</span>':''}
-      ${sk.gb?'<span class="tag outline">Rotura de Guardia</span>':''}
-      ${sk.sgb?'<span class="tag outline">Superrotura de Guardia</span>':''}
-    </div></div>`).join('');
-  const selectorItems = [{id:'base',name:'Base'}, ...sorted.map(u=>({id:u.id,name:u.name}))];
-  const teams = state.teams.filter(t=>t.members.some(k=>k.split('::')[0]===ch.id));
-  return `
-  <button class="btn ghost" data-act="backRoster" style="margin-bottom:16px">← Volver al roster</button>
-  <div style="display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap">
-    <div style="width:420px;max-width:100%;position:sticky;top:80px;display:flex;flex-direction:column;gap:10px">
-      <div class="hint" style="margin:0;text-transform:uppercase;font-size:11px">Comparar con uniforme</div>
-      <div class="row" style="overflow-x:auto;flex-wrap:nowrap;padding-bottom:4px">
-        ${selectorItems.map(u=>`<button class="chip ${ui.viewUniformIds.includes(u.id)?'active':''}" data-act="selectView" data-uid="${u.id}" style="flex:none">${h(u.name)}</button>`).join('')}
+  return `<div class="toolbar">
+    <div class="line">
+      <div class="search"><input id="q" placeholder="Buscar personaje o uniforme…" value="${h(ui.search)}" data-a="search"></div>
+      <button class="btn ${U.prefs.filtersOpen ? 'primary' : ''}" data-a="toggleFilters">Filtros${active ? ' · ' + active : ''}</button>
+      ${active || ui.search ? `<button class="btn sm" data-a="clearFilters">Limpiar</button>` : ''}
+      <div class="seg">
+        <button class="${P.kind === 'todo' ? 'on' : ''}" data-a="kind" data-v="todo">Todo</button>
+        <button class="${P.kind === 'base' ? 'on' : ''}" data-a="kind" data-v="base">Bases</button>
+        <button class="${P.kind === 'uni' ? 'on' : ''}" data-a="kind" data-v="uni">Uniformes</button>
       </div>
-      <div class="row" style="gap:16px">
-        ${['base',...ui.viewUniformIds.filter(x=>x!=='base')].filter((v,i,a)=>a.indexOf(v)===i && (v==='base'?true:ui.viewUniformIds.includes(v))).map(vid=>{
-          if (!ui.viewUniformIds.includes(vid)) return '';
-          const label = vid==='base' ? 'Base' : (findUniform(ch,vid)||{}).name;
-          const pid = vid==='base' ? ch.id : vid;
-          return `<div style="display:flex;flex-direction:column;gap:6px">
-            <div class="hint" style="margin:0;color:var(--gold);text-transform:uppercase;font-size:11px">${h(label)}</div>
-            <div style="width:100px;height:100px;border-radius:8px;overflow:hidden">${imgTag('portrait-'+pid,0,'100px')}</div>
-            <div style="width:190px;height:260px;border-radius:8px;overflow:hidden">${imgTag('fullbody-'+pid,0,'260px','Cuerpo entero')}</div>
-            <label class="btn small ghost" style="text-align:center;cursor:pointer">Subir retrato<input type="file" accept="image/*" style="display:none" data-act="uploadImg" data-imgid="portrait-${pid}"/></label>
-            <label class="btn small ghost" style="text-align:center;cursor:pointer">Subir cuerpo entero<input type="file" accept="image/*" style="display:none" data-act="uploadImg" data-imgid="fullbody-${pid}"/></label>
-          </div>`;
-        }).join('')}
+      <div class="seg">
+        <button class="${U.prefs.view === 'grid' ? 'on' : ''}" data-a="view" data-v="grid" title="Tarjetas">Tarjetas</button>
+        <button class="${U.prefs.view === 'dense' ? 'on' : ''}" data-a="view" data-v="dense" title="Compacto">Compacto</button>
+        <button class="${U.prefs.view === 'table' ? 'on' : ''}" data-a="view" data-v="table" title="Tabla">Tabla</button>
       </div>
+      <select data-a="sort" title="Ordenar">${Object.entries(SORTS).map(([k, s]) => `<option value="${k}" ${k === U.prefs.sort ? 'selected' : ''}>${h(s.label)}</option>`).join('')}</select>
+      <button class="btn icon" data-a="dir" title="Invertir orden">${U.prefs.dir === 1 ? '↑' : '↓'}</button>
+      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `Comparando (${ui.picks.length}/4)` : 'Comparar'}</button>
+      <span class="count"><b>${shown}</b> de ${total}</span>
     </div>
-    <div style="flex:1;min-width:280px">
-      <h1>${h(ch.name)}</h1>
-      <div class="row" style="margin-bottom:8px">${tag(ch.c,classColor(ch.c),true)}${tag(ch.f,'var(--gold)')}${tag(ch.t,tierColor(ch.t))}${tag(ch.ins,'var(--text-dim)',true)}</div>
-      <div class="hint">Roles: ${ch.r.join(', ')} · Modos: ${ch.modes.map(mid=>{const m=state.modes.find(x=>x.id===mid);return m?m.name:mid;}).join(', ')} · Raza: ${h(ch.race||'—')} · Género: ${h(ch.gender||'—')} · Habilidades: ${(ch.abilities||[]).map(a=>iconImg(a)+h(a)).join(', ')||'—'}</div>
-      <button class="btn ghost" data-act="editChar" data-cid="${ch.id}" style="margin-top:8px">Editar personaje</button>
-
-      ${teams.length?`<div class="section" style="margin-top:22px"><h3>Equipos sugeridos</h3><div class="grid">
-        ${teams.map(t=>`<div class="card"><div class="hint" style="margin:0;color:var(--red);text-transform:uppercase;font-size:10px">${h(t.name)}</div>
-          <div style="font-weight:600;font-size:13px">${t.members.map(k=>{const r=resolveMember(...k.split('::'));return r?r.name:k;}).join(' + ')}</div>
-          <p class="hint" style="margin:0">${h(t.reason)}</p></div>`).join('')}
-      </div></div>`:''}
-
-      <div class="section" style="margin-top:22px">
-        <h3>Uniformes (${ch.uniforms.length})</h3>
-        <p class="hint">"Base" son las estadísticas generales; cada uniforme las suma a lo suyo. El check ✓ es para comparar habilidades.</p>
-        <div class="grid">
-          ${sorted.map(u=>{
-            const isViewing = ui.viewUniformIds.includes(u.id);
-            return `<div class="card" style="${isViewing?'outline:2px solid var(--red);outline-offset:2px':''}">
-              <div class="row" style="justify-content:space-between">
-                <div style="font-weight:600">${h(u.name)}</div>
-              </div>
-              <div class="row">${tag(u.tier,tierColor(u.tier))}<span class="hint" style="margin:0">${h(u.year)}</span></div>
-              ${mkRows(ch.baseSkills.concat(u.skills))}
-            </div>`;
-          }).join('')}
-          <div class="card">
-            <div style="font-weight:600">Base (${h(ch.name)})</div>
-            ${mkRows(ch.baseSkills)}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-// ============================================================================
-// COMPARE (characters and/or specific uniforms, up to 4)
-// ============================================================================
-function renderCompare(){
-  const compareChars = ui.compareSelection.map(sel=>resolveMember(sel.cid, sel.uid)).filter(Boolean);
-  const colTemplate = 'repeat('+Math.max(compareChars.length,1)+',1fr)';
-  const cnt = (list, get) => { const m={}; list.forEach(v=>{const k=get(v); m[k]=(m[k]||0)+1;}); return m; };
-  const classCounts = cnt(compareChars,c=>c.c), factionCounts = cnt(compareChars,c=>c.f), tierCounts = cnt(compareChars,c=>c.t);
-  const slots = SLOT_ORDER.filter(slot=>compareChars.some(c=>c.rawSkills.some(sk=>sk.slot===slot)));
-  const synergy = compareChars.length>=2 ? synergyScore(compareChars) : {score:0,reasons:[]};
-  const pct = Math.min(100, Math.round(synergy.score/10*100));
-  return `
-  <button class="btn ghost" data-act="backRoster" style="margin-bottom:16px">← Volver al roster</button>
-  <h1>Comparativa</h1>
-  <div class="grid" style="grid-template-columns:${colTemplate};margin-bottom:20px">
-    ${compareChars.map(c=>`<div class="card">
-      <div style="font-weight:700;font-size:17px;margin-bottom:6px">${h(c.name)}</div>
-      <div style="font-size:12.5px;display:flex;flex-direction:column;gap:5px">
-        <div>Clase: ${tag(c.c, classCounts[c.c]>1?'var(--red)':'#333')}</div>
-        <div>Bando: ${tag(c.f, factionCounts[c.f]>1?'var(--red)':'#333')}</div>
-        <div>Rol: ${c.r.join(', ')}</div>
-        <div>Tier: ${tag(c.t, tierCounts[c.t]>1?'var(--red)':'#333')}</div>
-        <div class="hint" style="margin:0">Uniformes: ${c.uniforms.map(u=>u.name).join(', ')}</div>
-      </div>
-    </div>`).join('')}
-  </div>
-  <div class="section">
-    <h3>Habilidades</h3>
-    <p class="hint">Se resalta cuando coincide tipo de daño en el mismo slot.</p>
-    ${slots.map(slot=>{
-      const raw = compareChars.map(c=>c.rawSkills.find(sk=>sk.slot===slot)||null);
-      const present = raw.filter(Boolean);
-      const dmgCounts = {}; present.forEach(sk=>{ if (sk.dmg&&sk.dmg!=='Ninguno') dmgCounts[sk.dmg]=(dmgCounts[sk.dmg]||0)+1; });
-      return `<div style="margin-bottom:10px">
-        <div class="hint" style="margin:0 0 4px;text-transform:uppercase;font-size:11px">${h(slot)}</div>
-        <div class="grid" style="grid-template-columns:${colTemplate}">
-          ${raw.map(sk=>{
-            if (!sk) return `<div class="card"><span class="hint" style="margin:0">— No tiene este slot —</span></div>`;
-            const highlight = sk.dmg!=='Ninguno' && dmgCounts[sk.dmg]>1;
-            return `<div class="card">
-              <div style="font-weight:600;font-size:14px;margin-bottom:4px">${h(sk.n)}</div>
-              <div style="margin:0 0 6px;font-size:12.5px;opacity:.85">${skillFx(sk)}</div>
-              <div class="row">
-                <span class="tag outline" style="color:var(--gold);border-color:var(--gold)">${h(window.MFF_skillTiming(sk))}</span>
-                <span class="tag${highlight?'':' outline'}" style="${highlight?`background:var(--red);color:#111`:`color:${dmgColor(sk.dmg)};border-color:${dmgColor(sk.dmg)}`}">${h(sk.dmg)}</span>
-              </div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-    }).join('')}
-  </div>
-  <div class="card">
-    <div class="row" style="margin-bottom:8px">
-      <h3 style="margin:0">Sinergia automática</h3>
-      <div style="flex:1;height:6px;background:#333;border-radius:4px;overflow:hidden"><div style="height:100%;width:${pct}%;background:var(--red)"></div></div>
-      <span class="hint" style="margin:0">${synergy.score} pts</span>
-    </div>
-    ${synergy.reasons.length?`<ul style="margin:0;padding-left:18px;font-size:13px">${synergy.reasons.map(r=>`<li>${h(r)}</li>`).join('')}</ul>`
-      :`<p class="hint" style="margin:0">Sin señales de sinergia fuertes entre esta selección.</p>`}
-  </div>`;
-}
-
-// ============================================================================
-// TEAMS
-// ============================================================================
-function renderTeams(){
-  const modeOpts = [{id:'',name:'Sin modo específico (3 por defecto)'}, ...state.modes];
-  const tb = ui.teamBuilder;
-  const mode = state.modes.find(m=>m.id===tb.modeId);
-  const max = mode ? mode.teamSize : 3;
-  const modeMap = state.tierAssignments[tb.modeId] || {};
-  const rankIdx = (key) => { const i=TIER_RANKS.indexOf(modeMap[key]); return i===-1?TIER_RANKS.length:i; };
-  const q = (ui.teamBuilderSearch||'').trim().toLowerCase();
-  let entries = state.characters.flatMap(c=>[
-    {key:c.id, label:c.name, m:c.name.toLowerCase().includes(q)},
-    ...c.uniforms.map(u=>({key:c.id+'::'+u.id, label:u.name+' — '+c.name, m: !q || c.name.toLowerCase().includes(q) || u.name.toLowerCase().includes(q)}))
-  ]).filter(e=>!q||e.m);
-  entries.sort((a,b)=>rankIdx(a.key)-rankIdx(b.key));
-  const PS=24; const totalPages=Math.max(1,Math.ceil(entries.length/PS));
-  ui.teamBuilderPage = Math.min(ui.teamBuilderPage, totalPages-1);
-  const pageEntries = entries.slice(ui.teamBuilderPage*PS,(ui.teamBuilderPage+1)*PS);
-  return `
-  <div class="row" style="justify-content:space-between;margin-bottom:16px">
-    <div><h1>Equipos sugeridos</h1><p class="hint">Combinaciones curadas y las que armás vos, con sinergia automática.</p></div>
-    <button class="btn ghost" data-act="openTeamBuilder">+ Armar equipo</button>
-  </div>
-  ${ui.showTeamBuilder ? `<div class="card" style="margin-bottom:20px">
-    <div class="field"><label>Nombre del equipo (opcional)</label><input id="tbName" style="width:100%" value="${h(tb.name)}" data-act="tbName"/></div>
-    <div class="field" style="margin-top:8px"><label>Modo de juego (define el tamaño máximo)</label>
-      <select data-act="tbMode">${modeOpts.map(m=>`<option value="${m.id}" ${m.id===tb.modeId?'selected':''}>${h(m.name)}${m.teamSize?` (${m.teamSize})`:''}</option>`).join('')}</select>
-    </div>
-    <div class="field" style="margin-top:8px"><label>Miembros (${tb.memberIds.length} / ${max}) — ordenados por la tier list de este modo</label>
-      <input placeholder="Buscar personaje o uniforme…" style="width:100%;margin-bottom:8px" value="${h(ui.teamBuilderSearch)}" data-act="tbSearch"/>
-      <div class="row">
-        ${pageEntries.map(e=>{
-          const selected = tb.memberIds.includes(e.key);
-          const pid = e.key.includes('::') ? e.key.split('::')[1] : e.key;
-          return `<div title="${h(e.label)}" data-act="tbToggle" data-key="${e.key}" style="width:56px;height:56px;border-radius:8px;overflow:hidden;cursor:pointer;flex:none;${selected?'box-shadow:0 0 0 2px var(--red)':'box-shadow:0 0 0 1px rgba(240,240,240,.16)'}">${imgTag('portrait-'+pid,56,'56px')}</div>`;
-        }).join('')}
-      </div>
-      ${totalPages>1?`<div class="row" style="margin-top:8px">${Array.from({length:totalPages},(_,i)=>`<button class="btn small ${i===ui.teamBuilderPage?'primary':'ghost'}" data-act="tbPage" data-p="${i}">${i+1}</button>`).join('')}</div>`:''}
-    </div>
-    <div class="field" style="margin-top:8px"><label>Motivo (opcional)</label><textarea style="width:100%;min-height:50px" data-act="tbReason">${h(tb.reason)}</textarea></div>
-    <div class="row" style="justify-content:flex-end;margin-top:10px">
-      <button class="btn ghost" data-act="closeTeamBuilder">Cancelar</button>
-      <button class="btn primary" data-act="saveTeam" ${tb.memberIds.length<2?'disabled':''}>Guardar equipo</button>
-    </div>
-  </div>`:''}
-  <div class="grid">
-    ${state.teams.map(t=>{
-      const chars = t.members.map(k=>resolveMember(...k.split('::'))).filter(Boolean);
-      const sc = synergyScore(chars);
-      return `<div class="card" style="position:relative">
-        <button class="btn small ghost" data-act="removeTeam" data-id="${t.id}" style="position:absolute;top:8px;right:8px">✕</button>
-        <div style="font-weight:600;padding-right:18px">${h(t.name)}</div>
-        <div style="color:var(--red);font-size:13px">${chars.map(c=>c.name).join(' + ')}</div>
-        <p class="hint" style="margin:0">${h(t.reason)}</p>
-        <div class="hint" style="margin:0">${sc.score} pts de sinergia</div>
-      </div>`;
-    }).join('')}
-  </div>`;
-}
-
-// ============================================================================
-// TIER LIST
-// ============================================================================
-function tierDefs(){ return [...state.modes.map(m=>({key:m.id,label:m.name,removable:false})), ...state.customTierLists.map(l=>({key:l.id,label:l.name,removable:true}))]; }
-function renderTierList(){
-  const defs = tierDefs();
-  const active = ui.tierListModeView || (defs[0]&&defs[0].key) || '';
-  const entries = state.characters.flatMap(ch=>[{key:ch.id+'::base', label:ch.name+' (base)', uid:ch.id}, ...ch.uniforms.map(u=>({key:ch.id+'::'+u.id, label:u.name+' — '+ch.name, uid:u.id}))]);
-  const modeMap = state.tierAssignments[active] || {};
-  const rankColor = {S:'var(--red)',A:'#ff7a3d',B:'#ffb020',C:'#8a8f9c',D:'#555'};
-  const rows = TIER_RANKS.map(rank=>({
-    rank, items: entries.filter(e=>modeMap[e.key]===rank)
-  }));
-  const unranked = entries.filter(e=>!modeMap[e.key]);
-  return `
-  <h1>Tier list</h1>
-  <p class="hint">La armás vos: asigná cada uniforme a un rango (S/A/B/C/D), arrastrando o con los botones. Un tier list por modo o categoría.</p>
-  <div class="row" style="margin-bottom:10px">
-    ${defs.map(d=>`<span style="display:inline-flex;gap:2px;align-items:center">
-      <button class="tabbtn ${d.key===active?'active':''}" data-act="tierMode" data-key="${d.key}">${h(d.label)}</button>
-      ${d.removable?`<button class="btn small ghost" data-act="removeTierList" data-key="${d.key}" title="Borrar">✕</button>`:''}
-    </span>`).join('')}
-  </div>
-  <div class="row" style="margin-bottom:20px">
-    <input placeholder="Nombre de una tier list nueva (ej: Mis favoritos)" style="width:280px" value="${h(ui.newTierListName)}" data-act="newTierListName"/>
-    <button class="btn ghost" data-act="addTierList">+ Crear tier list</button>
-  </div>
-  <div style="margin-bottom:16px">
-    ${rows.map(row=>`<div class="rankrow" data-act="dropRank" data-rank="${row.rank}">
-      <span class="rankbadge" style="background:${rankColor[row.rank]}">${row.rank}</span>
-      <div class="row">${row.items.map(e=>`<span class="tierchip" draggable="true" data-act="dragItem" data-key="${e.key}">
-        ${imgTag('portrait-'+e.uid,26,'',' ').replace('class="portrait"','class="ph2"')}
-        ${h(e.label)}<button class="btn small ghost" data-act="unassignTier" data-key="${e.key}" style="padding:0 4px">✕</button>
-      </span>`).join('')}</div>
-    </div>`).join('')}
-  </div>
-  <details ${unranked.length?'':'style="display:none"'}>
-    <summary style="font-size:12px;color:var(--red);cursor:pointer">Asignar más uniformes (${unranked.length})…</summary>
-    <div style="display:flex;flex-direction:column;gap:5px;margin-top:8px;max-height:280px;overflow-y:auto" data-act="dropUnranked">
-      ${unranked.map(e=>`<div class="row" style="background:var(--surface);border-radius:7px;padding:5px 8px" draggable="true" data-act="dragItem" data-key="${e.key}">
-        <span style="flex:1;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h(e.label)}</span>
-        <div class="row" style="flex:none">${TIER_RANKS.map(r=>`<button class="btn small ghost" data-act="assignTier" data-key="${e.key}" data-rank="${r}">${r}</button>`).join('')}</div>
-      </div>`).join('')}
-    </div>
-  </details>`;
-}
-
-// ============================================================================
-// SETTINGS
-// ============================================================================
-function renderSettings(){
-  const taxSection = (cat, title) => `<div class="card" style="margin-bottom:14px">
-    <h3>${h(title)}</h3>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      ${state.taxonomies[cat].map((it,i)=>`<div class="row">
-        <input data-act="taxIcon" data-cat="${cat}" data-i="${i}" value="${h(it.icon)}" placeholder="Ícono/emoji" style="width:70px"/>
-        <input data-act="taxValue" data-cat="${cat}" data-i="${i}" value="${h(it.value)}" style="flex:1"/>
-        <button class="btn small ghost" data-act="taxRemove" data-cat="${cat}" data-i="${i}">✕</button>
-      </div>`).join('')}
-    </div>
-    <button class="btn small ghost" data-act="taxAdd" data-cat="${cat}" style="margin-top:8px">+ Agregar</button>
-  </div>`;
-  return `
-  <h1>Configuración</h1>
-  <div class="card" style="margin-bottom:14px">
-    <h3>Logo</h3>
-    <p class="hint">Si lo cargás, reemplaza el texto de la marca en el encabezado.</p>
-    <div style="width:220px;height:56px;border-radius:8px;overflow:hidden;background:var(--surface2)">${imgTag('brand-logo',220,'56px','Logo')}</div>
-    <label class="btn small ghost" style="margin-top:8px;display:inline-block;cursor:pointer">Subir logo<input type="file" accept="image/*" style="display:none" data-act="uploadImg" data-imgid="brand-logo"/></label>
-    ${state.images['brand-logo']?`<button class="btn small ghost" data-act="clearLogo" style="margin-left:6px">Quitar</button>`:''}
-  </div>
-  <div class="card" style="margin-bottom:14px">
-    <h3>Modos de juego</h3>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      ${state.modes.map((m,i)=>`<div class="row">
-        <input data-act="modeIcon" data-i="${i}" value="${h(m.icon||'')}" placeholder="Ícono" style="width:70px"/>
-        <input data-act="modeName" data-i="${i}" value="${h(m.name)}" style="flex:2"/>
-        <label class="hint" style="margin:0">Tamaño</label>
-        <input type="number" min="2" max="8" data-act="modeSize" data-i="${i}" value="${m.teamSize}" style="width:70px"/>
-        <button class="btn small ghost" data-act="modeRemove" data-i="${i}">✕</button>
-      </div>`).join('')}
-    </div>
-    <button class="btn small ghost" data-act="modeAdd" style="margin-top:8px">+ Agregar modo</button>
-  </div>
-  ${taxSection('races','Raza')}${taxSection('genders','Género')}${taxSection('factions','Bando')}${taxSection('instincts','Instinto')}${taxSection('skillTags','Habilidad (Etiqueta)')}
-  `;
-}
-
-// ============================================================================
-// ADMIN (add/edit character)
-// ============================================================================
-function blankDraft(){ return { name:'', c:'Combate', f: state.taxonomies.factions[0]?.value||'', r:[], t:'T2', ins: state.taxonomies.instincts[0]?.value||'', race:'', gender:'', modes:[], abilities:[], baseSkills:[], uniforms:[{name:'',tier:'T2',year:'',skills:[]}] }; }
-function renderAdmin(){
-  const d = ui.adminDraft; const steps=['Datos básicos','Uniformes','Revisar'];
-  const single = (field) => (val) => { d[field]=val; };
-  const chipPicker = (opts, field, multi) => opts.map(v=>{
-    const active = multi ? d[field].includes(v) : d[field]===v;
-    return `<button class="chip ${active?'active':''}" data-act="adminPick" data-field="${field}" data-val="${h(v)}" data-multi="${multi?1:0}">${h(v)}</button>`;
-  }).join('');
-  let body = '';
-  if (ui.adminStep===0){
-    body = `<div class="field"><label>Nombre</label><input style="width:100%" data-act="adminField" data-field="name" value="${h(d.name)}"/></div>
-    <div class="field"><label>Clase</label><div class="row">${chipPicker(SEED.CLASSES,'c',false)}</div></div>
-    <div class="field"><label>Bando</label><div class="row">${chipPicker(state.taxonomies.factions.map(x=>x.value),'f',false)}</div></div>
-    <div class="field"><label>Instinto</label><div class="row">${chipPicker(state.taxonomies.instincts.map(x=>x.value),'ins',false)}</div></div>
-    <div class="field"><label>Raza</label><div class="row">${chipPicker(state.taxonomies.races.map(x=>x.value),'race',false)}</div></div>
-    <div class="field"><label>Género</label><div class="row">${chipPicker(state.taxonomies.genders.map(x=>x.value),'gender',false)}</div></div>
-    <div class="field"><label>Rol (uno o más)</label><div class="row">${chipPicker(SEED.ROLES,'r',true)}</div></div>
-    <div class="field"><label>Tier</label><div class="row">${chipPicker(SEED.TIERS,'t',false)}</div></div>
-    <div class="field"><label>Modos donde destaca</label><div class="row">${state.modes.map(m=>`<button class="chip ${d.modes.includes(m.id)?'active':''}" data-act="adminPick" data-field="modes" data-val="${m.id}" data-multi="1">${h(m.name)}</button>`).join('')}</div></div>
-    <div class="field"><label>Habilidades destacadas (hasta 3)</label><div class="row">${chipPicker(state.taxonomies.skillTags.map(x=>x.value),'abilities',true)}</div></div>`;
-  } else if (ui.adminStep===1){
-    body = d.uniforms.map((u,ui2)=>`<div class="card" style="margin-bottom:12px">
-      <div class="row">
-        <input placeholder="Nombre del uniforme" style="flex:2" data-act="adminUField" data-u="${ui2}" data-field="name" value="${h(u.name)}"/>
-        <input placeholder="Tier" style="flex:1" data-act="adminUField" data-u="${ui2}" data-field="tier" value="${h(u.tier)}"/>
-        <input placeholder="Año" style="flex:1" data-act="adminUField" data-u="${ui2}" data-field="year" value="${h(u.year)}"/>
-      </div>
-      <div class="field" style="margin-top:6px"><label>¿Cambia la clase?</label><div class="row">
-        <button class="chip ${!u.c?'active':''}" data-act="adminUField" data-u="${ui2}" data-field="c" data-val="">Igual que el personaje</button>
-        ${SEED.CLASSES.map(v=>`<button class="chip ${u.c===v?'active':''}" data-act="adminUField" data-u="${ui2}" data-field="c" data-val="${v}">${v}</button>`).join('')}
+    ${U.prefs.filtersOpen ? `<div class="filterpanel">
+      ${group('Clase','c',SEED.CLASSES)}
+      ${group('Rol','r',SEED.ROLES)}
+      ${group('Tier','t',SEED.TIERS)}
+      ${group('Bando','f',SEED.FACTIONS)}
+      ${group('Instinto','ins',SEED.INSTINCTS)}
+      ${group('Raza','race',SEED.RACES)}
+      ${group('Origen','origin',[...new Set(CHARS.map(c => c.origin).filter(Boolean))].sort())}
+      ${group('Habilidad','ab',SEED.SKILL_TAGS)}
+      <div class="filtergroup"><div class="lbl">Atajos</div><div class="row">
+        <button class="chip ${G.t4 ? 'on' : ''}" data-a="flag" data-v="t4">Solo T4</button>
+        <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">Trascendidos</button>
+        <button class="chip ${G.nuevo ? 'on' : ''}" data-a="flag" data-v="nuevo">Nuevos</button>
       </div></div>
-      ${u.skills.map((sk,si)=>`<div class="card" style="background:#0f1422;margin-top:8px">
-        <div class="row">
-          <select data-act="adminSkField" data-u="${ui2}" data-s="${si}" data-field="slot">${SLOT_ORDER.map(s=>`<option ${s===sk.slot?'selected':''}>${s}</option>`).join('')}</select>
-          <select data-act="adminSkField" data-u="${ui2}" data-s="${si}" data-field="dmg">${SEED.DAMAGE_TYPES.map(s=>`<option ${s===sk.dmg?'selected':''}>${s}</option>`).join('')}</select>
-          <label class="hint" style="margin:0"><input type="checkbox" data-act="adminSkField" data-u="${ui2}" data-s="${si}" data-field="ii" ${sk.ii?'checked':''}/> Ignora iframe</label>
-          <button class="btn small ghost" data-act="adminSkRemove" data-u="${ui2}" data-s="${si}">✕</button>
-        </div>
-        <input placeholder="Nombre habilidad" style="width:100%;margin-top:6px" data-act="adminSkField" data-u="${ui2}" data-s="${si}" data-field="n" value="${h(sk.n)}"/>
-        <textarea placeholder="Descripción" style="width:100%;margin-top:6px" data-act="adminSkField" data-u="${ui2}" data-s="${si}" data-field="d">${h(sk.d)}</textarea>
-      </div>`).join('')}
-      <button class="btn small ghost" data-act="adminSkAdd" data-u="${ui2}" style="margin-top:8px">+ Agregar habilidad</button>
-    </div>`).join('') + `<button class="btn ghost" data-act="adminUAdd">+ Agregar otro uniforme</button>`;
-  } else {
-    body = `<div class="card"><div style="font-weight:600;font-size:18px">${h(d.name)}</div>
-      <div class="hint">${[d.c,d.f,d.t,d.r.join('/')].filter(Boolean).join(' · ')}</div>
-      <div class="hint">${d.uniforms.length} uniforme(s), ${d.uniforms.reduce((n,u)=>n+u.skills.length,0)} habilidades.</div></div>`;
+      <div class="filtergroup"><div class="lbl">Lista de referencia (define la posición que se muestra)</div>
+        <select data-a="refList" style="width:100%">
+          <option value="">— ninguna —</option>
+          ${LISTS.map(l => `<option value="${l.id}" ${l.id === U.prefs.refList ? 'selected' : ''}>${h(l.name)}</option>`).join('')}
+        </select>
+      </div>
+    </div>` : ''}
+  </div>`;
+}
+
+function cardHtml (v) {
+  const picked = ui.picks.some(p => p.key === v.key);
+  const rank = rankLabel(v.key);
+  return `<div class="ccard ${v.uid ? 'uni' : ''} ${picked ? 'sel' : ''}" style="--acc:${classColor(v.c)}" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}">
+    ${ui.pickMode ? `<div class="pick ${picked ? 'on' : ''}" data-a="pick" data-cid="${v.cid}" data-uid="${v.uid || ''}">✓</div>` : ''}
+    <div class="shot">
+      ${shot(v.id)}
+      <div class="tl"><span class="classdot" title="${h(v.c)}">${icon(v.c) || '<b style="font-size:10px">' + h(v.c[0]) + '</b>'}</span></div>
+      ${!ui.pickMode && rank ? `<div class="tr"><span class="tag solid rank" style="background:${rank.color}"
+          title="${h(((listById(U.prefs.refList)||{}).name||'') + ': ' + rank.label)}">${h(rank.label)}</span></div>` : ''}
+      <div class="bl">
+        <div class="nm">${h(v.uid ? v.sub : v.name)}</div>
+        ${v.uid ? `<div class="of">${h(v.name)}</div>` : ''}
+      </div>
+    </div>
+    <div class="cbody">
+      <div class="row" style="gap:5px">
+        ${tagSolid(v.t, tierColor(v.t))}${transTag(v.trans)}
+        ${v.nuevo ? tagSolid('NUEVO', 'var(--gold)') : ''}
+        ${insTag(v.ins)}
+      </div>
+      <div class="rolebar" title="${h(v.r.join(' · '))}">${SEED.ROLES.map(r => `<span style="background:${v.r.includes(r) ? roleColor(r) : 'var(--line)'}"></span>`).join('')}</div>
+      <div class="muted" style="font-size:11.5px">${h(v.f)} · ${v.skills.length} skills</div>
+    </div>
+  </div>`;
+}
+
+function tableHtml (rows) {
+  const cols = [['name','Personaje'],['c','Clase'],['t','Tier'],['f','Bando'],['ins','Instinto'],['r','Roles'],['striker','Striker'],['wba','World Boss'],['skills','Skills'],['rank','Lista']];
+  return `<div class="tablewrap"><table class="dt"><thead><tr>${cols.map(c => `<th>${h(c[1])}</th>`).join('')}</tr></thead><tbody>
+    ${rows.map(v => {
+      const rank = rankLabel(v.key);
+      const u = imgUrl('portrait-' + v.id);
+      return `<tr data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}">
+        <td><div class="cellname">${u ? `<img class="thumb" src="${u}" alt="" loading="lazy">` : '<span class="thumb"></span>'}
+          <div><div style="font-weight:600">${h(v.uid ? v.sub : v.name)}</div>${v.uid ? `<div class="muted" style="font-size:11.5px">${h(v.name)}</div>` : '<div class="muted" style="font-size:11.5px">Base</div>'}</div></div></td>
+        <td>${tagGhost(v.c, classColor(v.c))}</td>
+        <td style="white-space:nowrap">${tagSolid(v.t, tierColor(v.t))}${transTag(v.trans)}</td>
+        <td class="muted">${h(v.f)}</td>
+        <td class="muted">${h(v.ins === 'Desconocido' ? '—' : v.ins)}</td>
+        <td>${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(r)}</span>`).join(' ')}</td>
+        <td class="mono">${v.striker != null ? h(v.striker) : '—'}</td>
+        <td class="muted">${h(v.wba || '—')}</td>
+        <td class="mono">${v.skills.length}</td>
+        <td>${rank ? `<span class="tag solid" style="background:${rank.color}">${h(rank.label)}</span>` : '<span class="muted">—</span>'}</td>
+      </tr>`;
+    }).join('')}
+  </tbody></table></div>`;
+}
+
+function renderRoster () {
+  const rows = rosterData();
+  const total = allVariants().length;
+  const PAGE = U.prefs.view === 'table' ? 60 : 36;
+  const pages = Math.max(1, Math.ceil(rows.length / PAGE));
+  ui.page = Math.min(Math.max(0, ui.page), pages - 1);
+  const slice = rows.slice(ui.page * PAGE, (ui.page + 1) * PAGE);
+  const body = rows.length === 0
+    ? `<div class="empty"><div class="big">∅</div><div>Ningún personaje o uniforme coincide con estos filtros.</div>
+       <button class="btn sm" style="margin-top:12px" data-a="clearFilters">Limpiar filtros</button></div>`
+    : U.prefs.view === 'table' ? tableHtml(slice)
+    : `<div class="grid ${U.prefs.view === 'dense' ? 'dense' : ''}">${slice.map(cardHtml).join('')}</div>`;
+  return toolbar(total, rows.length) + body + pager(pages) +
+    (ui.pickMode && ui.picks.length >= 2
+      ? `<div style="position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:16px;
+           background:linear-gradient(to top,var(--bg) 62%,transparent);z-index:50">
+           <button class="btn primary" data-a="goCompare">Comparar ${ui.picks.length} →</button></div>` : '');
+}
+function pager (pages) {
+  if (pages <= 1) return '';
+  const cur = ui.page;
+  const nums = [];
+  for (let i = 0; i < pages; i++) {
+    if (i < 2 || i > pages - 3 || Math.abs(i - cur) <= 1) nums.push(i);
+    else if (nums[nums.length - 1] !== '…') nums.push('…');
   }
-  return `<h1>${ui.adminEditId?'Editar personaje':'Agregar personaje'}</h1>
-  <p class="hint">Paso ${ui.adminStep+1} de 3 — ${steps[ui.adminStep]}</p>
-  <div class="row" style="margin-bottom:16px">${steps.map((s,i)=>`<button class="tabbtn ${i===ui.adminStep?'active':''}" data-act="adminStep" data-i="${i}">${i+1}. ${s}</button>`).join('')}</div>
-  ${body}
-  <div class="row" style="justify-content:space-between;margin-top:20px">
-    <button class="btn ghost" data-act="adminPrev" ${ui.adminStep===0?'disabled':''}>Atrás</button>
-    ${ui.adminStep===2?`<button class="btn primary" data-act="adminSave">${ui.adminEditId?'Guardar cambios':'Guardar personaje'}</button>`:`<button class="btn primary" data-act="adminNext">Siguiente</button>`}
+  return `<div class="row" style="justify-content:center;margin-top:22px">
+    <button class="btn sm" data-a="page" data-p="${Math.max(0, cur - 1)}" ${cur === 0 ? 'disabled' : ''}>←</button>
+    ${nums.map(n => n === '…' ? '<span class="muted">…</span>' : `<button class="btn sm ${n === cur ? 'primary' : ''}" data-a="page" data-p="${n}">${n + 1}</button>`).join('')}
+    <button class="btn sm" data-a="page" data-p="${Math.min(pages - 1, cur + 1)}" ${cur === pages - 1 ? 'disabled' : ''}>→</button>
   </div>`;
 }
 
 // ============================================================================
-// NAV + RENDER DISPATCH
+// FICHA
 // ============================================================================
-function renderNav(){
-  const logo = state.images['brand-logo'];
+const STAT_ES = { recovery_rate:'Recuperación', fire_resist:'Res. fuego', cold_resist:'Res. frío',
+                  lightning_resist:'Res. rayo', poison_resist:'Res. veneno', mind_resist:'Res. mental' };
+function renderDetail () {
+  const ch = CHAR_BY_ID[ui.charId];
+  if (!ch) { ui.view = 'roster'; return renderRoster(); }
+  const v = variant(ch.id, ui.uniformId);
+  const rank = rankLabel(v.key);
+  const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
+  const teams = U.teams.filter(t => t.members.some(k => k.split('::')[0] === ch.id));
+  const byslot = {}; v.skills.forEach(sk => { (byslot[sk.slot] = byslot[sk.slot] || []).push(sk); });
+  const ordered = SLOT_ORDER.filter(s => byslot[s]);
+  const extra = Object.keys(byslot).filter(s => !SLOT_ORDER.includes(s));
+  const box = (k, val) => `<div class="stat"><div class="k">${h(k)}</div><div class="v">${val}</div></div>`;
+
+  return `
+  <div class="row" style="margin-bottom:14px">
+    <button class="btn sm" data-a="back">← Roster</button>
+    <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}">+ Comparar esta versión</button>
+    <button class="btn sm" data-a="edit" data-cid="${ch.id}">Editar</button>
+  </div>
+  <div class="hero">
+    <div class="glow" style="background:radial-gradient(60% 120% at 12% 0%, ${classColor(v.c)}22, transparent 70%)"></div>
+    <div class="inner">
+      <div class="face">${shot(v.id)}</div>
+      <div class="meta">
+        <h1>${h(ch.name)}</h1>
+        ${rank ? `<div class="row"><span class="muted">${h((listById(U.prefs.refList) || {}).name || '')}:</span>
+          <span class="tag solid" style="background:${rank.color}">${h(rank.label)}</span></div>` : ''}
+        <div class="row">
+          ${tagGhost(v.c, classColor(v.c))}
+          ${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid('TRASCENDIDO', 'var(--gold)') : ''}
+          <span class="tag dim">${h(v.f)}</span>
+          ${insTag(v.ins)}
+          ${v.nuevo ? tagSolid('NUEVO','var(--gold)') : ''}
+          ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(r)}</span>`).join('')}
+        </div>
+        <div class="statgrid">
+          ${box('Uniforme actual', h(v.uid ? v.sub : 'Base'))}
+          ${box('Raza', icon(ch.race) + h(ch.race || '—'))}
+          ${box('Género', icon(ch.gender) + h(ch.gender || '—'))}
+          ${box('Origen', h(ch.origin || '—'))}
+          ${box('Striker', v.striker != null ? 'Skill ' + h(v.striker) : '—')}
+          ${box('World Boss', icon(v.wba) + h(v.wba || '—'))}
+          ${v.cost ? box('Costo del uniforme', h(v.cost)) : ''}
+          ${box('Uniformes', h(String(ch.uniforms.length)))}
+          ${stats.map(([k, val]) => box(STAT_ES[k] || k, h(val))).join('')}
+        </div>
+        <div class="row">
+          <span class="muted">Habilidades:</span>
+          ${(v.ab || []).map(a => `<span class="tag dim">${icon(a)}${h(a)}</span>`).join('') || '<span class="muted">—</span>'}
+        </div>
+        ${(ch.tuc || []).length ? `<div class="row"><span class="muted">Cartas TUC:</span>${ch.tuc.map(t => `<span class="tag dim">${h(t)}</span>`).join('')}</div>` : ''}
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3>Uniformes · ${pluralUni(ch.uniforms.length)}</h3>
+    <div class="unitabs">
+      <button class="unitab ${v.uid ? '' : 'on'}" data-a="uniform" data-uid="base">
+        ${imgUrl('portrait-' + ch.id) ? `<img src="${imgUrl('portrait-' + ch.id)}" alt="">` : ''}Base</button>
+      ${ch.uniforms.map(u => `<button class="unitab ${v.uid === u.id ? 'on' : ''}" data-a="uniform" data-uid="${u.id}">
+        ${imgUrl('portrait-' + u.id) ? `<img src="${imgUrl('portrait-' + u.id)}" alt="">` : ''}${h(u.name)}
+        <span class="tag solid" style="background:${tierColor(u.tier)};font-size:9px">${h(u.tier)}</span></button>`).join('')}
+    </div>
+    <p class="muted" style="margin-bottom:12px">Se muestran las skills de la base más las propias del uniforme elegido.
+      ${v.uid && (findUniform(ch, v.uid) || {}).skills.length === 0 ? '<b>Este uniforme no tiene skills propias en la wiki.</b>' : ''}</p>
+    ${v.skills.length
+      ? ordered.concat(extra).map(slot => byslot[slot].map(skillCard).join('')).join('')
+      : `<div class="empty"><div class="big">?</div><div>La wiki no publica skills para este personaje todavía.</div></div>`}
+  </div>
+
+  ${teams.length ? `<div class="section"><h3>Equipos donde aparece</h3><div class="grid">
+    ${teams.map(t => `<div class="card"><div style="font-weight:600">${h(t.name)}</div>
+      <div class="muted">${t.members.map(k => { const r = variant(...k.split('::')); return r ? fullLabel(r) : k; }).join(' + ')}</div>
+      <p class="muted" style="margin-top:6px">${h(t.reason)}</p></div>`).join('')}
+  </div></div>` : ''}
+
+  <div class="section"><h3>Retratos propios</h3>
+    <p class="muted" style="margin-bottom:10px">Si subís una imagen reemplaza la de thanosvibs solo en este navegador.</p>
+    <div class="row">
+      <label class="btn sm" style="cursor:pointer">Subir retrato<input type="file" accept="image/*" hidden data-a="upload" data-img="portrait-${v.id}"></label>
+      ${U.images['portrait-' + v.id] ? `<button class="btn sm danger" data-a="clearImg" data-img="portrait-${v.id}">Volver al original</button>` : ''}
+    </div>
+  </div>`;
+}
+
+// ============================================================================
+// COMPARACIÓN
+// ============================================================================
+function renderCompare () {
+  const vs = ui.picks.map(p => variant(p.cid, p.uid)).filter(Boolean);
+  if (vs.length < 2) { ui.view = 'roster'; return renderRoster(); }
+  const same = (get) => { const m = {}; vs.forEach(v => { const k = get(v); m[k] = (m[k] || 0) + 1; }); return m; };
+  const cC = same(v => v.c), cF = same(v => v.f), cT = same(v => v.t), cI = same(v => v.ins);
+  const slots = SLOT_ORDER.filter(s => vs.some(v => v.skills.some(sk => sk.slot === s)));
+  const syn = synergy(vs);
+  const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
+  const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
+
+  return `
+  <div class="row" style="margin-bottom:14px"><button class="btn sm" data-a="back">← Roster</button></div>
+  <div class="page-head"><div><h1>Comparativa</h1>
+    <div class="sub">Las celdas resaltadas marcan coincidencias entre las columnas.</div></div></div>
+  <div class="cmp"><table class="cmpt">
+    <thead><tr><th></th>${vs.map(v => `<th><div class="cmphead">
+      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
+      <div><div style="font-weight:700;font-size:14px">${h(v.uid ? v.sub : v.name)}</div>
+      <div class="muted">${h(v.uid ? v.name : 'Base')}</div></div>
+      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}">Quitar</button>
+    </div></th>`).join('')}</tr></thead>
+    <tbody>
+      <tr><th>Clase</th>${vs.map(v => cell(v, tagGhost(v.c, classColor(v.c)), cC, v.c)).join('')}</tr>
+      <tr><th>Tier</th>${vs.map(v => cell(v, tagSolid(v.t, tierColor(v.t)) + transTag(v.trans), cT, v.t)).join('')}</tr>
+      <tr><th>Bando</th>${vs.map(v => cell(v, h(v.f), cF, v.f)).join('')}</tr>
+      <tr><th>Instinto</th>${vs.map(v => cell(v, h(v.ins === 'Desconocido' ? '—' : v.ins), cI, v.ins)).join('')}</tr>
+      ${attr('Roles', v => v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(r)}</span>`).join(' '))}
+      ${attr('Striker', v => v.striker != null ? 'Skill ' + h(v.striker) : '—')}
+      ${attr('World Boss', v => icon(v.wba) + h(v.wba || '—'))}
+      ${attr('Habilidades', v => (v.ab || []).map(a => `<span class="tag dim">${h(a)}</span>`).join(' ') || '—')}
+      ${attr('Costo', v => h(v.cost || '—'))}
+      ${LISTS.filter(l => Object.keys(assignOf(l.id)).length).map(l => {
+        const a = assignOf(l.id), rows = rowsOf(l);
+        return `<tr><th>${h(l.name)}</th>${vs.map(v => {
+          const i = rows.findIndex(x => x.id === a[v.key]);
+          return `<td>${i === -1 ? '<span class="muted">sin ubicar</span>' : `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`}</td>`;
+        }).join('')}</tr>`;
+      }).join('')}
+      ${slots.map(slot => `<tr class="slotrow"><th>${h(slot)}</th>${vs.map(v => {
+        const sk = v.skills.find(s => s.slot === slot);
+        if (!sk) return `<td><span class="muted">— no tiene —</span></td>`;
+        return `<td><div style="font-weight:600;margin-bottom:4px">${h(sk.n)}</div>
+          ${sk.dmg !== 'Ninguno' ? tagGhost(sk.dmg, dmgColor(sk.dmg)) : ''}
+          <span class="tag dim">${h(window.MFF_skillTiming(sk))}</span>
+          <div style="margin-top:6px">${skillFx(sk)}</div></td>`;
+      }).join('')}</tr>`).join('')}
+    </tbody>
+  </table></div>
+  <div class="card" style="margin-top:18px">
+    <div class="row" style="justify-content:space-between;margin-bottom:8px">
+      <h3 style="margin:0">Sinergia estimada</h3><span class="muted">${syn.score} pts</span></div>
+    <div style="height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;margin-bottom:10px">
+      <div style="height:100%;width:${Math.min(100, syn.score * 12)}%;background:linear-gradient(90deg,var(--accent),var(--gold))"></div></div>
+    ${syn.reasons.length ? `<ul style="margin:0;padding-left:18px">${syn.reasons.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
+      : '<p class="muted">Sin señales fuertes de sinergia en esta selección.</p>'}
+    <p class="muted" style="margin-top:10px">Heurística propia (bando, cobertura de roles y ventaja de clase), no un cálculo del juego.</p>
+  </div>`;
+}
+
+// ============================================================================
+// TIER LISTS
+// ============================================================================
+function renderTierList () {
+  const list = listById(ui.tierList) || LISTS[0];
+  if (!list) return `<div class="empty">No hay tier lists cargadas.</div>`;
+  ui.tierList = list.id;
+  const rows = rowsOf(list), a = assignOf(list.id);
+  const vs = allVariants();
+  const byRow = {}; rows.forEach(r => { byRow[r.id] = []; });
+  const unset = [];
+  vs.forEach(v => { const r = a[v.key]; if (r && byRow[r]) byRow[r].push(v); else unset.push(v); });
+  const imported = TIERLISTS_SEED.some(l => l.id === list.id);
+  const chip = (v) => `<span class="tlchip" draggable="true" data-a="drag" data-key="${v.key}" title="${h(fullLabel(v))}">
+      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="" loading="lazy">` : ''}
+      <span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}
+      <span class="x" data-a="unassign" data-key="${v.key}">✕</span></span>`;
+
+  return `
+  <div class="page-head"><div><h1>Tier lists</h1>
+    <div class="sub">Cada lista importada conserva las filas y los rótulos que le puso su autor. No son rangos S–D.</div></div>
+    <div class="row">
+      <input placeholder="Nombre de una lista nueva" value="${h(ui.newListName)}" data-a="newListName" style="width:220px">
+      <button class="btn" data-a="addList">+ Crear lista</button>
+    </div>
+  </div>
+  <div class="tlbar">${LISTS.map(l => `<button class="chip ${l.id === list.id ? 'on' : ''}" data-a="pickList" data-id="${l.id}">${h(l.name)}</button>`).join('')}</div>
+  <div class="tlsource">
+    ${imported
+      ? `<span>Fuente: <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a> · «${h(list.source)}»</span>
+         ${list.author ? `<span class="tag dim">autor: ${h(list.author)}</span>` : ''}
+         ${list.gameVersion ? `<span class="tag dim">juego ${h(list.gameVersion)}</span>` : ''}
+         <span class="tag dim">${Object.keys(a).length} ubicados</span>`
+      : `<span>Lista propia</span><span class="tag dim">${Object.keys(a).length} ubicados</span>
+         <button class="btn sm danger" data-a="removeList" data-id="${list.id}">Borrar lista</button>`}
+    ${U.assign[list.id] && Object.keys(U.assign[list.id]).length
+      ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">Deshacer mis cambios (${Object.keys(U.assign[list.id]).length})</button>` : ''}
+  </div>
+  ${rows.map((r, i) => `<div class="tierrow" data-a="drop" data-row="${h(r.id)}">
+    <div class="tierlabel" style="background:${rowColor(i, rows.length)}">${h(r.label)}</div>
+    <div class="tieritems">${byRow[r.id].map(chip).join('') || '<span class="muted" style="align-self:center">Arrastrá acá</span>'}</div>
+  </div>`).join('')}
+  <div style="margin-top:18px">
+    <div class="row">
+      <button class="btn sm" data-a="togglePool">${ui.poolOpen ? 'Ocultar' : 'Mostrar'} sin ubicar (${unset.length})</button>
+      ${ui.poolOpen ? `<input placeholder="Filtrar…" value="${h(ui.poolSearch)}" data-a="poolSearch" style="width:220px">` : ''}
+    </div>
+    ${ui.poolOpen ? (() => {
+      const q2 = ui.poolSearch.trim().toLowerCase();
+      const pool = (q2 ? unset.filter(v => fullLabel(v).toLowerCase().includes(q2)) : unset);
+      return `<div class="tieritems" data-a="drop" data-row="" style="margin-top:10px;max-height:360px;overflow-y:auto;
+        border:1px dashed var(--line-2);border-radius:var(--r-md)">
+        ${pool.slice(0, 150).map(chip).join('') || '<span class="muted">Nada coincide.</span>'}
+        ${pool.length > 150 ? `<span class="muted" style="align-self:center">…y ${pool.length - 150} más: filtrá para acotar.</span>` : ''}
+      </div>`;
+    })() : ''}
+  </div>`;
+}
+
+// ============================================================================
+// EQUIPOS
+// ============================================================================
+function renderTeams () {
+  const t = ui.team;
+  const mode = U.modes.find(m => m.id === t.modeId);
+  const max = mode ? mode.teamSize : 3;
+  const q = ui.teamSearch.trim().toLowerCase();
+  const pool = allVariants().filter(v => !q || fullLabel(v).toLowerCase().includes(q)).sort((a, b) => rankIndex(a.key) - rankIndex(b.key));
+  const PS = 40, pages = Math.max(1, Math.ceil(pool.length / PS));
+  ui.teamPage = Math.min(ui.teamPage, pages - 1);
+  const slice = pool.slice(ui.teamPage * PS, (ui.teamPage + 1) * PS);
+  return `
+  <div class="page-head"><div><h1>Equipos</h1>
+    <div class="sub">Los que armás vos, con la sinergia estimada por la app.</div></div>
+    <button class="btn primary" data-a="teamOpen">+ Armar equipo</button></div>
+  ${ui.teamOpen ? `<div class="card" style="margin-bottom:20px">
+    <div class="row" style="margin-bottom:10px">
+      <input placeholder="Nombre del equipo" value="${h(t.name)}" data-a="teamName" style="flex:2;min-width:180px">
+      <select data-a="teamMode" style="flex:1;min-width:160px">
+        <option value="">Sin modo (3)</option>
+        ${U.modes.map(m => `<option value="${m.id}" ${m.id === t.modeId ? 'selected' : ''}>${h(m.name)} (${m.teamSize})</option>`).join('')}
+      </select>
+    </div>
+    <div class="muted" style="margin-bottom:6px">Miembros ${t.members.length} / ${max} — ordenados por ${h((listById(U.prefs.refList) || {}).name || 'nombre')}</div>
+    <input placeholder="Buscar…" value="${h(ui.teamSearch)}" data-a="teamSearch" style="width:100%;margin-bottom:10px">
+    <div class="row" style="gap:6px">
+      ${slice.map(v => `<div title="${h(fullLabel(v))}" data-a="teamToggle" data-key="${v.key}"
+        style="width:50px;height:50px;border-radius:9px;overflow:hidden;cursor:pointer;flex:none;
+        box-shadow:0 0 0 ${t.members.includes(v.key) ? '2px var(--accent)' : '1px var(--line-2)'}">
+        ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" style="width:100%;height:100%;object-fit:cover" loading="lazy">` : ''}
+      </div>`).join('')}
+    </div>
+    ${pages > 1 ? `<div class="row" style="margin-top:10px">${Array.from({length: Math.min(pages, 12)}, (_, i) => `<button class="btn sm ${i === ui.teamPage ? 'primary' : ''}" data-a="teamPage" data-p="${i}">${i + 1}</button>`).join('')}</div>` : ''}
+    <textarea placeholder="Por qué funciona (opcional)" style="width:100%;margin-top:10px;min-height:54px" data-a="teamReason">${h(t.reason)}</textarea>
+    <div class="row" style="justify-content:flex-end;margin-top:10px">
+      <button class="btn" data-a="teamClose">Cancelar</button>
+      <button class="btn primary" data-a="teamSave" ${t.members.length < 2 ? 'disabled' : ''}>Guardar</button>
+    </div>
+  </div>` : ''}
+  ${U.teams.length ? `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+    ${U.teams.map(tt => {
+      const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
+      const s = synergy(vs);
+      return `<div class="card" style="position:relative">
+        <button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>
+        <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
+        <div class="row" style="gap:5px;margin-bottom:8px">${vs.map(v => imgUrl('portrait-' + v.id)
+          ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
+        <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
+        ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
+        <div class="muted" style="margin-top:6px">${s.score} pts de sinergia</div>
+      </div>`;
+    }).join('')}</div>`
+  : `<div class="empty"><div class="big">◇</div><div>Todavía no armaste ningún equipo.</div></div>`}`;
+}
+
+// ============================================================================
+// EDITOR DE PERSONAJES (capa de usuario)
+// ============================================================================
+function blankDraft () {
+  return { name:'', c:'Combate', f:SEED.FACTIONS[0], r:[], t:'T2', ins:SEED.INSTINCTS[0], race:SEED.RACES[0],
+           gender:SEED.GENDERS[0], origin:'Original MFF', abilities:[], tuc:[], stats:{}, striker:4, wba:'',
+           trans:false, new:false, baseSkills:[], uniforms:[] };
+}
+function renderEditor () {
+  const d = ui.edDraft, steps = ['Datos','Uniformes','Revisar'];
+  const pick = (opts, field, multi) => opts.map(v => {
+    const on = multi ? d[field].includes(v) : d[field] === v;
+    return `<button class="chip ${on ? 'on' : ''}" data-a="edPick" data-f="${field}" data-v="${h(v)}" data-multi="${multi ? 1 : 0}">${icon(v)}${h(v)}</button>`;
+  }).join('');
+  const field = (label, inner) => `<div style="margin-bottom:12px"><div class="lbl" style="font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);margin-bottom:6px;font-weight:700">${h(label)}</div>${inner}</div>`;
+  let body = '';
+  if (ui.edStep === 0) {
+    body = field('Nombre', `<input style="width:100%;max-width:420px" data-a="edField" data-f="name" value="${h(d.name)}">`)
+      + field('Clase', `<div class="row">${pick(SEED.CLASSES, 'c', false)}</div>`)
+      + field('Bando', `<div class="row">${pick(SEED.FACTIONS, 'f', false)}</div>`)
+      + field('Tier', `<div class="row">${pick(SEED.TIERS, 't', false)}</div>`)
+      + field('Instinto', `<div class="row">${pick(SEED.INSTINCTS, 'ins', false)}</div>`)
+      + field('Raza', `<div class="row">${pick(SEED.RACES, 'race', false)}</div>`)
+      + field('Género', `<div class="row">${pick(SEED.GENDERS, 'gender', false)}</div>`)
+      + field('Roles', `<div class="row">${pick(SEED.ROLES, 'r', true)}</div>`)
+      + field('Habilidades', `<div class="row">${pick(SEED.SKILL_TAGS, 'abilities', true)}</div>`)
+      + field('Striker (número de skill)', `<input type="number" min="1" max="6" style="width:90px" data-a="edField" data-f="striker" value="${h(d.striker)}">`);
+  } else if (ui.edStep === 1) {
+    body = d.uniforms.map((u, i) => `<div class="card" style="margin-bottom:12px">
+      <div class="row">
+        <input placeholder="Nombre del uniforme" style="flex:2;min-width:180px" data-a="edUni" data-i="${i}" data-f="name" value="${h(u.name)}">
+        <select data-a="edUni" data-i="${i}" data-f="tier">${SEED.TIERS.map(t => `<option ${t === u.tier ? 'selected' : ''}>${t}</option>`).join('')}</select>
+        <input placeholder="Costo" style="flex:1;min-width:120px" data-a="edUni" data-i="${i}" data-f="cost" value="${h(u.cost || '')}">
+        <button class="btn sm danger" data-a="edUniDel" data-i="${i}">✕</button>
+      </div>
+      ${u.skills.map((sk, si) => `<div class="card" style="margin-top:8px;background:var(--surface-2)">
+        <div class="row">
+          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="slot">${SLOT_ORDER.map(s => `<option ${s === sk.slot ? 'selected' : ''}>${s}</option>`).join('')}</select>
+          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="dmg">${SEED.DAMAGE_TYPES.map(s => `<option ${s === sk.dmg ? 'selected' : ''}>${s}</option>`).join('')}</select>
+          <input placeholder="Nombre" style="flex:1;min-width:150px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="n" value="${h(sk.n)}">
+          <button class="btn sm danger" data-a="edSkDel" data-i="${i}" data-s="${si}">✕</button>
+        </div>
+        <textarea placeholder="Descripción" style="width:100%;margin-top:6px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="d">${h(sk.d)}</textarea>
+      </div>`).join('')}
+      <button class="btn sm" style="margin-top:8px" data-a="edSkAdd" data-i="${i}">+ Skill</button>
+    </div>`).join('') + `<button class="btn" data-a="edUniAdd">+ Agregar uniforme</button>`;
+  } else {
+    body = `<div class="card"><div style="font-weight:700;font-size:17px">${h(d.name || 'Sin nombre')}</div>
+      <div class="muted">${[d.c, d.f, d.t, d.ins, d.r.join('/')].filter(Boolean).join(' · ')}</div>
+      <div class="muted">${pluralUni(d.uniforms.length)} · ${d.uniforms.reduce((n, u) => n + u.skills.length, 0)} skills propias</div></div>`;
+  }
+  return `<div class="page-head"><div><h1>${ui.edId ? 'Editar personaje' : 'Nuevo personaje'}</h1>
+    <div class="sub">Se guarda en tu navegador, aparte de data.js. Regenerar los datos no lo pisa.</div></div></div>
+  <div class="row" style="margin-bottom:18px">${steps.map((s, i) => `<button class="chip ${i === ui.edStep ? 'on' : ''}" data-a="edStep" data-i="${i}">${i + 1}. ${s}</button>`).join('')}</div>
+  ${body}
+  <div class="row" style="justify-content:space-between;margin-top:22px">
+    <button class="btn" data-a="edPrev" ${ui.edStep === 0 ? 'disabled' : ''}>Atrás</button>
+    <div class="row">
+      ${ui.edId && U.charEdits[ui.edId] ? `<button class="btn danger" data-a="edRevert">Descartar mi edición</button>` : ''}
+      ${ui.edStep === 2 ? `<button class="btn primary" data-a="edSave">Guardar</button>` : `<button class="btn primary" data-a="edNext">Siguiente</button>`}
+    </div>
+  </div>`;
+}
+
+// ============================================================================
+// AJUSTES
+// ============================================================================
+function renderSettings () {
+  const mine = Object.keys(U.charEdits).length + U.charNew.length;
+  const changed = Object.values(U.assign).reduce((n, o) => n + Object.keys(o).length, 0);
+  return `<div class="page-head"><div><h1>Ajustes</h1>
+    <div class="sub">Los datos del juego salen de data.js y no se guardan acá. Esto es solo lo tuyo.</div></div></div>
+
+  <div class="section"><h3>Tu capa guardada</h3>
+    <div class="statgrid">
+      <div class="stat"><div class="k">Personajes propios o editados</div><div class="v">${mine}</div></div>
+      <div class="stat"><div class="k">Equipos</div><div class="v">${U.teams.length}</div></div>
+      <div class="stat"><div class="k">Tier lists propias</div><div class="v">${U.lists.length}</div></div>
+      <div class="stat"><div class="k">Cambios sobre listas importadas</div><div class="v">${changed}</div></div>
+      <div class="stat"><div class="k">Imágenes subidas</div><div class="v">${Object.keys(U.images).length}</div></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" data-a="exportUser">Exportar mi capa (JSON)</button>
+      <label class="btn" style="cursor:pointer">Importar<input type="file" accept=".json" hidden data-a="importUser"></label>
+      <button class="btn" data-a="exportCsv">Exportar roster (CSV)</button>
+      <button class="btn danger" data-a="resetUser">Borrar todo lo mío</button>
+    </div>
+  </div>
+
+  <div class="section"><h3>Marca</h3>
+    <div style="width:200px;height:52px;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center">
+      ${U.images['brand-logo'] ? `<img src="${U.images['brand-logo']}" style="max-width:100%;max-height:100%">` : '<span class="muted">Sin logo</span>'}
+    </div>
+    <div class="row" style="margin-top:10px">
+      <label class="btn sm" style="cursor:pointer">Subir logo<input type="file" accept="image/*" hidden data-a="upload" data-img="brand-logo"></label>
+      ${U.images['brand-logo'] ? `<button class="btn sm danger" data-a="clearImg" data-img="brand-logo">Quitar</button>` : ''}
+    </div>
+  </div>
+
+  <div class="section"><h3>Modos de juego (tamaño de equipo)</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:520px">
+      ${U.modes.map((m, i) => `<div class="row">
+        <input value="${h(m.name)}" data-a="modeName" data-i="${i}" style="flex:1">
+        <input type="number" min="1" max="8" value="${m.teamSize}" data-a="modeSize" data-i="${i}" style="width:80px">
+        <button class="btn sm danger" data-a="modeDel" data-i="${i}">✕</button>
+      </div>`).join('')}
+    </div>
+    <button class="btn sm" style="margin-top:10px" data-a="modeAdd">+ Agregar modo</button>
+  </div>
+
+  <div class="section"><h3>Fuentes</h3>
+    <p class="muted">Personajes, uniformes, retratos, íconos y tier lists: <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a>.
+      Skills e instintos: <a href="https://future-fight.fandom.com" target="_blank" rel="noopener">Future Fight Wiki</a>.
+      Uso personal, sin fin comercial.</p>
+  </div>`;
+}
+
+// ============================================================================
+// NAV + DISPATCH
+// ============================================================================
+function renderNav () {
+  const link = (view, label, act) => `<button class="navlink ${ui.view === view ? 'on' : ''}" data-a="${act}">${label}</button>`;
   return `<nav class="topnav">
-    <span class="brand" data-act="backRoster">${logo?`<img src="${logo}" style="height:28px;vertical-align:middle"/>`:`TA GUIANAEL <span class="accent">MFF</span>`}</span>
-    <a data-act="backRoster">Roster</a>
-    <button class="navbtn" data-act="toggleCompareMode">${ui.compareMode?'Salir de modo comparar':'Comparar personajes'}</button>
-    <a data-act="goTeams">Equipos sugeridos</a>
-    <a data-act="goTierList">Tier list</a>
-    <a data-act="goAdmin">+ Agregar personaje</a>
-    <a data-act="goSettings">Configuración</a>
-    <button class="navbtn" data-act="exportJson">Exportar (JSON)</button>
-    <label class="navbtn" style="cursor:pointer">Importar (JSON)<input type="file" accept=".json" style="display:none" data-act="importJson"/></label>
-    <button class="navbtn" data-act="exportCsv">Exportar (CSV)</button>
+    <span class="brand" data-a="back">${U.images['brand-logo']
+      ? `<img src="${U.images['brand-logo']}" style="height:26px">`
+      : `<span class="dot"></span>COMPARADOR <span style="color:var(--accent)">MFF</span>`}</span>
+    ${link('roster','Roster','back')}
+    ${link('tierlist','Tier lists','goTier')}
+    ${link('teams','Equipos','goTeams')}
+    <span class="navspace"></span>
+    <div class="navtools">
+      ${link('editor','+ Personaje','goEditor')}
+      ${link('settings','Ajustes','goSettings')}
+    </div>
   </nav>`;
 }
-function render(){
+function render () {
   let body;
-  switch(ui.view){
-    case 'detail': body = renderDetail(); break;
-    case 'compare': body = renderCompare(); break;
-    case 'teams': body = renderTeams(); break;
+  switch (ui.view) {
+    case 'detail':   body = renderDetail(); break;
+    case 'compare':  body = renderCompare(); break;
     case 'tierlist': body = renderTierList(); break;
+    case 'teams':    body = renderTeams(); break;
+    case 'editor':   body = renderEditor(); break;
     case 'settings': body = renderSettings(); break;
-    case 'admin': body = renderAdmin(); break;
-    default: body = renderRoster();
+    default:         body = renderRoster();
   }
   $('#app').innerHTML = renderNav() + '<main>' + body + '</main>';
+  const q = $('#q');
+  if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
 
 // ============================================================================
-// EVENT HANDLING (delegated)
+// EVENTOS
 // ============================================================================
-function findMemberSel(cid, uid){ return ui.compareSelection.find(x=>x.cid===cid && (x.uid||null)===(uid||null)); }
+document.addEventListener('click', (e) => {
+  const el = e.target.closest('[data-a]'); if (!el) return;
+  const a = el.getAttribute('data-a'), d = el.dataset;
+  const P = U.prefs;
+  switch (a) {
+    case 'back': ui.view = 'roster'; ui.charId = null; ui.focusSearch = false; render(); break;
+    case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
+    case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] };
+      P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; ui.search = ''; ui.page = 0; commit(); break;
+    case 'filter': { const cur = P.filters[d.cat];
+      P.filters[d.cat] = cur.includes(d.v) ? cur.filter(x => x !== d.v) : cur.concat(d.v);
+      ui.page = 0; commit(); break; }
+    case 'flag': P.flags[d.v] = !P.flags[d.v]; ui.page = 0; commit(); break;
+    case 'view': P.view = d.v; ui.page = 0; commit(); break;
+    case 'kind': P.kind = d.v; ui.page = 0; commit(); break;
+    case 'dir': P.dir = -P.dir; commit(); break;
+    case 'page': ui.page = parseInt(d.p, 10); render(); window.scrollTo({top:0,behavior:'smooth'}); break;
+    case 'pickMode': ui.pickMode = !ui.pickMode; ui.picks = []; ui.view = 'roster'; render(); break;
+    case 'pick': case 'pickThis': {
+      e.stopPropagation();
+      togglePick(d.cid, d.uid || null);
+      if (a === 'pickThis') { ui.pickMode = true; ui.view = 'roster'; }
+      render(); break; }
+    case 'unpick': { const key = d.cid + '::' + (d.uid || 'base');
+      ui.picks = ui.picks.filter(p => p.key !== key);
+      if (ui.picks.length < 2) ui.view = 'roster';
+      render(); break; }
+    case 'goCompare': ui.view = 'compare'; render(); window.scrollTo(0, 0); break;
+    case 'open': {
+      if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
+      ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; render(); window.scrollTo(0, 0); break; }
+    case 'uniform': ui.uniformId = d.uid; render(); break;
 
-document.addEventListener('click', (e)=>{
-  const el = e.target.closest('[data-act]'); if (!el) return;
-  const act = el.getAttribute('data-act');
-  switch(act){
-    case 'backRoster': ui.view='roster'; ui.selectedCharId=null; ui.compareMode=false; ui.compareSelection=[]; render(); break;
-    case 'toggleFilters': ui.filtersOpen=!ui.filtersOpen; render(); break;
-    case 'clearFilters': ui.filters={c:[],r:[],f:[],t:[],ins:[],ab:[]}; ui.search=''; ui.rosterPage=0; render(); break;
-    case 'filter': { const cat=el.dataset.cat, val=el.dataset.val; const single=['c','f','t','ins'].includes(cat); const cur=ui.filters[cat];
-      if (single) ui.filters[cat] = (cur.length===1&&cur[0]===val)?[]:[val];
-      else ui.filters[cat] = cur.includes(val)?cur.filter(x=>x!==val):[...cur,val];
-      ui.rosterPage=0; render(); break; }
-    case 'rosterPage': ui.rosterPage=parseInt(el.dataset.p,10); render(); break;
-    case 'toggleCompareMode': ui.compareMode=!ui.compareMode; ui.compareSelection=[]; ui.view='roster'; render(); break;
-    case 'toggleCompare': { const cid=el.dataset.cid, uid=el.dataset.uid||null; const has=findMemberSel(cid,uid);
-      if (has) ui.compareSelection = ui.compareSelection.filter(x=>x!==has);
-      else { ui.compareSelection.push({cid,uid}); if (ui.compareSelection.length>4) ui.compareSelection.shift(); }
+    case 'goTier': ui.view = 'tierlist'; render(); break;
+    case 'pickList': ui.tierList = d.id; render(); break;
+    case 'addList': { const name = ui.newListName.trim(); if (!name) break;
+      const id = 'mia-' + Date.now();
+      U.lists.push({ id, name, rows: DEFAULT_ROWS.slice() }); ui.newListName = ''; ui.tierList = id; commit(); break; }
+    case 'removeList': { if (!confirm('¿Borrar esta lista y sus asignaciones?')) break;
+      U.lists = U.lists.filter(l => l.id !== d.id); delete U.assign[d.id];
+      ui.tierList = (LISTS[0] || {}).id || ''; commit(); break; }
+    case 'resetList': delete U.assign[d.id]; commit(); break;
+    case 'togglePool': ui.poolOpen = !ui.poolOpen; render(); break;
+    case 'unassign': e.stopPropagation(); setAssign(ui.tierList, d.key, REMOVED); break;
+
+    case 'goTeams': ui.view = 'teams'; render(); break;
+    case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
+    case 'teamClose': ui.teamOpen = false; render(); break;
+    case 'teamToggle': { const t = ui.team, mode = U.modes.find(m => m.id === t.modeId), max = mode ? mode.teamSize : 3;
+      const i = t.members.indexOf(d.key);
+      if (i > -1) t.members.splice(i, 1); else { t.members.push(d.key); if (t.members.length > max) t.members.shift(); }
       render(); break; }
-    case 'goCompare': ui.view='compare'; render(); break;
-    case 'openChar': if (!ui.compareMode){ ui.view='detail'; ui.selectedCharId=el.dataset.cid; ui.viewUniformIds=['base']; render(); } break;
-    case 'openUniform': if (!ui.compareMode){ ui.view='detail'; ui.selectedCharId=el.dataset.cid; ui.viewUniformIds=[el.dataset.uid]; render(); } break;
-    case 'selectView': { const uid=el.dataset.uid; const i=ui.viewUniformIds.indexOf(uid);
-      if (i>-1) ui.viewUniformIds.splice(i,1); else { ui.viewUniformIds.push(uid); if (ui.viewUniformIds.length>2) ui.viewUniformIds.shift(); }
+    case 'teamPage': ui.teamPage = parseInt(d.p, 10); render(); break;
+    case 'teamSave': { const t = ui.team; if (t.members.length < 2) break;
+      const vs = t.members.map(k => variant(...k.split('::'))).filter(Boolean);
+      U.teams.unshift({ id: 'eq-' + Date.now(), name: t.name || vs.map(fullLabel).join(' + '),
+                        members: t.members.slice(), reason: t.reason });
+      ui.teamOpen = false; commit(); break; }
+    case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
+
+    case 'goEditor': ui.view = 'editor'; ui.edId = null; ui.edStep = 0; ui.edDraft = blankDraft(); render(); break;
+    case 'edit': { ui.view = 'editor'; ui.edId = d.cid; ui.edStep = 0;
+      ui.edDraft = JSON.parse(JSON.stringify(CHAR_BY_ID[d.cid])); render(); break; }
+    case 'edStep': ui.edStep = parseInt(d.i, 10); render(); break;
+    case 'edPrev': ui.edStep = Math.max(0, ui.edStep - 1); render(); break;
+    case 'edNext': ui.edStep = Math.min(2, ui.edStep + 1); render(); break;
+    case 'edPick': { const f = d.f, v = d.v, dr = ui.edDraft;
+      if (d.multi === '1') { const i = dr[f].indexOf(v); if (i > -1) dr[f].splice(i, 1); else dr[f].push(v); }
+      else dr[f] = v;
       render(); break; }
-    case 'editChar': ui.view='admin'; ui.adminEditId=el.dataset.cid; ui.adminStep=0; { const ch=findChar(el.dataset.cid); ui.adminDraft = deepCopy({ ...ch, uniforms: ch.uniforms }); } render(); break;
-    case 'goTeams': ui.view='teams'; render(); break;
-    case 'openTeamBuilder': ui.showTeamBuilder=true; ui.teamBuilder={name:'',memberIds:[],reason:'',modeId:''}; ui.teamBuilderSearch=''; ui.teamBuilderPage=0; render(); break;
-    case 'closeTeamBuilder': ui.showTeamBuilder=false; render(); break;
-    case 'tbToggle': { const key=el.dataset.key; const tb=ui.teamBuilder; const mode=state.modes.find(m=>m.id===tb.modeId); const max=mode?mode.teamSize:3;
-      const i=tb.memberIds.indexOf(key); if (i>-1) tb.memberIds.splice(i,1); else { tb.memberIds.push(key); if (tb.memberIds.length>max) tb.memberIds.shift(); }
-      render(); break; }
-    case 'tbPage': ui.teamBuilderPage=parseInt(el.dataset.p,10); render(); break;
-    case 'saveTeam': { const tb=ui.teamBuilder; if (tb.memberIds.length<2) break;
-      const chars = tb.memberIds.map(k=>resolveMember(...k.split('::'))).filter(Boolean);
-      const auto = synergyScore(chars);
-      state.teams.unshift({ id:'team-'+Date.now(), name: tb.name || chars.map(c=>c.name).join(' + '), members: tb.memberIds.slice(), reason: tb.reason || auto.reasons[0] || 'Combinación creada manualmente.' });
-      ui.showTeamBuilder=false; save(); render(); break; }
-    case 'removeTeam': state.teams = state.teams.filter(t=>t.id!==el.dataset.id); save(); render(); break;
-    case 'goTierList': ui.view='tierlist'; render(); break;
-    case 'tierMode': ui.tierListModeView=el.dataset.key; render(); break;
-    case 'addTierList': { const name=(ui.newTierListName||'').trim(); if (!name) break; const id='custom-'+Date.now();
-      state.customTierLists.push({id,name}); ui.newTierListName=''; ui.tierListModeView=id; save(); render(); break; }
-    case 'removeTierList': { const key=el.dataset.key; state.customTierLists=state.customTierLists.filter(l=>l.id!==key); delete state.tierAssignments[key];
-      if (ui.tierListModeView===key) ui.tierListModeView=''; save(); render(); break; }
-    case 'assignTier': { const key=el.dataset.key, rank=el.dataset.rank; const active=ui.tierListModeView||(tierDefs()[0]||{}).key;
-      state.tierAssignments[active]=state.tierAssignments[active]||{}; state.tierAssignments[active][key]=rank; save(); render(); break; }
-    case 'unassignTier': { const key=el.dataset.key; const active=ui.tierListModeView||(tierDefs()[0]||{}).key;
-      if (state.tierAssignments[active]) delete state.tierAssignments[active][key]; save(); render(); break; }
-    case 'goSettings': ui.view='settings'; render(); break;
-    case 'modeAdd': state.modes.push({id:'mode-'+Date.now(), name:'Modo nuevo', teamSize:3, icon:''}); save(); render(); break;
-    case 'modeRemove': state.modes.splice(parseInt(el.dataset.i,10),1); save(); render(); break;
-    case 'taxAdd': state.taxonomies[el.dataset.cat].push({value:'Nuevo',icon:''}); save(); render(); break;
-    case 'taxRemove': state.taxonomies[el.dataset.cat].splice(parseInt(el.dataset.i,10),1); save(); render(); break;
-    case 'clearLogo': delete state.images['brand-logo']; save(); render(); break;
-    case 'goAdmin': ui.view='admin'; ui.adminEditId=null; ui.adminStep=0; ui.adminDraft=blankDraft(); render(); break;
-    case 'adminPick': { const field=el.dataset.field, val=el.dataset.val, multi=el.dataset.multi==='1'; const d=ui.adminDraft;
-      if (multi) { const i=d[field].indexOf(val); if (i>-1) d[field].splice(i,1); else { d[field].push(val); if (field==='abilities'&&d[field].length>3) d[field].shift(); } }
-      else d[field] = (d[field]===val) ? d[field] : val;
-      render(); break; }
-    case 'adminUAdd': ui.adminDraft.uniforms.push({name:'',tier:'T2',year:'',skills:[]}); render(); break;
-    case 'adminSkAdd': ui.adminDraft.uniforms[parseInt(el.dataset.u,10)].skills.push({slot:'Activa 1',n:'',d:'',dmg:'Ninguno',ii:false,tags:[]}); render(); break;
-    case 'adminSkRemove': ui.adminDraft.uniforms[parseInt(el.dataset.u,10)].skills.splice(parseInt(el.dataset.s,10),1); render(); break;
-    case 'adminUField': if (el.tagName==='BUTTON'){ ui.adminDraft.uniforms[parseInt(el.dataset.u,10)][el.dataset.field]=el.dataset.val; render(); } break;
-    case 'adminStep': ui.adminStep=parseInt(el.dataset.i,10); render(); break;
-    case 'adminPrev': ui.adminStep=Math.max(0,ui.adminStep-1); render(); break;
-    case 'adminNext': ui.adminStep=Math.min(2,ui.adminStep+1); render(); break;
-    case 'adminSave': { const d=ui.adminDraft; const id = ui.adminEditId || ((d.name||'personaje').toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+Date.now());
-      const uniforms = d.uniforms.map((u,i)=>({...u, id: u.id || (id+'-u'+i)}));
-      const newChar = { id, name:d.name||'Sin nombre', c:d.c, f:d.f, r:d.r, t:d.t, ins:d.ins, race:d.race, gender:d.gender, modes:d.modes, abilities:d.abilities, baseSkills:d.baseSkills||[], uniforms };
-      if (ui.adminEditId) state.characters = state.characters.map(c=>c.id===ui.adminEditId?newChar:c);
-      else state.characters.unshift(newChar);
-      if (d.f && !state.taxonomies.factions.some(x=>x.value===d.f)) state.taxonomies.factions.push({value:d.f,icon:''});
-      save(); ui.view = ui.adminEditId ? 'detail' : 'roster'; ui.selectedCharId = ui.adminEditId || ui.selectedCharId; ui.adminEditId=null; render(); break; }
-    case 'exportJson': { const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mff-comparador-backup.json'; a.click(); break; }
+    case 'edUniAdd': ui.edDraft.uniforms.push({ id:'u-' + Date.now(), name:'', tier:'T2', year:'', cost:'', striker:4, skills:[] }); render(); break;
+    case 'edUniDel': ui.edDraft.uniforms.splice(parseInt(d.i, 10), 1); render(); break;
+    case 'edSkAdd': ui.edDraft.uniforms[parseInt(d.i, 10)].skills.push({ slot:'Activa 1', n:'', d:'', fx:null, dmg:'Ninguno', ii:false, tags:[], cd:null, perm:false, iframe:false, gb:false, sgb:false }); render(); break;
+    case 'edSkDel': ui.edDraft.uniforms[parseInt(d.i, 10)].skills.splice(parseInt(d.s, 10), 1); render(); break;
+    case 'edRevert': delete U.charEdits[ui.edId]; ui.view = 'detail'; ui.charId = ui.edId; ui.edId = null; commit(); break;
+    case 'edSave': { const dr = ui.edDraft;
+      if (!dr.name.trim()) { alert('Poné un nombre.'); break; }
+      const id = ui.edId || ('mio-' + dr.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now());
+      const ch = Object.assign({}, dr, { id, uniforms: dr.uniforms.map((u, i) => Object.assign({}, u, { id: u.id || id + '-u' + i })) });
+      if (ui.edId && CHARS_SEED.some(c => c.id === ui.edId)) U.charEdits[id] = ch;
+      else if (ui.edId) U.charNew = U.charNew.map(c => c.id === id ? ch : c);
+      else U.charNew.unshift(ch);
+      ui.view = 'detail'; ui.charId = id; ui.uniformId = 'base'; ui.edId = null; commit(); break; }
+
+    case 'goSettings': ui.view = 'settings'; render(); break;
+    case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:'Modo nuevo', teamSize:3 }); commit(); break;
+    case 'modeDel': U.modes.splice(parseInt(d.i, 10), 1); commit(); break;
+    case 'clearImg': delete U.images[d.img]; commit(); break;
+    case 'resetUser': if (confirm('Se borran tus equipos, listas, ediciones e imágenes. Los datos del juego no se tocan. ¿Seguimos?')) {
+      U = blankUser(); commit(); } break;
+    case 'exportUser': download('mff-mi-capa.json', JSON.stringify(U, null, 2), 'application/json'); break;
     case 'exportCsv': exportCsv(); break;
   }
 });
-document.addEventListener('change', (e)=>{
-  const el = e.target.closest('[data-act]'); if (!el) return;
-  const act = el.getAttribute('data-act');
-  if (act==='search'){ ui.search=el.value; ui.rosterPage=0; render(); return; }
-  if (act==='uploadImg'){ const f=el.files[0]; if (f) readFileAsDataUrl(f, url=>{ state.images[el.dataset.imgid]=url; save(); render(); }); return; }
-  if (act==='importJson'){ const f=el.files[0]; if (f){ const r=new FileReader(); r.onload=()=>{ try { state=Object.assign(defaultState(), JSON.parse(r.result)); save(); render(); } catch(err){ alert('Archivo inválido'); } }; r.readAsText(f); } return; }
-  if (act==='tbName'){ ui.teamBuilder.name=el.value; return; }
-  if (act==='tbReason'){ ui.teamBuilder.reason=el.value; return; }
-  if (act==='tbMode'){ const mode=state.modes.find(m=>m.id===el.value); const max=mode?mode.teamSize:3; ui.teamBuilder.modeId=el.value; ui.teamBuilder.memberIds=ui.teamBuilder.memberIds.slice(-max); render(); return; }
-  if (act==='tbSearch'){ ui.teamBuilderSearch=el.value; ui.teamBuilderPage=0; render(); return; }
-  if (act==='newTierListName'){ ui.newTierListName=el.value; return; }
-  if (act==='modeIcon'){ state.modes[el.dataset.i].icon=el.value; save(); return; }
-  if (act==='modeName'){ state.modes[el.dataset.i].name=el.value; save(); return; }
-  if (act==='modeSize'){ state.modes[el.dataset.i].teamSize=Math.max(2,parseInt(el.value,10)||3); save(); return; }
-  if (act==='taxIcon'){ state.taxonomies[el.dataset.cat][el.dataset.i].icon=el.value; save(); return; }
-  if (act==='taxValue'){ state.taxonomies[el.dataset.cat][el.dataset.i].value=el.value; save(); return; }
-  if (act==='adminField'){ ui.adminDraft[el.dataset.field]=el.value; return; }
-  if (act==='adminUField'){ ui.adminDraft.uniforms[el.dataset.u][el.dataset.field]=el.value; return; }
-  if (act==='adminSkField'){ const sk=ui.adminDraft.uniforms[el.dataset.u].skills[el.dataset.s]; const f=el.dataset.field;
-    sk[f] = el.type==='checkbox' ? el.checked : el.value; if (f==='slot'||f==='dmg') render(); return; }
-});
-// Drag & drop for tier list
-document.addEventListener('dragstart', (e)=>{ const el=e.target.closest('[data-act="dragItem"]'); if (el){ ui.admin_field_dragKey = el.dataset.key; e.dataTransfer.setData('text/plain', el.dataset.key); } });
-document.addEventListener('dragover', (e)=>{ if (e.target.closest('[data-act="dropRank"],[data-act="dropUnranked"]')) e.preventDefault(); });
-document.addEventListener('drop', (e)=>{
-  const rankEl = e.target.closest('[data-act="dropRank"]'); const poolEl = e.target.closest('[data-act="dropUnranked"]');
-  if (!rankEl && !poolEl) return;
-  e.preventDefault();
-  const key = ui.admin_field_dragKey; if (!key) return;
-  const active = ui.tierListModeView || (tierDefs()[0]||{}).key;
-  state.tierAssignments[active] = state.tierAssignments[active] || {};
-  if (rankEl) state.tierAssignments[active][key] = rankEl.dataset.rank;
-  else delete state.tierAssignments[active][key];
-  ui.admin_field_dragKey = null; save(); render();
+
+document.addEventListener('input', (e) => {
+  const el = e.target.closest('[data-a]'); if (!el) return;
+  const a = el.getAttribute('data-a'), d = el.dataset;
+  if (a === 'search') { ui.search = el.value; ui.page = 0; ui.focusSearch = true; render(); return; }
+  if (a === 'newListName') { ui.newListName = el.value; return; }
+  if (a === 'poolSearch') { ui.poolSearch = el.value; render(); $('[data-a="poolSearch"]')?.focus(); return; }
+  if (a === 'teamName') { ui.team.name = el.value; return; }
+  if (a === 'teamReason') { ui.team.reason = el.value; return; }
+  if (a === 'teamSearch') { ui.teamSearch = el.value; ui.teamPage = 0; render(); return; }
+  if (a === 'edField') { ui.edDraft[d.f] = el.value; return; }
+  if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
+  if (a === 'edSk') { ui.edDraft.uniforms[d.i].skills[d.s][d.f] = el.value; return; }
+  if (a === 'modeName') { U.modes[d.i].name = el.value; saveUser(); return; }
+  if (a === 'modeSize') { U.modes[d.i].teamSize = Math.max(1, parseInt(el.value, 10) || 3); saveUser(); return; }
 });
 
-function exportCsv(){
-  const rows = [['personaje_id','personaje_nombre','clase','faccion','tier','instinto','uniforme_id','uniforme_nombre','uniforme_tier','uniforme_anio','slot','habilidad','descripcion','tipo_dano']];
-  state.characters.forEach(ch=>{
-    if (!ch.uniforms.length) rows.push([ch.id,ch.name,ch.c,ch.f,ch.t,ch.ins,'','','','','','','','']);
-    ch.uniforms.forEach(u=>{
-      const skills = (ch.baseSkills||[]).concat(u.skills);
-      if (!skills.length) rows.push([ch.id,ch.name,ch.c,ch.f,ch.t,ch.ins,u.id,u.name,u.tier,u.year,'','','','']);
-      skills.forEach(sk=>rows.push([ch.id,ch.name,ch.c,ch.f,ch.t,ch.ins,u.id,u.name,u.tier,u.year,sk.slot,sk.n,sk.d,sk.dmg]));
-    });
+document.addEventListener('change', (e) => {
+  const el = e.target.closest('[data-a]'); if (!el) return;
+  const a = el.getAttribute('data-a'), d = el.dataset;
+  if (a === 'sort') { U.prefs.sort = el.value; commit(); return; }
+  if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
+  if (a === 'teamMode') { const m = U.modes.find(x => x.id === el.value);
+    ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-(m ? m.teamSize : 3)); render(); return; }
+  if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
+  if (a === 'edSk') { ui.edDraft.uniforms[d.i].skills[d.s][d.f] = el.value; return; }
+  if (a === 'upload') { const f = el.files[0]; if (f) readFile(f, url => { U.images[d.img] = url; commit(); }); return; }
+  if (a === 'importUser') { const f = el.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { try { U = Object.assign(blankUser(), JSON.parse(r.result)); commit(); }
+                       catch (err) { alert('Ese archivo no es una capa de usuario válida: ' + err.message); } };
+    r.readAsText(f); return; }
+});
+
+// arrastrar y soltar en las tier lists
+document.addEventListener('dragstart', (e) => {
+  const el = e.target.closest('[data-a="drag"]'); if (!el) return;
+  ui.dragKey = el.dataset.key; e.dataTransfer.setData('text/plain', el.dataset.key); e.dataTransfer.effectAllowed = 'move';
+});
+document.addEventListener('dragover', (e) => {
+  const z = e.target.closest('[data-a="drop"]'); if (!z) return;
+  e.preventDefault(); z.closest('.tierrow')?.classList.add('over');
+});
+document.addEventListener('dragleave', (e) => { e.target.closest('[data-a="drop"]')?.closest('.tierrow')?.classList.remove('over'); });
+document.addEventListener('drop', (e) => {
+  const z = e.target.closest('[data-a="drop"]'); if (!z) return;
+  e.preventDefault();
+  const key = ui.dragKey; ui.dragKey = null; if (!key) return;
+  setAssign(ui.tierList, key, z.dataset.row || REMOVED);
+});
+
+function download (name, text, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name; a.click(); URL.revokeObjectURL(a.href);
+}
+function exportCsv () {
+  const head = ['clave','personaje','uniforme','clase','bando','tier','trascendido','instinto','raza','genero','origen',
+                'roles','habilidades','striker','world_boss','costo','slot','skill','descripcion','dano','etiquetas'];
+  const rows = [head];
+  allVariants().forEach(v => {
+    const base = [v.key, v.name, v.uid ? v.sub : '', v.c, v.f, v.t, v.trans ? 'sí' : 'no', v.ins, v.ch.race, v.ch.gender,
+                  v.ch.origin, v.r.join('|'), (v.ab || []).join('|'), v.striker, v.wba, v.cost];
+    if (!v.skills.length) rows.push(base.concat(['', '', '', '', '']));
+    v.skills.forEach(sk => rows.push(base.concat([sk.slot, sk.n, sk.d, sk.dmg, (sk.tags || []).join('|')])));
   });
-  const csv = rows.map(r=>r.map(c=>'"'+String(c==null?'':c).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob = new Blob([csv],{type:'text/csv'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mff-personajes-uniformes.csv'; a.click();
+  download('mff-roster.csv', '﻿' + rows.map(r => r.map(c => '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"').join(',')).join('\n'), 'text/csv');
 }
 
+rebuild();
 render();
 })();
