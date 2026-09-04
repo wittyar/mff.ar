@@ -17,8 +17,15 @@ const CHARS_SEED     = window.MFF_SEED_CHARACTERS || [];
 const IMAGES_SEED    = window.MFF_SEED_IMAGES || {};
 const TIERLISTS_SEED = window.MFF_SEED_TIERLISTS || [];
 const ASSIGN_SEED    = window.MFF_SEED_TIER_ASSIGNMENTS || {};
+const SKILLS         = window.MFF_SKILLS || {};   // skills por retrato
+const TB             = window.MFF_TABLAS || {};   // patrones y etiquetas, en los dos idiomas
+const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
 const DEFAULT_ROWS   = window.MFF_DEFAULT_TIER_ROWS || [{id:'S',label:'S'},{id:'A',label:'A'},{id:'B',label:'B'},{id:'C',label:'C'},{id:'D',label:'D'}];
-const SLOT_ORDER     = ['Liderazgo','Pasiva','Activa 1','Activa 2','Activa 3','Activa 4','Activa 5','Definitiva'];
+const SLOT_ORDER     = ['Leader Skill','Passive','Tier-2 Passive','Uniform Passive',
+                        'Active 1','Active 2','Active 3','Active 4','Active 5','Active Ult','Striker Skill'];
+const SLOT_ES = { 'Leader Skill':'Liderazgo', 'Passive':'Pasiva', 'Tier-2 Passive':'Pasiva T2',
+  'Uniform Passive':'Pasiva de uniforme', 'Striker Skill':'Striker', 'Active Ult':'Definitiva',
+  'Active 1':'Activa 1','Active 2':'Activa 2','Active 3':'Activa 3','Active 4':'Activa 4','Active 5':'Activa 5' };
 const REMOVED        = null; // marca explícita: entrada de una lista importada que el usuario quitó
 
 // ============================================================================
@@ -164,8 +171,8 @@ const T = {
   d_abilities:       { es:'Habilidades:',        en:'Abilities:' },
   d_tuc:             { es:'Cartas TUC:',         en:'TUC cards:' },
   d_uni_section:     { es:'Uniformes',           en:'Uniforms' },
-  d_uni_note:        { es:'Se muestran las skills de la base más las propias del uniforme elegido.',
-                       en:'Shows the base skills plus the ones specific to the selected uniform.' },
+  d_uni_note:        { es:'Cada uniforme tiene su propio set completo de skills; elegí uno para verlo.',
+                       en:'Each uniform has its own complete skill set; pick one to see it.' },
   d_uni_noskills:    { es:'Este uniforme no tiene skills propias en la wiki.',
                        en:'This uniform has no skills of its own on the wiki.' },
   d_no_skills:       { es:'La wiki no publica skills para este personaje todavía.',
@@ -247,7 +254,8 @@ const T = {
   ed_save:           { es:'Guardar',             en:'Save' },
   ed_discard:        { es:'Descartar mi edición', en:'Discard my edit' },
   ed_need_name:      { es:'Poné un nombre.',     en:'Enter a name.' },
-  ed_own_skills:     { es:'skills propias',      en:'own skills' },
+  ed_no_skills:      { es:'Los personajes propios no llevan skills: las skills vienen tipadas de la API de thanosvibs y no se cargan a mano.',
+                       en:'Your own characters have no skills: skills come typed from the thanosvibs API and are not entered by hand.' },
 
   st_title:          { es:'Ajustes',             en:'Settings' },
   st_note:           { es:'Los datos del juego salen de data.js y no se guardan acá. Esto es solo lo tuyo.',
@@ -281,6 +289,32 @@ const T = {
   st_translation_txt:{ es:'Los efectos y los nombres de skill están traducidos por patrón, con el original a la vista. Los nombres de personaje y de uniforme quedan en inglés a propósito: son el identificador con el que se cruza el juego, la wiki y thanosvibs.',
                        en:'Effects and skill names are translated by pattern, with the original in view. Character and uniform names stay in English on purpose: they are the identifier used to cross-reference the game, the wiki and thanosvibs.' },
 
+  st_stage:          { es:'Etapa',               en:'Stage' },
+  st_pct:            { es:'% de ataque',         en:'% of attack' },
+  st_flat:           { es:'Daño extra',          en:'Extra damage' },
+  st_element:        { es:'Elemento',            en:'Element' },
+  st_activation:     { es:'Se activa',           en:'Activates' },
+  st_target:         { es:'Objetivo',            en:'Target' },
+  c_ult:             { es:'Ult',                 en:'Ult' },
+  c_striker:         { es:'Striker',             en:'Striker' },
+  c_cooldown:        { es:'Recarga',             en:'Cooldown' },
+  every:             { es:'cada',                en:'every' },
+  permanent_fx:      { es:'permanente',          en:'permanent' },
+  team_fx:           { es:'al equipo',           en:'team' },
+  c_keybuffs:        { es:'Buffs clave',         en:'Key buffs' },
+  c_uni_cost:        { es:'Costo de mejora',     en:'Upgrade cost' },
+  c_dmg_total:       { es:'Daño total de activas', en:'Total active damage' },
+  d_upgrade:         { es:'Mejora del uniforme', en:'Uniform upgrade' },
+  d_kits:            { es:'Kits',                en:'Kits' },
+  d_gold:            { es:'Oro',                 en:'Gold' },
+  d_xp:              { es:'XP',                  en:'XP' },
+  d_materials:       { es:'Materiales',          en:'Materials' },
+  f_effect:          { es:'Efecto',              en:'Effect' },
+  tpl_title:         { es:'La fuente no especifica cuál: publica un marcador de plantilla sin resolver.',
+                       en:'The source does not say which: it publishes an unresolved template marker.' },
+  tpl_faction:       { es:'sin especificar',      en:'unspecified' },
+  tpl_class:         { es:'sin especificar',      en:'unspecified' },
+  tpl_time:          { es:'sin especificar',      en:'unspecified' },
   lang_switch:       { es:'English',             en:'Español' },
   lang_title:        { es:'Ver la app en inglés', en:'View the app in Spanish' },
   untranslated:      { es:'sin traducir',        en:'untranslated' },
@@ -307,13 +341,6 @@ function dom (v) {
   const en = VOCAB_EN[v];
   if (en === undefined) { console.warn('valor de dominio sin inglés en MFF_VOCAB_EN:', v); return v; }
   return en;
-}
-/** Recarga en el idioma activo: 'Permanente' / '8s de recarga'. */
-function timing (sk) {
-  if (sk.perm) return t('timing_permanent');
-  if (sk.slot === 'Definitiva') return t('timing_ultimate');
-  if (sk.cd) return sk.cd + t('timing_cd');
-  return '—';
 }
 let LANG = U.prefs.lang;
 
@@ -358,19 +385,41 @@ function transTag (on) { return on ? `<span class="tag solid" style="background:
 
 function findUniform (ch, uid) { return ch && ch.uniforms.find(u => u.id === uid); }
 /** Vista efectiva de "personaje base" o "personaje con uniforme X": el uniforme pisa lo que redefine. */
+/** Vista efectiva de "base" o "personaje con uniforme X". Las skills salen del set
+ *  del retrato correspondiente: cada uniforme tiene el suyo en la API. */
 function variant (cid, uid) {
   const ch = CHAR_BY_ID[cid]; if (!ch) return null;
-  const base = ch.baseSkills || [];
   const u = uid && uid !== 'base' ? findUniform(ch, uid) : null;
+  const p = u ? u.p : ch.p;
+  const skills = SKILLS[p] || [];
   if (!u) return { cid: ch.id, uid: null, key: ch.id + '::base', id: ch.id, name: ch.name, sub: 'Base',
                    c: ch.c, f: ch.f, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
                    striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '',
-                   ch, skills: base };
+                   p, up: null, ch, skills };
   return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
            c: u.c || ch.c, f: u.f || ch.f, t: u.tier || ch.t, ins: ch.ins, r: ch.r, ab: u.ab || ch.abilities || [],
            striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
            trans: u.trans, nuevo: u.new, cost: u.cost || '',
-           ch, skills: base.concat(u.skills) };
+           p, up: u.up || null, ch, skills };
+}
+/** Totales que muestra thanosvibs: carga combinada de las cinco activas. */
+function cargas (skills) {
+  let ult = 0, stk = 0;
+  skills.forEach(sk => { if (sk.ult) ult += sk.ult; if (sk.stk) stk += sk.stk; });
+  return { ult: Math.round(ult * 10) / 10, stk: Math.round(stk * 10) / 10 };
+}
+/** Suma del % de ataque de todas las etapas de las skills activas. */
+function danoTotal (skills) {
+  let n = 0;
+  skills.forEach(sk => { if (!/^Active/.test(sk.sl)) return;
+    (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d) n += d.pct; })); });
+  return Math.round(n);
+}
+/** Índices de etiqueta de efecto presentes en un set de skills (para filtrar). */
+function efectosDe (skills) {
+  const out = new Set();
+  skills.forEach(sk => (sk.st || []).forEach(st => (st.fx || []).forEach(f => out.add(f.a))));
+  return out;
 }
 function allVariants () {
   const out = [];
@@ -405,53 +454,144 @@ function synergy (vs) {
   return { score, reasons: [...new Set(reasons)] };
 }
 
-/** Efectos en el idioma activo. En español, una línea sin traducción cargada se
- *  muestra en inglés y marcada: nunca se inventa una traducción ni se oculta el dato. */
-function skillFx (sk) {
-  if (!sk.fx) return '';
-  let out = '';
-  for (const k of ['general','self','enemy','allies']) {
-    const en = sk.fx[k];
-    if (!en || !en.length) continue;
-    const es = (sk.fxEs && sk.fxEs[k]) || [];
-    const items = en.map((linea, i) => {
-      if (LANG === 'en') return `<span>${h(linea)}</span>`;
-      const tr = es[i];
-      return tr ? `<span>${h(tr)}</span>`
-                : `<span class="sintrad" title="${h(t('untranslated'))}">${h(linea)}</span>`;
-    }).join('');
-    out += `<div class="fxline"><span class="fxlabel fx-${k}">${t('fx_' + k)}</span><div class="fxitems">${items}</div></div>`;
-  }
-  return out;
+// ---------------------------------------------------------------------------
+// TEXTO DE LAS SKILLS
+// Un efecto guarda el índice de su patrón y sus números; el texto se arma acá.
+// ---------------------------------------------------------------------------
+/** Fila de una tabla de data.js. */
+function fila (tabla, i) { return (i == null || !TB[tabla]) ? null : TB[tabla][i]; }
+// thanosvibs publica algunas descripciones con marcadores de plantilla sin resolver
+// ($HEROSUBTYPE1, $HEROCLASS2, $TIME). Los que tienen un campo real detrás se resuelven
+// con ese campo; los que no, se marcan como "sin especificar en la fuente" en vez de
+// inventarles un valor o dejar el marcador crudo a la vista.
+function marcadores (texto, f) {
+  const chip = (clave) => `<i class="tpl" title="${h(t('tpl_title'))}">${h(t(clave))}</i>`;
+  return texto
+    .replace(/\$TIME/g, () => (f && f.d != null) ? f.d + ' s' : chip('tpl_time'))
+    .replace(/\$TICK/g, () => (f && f.t != null) ? f.t + ' s' : chip('tpl_time'))
+    .replace(/\$HEROSUBTYPE\d*/g, () => chip('tpl_faction'))
+    .replace(/\$HEROCLASS\d*/g, () => chip('tpl_class'));
 }
-/** Nombre de la skill: en español se muestra la traducción con el original al lado,
- *  porque el nombre inglés es con lo que se busca en el juego y en la wiki. */
-function skillName (sk) {
-  if (LANG === 'en' || !sk.nEs) return `<span class="nm">${h(sk.n)}</span>`;
-  return `<span class="nm">${h(sk.nEs)}<span class="orig">${h(sk.n)}</span></span>`;
+/** Reemplaza cada '#' del patrón por el número que le toca, en orden. */
+function rellenar (patron, nums) {
+  let i = 0;
+  return String(patron).replace(/#/g, () => (nums && nums[i] !== undefined ? nums[i++] : '#'));
 }
+/** {txt, sinTraducir} de una fila, en el idioma activo. */
+function texto (tabla, i, nums) {
+  const f = fila(tabla, i);
+  if (!f) return null;
+  if (LANG === 'en') return { txt: rellenar(f.en, nums), sinTraducir: false };
+  if (f.es == null) return { txt: rellenar(f.en, nums), sinTraducir: true };
+  return { txt: rellenar(f.es, nums), sinTraducir: false };
+}
+function txt (tabla, i, nums) { const r = texto(tabla, i, nums); return r ? r.txt : ''; }
+/** Los números de daño de un efecto, si el patrón es una línea de daño. */
+function dano (f) {
+  const d = fila('desc', f.p);
+  if (!d || d.pi === undefined || !f.v) return null;
+  return { pct: f.v[d.pi], flat: d.fi !== undefined ? f.v[d.fi] : null, src: d.src, elem: d.elem };
+}
+function esDano (f) { return dano(f) !== null; }
+/** Nombre de la skill: traducción con el original al lado, que es con lo que se busca. */
+function nombreSkill (sk) {
+  const f = fila('name', sk.n);
+  if (!f) return '';
+  if (LANG === 'en' || f.es == null) return `<span class="nm">${h(f.en)}</span>`;
+  return `<span class="nm">${h(f.es)}<span class="orig">${h(f.en)}</span></span>`;
+}
+function slotEs (sl) { return LANG === 'es' ? (SLOT_ES[sl] || sl) : sl; }
+function slotClase (sl) {
+  return sl === 'Leader Skill' ? 'lead'
+       : (sl === 'Passive' || sl === 'Tier-2 Passive' || sl === 'Uniform Passive') ? 'pass'
+       : sl === 'Active Ult' ? 'ult'
+       : sl === 'Striker Skill' ? 'stk' : '';
+}
+
+/** Un efecto que no es daño: etiqueta tipada + texto, uno por línea. */
+function efectoLinea (f) {
+  const r = texto('desc', f.p, f.v);
+  if (!r) return '';
+  const partes = r.txt.split(/<br\s*\/?>/i).map(x => x.trim()).filter(Boolean);
+  // Duración, tick y marcas van pegadas al final de la última línea, no en un renglón aparte.
+  const meta = [];
+  if (f.t != null) meta.push(t('every') + ' ' + f.t + ' s');
+  if (f.d != null) meta.push(f.d + ' s');
+  if (f.m) meta.push(t('permanent_fx'));
+  if (f.b) meta.push(t('team_fx'));
+  const etiqueta = txt('ab', f.a);
+  return `<div class="fxline">
+    <span class="fxtag" title="${h(etiqueta)}">${h(etiqueta)}</span>
+    <div class="fxitems ${r.sinTraducir ? 'sintrad' : ''}"
+         ${r.sinTraducir ? `title="${h(t('untranslated'))}"` : ''}>
+      ${partes.map((x, i) => `<div>${marcadores(h(x), f)}${
+        i === partes.length - 1 && meta.length ? ` <span class="dur">${h(meta.join(' · '))}</span>` : ''}</div>`).join('')}
+    </div></div>`;
+}
+
+/** Una skill: tabla de daño por etapa arriba, y el resto de los efectos abajo. */
 function skillCard (sk) {
+  const etapas = sk.st || [];
+  const filasDano = [];
+  etapas.forEach((st, i) => {
+    (st.fx || []).forEach(f => {
+      const dn = dano(f);
+      if (dn) filasDano.push({ i, st, dn, f });
+    });
+  });
+  const varias = etapas.length > 1;
+  const hayObj = etapas.some(st => st.tg != null);
+  const hayAct = etapas.some(st => st.ac != null);
+
+  const tabla = filasDano.length ? `<div class="stagewrap"><table class="stages">
+    <thead><tr>
+      ${varias ? `<th>${h(t('st_stage'))}</th>` : ''}
+      <th>${h(t('st_pct'))}</th><th>${h(t('st_flat'))}</th><th>${h(t('st_element'))}</th>
+    </tr></thead><tbody>
+    ${filasDano.map(r => `<tr>
+      ${varias ? `<td class="stnum">${r.i + 1}</td>` : ''}
+      <td class="num"><b>${h(r.dn.pct)}%</b> <span class="muted">${h(srcEs(r.dn.src))}</span></td>
+      <td class="num">${r.dn.flat != null ? '+' + h(r.dn.flat) : '<span class="muted">—</span>'}</td>
+      <td>${r.st.el != null ? `<span class="tag dim">${h(txt('elem', r.st.el))}</span>`
+                            : `<span class="muted">${h(elemEs(r.dn.elem))}</span>`}</td>
+    </tr>`).join('')}
+    </tbody></table></div>` : '';
+
+  const otros = etapas.map((st, i) => {
+    const fx = (st.fx || []).filter(f => !esDano(f));
+    const meta = [];
+    if (st.ac != null) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
+    if (st.tg != null) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${h(txt('tgt', st.tg))}</span>`);
+    if (!fx.length && !meta.length) return '';
+    return `<div class="stageblock">
+      ${varias || meta.length ? `<div class="stagehead">${varias ? `<span class="stnum">${i + 1}</span>` : ''}${meta.join('')}</div>` : ''}
+      ${fx.map(efectoLinea).join('')}</div>`;
+  }).join('');
+
+  const cargas = [];
+  if (sk.cd) cargas.push(`<span class="tag dim">CD ${h(sk.cd)}s</span>`);
+  if (sk.ult != null) cargas.push(`<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>`);
+  if (sk.stk != null) cargas.push(`<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>`);
+
   return `<div class="skill">
     <div class="top">
-      <span class="slotbadge ${slotClass(sk.slot)}">${h(dom(sk.slot))}</span>
-      ${skillName(sk)}
-      <span class="tag dim">${h(timing(sk))}</span>
-      ${sk.dmg && sk.dmg !== 'Ninguno' ? tagGhost(dom(sk.dmg), dmgColor(sk.dmg)) : ''}
+      <span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>
+      ${nombreSkill(sk)}
+      ${cargas.join('')}
     </div>
-    <div class="body">
-      ${skillFx(sk)}
-      ${(sk.tags && sk.tags.length) || sk.ii || sk.iframe ? `<div class="row" style="margin-top:3px">
-        ${(sk.tags || []).map(x => `<span class="tag dim">${h(dom(x))}</span>`).join('')}
-        ${sk.ii ? tagGhost(t('ignores_iframe'),'var(--accent-2)') : ''}
-        ${sk.iframe ? tagGhost(t('has_iframe'),'var(--allies)') : ''}
-      </div>` : ''}
-    </div>
+    <div class="body">${tabla}${otros}</div>
   </div>`;
 }
+function srcEs (v) {
+  if (LANG === 'en') return v;
+  return { 'Physical Attack':'ataque físico', 'Energy Attack':'ataque de energía', 'HP':'vida' }[v] || v;
+}
+function elemEs (v) { return LANG === 'en' ? v : (txt('elem', (TB.elem || []).findIndex(x => x.en === v)) || v); }
+
 /** Máximo 4 columnas en la comparación: al agregar la quinta se descarta la más vieja. */
 function togglePick (cid, uid) {
   const key = cid + '::' + (uid || 'base');
-  const i = ui.picks.findIndex(p => p.key === key);
+  const i = ui.picks.findIndex(x => x.key === key);
   if (i > -1) { ui.picks.splice(i, 1); return; }
   ui.picks.push({ cid, uid: uid || null, key });
   if (ui.picks.length > 4) ui.picks.shift();
@@ -660,9 +800,7 @@ function renderDetail () {
   const rank = rankLabel(v.key);
   const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
   const teams = U.teams.filter(eq => eq.members.some(k => k.split('::')[0] === ch.id));
-  const byslot = {}; v.skills.forEach(sk => { (byslot[sk.slot] = byslot[sk.slot] || []).push(sk); });
-  const ordered = SLOT_ORDER.filter(s => byslot[s]);
-  const extra = Object.keys(byslot).filter(s => !SLOT_ORDER.includes(s));
+  const car = cargas(v.skills);
   const box = (k, val) => `<div class="stat"><div class="k">${h(k)}</div><div class="v">${val}</div></div>`;
 
   return `
@@ -717,9 +855,18 @@ function renderDetail () {
         <span class="tag solid" style="background:${tierColor(u.tier)};font-size:9px">${h(u.tier)}</span></button>`).join('')}
     </div>
     <p class="muted" style="margin-bottom:12px">${h(t('d_uni_note'))}
-      ${v.uid && (findUniform(ch, v.uid) || {}).skills.length === 0 ? `<b>${h(t('d_uni_noskills'))}</b>` : ''}</p>
+</p>
+    ${(() => { const kb = BUFFS[v.p] || {}; const ks = Object.keys(kb);
+       return ks.length ? `<div class="keybuffs">
+         <div class="kbhead">${h(t('c_keybuffs'))}</div>
+         ${ks.map(k => `<div class="kbrow"><span class="kbname">${h(k)}</span>
+            <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x === 'Leader Skill' ? 'Leader Skill' : x))}</span>`).join('')}</span></div>`).join('')}
+       </div>` : ''; })()}
     ${v.skills.length
-      ? ordered.concat(extra).map(slot => byslot[slot].map(skillCard).join('')).join('')
+      ? `<div class="chargebar">
+           <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult)}%;background:var(--accent)"></i></div><b>${car.ult}%</b>
+           <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk)}%;background:var(--role-control)"></i></div><b>${car.stk}%</b>
+         </div>` + v.skills.map(skillCard).join('')
       : `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`}
   </div>
 
@@ -746,7 +893,8 @@ function renderCompare () {
   if (vs.length < 2) { ui.view = 'roster'; return renderRoster(); }
   const same = (get) => { const m = {}; vs.forEach(v => { const k = get(v); m[k] = (m[k] || 0) + 1; }); return m; };
   const cC = same(v => v.c), cF = same(v => v.f), cT = same(v => v.t), cI = same(v => v.ins);
-  const slots = SLOT_ORDER.filter(s => vs.some(v => v.skills.some(sk => sk.slot === s)));
+  const slots = SLOT_ORDER.filter(sl => vs.some(v => v.skills.some(sk => sk.sl === sl)));
+  const car = vs.map(v => cargas(v.skills));
   const syn = synergy(vs);
   const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
@@ -772,6 +920,16 @@ function renderCompare () {
       ${attr(t('c_worldboss'), v => icon(v.wba) + h(dom(v.wba) || '—'))}
       ${attr(t('cmp_abilities'), v => (v.ab || []).map(a => `<span class="tag dim">${h(dom(a))}</span>`).join(' ') || '—')}
       ${attr(t('cmp_cost'), v => h(v.cost || '—'))}
+      <tr><th>${h(t('c_ult'))}</th>${vs.map((v, i) => `<td class="num">${car[i].ult}%</td>`).join('')}</tr>
+      <tr><th>${h(t('c_striker'))}</th>${vs.map((v, i) => `<td class="num">${car[i].stk}%</td>`).join('')}</tr>
+      <tr><th>${h(t('c_dmg_total'))}</th>${vs.map(v => `<td class="num">${danoTotal(v.skills)}%</td>`).join('')}</tr>
+      <tr><th>${h(t('c_keybuffs'))}</th>${vs.map(v => `<td>${
+        Object.keys(BUFFS[v.p] || {}).map(b => `<span class="tag dim">${h(b)}</span>`).join(' ') || '—'}</td>`).join('')}</tr>
+      <tr><th>${h(t('c_uni_cost'))}</th>${vs.map(v => `<td>${v.up
+        ? `<div class="muted">${h(t('d_kits'))}: ${(v.up.uniform_kits || []).reduce((a, b) => a + b, 0)}
+           · ${h(t('d_gold'))}: ${((v.up.gold || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k
+           · ${h(t('d_xp'))}: ${((v.up.uniform_xp || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k</div>`
+        : '<span class="muted">—</span>'}</td>`).join('')}</tr>
       ${LISTS.filter(l => Object.keys(assignOf(l.id)).length).map(l => {
         const a = assignOf(l.id), rows = rowsOf(l);
         return `<tr><th>${h(listName(l))}</th>${vs.map(v => {
@@ -779,13 +937,24 @@ function renderCompare () {
           return `<td>${i === -1 ? `<span class="muted">${h(t('cmp_unplaced'))}</span>` : `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`}</td>`;
         }).join('')}</tr>`;
       }).join('')}
-      ${slots.map(slot => `<tr class="slotrow"><th>${h(dom(slot))}</th>${vs.map(v => {
-        const sk = v.skills.find(s => s.slot === slot);
+      ${slots.map(sl => `<tr class="slotrow"><th>${h(slotEs(sl))}</th>${vs.map(v => {
+        const sk = v.skills.find(x => x.sl === sl);
         if (!sk) return `<td><span class="muted">${h(t('cmp_missing_slot'))}</span></td>`;
-        return `<td><div style="font-weight:600;margin-bottom:4px">${skillName(sk)}</div>
-          ${sk.dmg !== 'Ninguno' ? tagGhost(dom(sk.dmg), dmgColor(sk.dmg)) : ''}
-          <span class="tag dim">${h(timing(sk))}</span>
-          <div style="margin-top:6px">${skillFx(sk)}</div></td>`;
+        const dmg = [];
+        (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d) dmg.push(d); }));
+        const otros = [];
+        (sk.st || []).forEach(st => (st.fx || []).forEach(f => { if (!esDano(f)) otros.push(f); }));
+        return `<td><div style="font-weight:600;margin-bottom:4px">${nombreSkill(sk)}</div>
+          <div class="row" style="gap:4px;margin-bottom:6px">
+            ${sk.cd ? `<span class="tag dim">CD ${h(sk.cd)}s</span>` : ''}
+            ${sk.ult != null ? `<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>` : ''}
+            ${sk.stk != null ? `<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>` : ''}
+          </div>
+          ${dmg.length ? `<div class="muted" style="margin-bottom:5px">${dmg.map(d =>
+             `<b>${h(d.pct)}%</b>${d.flat != null ? ' +' + h(d.flat) : ''}`).join(' · ')}</div>` : ''}
+          ${otros.slice(0, 6).map(f => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
+             marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`).join('')}
+          ${otros.length > 6 ? `<div class="muted">+${otros.length - 6}</div>` : ''}</td>`;
       }).join('')}</tr>`).join('')}
     </tbody>
   </table></div>
@@ -922,7 +1091,7 @@ function renderTeams () {
 function blankDraft () {
   return { name:'', c:'Combate', f:SEED.FACTIONS[0], r:[], t:'T2', ins:SEED.INSTINCTS[0], race:SEED.RACES[0],
            gender:SEED.GENDERS[0], origin:'Original MFF', abilities:[], tuc:[], stats:{}, striker:4, wba:'',
-           trans:false, new:false, baseSkills:[], uniforms:[] };
+           trans:false, new:false, uniforms:[] };
 }
 function renderEditor () {
   const d = ui.edDraft, steps = [t('ed_step_data'), t('ed_step_unis'), t('ed_step_review')];
@@ -951,21 +1120,12 @@ function renderEditor () {
         <input placeholder="${h(t('ed_cost'))}" style="flex:1;min-width:120px" data-a="edUni" data-i="${i}" data-f="cost" value="${h(u.cost || '')}">
         <button class="btn sm danger" data-a="edUniDel" data-i="${i}">✕</button>
       </div>
-      ${u.skills.map((sk, si) => `<div class="card" style="margin-top:8px;background:var(--surface-2)">
-        <div class="row">
-          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="slot">${SLOT_ORDER.map(x => `<option value="${h(x)}" ${x === sk.slot ? 'selected' : ''}>${h(dom(x))}</option>`).join('')}</select>
-          <select data-a="edSk" data-i="${i}" data-s="${si}" data-f="dmg">${SEED.DAMAGE_TYPES.map(x => `<option value="${h(x)}" ${x === sk.dmg ? 'selected' : ''}>${h(dom(x))}</option>`).join('')}</select>
-          <input placeholder="${h(t('ed_skill_name'))}" style="flex:1;min-width:150px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="n" value="${h(sk.n)}">
-          <button class="btn sm danger" data-a="edSkDel" data-i="${i}" data-s="${si}">✕</button>
-        </div>
-        <textarea placeholder="${h(t('ed_desc'))}" style="width:100%;margin-top:6px" data-a="edSk" data-i="${i}" data-s="${si}" data-f="d">${h(sk.d)}</textarea>
-      </div>`).join('')}
-      <button class="btn sm" style="margin-top:8px" data-a="edSkAdd" data-i="${i}">${h(t('ed_add_skill'))}</button>
-    </div>`).join('') + `<button class="btn" data-a="edUniAdd">${h(t('ed_add_uni'))}</button>`;
+    </div>`).join('') + `<button class="btn" data-a="edUniAdd">${h(t('ed_add_uni'))}</button>`
+      + `<p class="muted" style="margin-top:12px">${h(t('ed_no_skills'))}</p>`;
   } else {
     body = `<div class="card"><div style="font-weight:700;font-size:17px">${h(d.name || 'Sin nombre')}</div>
       <div class="muted">${[dom(d.c), dom(d.f), d.t, dom(d.ins), d.r.map(dom).join('/')].filter(Boolean).join(' · ')}</div>
-      <div class="muted">${pluralUni(d.uniforms.length)} · ${d.uniforms.reduce((n, u) => n + u.skills.length, 0)} ${h(t('ed_own_skills'))}</div></div>`;
+      <div class="muted">${pluralUni(d.uniforms.length)}</div></div>`;
   }
   return `<div class="page-head"><div><h1>${h(ui.edId ? t('ed_edit') : t('ed_new'))}</h1>
     <div class="sub">${h(t('ed_note'))}</div></div></div>
@@ -1147,10 +1307,8 @@ document.addEventListener('click', (e) => {
       if (d.multi === '1') { const i = dr[f].indexOf(v); if (i > -1) dr[f].splice(i, 1); else dr[f].push(v); }
       else dr[f] = v;
       render(); break; }
-    case 'edUniAdd': ui.edDraft.uniforms.push({ id:'u-' + Date.now(), name:'', tier:'T2', year:'', cost:'', striker:4, skills:[] }); render(); break;
+    case 'edUniAdd': ui.edDraft.uniforms.push({ id:'u-' + Date.now(), name:'', tier:'T2', cost:'', striker:4 }); render(); break;
     case 'edUniDel': ui.edDraft.uniforms.splice(parseInt(d.i, 10), 1); render(); break;
-    case 'edSkAdd': ui.edDraft.uniforms[parseInt(d.i, 10)].skills.push({ slot:'Activa 1', n:'', d:'', fx:null, dmg:'Ninguno', ii:false, tags:[], cd:null, perm:false, iframe:false, gb:false, sgb:false }); render(); break;
-    case 'edSkDel': ui.edDraft.uniforms[parseInt(d.i, 10)].skills.splice(parseInt(d.s, 10), 1); render(); break;
     case 'edRevert': delete U.charEdits[ui.edId]; ui.view = 'detail'; ui.charId = ui.edId; ui.edId = null; commit(); break;
     case 'edSave': { const dr = ui.edDraft;
       if (!dr.name.trim()) { alert(t('ed_need_name')); break; }
@@ -1183,7 +1341,6 @@ document.addEventListener('input', (e) => {
   if (a === 'teamSearch') { ui.teamSearch = el.value; ui.teamPage = 0; render(); return; }
   if (a === 'edField') { ui.edDraft[d.f] = el.value; return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
-  if (a === 'edSk') { ui.edDraft.uniforms[d.i].skills[d.s][d.f] = el.value; return; }
   if (a === 'modeName') { U.modes[d.i].name = el.value; saveUser(); return; }
   if (a === 'modeSize') { U.modes[d.i].teamSize = Math.max(1, parseInt(el.value, 10) || 3); saveUser(); return; }
 });
@@ -1196,7 +1353,6 @@ document.addEventListener('change', (e) => {
   if (a === 'teamMode') { const m = U.modes.find(x => x.id === el.value);
     ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-(m ? m.teamSize : 3)); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
-  if (a === 'edSk') { ui.edDraft.uniforms[d.i].skills[d.s][d.f] = el.value; return; }
   if (a === 'upload') { const f = el.files[0]; if (f) readFile(f, url => { U.images[d.img] = url; commit(); }); return; }
   if (a === 'importUser') { const f = el.files[0]; if (!f) return;
     const r = new FileReader();
@@ -1229,13 +1385,21 @@ function download (name, text, type) {
 }
 function exportCsv () {
   const head = ['clave','personaje','uniforme','clase','bando','tier','trascendido','instinto','raza','genero','origen',
-                'roles','habilidades','striker','world_boss','costo','slot','skill','descripcion','dano','etiquetas'];
+                'roles','habilidades','striker','world_boss','costo',
+                'slot','skill','cooldown','carga_ult','carga_striker','etapa','efecto','descripcion',
+                'pct_ataque','dano_extra','elemento','duracion'];
   const rows = [head];
   allVariants().forEach(v => {
     const base = [v.key, v.name, v.uid ? v.sub : '', v.c, v.f, v.t, v.trans ? 'sí' : 'no', v.ins, v.ch.race, v.ch.gender,
                   v.ch.origin, v.r.join('|'), (v.ab || []).join('|'), v.striker, v.wba, v.cost];
-    if (!v.skills.length) rows.push(base.concat(['', '', '', '', '']));
-    v.skills.forEach(sk => rows.push(base.concat([sk.slot, sk.n, sk.d, sk.dmg, (sk.tags || []).join('|')])));
+    if (!v.skills.length) rows.push(base.concat(['', '', '', '', '', '', '', '', '']));
+    v.skills.forEach(sk => (sk.st || []).forEach((st, i) => (st.fx || []).forEach(f => {
+      const d = dano(f);
+      rows.push(base.concat([sk.sl, txt('name', sk.n), sk.cd, sk.ult != null ? sk.ult : '',
+        sk.stk != null ? sk.stk : '', i + 1, txt('ab', f.a),
+        txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' '),
+        d ? d.pct : '', d && d.flat != null ? d.flat : '',
+        st.el != null ? txt('elem', st.el) : '', f.d != null ? f.d : ''])); })));
   });
   download('mff-roster.csv', '﻿' + rows.map(r => r.map(c => '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"').join(',')).join('\n'), 'text/csv');
 }

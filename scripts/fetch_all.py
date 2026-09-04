@@ -57,7 +57,31 @@ for i, (slug, title, es, en) in enumerate(TIERLISTS):
     print('tier list:', title, '| juego', v0['gameVersion'], '| autor', v0.get('author'),
           '| filas', len(v0.get('tiers', [])))
 
-# 3) resolucion de titulos de wiki (lotes + busqueda de rescate + overrides)
+# 3) skills: la API de thanosvibs es la fuente. Una llamada por retrato, porque cada
+# uniforme tiene su propio set (incluidas Uniform Passive y Striker Skill).
+os.makedirs('work/skills_api', exist_ok=True)
+ports_sk = sorted({r['portrait'] for r in chars} | {r['base_portrait'] for r in chars})
+fallos_sk = []
+def get_skills(p):
+    fn = f'work/skills_api/{p}.json'
+    if os.path.exists(fn): return
+    for intento in range(3):
+        try:
+            open(fn, 'wb').write(get(f'{TV}/api/characters/{urllib.parse.quote(p)}/skills'))
+            return
+        except Exception as e:
+            if intento == 2: fallos_sk.append(p)
+            time.sleep(1.5)
+with ThreadPoolExecutor(5) as ex: list(ex.map(get_skills, ports_sk))
+print('skills:', len(os.listdir('work/skills_api')), 'retratos', ('| AVISO fallaron: ' + str(fallos_sk)) if fallos_sk else '')
+
+# 3b) costos y materiales de cada uniforme
+json.dump(get_json(TV + '/api/uniforms'), open('work/uniforms.json', 'w'))
+print('uniformes:', len(json.load(open('work/uniforms.json'))), 'con costos y materiales')
+
+# 4) resolucion de titulos de wiki. La wiki ya NO aporta skills: se usa solo para el
+# instinto, que thanosvibs no publica en ninguna de sus APIs.
+
 OVERRIDES = {'Kraven The Hunter': 'Kraven the Hunter', 'Morgan le Fay': 'Morgan Le Fay',
              'Falcon (Joaquin Torres)': 'Falcon (Joaqu\u00edn Torres)'}
 names = sorted({r['character'] for r in chars if r['uniformed'] == 'False'})
@@ -82,7 +106,7 @@ still = [n for n in names if n not in resolved]
 if still: print('AVISO: sin pagina de wiki:', still)
 json.dump(resolved, open('work/wiki_titles.json', 'w'))
 
-# 4) wikitexts
+# 4b) wikitexts (solo por el instinto)
 def wslug(s): return re.sub(r'[^A-Za-z0-9]+', '_', s)
 for name, title in resolved.items():
     fn = f'work/wikitext/{wslug(name)}.json'

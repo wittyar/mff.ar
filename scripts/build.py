@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Reconstruye data.js y mff-thanosvibs-import.json desde work/. Correr tras fetch_all y parse_skills."""
 import json, os, datetime
-exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())  # deja work/build2.json
+# skills_api.py deja work/skills_parsed.json; _core.py lo consume y deja work/build2.json
+import subprocess, sys
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
+exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 
 b = json.load(open('work/build2.json'))
 chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
-vocab = b['vocab']
+vocab, SKILLS, TABLAS, BUFFS = b['vocab'], b['skills'], b['tablas'], b['buffs']
 gv = json.load(open('work/gen_versions.json'))[0]['gameVersion']
 ABIL_VALUES = sorted({a for c in chars for a in c['abilities']})
 SEED = {
@@ -52,6 +55,11 @@ function sk(slot, n, d, dmg, ii, tags, opts) {
 window.MFF_sk = sk;
 """,
  'window.MFF_SEED_CHARACTERS = ' + json.dumps(chars, ensure_ascii=False) + ';\n',
+ '// Skills por retrato. Cada efecto guarda el índice de su patrón y sus números;\n'
+ '// el texto se arma en la app desde MFF_TABLAS, en el idioma activo.\n',
+ 'window.MFF_SKILLS = ' + json.dumps(SKILLS, ensure_ascii=False) + ';\n',
+ 'window.MFF_TABLAS = ' + json.dumps(TABLAS, ensure_ascii=False) + ';\n',
+ 'window.MFF_BUFFS = ' + json.dumps(BUFFS, ensure_ascii=False) + ';\n',
  'window.MFF_TEAM_SUGGESTIONS = [];\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
  'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',
@@ -59,12 +67,6 @@ window.MFF_sk = sk;
  'window.MFF_SEED_TIERLISTS = ' + json.dumps(tl, ensure_ascii=False) + ';\n',
  'window.MFF_SEED_TIER_ASSIGNMENTS = ' + json.dumps(assign, ensure_ascii=False) + ';\n',
  """
-window.MFF_skillTiming = function (skill) {
-  if (skill.perm) return 'Permanente';
-  if (skill.slot === 'Definitiva') return 'Barra de habilidad llena';
-  if (skill.cd) return skill.cd + 's de recarga';
-  return '—';
-};
 """]
 open('data.js','w').write('\n'.join(parts))
 state = {
@@ -80,4 +82,4 @@ state = {
   'images': images, 'logo': ''}
 json.dump(state, open('mff-thanosvibs-import.json','w'), ensure_ascii=False, indent=1)
 print(f"data.js {os.path.getsize('data.js')//1024} KB | import {os.path.getsize('mff-thanosvibs-import.json')//1024} KB"
-      f" | juego {gv} | listas {len(tl)}")
+      f" | juego {gv} | listas {len(tl)} | sets de skills {len(SKILLS)}")

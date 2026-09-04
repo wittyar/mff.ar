@@ -30,8 +30,20 @@ def _cargar(nombre):
     with open(ruta, encoding='utf-8') as f:
         return json.load(f)
 
-EFECTOS = _cargar('efectos.json')   # patrón inglés -> patrón español
-SKILLS  = _cargar('skills.json')    # nombre de skill inglés -> español
+EFECTOS     = _cargar('efectos.json')      # patrón de descripción inglés -> español
+SKILLS      = _cargar('skills.json')       # nombre de skill inglés -> español
+ETIQUETAS   = _cargar('etiquetas.json')    # etiqueta de efecto ("STUN") -> español
+ELEMENTOS   = _cargar('elementos.json')    # elemento de daño ("Energy Fire") -> español
+OBJETIVOS   = _cargar('objetivos.json')    # target de la etapa -> español
+ACTIVACIONES= _cargar('activaciones.json') # activation de la etapa -> español
+
+# El tipo de skill lo define la API con un conjunto cerrado de valores.
+SLOT_ES = {
+ 'Leader Skill':'Liderazgo', 'Passive':'Pasiva', 'Tier-2 Passive':'Pasiva T2',
+ 'Uniform Passive':'Pasiva de uniforme', 'Striker Skill':'Striker', 'Active Ult':'Definitiva',
+ **{f'Active {i}': f'Activa {i}' for i in range(1, 12)},
+}
+SLOT_EN = {k: k for k in SLOT_ES}
 
 def patron(linea):
     """Clave de búsqueda: la línea con cada número reemplazado por '#'."""
@@ -57,6 +69,20 @@ def traducir_fx(fx):
 def traducir_skill(nombre):
     """Nombre de skill en español, o None si no está en la tabla."""
     return SKILLS.get(nombre)
+
+def traducir_etiqueta(v):  return ETIQUETAS.get(v)
+def traducir_elemento(v):  return ELEMENTOS.get(v)
+def traducir_objetivo(v):  return OBJETIVOS.get(v)
+def traducir_activacion(v):
+    """Las activaciones llevan números; se traducen por patrón como las descripciones."""
+    es = ACTIVACIONES.get(patron(v))
+    if es is None:
+        return None
+    numeros = NUM.findall(v)
+    if es.count('#') != len(numeros):
+        raise ValueError(f'placeholders desparejos en activaciones.json\n  en: {patron(v)!r}\n  es: {es!r}')
+    it = iter(numeros)
+    return re.sub(r'#', lambda _: next(it), es)
 
 def aplanar(fx, etiquetas):
     """Arma el string plano 'd' a partir de un fx ya en un solo idioma."""

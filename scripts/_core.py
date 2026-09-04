@@ -1,6 +1,8 @@
 import glob, json, os, re, unicodedata
 d = json.load(open('work/characters.json'))
-wiki = json.load(open('work/wiki_parsed.json'))
+inst = json.load(open('work/instintos.json'))
+SK = json.load(open('work/skills_parsed.json'))       # skills por retrato + tablas de texto
+UNI = json.load(open('work/uniforms.json'))           # costos y materiales por uniforme
 ver = json.load(open('work/gen_versions.json'))[0]
 # Cada lista de thanosvibs define sus propias filas rotuladas ("Meta", "T4 / s",
 # "strikers"...). No son rangos S-D: aplastarlas a S-D renombraba un striker top
@@ -36,15 +38,24 @@ def tier_of(row):
     if row['tier-4'] == 'True': return 'T4'
     if row['skill6'] != 'False': return 'T3'
     return 'T2'
-SLOT_SORT = {'Liderazgo':0,'Pasiva':1,'Activa 1':2,'Activa 2':3,'Activa 3':4,'Activa 4':5,'Activa 5':6,'Definitiva':9}
-def sort_sk(sks): return sorted(sks, key=lambda s: SLOT_SORT.get(s['slot'], 7))
-CONTROL_TAGS = {'Aturdir','Inmovilizar','Silencio','Miedo','Ralentizar'}
-def derive_roles(skills):
-    tags = set(t for s in skills for t in s['tags'])
+# Los roles no existen en el juego: se derivan. Antes salían de etiquetas que un regex
+# adivinaba sobre el texto de la wiki; ahora salen de las etiquetas tipadas de la API,
+# que son un vocabulario cerrado de 228 valores.
+ETIQ_AB = [x['en'] for x in SK['tablas']['ab']]
+def _ids(*patrones):
+    rx = re.compile('|'.join(patrones), re.I)
+    return {i for i, e in enumerate(ETIQ_AB) if rx.search(e)}
+AB_CONTROL = _ids(r'\bstun\b', r'silence', r'snare', r'paraly', r'fracture', r'freeze', r'\bweb\b',
+                  r'incapacit', r'\bfear\b', r'mind control', r'entice', r'misdirection')
+AB_SOPORTE = _ids(r'hp recovery', r'removes all debuff', r'\bshield\b', r'barrier',
+                  r'recovery rate', r'ultimate skill gauge recovery')
+AB_TANQUE  = _ids(r'provoke', r'super armor', r'basic defenses increase', r'decreases all basic damage')
+def derive_roles(sets):
+    ab = {f['a'] for lista in sets for sk in lista for st in sk['st'] for f in st['fx']}
     roles = []
-    if len(tags & CONTROL_TAGS) >= 2: roles.append('Control')
-    if 'Curación' in tags or 'Limpia Debuffs' in tags: roles.append('Soporte')
-    if 'Provocar' in tags: roles.append('Tanque')
+    if len(ab & AB_CONTROL) >= 2: roles.append('Control')
+    if ab & AB_SOPORTE: roles.append('Soporte')
+    if ab & AB_TANQUE: roles.append('Tanque')
     roles.append('Daño')
     return roles
 nuevas = sorted({a for r in d for a in r['ability']} - set(ABIL))
@@ -53,60 +64,62 @@ if nuevas:
 byid = {}
 for x in d: byid.setdefault(x['id'], []).append(x)
 characters, images, uindex, seen = [], {}, {}, set()
+sin_skills = []
 for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
     base = next(r for r in rows if r['uniformed']=='False')
     cid = slug(base['character'])
     if cid in seen: cid = f"{cid}-{numid}"
     seen.add(cid)
-    w = wiki.get(base['character'], {'instinct':'','base':[],'per_uni':{}})
-    ins = INSTINCT.get(w['instinct'], 'Desconocido')
-    base_skills = list(w['base'])
-    per_uni = list(w['per_uni'].items())
-    used = set()
+    ins = INSTINCT.get(inst.get(base['character'], {}).get('instinct', ''), 'Desconocido')
+
+    def skills_de(portrait, quien):
+        # Cada retrato tiene su propio set en la API. Si falta, se avisa: no hay
+        # fuente alternativa desde que la wiki dejo de aportar skills.
+        if portrait not in SK['skills']:
+            sin_skills.append(quien)
+            return []
+        return SK['skills'][portrait]
+
+    base_sk = skills_de(base['base_portrait'], base['character'])
     uniforms = []
     for i, r in enumerate([r for r in rows if r['uniformed']=='True']):
         uid = f"{cid}-{r.get('uniform_id') or 'u'+str(i)}"
         uname = r['uniform']
         if r['character'] != base['character']: uname = f"{uname} ({r['character']})"
-        usk, nu = [], norm(r['uniform'])
-        for j,(wk, v) in enumerate(per_uni):
-            k = norm(wk)
-            if j not in used and k and (k in nu or nu in k):
-                usk = sort_sk(v); used.add(j); break
-        u = {'id': uid, 'name': uname, 'tier': tier_of(r), 'year': '',
+        u = {'id': uid, 'name': uname, 'tier': tier_of(r), 'p': r['portrait'],
              'cost': r.get('uniform_cost',''), 'striker': r['striker_skill'],
              'wba': ABIL[r['world_boss_ability']], 'trans': r['skill6'] == 'Transcended',
-             'new': r['new'] == 'True', 'skills': usk}
+             'new': r['new'] == 'True'}
         # El uniforme puede cambiar tipo, bando o habilidades respecto de la base.
         if TYPE[r['type']] != TYPE[base['type']]: u['c'] = TYPE[r['type']]
         if SIDE[r['side']] != SIDE[base['side']]: u['f'] = SIDE[r['side']]
         if r['ability'] != base['ability']: u['ab'] = [ABIL[a] for a in r['ability']]
+        # Costos, materiales y XP de mejora, de /api/uniforms.
+        up = UNI.get(r['portrait'])
+        if up:
+            u['up'] = {k: up[k] for k in ('uniform_xp','uniform_kits','gold','totals','update','flags')
+                       if up.get(k)}
+            for mk in ('material1','material2'):
+                if up.get(mk): u['up'][mk] = up[mk]
+        skills_de(r['portrait'], f"{base['character']} / {r['uniform']}")
         uniforms.append(u)
         images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'
         uindex[(numid, r.get('uniform_id'))] = (cid, uid)
-    leftovers = [j for j in range(len(per_uni)) if j not in used]
-    # En las paginas donde las activas viven por uniforme, la base no trae ninguna y el
-    # primer grupo sin cruzar es el traje base: ese se mergea. Si la base ya trae activas,
-    # el grupo es de un uniforme que no supimos cruzar y mergearlo inventaria atribucion.
-    if leftovers and not any(sk['slot'].startswith('Activa') for sk in base_skills):
-        base_skills += per_uni[leftovers[0]][1]
-        leftovers = leftovers[1:]
-    for j in leftovers:
-        print(f"AVISO: {base['character']}: skills de '{per_uni[j][0]}' sin uniforme que cruce"
-              f" ({len(per_uni[j][1])} skills, quedan fuera del snapshot)")
-    base_skills = sort_sk(base_skills)
-    all_sk = base_skills + [s for u in uniforms for s in u['skills']]
+
+    sets = [base_sk] + [SK['skills'].get(u['p'], []) for u in uniforms]
     characters.append({
         'id': cid, 'name': base['character'], 'c': TYPE[base['type']], 'f': SIDE[base['side']],
-        'r': derive_roles(all_sk) if all_sk else [], 'ins': ins, 'race': ALLIES[base['allies']],
+        'r': derive_roles(sets), 'ins': ins, 'race': ALLIES[base['allies']],
         'gender': GENDER[base['gender']], 't': tier_of(base), 'modes': [],
         'abilities': [ABIL[a] for a in base['ability']], 'origin': ORIGIN[base['original']],
         'tuc': base.get('tuc', []), 'stats': base.get('stats', {}),
         'striker': base['striker_skill'], 'wba': ABIL[base['world_boss_ability']],
         'trans': base['skill6'] == 'Transcended', 'new': base['new'] == 'True',
-        'baseSkills': base_skills, 'uniforms': uniforms})
+        'p': base['base_portrait'], 'uniforms': uniforms})
     images['portrait-'+cid] = 'images/' + base['base_portrait'] + '.png'
     uindex[(numid, None)] = (cid, None)
+if sin_skills:
+    print(f'AVISO: {len(sin_skills)} retratos sin skills en la API:', sin_skills[:5])
 tierlists, assign = [], {}
 for fn in TL_FILES:
     tl = json.load(open(fn))
@@ -183,7 +196,9 @@ VOCAB_EN.update({
 })
 
 tierlists.sort(key=lambda t: t['order'])   # el orden de fetch_all manda: la general primero
-json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,'vocab':VOCAB_EN},
+json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,
+           'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs']},
           open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images),
-      '| listas:', len(tierlists), '| asignaciones:', sum(len(a) for a in assign.values()))
+      '| listas:', len(tierlists), '| asignaciones:', sum(len(a) for a in assign.values()),
+      '| sets de skills:', len(SK['skills']))

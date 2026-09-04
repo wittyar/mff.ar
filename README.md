@@ -6,8 +6,10 @@ MARVEL Future Fight, armar equipos y trabajar sobre tier lists. 290 personajes, 
 sin fin comercial.**
 
 **Fuentes de datos** (crédito correspondiente):
-- [THANO$VIB$](https://thanosvibs.money) — personajes, uniformes, retratos, íconos y cinco tier lists.
-- [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — skills e instintos.
+- [THANO$VIB$](https://thanosvibs.money) — personajes, uniformes, **skills**, costos de mejora,
+  retratos, íconos y cinco tier lists.
+- [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — solo el instinto, que thanosvibs
+  no publica en ninguna de sus APIs.
 
 ## Uso
 Las **imágenes no están en el repo** (59 MB de PNGs de terceros, gitignoreadas). Tras clonar:
@@ -20,7 +22,7 @@ y abrir `index.html`. Si ya tenés la carpeta `images/` de una copia anterior, a
 Local:
 ```
 python scripts/fetch_all.py
-python scripts/parse_skills.py
+python scripts/parse_instinto.py
 python scripts/build.py        # regenera data.js y mff-thanosvibs-import.json
 ```
 O desde GitHub: pestaña **Actions → "Actualizar datos MFF" → Run workflow** (regenera y commitea
@@ -32,6 +34,33 @@ O desde GitHub: pestaña **Actions → "Actualizar datos MFF" → Run workflow**
 - `localStorage` guarda **solo la capa del usuario** (clave `mff_user_v1`): personajes propios o
   editados, equipos, tier lists propias, cambios sobre las importadas, imágenes subidas y preferencias.
   Se exporta e importa desde **Ajustes**.
+
+## De dónde salen las skills
+De `/api/characters/<retrato>/skills`, que es el modelo de datos del juego. Cada retrato (el base y
+el de cada uniforme) tiene su propio set completo. Por eso hay **9.125 skills** y no las 3.008 que
+salían de parsear la wiki, y no queda ningún personaje sin skills.
+
+Lo que trae y antes no había:
+- Cooldown, y el porcentaje de carga de ult y de striker por skill (y sus totales combinados).
+- *Uniform Passive* y *Striker Skill*, que la wiki no publica.
+- Etapas: cada skill puede tener varias, cada una con su elemento, su objetivo y su condición de activación.
+- Efectos tipados: cada efecto trae `abilityId` + etiqueta de un vocabulario cerrado de 228 valores,
+  más duración y tick. Los roles y los filtros por efecto salen de ahí, no de un regex sobre texto libre.
+- De `/api/uniforms`, el costo de mejora de cada uniforme: cristales, oro, kits, XP y materiales por nivel.
+
+**Lo que se perdió al cambiar de fuente**: la geometría del golpe (cantidad de hits, melee/ranged,
+área, empuje). Eso solo estaba en la wiki y la API de thanosvibs no lo publica.
+
+**Marcadores sin resolver**: 269 descripciones de la fuente traen plantillas como `$HEROSUBTYPE1` o
+`$TIME` sin reemplazar (a veces incluso duplicadas, como en la pasiva T2 de Abomination). Cuando hay
+un campo real detrás (`duration`, `tick`) la app lo usa; cuando no, muestra «sin especificar» con la
+explicación en el tooltip, en vez de inventar un valor o dejar el marcador crudo.
+
+### Formato en data.js
+Los 41.152 efectos usan solo 299 descripciones distintas. Guardar el texto en cada efecto, y encima
+en dos idiomas, daba 11 MB. En vez de eso cada efecto guarda el índice de su patrón y sus números
+(`{"a":12,"p":3,"v":[152,1067]}`) y el texto se arma en el navegador desde `MFF_TABLAS`, en el
+idioma activo. Con eso `data.js` queda en 3,4 MB llevando el triple de contenido que antes.
 
 ## Idioma
 La app tiene un botón **ES / EN** en la barra superior. Cambia la interfaz completa y también
@@ -52,7 +81,9 @@ Cómo funciona la traducción:
 - El vocabulario de dominio (clases, roles, slots, etiquetas, razas, orígenes) viaja en `data.js`
   como `MFF_VOCAB_EN`, generado por `_core.py` invirtiendo los mismos mapas con los que se tradujo.
 
-Cobertura actual: 13.151 de 13.151 líneas de efecto y 2.651 de 2.651 nombres de skill.
+Cobertura actual, con el build fallando en voz alta si aparece algo nuevo sin traducir:
+299 patrones de descripción, 228 etiquetas de efecto, 85 activaciones, 53 objetivos, 13 elementos y
+5.008 nombres de skill. Cero sin traducir.
 
 **Los nombres de personaje y de uniforme quedan en inglés a propósito**: son el identificador con el
 que se cruza la app con el juego, con la wiki y con thanosvibs. Los rótulos de las filas de las tier
@@ -79,19 +110,21 @@ van una versión atrás de la general.
 ## Estructura
 - `index.html` / `app.js` / `styles.css` — la app (roster, ficha, comparación, tier lists, equipos, editor).
 - `data.js` — snapshot generado de los datos (autosuficiente; la app no necesita importar nada).
-- `scripts/` — pipeline de regeneración (`fetch_all` → `parse_skills` → `build`; `_core.py` es el transformador común, `traducir.py` la capa de traducción).
+- `scripts/` — pipeline de regeneración (`fetch_all` → `parse_instinto` → `build`, que llama a
+  `skills_api.py` y `_core.py`; `traducir.py` es la capa de traducción).
 - `scripts/traducciones/` — las tablas de traducción (`efectos.json`, `skills.json`), editables a mano.
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual).
 
 ## Limitaciones conocidas
-- 35 personajes sin skills: sus páginas de la wiki son stubs (personajes recientes en su mayoría).
-- 3 grupos de skills por uniforme quedan afuera porque la wiki los rotula distinto que THANO$VIB$
-  (Groot «GotG 2», Squirrel Girl «Nutty Tyrant», Shuri «Wakanda Forever (Black Panther)»);
-  `build.py` los avisa por consola en cada corrida.
-- Roles derivados por reglas documentadas (el juego no tiene roles).
+- No hay cantidad de hits ni melee/ranged/área/empuje: la API de skills no lo publica y la wiki
+  dejó de ser fuente de skills.
+- Roles derivados por reglas documentadas (el juego no tiene roles); ahora salen de las etiquetas
+  tipadas de la API en vez de un regex sobre texto libre.
+- 61 de 290 personajes sin instinto: sus páginas de la wiki no lo declaran.
+- Los personajes que agregues a mano no llevan skills: las skills vienen tipadas de la API.
 - La sinergia de equipos es una heurística propia (bando, cobertura de roles, ventaja de clase),
   no un cálculo del juego.
-- Los números de skills reflejan la wiki, que puede atrasarse respecto de rebalanceos del juego.
+- Los números reflejan lo que publica thanosvibs, que puede atrasarse respecto de un rebalanceo.
 - La traducción es propia, no oficial: MFF no tiene cliente en español, así que no hay término
   establecido contra el cual contrastarla. El original en inglés siempre queda a la vista.
 - La fuente ubica tres entradas en dos filas a la vez; `build.py` avisa y se queda con la primera.
