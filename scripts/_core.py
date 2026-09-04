@@ -70,8 +70,13 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
             if j not in used and k and (k in nu or nu in k):
                 usk = sort_sk(v); used.add(j); break
         u = {'id': uid, 'name': uname, 'tier': tier_of(r), 'year': '',
-             'cost': r.get('uniform_cost',''), 'skills': usk}
+             'cost': r.get('uniform_cost',''), 'striker': r['striker_skill'],
+             'wba': ABIL[r['world_boss_ability']], 'trans': r['skill6'] == 'Transcended',
+             'new': r['new'] == 'True', 'skills': usk}
+        # El uniforme puede cambiar tipo, bando o habilidades respecto de la base.
         if TYPE[r['type']] != TYPE[base['type']]: u['c'] = TYPE[r['type']]
+        if SIDE[r['side']] != SIDE[base['side']]: u['f'] = SIDE[r['side']]
+        if r['ability'] != base['ability']: u['ab'] = [ABIL[a] for a in r['ability']]
         uniforms.append(u)
         images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'
         uindex[(numid, r.get('uniform_id'))] = (cid, uid)
@@ -93,6 +98,8 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         'gender': GENDER[base['gender']], 't': tier_of(base), 'modes': [],
         'abilities': [ABIL[a] for a in base['ability']], 'origin': ORIGIN[base['original']],
         'tuc': base.get('tuc', []), 'stats': base.get('stats', {}),
+        'striker': base['striker_skill'], 'wba': ABIL[base['world_boss_ability']],
+        'trans': base['skill6'] == 'Transcended', 'new': base['new'] == 'True',
         'baseSkills': base_skills, 'uniforms': uniforms})
     images['portrait-'+cid] = 'images/' + base['base_portrait'] + '.png'
     uindex[(numid, None)] = (cid, None)
