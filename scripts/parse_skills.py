@@ -60,14 +60,25 @@ GEO = [ (r'\bRanged\b','A distancia'), (r'\bMelee\b','Cuerpo a cuerpo'), (r'(\d+
         (r'Small AOE','área chica'), (r'\bAOE\b','área'), (r'Teleport to target','teletransporte al objetivo'),
         (r'Teleport away from target','teletransporte lejos del objetivo'), (r'(\d+) way shot', r'disparo en \1 direcciones'),
         (r'\bSplit\b','dividido') ]
-SKIP = re.compile(r"^[}{|]+$|Cooldown Time|Required (Hero )?Rank|Mastery Needed|Tier-\d Advancement|Applies to the following Uniforms|^\s*$|^\[\[File:|^<|^\{\{|^\}\}", re.I)
+SKIP = re.compile(r"^[}{|]+$|Cooldown Time|Required (Hero )?Rank|Mastery Needed|Tier-\d Advancement|Applies to the following Uniforms|^\s*$|^\[\[File:|^<|^\{\{|^\}\}|^\{\||^\|\}|^class=|^style=", re.I)
+
+# Los iconos de la wiki ([[File:x.png|left|frameless|60x60px]]) no aportan nada al
+# efecto y, si se dejan, ocupan lugar en el presupuesto de 14 lineas de translate_body.
+FILE_LINK = re.compile(r'\[\[\s*(?:File|Image|Archivo)\s*:[^\[\]]*\]\]', re.I)
+# Restos de sintaxis de imagen sueltos: aparecen cuando el corchete de cierre falta.
+# Solo se aplica a la linea completa, para no borrar palabras de un efecto real.
+IMG_ONLY = re.compile(r'^(?:\s*(?:left|right|center|thumb|thumbnail|frame|frameless|border|baseline|top|middle|bottom'
+                      r'|\d+x\d+px|\d+px|link=\S*|alt=\S*)\s*\|?)+', re.I)
 
 def clean_line(l):
     l = l.strip()
     l = re.sub(r'^\|+\s*', '', l)      # fmt1: filas de tabla empiezan con |
     l = re.sub(r"'''|''|<br ?/?>|</?font[^>]*>|\{\{[Ss]tar\}\}|\{\{MStar\}\}", '', l)
-    l = re.sub(r'\[\[(?:[^|\]]*\|)?([^\]]+)\]\]', r'\1', l)
-    return l.strip(' *·\t')
+    l = FILE_LINK.sub(' ', l)          # el icono entero, antes del enlace generico
+    l = re.sub(r'\[\[([^\[\]]+)\]\]', lambda m: m.group(1).split('|')[-1], l)
+    l = IMG_ONLY.sub('', l)            # atributos huerfanos de un File: sin cerrar
+    l = re.sub(r'\s{2,}', ' ', l)
+    return l.strip(' *·|\t')
 
 def classify_target(raw):
     t = raw.strip().lower().rstrip('.')
