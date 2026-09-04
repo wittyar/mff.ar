@@ -1,7 +1,7 @@
 # Comparador MFF
 
 App standalone (HTML/JS sin dependencias) para comparar personajes de MARVEL Future Fight,
-armar equipos y crear tier lists. 288 personajes, 594 uniformes, ~2.900 skills con efectos
+armar equipos y crear tier lists. 290 personajes, 596 uniformes, ~3.000 skills con efectos
 estructurados por objetivo. **Material de consulta de uso interno/personal, sin fin comercial.**
 
 **Fuentes de datos** (crédito correspondiente):
@@ -9,7 +9,7 @@ estructurados por objetivo. **Material de consulta de uso interno/personal, sin 
 - [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — skills e instintos.
 
 ## Uso
-Las **imágenes no están en el repo** (58 MB de PNGs de terceros, gitignoreadas). Tras clonar:
+Las **imágenes no están en el repo** (59 MB de PNGs de terceros, gitignoreadas). Tras clonar:
 ```
 python scripts/fetch_all.py    # baja datos + imágenes a images/
 ```
@@ -32,7 +32,10 @@ O desde GitHub: pestaña **Actions → "Actualizar datos MFF" → Run workflow**
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual desde Ajustes).
 
 ## Limitaciones conocidas
-- 33 personajes sin skills: sus páginas de la wiki son stubs (personajes recientes en su mayoría).
+- 35 personajes sin skills: sus páginas de la wiki son stubs (personajes recientes en su mayoría).
+- 3 grupos de skills por uniforme quedan afuera porque la wiki los rotula distinto que THANO$VIB$
+  (Groot «GotG 2», Squirrel Girl «Nutty Tyrant», Shuri «Wakanda Forever (Black Panther)»);
+  `build.py` los avisa por consola en cada corrida.
 - Roles derivados por reglas documentadas (el juego no tiene roles); `modes` sin fuente real.
 - Tier list de THANO$VIB$ aplastada de sus 8 niveles a los rangos S–D de la app.
 - Los números de skills reflejan la wiki, que puede atrasarse respecto a rebalanceos del juego.
