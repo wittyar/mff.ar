@@ -81,6 +81,12 @@ Lo que trae y antes no había:
 - Etapas: cada skill puede tener varias, cada una con su elemento, su objetivo y su condición de activación.
 - Efectos tipados: cada efecto trae `abilityId` + etiqueta de un vocabulario cerrado de 228 valores,
   más duración y tick. Los roles y los filtros por efecto salen de ahí, no de un regex sobre texto libre.
+- **A quién le pega cada skill**: 1.188 de las 9.125 skills declaran un objetivo que no es uno mismo
+  (los 886 liderazgos más 302 pasivas y activas), sobre 53 grupos: todos los aliados, aliados mutantes,
+  aliados de tipo Velocidad, aliados con Sentido Arácnido, etc. Se muestra como insignia en el
+  encabezado de la skill, se compara en la fila «Beneficia a» y se puede filtrar el roster por grupo.
+  Tres valores de la fuente traen la condición de activación metida adentro del objetivo con un `\n`
+  literal; se muestra como separador.
 - De `/api/uniforms`, el costo de mejora de cada uniforme: cristales, oro, kits, XP y materiales por nivel.
 
 **Lo que se perdió al cambiar de fuente**: la geometría del golpe (cantidad de hits, melee/ranged,

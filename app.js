@@ -42,7 +42,7 @@ function blankUser () {
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
     modes: JSON.parse(JSON.stringify(SEED.MODES)),
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
-             kind:'todo', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
+             kind:'todo', objetivo:'', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
   };
 }
@@ -315,6 +315,9 @@ const T = {
   tpl_faction:       { es:'sin especificar',      en:'unspecified' },
   tpl_class:         { es:'sin especificar',      en:'unspecified' },
   tpl_time:          { es:'sin especificar',      en:'unspecified' },
+  c_targets:         { es:'Beneficia a',          en:'Buffs' },
+  f_targets:         { es:'Beneficia a (buffs de equipo)', en:'Buffs (team-wide effects)' },
+  f_any_target:      { es:'— cualquiera —',        en:'— any —' },
   sy_title:          { es:'Sincronización',       en:'Sync' },
   sy_go:             { es:'Sincronizar',          en:'Sync now' },
   sy_note:            { es:'Baja los datos de thanosvibs y regenera el snapshot local. La página se recarga sola al terminar.',
@@ -555,7 +558,10 @@ function texto (tabla, i, nums) {
   if (f.es == null) return { txt: rellenar(f.en, nums), sinTraducir: true };
   return { txt: rellenar(f.es, nums), sinTraducir: false };
 }
-function txt (tabla, i, nums) { const r = texto(tabla, i, nums); return r ? r.txt : ''; }
+// Tres objetivos de la fuente traen un "\n" literal (dos caracteres) metiendo la
+// condicion de activacion adentro del objetivo. Se muestra como separador, no crudo.
+const BARRA_N = /\\n/g;
+function txt (tabla, i, nums) { const r = texto(tabla, i, nums); return r ? r.txt.replace(BARRA_N, ' · ') : ''; }
 /** Los números de daño de un efecto, si el patrón es una línea de daño. */
 function dano (f) {
   const d = fila('desc', f.p);
@@ -571,6 +577,23 @@ function nombreSkill (sk) {
   return `<span class="nm">${h(f.es)}<span class="orig">${h(f.en)}</span></span>`;
 }
 function slotEs (sl) { return LANG === 'es' ? (SLOT_ES[sl] || sl) : sl; }
+/** ¿El objetivo de la etapa es alguien distinto de uno mismo? */
+function esAjeno (idxObjetivo) {
+  const f = fila('tgt', idxObjetivo);
+  return !!f && f.en.trim().toLowerCase() !== 'self';
+}
+/** Si todas las etapas declaran el mismo valor, devuelve ese índice; si no, null. */
+function comunEnEtapas (sk, campo) {
+  const vals = (sk.st || []).map(st => st[campo]).filter(x => x != null);
+  if (!vals.length || vals.length !== (sk.st || []).length) return null;
+  return vals.every(v => v === vals[0]) ? vals[0] : null;
+}
+/** Índices de objetivo ajeno que toca un set de skills (para filtrar y comparar). */
+function objetivosDe (skills) {
+  const out = new Set();
+  skills.forEach(sk => (sk.st || []).forEach(st => { if (esAjeno(st.tg)) out.add(st.tg); }));
+  return out;
+}
 function slotClase (sl) {
   return sl === 'Leader Skill' ? 'lead'
        : (sl === 'Passive' || sl === 'Tier-2 Passive' || sl === 'Uniform Passive') ? 'pass'
@@ -609,6 +632,15 @@ function skillCard (sk) {
       if (dn) filasDano.push({ i, st, dn, f });
     });
   });
+  // A quien le pega y que lo dispara son datos de cabecera, no una nota al pie: se
+  // muestran junto al nombre cuando valen para toda la skill.
+  const tgComun = comunEnEtapas(sk, 'tg'), acComun = comunEnEtapas(sk, 'ac');
+  const cabecera = [];
+  if (esAjeno(tgComun)) cabecera.push(`<span class="tag objetivo">→ ${h(txt('tgt', tgComun))}</span>`);
+  if (acComun != null) {
+    const st0 = sk.st.find(x => x.ac === acComun) || {};
+    cabecera.push(`<span class="tag dim">${h(t('st_activation'))}: ${h(txt('act', acComun, st0.av))}</span>`);
+  }
   const varias = etapas.length > 1;
   const hayObj = etapas.some(st => st.tg != null);
   const hayAct = etapas.some(st => st.ac != null);
@@ -630,8 +662,8 @@ function skillCard (sk) {
   const otros = etapas.map((st, i) => {
     const fx = (st.fx || []).filter(f => !esDano(f));
     const meta = [];
-    if (st.ac != null) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
-    if (st.tg != null) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${h(txt('tgt', st.tg))}</span>`);
+    if (st.ac != null && st.ac !== acComun) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
+    if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${h(txt('tgt', st.tg))}</span>`);
     if (!fx.length && !meta.length) return '';
     return `<div class="stageblock">
       ${varias || meta.length ? `<div class="stagehead">${varias ? `<span class="stnum">${i + 1}</span>` : ''}${meta.join('')}</div>` : ''}
@@ -647,6 +679,7 @@ function skillCard (sk) {
     <div class="top">
       <span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>
       ${nombreSkill(sk)}
+      ${cabecera.join('')}
       ${cargas.join('')}
     </div>
     <div class="body">${tabla}${otros}</div>
@@ -710,6 +743,7 @@ function rosterData () {
     if (G.t4 && v.t !== 'T4') return false;
     if (G.trans && !v.trans) return false;
     if (G.nuevo && !v.nuevo) return false;
+    if (P.objetivo !== '' && !objetivosDe(v.skills).has(Number(P.objetivo))) return false;
     return true;
   });
   const s = SORTS[U.prefs.sort] || SORTS.name;
@@ -724,7 +758,8 @@ function rosterData () {
 
 function toolbar (total, shown) {
   const P = U.prefs, F = P.filters, G = P.flags;
-  const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length;
+  const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length
+               + (P.objetivo !== '' ? 1 : 0);
   // El valor que viaja en data-v es siempre el del snapshot (español): el idioma solo
   // cambia lo que se ve, nunca la clave con la que se filtra ni la del ícono.
   const group = (clave, cat, values) => `<div class="filtergroup"><div class="lbl">${h(t(clave))}</div><div class="row">${
@@ -764,6 +799,14 @@ function toolbar (total, shown) {
         <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">${h(t('f_transcended'))}</button>
         <button class="chip ${G.nuevo ? 'on' : ''}" data-a="flag" data-v="nuevo">${h(t('f_new'))}</button>
       </div></div>
+      <div class="filtergroup"><div class="lbl">${h(t('f_targets'))}</div>
+        <select data-a="objetivo" style="width:100%">
+          <option value="">${h(t('f_any_target'))}</option>
+          ${(TB.tgt || []).map((f, i) => ({ f, i })).filter(x => x.f.en.trim().toLowerCase() !== 'self')
+            .sort((a, b) => (LANG === 'es' ? (a.f.es || a.f.en) : a.f.en).localeCompare(LANG === 'es' ? (b.f.es || b.f.en) : b.f.en))
+            .map(x => `<option value="${x.i}" ${String(x.i) === String(P.objetivo) ? 'selected' : ''}>${h(txt('tgt', x.i))}</option>`).join('')}
+        </select>
+      </div>
       <div class="filtergroup"><div class="lbl">${h(t('f_reflist'))}</div>
         <select data-a="refList" style="width:100%">
           <option value="">${h(t('none_f'))}</option>
@@ -993,6 +1036,9 @@ function renderCompare () {
       <tr><th>${h(t('c_ult'))}</th>${vs.map((v, i) => `<td class="num">${car[i].ult}%</td>`).join('')}</tr>
       <tr><th>${h(t('c_striker'))}</th>${vs.map((v, i) => `<td class="num">${car[i].stk}%</td>`).join('')}</tr>
       <tr><th>${h(t('c_dmg_total'))}</th>${vs.map(v => `<td class="num">${danoTotal(v.skills)}%</td>`).join('')}</tr>
+      <tr><th>${h(t('c_targets'))}</th>${vs.map(v => { const o = [...objetivosDe(v.skills)];
+        return `<td>${o.length ? o.map(i => `<span class="tag objetivo">${h(txt('tgt', i))}</span>`).join(' ')
+                               : '<span class="muted">—</span>'}</td>`; }).join('')}</tr>
       <tr><th>${h(t('c_keybuffs'))}</th>${vs.map(v => `<td>${
         Object.keys(BUFFS[v.p] || {}).map(b => `<span class="tag dim">${h(b)}</span>`).join(' ') || '—'}</td>`).join('')}</tr>
       <tr><th>${h(t('c_uni_cost'))}</th>${vs.map(v => `<td>${v.up
@@ -1014,7 +1060,13 @@ function renderCompare () {
         (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d) dmg.push(d); }));
         const otros = [];
         (sk.st || []).forEach(st => (st.fx || []).forEach(f => { if (!esDano(f)) otros.push(f); }));
+        const tgC = comunEnEtapas(sk, 'tg'), acC = comunEnEtapas(sk, 'ac');
         return `<td><div style="font-weight:600;margin-bottom:4px">${nombreSkill(sk)}</div>
+          ${esAjeno(tgC) ? `<div class="row" style="margin-bottom:5px"><span class="tag objetivo">→ ${h(txt('tgt', tgC))}</span></div>` : ''}
+          ${acC != null ? `<div class="muted" style="margin-bottom:5px">${h(t('st_activation'))}: ${h(txt('act', acC, (sk.st.find(x => x.ac === acC) || {}).av))}</div>` : ''}
+          ${(sk.st || []).some(st => st.tg != null && st.tg !== tgC)
+            ? `<div class="muted" style="margin-bottom:5px">${(sk.st || []).filter(st => st.tg != null && st.tg !== tgC)
+                .map((st, i) => `${h(t('st_stage'))} ${(sk.st.indexOf(st) + 1)}: ${h(txt('tgt', st.tg))}`).join(' · ')}</div>` : ''}
           <div class="row" style="gap:4px;margin-bottom:6px">
             ${sk.cd ? `<span class="tag dim">CD ${h(sk.cd)}s</span>` : ''}
             ${sk.ult != null ? `<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>` : ''}
@@ -1366,7 +1418,8 @@ document.addEventListener('click', (e) => {
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] };
-      P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; ui.search = ''; ui.page = 0; commit(); break;
+      P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = '';
+      ui.search = ''; ui.page = 0; commit(); break;
     case 'filter': { const cur = P.filters[d.cat];
       P.filters[d.cat] = cur.includes(d.v) ? cur.filter(x => x !== d.v) : cur.concat(d.v);
       ui.page = 0; commit(); break; }
@@ -1482,6 +1535,7 @@ document.addEventListener('change', (e) => {
   const a = el.getAttribute('data-a'), d = el.dataset;
   if (a === 'sort') { U.prefs.sort = el.value; commit(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
+  if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
   if (a === 'teamMode') { const m = U.modes.find(x => x.id === el.value);
     ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-(m ? m.teamSize : 3)); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }

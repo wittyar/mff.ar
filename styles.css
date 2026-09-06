@@ -376,3 +376,6 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
   color:var(--text-2);white-space:pre-wrap;word-break:break-word}
 .syncerr{color:var(--accent-2);font-weight:600;margin-bottom:6px}
 .syncok{color:var(--self);font-weight:600;margin-bottom:6px}
+
+/* A quien le pega una skill: es un dato de cabecera, no una nota al pie. */
+.tag.objetivo{background:rgba(122,184,255,.16);color:var(--allies);font-weight:700}
