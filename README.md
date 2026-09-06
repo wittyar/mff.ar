@@ -90,7 +90,19 @@ Lo que trae y antes no había:
 - De `/api/uniforms`, el costo de mejora de cada uniforme: cristales, oro, kits, XP y materiales por nivel.
 
 **Lo que se perdió al cambiar de fuente**: la geometría del golpe (cantidad de hits, melee/ranged,
-área, empuje). Eso solo estaba en la wiki y la API de thanosvibs no lo publica.
+área, empuje) y los atributos de la skill (*Ignore Targeting*, *Ignore All Targeting*, *Guard Break*,
+*Super Guard Break*). Eso solo estaba en la wiki. Verificado sobre el texto crudo de las 886
+respuestas: la API menciona `Ignore Targeting` 24 veces, todas dentro de la descripción de la skill
+*Guaranteed Targeting* (que apunta a enemigos que lo tienen), y `Guard Break` 94, todas de la
+etiqueta `GUARD BREAK IMMUNE`, que es un buff distinto. El atributo de la skill no está en ningún
+campo.
+
+Por eso **esos cuatro atributos se marcan a mano**: en la ficha, el botón «Marcar atributos» muestra
+un checkbox por skill. Las marcas viven en la capa del usuario, indexadas por retrato y tipo de
+skill (`thanos7::Active 1`), así que sobreviven a las sincronizaciones; se ven como insignia en la
+ficha y en la comparativa, suman la fila «Atributos marcados» y se puede filtrar el roster por ellas.
+Cruzar la wiki para precargarlas cubriría solo el 11% de las 9.125 skills (medido), y una skill sin
+insignia pasaría a significar dos cosas distintas, así que no se hace.
 
 **Marcadores sin resolver**: 269 descripciones de la fuente traen plantillas como `$HEROSUBTYPE1` o
 `$TIME` sin reemplazar (a veces incluso duplicadas, como en la pasiva T2 de Abomination). Cuando hay

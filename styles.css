@@ -379,3 +379,12 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 
 /* A quien le pega una skill: es un dato de cabecera, no una nota al pie. */
 .tag.objetivo{background:rgba(122,184,255,.16);color:var(--allies);font-weight:700}
+
+/* Atributos que marca el usuario (la fuente no los publica). */
+.tag.atributo{background:rgba(255,176,32,.16);color:var(--gold);font-weight:700}
+.marcador{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;padding-top:10px;
+  border-top:1px dashed var(--line-2)}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);cursor:pointer;
+  padding:4px 9px;border:1px solid var(--line);border-radius:99px;background:rgba(255,255,255,.02)}
+.chk:hover{border-color:var(--line-2);color:var(--text)}
+.chk input{accent-color:var(--gold);cursor:pointer;margin:0}

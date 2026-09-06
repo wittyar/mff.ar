@@ -40,9 +40,10 @@ function blankUser () {
     lists: [],                        // tier lists propias: {id,name,rows}
     assign: {},                       // listId -> {clave: filaId | null}
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
+    marcas: {},                       // '<retrato>::<tipo de skill>' -> {it:1, gb:1, ...}
     modes: JSON.parse(JSON.stringify(SEED.MODES)),
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
-             kind:'todo', objetivo:'', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
+             kind:'todo', objetivo:'', atributo:'', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
   };
 }
@@ -316,6 +317,12 @@ const T = {
   tpl_class:         { es:'sin especificar',      en:'unspecified' },
   tpl_time:          { es:'sin especificar',      en:'unspecified' },
   c_targets:         { es:'Beneficia a',          en:'Buffs' },
+  c_attrs:           { es:'Atributos marcados',   en:'Marked attributes' },
+  f_attrs:           { es:'Atributo marcado por vos', en:'Attribute you marked' },
+  at_edit:           { es:'Marcar atributos',     en:'Mark attributes' },
+  at_done:           { es:'Listo',                en:'Done' },
+  at_mark:           { es:'Marcar:',              en:'Mark:' },
+  st_marks:          { es:'Skills con marcas',    en:'Skills with marks' },
   f_targets:         { es:'Beneficia a (buffs de equipo)', en:'Buffs (team-wide effects)' },
   f_any_target:      { es:'— cualquiera —',        en:'— any —' },
   sy_title:          { es:'Sincronización',       en:'Sync' },
@@ -426,7 +433,7 @@ let ui = {
   charId: null, uniformId: 'base',
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
   teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
-  newListName: '', poolOpen: false, poolSearch: '',
+  newListName: '', poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null
 };
@@ -588,6 +595,33 @@ function comunEnEtapas (sk, campo) {
   if (!vals.length || vals.length !== (sk.st || []).length) return null;
   return vals.every(v => v === vals[0]) ? vals[0] : null;
 }
+// Atributos que el juego tiene pero la API de thanosvibs no publica (los verifiqué en
+// las 886 respuestas). Los marca el usuario a mano y viven en su capa, así que
+// sobreviven a cualquier sincronización.
+const ATRIBUTOS = [
+  { k:'it',  es:'Ignora objetivo',        en:'Ignore Targeting' },
+  { k:'iat', es:'Ignora todo objetivo',   en:'Ignore All Targeting' },
+  { k:'gb',  es:'Rotura de guardia',      en:'Guard Break' },
+  { k:'sgb', es:'Superrotura de guardia', en:'Super Guard Break' },
+];
+function atrNombre (k) { const a = ATRIBUTOS.find(x => x.k === k); return a ? a[LANG] : k; }
+/** Clave estable de una skill: el retrato y el tipo no cambian al regenerar los datos. */
+function claveSkill (portrait, tipo) { return portrait + '::' + tipo; }
+function marcasDe (portrait, tipo) { return U.marcas[claveSkill(portrait, tipo)] || {}; }
+function marcar (portrait, tipo, k, valor) {
+  const clave = claveSkill(portrait, tipo);
+  const m = Object.assign({}, U.marcas[clave]);
+  if (valor) m[k] = 1; else delete m[k];
+  if (Object.keys(m).length) U.marcas[clave] = m; else delete U.marcas[clave];
+  commit();
+}
+/** Atributos marcados en un set de skills, para filtrar y comparar. */
+function atributosDe (portrait, skills) {
+  const out = new Set();
+  skills.forEach(sk => Object.keys(marcasDe(portrait, sk.sl)).forEach(k => out.add(k)));
+  return out;
+}
+
 /** Índices de objetivo ajeno que toca un set de skills (para filtrar y comparar). */
 function objetivosDe (skills) {
   const out = new Set();
@@ -623,8 +657,9 @@ function efectoLinea (f) {
 }
 
 /** Una skill: tabla de daño por etapa arriba, y el resto de los efectos abajo. */
-function skillCard (sk) {
+function skillCard (sk, portrait) {
   const etapas = sk.st || [];
+  const marcas = portrait ? marcasDe(portrait, sk.sl) : {};
   const filasDano = [];
   etapas.forEach((st, i) => {
     (st.fx || []).forEach(f => {
@@ -636,6 +671,7 @@ function skillCard (sk) {
   // muestran junto al nombre cuando valen para toda la skill.
   const tgComun = comunEnEtapas(sk, 'tg'), acComun = comunEnEtapas(sk, 'ac');
   const cabecera = [];
+  ATRIBUTOS.forEach(a => { if (marcas[a.k]) cabecera.push(`<span class="tag atributo">${h(a[LANG])}</span>`); });
   if (esAjeno(tgComun)) cabecera.push(`<span class="tag objetivo">→ ${h(txt('tgt', tgComun))}</span>`);
   if (acComun != null) {
     const st0 = sk.st.find(x => x.ac === acComun) || {};
@@ -682,7 +718,14 @@ function skillCard (sk) {
       ${cabecera.join('')}
       ${cargas.join('')}
     </div>
-    <div class="body">${tabla}${otros}</div>
+    <div class="body">${tabla}${otros}
+      ${portrait && ui.marcando ? `<div class="marcador">
+        <span class="muted">${h(t('at_mark'))}</span>
+        ${ATRIBUTOS.map(a => `<label class="chk"><input type="checkbox" data-a="marca"
+            data-p="${h(portrait)}" data-sl="${h(sk.sl)}" data-k="${a.k}"
+            ${marcas[a.k] ? 'checked' : ''}> ${h(a[LANG])}</label>`).join('')}
+      </div>` : ''}
+    </div>
   </div>`;
 }
 function srcEs (v) {
@@ -744,6 +787,7 @@ function rosterData () {
     if (G.trans && !v.trans) return false;
     if (G.nuevo && !v.nuevo) return false;
     if (P.objetivo !== '' && !objetivosDe(v.skills).has(Number(P.objetivo))) return false;
+    if (P.atributo !== '' && !atributosDe(v.p, v.skills).has(P.atributo)) return false;
     return true;
   });
   const s = SORTS[U.prefs.sort] || SORTS.name;
@@ -759,7 +803,7 @@ function rosterData () {
 function toolbar (total, shown) {
   const P = U.prefs, F = P.filters, G = P.flags;
   const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length
-               + (P.objetivo !== '' ? 1 : 0);
+               + (P.objetivo !== '' ? 1 : 0) + (P.atributo !== '' ? 1 : 0);
   // El valor que viaja en data-v es siempre el del snapshot (español): el idioma solo
   // cambia lo que se ve, nunca la clave con la que se filtra ni la del ícono.
   const group = (clave, cat, values) => `<div class="filtergroup"><div class="lbl">${h(t(clave))}</div><div class="row">${
@@ -799,6 +843,12 @@ function toolbar (total, shown) {
         <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">${h(t('f_transcended'))}</button>
         <button class="chip ${G.nuevo ? 'on' : ''}" data-a="flag" data-v="nuevo">${h(t('f_new'))}</button>
       </div></div>
+      <div class="filtergroup"><div class="lbl">${h(t('f_attrs'))}</div>
+        <select data-a="atributo" style="width:100%">
+          <option value="">${h(t('f_any_target'))}</option>
+          ${ATRIBUTOS.map(a => `<option value="${a.k}" ${a.k === P.atributo ? 'selected' : ''}>${h(a[LANG])}</option>`).join('')}
+        </select>
+      </div>
       <div class="filtergroup"><div class="lbl">${h(t('f_targets'))}</div>
         <select data-a="objetivo" style="width:100%">
           <option value="">${h(t('f_any_target'))}</option>
@@ -921,6 +971,7 @@ function renderDetail () {
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
     <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}">${h(t('compare_this'))}</button>
     <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
+    <button class="btn sm ${ui.marcando ? 'primary' : ''}" data-a="marcarModo">${h(ui.marcando ? t('at_done') : t('at_edit'))}</button>
   </div>
   <div class="hero">
     <div class="glow" style="background:radial-gradient(60% 120% at 12% 0%, ${classColor(v.c)}22, transparent 70%)"></div>
@@ -979,7 +1030,7 @@ function renderDetail () {
       ? `<div class="chargebar">
            <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult)}%;background:var(--accent)"></i></div><b>${car.ult}%</b>
            <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk)}%;background:var(--role-control)"></i></div><b>${car.stk}%</b>
-         </div>` + v.skills.map(skillCard).join('')
+         </div>` + v.skills.map(sk => skillCard(sk, v.p)).join('')
       : `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`}
   </div>
 
@@ -1036,6 +1087,9 @@ function renderCompare () {
       <tr><th>${h(t('c_ult'))}</th>${vs.map((v, i) => `<td class="num">${car[i].ult}%</td>`).join('')}</tr>
       <tr><th>${h(t('c_striker'))}</th>${vs.map((v, i) => `<td class="num">${car[i].stk}%</td>`).join('')}</tr>
       <tr><th>${h(t('c_dmg_total'))}</th>${vs.map(v => `<td class="num">${danoTotal(v.skills)}%</td>`).join('')}</tr>
+      <tr><th>${h(t('c_attrs'))}</th>${vs.map(v => { const a = [...atributosDe(v.p, v.skills)];
+        return `<td>${a.length ? a.map(k => `<span class="tag atributo">${h(atrNombre(k))}</span>`).join(' ')
+                               : '<span class="muted">—</span>'}</td>`; }).join('')}</tr>
       <tr><th>${h(t('c_targets'))}</th>${vs.map(v => { const o = [...objetivosDe(v.skills)];
         return `<td>${o.length ? o.map(i => `<span class="tag objetivo">${h(txt('tgt', i))}</span>`).join(' ')
                                : '<span class="muted">—</span>'}</td>`; }).join('')}</tr>
@@ -1061,7 +1115,10 @@ function renderCompare () {
         const otros = [];
         (sk.st || []).forEach(st => (st.fx || []).forEach(f => { if (!esDano(f)) otros.push(f); }));
         const tgC = comunEnEtapas(sk, 'tg'), acC = comunEnEtapas(sk, 'ac');
+        const mk = marcasDe(v.p, sk.sl);
         return `<td><div style="font-weight:600;margin-bottom:4px">${nombreSkill(sk)}</div>
+          ${Object.keys(mk).length ? `<div class="row" style="margin-bottom:5px">${
+            ATRIBUTOS.filter(a => mk[a.k]).map(a => `<span class="tag atributo">${h(a[LANG])}</span>`).join('')}</div>` : ''}
           ${esAjeno(tgC) ? `<div class="row" style="margin-bottom:5px"><span class="tag objetivo">→ ${h(txt('tgt', tgC))}</span></div>` : ''}
           ${acC != null ? `<div class="muted" style="margin-bottom:5px">${h(t('st_activation'))}: ${h(txt('act', acC, (sk.st.find(x => x.ac === acC) || {}).av))}</div>` : ''}
           ${(sk.st || []).some(st => st.tg != null && st.tg !== tgC)
@@ -1278,6 +1335,7 @@ function renderSettings () {
       <div class="stat"><div class="k">${h(t('st_own_lists'))}</div><div class="v">${U.lists.length}</div></div>
       <div class="stat"><div class="k">${h(t('st_list_changes'))}</div><div class="v">${changed}</div></div>
       <div class="stat"><div class="k">${h(t('st_images'))}</div><div class="v">${Object.keys(U.images).length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_marks'))}</div><div class="v">${Object.keys(U.marcas || {}).length}</div></div>
     </div>
     <div class="row" style="margin-top:12px">
       <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
@@ -1418,7 +1476,7 @@ document.addEventListener('click', (e) => {
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] };
-      P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = '';
+      P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = ''; P.atributo = '';
       ui.search = ''; ui.page = 0; commit(); break;
     case 'filter': { const cur = P.filters[d.cat];
       P.filters[d.cat] = cur.includes(d.v) ? cur.filter(x => x !== d.v) : cur.concat(d.v);
@@ -1493,6 +1551,7 @@ document.addEventListener('click', (e) => {
       else U.charNew.unshift(ch);
       ui.view = 'detail'; ui.charId = id; ui.uniformId = 'base'; ui.edId = null; commit(); break; }
 
+    case 'marcarModo': ui.marcando = !ui.marcando; render(); break;
     case 'goSettings': ui.view = 'settings'; render(); break;
     case 'sync': {
       const que = d.v;
@@ -1536,9 +1595,11 @@ document.addEventListener('change', (e) => {
   if (a === 'sort') { U.prefs.sort = el.value; commit(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
+  if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }
   if (a === 'teamMode') { const m = U.modes.find(x => x.id === el.value);
     ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-(m ? m.teamSize : 3)); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
+  if (a === 'marca') { marcar(d.p, d.sl, d.k, el.checked); return; }
   if (a === 'upload') { const f = el.files[0]; if (f) readFile(f, url => { U.images[d.img] = url; commit(); }); return; }
   if (a === 'importUser') { const f = el.files[0]; if (!f) return;
     const r = new FileReader();
