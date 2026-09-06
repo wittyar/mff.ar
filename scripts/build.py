@@ -3,6 +3,17 @@
 import json, os, datetime
 # skills_api.py deja work/skills_parsed.json; _core.py lo consume y deja work/build2.json
 import subprocess, sys
+# Sin los insumos de fetch_all no hay nada que construir. Se avisa en una linea en vez
+# de reventar con un traceback: este script lo corre la app de escritorio y el texto
+# va directo a la pantalla del usuario.
+_faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
+                       'work/gen_versions.json') if not os.path.exists(f)]
+if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
+    _faltan.append('work/skills_api/')
+if _faltan:
+    raise SystemExit('Faltan datos para construir: ' + ', '.join(_faltan) +
+                     '\nCorre primero: python scripts/fetch_all.py --datos'
+                     '  (o el boton "Actualizar datos del juego" en Ajustes)')
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
 exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 
@@ -29,6 +40,9 @@ SEED = {
  'CLASS_ADVANTAGE': {'Combate':'Velocidad','Velocidad':'Detonación','Detonación':'Combate','Universal':None}
 }
 hoy = datetime.date.today().isoformat()
+# Version del juego y fecha del snapshot, como dato de la app (no solo como comentario):
+# la app de escritorio las compara contra thanosvibs para avisar si hay una mas nueva.
+VERSION = {'juego': gv, 'generado': hoy}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes/uniformes/retratos/íconos/tier list) y
 // future-fight.fandom.com (skills e instintos). Cada skill trae 'fx' (efectos por objetivo).
@@ -39,6 +53,7 @@ header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {h
 DEFAULT_ROWS = [{'id': r, 'label': r} for r in ['S', 'A', 'B', 'C', 'D']]
 tl = tierlists
 parts = [header,
+ 'window.MFF_VERSION = ' + json.dumps(VERSION, ensure_ascii=False) + ';\n',
  'window.MFF_SEED = ' + json.dumps(SEED, ensure_ascii=False, indent=1) + ';\n',
  """
 function sk(slot, n, d, dmg, ii, tags, opts) {

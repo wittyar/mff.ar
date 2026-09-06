@@ -315,6 +315,37 @@ const T = {
   tpl_faction:       { es:'sin especificar',      en:'unspecified' },
   tpl_class:         { es:'sin especificar',      en:'unspecified' },
   tpl_time:          { es:'sin especificar',      en:'unspecified' },
+  sy_title:          { es:'Sincronización',       en:'Sync' },
+  sy_go:             { es:'Sincronizar',          en:'Sync now' },
+  sy_note:            { es:'Baja los datos de thanosvibs y regenera el snapshot local. La página se recarga sola al terminar.',
+                        en:'Downloads the data from thanosvibs and rebuilds the local snapshot. The page reloads when it finishes.' },
+  sy_local:           { es:'Datos locales',         en:'Local data' },
+  sy_remote:          { es:'Última versión publicada', en:'Latest published version' },
+  sy_snapshot:        { es:'snapshot',              en:'snapshot' },
+  sy_uptodate:        { es:'Estás al día.',         en:'You are up to date.' },
+  sy_outdated:        { es:'Hay una versión más nueva del juego que la de tus datos.',
+                        en:'There is a newer game version than the one in your data.' },
+  sy_unknown:         { es:'No se pudo consultar la versión publicada.',
+                        en:'Could not check the published version.' },
+  sy_data:            { es:'Actualizar datos del juego', en:'Update game data' },
+  sy_data_note:       { es:'Personajes, uniformes, skills y costos. Tarda unos minutos.',
+                        en:'Characters, uniforms, skills and costs. Takes a few minutes.' },
+  sy_tier:            { es:'Actualizar tier lists',  en:'Update tier lists' },
+  sy_tier_note:       { es:'Solo las cinco listas de thanosvibs. Es rápido.',
+                        en:'Only the five thanosvibs lists. Quick.' },
+  sy_img:             { es:'Bajar retratos que falten', en:'Download missing portraits' },
+  sy_img_note:        { es:'Solo los que no estén en images/. La primera vez son 56 MB.',
+                        en:'Only the ones missing from images/. The first time it is 56 MB.' },
+  sy_running:         { es:'Sincronizando…',        en:'Syncing…' },
+  sy_done:            { es:'Listo. Recargando…',    en:'Done. Reloading…' },
+  sy_failed:          { es:'Falló la sincronización', en:'Sync failed' },
+  sy_busy:            { es:'Ya hay una sincronización en curso.', en:'A sync is already running.' },
+  sy_needdata:        { es:'Primero hay que actualizar los datos del juego: las tier lists se arman sobre ellos.',
+                        en:'Update the game data first: the tier lists are built on top of it.' },
+  sy_offline:         { es:'Sincronización disponible solo en la app de escritorio',
+                        en:'Sync is available only in the desktop app' },
+  sy_offline_note:    { es:'Estás viendo el HTML suelto. thanosvibs no habilita CORS, así que el navegador no puede bajar los datos por su cuenta: hace falta abrir la app con MFF.bat.',
+                        en:'You are viewing the plain HTML. thanosvibs does not enable CORS, so the browser cannot fetch the data on its own: open the app with MFF.bat.' },
   lang_switch:       { es:'English',             en:'Español' },
   lang_title:        { es:'Ver la app en inglés', en:'View the app in Spanish' },
   untranslated:      { es:'sin traducir',        en:'untranslated' },
@@ -343,6 +374,45 @@ function dom (v) {
   return en;
 }
 let LANG = U.prefs.lang;
+
+// ---------------------------------------------------------------------------
+// APP DE ESCRITORIO
+// Cuando la app corre servida por desktop/servidor.py, ese proceso puede llamar a
+// thanosvibs (el navegador no: la API no manda Access-Control-Allow-Origin). Se
+// detecta preguntandole al servidor; si no contesta, es el HTML suelto.
+// ---------------------------------------------------------------------------
+let ESCRITORIO = null;               // respuesta de /api/estado, o null
+let SYNC = { progreso: null, poll: null };
+async function apiLocal (ruta, metodo) {
+  const r = await fetch(ruta, { method: metodo || 'GET', headers: { 'X-MFF': '1' } });
+  const cuerpo = await r.json();
+  if (!r.ok) throw new Error(cuerpo.error || ('HTTP ' + r.status));
+  return cuerpo;
+}
+async function detectarEscritorio () {
+  // Desde file:// no hay servidor al que preguntarle, y fetch tira un error de consola
+  // que no aporta nada. Se sale antes.
+  if (location.protocol === 'file:') return;
+  try {
+    const e = await apiLocal('/api/estado');
+    if (e && e.app === 'mff-escritorio') { ESCRITORIO = e; render(); }
+  } catch (e) { ESCRITORIO = null; }
+}
+function pollProgreso () {
+  clearInterval(SYNC.poll);
+  SYNC.poll = setInterval(async () => {
+    try {
+      const p = await apiLocal('/api/progreso');
+      SYNC.progreso = p;
+      if (p.terminado) {
+        clearInterval(SYNC.poll); SYNC.poll = null;
+        if (!p.error) { try { sessionStorage.setItem('mff_volver', 'settings'); } catch (e) {}
+                        setTimeout(() => location.reload(), 1200); }
+      }
+      if (ui.view === 'settings') render();
+    } catch (e) { clearInterval(SYNC.poll); SYNC.poll = null; }
+  }, 1500);
+}
 
 // ============================================================================
 // ESTADO DE UI (no persistido)
@@ -1165,6 +1235,8 @@ function renderSettings () {
     </div>
   </div>
 
+  ${seccionSync()}
+
   <div class="section"><h3>${h(t('st_brand'))}</h3>
     <div style="width:200px;height:52px;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center">
       ${U.images['brand-logo'] ? `<img src="${U.images['brand-logo']}" style="max-width:100%;max-height:100%">` : `<span class="muted">${h(t('st_no_logo'))}</span>`}
@@ -1192,6 +1264,55 @@ function renderSettings () {
 
   <div class="section"><h3>${h(t('st_sources'))}</h3>
     <p class="muted">${h(t('st_sources_txt'))}<a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a>${h(t('st_sources_txt2'))}<a href="https://future-fight.fandom.com" target="_blank" rel="noopener">Future Fight Wiki</a>${h(t('st_sources_txt3'))}</p>
+  </div>`;
+}
+
+/** Sección de sincronización. Solo tiene sentido dentro de la app de escritorio. */
+function seccionSync () {
+  if (!ESCRITORIO) {
+    return `<div class="section"><h3>${h(t('sy_title'))}</h3>
+      <div class="card"><div style="font-weight:600;margin-bottom:6px">${h(t('sy_offline'))}</div>
+      <p class="muted">${h(t('sy_offline_note'))}</p></div></div>`;
+  }
+  const loc = ESCRITORIO.local || {}, rem = ESCRITORIO.remota || {};
+  const p = SYNC.progreso;
+  const corriendo = !!(p && p.corriendo);
+  let aviso;
+  if (!rem.juego) aviso = `<span class="muted">${h(t('sy_unknown'))}</span>`;
+  else if (rem.juego === loc.juego) aviso = `<span class="tag dim">${h(t('sy_uptodate'))}</span>`;
+  else aviso = `<span class="tag solid" style="background:var(--gold)">${h(t('sy_outdated'))}</span>`;
+
+  // Las tier lists regeneran data.js y para eso el build necesita los insumos de la
+  // sincronizacion de datos, que un paquete recien descomprimido todavia no tiene.
+  const listo = ESCRITORIO.listo !== false;
+  const boton = (clave, nota, que) => {
+    const bloqueado = (que === 'tierlists' && !listo);
+    return `<div class="syncrow">
+      <div><div style="font-weight:600">${h(t(clave))}</div>
+        <div class="muted">${h(bloqueado ? t('sy_needdata') : t(nota))}</div></div>
+      <button class="btn ${corriendo || bloqueado ? '' : 'primary'}" data-a="sync" data-v="${que}"
+        ${corriendo || bloqueado ? 'disabled' : ''}>
+        ${h(corriendo && p.que === que ? t('sy_running') : t('sy_go'))}</button>
+    </div>`;
+  };
+
+  return `<div class="section"><h3>${h(t('sy_title'))}</h3>
+    <p class="muted" style="margin-bottom:12px">${h(t('sy_note'))}</p>
+    <div class="statgrid" style="margin-bottom:12px">
+      <div class="stat"><div class="k">${h(t('sy_local'))}</div>
+        <div class="v">${h(loc.juego || '?')}</div>
+        <div class="muted" style="font-size:11px">${h(t('sy_snapshot'))} ${h(loc.generado || '?')}</div></div>
+      <div class="stat"><div class="k">${h(t('sy_remote'))}</div><div class="v">${h(rem.juego || '—')}</div></div>
+    </div>
+    <div class="row" style="margin-bottom:12px">${aviso}</div>
+    ${boton('sy_data', 'sy_data_note', 'datos')}
+    ${boton('sy_tier', 'sy_tier_note', 'tierlists')}
+    ${boton('sy_img', 'sy_img_note', 'imagenes')}
+    ${p ? `<div class="synclog ${p.error ? 'mal' : ''}">
+      ${p.error ? `<div class="syncerr">${h(t('sy_failed'))}: ${h(p.error)}</div>` : ''}
+      ${p.terminado && !p.error ? `<div class="syncok">${h(t('sy_done'))}</div>` : ''}
+      <pre>${h((p.lineas || []).slice(-40).join('\n'))}</pre>
+    </div>` : ''}
   </div>`;
 }
 
@@ -1320,6 +1441,17 @@ document.addEventListener('click', (e) => {
       ui.view = 'detail'; ui.charId = id; ui.uniformId = 'base'; ui.edId = null; commit(); break; }
 
     case 'goSettings': ui.view = 'settings'; render(); break;
+    case 'sync': {
+      const que = d.v;
+      apiLocal('/api/sync/' + que, 'POST')
+        .then(p => { SYNC.progreso = p; render(); pollProgreso(); })
+        .catch(err => {
+          SYNC.progreso = null; render();
+          alert(err.message === 'sin-datos' ? t('sy_needdata')
+              : err.message === 'ya hay una sincronizacion en curso' ? t('sy_busy') : err.message);
+        });
+      SYNC.progreso = { corriendo: true, que, lineas: [], error: null, terminado: false };
+      render(); break; }
     case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:t('st_new_mode'), teamSize:3 }); commit(); break;
     case 'modeDel': U.modes.splice(parseInt(d.i, 10), 1); commit(); break;
     case 'clearImg': delete U.images[d.img]; commit(); break;
@@ -1405,5 +1537,7 @@ function exportCsv () {
 }
 
 rebuild();
+try { if (sessionStorage.getItem('mff_volver') === 'settings') { ui.view = 'settings'; sessionStorage.removeItem('mff_volver'); } } catch (e) {}
 render();
+detectarEscritorio();
 })();

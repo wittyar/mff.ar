@@ -11,6 +11,41 @@ sin fin comercial.**
 - [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — solo el instinto, que thanosvibs
   no publica en ninguna de sus APIs.
 
+## App de escritorio (Windows)
+`MFF.bat` levanta un servidor local en 127.0.0.1 y abre la app en el navegador por defecto.
+Sirve para tener **botones de sincronización dentro de Ajustes**: la API de thanosvibs no manda
+`Access-Control-Allow-Origin`, así que el navegador no puede bajar los datos por su cuenta — hace
+falta un proceso afuera del sandbox, y ese proceso es `desktop/servidor.py`.
+
+Tres botones, cada uno actualiza solo lo suyo y muestra el progreso en vivo:
+- **Datos del juego** — `fetch_all --datos` + `parse_instinto` + `build`. Regenera `data.js`.
+- **Tier lists** — `fetch_all --tierlists` + `build`. Rápido. Necesita que ya se hayan bajado los
+  datos alguna vez (el botón se deshabilita solo y lo explica si no).
+- **Retratos** — `fetch_all --imagenes`. Solo baja los PNG que falten.
+
+Al terminar, la página se recarga sola y vuelve a Ajustes. Al abrir, la app compara la versión de
+juego de `data.js` contra la que publica thanosvibs y avisa si hay una más nueva.
+
+Si abrís el HTML suelto (sin `MFF.bat`), la sección de Ajustes explica por qué no hay sincronización
+en vez de mostrar botones rotos.
+
+### Pasarle la app a otra persona
+```
+python desktop/preparar_paquete.py
+```
+Deja `dist/TA-GUIANAEL-MFF/` con la app, el pipeline, el lanzador y **un Python embebido de
+python.org adentro** (un ZIP sin instalador: no pide admin, no toca el PATH ni el registro).
+Quien lo recibe descomprime y hace doble clic en `MFF.bat`, sin instalar nada. Con `--sin-imagenes`
+el paquete sale en 25 MB y los retratos se bajan después desde Ajustes; con imágenes son ~81 MB.
+
+Se eligió el Python embebido y no un `.exe` de PyInstaller a propósito: un ejecutable sin firmar
+dispara el aviso de SmartScreen y es un falso positivo habitual de varios antivirus. El `.bat`, en
+cambio, no dispara nada.
+
+**Sin verificar**: el paquete se probó entero en Linux (servidor, endpoints, botones, regeneración
+de `data.js`, arranque desde la carpeta armada). Lo que **no** se pudo probar desde acá es el
+`python\python.exe` embebido corriendo en Windows real.
+
 ## Uso
 Las **imágenes no están en el repo** (59 MB de PNGs de terceros, gitignoreadas). Tras clonar:
 ```
@@ -113,6 +148,8 @@ van una versión atrás de la general.
 - `scripts/` — pipeline de regeneración (`fetch_all` → `parse_instinto` → `build`, que llama a
   `skills_api.py` y `_core.py`; `traducir.py` es la capa de traducción).
 - `scripts/traducciones/` — las tablas de traducción (`efectos.json`, `skills.json`), editables a mano.
+- `desktop/` — servidor local (`servidor.py`) y armador del paquete (`preparar_paquete.py`).
+- `MFF.bat` / `MFF.sh` — lanzadores.
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual).
 
 ## Limitaciones conocidas

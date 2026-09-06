@@ -364,3 +364,15 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 
 /* Marcador de plantilla que thanosvibs deja sin resolver. */
 .tpl{font-style:normal;color:var(--text-3);border-bottom:1px dotted var(--line-2);cursor:help;font-size:.94em}
+
+/* ---------- sincronización (app de escritorio) ---------- */
+.syncrow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);
+  padding:11px 13px;margin-bottom:8px}
+.synclog{margin-top:12px;border:1px solid var(--line);border-radius:var(--r-sm);background:#0b0e17;
+  padding:10px 12px;max-height:260px;overflow:auto}
+.synclog.mal{border-color:rgba(255,45,85,.45)}
+.synclog pre{margin:0;font-family:var(--font-mono);font-size:11.5px;line-height:1.5;
+  color:var(--text-2);white-space:pre-wrap;word-break:break-word}
+.syncerr{color:var(--accent-2);font-weight:600;margin-bottom:6px}
+.syncok{color:var(--self);font-weight:600;margin-bottom:6px}

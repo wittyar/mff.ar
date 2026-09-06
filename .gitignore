@@ -2,3 +2,4 @@ work/
 images/
 
 __pycache__/
+dist/
