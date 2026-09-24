@@ -92,6 +92,20 @@ function listasAgrupadas () {
   return GRUPOS_LISTA.map(([g, k]) => ({ g, k, ls: LISTS.filter(l => (l.group || 'propia') === g) }))
                      .filter(x => x.ls.length);
 }
+/** Plantillas de filas para las listas propias. Los rótulos quedan en el idioma en que
+ *  se creó la lista: después son del usuario y se editan como cualquier fila. */
+const PLANTILLAS = [
+  { id:'rango',    k:'tp_rank',      filas: () => ['S', 'A', 'B', 'C', 'D'] },
+  { id:'rangomas', k:'tp_rank_plus', filas: () => ['SS', 'S', 'A', 'B', 'C', 'D'] },
+  { id:'uso',      k:'tp_role',      filas: () => [t('tp_r_lead'), t('tp_r_main'), t('tp_r_support'), t('tp_r_striker')] },
+  { id:'vacia',    k:'tp_empty',     filas: () => [t('tp_new_row')] },
+];
+function filasDePlantilla (id) {
+  const p = PLANTILLAS.find(x => x.id === id) || PLANTILLAS[0];
+  const base = Date.now();
+  return p.filas().map((label, i) => ({ id: 'f-' + base + '-' + i, label }));
+}
+function esPropia (list) { return !!list && U.lists.some(l => l.id === list.id); }
 /** Asignaciones efectivas de una lista: las de data.js con los cambios del usuario encima. */
 function assignOf (listId) {
   const out = Object.assign({}, ASSIGN_SEED[listId] || {});
@@ -241,6 +255,30 @@ const T = {
   tl_more:           { es:'más: filtrá para acotar.', en:'more: filter to narrow it down.' },
   tl_confirm_del:    { es:'¿Borrar esta lista y sus asignaciones?', en:'Delete this list and its placements?' },
   tl_spots:          { es:'ubicaciones',         en:'placements' },
+  tl_rename:         { es:'Nombre de la lista',  en:'List name' },
+  tl_rows_edit:      { es:'Editar filas',        en:'Edit rows' },
+  tl_rows_done:      { es:'Listo',               en:'Done' },
+  tl_row_up:         { es:'Subir',               en:'Move up' },
+  tl_row_down:       { es:'Bajar',               en:'Move down' },
+  tl_row_del:        { es:'Borrar fila',         en:'Delete row' },
+  tl_row_add:        { es:'+ Agregar fila',      en:'+ Add row' },
+  tl_rows_note2:     { es:'El orden de las filas es el orden de la lista.', en:'Row order is the list order.' },
+  tl_row_del_confirm:{ es:'Entradas en esta fila: {n}. Se sacan de ella (las que estén también en otra fila siguen ahí). ¿Borrar la fila?',
+                       en:'Entries in this row: {n}. They are removed from it (those also in another row stay there). Delete the row?' },
+  tl_dup:            { es:'Duplicar como mía',   en:'Duplicate as mine' },
+  tl_dup_title:      { es:'Crea una lista propia con las mismas filas y ubicaciones, para editarla sin tocar la importada.',
+                       en:'Creates an own list with the same rows and placements, to edit it without touching the imported one.' },
+  tl_copy_suffix:    { es:'(copia)',             en:'(copy)' },
+  tp_title:          { es:'Plantilla de filas',  en:'Row template' },
+  tp_rank:           { es:'Rango S–D',           en:'Rank S–D' },
+  tp_rank_plus:      { es:'Rango SS–D',          en:'Rank SS–D' },
+  tp_role:           { es:'Uso: líder / principal / soporte / striker', en:'Use: lead / main / support / striker' },
+  tp_empty:          { es:'Vacía (una fila)',    en:'Empty (one row)' },
+  tp_new_row:        { es:'Fila nueva',          en:'New row' },
+  tp_r_lead:         { es:'Líder',               en:'Lead' },
+  tp_r_main:         { es:'Principal (DPS)',     en:'Main (DPS)' },
+  tp_r_support:      { es:'Soporte',             en:'Support' },
+  tp_r_striker:      { es:'Striker',             en:'Striker' },
   tl_g_main:         { es:'Principales',         en:'Main' },
   tl_g_community:    { es:'Comunidad',           en:'Community' },
   tl_g_own:          { es:'Mías',                en:'Mine' },
@@ -471,7 +509,7 @@ let ui = {
   charId: null, uniformId: 'base',
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
   teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
-  newListName: '', poolOpen: false, poolSearch: '', marcando: false,
+  newListName: '', newListTpl: 'rango', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null
 };
@@ -1227,6 +1265,8 @@ function renderTierList () {
     <div class="sub">${h(t('tl_note'))}</div></div>
     <div class="row">
       <input placeholder="${h(t('tl_new_ph'))}" value="${h(ui.newListName)}" data-a="newListName" style="width:220px">
+      <select data-a="newListTpl" title="${h(t('tp_title'))}">${PLANTILLAS.map(p =>
+        `<option value="${p.id}" ${p.id === ui.newListTpl ? 'selected' : ''}>${h(t(p.k))}</option>`).join('')}</select>
       <button class="btn" data-a="addList">${h(t('tl_create'))}</button>
     </div>
   </div>
@@ -1242,15 +1282,30 @@ function renderTierList () {
          ${list.ratings ? `<span class="tag dim" title="${h(t('tl_rating_title'))}">★ ${h(list.rating)} · ${h(list.ratings)} ${h(t('tl_votes'))}</span>` : ''}
          ${(list.tags || []).map(x => `<span class="tag ghost" style="color:var(--text-3)">${h(x)}</span>`).join('')}
          <span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>`
-      : `<span>${h(t('tl_own'))}</span><span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>
+      : `<span>${h(t('tl_own'))}</span>
+         <input value="${h(list.name)}" data-a="listName" data-id="${list.id}" title="${h(t('tl_rename'))}" style="width:220px;padding:5px 9px">
+         <span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>
+         <button class="btn sm ${ui.editRows ? 'primary' : ''}" data-a="editRows">${h(ui.editRows ? t('tl_rows_done') : t('tl_rows_edit'))}</button>
          <button class="btn sm danger" data-a="removeList" data-id="${list.id}">${h(t('tl_delete'))}</button>`}
-    ${U.assign[list.id] && Object.keys(U.assign[list.id]).length
+    ${imported ? `<button class="btn sm" data-a="dupList" data-id="${list.id}" title="${h(t('tl_dup_title'))}">${h(t('tl_dup'))}</button>` : ''}
+    ${imported && U.assign[list.id] && Object.keys(U.assign[list.id]).length
       ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">${h(t('tl_undo'))} (${Object.keys(U.assign[list.id]).length})</button>` : ''}
   </div>
   ${list.description || list.notes ? `<div class="tlmeta">
     ${list.description ? `<details><summary>${h(t('tl_description'))}</summary><p class="autor">${h(list.description)}</p></details>` : ''}
     ${list.notes ? `<details><summary>${h(t('tl_notes'))}</summary><p class="autor">${h(list.notes)}</p></details>` : ''}
     <span class="muted">${h(t('tl_author_lang'))}</span>
+  </div>` : ''}
+  ${esPropia(list) && ui.editRows ? `<div class="card roweditor">
+    ${rows.map((r, i) => `<div class="row">
+      <span class="tag solid" style="background:${rowColor(i, rows.length)};min-width:26px;justify-content:center">${i + 1}</span>
+      <input value="${h(r.label)}" data-a="rowLabel" data-row="${h(r.id)}" style="flex:1;min-width:140px">
+      <button class="btn sm icon" data-a="rowMove" data-row="${h(r.id)}" data-dir="-1" ${i === 0 ? 'disabled' : ''} title="${h(t('tl_row_up'))}">↑</button>
+      <button class="btn sm icon" data-a="rowMove" data-row="${h(r.id)}" data-dir="1" ${i === rows.length - 1 ? 'disabled' : ''} title="${h(t('tl_row_down'))}">↓</button>
+      <button class="btn sm danger icon" data-a="rowDel" data-row="${h(r.id)}" ${rows.length === 1 ? 'disabled' : ''} title="${h(t('tl_row_del'))}">✕</button>
+    </div>`).join('')}
+    <div class="row"><button class="btn sm" data-a="rowAdd">${h(t('tl_row_add'))}</button>
+      <span class="muted">${h(t('tl_rows_note2'))}</span></div>
   </div>` : ''}
   ${rows.map((r, i) => `<div class="tierrow" data-a="drop" data-row="${h(r.id)}">
     <div class="tierlabel" style="background:${rowColor(i, rows.length)}">${h(r.label)}</div>
@@ -1597,7 +1652,36 @@ document.addEventListener('click', (e) => {
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
       const id = 'mia-' + Date.now();
-      U.lists.push({ id, name, rows: DEFAULT_ROWS.slice() }); ui.newListName = ''; ui.tierList = id; commit(); break; }
+      U.lists.push({ id, name, rows: filasDePlantilla(ui.newListTpl) });
+      ui.newListName = ''; ui.tierList = id; ui.editRows = false; commit(); break; }
+    case 'dupList': { const orig = listById(d.id); if (!orig) break;
+      const id = 'mia-' + Date.now();
+      // Copia filas y ubicaciones efectivas (las de la fuente con tus cambios encima).
+      U.lists.push({ id, name: listName(orig) + ' ' + t('tl_copy_suffix'), rows: rowsOf(orig).map(r => ({ id: r.id, label: r.label })) });
+      U.assign[id] = JSON.parse(JSON.stringify(assignOf(orig.id)));
+      ui.tierList = id; commit(); break; }
+    case 'editRows': ui.editRows = !ui.editRows; render(); break;
+    case 'rowAdd': { const l = U.lists.find(x => x.id === ui.tierList); if (!l) break;
+      l.rows.push({ id: 'f-' + Date.now(), label: t('tp_new_row') }); commit(); break; }
+    case 'rowMove': { const l = U.lists.find(x => x.id === ui.tierList); if (!l) break;
+      const i = l.rows.findIndex(r => r.id === d.row), j = i + parseInt(d.dir, 10);
+      if (i < 0 || j < 0 || j >= l.rows.length) break;
+      [l.rows[i], l.rows[j]] = [l.rows[j], l.rows[i]];
+      // Las filas de cada entrada se guardan en el orden de la lista: se reordenan.
+      const orden = l.rows.map(r => r.id);
+      Object.values(U.assign[l.id] || {}).forEach(fs => { if (fs) fs.sort((x, y) => orden.indexOf(x) - orden.indexOf(y)); });
+      commit(); break; }
+    case 'rowDel': { const l = U.lists.find(x => x.id === ui.tierList); if (!l || l.rows.length < 2) break;
+      const mias = U.assign[l.id] || {};
+      const n = Object.values(mias).filter(fs => fs && fs.includes(d.row)).length;
+      if (n && !confirm(t('tl_row_del_confirm').replace('{n}', n))) break;
+      l.rows = l.rows.filter(r => r.id !== d.row);
+      for (const k in mias) {
+        if (!mias[k]) continue;
+        mias[k] = mias[k].filter(r => r !== d.row);
+        if (!mias[k].length) delete mias[k];
+      }
+      commit(); break; }
     case 'removeList': { if (!confirm(t('tl_confirm_del'))) break;
       U.lists = U.lists.filter(l => l.id !== d.id); delete U.assign[d.id];
       ui.tierList = (LISTS[0] || {}).id || ''; commit(); break; }
@@ -1673,6 +1757,9 @@ document.addEventListener('input', (e) => {
   const a = el.getAttribute('data-a'), d = el.dataset;
   if (a === 'search') { ui.search = el.value; ui.page = 0; ui.focusSearch = true; render(); return; }
   if (a === 'newListName') { ui.newListName = el.value; return; }
+  if (a === 'rowLabel') { const l = U.lists.find(x => x.id === ui.tierList); const r = l && l.rows.find(x => x.id === d.row);
+    if (r) { r.label = el.value; saveUser(); } return; }
+  if (a === 'listName') { const l = U.lists.find(x => x.id === d.id); if (l) { l.name = el.value; saveUser(); } return; }
   if (a === 'poolSearch') { ui.poolSearch = el.value; render(); $('[data-a="poolSearch"]')?.focus(); return; }
   if (a === 'teamName') { ui.team.name = el.value; return; }
   if (a === 'teamReason') { ui.team.reason = el.value; return; }
@@ -1687,6 +1774,8 @@ document.addEventListener('change', (e) => {
   const el = e.target.closest('[data-a]'); if (!el) return;
   const a = el.getAttribute('data-a'), d = el.dataset;
   if (a === 'sort') { U.prefs.sort = el.value; commit(); return; }
+  if (a === 'newListTpl') { ui.newListTpl = el.value; return; }
+  if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
   if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }

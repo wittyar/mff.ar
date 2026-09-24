@@ -261,6 +261,7 @@ td.same{background:rgba(255,45,85,.055)}
 .tlgroup{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .tlglabel{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);font-weight:700;
   width:96px;flex:none}
+.roweditor{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
 .tlmeta{display:flex;flex-direction:column;gap:6px;margin:-4px 0 14px}
 .tlmeta details{border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);padding:7px 11px}
 .tlmeta summary{cursor:pointer;font-size:12px;color:var(--text-2);font-weight:600}
