@@ -393,8 +393,8 @@ const T = {
   cmp_pts:           { es:'pts',                 en:'pts' },
   cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
                        en:'No strong synergy signals in this selection.' },
-  cmp_heuristic:     { es:'Heurística propia (bando, cobertura de roles y ventaja de clase), no un cálculo del juego.',
-                       en:'Our own heuristic (side, role coverage and class advantage), not a game calculation.' },
+  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante (el liderazgo, con el mejor líder posible). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase según la wiki. No es un cálculo del juego.',
+                       en:'What weighs most are the thanosvibs lead and support effects that reach another member (leadership, with the best possible leader). Two readings of our own are added: roles derived from skills and class advantage per the wiki. Not a game calculation.' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
   cmp_cost:          { es:'Costo',               en:'Cost' },
 
@@ -759,27 +759,72 @@ function allVariants () {
 }
 function fullLabel (v) { return v.uid ? v.name + ' — ' + v.sub : v.name; }
 
-/** Heurística propia: bando compartido, cobertura de roles y ventaja de clase. No sale del juego. */
+/** ¿Un efecto de líder o de soporte (MFF_SOPORTES) alcanza a la variante b? */
+function aplicaA (x, b) {
+  if (!x.r) return true;
+  const [cat, val] = x.r;
+  switch (cat) {
+    case 'Ability':   return (b.ab || []).includes(val);
+    case 'Type':      return b.c === val;
+    case 'Allies':    return b.ch.race === val;
+    case 'Side':      return b.f === val;
+    case 'Character': return b.name === val;
+  }
+  throw new Error('restricción de soporte desconocida: ' + cat);
+}
+/** Un efecto de soporte en texto plano: "Ignorar evasión +25%". */
+function efectoSoporteTxt (f) {
+  const val = [];
+  if (f.v != null) val.push(typeof f.v === 'number' ? (f.v > 0 ? '+' : '') + f.v + '%' : trTxt(f.v));
+  if (f.i != null) val.push('+' + f.i + '% ' + t('sp_inst'));
+  if (f.c) val.push(trTxt(f.c));
+  return trTxt(f.s) + (val.length ? ' ' + val.join(' ') : '');
+}
+/** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
+ *  soporte de thanosvibs que alcanzan a otro integrante: los de soporte valen en
+ *  cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
+ *  cuenta el mejor líder posible. Se suman dos lecturas propias, dichas como tales:
+ *  los roles derivados de las skills y la ventaja de clase de la wiki (Combate > Velocidad
+ *  > Detonación > Combate; Universal no tiene debilidad). No es un cálculo del juego. */
 function synergy (vs) {
   if (vs.length < 2) return { score: 0, reasons: [] };
   const reasons = []; let score = 0;
   const ES = LANG === 'es';
-  if (vs.every(v => v.f === vs[0].f)) { score += 2;
-    reasons.push(ES ? 'Mismo bando (' + dom(vs[0].f) + '): bonos de equipo activos.'
-                    : 'Same side (' + dom(vs[0].f) + '): team bonuses active.'); }
+  const quienes = (bs) => bs.map(fullLabel).join(', ');
+  const efectos = (x) => x.fx.map(efectoSoporteTxt).join(' · ');
+  // Soportes: pasivas de 4★ y Tier-2, efecto de uniforme y artefacto (si lo lleva).
+  vs.forEach(a => { const s = SOPORTES[a.p]; if (!s) return;
+    TIPOS_SOPORTE.filter(([k]) => s[k] && !k.startsWith('leader')).forEach(([k, clave]) => {
+      const bs = vs.filter(b => b !== a && aplicaA(s[k], b));
+      if (!bs.length) return;
+      score += s[k].sig ? 3 : 2;
+      reasons.push(`${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(s[k])}`);
+    }); });
+  // Liderazgo: el del integrante que más alcanza a los demás.
+  const lideres = vs.map(a => { const s = SOPORTES[a.p] || {};
+    const xs = ['leader', 'leader2'].filter(k => s[k]).map(k => ({ x: s[k], bs: vs.filter(b => b !== a && aplicaA(s[k], b)) })).filter(o => o.bs.length);
+    return { a, xs, pts: xs.reduce((n, o) => n + (o.x.sig ? 3 : 2), 0) }; }).filter(o => o.pts);
+  if (lideres.length) {
+    const mejor = lideres.sort((p, q) => q.pts - p.pts)[0];
+    score += mejor.pts;
+    mejor.xs.forEach(o => reasons.push(`${ES ? 'Con' : 'With'} ${fullLabel(mejor.a)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`));
+  }
   const roles = new Set(vs.flatMap(v => v.r));
   const covered = ['Tanque','Control','Daño','Soporte'].filter(r => roles.has(r));
-  if (covered.length >= 2) { score += covered.length;
-    reasons.push((ES ? 'Roles cubiertos: ' : 'Roles covered: ') + covered.map(dom).join(' + ') + '.'); }
+  if (covered.length >= 2) { score += 1;
+    reasons.push((ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + covered.map(dom).join(' + ') + '.'); }
   const classes = new Set(vs.map(v => v.c));
   if (classes.size === vs.length) { score += 1;
     reasons.push(ES ? 'Clases distintas: no comparten la misma debilidad.'
                     : 'Different classes: they do not share the same weakness.'); }
+  // a cubre la debilidad de b si a le gana a la clase que le gana a b.
+  const leGanaA = (c) => Object.keys(SEED.CLASS_ADVANTAGE).find(k => SEED.CLASS_ADVANTAGE[k] === c);
   vs.forEach(a => vs.forEach(b => {
-    if (a !== b && SEED.CLASS_ADVANTAGE[a.c] === b.c) {
+    const amenaza = leGanaA(b.c);
+    if (a !== b && amenaza && SEED.CLASS_ADVANTAGE[a.c] === amenaza) {
       score += 1;
-      reasons.push(ES ? fullLabel(a) + ' (' + dom(a.c) + ') cubre la debilidad de clase de ' + fullLabel(b) + '.'
-                      : fullLabel(a) + ' (' + dom(a.c) + ') covers the class weakness of ' + fullLabel(b) + '.');
+      reasons.push(ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}.`
+                      : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
     }
   }));
   return { score, reasons: [...new Set(reasons)] };
