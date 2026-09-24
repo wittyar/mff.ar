@@ -10197,7 +10197,7 @@
    "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
-   "t": "T3",
+   "t": "T4",
    "modes": [],
    "abilities": [
     "Maldad Pura",
@@ -10222,7 +10222,7 @@
     {
      "id": "red-skull-10100015",
      "name": "Secret Wars: Red Skull",
-     "tier": "T3",
+     "tier": "T4",
      "p": "redskull1",
      "cost": "500000 Gold",
      "striker": 4,
@@ -10312,7 +10312,7 @@
     {
      "id": "red-skull-10200015",
      "name": "Hydra Armor",
-     "tier": "T3",
+     "tier": "T4",
      "p": "redskull2",
      "cost": "1750 Crystals",
      "striker": 4,
@@ -10356,6 +10356,102 @@
       "update": "5.8",
       "flags": [
        "Crystal1750"
+      ],
+      "material1": [
+       {
+        "material": "bios",
+        "qty": 30
+       },
+       {
+        "material": "bios",
+        "qty": 60
+       },
+       {
+        "material": "bios",
+        "qty": 120
+       },
+       {
+        "material": "bios",
+        "qty": 240
+       },
+       {
+        "material": "bios",
+        "qty": 480
+       }
+      ],
+      "material2": [
+       {
+        "material": "norn_blast",
+        "qty": 90
+       },
+       {
+        "material": "norn_blast",
+        "qty": 135
+       },
+       {
+        "material": "norn_blast",
+        "qty": 195
+       },
+       {
+        "material": "norn_blast",
+        "qty": 240
+       },
+       {
+        "material": "norn_blast",
+        "qty": 285
+       }
+      ]
+     }
+    },
+    {
+     "id": "red-skull-10300015",
+     "name": "The Crimson Fall",
+     "tier": "T4",
+     "p": "redskull3",
+     "cost": "Halloween Exclusive (1750 Crystals)",
+     "striker": 4,
+     "wba": "Cubo Cósmico",
+     "trans": true,
+     "new": false,
+     "ab": [
+      "Maldad Pura",
+      "Mando",
+      "Cubo Cósmico"
+     ],
+     "up": {
+      "uniform_xp": [
+       10000,
+       16000,
+       27200,
+       48960,
+       93024
+      ],
+      "uniform_kits": [
+       30,
+       45,
+       90,
+       180,
+       330
+      ],
+      "gold": [
+       44000,
+       80000,
+       120000,
+       220000,
+       360000
+      ],
+      "totals": [
+       195184,
+       930,
+       945,
+       675,
+       824000
+      ],
+      "flags": [
+       "Seasonal",
+       "Halloween",
+       "FullPrice",
+       "CrystalHalloween"
       ],
       "material1": [
        {
@@ -11222,7 +11318,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T4",
@@ -19956,7 +20052,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Inhumano",
    "gender": "Masculino",
    "t": "T4",
@@ -25029,7 +25125,7 @@
    "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
-   "t": "T3",
+   "t": "T4",
    "modes": [],
    "abilities": [
     "Magia"
@@ -25053,7 +25149,7 @@
     {
      "id": "sister-grimm-10100053",
      "name": "All-New, All-Different",
-     "tier": "T3",
+     "tier": "T4",
      "p": "sistergrimm1",
      "cost": "500000 Gold",
      "striker": 5,
@@ -25142,7 +25238,7 @@
     {
      "id": "sister-grimm-10200053",
      "name": "Runaways",
-     "tier": "T3",
+     "tier": "T4",
      "p": "sistergrimm2",
      "cost": "1750 Crystals",
      "striker": 2,
@@ -25181,6 +25277,96 @@
       "update": "9.4",
       "flags": [
        "Crystal1750"
+      ],
+      "material1": [
+       {
+        "material": "bios",
+        "qty": 30
+       },
+       {
+        "material": "bios",
+        "qty": 60
+       },
+       {
+        "material": "bios",
+        "qty": 120
+       },
+       {
+        "material": "bios",
+        "qty": 240
+       },
+       {
+        "material": "bios",
+        "qty": 480
+       }
+      ],
+      "material2": [
+       {
+        "material": "norn_blast",
+        "qty": 90
+       },
+       {
+        "material": "norn_blast",
+        "qty": 135
+       },
+       {
+        "material": "norn_blast",
+        "qty": 195
+       },
+       {
+        "material": "norn_blast",
+        "qty": 240
+       },
+       {
+        "material": "norn_blast",
+        "qty": 285
+       }
+      ]
+     }
+    },
+    {
+     "id": "sister-grimm-10300053",
+     "name": "Princess Tsukimi",
+     "tier": "T4",
+     "p": "sistergrimm3",
+     "cost": "Halloween Exclusive (Paywall)",
+     "striker": 5,
+     "wba": "Magia",
+     "trans": false,
+     "new": false,
+     "up": {
+      "uniform_xp": [
+       10000,
+       16000,
+       27200,
+       48960,
+       93024
+      ],
+      "uniform_kits": [
+       30,
+       45,
+       90,
+       180,
+       330
+      ],
+      "gold": [
+       44000,
+       80000,
+       120000,
+       220000,
+       360000
+      ],
+      "totals": [
+       195184,
+       930,
+       945,
+       675,
+       824000
+      ],
+      "flags": [
+       "Seasonal",
+       "Halloween",
+       "Paywall"
       ],
       "material1": [
        {
@@ -35918,7 +36104,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T4",
@@ -37750,7 +37936,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T4",
@@ -38094,7 +38280,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T4",
@@ -38589,7 +38775,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Femenino",
    "t": "T4",
@@ -39680,7 +39866,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Femenino",
    "t": "T4",
@@ -42277,7 +42463,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -45929,7 +46115,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Criatura",
    "gender": "Masculino",
    "t": "T4",
@@ -46634,7 +46820,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -54503,7 +54689,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T4",
@@ -55380,7 +55566,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T4",
@@ -59891,7 +60077,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -60673,7 +60859,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -61160,7 +61346,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T4",
@@ -63171,7 +63357,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -63248,7 +63434,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Femenino",
    "t": "T4",
@@ -63413,7 +63599,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -63656,7 +63842,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T3",
@@ -63731,7 +63917,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T3",
@@ -63766,7 +63952,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Femenino",
    "t": "T3",
@@ -63803,7 +63989,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T3",
@@ -63840,7 +64026,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Mutante",
    "gender": "Femenino",
    "t": "T4",
@@ -63975,7 +64161,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T3",
@@ -64013,7 +64199,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -64053,7 +64239,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T3",
@@ -64090,7 +64276,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -64127,7 +64313,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -64238,7 +64424,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Neutro",
    "t": "T3",
@@ -64278,7 +64464,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -64314,7 +64500,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -64351,7 +64537,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -64388,7 +64574,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T3",
@@ -64424,7 +64610,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -64461,7 +64647,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T4",
@@ -64533,7 +64719,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T4",
@@ -64571,7 +64757,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T4",
@@ -64609,7 +64795,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T4",
@@ -64647,7 +64833,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T3",
@@ -64685,7 +64871,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T3",
@@ -64723,7 +64909,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T3",
@@ -64760,7 +64946,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T4",
@@ -64797,7 +64983,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Criatura",
    "gender": "Masculino",
    "t": "T4",
@@ -64834,7 +65020,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Mutante",
    "gender": "Neutro",
    "t": "T3",
@@ -64871,7 +65057,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T4",
@@ -64908,7 +65094,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Alienígena",
    "gender": "Masculino",
    "t": "T4",
@@ -65044,7 +65230,7 @@
    "nameEn": "Team Battle Arena",
    "source": "Team Battle Arena",
    "author": "Shiruishi",
-   "gameVersion": "12.1.5",
+   "gameVersion": "12.2",
    "rows": [
     {
      "id": "tier-s",
@@ -65225,12 +65411,8 @@
    "wolverine::wolverine-10600125": "tier-s",
    "captain-america::captain-america-11400001": "tier-b",
    "apocalypse::apocalypse-10300141": "tier-b",
-   "juggernaut::juggernaut-10200189": "tier-b",
-   "shang-chi::shang-chi-10200089": "tier-b",
-   "punisher::punisher-10700032": "tier-b",
    "carnage::carnage-10300072": "tier-a",
    "apocalypse::apocalypse-10200141": "tier-a",
-   "hulk::hulk-10900002": "tier-a",
    "silver-samurai::base": "tier-c",
    "black-knight::base": "tier-c",
    "beast::beast-10400127": "tier-c",
@@ -65255,26 +65437,20 @@
    "mantis::mantis-10100120": "tier-d",
    "magik::magik-10300157": "tier-b",
    "emma-frost::emma-frost-10400160": "tier-b",
-   "daredevil::daredevil-10400016": "tier-b",
    "black-widow::black-widow-11100007": "tier-b",
    "deadpool::deadpool-10800164": "tier-b",
    "spider-man::spider-man-11200010": "tier-b",
-   "elektra::elektra-10300040": "tier-b",
-   "quicksilver::quicksilver-10400139": "tier-b",
    "white-fox::white-fox-10300178": "tier-c",
    "shuri::shuri-10300154": "tier-c",
    "nick-fury::nick-fury-10300185": "tier-d",
    "ghost-rider::ghost-rider-10500004": "tier-a",
    "silver-surfer::silver-surfer-10200199": "tier-a",
    "silver-surfer-shalla-bal::base": "tier-a",
+   "thanos::thanos-10700075": "tier-a",
+   "galactus::base": "tier-a",
    "destroyer::destroyer-10200021": "tier-b",
-   "captain-marvel::captain-marvel-10700026": "tier-b",
-   "thanos::thanos-10600075": "tier-b",
    "doctor-doom::doctor-doom-10200183": "tier-b",
    "mephisto::mephisto-10100244": "tier-b",
-   "vision::vision-10400029": "tier-b",
-   "sentinel::sentinel-10200175": "tier-b",
-   "ultron::ultron-10500013": "tier-b",
    "black-cat::black-cat-10400009": "tier-c",
    "hela::hela-10300106": "tier-c",
    "ronan::ronan-10300048": "tier-c",
@@ -66151,6 +66327,7 @@
   "portrait-loki": "images/loki.png",
   "portrait-red-skull-10100015": "images/redskull1.png",
   "portrait-red-skull-10200015": "images/redskull2.png",
+  "portrait-red-skull-10300015": "images/redskull3.png",
   "portrait-red-skull": "images/redskull.png",
   "portrait-daredevil-10100016": "images/daredevil1.png",
   "portrait-daredevil-10200016": "images/daredevil2.png",
@@ -66337,6 +66514,7 @@
   "portrait-yellowjacket": "images/yellowjacket.png",
   "portrait-sister-grimm-10100053": "images/sistergrimm1.png",
   "portrait-sister-grimm-10200053": "images/sistergrimm2.png",
+  "portrait-sister-grimm-10300053": "images/sistergrimm3.png",
   "portrait-sister-grimm": "images/sistergrimm.png",
   "portrait-singularity": "images/singularity.png",
   "portrait-she-hulk-10100055": "images/shehulk1.png",
