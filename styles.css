@@ -451,3 +451,29 @@ details.ctp p{margin-top:6px;font-size:12.5px}
 .piedras i{width:11px;height:14px;border-radius:3px 3px 6px 6px;display:inline-block;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
 ol.prio{margin:0 0 6px;padding-left:20px;font-size:12.5px}
 .sintrad{color:var(--gold);border-bottom:1px dotted rgba(255,176,32,.5);cursor:help}
+
+/* ---------- ficha: para qué se usa ---------- */
+.usogrid{columns:2 340px;column-gap:12px}
+.usogrid > .bloque{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:12px;min-width:0;
+  break-inside:avoid;display:inline-block;width:100%;margin-bottom:12px}
+.uslista{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.uslista:last-child{border-bottom:none}
+.usl{flex:0 0 140px;font-size:12.5px;color:var(--text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.usf{flex:1;display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-width:110px}
+.usf .tag{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.usgrupo{margin-bottom:6px}
+details.usgrupo summary{cursor:pointer;font-size:12.5px;color:var(--text-2);margin:6px 0}
+.tag.varx{font-size:10px}
+.sops{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.sop{border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;background:rgba(255,255,255,.015)}
+.soph{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.soph .nm{font-weight:600;font-size:13px}
+.soph .nm .orig{margin-left:6px;font-weight:400;font-size:11px;color:var(--text-3)}
+.soph .nm .orig::before{content:'· '}
+.sopr{font-size:12.5px;margin-bottom:4px}
+.sopfx{margin:0 0 4px;padding-left:18px;font-size:12.5px}
+.corr{color:var(--gold);cursor:help}
+.usguia{border-left:2px solid var(--line-2);padding:2px 0 2px 10px;margin-bottom:10px}
+.usguia p{margin:4px 0;font-size:12.5px}
+.usabx{display:flex;flex-direction:column;gap:6px}
+@media (max-width:640px){ .usl{flex-basis:100%} }

@@ -223,6 +223,58 @@ const T = {
   iso_amarilla:      { es:'amarilla',            en:'yellow' },
   iso_violeta:       { es:'violeta',             en:'purple' },
   iso_caos:          { es:'caos',                en:'chaos' },
+  us_title:          { es:'Para qué se usa',     en:'What it is used for' },
+  us_note:           { es:'Lo que dicen las fuentes de este personaje y de sus uniformes. Lo derivado se dice derivado.',
+                       en:'What the sources say about this character and its uniforms. Anything derived is labelled as such.' },
+  us_lists:          { es:'Tier lists',          en:'Tier lists' },
+  us_in_n_lists:     { es:'está en {n} de {t}',  en:'in {n} of {t}' },
+  us_atk:            { es:'Tipo de ataque (derivado)', en:'Attack type (derived)' },
+  us_atk_note:       { es:'Derivado de sus skills activas: el stat con el que escala su % de daño. Define qué urus y qué piedras ISO le sirven.',
+                       en:'Derived from its active skills: the stat its damage % scales with. It decides which Urus and ISO stones suit it.' },
+  us_atk_none:       { es:'Sus skills activas no hacen daño.', en:'Its active skills deal no damage.' },
+  at_fisico:         { es:'Ataque físico',       en:'Physical Attack' },
+  at_energia:        { es:'Ataque de energía',   en:'Energy Attack' },
+  at_vida:           { es:'Vida (su daño escala con la vida)', en:'HP (its damage scales with HP)' },
+  at_mixto:          { es:'Mixto',               en:'Mixed' },
+  us_sup:            { es:'Lo que le da al equipo', en:'What it gives the team' },
+  us_sup_none:       { es:'thanosvibs no le lista efectos de líder ni de soporte a este retrato.',
+                       en:'thanosvibs lists no lead or support effects for this portrait.' },
+  sp_leader:         { es:'Liderazgo',           en:'Leadership' },
+  sp_leader2:        { es:'Liderazgo (secundario)', en:'Leadership (Secondary)' },
+  sp_passive:        { es:'Pasiva 4★',           en:'4★ Passive' },
+  sp_passive2:       { es:'Pasiva 4★ (secundaria)', en:'4★ Passive (Secondary)' },
+  sp_t2:             { es:'Pasiva de Tier-2',    en:'Tier-2 Passive' },
+  sp_t22:            { es:'Pasiva de Tier-2 (secundaria)', en:'Tier-2 Passive (Secondary)' },
+  sp_uniform:        { es:'Efecto de uniforme',  en:'Uniform Effect' },
+  sp_uniform2:       { es:'Efecto de uniforme (secundario)', en:'Uniform Effect (Secondary)' },
+  sp_artifact:       { es:'Skill exclusiva del artefacto', en:'Artifact Exclusive Skill' },
+  sp_inst:           { es:'del instinto total',  en:'of total Instinct' },
+  sp_cap:            { es:'acumula hasta',       en:'stacks up to' },
+  sp_all:            { es:'Sin restricción',     en:'No restriction' },
+  sp_applies:        { es:'Aplica a',            en:'Applies to' },
+  sp_corrected:      { es:'Corregido: la fuente dice', en:'Corrected: the source says' },
+  sp_r_Ability:      { es:'habilidad',           en:'ability' },
+  sp_r_Type:         { es:'clase',               en:'class' },
+  sp_r_Allies:       { es:'raza',                en:'race' },
+  sp_r_Side:         { es:'bando',               en:'side' },
+  sp_r_Character:    { es:'personaje',           en:'character' },
+  sp_act:            { es:'Se activa',           en:'Activates' },
+  sp_cd:             { es:'recarga',             en:'cooldown' },
+  sp_dur:            { es:'duración',            en:'duration' },
+  sp_req:            { es:'Requiere',            en:'Requires' },
+  sp_notable:        { es:'Notable',             en:'Notable' },
+  sp_notable_t:      { es:'thanosvibs lo marca como notable', en:'thanosvibs marks it as notable' },
+  sp_at6:            { es:'a 6★',                en:'at 6★' },
+  sp_np:             { es:'Buena elección para empezar (thanosvibs)', en:'New player pick (thanosvibs)' },
+  us_guide:          { es:'En la guía de principiantes', en:"In the Beginner's Guide" },
+  us_guide_none:     { es:'La guía no lo nombra en sus secciones de personajes.', en:'The guide does not name it in its character sections.' },
+  us_obelisk:        { es:'Obelisco',            en:'Obelisk' },
+  us_cancels:        { es:'Controles que aplica (cortan a los jefes):', en:'Controls it applies (they cancel the bosses):' },
+  us_cancels_none:   { es:'No aplica ninguno de los controles que cortan a los jefes de Extreme ni de Legend.',
+                       en:'It applies none of the controls that cancel Extreme or Legend bosses.' },
+  us_abx_teams:      { es:'Equipos recomendados que lo incluyen:', en:'Recommended teams that include it:' },
+  us_abx_none:       { es:'No está en los equipos recomendados.', en:'Not in the recommended teams.' },
+  us_day:            { es:'Día',                 en:'Day' },
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
 
@@ -1177,6 +1229,7 @@ function renderDetail () {
           ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
           ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
           ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
+          ${box(t('us_atk'), ataqueHtml(tipoAtaque(v.skills)))}
           ${v.cost ? box(t('d_cost'), h(v.cost)) : ''}
           ${box(t('d_uniforms'), h(String(ch.uniforms.length)))}
           ${stats.map(([k, val]) => box(statLabel(k), h(val))).join('')}
@@ -1189,6 +1242,8 @@ function renderDetail () {
       </div>
     </div>
   </div>
+
+  ${panelUso(ch, v)}
 
   <div class="section">
     <h3>${h(t('d_uni_section'))} · ${pluralUni(ch.uniforms.length)}</h3>
@@ -1461,6 +1516,7 @@ const MODOS  = window.MFF_MODOS || [];
 const ABX    = window.MFF_ABX || { restricciones: [], equipos: [] };
 const CANCELS = window.MFF_CANCELS || {};
 const GUIA_PJ = window.MFF_GUIA_PJ || {};
+const SOPORTES = window.MFF_SOPORTES || {};
 const TXT    = window.MFF_TXT || {};
 /** Texto de una fuente en inglés, en el idioma activo. Sin traducción cargada se muestra
  *  el inglés marcado, como las líneas de efecto: nunca se inventa una. Devuelve HTML.
@@ -1497,6 +1553,159 @@ function miniPj (v, extra, nota) {
     ${u ? `<img src="${u}" alt="" loading="lazy">` : ''}<span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}${extra || ''}</span>`;
 }
 function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
+/** Controles de Alliance Battle que aplican las skills de un retrato, como etiquetas:
+ *  "Parálisis: 1/4" = las skills 1 y 4 (6 = la definitiva). */
+function cortesHtml (p, tipos) {
+  const c = CANCELS[p] || {};
+  return tipos.filter(x => c[x]).map(x => `<span class="tag cancel" title="${h(c[x].map(slotEs).join(', '))}">${h(trTxt(x))}: ${h(c[x].map(s => s.replace('Active ', '').replace('Ult', '6')).join('/'))}</span>`).join('');
+}
+
+// ============================================================================
+// FICHA: PARA QUÉ SE USA
+// Lo que dicen las fuentes del personaje y de sus uniformes: listas, guía, Alliance
+// Battle y lo que le da al equipo. Lo derivado (el tipo de ataque) se dice derivado.
+// ============================================================================
+/** Base y uniformes del personaje, como variantes. */
+function variantesDe (ch) { return [variant(ch.id, null)].concat(ch.uniforms.map(u => variant(ch.id, u.id))); }
+/** Rótulo de la variante cuando no es la que está abierta en la ficha. */
+function otraVar (vv, v) { return vv.key === v.key ? '' : `<span class="tag dim varx">${h(vv.uid ? vv.sub : t('base'))}</span>`; }
+
+const SRC_ATAQUE = { 'Physical Attack': 'fisico', 'Energy Attack': 'energia', 'HP': 'vida' };
+/** Tipo de ataque derivado de las skills activas: con qué stat escala su % de daño.
+ *  {k: fisico|energia|vida|mixto, reparto: [{src, k, pct}]}, o null si no hacen daño. */
+function tipoAtaque (skills) {
+  const suma = {};
+  skills.forEach(sk => { if (!/^Active/.test(sk.sl)) return;
+    (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d && d.pct) suma[d.src] = (suma[d.src] || 0) + d.pct; })); });
+  const total = Object.values(suma).reduce((a, b) => a + b, 0);
+  if (!total) return null;
+  const reparto = Object.entries(suma).sort((a, b) => b[1] - a[1])
+    .map(([src, n]) => ({ src, k: SRC_ATAQUE[src], pct: Math.round(n * 100 / total) }));
+  return { k: reparto.length === 1 ? reparto[0].k : 'mixto', reparto };
+}
+function ataqueHtml (ta) {
+  if (!ta) return `<span class="muted" title="${h(t('us_atk_note'))}">${h(t('us_atk_none'))}</span>`;
+  const nom = (x) => x.k ? t('at_' + x.k) : x.src;
+  const color = { fisico: 'var(--dmg-fisico)', energia: 'var(--dmg-energia)', vida: 'var(--dmg-pg)' }[ta.k] || 'var(--text)';
+  return `<span style="color:${color};font-weight:700" title="${h(t('us_atk_note'))}">${h(ta.k === 'mixto' ? t('at_mixto') : nom(ta.reparto[0]))}</span>${
+    ta.k === 'mixto' ? `<div class="muted">${ta.reparto.map(x => h(nom(x)) + ' ' + x.pct + '%').join(' · ')}</div>` : ''}`;
+}
+/** Posiciones del personaje (todas sus variantes) en las tier lists de personajes. */
+function usoListas (ch, v) {
+  const vs = variantesDe(ch);
+  const linea = (l, siempre) => {
+    const rows = rowsOf(l), fs = [];
+    vs.forEach(vv => indicesFila(l, vv.key).forEach(i => fs.push({ i, r: rows[i], vv })));
+    if (!fs.length && !siempre) return '';
+    fs.sort((a, b) => a.i - b.i);
+    return `<div class="uslista"><span class="usl" title="${h(listName(l))}">${h(listName(l))}</span>
+      <span class="usf">${fs.length ? fs.map(f => `<span class="tag solid" style="background:${rowColor(f.i, rows.length)}" title="${h(f.r.label)}">${h(f.r.label)}</span>${otraVar(f.vv, v)}`).join(' ')
+                                   : '<span class="muted">—</span>'}</span>
+      <button class="btn sm" data-a="verLista" data-id="${l.id}">${h(t('md_see_list'))}</button></div>`;
+  };
+  const grupos = listasAgrupadas().map(g => ({ g, ls: g.ls.filter(l => tipoLista(l) === 'personajes') }));
+  return grupos.map(({ g, ls }) => {
+    if (g.g === 'principal') return `<div class="usgrupo">${ls.map(l => linea(l, true)).join('')}</div>`;
+    const con = ls.map(l => linea(l, false)).filter(Boolean);
+    return con.length ? `<details class="usgrupo"><summary>${h(t(g.k))}: ${h(t('us_in_n_lists').replace('{n}', con.length).replace('{t}', ls.length))}</summary>${con.join('')}</details>` : '';
+  }).join('');
+}
+
+/** Nombre de una skill de soporte: traducido si la tabla de nombres de skills lo tiene. */
+let _NOMBRES = null;
+function nombreTabla (en) {
+  if (!_NOMBRES) { _NOMBRES = new Map(); (TB.name || []).forEach(f => _NOMBRES.set(f.en, f)); }
+  const f = _NOMBRES.get(en);
+  if (!f || LANG === 'en' || f.es == null) return `<span class="nm">${h(en)}</span>`;
+  return `<span class="nm">${h(f.es)}<span class="orig">${h(f.en)}</span></span>`;
+}
+const TIPOS_SOPORTE = [['leader', 'sp_leader'], ['leader2', 'sp_leader2'], ['passive', 'sp_passive'], ['passive2', 'sp_passive2'],
+  ['t2', 'sp_t2'], ['t22', 'sp_t22'], ['uniform', 'sp_uniform'], ['uniform2', 'sp_uniform2'], ['artifact', 'sp_artifact']];
+function efectoSoporteHtml (x) {
+  const val = [];
+  if (x.v != null) val.push(typeof x.v === 'number' ? h((x.v > 0 ? '+' : '') + x.v + '%') : trHtml(x.v));
+  if (x.i != null) val.push(h('+' + x.i + '% ' + t('sp_inst')));
+  if (x.tope != null) val.push(h(t('sp_cap') + ' ' + x.tope + '%'));
+  if (x.c) val.push(trHtml(x.c));
+  if (x.d != null) val.push(h(x.d + ' s'));
+  return `<li>${trHtml(x.s)}${val.length ? ` <b>${val.join(' · ')}</b>` : ''}</li>`;
+}
+function restrHtml (x) {
+  if (!x.r) return `<span class="muted">${h(t('sp_all'))}</span>`;
+  const [cat, val] = x.r;
+  const corr = x.rc ? ` <span class="corr" title="${h(t('sp_corrected') + ' ' + x.rc.join(': '))}">⚠</span>` : '';
+  return `<span class="muted">${h(t('sp_applies'))}: ${h(t('sp_r_' + cat))}</span> ${icon(val)}<b>${h(cat === 'Character' ? val : dom(val))}</b>${corr}`;
+}
+function soporteHtml (tipo, clave, x) {
+  const extra = [];
+  if (x.ac) extra.push(h(t('sp_act')) + ': ' + trHtml(x.ac));
+  if (x.cd) extra.push(h(t('sp_cd') + ' ' + x.cd + ' s'));
+  if (x.d) extra.push(h(t('sp_dur') + ' ' + x.d + ' s'));
+  if (x.req) extra.push(h(t('sp_req')) + ' ' + trHtml(x.req));
+  return `<div class="sop">
+    <div class="soph"><span class="slotbadge ${tipo.startsWith('leader') ? 'lead' : 'pass'}">${h(t(clave))}</span>
+      ${x.n ? nombreTabla(x.n) : ''}
+      ${x.sig ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('sp_notable_t'))}">${h(t('sp_notable'))}</span>` : ''}
+      ${x.est ? `<span class="tag dim">${h(t('sp_at6'))}</span>` : ''}</div>
+    <div class="sopr">${restrHtml(x)}</div>
+    <ul class="sopfx">${x.fx.map(efectoSoporteHtml).join('')}</ul>
+    ${extra.length ? `<div class="muted">${extra.join(' · ')}</div>` : ''}
+  </div>`;
+}
+/** Lo que el retrato le da al equipo según thanosvibs (Leads & Supports). */
+function usoSoportes (v) {
+  const s = SOPORTES[v.p];
+  const tipos = s ? TIPOS_SOPORTE.filter(([k]) => s[k]) : [];
+  if (!tipos.length) return `<p class="muted">${h(t('us_sup_none'))}</p>`;
+  return `${s.np ? `<p><span class="tag solid" style="background:var(--role-soporte)">${h(t('sp_np'))}</span></p>` : ''}
+    <div class="sops">${tipos.map(([k, clave]) => soporteHtml(k, clave, s[k])).join('')}</div>
+    <p class="muted">${h(bi(GUIA.equipos.pve[1]))}</p>
+    <div class="fuentes">${fuentesHtml(['tv-sup', 'tv-guia-4'])}</div>`;
+}
+
+/** Dónde lo recomienda la guía de principiantes (cualquiera de sus variantes). */
+function usoGuia (ch, v) {
+  const es = variantesDe(ch).flatMap(vv => (GUIA_PJ[vv.p] || []).map(e => ({ e, vv })));
+  if (!es.length) return `<p class="muted">${h(t('us_guide_none'))}</p>`;
+  const modo = (id) => { const m = MODOS.find(x => x.id === id); return m ? m.nombre : id; };
+  return es.map(({ e, vv }) => `<div class="usguia">
+      <div class="muted">${trHtml(e.sec)}${e.sub ? ' › ' + trHtml(e.sub) : ''} ${otraVar(vv, v)}</div>
+      ${e.textos.map(x => `<p>${trHtml(x)}</p>`).join('')}
+      ${e.ctps.length || e.modos.length ? `<div class="row" style="gap:5px">
+        ${e.ctps.map(c => { const x = CTPS.find(y => y.id === c);
+          return x ? `<span class="tag dim">${ctpIcono(c)}C.T.P. of ${h(x.name)}</span>` : `<span class="tag dim">${h(c === 'obelisco6' ? t('us_obelisk') : c)}</span>`; }).join('')}
+        ${e.modos.map(m => `<span class="tag ghost" style="color:var(--allies)" title="${h(t('md_guide_mentions_note'))}">${h(modo(m))}</span>`).join('')}</div>` : ''}
+    </div>`).join('') + `<div class="fuentes">${fuentesHtml(['tv-guia-1', 'tv-guia-2'])}</div>`;
+}
+
+/** Alliance Battle: equipos recomendados que lo incluyen y qué controles aplica. */
+function usoABX (ch, v) {
+  const ps = new Map(variantesDe(ch).map(vv => [vv.p, vv]));
+  const eqs = ABX.equipos.filter(e => e.pj.some(p => ps.has(p)));
+  const ab = MODOS.find(m => m.abx);
+  const cortes = ab && ab.cancels ? Object.entries(ab.cancels).map(([modo, tipos]) => {
+    const c = cortesHtml(v.p, tipos); return c ? `<div class="row" style="gap:5px"><span class="tag dim">${h(modo)}</span>${c}</div>` : ''; }).join('') : '';
+  const rol = (e, p) => p === e.lider && e.dps.includes(p) ? t('md_r_leaddps') : p === e.lider ? t('md_r_lead') : e.dps.includes(p) ? t('md_r_dps') : t('md_r_support');
+  return `${cortes ? `<p class="muted">${h(t('us_cancels'))}</p>${cortes}` : `<p class="muted">${h(t('us_cancels_none'))}</p>`}
+    ${eqs.length ? `<p class="muted" style="margin-top:8px">${h(t('us_abx_teams'))}</p>
+      <div class="usabx">${eqs.map(e => { const p = e.pj.find(x => ps.has(x));
+        return `<div class="row" style="gap:5px"><span class="tag dim">${h(t('us_day'))} ${e.d}</span><span class="tag dim">${h(e.m)}</span>
+          <span class="tag ghost">${h(rol(e, p))}</span>${otraVar(ps.get(p), v)}
+          <span class="minis">${e.pj.filter(x => x !== p).map(x => miniPj(varDeRetrato(x))).join('')}</span></div>`; }).join('')}</div>`
+    : `<p class="muted" style="margin-top:8px">${h(t('us_abx_none'))}</p>`}
+    <div class="fuentes">${fuentesHtml(['tv-abxl'])}</div>`;
+}
+
+function panelUso (ch, v) {
+  return `<div class="section uso"><h3>${h(t('us_title'))}</h3>
+    <p class="muted" style="margin-bottom:12px">${h(t('us_note'))}</p>
+    <div class="usogrid">
+      <div class="bloque"><h4>${h(t('us_lists'))}</h4>${usoListas(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('us_sup'))}</h4>${usoSoportes(v)}</div>
+      <div class="bloque"><h4>${h(t('us_guide'))}</h4>${usoGuia(ch, v)}</div>
+      <div class="bloque"><h4>Alliance Battle</h4>${usoABX(ch, v)}</div>
+    </div></div>`;
+}
 
 // ============================================================================
 // MODOS DE JUEGO
@@ -1586,8 +1795,7 @@ function panelABX (m) {
   const eqs = ABX.equipos.filter(e => e.d === dia);
   const orden = ['Normal', 'Extreme', 'Legend', 'Infinite Challenge'];
   const restr = (r) => r.length ? r.map(x => `<span class="tag dim">${icon(x)}${h(dom(x))}</span>`).join(' ') : `<span class="muted">${h(t('md_no_restr'))}</span>`;
-  const cortes = (p, modo) => { const c = CANCELS[p] || {}; const tipos = (m.cancels || {})[modo] || [];
-    return tipos.filter(x => c[x]).map(x => `<span class="tag cancel" title="${h(c[x].map(slotEs).join(', '))}">${h(trTxt(x))}: ${h(c[x].map(s => s.replace('Active ', '').replace('Ult', '6')).join('/'))}</span>`).join(''); };
+  const cortes = (p, modo) => cortesHtml(p, (m.cancels || {})[modo] || []);
   return `<div class="bloque"><h4>${h(t('md_abx'))}</h4>
     <div class="row" style="margin-bottom:8px"><span class="muted">${h(t('md_day'))}</span>
       <select data-a="abxDia">${Array.from({ length: 28 }, (_, i) => `<option value="${i + 1}" ${i + 1 === dia ? 'selected' : ''}>${i + 1}</option>`).join('')}</select>
