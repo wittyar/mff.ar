@@ -16,8 +16,8 @@ jobs:
           python-version: '3.12'
       - name: Bajar datos (sin retratos; los íconos sí, son insumo del build)
         run: python scripts/fetch_all.py --no-portraits
-      - name: Parsear skills
-        run: python scripts/parse_skills.py
+      - name: Sacar instintos de la wiki
+        run: python scripts/parse_instinto.py
       - name: Reconstruir data.js e import
         run: python scripts/build.py
       - name: Commitear si hay cambios
