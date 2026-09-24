@@ -115,10 +115,18 @@ if HACER_DATOS:
     json.dump(get_json(TV + '/api/updates'), open('work/updates.json', 'w'))
     print('actualizaciones:', len(json.load(open('work/updates.json'))), 'versiones mayores')
 
-    # 3d) C.T.P.s y artefactos (los transforma scripts/fuentes.py)
+    # 3d) C.T.P.s, artefactos, Alliance Battle y la Beginner's Guide (los transforma
+    # scripts/fuentes.py)
     json.dump(get_json(TV + '/api/ctps'), open('work/ctps.json', 'w'))
     json.dump(get_json(TV + '/api/artifacts'), open('work/artifacts.json', 'w'))
-    print('ctps:', len(json.load(open('work/ctps.json'))), '| artefactos:', len(json.load(open('work/artifacts.json'))))
+    json.dump(get_json(TV + '/api/abxl-data'), open('work/abxl.json', 'w'))
+    print('ctps:', len(json.load(open('work/ctps.json'))), '| artefactos:', len(json.load(open('work/artifacts.json'))),
+          '| alliance battle:', len(json.load(open('work/abxl.json'))['teams']), 'equipos')
+    os.makedirs('work/guia', exist_ok=True)
+    json.dump(get_json(TV + '/api/beginners/changelog'), open('work/guia/changelog.json', 'w'))
+    for parte in range(1, 6):
+        open(f'work/guia/parte{parte}.txt', 'wb').write(get(f'{TV}/api/beginners/mff-content/{parte}'))
+    print('guía de principiantes:', json.load(open('work/guia/changelog.json'))[0]['update_version'])
 
 
 if HACER_DATOS:

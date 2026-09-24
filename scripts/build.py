@@ -9,7 +9,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # de reventar con un traceback: este script lo corre la app de escritorio y el texto
 # va directo a la pantalla del usuario.
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
-                       'work/updates.json', 'work/ctps.json', 'work/artifacts.json') if not os.path.exists(f)]
+                       'work/updates.json', 'work/ctps.json', 'work/artifacts.json', 'work/abxl.json',
+                       'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
+           if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
     _faltan.append('work/skills_api/')
 if _faltan:
@@ -87,9 +89,16 @@ window.MFF_sk = sk;
  'window.MFF_SKILLS = ' + json.dumps(SKILLS, ensure_ascii=False) + ';\n',
  'window.MFF_TABLAS = ' + json.dumps(TABLAS, ensure_ascii=False) + ';\n',
  'window.MFF_BUFFS = ' + json.dumps(BUFFS, ensure_ascii=False) + ';\n',
- '// C.T.P.s y artefactos (scripts/fuentes.py).\n',
+ '// C.T.P.s, artefactos, Alliance Battle, guía y modos (scripts/fuentes.py y scripts/contenido/).\n',
  'window.MFF_CTPS = ' + json.dumps(FUENTES['ctps'], ensure_ascii=False) + ';\n',
  'window.MFF_ARTEFACTOS = ' + json.dumps(FUENTES['artefactos'], ensure_ascii=False) + ';\n',
+ 'window.MFF_ABX = ' + json.dumps(FUENTES['abx'], ensure_ascii=False) + ';\n',
+ 'window.MFF_CANCELS = ' + json.dumps(FUENTES['cancels'], ensure_ascii=False) + ';\n',
+ 'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',
+ 'window.MFF_GUIA = ' + json.dumps({**FUENTES['guia'], 'version_fuente': FUENTES['version_guia_fuente']}, ensure_ascii=False) + ';\n',
+ 'window.MFF_MODOS = ' + json.dumps(FUENTES['modos'], ensure_ascii=False) + ';\n',
+ '// Traducciones de los textos de esas fuentes: inglés -> español (lo que falta viaja en inglés).\n',
+ 'window.MFF_TXT = ' + json.dumps(FUENTES['txt'], ensure_ascii=False) + ';\n',
  'window.MFF_TEAM_SUGGESTIONS = [];\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
  'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',

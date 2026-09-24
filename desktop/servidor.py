@@ -81,7 +81,8 @@ REMOTA = {'juego': None, 'error': None}
 # 'tierlists' regenera data.js, y para eso el build necesita los insumos que deja la
 # sincronizacion de datos. En un paquete recien descomprimido no estan.
 INSUMOS = ('work/characters.json', 'work/instintos.json', 'work/uniforms.json', 'work/updates.json',
-           'work/ctps.json', 'work/artifacts.json')
+           'work/ctps.json', 'work/artifacts.json', 'work/abxl.json', 'work/guia/changelog.json',
+           'work/guia/parte1.txt', 'work/guia/parte2.txt')
 def pipeline_listo():
     if any(not os.path.exists(os.path.join(RAIZ, f)) for f in INSUMOS):
         return False

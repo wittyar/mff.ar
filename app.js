@@ -162,6 +162,62 @@ const T = {
   nav_roster:        { es:'Roster',              en:'Roster' },
   nav_tierlists:     { es:'Tier lists',          en:'Tier lists' },
   nav_teams:         { es:'Equipos',             en:'Teams' },
+  nav_modes:         { es:'Modos',               en:'Modes' },
+  md_title:          { es:'Modos de juego',      en:'Game modes' },
+  md_note:           { es:'Qué da cada modo, cómo armar el equipo y con quién. Todo sale de fuentes citadas: donde no hay fuente, no se afirma.',
+                       en:'What each mode gives, how to build the team and with whom. Everything comes from cited sources: where there is none, nothing is claimed.' },
+  md_guide:          { es:'Guía de thanosvibs', en:'thanosvibs guide' },
+  md_guide_old:      { es:'hay versión nueva:',  en:'new version out:' },
+  md_guide_old_t:    { es:'El contenido curado se escribió sobre una versión anterior de la guía: puede haber recomendaciones desactualizadas.',
+                       en:'The curated content was written on an earlier guide version: some recommendations may be outdated.' },
+  md_f_todos:        { es:'Todos',               en:'All' },
+  md_f_pve:          { es:'PvE',                 en:'PvE' },
+  md_f_pvp:          { es:'PvP',                 en:'PvP' },
+  md_f_diario:       { es:'Diario',              en:'Daily' },
+  md_f_semanal:      { es:'Semanal',             en:'Weekly' },
+  md_team:           { es:'Equipo',              en:'Team' },
+  md_what:           { es:'Qué da y qué hacer',  en:'What it gives and what to do' },
+  md_source:         { es:'Fuente',              en:'Source' },
+  md_recs:           { es:'Personajes recomendados', en:'Recommended characters' },
+  md_no_list:        { es:'Ninguna lista publicada cubre este modo.', en:'No published list covers this mode.' },
+  md_see_list:       { es:'Ver lista',           en:'Open list' },
+  md_guide_mentions: { es:'Mencionados en la guía', en:'Mentioned in the guide' },
+  md_guide_mentions_note:{ es:'(derivado: la guía nombra el modo al hablar de ellos)', en:'(derived: the guide names the mode when talking about them)' },
+  md_abx:            { es:'Restricciones y equipos por día', en:'Restrictions and teams by day' },
+  md_cancel_read:    { es:'En cada integrante, "Parálisis: 1/4" quiere decir que sus skills 1 y 4 aplican parálisis (6 = la definitiva).',
+                       en:'On each member, "Paralyze: 1/4" means their skills 1 and 4 apply Paralyze (6 = the ultimate).' },
+  md_day:            { es:'Día del ciclo',       en:'Cycle day' },
+  md_day_note:       { es:'Ciclo de 28 días. La fuente no dice qué día es hoy: elegilo mirando el juego.',
+                       en:'28-day cycle. The source does not say which day is today: pick it from the game.' },
+  md_no_restr:       { es:'sin restricción',     en:'no restriction' },
+  md_no_teams:       { es:'La fuente no recomienda equipos para este día.', en:'The source recommends no teams for this day.' },
+  md_added:          { es:'agregado en',         en:'added in' },
+  md_r_lead:         { es:'Líder',               en:'Lead' },
+  md_r_dps:          { es:'DPS',                 en:'DPS' },
+  md_r_leaddps:      { es:'Líder y DPS',         en:'Lead and DPS' },
+  md_r_support:      { es:'Soporte',             en:'Support' },
+  md_ctps:           { es:'C.T.P. recomendados', en:'Recommended C.T.P.s' },
+  md_reforged:       { es:'Reforjado',           en:'Reforged' },
+  md_go_pve:         { es:'Ver armado de PvE (ISO, urus, gear, opciones de uniforme) ↓', en:'See the PvE build (ISO, Uru, gear, uniform options) ↓' },
+  md_go_pvp:         { es:'Ver armado de PvP (ISO, urus, gear, opciones de uniforme) ↓', en:'See the PvP build (ISO, Uru, gear, uniform options) ↓' },
+  md_builds:         { es:'Armado según el tipo de modo', en:'Build by mode type' },
+  md_builds_note:    { es:'Reglas generales de la guía, cruzadas con la wiki. La ficha de cada personaje las aplica a su tipo de ataque.',
+                       en:"General rules from the guide, cross-checked with the wiki. Each character's sheet applies them to its attack type." },
+  md_urus:           { es:'Urus',                en:'Urus' },
+  md_uru_pvp:        { es:'PvP: igual dos urus de ataque por pieza y priorizar la recarga; después vida, o evasión en personajes de evasión.',
+                       en:'PvP: still two attack Urus per gear and prioritise Skill Cooldown; then HP, or Dodge for Dodge-heavy characters.' },
+  md_gear4:          { es:'Opción del 4.º gear', en:'4th gear option' },
+  md_obelisk:        { es:'Custom gear (obelisco)', en:'Custom gear (Obelisk)' },
+  md_uni_opts:       { es:'Opciones de uniforme', en:'Uniform options' },
+  md_own_attack:     { es:'el ataque del personaje', en:"the character's attack" },
+  iso_blanca:        { es:'blanca',              en:'white' },
+  iso_roja:          { es:'roja',                en:'red' },
+  iso_azul:          { es:'azul',                en:'blue' },
+  iso_verde:         { es:'verde',               en:'green' },
+  iso_naranja:       { es:'naranja',             en:'orange' },
+  iso_amarilla:      { es:'amarilla',            en:'yellow' },
+  iso_violeta:       { es:'violeta',             en:'purple' },
+  iso_caos:          { es:'caos',                en:'chaos' },
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
 
@@ -540,7 +596,8 @@ let ui = {
   teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
-  dragKey: null, dragFrom: '', tlPick: null
+  dragKey: null, dragFrom: '', tlPick: null,
+  modoFiltro: 'todos', modoAbierto: null, abxDia: 1
 };
 
 // ============================================================================
@@ -1388,6 +1445,206 @@ function selectorFilas (list, rows, a, items) {
 }
 
 // ============================================================================
+// FUENTES CURADAS: textos traducidos, fuentes citadas y vocabulario de stats
+// ============================================================================
+const GUIA   = window.MFF_GUIA || { fuentes: {}, stats: {} };
+const MODOS  = window.MFF_MODOS || [];
+const ABX    = window.MFF_ABX || { restricciones: [], equipos: [] };
+const CANCELS = window.MFF_CANCELS || {};
+const GUIA_PJ = window.MFF_GUIA_PJ || {};
+const TXT    = window.MFF_TXT || {};
+/** Texto de una fuente en inglés, en el idioma activo. Sin traducción cargada se muestra
+ *  el inglés marcado, como las líneas de efecto: nunca se inventa una. Devuelve HTML.
+ *  '[n]' es el salto de línea de la guía de thanosvibs. */
+function trHtml (en) {
+  if (!en) return '';
+  const br = (s) => h(s).replace(/\[n\]/g, '<br>');
+  if (LANG === 'en') return br(en);
+  const es = TXT[en];
+  return es == null ? `<span class="sintrad" title="${h(t('untranslated'))}">${br(en)}</span>` : br(es);
+}
+/** Texto plano (para atributos title). */
+function trTxt (en) { return !en ? '' : (LANG === 'en' ? en : (TXT[en] || en)).replace(/\[n\]/g, ' '); }
+/** Objeto {es, en} de lo curado a mano. */
+function bi (o) { return o ? (o[LANG] || o.es || '') : ''; }
+function statNom (k) { const s = GUIA.stats[k]; return s ? bi(s) : k; }
+/** Chips con las fuentes citadas, cada una con su enlace. */
+function fuentesHtml (claves) {
+  return (claves || []).map(k => { const f = GUIA.fuentes[k]; if (!f) return '';
+    return `<a class="fuente" href="${h(f.url)}" target="_blank" rel="noopener" title="${h(t('md_source'))}">${h(f.nombre)}</a>`; }).join('');
+}
+/** Retrato de la API -> variante del roster (base o uniforme). */
+let _PORT = null;
+function varDeRetrato (p) {
+  if (!_PORT) { _PORT = {};
+    CHARS.forEach(ch => { if (ch.p) _PORT[ch.p] = [ch.id, null]; (ch.uniforms || []).forEach(u => { if (u.p) _PORT[u.p] = [ch.id, u.id]; }); }); }
+  const x = _PORT[p]; return x ? variant(x[0], x[1]) : null;
+}
+/** Ficha chica de personaje que abre su ficha al tocarla. */
+function miniPj (v, extra, nota) {
+  if (!v) return '';
+  const u = imgUrl('portrait-' + v.id);
+  return `<span class="minipj" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}" title="${h((nota ? nota + ' — ' : '') + fullLabel(v))}">
+    ${u ? `<img src="${u}" alt="" loading="lazy">` : ''}<span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}${extra || ''}</span>`;
+}
+function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
+
+// ============================================================================
+// MODOS DE JUEGO
+// ============================================================================
+function renderModos () {
+  const F = ui.modoFiltro;
+  const lista = MODOS.filter(m => (F === 'todos') || m.tipo === F || m.frecuencia === F);
+  const desact = GUIA.version_fuente && GUIA.version_fuente !== GUIA.version_guia;
+  return `<div class="page-head"><div><h1>${h(t('md_title'))}</h1>
+      <div class="sub">${h(t('md_note'))}</div></div>
+      <div class="row"><span class="tag dim">${h(t('md_guide'))} ${h(GUIA.version_guia)}</span>
+        ${desact ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('md_guide_old_t'))}">${h(t('md_guide_old'))} ${h(GUIA.version_fuente)}</span>` : ''}</div></div>
+    <div class="seg" style="margin-bottom:14px">${['todos', 'pve', 'pvp', 'diario', 'semanal'].map(k =>
+      `<button class="${F === k ? 'on' : ''}" data-a="modoFiltro" data-v="${k}">${h(t('md_f_' + k))}</button>`).join('')}</div>
+    <div class="modos">${lista.map(modoCard).join('')}</div>
+    <div class="section" id="armado" style="margin-top:28px"><h3>${h(t('md_builds'))}</h3>
+      <p class="muted" style="margin-bottom:12px">${h(t('md_builds_note'))}</p>
+      <div class="armados">${armadoHtml('pve')}${armadoHtml('pvp')}</div>
+    </div>`;
+}
+
+function modoCard (m) {
+  const abierto = ui.modoAbierto === m.id;
+  const eq = m.equipo;
+  return `<div class="modo ${abierto ? 'on' : ''}">
+    <div class="modohead" data-a="modoAbrir" data-id="${m.id}">
+      <span class="tag solid" style="background:${m.tipo === 'pvp' ? 'var(--role-control)' : 'var(--role-soporte)'}">${m.tipo === 'pvp' ? 'PvP' : 'PvE'}</span>
+      <span class="modonom">${h(m.nombre)}</span>
+      <span class="tag dim">${h(t('md_f_' + m.frecuencia))}</span>
+      ${eq ? `<span class="tag dim">${h(t('md_team'))} ${eq.tam}</span>` : ''}
+      <span class="flecha">${abierto ? '▾' : '▸'}</span>
+    </div>
+    ${abierto ? `<div class="modobody">
+      <div class="bloque"><h4>${h(t('md_what'))}</h4>
+        <ul>${(m.que || []).map(x => `<li>${h(bi(x))}</li>`).join('')}</ul>
+        <div class="fuentes">${fuentesHtml(m.fuente)}</div>
+        ${m.corrobora ? `<p class="muted">${h(bi(m.corrobora))}</p><div class="fuentes">${fuentesHtml(m.corrobora_fuente)}</div>` : ''}
+      </div>
+      ${eq ? `<div class="bloque"><h4>${h(t('md_team'))}</h4><p>${h(bi(eq))}</p><div class="fuentes">${fuentesHtml(eq.fuente)}</div></div>` : ''}
+      ${(m.avisos || []).length ? `<div class="bloque aviso">${m.avisos.map(x => `<p>${h(bi(x))}</p>`).join('')}<div class="fuentes">${fuentesHtml(m.avisos_fuente)}</div></div>` : ''}
+      ${m.abx ? panelABX(m) : ''}
+      ${panelRecomendados(m)}
+      ${m.ctp ? panelCTPs(m.ctp) : ''}
+      ${m.ctp ? `<p class="muted"><a href="#armado" data-a="irArmado" data-v="${m.ctp}">${h(t(m.ctp === 'pvp' ? 'md_go_pvp' : 'md_go_pve'))}</a></p>` : ''}
+    </div>` : ''}
+  </div>`;
+}
+
+/** Personajes recomendados para un modo: las primeras filas de sus listas, las filas de
+ *  PvP de todas las listas (modos PvP) y las menciones de la guía. */
+function panelRecomendados (m) {
+  const bloques = [];
+  (m.listas || []).forEach(id => { const l = listById(id); if (l) bloques.push(bloqueLista(l, (r, i) => i < 3)); });
+  if (m.pvp_filas) LISTS.filter(l => l.group && l.rows.some(r => /pvp/i.test(r.label)))
+    .forEach(l => bloques.push(bloqueLista(l, r => /pvp/i.test(r.label))));
+  const guia = Object.entries(GUIA_PJ).filter(([, es]) => es.some(e => e.modos.includes(m.id)));
+  return `<div class="bloque"><h4>${h(t('md_recs'))}</h4>
+    ${bloques.join('') || `<p class="muted">${h(t('md_no_list'))}</p>`}
+    ${guia.length ? `<div class="reclista"><div class="reclh">${h(t('md_guide_mentions'))}
+        <span class="muted">${h(t('md_guide_mentions_note'))}</span></div>
+      <div class="minis">${guia.map(([p, es]) => { const v = varDeRetrato(p);
+        const txt = es.filter(e => e.modos.includes(m.id)).flatMap(e => e.textos).map(trTxt).join(' · ');
+        return v ? miniPj(v, '', txt) : ''; }).join('')}</div>
+      <div class="fuentes">${fuentesHtml(['tv-guia-1', 'tv-guia-2'])}</div></div>` : ''}
+  </div>`;
+}
+/** Filas elegidas de una lista importada, con sus personajes. */
+function bloqueLista (l, elegir) {
+  const rows = rowsOf(l), a = assignOf(l.id);
+  const filas = rows.map((r, i) => ({ r, i })).filter(x => elegir(x.r, x.i));
+  if (!filas.length) return '';
+  const vs = allVariants();
+  return `<div class="reclista"><div class="reclh"><b>${h(listName(l))}</b>
+      <span class="muted">${h(l.author || '')}${l.gameVersion ? ' · ' + h(t('tl_game')) + ' ' + h(l.gameVersion) : ''}</span>
+      <button class="btn sm" data-a="verLista" data-id="${l.id}">${h(t('md_see_list'))}</button></div>
+    ${filas.map(({ r, i }) => { const en = vs.filter(v => (a[v.key] || []).includes(r.id));
+      return en.length ? `<div class="recfila"><span class="tag solid" style="background:${rowColor(i, rows.length)}" title="${h(r.label)}">${h(r.label)}</span>
+        <div class="minis">${en.map(v => miniPj(v)).join('')}</div></div>` : ''; }).join('')}
+  </div>`;
+}
+
+/** Alliance Battle: restricciones de un día del ciclo de 28 y los equipos recomendados,
+ *  con qué integrante corta a los jefes (cancels) y con qué skill. */
+function panelABX (m) {
+  const dia = ui.abxDia;
+  const rs = ABX.restricciones.filter(r => r.d === dia);
+  const eqs = ABX.equipos.filter(e => e.d === dia);
+  const orden = ['Normal', 'Extreme', 'Legend', 'Infinite Challenge'];
+  const restr = (r) => r.length ? r.map(x => `<span class="tag dim">${icon(x)}${h(dom(x))}</span>`).join(' ') : `<span class="muted">${h(t('md_no_restr'))}</span>`;
+  const cortes = (p, modo) => { const c = CANCELS[p] || {}; const tipos = (m.cancels || {})[modo] || [];
+    return tipos.filter(x => c[x]).map(x => `<span class="tag cancel" title="${h(c[x].map(slotEs).join(', '))}">${h(trTxt(x))}: ${h(c[x].map(s => s.replace('Active ', '').replace('Ult', '6')).join('/'))}</span>`).join(''); };
+  return `<div class="bloque"><h4>${h(t('md_abx'))}</h4>
+    <div class="row" style="margin-bottom:8px"><span class="muted">${h(t('md_day'))}</span>
+      <select data-a="abxDia">${Array.from({ length: 28 }, (_, i) => `<option value="${i + 1}" ${i + 1 === dia ? 'selected' : ''}>${i + 1}</option>`).join('')}</select>
+      <span class="muted">${h(t('md_day_note'))}</span></div>
+    <table class="abx"><tbody>${orden.filter(o => rs.some(r => r.m === o)).map(o => `<tr><th>${h(o)}</th><td>${restr(rs.find(r => r.m === o).r)}</td></tr>`).join('')}</tbody></table>
+    ${m.cancels ? `<p class="muted" style="margin:8px 0">${h(bi(m.cancels_nota))} <b>Extreme</b>: ${h(m.cancels.Extreme.map(trTxt).join(', '))} · <b>Legend</b>: ${h(m.cancels.Legend.map(trTxt).join(', '))}.
+      ${h(t('md_cancel_read'))}</p>` : ''}
+    ${eqs.length ? `<div class="abxeqs">${eqs.map(e => `<div class="abxeq">
+        <div class="row" style="gap:6px;margin-bottom:6px"><span class="tag dim">${h(e.m)}</span>
+          ${e.titulo ? `<span class="tag ghost" style="color:var(--gold)">${trHtml(e.titulo)}</span>` : ''}
+          <span class="muted">${h(t('md_added'))} ${h(e.v || '?')}</span></div>
+        ${e.pj.map(p => { const v = varDeRetrato(p);
+          const rol = p === e.lider && e.dps.includes(p) ? t('md_r_leaddps') : p === e.lider ? t('md_r_lead') : e.dps.includes(p) ? t('md_r_dps') : t('md_r_support');
+          return `<div class="abxpj">${miniPj(v)}<span class="tag dim">${h(rol)}</span>${cortes(p, e.m)}</div>`; }).join('')}
+      </div>`).join('')}</div>` : `<p class="muted">${h(t('md_no_teams'))}</p>`}
+    <div class="fuentes">${fuentesHtml(['tv-abxl'])}</div>
+  </div>`;
+}
+
+/** C.T.P.s recomendados para un tipo de modo, con la descripción de thanosvibs. */
+function panelCTPs (tipo) {
+  const grupos = (GUIA.ctp_ranking || { grupos: [] }).grupos.filter(g => g.id === tipo || (g.id === 'otros'));
+  return `<div class="bloque"><h4>${h(t('md_ctps'))}</h4>
+    ${grupos.map(g => `<p class="muted">${h(bi(g))}</p><div class="ctps">${g.ctps.map(id => {
+      const c = CTPS.find(x => x.id === id); if (!c) return '';
+      return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>C.T.P. of ${h(c.name)}</b></summary>
+        <p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}</details>`; }).join('')}</div>`).join('')}
+    <div class="fuentes">${fuentesHtml(GUIA.ctp_ranking && GUIA.ctp_ranking.fuente)}</div>
+  </div>`;
+}
+
+/** Piedras de un set ISO, como puntos de color. */
+function piedrasHtml (ps) {
+  const P = GUIA.iso.piedras;
+  return `<span class="piedras">${ps.map(k => `<i style="background:${P[k].color}" title="${h(P[k].nombre)} (${h(t('iso_' + k))})"></i>`).join('')}</span>`;
+}
+/** Armado general según el tipo de modo: ISO, urus, 4.º gear, opciones de uniforme, obelisco. */
+function armadoHtml (tipo) {
+  const G = GUIA, pvp = tipo === 'pvp';
+  const sets = pvp ? G.iso.sets_pvp : G.iso.sets_pve;
+  return `<div class="card armado"><h3 style="margin-bottom:10px">${pvp ? 'PvP' : 'PvE'}</h3>
+    <h4>ISO-8</h4>
+    ${sets.map(s => `<div class="isoset"><b>${h(s.nombre)}</b> ${piedrasHtml(s.piedras)}
+      <div class="muted">${s.stats.map(statNom).join(' · ')}${s.es ? ' — ' + h(bi(s)) : ''}</div></div>`).join('')}
+    ${!pvp ? `<p class="muted">${h(bi(G.iso.efecto_pve))}</p>` : ''}
+    ${(pvp ? G.iso.notas_pvp : G.iso.notas_pve).map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
+    <p class="muted"><i>${h(bi(G.iso.composicion_fuente))}</i></p>
+    <h4>${h(t('md_urus'))}</h4>
+    <p class="muted">${h(bi(G.urus.ataque))}</p>
+    ${pvp ? `<p class="muted">${h(t('md_uru_pvp'))}</p>`
+          : `<ol class="prio">${G.urus.prioridad.map(k => `<li>${h(statNom(k))}</li>`).join('')}</ol>
+             <p class="muted">${h(bi(G.urus.prioridad_nota))}</p>${G.urus.reglas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}`}
+    <h4>${h(t('md_gear4'))}</h4>
+    <ol class="prio">${G.gear4.prioridad.map(k => `<li>${h(statNom(k))}</li>`).join('')}</ol>
+    ${G.gear4.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
+    <h4>${h(t('md_obelisk'))}</h4>
+    ${pvp ? `<p class="muted">${h(bi(G.obelisco.pvp))}</p>` : G.obelisco.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
+    <h4>${h(t('md_uni_opts'))}</h4>
+    ${pvp ? `<p class="muted">${h(bi(G.opciones_uniforme.pvp))}</p><p class="aviso">${h(bi(G.opciones_uniforme.pvp_inconsistencia))}</p>`
+          : `<table class="abx"><tbody>${G.opciones_uniforme.rangos.map(r => `<tr><th>${h(r.rango)}</th>
+              <td>${r.mejor.map(k => k === 'ataque' ? h(t('md_own_attack')) : h(statNom(k))).join(' › ')}</td></tr>`).join('')}</tbody></table>`}
+    <div class="fuentes">${fuentesHtml(['tv-guia-3', 'wiki-iso', 'wiki-uru', 'wiki-gear'])}</div>
+  </div>`;
+}
+
+// ============================================================================
 // EQUIPOS
 // ============================================================================
 function renderTeams () {
@@ -1617,6 +1874,7 @@ function renderNav () {
       : `<span class="dot"></span>TA GUIANAEL <span style="color:var(--accent)">MFF</span>`}</span>
     ${link('roster','nav_roster','back')}
     ${link('tierlist','nav_tierlists','goTier')}
+    ${link('modos','nav_modes','goModos')}
     ${link('teams','nav_teams','goTeams')}
     <span class="navspace"></span>
     <div class="navtools">
@@ -1634,6 +1892,7 @@ function render () {
     case 'detail':   body = renderDetail(); break;
     case 'compare':  body = renderCompare(); break;
     case 'tierlist': body = renderTierList(); break;
+    case 'modos':    body = renderModos(); break;
     case 'teams':    body = renderTeams(); break;
     case 'editor':   body = renderEditor(); break;
     case 'settings': body = renderSettings(); break;
@@ -1684,6 +1943,11 @@ document.addEventListener('click', (e) => {
     case 'uniform': ui.uniformId = d.uid; render(); break;
 
     case 'goTier': ui.view = 'tierlist'; render(); break;
+    case 'goModos': ui.view = 'modos'; render(); break;
+    case 'modoFiltro': ui.modoFiltro = d.v; render(); break;
+    case 'modoAbrir': ui.modoAbierto = ui.modoAbierto === d.id ? null : d.id; render(); break;
+    case 'verLista': ui.view = 'tierlist'; ui.tierList = d.id; render(); window.scrollTo(0, 0); break;
+    case 'irArmado': e.preventDefault(); document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
       const id = 'mia-' + Date.now();
@@ -1811,6 +2075,7 @@ document.addEventListener('change', (e) => {
   if (a === 'sort') { U.prefs.sort = el.value; commit(); return; }
   if (a === 'newListTpl') { ui.newListTpl = el.value; return; }
   if (a === 'newListKind') { ui.newListKind = el.value; return; }
+  if (a === 'abxDia') { ui.abxDia = parseInt(el.value, 10); render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }

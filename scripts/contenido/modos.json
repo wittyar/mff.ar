@@ -1,0 +1,457 @@
+{
+ "fuente": "tv-guia-4",
+ "modos": [
+  {
+   "id": "world-boss",
+   "nombre": "World Boss (Ultimate / Legend)",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "La fuente principal de materiales de Tier-2 y Tier-3 al principio. Apuntá a pasar Ultimate y después Legend, que dan recompensas extra.",
+     "en": "The main source of Tier-2 and Tier-3 materials early-game. Work towards clearing Ultimate and then Legend for bonus rewards."
+    },
+    {
+     "es": "World Boss Legend da más de todo que Ultimate (salvo libros específicos) y además materiales de Tier-4: cuando puedas hacer WBL 5 veces por día, casi no hay razón para jugar WBU.",
+     "en": "World Boss Legend drops more of everything than Ultimate (except specific books) plus Tier-4 materials: once you can do WBL 5 times a day there is very little reason to play WBU."
+    },
+    {
+     "es": "Hay 5 entradas por día: la guía recomienda armar un DPS fuerte para cada una (los \"Starting 5\").",
+     "en": "There are 5 World Boss entries per day: the guide recommends one strong DPS for each (the \"Starting 5\")."
+    },
+    {
+     "es": "El Potencial se realiza jugando World Boss y el 2.º Potencial jugando World Boss Legend.",
+     "en": "Potential is realised by running World Boss, and 2nd Potential by running World Boss Legend."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4",
+    "tv-guia-1"
+   ],
+   "equipo": {
+    "tam": 3,
+    "es": "Líder / principal / soporte, más strikers de Tier-4 (la guía menciona usar a Ghost Rider y a Groot como strikers).",
+    "en": "Lead / main / support, plus Tier-4 strikers (the guide mentions Ghost Rider and Groot as strikers).",
+    "fuente": [
+     "tv-guia-4",
+     "tv-guia-1"
+    ]
+   },
+   "avisos": [
+    {
+     "es": "Los artefactos genéricos con daño extra a \"Pure Evil\" no ayudan en WBL: Netmarble confirmó que los jefes de WBL no tienen habilidades asociadas.",
+     "en": "Generic Artifacts with increased damage to \"Pure Evil\" do not help in WBL: Netmarble confirmed the WBL bosses have no abilities associated with them."
+    }
+   ],
+   "avisos_fuente": [
+    "tv-guia-3"
+   ],
+   "listas": [
+    "tv-wbl",
+    "tv-soportes",
+    "tv-general"
+   ],
+   "ctp": "pve",
+   "claves_guia": [
+    "World Boss",
+    "WBL",
+    "WBU"
+   ]
+  },
+  {
+   "id": "alliance-battle",
+   "nombre": "Alliance Battle (Normal / Extreme / Legend)",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Da recompensas al azar y, sobre todo, materiales de Despertar y Trascendencia. Pasá Normal una vez por día y hacé todo el puntaje que puedas en Extreme: no es difícil llegar a los materiales de Despertar.",
+     "en": "Drops random rewards but, most importantly, Awakening/Transcending materials. Clear Normal once a day and score as high as you can in Extreme: it is not very hard to score enough for the Awakening materials."
+    },
+    {
+     "es": "Legend (más adelante): el puntaje alto no importa tanto; alcanza con lo necesario para los materiales de Despertar extra.",
+     "en": "Legend (late game): scoring high does not matter much; just do enough to get the bonus Awakening Materials."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "equipo": {
+    "tam": 3,
+    "es": "3 personajes que cumplan la restricción del día.",
+    "en": "3 characters that meet the day's requirement.",
+    "fuente": [
+     "wiki-ab"
+    ]
+   },
+   "abx": true,
+   "cancels_nota": {
+    "es": "Los jefes de Extreme y los de Legend se cortan con controles distintos, y thanosvibs marca qué skills de cada personaje los aplican:",
+    "en": "Extreme and Legend bosses are cancelled with different crowd controls, and thanosvibs marks which of each character's skills apply them:"
+   },
+   "cancels_fuente": [
+    "tv-abxl"
+   ],
+   "listas": [
+    "tv-alianza"
+   ],
+   "ctp": "pve",
+   "claves_guia": [
+    "Alliance Battle",
+    "ABX",
+    "ABL"
+   ],
+   "cancels": {
+    "Extreme": [
+     "Silence",
+     "Paralyze",
+     "Burn"
+    ],
+    "Legend": [
+     "Snare",
+     "Shock",
+     "Fracture"
+    ]
+   }
+  },
+  {
+   "id": "giant-boss-raid",
+   "nombre": "Giant Boss Raid (Galactus / Dormammu)",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Buena fuente de fichas de cartas premium: 600 se cambian por una carta premium.",
+     "en": "A good source of Premium Card Tokens: 600 can be exchanged for a Premium Card."
+    },
+    {
+     "es": "Pasá a Galactus apenas puedas (o que te carguen): da materiales de Tier-4.",
+     "en": "Clear Galactus as soon as you are able (or get carried): he drops Tier-4 materials."
+    },
+    {
+     "es": "Dormammu (más adelante): la única forma de conseguir Souls of the Faltine, necesarias para el Tier-4. Si no estás cerca del 10% de perforación, buscá quien te cargue.",
+     "en": "Dormammu (late game): the only way to get Souls of the Faltine, required for Tier-4. Find someone to carry you if you are not around 10% Pierce yet."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "corrobora": {
+    "es": "La wiki confirma que los materiales de Tier-4 salen de Giant Boss Raid: Dormammu y de World Boss Legend.",
+    "en": "The wiki confirms Tier-4 materials come from Giant Boss Raid: Dormammu and World Boss Legend."
+   },
+   "corrobora_fuente": [
+    "wiki-t4"
+   ],
+   "listas": [
+    "tv-general"
+   ],
+   "ctp": "pve",
+   "claves_guia": [
+    "Giant Boss Raid",
+    "GBR",
+    "Galactus",
+    "Dormammu"
+   ]
+  },
+  {
+   "id": "dimension-rift",
+   "nombre": "Dimension Rift",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "La fuente principal de cubos para craftear cartas, muy importantes a mitad y final de juego. Completá 2 rifts por día: 350 cubos el primero y 400 el segundo.",
+     "en": "The main source of Card Crafting Cubes, very important mid-to-late game. Clear 2 rifts to completion each day: 350 Cubes for the first and 400 for the second."
+    },
+    {
+     "es": "También dan artefactos exclusivos como recompensa.",
+     "en": "They also reward exclusive Artifacts."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4",
+    "wiki-rift"
+   ],
+   "equipo": {
+    "tam": 3,
+    "es": "Elegís 3 héroes y controlás a 1.",
+    "en": "You pick 3 heroes and control 1.",
+    "fuente": [
+     "wiki-rift"
+    ]
+   },
+   "listas": [
+    "tv-general"
+   ],
+   "ctp": "pve",
+   "claves_guia": [
+    "Dimension Rift"
+   ]
+  },
+  {
+   "id": "dimension-missions",
+   "nombre": "Dimension Missions",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Fichas de soporte, oro (primera recompensa) y X-Genes al azar (octava). Hacé 40 corridas por día en el nivel más alto que puedas pasar en automático, para 8 recompensas.",
+     "en": "Support Tokens, Gold (first reward) and random X-Genes (8th reward). Do 40 runs a day at the highest level you can auto-clear, for 8 reward acquisitions."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "listas": [],
+   "ctp": "pve",
+   "claves_guia": [
+    "Dimension Mission"
+   ]
+  },
+  {
+   "id": "timeline-battle",
+   "nombre": "Timeline Battle",
+   "tipo": "pvp",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "La única fuente de Glory Tokens, y paga cristales cada semana según tu puesto. Jugá 10 partidas por día: aunque pierdas, recuperás algunas fichas.",
+     "en": "The only source of Glory Tokens, with a weekly Crystal payout based on rank. Play 10 matches a day: even if you lose, you get some Glory Tokens back."
+    },
+    {
+     "es": "Semanal: Timeline Challenger Cheer es la única fuente de Advanced Glory Tokens, que conviene cambiar por materiales de Despertar.",
+     "en": "Weekly: Timeline Challenger Cheer is the only source of Advanced Glory Tokens, which should be exchanged for Awakening materials."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "equipo": {
+    "tam": 3,
+    "es": "3 contra 3.",
+    "en": "3 vs 3.",
+    "fuente": [
+     "wiki-tl"
+    ]
+   },
+   "listas": [],
+   "pvp_filas": true,
+   "ctp": "pvp",
+   "claves_guia": [
+    "Timeline",
+    "PvP"
+   ]
+  },
+  {
+   "id": "otherworld-battle",
+   "nombre": "Otherworld Battle",
+   "tipo": "pvp",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Fuente de espadas y de fichas de Otherworld. Jugá las partidas con recompensa diaria e, idealmente, algunas más hasta completar los desafíos diarios.",
+     "en": "Source of Swords and Otherworld Tokens. Play your daily reward matches, and ideally extra until you complete the Daily Challenges."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "equipo": {
+    "tam": 5,
+    "es": "Equipo de 5 personajes.",
+    "en": "A team of 5 characters.",
+    "fuente": [
+     "wiki-owb"
+    ]
+   },
+   "listas": [],
+   "pvp_filas": true,
+   "ctp": "pvp",
+   "claves_guia": [
+    "Otherworld",
+    "PvP"
+   ]
+  },
+  {
+   "id": "team-battle-arena",
+   "nombre": "Team Battle Arena",
+   "tipo": "pvp",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Fuente de Arena Tokens, que compran materiales de Tier-4. Jugá tus 10 partidas diarias; paga algunos cristales al final de la semana.",
+     "en": "Source of Arena Tokens, used to purchase Tier-4 Materials. Play your 10 daily matches; a few extra Crystals at the end of each week."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "equipo": {
+    "tam": 3,
+    "es": "3 posiciones. Según la lista de Shiruishi, un \"líder señuelo\" en el medio atrae al líder rival mientras los de los costados hacen el daño.",
+    "en": "3 positions. Per Shiruishi's list, a \"rigged leader\" in the middle draws the opposing leader while the side characters deal damage.",
+    "fuente": [
+     "tv-listas"
+    ]
+   },
+   "listas": [
+    "tv-arena"
+   ],
+   "pvp_filas": true,
+   "ctp": "pvp",
+   "claves_guia": [
+    "Team Battle Arena",
+    "TBA"
+   ]
+  },
+  {
+   "id": "alliance-conquest",
+   "nombre": "Alliance Conquest",
+   "tipo": "pvp",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Tres turnos de una hora por día, tres días por semana. Conviene hacer 5 entradas por día aunque las pierdas todas: dan 85 Alliance Tokens, que compran materiales de Tier-4 en la tienda de la alianza.",
+     "en": "Available in three 1-hour slots a day, three days a week. Worth doing 5 entries a day even if you lose them all: 85 Alliance Tokens just for participating, used for Tier-4 Materials in the Alliance Shop."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "equipo": {
+    "tam": 6,
+    "es": "Dos escuadras de 3 (cada batalla son dos partidas de 3 contra 3).",
+    "en": "Two squads of 3 (each battle is two 3v3 matches).",
+    "fuente": [
+     "wiki-ac"
+    ]
+   },
+   "listas": [],
+   "pvp_filas": true,
+   "ctp": "pvp",
+   "claves_guia": [
+    "Alliance Conquest"
+   ]
+  },
+  {
+   "id": "multiverse-saga",
+   "nombre": "Multiverse Saga",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Jugá las etapas de jefe 5 veces por día por los emblemas y materiales relacionados.",
+     "en": "Run the Boss stage(s) 5 times daily for Emblems and related materials."
+    },
+    {
+     "es": "Se juega con personajes fijos: no cuenta el crecimiento de tu cuenta.",
+     "en": "Played with fixed characters: your account growth is not reflected."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4",
+    "wiki-ms"
+   ],
+   "listas": [],
+   "ctp": null,
+   "claves_guia": [
+    "Multiverse Saga"
+   ]
+  },
+  {
+   "id": "epic-quests",
+   "nombre": "Epic Quest Missions",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Las misiones que se desbloquean con las Epic Quests suelen valer la pena por los materiales; las que dan materiales mutantes (Phoenix Feathers, M'Kraan Crystals) son especialmente importantes.",
+     "en": "Missions unlocked through Epic Quests are usually worth running for materials; the ones that drop Mutant materials (Phoenix Feathers, M'Kraan Crystals) are particularly important."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "listas": [],
+   "ctp": "pve",
+   "claves_guia": [
+    "Epic Quest"
+   ]
+  },
+  {
+   "id": "zombie-survival",
+   "nombre": "Zombie Survival",
+   "tipo": "pve",
+   "frecuencia": "semanal",
+   "que": [
+    {
+     "es": "Recompensas muy buenas, con materiales de Tier-4. Hacé todos los desafíos cada semana, aunque sea pasando solo la etapa 1 y sin ir por el ranking.",
+     "en": "Crazy rewards with Tier-4 Materials available. Do all the challenges every week, even if it means just clearing Stage 1 and not going for ranking rewards."
+    },
+    {
+     "es": "Se desbloquea pasando una vez World Boss Legend: Knull y teniendo 5 o más héroes Tier-3 o con Potencial Trascendido en Nv. 70. Cada temporada cambia las skills prohibidas.",
+     "en": "Unlocked by clearing World Boss Legend Knull once and owning five or more Tier-3 or Potential Transcended heroes at Lv.70. Restricted skills change every season."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4",
+    "wiki-zs"
+   ],
+   "listas": [],
+   "ctp": "pve",
+   "claves_guia": [
+    "Zombie"
+   ]
+  },
+  {
+   "id": "shadowland",
+   "nombre": "Shadowland",
+   "tipo": "pve",
+   "frecuencia": "semanal",
+   "que": [
+    {
+     "es": "Muy buenas recompensas y la fuente principal de selectores de biométricos. Avanzá todo lo que puedas cada semana; incluso pasado el piso 35 sirve para juntar fichas.",
+     "en": "Drops a bunch of great rewards and is the main source of Biometric Selectors. Work through as much as you can each week; even past Floor 35 is good for farming tokens."
+    },
+    {
+     "es": "También es una buena forma de medir cómo está tu roster.",
+     "en": "Also a really nice way to gauge your roster's development."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4"
+   ],
+   "listas": [],
+   "ctp": "pve",
+   "claves_guia": [
+    "Shadowland"
+   ]
+  },
+  {
+   "id": "story-ultimate",
+   "nombre": "Story Mode Ultimate",
+   "tipo": "pve",
+   "frecuencia": "diario",
+   "que": [
+    {
+     "es": "Buena forma de sumar Titan Component Packs y Essence of Dimension, con una chance chica de C.T.P.s, Odin's Blessings y cartas premium.",
+     "en": "A great way to boost Titan Component Pack and Essence of Dimension income, with a tiny chance at CTPs, Odin's Blessings and Premium Cards."
+    },
+    {
+     "es": "Dimensional Clash es donde se farmean los tickets de Type Enhancement.",
+     "en": "Dimensional Clash is where Type Enhancement Tickets are primarily farmed."
+    }
+   ],
+   "fuente": [
+    "tv-guia-4",
+    "tv-guia-3"
+   ],
+   "listas": [],
+   "ctp": "pve",
+   "claves_guia": [
+    "Story Mode"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1050 @@
+{
+ "version_guia": "12.1.5",
+ "fuentes": {
+  "tv-guia-1": {
+   "nombre": "THANO$VIB$ Beginner's Guide, parte 1",
+   "url": "https://thanosvibs.money/beginners/1"
+  },
+  "tv-guia-2": {
+   "nombre": "THANO$VIB$ Beginner's Guide, parte 2",
+   "url": "https://thanosvibs.money/beginners/2"
+  },
+  "tv-guia-3": {
+   "nombre": "THANO$VIB$ Beginner's Guide, parte 3",
+   "url": "https://thanosvibs.money/beginners/3"
+  },
+  "tv-guia-4": {
+   "nombre": "THANO$VIB$ Beginner's Guide, parte 4",
+   "url": "https://thanosvibs.money/beginners/4"
+  },
+  "tv-guia-5": {
+   "nombre": "THANO$VIB$ Beginner's Guide, parte 5",
+   "url": "https://thanosvibs.money/beginners/5"
+  },
+  "tv-ctps": {
+   "nombre": "THANO$VIB$ — C.T.P.s",
+   "url": "https://thanosvibs.money/ctps"
+  },
+  "tv-abxl": {
+   "nombre": "THANO$VIB$ — Alliance Battle (ABX/ABL)",
+   "url": "https://thanosvibs.money/abxl"
+  },
+  "tv-rot": {
+   "nombre": "THANO$VIB$ — Rotations",
+   "url": "https://thanosvibs.money/rotations"
+  },
+  "tv-sup": {
+   "nombre": "THANO$VIB$ — Leads & Supports",
+   "url": "https://thanosvibs.money/supports"
+  },
+  "tv-art": {
+   "nombre": "THANO$VIB$ — Artifacts",
+   "url": "https://thanosvibs.money/artifacts"
+  },
+  "tv-listas": {
+   "nombre": "THANO$VIB$ — Tier lists",
+   "url": "https://thanosvibs.money/tierlist"
+  },
+  "wiki-iso": {
+   "nombre": "Future Fight Wiki — ISO-8",
+   "url": "https://future-fight.fandom.com/wiki/ISO-8"
+  },
+  "wiki-uru": {
+   "nombre": "Future Fight Wiki — Enchanted Uru",
+   "url": "https://future-fight.fandom.com/wiki/Enchanted_Uru"
+  },
+  "wiki-gear": {
+   "nombre": "Future Fight Wiki — Character Gear",
+   "url": "https://future-fight.fandom.com/wiki/Character_Gear"
+  },
+  "wiki-t3": {
+   "nombre": "Future Fight Wiki — Tier-3",
+   "url": "https://future-fight.fandom.com/wiki/Tier-3"
+  },
+  "wiki-tp": {
+   "nombre": "Future Fight Wiki — Transcend Potential",
+   "url": "https://future-fight.fandom.com/wiki/Transcend_Potential"
+  },
+  "wiki-t4": {
+   "nombre": "Future Fight Wiki — Tier-4",
+   "url": "https://future-fight.fandom.com/wiki/Tier-4"
+  },
+  "wiki-nativos": {
+   "nombre": "Future Fight Wiki — Native Tiers",
+   "url": "https://future-fight.fandom.com/wiki/Native_Tiers"
+  },
+  "wiki-ab": {
+   "nombre": "Future Fight Wiki — Alliance Battle",
+   "url": "https://future-fight.fandom.com/wiki/Alliance_Battle"
+  },
+  "wiki-tl": {
+   "nombre": "Future Fight Wiki — Timeline Battle",
+   "url": "https://future-fight.fandom.com/wiki/Timeline_Battle"
+  },
+  "wiki-owb": {
+   "nombre": "Future Fight Wiki — Otherworld Battle",
+   "url": "https://future-fight.fandom.com/wiki/Otherworld_Battle"
+  },
+  "wiki-ac": {
+   "nombre": "Future Fight Wiki — Alliance Conquest",
+   "url": "https://future-fight.fandom.com/wiki/Alliance_Conquest"
+  },
+  "wiki-rift": {
+   "nombre": "Future Fight Wiki — Dimension Rift",
+   "url": "https://future-fight.fandom.com/wiki/Dimension_Rift"
+  },
+  "wiki-zs": {
+   "nombre": "Future Fight Wiki — Zombie Survival",
+   "url": "https://future-fight.fandom.com/wiki/Zombie_Survival"
+  },
+  "wiki-ms": {
+   "nombre": "Future Fight Wiki — Multiverse Saga",
+   "url": "https://future-fight.fandom.com/wiki/Multiverse_Saga"
+  },
+  "wiki-arena": {
+   "nombre": "Future Fight Wiki — Arena",
+   "url": "https://future-fight.fandom.com/wiki/Arena"
+  }
+ },
+ "stats": {
+  "patk": {
+   "es": "Ataque físico",
+   "en": "Physical Attack"
+  },
+  "eatk": {
+   "es": "Ataque de energía",
+   "en": "Energy Attack"
+  },
+  "allatk": {
+   "es": "Todos los ataques básicos",
+   "en": "All Basic Attacks"
+  },
+  "aspd": {
+   "es": "Vel. de ataque",
+   "en": "Attack Speed"
+  },
+  "mspd": {
+   "es": "Vel. de movimiento",
+   "en": "Movement Speed"
+  },
+  "crit": {
+   "es": "Prob. de crítico",
+   "en": "Critical Rate"
+  },
+  "critdmg": {
+   "es": "Daño crítico",
+   "en": "Critical Damage"
+  },
+  "igdef": {
+   "es": "Perforación de defensa (Ignore Defense)",
+   "en": "Ignore Defense"
+  },
+  "igdodge": {
+   "es": "Ignorar evasión",
+   "en": "Ignore Dodge"
+  },
+  "elem": {
+   "es": "Daño elemental",
+   "en": "Elemental Damage"
+  },
+  "hp": {
+   "es": "Vida",
+   "en": "HP"
+  },
+  "rec": {
+   "es": "Tasa de recuperación",
+   "en": "Recovery Rate"
+  },
+  "dodge": {
+   "es": "Evasión",
+   "en": "Dodge"
+  },
+  "cd": {
+   "es": "Recarga de skills (Skill Cooldown)",
+   "en": "Skill Cooldown"
+  },
+  "elemres": {
+   "es": "Resistencia elemental",
+   "en": "Elemental Resist"
+  },
+  "debuff": {
+   "es": "Duración de debuffs",
+   "en": "Debuff Duration"
+  },
+  "cc": {
+   "es": "Duración de control",
+   "en": "Crowd Control Time"
+  },
+  "alldef": {
+   "es": "Todas las defensas básicas",
+   "en": "All Basic Defenses"
+  },
+  "pdef": {
+   "es": "Defensa física",
+   "en": "Physical Defense"
+  },
+  "edef": {
+   "es": "Defensa de energía",
+   "en": "Energy Defense"
+  }
+ },
+ "progresion": {
+  "fuente": [
+   "tv-guia-1"
+  ],
+  "pasos": [
+   {
+    "id": "desbloqueo",
+    "es": "Desbloquear el personaje.",
+    "en": "Unlock the character."
+   },
+   {
+    "id": "t1",
+    "es": "Llevarlo a 6★, Maestría 6, Nv. 60 y gear +20.",
+    "en": "Upgrade to 6 Stars, 6 Mastery, Lv.60, Character Gear +20."
+   },
+   {
+    "id": "t2",
+    "es": "Subirlo a Tier-2 y realizar su Potencial jugando World Boss.",
+    "en": "Upgrade to Tier-2, and Realise Potential by running World Boss."
+   },
+   {
+    "id": "n70",
+    "es": "Nv. 70 y gear +25.",
+    "en": "Upgrade to Lv.70, Character Gear +25."
+   },
+   {
+    "id": "t3",
+    "es": "Subirlo a Tier-3 o Trascender su Potencial, y realizar el 2.º Potencial jugando World Boss Legend.",
+    "en": "Upgrade to either Tier-3 or Transcended Potential, and Realise 2nd Potential by running World Boss Legend."
+   },
+   {
+    "id": "n80",
+    "es": "Nv. 80, gear +30 y skills en Nv. 12.",
+    "en": "Upgrade to Lv.80, Character Gear +30, Skill Lv.12."
+   },
+   {
+    "id": "t4",
+    "es": "Subirlo a Tier-4.",
+    "en": "Upgrade to Tier-4."
+   }
+  ],
+  "notas": [
+   {
+    "es": "No todos los personajes tienen Tier-4.",
+    "en": "Not all characters have Tier-4s available."
+   },
+   {
+    "es": "Los personajes \"Tier-2 nativos\" y \"Tier-3 nativos\" siguen otro sistema de niveles.",
+    "en": "Rare characters such as \"Native Tier-2s\" and \"Native Tier-3s\" follow a different levelling system."
+   },
+   {
+    "es": "No subas personajes al azar más allá del Nv. 60: enfocate en 1 o 2 buenos a la vez y llevalos hasta el 70, priorizando los que vas a pasar a Tier-3 o Trascender.",
+    "en": "Don't level random characters past Lv.60. Focus on 1-2 good ones at a time and take them to 70, prioritising the ones you plan to Tier-3 or Transcend."
+   },
+   {
+    "es": "Para mejorar el Potencial conviene el método del 10%: gasta más o menos la mitad de materiales que el del 100%, con un poco más de oro.",
+    "en": "The 10% method for Enhancing Potential is far superior: about half the materials of the 100% method, with a minor increase to Gold cost."
+   }
+  ],
+  "requisitos": {
+   "fuente": [
+    "wiki-t3",
+    "wiki-tp",
+    "wiki-t4"
+   ],
+   "items": [
+    {
+     "id": "t3",
+     "es": "Tier-3: primero Tier-2 y gear +20 en las cuatro piezas; realizar el Potencial en World Boss y subirlo (cada nivel sube el nivel máximo de 62 a 70 y el gear de +21 a +25); con Nv. 70 y gear +25 se habilita el Tier-3.",
+     "en": "Tier-3: first Tier-2 and 20/20/20/20 gear; realise Potential in World Boss and raise it (each level raises the max level from 62 to 70 and gear from +21 to +25); Lv.70 and +25 gear enable Tier-3.",
+     "fuente": [
+      "wiki-t3"
+     ]
+    },
+    {
+     "id": "tp",
+     "es": "Potencial Trascendido: skill de Potencial Despertado en Nv. 6 y las cuatro piezas de gear en +25.",
+     "en": "Transcend Potential: Potential Awakening Skill at Lv.6 and all character gear at +25.",
+     "fuente": [
+      "wiki-tp"
+     ]
+    },
+    {
+     "id": "t4",
+     "es": "Tier-4: personaje Tier-3 o con Potencial Trascendido, Nv. 80, gear +30 y todas las skills en Nv. 10. Desbloquea la Striker Skill. Los materiales salen de Giant Boss Raid: Dormammu y World Boss Legend.",
+     "en": "Tier-4: a Tier-3 or Potential Transcended character at Lv.80 with all gear at +30 and all skills at Lv.10. Unlocks the Striker Skill. Materials come from Giant Boss Raid: Dormammu and World Boss Legend.",
+     "fuente": [
+      "wiki-t4"
+     ]
+    }
+   ],
+   "discrepancia": {
+    "es": "La guía (12.1.5) pone \"skills en Nv. 12\" en el paso previo al Tier-4 y la wiki pide Nv. 10 como requisito. No encontré una fuente que diga cuál es el requisito vigente: puede que la guía recomiende más de lo mínimo.",
+    "en": "The guide (12.1.5) lists \"Skill Lv.12\" in the step before Tier-4 while the wiki requires Lv.10. I found no source stating which requirement is current: the guide may be recommending more than the minimum."
+   }
+  }
+ },
+ "topes": {
+  "fuente": [
+   "tv-guia-3"
+  ],
+  "items": [
+   {
+    "stats": [
+     "patk",
+     "eatk",
+     "allatk",
+     "igdodge",
+     "elem",
+     "hp"
+    ],
+    "tope": null
+   },
+   {
+    "stats": [
+     "rec"
+    ],
+    "tope": 250,
+    "base": 100
+   },
+   {
+    "stats": [
+     "critdmg"
+    ],
+    "tope": 200,
+    "base": 100
+   },
+   {
+    "stats": [
+     "elemres"
+    ],
+    "tope": 200
+   },
+   {
+    "stats": [
+     "aspd",
+     "mspd"
+    ],
+    "tope": 130,
+    "base": 100
+   },
+   {
+    "stats": [
+     "dodge",
+     "crit"
+    ],
+    "tope": 75
+   },
+   {
+    "stats": [
+     "cd",
+     "igdef"
+    ],
+    "tope": 50
+   }
+  ],
+  "notas": [
+   {
+    "es": "Tasa de recuperación, daño crítico, vel. de ataque y vel. de movimiento arrancan en 100%: para la vel. de ataque (tope 130%) alcanza con sumar 30%.",
+    "en": "Recovery Rate, Critical Damage, Attack Speed and Movement Speed start at 100%: Attack Speed (cap 130%) only needs +30% from bonuses."
+   },
+   {
+    "es": "Los personajes están diseñados alrededor del 50% de recarga (el máximo): tenerla en el tope, o muy cerca, es crucial.",
+    "en": "Characters are designed around 50% (max) Skill Cooldown, so it is crucial that it is capped or very close."
+   },
+   {
+    "es": "La prob. de crítico sufre una reducción según el nivel del rival: contá con más o menos la mitad de lo que muestra la pantalla. El tope de 75% se aplica antes de esa reducción. La prob. de crítico garantizada (de algunas pasivas) no sufre la reducción. La evasión tiene la misma reducción y también su versión garantizada.",
+    "en": "Critical Rate is subject to a level-based reduction: assume about half of what the stats page shows. The 75% cap applies before the reduction. Guaranteed Critical Rate (from some passives) escapes it. Dodge has the same reduction and a Guaranteed counterpart."
+   },
+   {
+    "es": "Los buffs con duración de las skills activas no aparecen en la pantalla de stats: si el personaje muestra 50% de crítico y una skill le da 30% más, ya está pasado del tope (80% sobre 75%).",
+    "en": "Timed stat buffs from active skills do not show on the stats page: 50% Critical Rate shown plus a 30% buff is already over cap (80% vs 75%)."
+   },
+   {
+    "es": "Defensa: casi inútil. Vida: solo para quienes escalan su daño con la vida (p. ej. Hulk [Titan], Immortal Hulk, Victorious) o personajes de PvP muy resistentes.",
+    "en": "Defense is largely useless. HP only matters for characters whose damage scales with HP (e.g. Titan Hulk, Immortal Hulk, Victorious) or very tanky PvP characters."
+   },
+   {
+    "es": "El daño elemental es un modificador y los buffs de un mismo elemento se suman entre sí: dos fuentes de daño de fuego rinden menos que una de fuego y otra de daño general.",
+    "en": "Elemental Damage is a modifier and buffs of the same element are additive with each other: two Fire Damage sources yield less than one Fire and one general Damage buff."
+   },
+   {
+    "es": "Resistencias elementales y reducción de duración de debuffs: no son importantes.",
+    "en": "Elemental Resist and Reduce Debuff Duration are not important."
+   }
+  ]
+ },
+ "orden_build": {
+  "fuente": [
+   "tv-guia-3"
+  ],
+  "pasos": [
+   {
+    "es": "Subir a Nv. 6 todas las skills útiles, teniendo en cuenta los buffs de stats que dan.",
+    "en": "Upgrade all useful skills to Level 6, keeping in mind the stat buffs they give."
+   },
+   {
+    "es": "Elegir y equipar un Custom Gear viable (obelisco o C.T.P.).",
+    "en": "Pick a viable Custom Gear and equip it."
+   },
+   {
+    "es": "Rolear uno de los tres sets ISO de ataque y completar su bono de set.",
+    "en": "Roll one of the three Attack ISO sets and activate the Set Bonus."
+   },
+   {
+    "es": "Ajustar con la opción del 4.º gear, los urus y, si se puede, las mejoras de uniforme, hasta llevar al tope los stats más importantes.",
+    "en": "Use the 4th gear option, Urus and potentially Uniform Upgrades to fine-tune stats and cap the most important ones."
+   },
+   {
+    "es": "Con recursos, pasar a Type Enhancement y artefactos.",
+    "en": "Once you have the resources, look into Type Enhancement and Artifacts."
+   }
+  ]
+ },
+ "gear4": {
+  "fuente": [
+   "tv-guia-3",
+   "wiki-gear"
+  ],
+  "prioridad": [
+   "igdef",
+   "aspd",
+   "crit",
+   "critdmg"
+  ],
+  "notas": [
+   {
+    "es": "La 4.ª pieza de gear tiene un stat azul aleatorio que se puede volver a rolear: usalo para el stat más importante que todavía no esté en el tope.",
+    "en": "Every character's 4th gear has a randomised blue stat that can be rerolled: use it for the most important stat that isn't capped yet."
+   },
+   {
+    "es": "Con C.T.P. of Rage, o personajes con mucha evasión propia, puede convenir rolear evasión.",
+    "en": "For C.T.P. of Rage characters, or ones with innately high Dodge, you might want to roll Dodge."
+   }
+  ],
+  "corrobora": {
+   "es": "La wiki confirma que de las cuatro piezas solo el último stat de la 4.ª se puede cambiar.",
+   "en": "The wiki confirms that only the last stat of the 4th gear piece can be changed."
+  }
+ },
+ "urus": {
+  "fuente": [
+   "tv-guia-3",
+   "wiki-uru"
+  ],
+  "reglas": [
+   {
+    "es": "Cada una de las 4 piezas tiene 5 ranuras de uru, que se habilitan del todo con el gear en +20.",
+    "en": "Each of the four gears has 5 Uru slots, fully unlocked at +20."
+   },
+   {
+    "es": "Por pieza, como mucho 2 urus pueden subir el mismo stat: 8 por personaje (2 × 4 piezas).",
+    "en": "Per gear, at most 2 equipped Urus can buff the same stat: 8 per character (2 per gear × 4)."
+   },
+   {
+    "es": "Antes de equipar, amplificar las ranuras: amplificar 4 por pieza es el mejor equilibrio entre stats y oro. En una ranura sin amplificar el uru rinde menos de la mitad.",
+    "en": "Amplify slots before equipping: 4 amplified slots per gear is the accepted balance of stats vs. Gold. An Uru in a non-amplified slot gives less than half the bonus."
+   },
+   {
+    "es": "Urus de 4★ para la mayoría; los de más estrellas u Odin's Blessing, para los personajes que más uses.",
+    "en": "4-Star Urus for most builds; higher ranks or Odin's Blessings for the characters you use most."
+   }
+  ],
+  "ataque": {
+   "es": "Primero, 2 urus del tipo de ataque del personaje en dos ranuras amplificadas de cada pieza: 8 en total.",
+   "en": "First, 2 Urus of the character's attack type in two amplified slots of each gear: 8 in total."
+  },
+  "prioridad": [
+   "cd",
+   "igdef",
+   "aspd",
+   "crit",
+   "critdmg",
+   "hp"
+  ],
+  "prioridad_nota": {
+   "es": "Con el resto de las ranuras, hasta llegar a los topes en este orden (vida solo si todo lo anterior está al tope).",
+   "en": "Fill the other slots up to the caps in this order (HP only once everything before is capped)."
+  },
+  "odin": {
+   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). Solo uno del mismo tipo por pieza.",
+   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). Only one of the same type per gear."
+  },
+  "corrobora": {
+   "es": "La wiki confirma las 5 ranuras por pieza en +20 y el límite de 2 del mismo stat por pieza (8 de 20).",
+   "en": "The wiki confirms 5 slots per gear at +20 and the limit of 2 of the same stat per gear (8 of 20)."
+  }
+ },
+ "iso": {
+  "fuente": [
+   "tv-guia-3",
+   "wiki-iso"
+  ],
+  "piedras": {
+   "blanca": {
+    "nombre": "Powerful",
+    "color": "#b7c9d6",
+    "stats": [
+     "allatk",
+     "patk"
+    ],
+    "es": "En un personaje de energía, que el stat sea \"todos los ataques básicos\": el ataque físico no le sirve.",
+    "en": "On an Energy Attack character make sure it rolls All Basic Attacks: Physical Attack does nothing for them."
+   },
+   "roja": {
+    "nombre": "Amplifying",
+    "color": "#d2332c",
+    "stats": [
+     "allatk",
+     "eatk"
+    ],
+    "es": "En un personaje físico, que el stat sea \"todos los ataques básicos\".",
+    "en": "On a Physical Attack character make sure it rolls All Basic Attacks."
+   },
+   "azul": {
+    "nombre": "Impregnable",
+    "color": "#1c8fc4",
+    "stats": [
+     "alldef",
+     "pdef"
+    ],
+    "es": "Idealmente defensas básicas, aunque no importa mucho.",
+    "en": "Ideally All Basic Defenses, but it doesn't matter much."
+   },
+   "verde": {
+    "nombre": "Absorbing",
+    "color": "#7fcb21",
+    "stats": [
+     "alldef",
+     "edef"
+    ],
+    "es": "Idealmente defensas básicas, aunque no importa mucho.",
+    "en": "Ideally All Basic Defenses, but it doesn't matter much."
+   },
+   "naranja": {
+    "nombre": "Vital",
+    "color": "#d4691c",
+    "stats": [
+     "hp"
+    ],
+    "es": "Solo vida. De los tres sets de ataque, solo Hawk's Eye la usa.",
+    "en": "Only HP. Of the three Attack sets, only Hawk's Eye uses it."
+   },
+   "amarilla": {
+    "nombre": "Fierce",
+    "color": "#d4a81c",
+    "stats": [
+     "crit"
+    ],
+    "es": "Solo prob. de crítico.",
+    "en": "Only Critical Rate."
+   },
+   "violeta": {
+    "nombre": "Nimble",
+    "color": "#8e1cd4",
+    "stats": [
+     "dodge"
+    ],
+    "es": "Solo evasión. Ninguno de los tres sets de ataque la usa.",
+    "en": "Only Dodge. None of the three Attack sets uses it."
+   },
+   "caos": {
+    "nombre": "Chaotic",
+    "color": "linear-gradient(135deg,#ff5c8a,#ffd35c,#5cffb0,#5cc8ff)",
+    "stats": [],
+    "es": "Dos stats: uno ofensivo, que tiene que ser el ataque del personaje, y uno defensivo: vida para casi todos, evasión con C.T.P. of Rage.",
+    "en": "Two stats: an offensive one that should be the character's attack, and a defensive one: HP for most, Dodge for C.T.P. of Rage characters."
+   }
+  },
+  "colores_fuente": {
+   "es": "Los colores de cada piedra salen de los íconos que publica thanosvibs y cierran con la guía: la naranja (Vital) solo está en Hawk's Eye y la violeta (Nimble) en ninguno de los tres sets de ataque.",
+   "en": "Stone colours come from thanosvibs' icons and match the guide: orange (Vital) is only in Hawk's Eye and purple (Nimble) in none of the three Attack sets."
+  },
+  "sets_pve": [
+   {
+    "nombre": "Overdrive",
+    "piedras": [
+     "blanca",
+     "blanca",
+     "roja",
+     "azul",
+     "verde",
+     "amarilla",
+     "caos",
+     "caos"
+    ],
+    "stats": [
+     "allatk",
+     "alldef",
+     "crit",
+     "critdmg",
+     "igdef"
+    ]
+   },
+   {
+    "nombre": "Power of Angry Hulk",
+    "piedras": [
+     "blanca",
+     "roja",
+     "azul",
+     "verde",
+     "amarilla",
+     "caos",
+     "caos",
+     "caos"
+    ],
+    "stats": [
+     "allatk",
+     "aspd",
+     "alldef",
+     "crit",
+     "igdef"
+    ]
+   },
+   {
+    "nombre": "Hawk's Eye",
+    "piedras": [
+     "blanca",
+     "roja",
+     "azul",
+     "verde",
+     "amarilla",
+     "naranja",
+     "caos",
+     "caos"
+    ],
+    "stats": [
+     "allatk",
+     "crit",
+     "critdmg",
+     "dodge",
+     "cd"
+    ]
+   }
+  ],
+  "efecto_pve": {
+   "es": "Los tres dan, con 12% de probabilidad al atacar, +40% a todos los ataques por 20 s (recarga 54 s), además de los cinco stats permanentes.",
+   "en": "All three give, with a 12% chance when attacking, +40% All Attacks for 20 s (54 s cooldown), on top of the five permanent stats."
+  },
+  "efecto_fuente": [
+   "wiki-iso"
+  ],
+  "notas_pve": [
+   {
+    "es": "Hawk's Eye rinde algo menos en el mid-game, pero ayuda mucho si a tus cartas les falta vel. de ataque y recarga. Se puede rolear otro después.",
+    "en": "Hawk's Eye is slightly worse mid-game, but helps a lot if your cards lack Attack Speed and Cooldown. You can reroll it later."
+   },
+   {
+    "es": "Rolear un set cuesta mucho oro: quedate con el primero de los tres que salga. Una vez por ciclo de actualización (unas 5 semanas) hay 50% de descuento en el rerolleo.",
+    "en": "Rolling a set is a huge Gold sink: keep the first of the three you roll. There is a 50% reroll discount once per update cycle (about 5 weeks)."
+   },
+   {
+    "es": "El buff de ataque del set crece con el rango de las piedras (estrellas y estrellas rojas) hasta +40% con las 8 despertadas del todo. También sirve para personajes que escalan con la vida.",
+    "en": "The set attack boost grows with stone rank (stars and red stars) up to +40% with all 8 fully awakened. It also works for characters whose damage scales with HP."
+   }
+  ],
+  "sets_pvp": [
+   {
+    "nombre": "Protect the Captain",
+    "piedras": [
+     "blanca",
+     "roja",
+     "azul",
+     "verde",
+     "naranja",
+     "violeta",
+     "caos",
+     "caos"
+    ],
+    "stats": [
+     "alldef",
+     "hp",
+     "dodge",
+     "rec",
+     "cc"
+    ],
+    "es": "12% al atacar: +40% a todas las defensas por 20 s.",
+    "en": "12% when attacking: +40% All Defenses for 20 s."
+   },
+   {
+    "nombre": "Binary Power",
+    "piedras": [
+     "blanca",
+     "roja",
+     "azul",
+     "azul",
+     "verde",
+     "verde",
+     "naranja",
+     "caos"
+    ],
+    "stats": [
+     "hp",
+     "alldef",
+     "aspd",
+     "crit",
+     "rec"
+    ],
+    "es": "15% al recibir un golpe: escudo del 32% de la vida máxima.",
+    "en": "15% when hit: a shield of 32% of Max HP."
+   },
+   {
+    "nombre": "Drastic Density Enhancement",
+    "piedras": [
+     "blanca",
+     "roja",
+     "azul",
+     "azul",
+     "verde",
+     "violeta",
+     "naranja",
+     "caos"
+    ],
+    "stats": [
+     "allatk",
+     "hp",
+     "critdmg",
+     "cc",
+     "igdef"
+    ],
+    "es": "12% al atacar: escudo del 32% de la vida máxima.",
+    "en": "12% when attacking: a shield of 32% of Max HP."
+   }
+  ],
+  "notas_pvp": [
+   {
+    "es": "Muchos personajes de PvP funcionan igual con los tres sets de ataque; para uno muy resistente sirven Protect the Captain, Binary Power o Drastic Density Enhancement.",
+    "en": "Many PvP characters still work with the three Attack sets; for a really tanky one, Protect the Captain, Binary Power and Drastic Density Enhancement are useful."
+   }
+  ],
+  "composicion_fuente": {
+   "es": "Composición, stats y efecto de cada set: tabla de la wiki. Los tres de ataque coinciden piedra por piedra con la imagen de la guía.",
+   "en": "Composition, stats and effect of each set: the wiki's table. The three Attack sets match the guide's image stone by stone."
+  },
+  "mejora": [
+   {
+    "es": "Potenciar (+1 a +5) sacrificando otras piedras.",
+    "en": "Enhance (+1 to +5) by sacrificing other stones."
+   },
+   {
+    "es": "Combinar dos piedras del mismo color y rango da una de un rango más; queda el stat de la primera.",
+    "en": "Combining two stones of the same colour and rank gives one of the next rank; the first stone's stat persists."
+   },
+   {
+    "es": "Despertar: con una de 6★ en +5 se suman estrellas rojas sacrificando piedras de 6★ o más (1 para la primera, 2 para la segunda...): 21 para despertarla del todo.",
+    "en": "Awaken: a 6-Star at +5 gains red stars by sacrificing 6-Star or higher stones (1 for the first, 2 for the second...): 21 to fully awaken one."
+   }
+  ]
+ },
+ "opciones_uniforme": {
+  "fuente": [
+   "tv-guia-3"
+  ],
+  "notas": [
+   {
+    "es": "Cada mejora de uniforme da +2% a todos los ataques y defensas básicos (+3% en uniformes de costo doble) y revela una opción.",
+    "en": "Each uniform upgrade gives a flat +2% to All Basic Attacks and Defenses (+3% for double-cost uniforms) and reveals an option."
+   },
+   {
+    "es": "La opción de cada rango se habilita si tenés el uniforme asociado a esa opción; mejorar ese otro uniforme sube el valor (en Mythic, el doble que en Normal).",
+    "en": "Each rank's option unlocks if you own the uniform tied to it; upgrading that option uniform increases the boost (twice as much at Mythic as at Normal)."
+   },
+   {
+    "es": "Es un pozo de recursos para una mejora chica: se puede ignorar mientras armás personajes. No compres uniformes solo para habilitar opciones.",
+    "en": "It's a massive resource sink for a minor stat boost: safe to ignore while building characters. Don't buy uniforms just for their options."
+   }
+  ],
+  "rangos": [
+   {
+    "rango": "Advanced",
+    "pool": [
+     "aspd",
+     "mspd",
+     "cd",
+     "cc",
+     "dodge"
+    ],
+    "mejor": [
+     "cd",
+     "aspd",
+     "dodge"
+    ]
+   },
+   {
+    "rango": "Rare",
+    "pool": [
+     "patk",
+     "eatk",
+     "pdef",
+     "edef",
+     "hp"
+    ],
+    "mejor": [
+     "ataque"
+    ]
+   },
+   {
+    "rango": "Heroic",
+    "pool": [
+     "rec",
+     "igdef",
+     "cd",
+     "hp",
+     "aspd"
+    ],
+    "mejor": [
+     "cd",
+     "igdef",
+     "aspd",
+     "hp"
+    ]
+   },
+   {
+    "rango": "Legendary",
+    "pool": [
+     "pdef",
+     "edef",
+     "alldef",
+     "dodge",
+     "mspd"
+    ],
+    "mejor": [
+     "dodge",
+     "alldef"
+    ]
+   },
+   {
+    "rango": "Mythic",
+    "pool": [
+     "patk",
+     "eatk",
+     "allatk",
+     "crit",
+     "critdmg"
+    ],
+    "mejor": [
+     "ataque",
+     "allatk"
+    ]
+   }
+  ],
+  "pvp": {
+   "es": "PvP: evasión en la opción Advanced (y, según la guía, en Heroic) y vida en Heroic (y quizás en Rare en vez de ataque).",
+   "en": "PvP: Dodge on the Advanced (and, per the guide, Heroic) option, and HP on Heroic (and maybe Rare, over Attack)."
+  },
+  "pvp_inconsistencia": {
+   "es": "Ojo: la misma guía lista el pool de Heroic sin evasión (tasa de recuperación, perforación de defensa, recarga, vida, vel. de ataque). La evasión está en Advanced y en Legendary: probablemente quiso decir Legendary.",
+   "en": "Note: the same guide lists the Heroic pool without Dodge (Recovery Rate, Ignore Defense, Skill Cooldown, HP, Attack Speed). Dodge is in Advanced and Legendary: it probably meant Legendary."
+  }
+ },
+ "obelisco": {
+  "fuente": [
+   "tv-guia-3"
+  ],
+  "notas": [
+   {
+    "es": "El Custom Gear es probablemente la parte más importante del armado.",
+    "en": "Custom Gear is arguably the most important part of character building."
+   },
+   {
+    "es": "Obelisco ideal: stat fijo (naranja) de daño crítico, ignorar evasión o daño elemental; el segundo stat es aleatorio; y el proc exacto \"Increases basic damage by x% for 1 attack(s)\".",
+    "en": "Ideal Obelisk: fixed (orange) stat of Critical Damage, Ignore Dodge or Elemental Damage; the second stat is random; and the exact proc \"Increases basic damage by x% for 1 attack(s)\"."
+   },
+   {
+    "es": "Mientras no tengas obeliscos buenos de 6★, uno de 4★ con cualquier proc de daño sirve de reemplazo.",
+    "en": "While good 6-Star Obelisks are scarce, a 4-Star Obelisk with any damage proc works as a placeholder."
+   },
+   {
+    "es": "El \"mini rage\" (aumento de daño por 5 s según prob. de crítico o evasión) queda muy por debajo del C.T.P. of Rage; solo conviene en personajes poco \"proc-friendly\".",
+    "en": "The \"Mini Rage\" (5 s damage increase based on Critical or Dodge Rate) is far inferior to C.T.P. of Rage; only worth it on characters that are not proc-friendly."
+   }
+  ],
+  "pvp": {
+   "es": "PvP: vida en el stat fijo e invencibilidad en vez del proc de daño; aunque varios personajes baratos de PvP andan bien con un obelisco de PvE.",
+   "en": "PvP: HP on the fixed stat and Invincibility instead of the damage proc; though several cheap PvP characters work fine with a standard PvE Obelisk."
+  }
+ },
+ "ctp_ranking": {
+  "fuente": [
+   "tv-guia-4",
+   "tv-ctps"
+  ],
+  "grupos": [
+   {
+    "id": "pve",
+    "ctps": [
+     "rage",
+     "competition",
+     "judgement",
+     "energy",
+     "destruction"
+    ],
+    "es": "Para PvE, sin orden: cuál conviene depende del personaje y del modo. Destruction tiene que estar reforjado para ser bueno.",
+    "en": "For PvE, in no particular order: the ideal one depends on the character and the mode. Destruction needs to be reforged to be good."
+   },
+   {
+    "id": "pvp",
+    "ctps": [
+     "conquest",
+     "authority",
+     "refinement",
+     "regeneration",
+     "transcendence"
+    ],
+    "es": "Para PvP, tampoco en orden estricto (los primeros suelen servir más). Los de PvP ganan mucho reforjados: la guía asume que lo están.",
+    "en": "For PvP, not strictly ordered (the top ones are usually more useful). PvP C.T.P.s gain a lot from Reforging: the guide assumes they are."
+   },
+   {
+    "id": "otros",
+    "ctps": [
+     "greed",
+     "insight",
+     "liberation",
+     "veteran"
+    ],
+    "es": "Otros: no entran en PvE ni en PvP pero son útiles (en orden alfabético). Insight y Liberation son para soportes.",
+    "en": "Other: they don't fit PvE or PvP strictly but are still useful (alphabetical). Insight and Liberation are for supports."
+   },
+   {
+    "id": "inutil",
+    "ctps": [
+     "patience"
+    ],
+    "es": "Inútil: los obeliscos con proc de daño suelen ser mejores.",
+    "en": "Useless: damage proc Obelisks are usually better."
+   }
+  ],
+  "soportes": {
+   "es": "La Ideal CTP List (CrisisCardio) sugiere repartir Insight y Liberation entre los soportes de cada par, uno de cada uno.",
+   "en": "The Ideal CTP List (CrisisCardio) suggests splitting Insight and Liberation across each pair of supports, one of each."
+  }
+ },
+ "equipos": {
+  "fuente": [
+   "tv-guia-4"
+  ],
+  "pve": [
+   {
+    "es": "En PvE el equipo es \"líder / principal / soporte\": se arma para maximizar el daño de un solo principal (el DPS), con un líder y un soporte que lo potencian.",
+    "en": "In PvE, teams are \"lead / main / support\": built to maximise the damage of a single Main (the DPS) through a Lead and a Support that augment it."
+   },
+   {
+    "es": "Los soportes aplican su pasiva en cualquier lugar del equipo; el liderazgo solo en el lugar de líder. Un personaje con buen liderazgo y buen soporte (p. ej. Sif) en el lugar de líder aplica las dos cosas.",
+    "en": "Support passives always apply regardless of slot; leadership only in the Lead slot. A character with a good lead and a good support (e.g. Sif) in the Lead slot applies both."
+   },
+   {
+    "es": "El líder entra primero a la pelea; para arrancar con otro, usá \"Set Dealer\".",
+    "en": "The leader enters the fight first; to start with a non-leader, use \"Set Dealer\"."
+   },
+   {
+    "es": "Con restricciones duras y pocos soportes buenos, a veces conviene llevar dos principales y alternarlos; al menos uno suele ser Trascendido, porque su 6.ª skill se recarga fuera de la pelea (la de los Tier-3 no).",
+    "en": "With tight restrictions and few good supports it can be better to bring two mains and swap; at least one is usually Transcended, since their 6th skill cools down while tagged out (Tier-3s' don't)."
+   }
+  ],
+  "pvp": [
+   {
+    "es": "En PvP pesan la defensa: reducción de daño, vida y evasión. La inmunidad a debuffs es crucial: si el principal no la tiene, se suma un líder o soporte que la dé.",
+    "en": "PvP teams focus on defense: damage reduction, HP and Dodge. Debuff Immunity is crucial: if the Main lacks it, a Lead or Support provides it."
+   },
+   {
+    "es": "En PvP es más común llevar dos o tres principales.",
+    "en": "In PvP it is more common to run two or even three Mains."
+   }
+  ],
+  "tematicos": {
+   "es": "Los bonos de equipo casi no importan frente a un buen líder y soporte; un equipo temático solo conviene cuando el líder o el soporte potencian un atributo del principal (p. ej. Warriors of the Sky).",
+   "en": "Team bonuses hardly matter compared to a good Lead and Support; thematic teams are only good when the Lead/Support buffs an attribute of the Main (e.g. Warriors of the Sky)."
+  }
+ },
+ "skills": {
+  "fuente": [
+   "tv-guia-3"
+  ],
+  "notas": [
+   {
+    "es": "Subí solo las skills cuyos buffs o debuffs crecen en porcentaje o en duración con el nivel (suelen ser la 3, la 4 y la 5).",
+    "en": "Only upgrade skills whose buffs or debuffs scale by percentage or duration with level (usually skills 3, 4 and 5)."
+   },
+   {
+    "es": "No suben los daños por tiempo (sangrado, electrocución, quemadura...): aunque crecen, no sirven.",
+    "en": "Don't upgrade damage-over-time debuffs (Bleed, Shock, Burn...): they scale but are useless."
+   },
+   {
+    "es": "El porcentaje de daño de una skill nunca cambia con el nivel; solo sube el daño adicional plano, que queda eclipsado.",
+    "en": "A skill's damage percentage never changes with level; only the flat Additional Damage increases, and it is eclipsed."
+   }
+  ]
+ },
+ "rotaciones": {
+  "fuente": [
+   "tv-guia-5",
+   "tv-rot"
+  ],
+  "leyenda": [
+   {
+    "k": "1–7",
+    "es": "Número de skill (6: la de Tier-3 o Potencial Despertado; 7: la de Tier-4 cuando la hay).",
+    "en": "Skill number (6: the Tier-3 / Awakened skill; 7: the Tier-4 one where it exists)."
+   },
+   {
+    "k": "c",
+    "es": "Cancelación instantánea: pasar a la skill siguiente lo antes posible.",
+    "en": "Instant cancel: chain into the next skill as fast as you can."
+   },
+   {
+    "k": "qc",
+    "es": "Cancelación rápida: a más o menos medio segundo (depende de tu vel. de ataque).",
+    "en": "Quick cancel: after about half a second (depends on your Attack Speed)."
+   },
+   {
+    "k": "dc",
+    "es": "Cancelación demorada: esperar la animación; la nota dice en qué momento.",
+    "en": "Delayed cancel: wait for the animation; the note says when."
+   },
+   {
+    "k": "h",
+    "es": "Mantener o cargar la skill antes de soltarla.",
+    "en": "Hold or charge the skill before releasing."
+   },
+   {
+    "k": "kite",
+    "es": "Moverse esquivando durante la skill.",
+    "en": "Dodge-move during the skill."
+   },
+   {
+    "k": "coop",
+    "es": "Tocar el botón de co-op.",
+    "en": "Press the co-op button."
+   },
+   {
+    "k": "**…**",
+    "es": "Tramo en negrita: el del proc; la última skill en negrita es la que tiene que procear.",
+    "en": "Bold section: the proc part; the last bold skill is the one to proc on."
+   },
+   {
+    "k": "(…)",
+    "es": "Entre paréntesis: paso que se hace si está disponible, como la 6 cuando está cargada (en el ejemplo de la guía \"3dc5qc4(c6)\" se procea en la 4 o en la 6).",
+    "en": "In parentheses: a step done if available, like skill 6 when charged (in the guide's example \"3dc5qc4(c6)\" you proc on either 4 or 6)."
+   }
+  ],
+  "categorias": {
+   "General": {
+    "es": "General",
+    "en": "General"
+   },
+   "Proc": {
+    "es": "Proc",
+    "en": "Proc"
+   },
+   "Rage": {
+    "es": "Rage (C.T.P. of Rage)",
+    "en": "Rage (C.T.P. of Rage)"
+   }
+  },
+  "nota": {
+   "es": "Las rotaciones las compila la comunidad de thanosvibs; la guía pide ignorar los \"combos\" del juego porque suelen ser imprecisos.",
+   "en": "Rotations are compiled by the thanosvibs community; the guide advises ignoring the in-game \"skill combos\" as they are largely inaccurate."
+  }
+ }
+}
