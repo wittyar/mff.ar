@@ -3,6 +3,8 @@
 import json, os, datetime
 # skills_api.py deja work/skills_parsed.json; _core.py lo consume y deja work/build2.json
 import subprocess, sys
+# Los módulos del pipeline (dominio, version_juego) viven al lado de este script.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Sin los insumos de fetch_all no hay nada que construir. Se avisa en una linea en vez
 # de reventar con un traceback: este script lo corre la app de escritorio y el texto
 # va directo a la pantalla del usuario.
@@ -28,7 +30,6 @@ for c in FUENTES['ctps']:
     images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
 for a in FUENTES['artefactos']:
     images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima
 hoy = datetime.date.today()
 gv = ultima(json.load(open('work/updates.json')), hoy)[1]
