@@ -11,6 +11,7 @@ Uso:
 Las partes se pueden pedir sueltas para que cada boton de Ajustes actualice solo lo suyo.
 Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       work/skills_api/*.json, work/uniforms.json, work/ctps.json, work/artifacts.json,
+      work/abxl.json, work/supports.json, work/rotations.json, work/guia/*,
       work/wikitext/*.json, images/icons/*.png (insumo del build), images/*.png (los
       retratos) e images/items/*.png (íconos de C.T.P.s y artefactos)."""
 import glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
@@ -115,13 +116,16 @@ if HACER_DATOS:
     json.dump(get_json(TV + '/api/updates'), open('work/updates.json', 'w'))
     print('actualizaciones:', len(json.load(open('work/updates.json'))), 'versiones mayores')
 
-    # 3d) C.T.P.s, artefactos, Alliance Battle y la Beginner's Guide (los transforma
-    # scripts/fuentes.py)
+    # 3d) C.T.P.s, artefactos, Alliance Battle, soportes, rotaciones y la Beginner's
+    # Guide (los transforma scripts/fuentes.py)
     json.dump(get_json(TV + '/api/ctps'), open('work/ctps.json', 'w'))
     json.dump(get_json(TV + '/api/artifacts'), open('work/artifacts.json', 'w'))
     json.dump(get_json(TV + '/api/abxl-data'), open('work/abxl.json', 'w'))
+    json.dump(get_json(TV + '/api/supports'), open('work/supports.json', 'w'))
+    json.dump(get_json(TV + '/api/rotations/default'), open('work/rotations.json', 'w'))
     print('ctps:', len(json.load(open('work/ctps.json'))), '| artefactos:', len(json.load(open('work/artifacts.json'))),
-          '| alliance battle:', len(json.load(open('work/abxl.json'))['teams']), 'equipos')
+          '| alliance battle:', len(json.load(open('work/abxl.json'))['teams']), 'equipos',
+          '| soportes:', len(json.load(open('work/supports.json'))), '| rotaciones:', len(json.load(open('work/rotations.json'))))
     os.makedirs('work/guia', exist_ok=True)
     json.dump(get_json(TV + '/api/beginners/changelog'), open('work/guia/changelog.json', 'w'))
     for parte in range(1, 6):

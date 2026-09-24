@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # va directo a la pantalla del usuario.
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
                        'work/updates.json', 'work/ctps.json', 'work/artifacts.json', 'work/abxl.json',
+                       'work/supports.json', 'work/rotations.json',
                        'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
            if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
@@ -84,11 +85,14 @@ window.MFF_sk = sk;
  'window.MFF_SKILLS = ' + json.dumps(SKILLS, ensure_ascii=False) + ';\n',
  'window.MFF_TABLAS = ' + json.dumps(TABLAS, ensure_ascii=False) + ';\n',
  'window.MFF_BUFFS = ' + json.dumps(BUFFS, ensure_ascii=False) + ';\n',
- '// C.T.P.s, artefactos, Alliance Battle, guía y modos (scripts/fuentes.py y scripts/contenido/).\n',
+ '// C.T.P.s, artefactos, Alliance Battle, soportes, rotaciones, guía y modos\n'
+ '// (scripts/fuentes.py y scripts/contenido/).\n',
  'window.MFF_CTPS = ' + json.dumps(FUENTES['ctps'], ensure_ascii=False) + ';\n',
  'window.MFF_ARTEFACTOS = ' + json.dumps(FUENTES['artefactos'], ensure_ascii=False) + ';\n',
  'window.MFF_ABX = ' + json.dumps(FUENTES['abx'], ensure_ascii=False) + ';\n',
  'window.MFF_CANCELS = ' + json.dumps(FUENTES['cancels'], ensure_ascii=False) + ';\n',
+ 'window.MFF_SOPORTES = ' + json.dumps(FUENTES['soportes'], ensure_ascii=False) + ';\n',
+ 'window.MFF_ROTACIONES = ' + json.dumps(FUENTES['rotaciones'], ensure_ascii=False) + ';\n',
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',
  'window.MFF_GUIA = ' + json.dumps({**FUENTES['guia'], 'version_fuente': FUENTES['version_guia_fuente']}, ensure_ascii=False) + ';\n',
  'window.MFF_MODOS = ' + json.dumps(FUENTES['modos'], ensure_ascii=False) + ';\n',

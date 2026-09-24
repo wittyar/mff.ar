@@ -918,6 +918,15 @@
   "soportes": {
    "es": "La Ideal CTP List (CrisisCardio) sugiere repartir Insight y Liberation entre los soportes de cada par, uno de cada uno.",
    "en": "The Ideal CTP List (CrisisCardio) suggests splitting Insight and Liberation across each pair of supports, one of each."
+  },
+  "lista_ideal": {
+   "id": "tv-proj-1787289919119-spoe2",
+   "nombre": "Ideal CTP List (CrisisCardio)",
+   "es": "Una fila por C.T.P.: el que su autor considera ideal para cada personaje (lista de la comunidad, no de la guía).",
+   "en": "One row per C.T.P.: the one its author considers ideal for each character (community list, not the guide).",
+   "fuente": [
+    "tv-listas"
+   ]
   }
  },
  "equipos": {
