@@ -41,6 +41,11 @@ ORDEN = ['Leader Skill', 'Passive', 'Tier-2 Passive', 'Uniform Passive',
 # y Burn en Extreme; Snare, Shock y Fracture en Legend). Se guarda aparte: tomarla como
 # skill creaba un slot "cancels" sin nombre ni etapas.
 NO_SKILLS = {'cancels'}
+# La fuente pone recarga 1 (o 0) a las skills que no se recargan por tiempo sino con
+# una barra: la Definitiva de Tier-3 (barra de ult) y la Striker Skill (barra de
+# striker). La Definitiva de los Trascendidos sí trae su recarga real (40 a 60 s). Se
+# guardan sin recarga en vez de mostrar "CD 1s".
+CON_BARRA = {'Active Ult', 'Striker Skill'}
 
 def limpio(txt):
     return re.sub(r'\s{2,}', ' ', BOLD.sub('', txt or '')).strip()
@@ -78,7 +83,7 @@ def main():
          'name': Tabla(traducir.traducir_skill)}
     salida, buffs, cancels = {}, {}, {}
     desconocidas = {}
-    n_sk = n_st = n_fx = 0
+    n_sk = n_st = n_fx = n_barra = 0
 
     def efecto(a):
         d = limpio(a.get('description'))
@@ -116,7 +121,11 @@ def main():
         lista = []
         for tipo in [t for t in ORDEN if t in sk]:
             s = sk[tipo]
-            out = {'sl': tipo, 'n': T['name'].id(s.get('name')), 'cd': s.get('cooldown'),
+            cd = s.get('cooldown')
+            if tipo in CON_BARRA and cd is not None and cd <= 1:
+                cd = None
+                n_barra += 1
+            out = {'sl': tipo, 'n': T['name'].id(s.get('name')), 'cd': cd,
                    'st': [etapa(x) for x in s.get('stages', [])]}
             if s.get('ult_charge') is not None: out['ult'] = s['ult_charge']
             if s.get('striker_charge') is not None: out['stk'] = s['striker_charge']
@@ -138,7 +147,7 @@ def main():
         json.dump(sorted(t.faltan), open(f'work/sin_traducir_{k}.json', 'w'), ensure_ascii=False, indent=1)
     tam = os.path.getsize('work/skills_parsed.json') / 1024 / 1024
     print(f'portraits: {len(salida)} | skills: {n_sk} | etapas: {n_st} | efectos: {n_fx} | {tam:.1f} MB'
-          f' | con cancels: {len(cancels)}')
+          f' | con cancels: {len(cancels)} | de barra, sin recarga: {n_barra}')
     print('tablas: ' + ' | '.join(f'{k} {len(t.filas)}' for k, t in T.items()))
     faltan = {k: len(t.faltan) for k, t in T.items() if t.faltan}
     print('sin traducir:', faltan or 'nada')

@@ -377,6 +377,8 @@ const T = {
   c_instinct:        { es:'Instinto',            en:'Instinct' },
   c_roles:           { es:'Roles',               en:'Roles' },
   c_striker:         { es:'Striker',             en:'Striker' },
+  sk_bar_ult:        { es:'se carga con la barra de ult', en:'charged by the ult bar' },
+  sk_bar_stk:        { es:'se carga con la barra de striker', en:'charged by the striker bar' },
   c_worldboss:       { es:'World Boss',          en:'World Boss' },
   c_skills:          { es:'Skills',              en:'Skills' },
   c_list:            { es:'Lista',               en:'List' },
@@ -1032,6 +1034,7 @@ function skillCard (sk, portrait) {
 
   const cargas = [];
   if (sk.cd) cargas.push(`<span class="tag dim">CD ${h(sk.cd)}s</span>`);
+  else if (sk.sl === 'Active Ult' || sk.sl === 'Striker Skill') cargas.push(`<span class="tag dim">${h(t(sk.sl === 'Active Ult' ? 'sk_bar_ult' : 'sk_bar_stk'))}</span>`);
   if (sk.ult != null) cargas.push(`<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>`);
   if (sk.stk != null) cargas.push(`<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>`);
 
