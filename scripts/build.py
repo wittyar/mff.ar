@@ -7,7 +7,7 @@ import subprocess, sys
 # de reventar con un traceback: este script lo corre la app de escritorio y el texto
 # va directo a la pantalla del usuario.
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
-                       'work/gen_versions.json') if not os.path.exists(f)]
+                       'work/updates.json') if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
     _faltan.append('work/skills_api/')
 if _faltan:
@@ -20,7 +20,10 @@ exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 b = json.load(open('work/build2.json'))
 chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
 vocab, SKILLS, TABLAS, BUFFS = b['vocab'], b['skills'], b['tablas'], b['buffs']
-gv = json.load(open('work/gen_versions.json'))[0]['gameVersion']
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from version_juego import ultima
+hoy = datetime.date.today()
+gv = ultima(json.load(open('work/updates.json')), hoy)[1]
 ABIL_VALUES = sorted({a for c in chars for a in c['abilities']})
 SEED = {
  'CLASSES': ['Combate','Detonación','Velocidad','Universal'],
@@ -39,7 +42,7 @@ SEED = {
  'FACTIONS': ['Superhéroe','Supervillano','Neutral'],
  'CLASS_ADVANTAGE': {'Combate':'Velocidad','Velocidad':'Detonación','Detonación':'Combate','Universal':None}
 }
-hoy = datetime.date.today().isoformat()
+hoy = hoy.isoformat()
 # Version del juego y fecha del snapshot, como dato de la app (no solo como comentario):
 # la app de escritorio las compara contra thanosvibs para avisar si hay una mas nueva.
 VERSION = {'juego': gv, 'generado': hoy}

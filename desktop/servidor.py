@@ -8,10 +8,12 @@ expone los botones de Ajustes como endpoints que ejecutan el pipeline de siempre
 
 Solo biblioteca estandar, para que corra con el Python embebido que viaja en la carpeta.
 """
-import json, os, re, socket, subprocess, sys, threading, urllib.parse, urllib.request, webbrowser
+import json, os, re, socket, subprocess, sys, threading, urllib.request, webbrowser
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(RAIZ, 'scripts'))
+from version_juego import ultima
 PY = sys.executable
 PUERTO_PREFERIDO = 8731
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
@@ -78,7 +80,7 @@ REMOTA = {'juego': None, 'error': None}
 
 # 'tierlists' regenera data.js, y para eso el build necesita los insumos que deja la
 # sincronizacion de datos. En un paquete recien descomprimido no estan.
-INSUMOS = ('work/characters.json', 'work/instintos.json', 'work/uniforms.json', 'work/gen_versions.json')
+INSUMOS = ('work/characters.json', 'work/instintos.json', 'work/uniforms.json', 'work/updates.json')
 def pipeline_listo():
     if any(not os.path.exists(os.path.join(RAIZ, f)) for f in INSUMOS):
         return False
@@ -96,15 +98,11 @@ def version_local():
         return {}
 
 def consultar_version_remota():
-    """La version de juego que publica thanosvibs, para avisar si hay una mas nueva."""
+    """La version de juego que publica thanosvibs, para avisar si hay una mas nueva.
+    Sale de /api/updates con la misma regla que usa build.py (version_juego.py)."""
     try:
-        req = urllib.request.Request('https://thanosvibs.money/api/tierlists/projects', headers=UA)
-        proyectos = json.loads(urllib.request.urlopen(req, timeout=25).read())
-        gen = next(p for p in proyectos if 'General Tier List' in p['title'])
-        req = urllib.request.Request(
-            'https://thanosvibs.money/api/tierlists/projects/' + urllib.parse.quote(gen['id']) + '/versions',
-            headers=UA)
-        REMOTA['juego'] = json.loads(urllib.request.urlopen(req, timeout=25).read())[0]['gameVersion']
+        req = urllib.request.Request('https://thanosvibs.money/api/updates', headers=UA)
+        REMOTA['juego'] = ultima(json.loads(urllib.request.urlopen(req, timeout=25).read()))[1]
     except Exception as e:
         REMOTA['error'] = str(e)
 

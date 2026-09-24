@@ -3,7 +3,6 @@ d = json.load(open('work/characters.json'))
 inst = json.load(open('work/instintos.json'))
 SK = json.load(open('work/skills_parsed.json'))       # skills por retrato + tablas de texto
 UNI = json.load(open('work/uniforms.json'))           # costos y materiales por uniforme
-ver = json.load(open('work/gen_versions.json'))[0]
 # Cada lista de thanosvibs define sus propias filas rotuladas ("Meta", "T4 / s",
 # "strikers"...). No son rangos S-D: aplastarlas a S-D renombraba un striker top
 # como "D". Se importan con sus filas tal cual y el orden de la fuente.

@@ -9,7 +9,7 @@ Uso:
   python scripts/fetch_all.py --no-portraits  # todo menos los retratos (lo que usa el CI)
 
 Las partes se pueden pedir sueltas para que cada boton de Ajustes actualice solo lo suyo.
-Deja: work/characters.json, work/gen_versions.json, work/tierlists/*.json,
+Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       work/skills_api/*.json, work/uniforms.json, work/wikitext/*.json,
       images/icons/*.png (insumo del build) e images/*.png (los retratos)."""
 import json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
@@ -44,8 +44,7 @@ print('characters:', len(chars), 'filas')
 
 
 if HACER_TIERLISTS:
-    # 2) tier lists (por titulo, no por id hardcodeado). La general va aparte por
-    # compatibilidad con work/gen_versions.json; las demas quedan en work/tierlists/.
+    # 2) tier lists (por titulo, no por id hardcodeado), en work/tierlists/.
     # Son listas de autor: cada una trae sus propias filas rotuladas, que se respetan
     # tal cual (ver _core.py). Si alguna cambia de titulo, el fetch avisa y sigue.
     # (slug, título en thanosvibs, nombre ES en la app, nombre EN en la app)
@@ -68,8 +67,6 @@ if HACER_TIERLISTS:
         v0 = vers[0]
         json.dump({'slug': slug, 'title': title, 'name_es': es, 'name_en': en, 'order': i, 'version': v0},
                   open(f'work/tierlists/{slug}.json', 'w'))
-        if slug == 'tv-general':
-            json.dump(vers, open('work/gen_versions.json', 'w'))
         print('tier list:', title, '| juego', v0['gameVersion'], '| autor', v0.get('author'),
               '| filas', len(v0.get('tiers', [])))
 
@@ -96,6 +93,10 @@ if HACER_DATOS:
     # 3b) costos y materiales de cada uniforme
     json.dump(get_json(TV + '/api/uniforms'), open('work/uniforms.json', 'w'))
     print('uniformes:', len(json.load(open('work/uniforms.json'))), 'con costos y materiales')
+
+    # 3c) actualizaciones del juego: de acá sale la versión del snapshot (version_juego.py)
+    json.dump(get_json(TV + '/api/updates'), open('work/updates.json', 'w'))
+    print('actualizaciones:', len(json.load(open('work/updates.json'))), 'versiones mayores')
 
 
 if HACER_DATOS:
