@@ -19,7 +19,9 @@ PY_URL = f'https://www.python.org/ftp/python/{PY_VER}/python-{PY_VER}-embed-amd6
 CACHE = os.path.join(RAIZ, 'work', f'python-{PY_VER}-embed-amd64.zip')
 
 APP = ['index.html', 'app.js', 'styles.css', 'data.js', 'MFF.bat', 'README.md']
-CARPETAS = ['scripts', 'desktop']
+# docs/ lleva el informe de auditoría que enlaza cada ficha: sin él, el enlace queda
+# roto hasta la primera sincronización.
+CARPETAS = ['scripts', 'desktop', 'docs']
 
 def bajar_python():
     if os.path.exists(CACHE):
