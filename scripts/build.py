@@ -7,7 +7,7 @@ import subprocess, sys
 # de reventar con un traceback: este script lo corre la app de escritorio y el texto
 # va directo a la pantalla del usuario.
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
-                       'work/updates.json') if not os.path.exists(f)]
+                       'work/updates.json', 'work/ctps.json', 'work/artifacts.json') if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
     _faltan.append('work/skills_api/')
 if _faltan:
@@ -15,11 +15,19 @@ if _faltan:
                      '\nCorre primero: python scripts/fetch_all.py --datos'
                      '  (o el boton "Actualizar datos del juego" en Ajustes)')
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'fuentes.py')], check=True)
 exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 
 b = json.load(open('work/build2.json'))
 chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
 vocab, SKILLS, TABLAS, BUFFS = b['vocab'], b['skills'], b['tablas'], b['buffs']
+FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
+# Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
+# que los retratos; si falta el archivo la app muestra el nombre sin ícono.
+for c in FUENTES['ctps']:
+    images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
+for a in FUENTES['artefactos']:
+    images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima
 hoy = datetime.date.today()
@@ -78,6 +86,9 @@ window.MFF_sk = sk;
  'window.MFF_SKILLS = ' + json.dumps(SKILLS, ensure_ascii=False) + ';\n',
  'window.MFF_TABLAS = ' + json.dumps(TABLAS, ensure_ascii=False) + ';\n',
  'window.MFF_BUFFS = ' + json.dumps(BUFFS, ensure_ascii=False) + ';\n',
+ '// C.T.P.s y artefactos (scripts/fuentes.py).\n',
+ 'window.MFF_CTPS = ' + json.dumps(FUENTES['ctps'], ensure_ascii=False) + ';\n',
+ 'window.MFF_ARTEFACTOS = ' + json.dumps(FUENTES['artefactos'], ensure_ascii=False) + ';\n',
  'window.MFF_TEAM_SUGGESTIONS = [];\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
  'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',

@@ -10,8 +10,9 @@ Uso:
 
 Las partes se pueden pedir sueltas para que cada boton de Ajustes actualice solo lo suyo.
 Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
-      work/skills_api/*.json, work/uniforms.json, work/wikitext/*.json,
-      images/icons/*.png (insumo del build) e images/*.png (los retratos)."""
+      work/skills_api/*.json, work/uniforms.json, work/ctps.json, work/artifacts.json,
+      work/wikitext/*.json, images/icons/*.png (insumo del build), images/*.png (los
+      retratos) e images/items/*.png (íconos de C.T.P.s y artefactos)."""
 import glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
@@ -114,6 +115,11 @@ if HACER_DATOS:
     json.dump(get_json(TV + '/api/updates'), open('work/updates.json', 'w'))
     print('actualizaciones:', len(json.load(open('work/updates.json'))), 'versiones mayores')
 
+    # 3d) C.T.P.s y artefactos (los transforma scripts/fuentes.py)
+    json.dump(get_json(TV + '/api/ctps'), open('work/ctps.json', 'w'))
+    json.dump(get_json(TV + '/api/artifacts'), open('work/artifacts.json', 'w'))
+    print('ctps:', len(json.load(open('work/ctps.json'))), '| artefactos:', len(json.load(open('work/artifacts.json'))))
+
 
 if HACER_DATOS:
     # 4) resolucion de titulos de wiki. La wiki ya NO aporta skills: se usa solo para el
@@ -165,6 +171,25 @@ if HACER_IMAGENES:
         except Exception as e: print('AVISO retrato fallo:', p, e)
     with ThreadPoolExecutor(6) as ex: list(ex.map(getp, ports))
     print('retratos:', len([f for f in os.listdir('images') if f.endswith('.png')]))
+
+    # Íconos de C.T.P.s y de artefactos: arte de terceros como los retratos. Salen de los
+    # insumos que baja --datos, así que se omiten si todavía no se bajaron.
+    os.makedirs('images/items', exist_ok=True)
+    items = []
+    if os.path.exists('work/ctps.json'):
+        items += ['ctp_' + re.sub(r'[^a-z0-9]', '', c['name'].lower()) for c in json.load(open('work/ctps.json'))]
+    if os.path.exists('work/artifacts.json'):
+        items += ['artifact_' + a['portrait'] for a in json.load(open('work/artifacts.json'))]
+    def geti_item(n):
+        fn = f'images/items/{n}.png'
+        if os.path.exists(fn): return
+        try:
+            data = get(f'{TV}/images/items/{n}.png')
+            if data[:4] == b'\x89PNG': open(fn, 'wb').write(data)
+            else: print('AVISO ícono de ítem no es PNG:', n)
+        except Exception as e: print('AVISO ícono de ítem fallo:', n, e)
+    with ThreadPoolExecutor(6) as ex: list(ex.map(geti_item, items))
+    print('íconos de ítems:', len(os.listdir('images/items')))
 
 
 if HACER_DATOS:
