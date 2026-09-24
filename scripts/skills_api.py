@@ -62,6 +62,10 @@ class Tabla:
         if clave in self.idx: return self.idx[clave]
         es = self.tr(clave)
         if es is None: self.faltan.add(clave)
+        elif self.por_patron and es.count('#') != clave.count('#'):
+            # La app reinyecta los números en orden: un '#' de más o de menos mostraría
+            # una cifra equivocada. Es un error de la tabla y corta el build.
+            raise SystemExit(f'traducción con otra cantidad de "#" que el original\n  en: {clave!r}\n  es: {es!r}')
         fila = {'en': clave, 'es': es}
         if self.por_patron:
             m = DMG_HEAD.match(clave)

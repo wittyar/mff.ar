@@ -91,7 +91,7 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
     characters.append({
         'id': cid, 'name': base['character'], 'c': TYPE[base['type']], 'f': SIDE[base['side']],
         'r': derive_roles(sets), 'ins': ins, 'race': ALLIES[base['allies']],
-        'gender': GENDER[base['gender']], 't': tier_of(base), 'modes': [],
+        'gender': GENDER[base['gender']], 't': tier_of(base),
         'abilities': [ABIL[a] for a in base['ability']], 'origin': ORIGIN[base['original']],
         'tuc': base.get('tuc', []), 'stats': base.get('stats', {}),
         'striker': base['striker_skill'], 'wba': ABIL[base['world_boss_ability']],

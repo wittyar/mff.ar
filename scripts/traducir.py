@@ -1,96 +1,51 @@
 #!/usr/bin/env python3
-"""Capa de traducción al español. Separada del parser a propósito: parse_skills.py
-decide estructura (a quién le pega cada efecto) y guarda el inglés crudo de la wiki;
-acá se traduce, sin inventar.
+"""Tablas de traducción de las skills (inglés -> español), que usa skills_api.py.
 
 Cómo funciona
 -------------
-Una línea de efecto se normaliza reemplazando cada número por '#'. Ese patrón se
-busca en traducciones/efectos.json, que mapea patrón inglés -> patrón español con
-los mismos '#'. Al aplicar, los números originales se reinyectan en orden.
+Una descripción de efecto se normaliza reemplazando cada número por '#'. Ese patrón
+se busca en traducciones/efectos.json, que mapea patrón inglés -> patrón español con
+los mismos '#'. La app reinyecta los números en orden al mostrarlo.
 
     "Physical Damage 152% of Physical Attack."
       -> patrón  "Physical Damage #% of Physical Attack."
       -> español "Daño físico #% del ataque físico."
-      -> salida  "Daño físico 152% del ataque físico."
+      -> en la app "Daño físico 152% del ataque físico."
 
-Así una traducción cubre todas las variantes numéricas, incluidas las que aparezcan
-en futuras versiones del juego. Si un patrón no está, la función devuelve None: la
-app muestra el inglés marcado. Nunca se devuelve una traducción aproximada.
+Así una traducción cubre todas las variantes numéricas, incluidas las de futuras
+versiones del juego. Si un patrón no está, no hay traducción: la app muestra el
+inglés marcado y el build lo lista. Nunca se usa una traducción aproximada.
 """
 import json, os, re
 
 _DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'traducciones')
 NUM = re.compile(r'\d+(?:\.\d+)?')
 
+
 def _cargar(nombre):
-    ruta = os.path.join(_DIR, nombre)
-    if not os.path.exists(ruta):
-        return {}
-    with open(ruta, encoding='utf-8') as f:
+    # Las tablas están en el repo: si falta una, es un error, no "todo sin traducir".
+    with open(os.path.join(_DIR, nombre), encoding='utf-8') as f:
         return json.load(f)
 
-EFECTOS     = _cargar('efectos.json')      # patrón de descripción inglés -> español
-SKILLS      = _cargar('skills.json')       # nombre de skill inglés -> español
-ETIQUETAS   = _cargar('etiquetas.json')    # etiqueta de efecto ("STUN") -> español
-ELEMENTOS   = _cargar('elementos.json')    # elemento de daño ("Energy Fire") -> español
-OBJETIVOS   = _cargar('objetivos.json')    # target de la etapa -> español
-ACTIVACIONES= _cargar('activaciones.json') # activation de la etapa -> español
 
-# El tipo de skill lo define la API con un conjunto cerrado de valores.
-SLOT_ES = {
- 'Leader Skill':'Liderazgo', 'Passive':'Pasiva', 'Tier-2 Passive':'Pasiva T2',
- 'Uniform Passive':'Pasiva de uniforme', 'Striker Skill':'Striker', 'Active Ult':'Definitiva',
- **{f'Active {i}': f'Activa {i}' for i in range(1, 12)},
-}
-SLOT_EN = {k: k for k in SLOT_ES}
+EFECTOS      = _cargar('efectos.json')      # patrón de descripción inglés -> español
+SKILLS       = _cargar('skills.json')       # nombre de skill inglés -> español
+ETIQUETAS    = _cargar('etiquetas.json')    # etiqueta de efecto ("STUN") -> español
+ELEMENTOS    = _cargar('elementos.json')    # elemento de daño ("Energy Fire") -> español
+OBJETIVOS    = _cargar('objetivos.json')    # objetivo de la etapa -> español
+ACTIVACIONES = _cargar('activaciones.json') # activación de la etapa (patrón) -> español
+
 
 def patron(linea):
     """Clave de búsqueda: la línea con cada número reemplazado por '#'."""
     return NUM.sub('#', linea)
 
-def traducir_linea(linea):
-    """Español, o None si no hay traducción cargada para ese patrón."""
-    es = EFECTOS.get(patron(linea))
-    if es is None:
-        return None
-    numeros = NUM.findall(linea)
-    if es.count('#') != len(numeros):
-        # El patrón español perdió o inventó un número: es un error de la tabla, no
-        # un texto sin traducir. Se avisa fuerte en vez de emitir una cifra equivocada.
-        raise ValueError(f'placeholders desparejos en efectos.json\n  en: {patron(linea)!r}\n  es: {es!r}')
-    it = iter(numeros)
-    return re.sub(r'#', lambda _: next(it), es)
-
-def traducir_fx(fx):
-    """{bucket: [líneas]} -> {bucket: [línea traducida o None]}, misma longitud."""
-    return {k: [traducir_linea(l) for l in v] for k, v in fx.items()}
 
 def traducir_skill(nombre):
     """Nombre de skill en español, o None si no está en la tabla."""
     return SKILLS.get(nombre)
 
+
 def traducir_etiqueta(v):  return ETIQUETAS.get(v)
 def traducir_elemento(v):  return ELEMENTOS.get(v)
 def traducir_objetivo(v):  return OBJETIVOS.get(v)
-def traducir_activacion(v):
-    """Las activaciones llevan números; se traducen por patrón como las descripciones."""
-    es = ACTIVACIONES.get(patron(v))
-    if es is None:
-        return None
-    numeros = NUM.findall(v)
-    if es.count('#') != len(numeros):
-        raise ValueError(f'placeholders desparejos en activaciones.json\n  en: {patron(v)!r}\n  es: {es!r}')
-    it = iter(numeros)
-    return re.sub(r'#', lambda _: next(it), es)
-
-def aplanar(fx, etiquetas):
-    """Arma el string plano 'd' a partir de un fx ya en un solo idioma."""
-    partes = list(fx.get('general', []))
-    for k, lbl in etiquetas:
-        if fx.get(k):
-            partes.append(lbl + ': ' + ' / '.join(fx[k]))
-    return ' · '.join(partes)
-
-ETIQ_ES = (('self', 'A sí mismo'), ('enemy', 'Al oponente'), ('allies', 'Al equipo'))
-ETIQ_EN = (('self', 'Self'), ('enemy', 'Enemy'), ('allies', 'Allies'))

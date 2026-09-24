@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""Reconstruye data.js y mff-thanosvibs-import.json desde work/. Correr tras fetch_all y parse_skills."""
+"""Reconstruye data.js, mff-thanosvibs-import.json y docs/AUDITORIA.md desde work/.
+Correr tras fetch_all.py y parse_instinto.py.
+
+Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
+auditar.py (work/verificacion.json y docs/AUDITORIA.md) y _core.py (personajes y tier
+lists, work/build2.json); acá se junta todo en data.js."""
 import json, os, datetime
-# skills_api.py deja work/skills_parsed.json; _core.py lo consume y deja work/build2.json
 import subprocess, sys
 # Los módulos del pipeline (dominio, version_juego) viven al lado de este script.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +50,6 @@ SEED = {
  'INSTINCTS': ['Justicia','Orden','Destrucción','Crueldad','Desconocido'],
  'RACES': ['Humano','Mutante','Inhumano','Alienígena','Criatura','Otro'],
  'GENDERS': ['Masculino','Femenino','Neutro'],
- 'DAMAGE_TYPES': ['Físico','Energía','PG','Ninguno'],
  'SKILL_TAGS': ABIL_VALUES,
  'FACTIONS': ['Superhéroe','Supervillano','Neutral'],
  'CLASS_ADVANTAGE': {'Combate':'Velocidad','Velocidad':'Detonación','Detonación':'Combate','Universal':None}
@@ -56,9 +59,10 @@ hoy = hoy.isoformat()
 # la app de escritorio las compara contra thanosvibs para avisar si hay una mas nueva.
 VERSION = {'juego': gv, 'generado': hoy}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
-// Fuentes: thanosvibs.money (personajes/uniformes/retratos/íconos/tier list) y
-// future-fight.fandom.com (skills e instintos). Cada skill trae 'fx' (efectos por objetivo).
-// Crédito: THANO$VIB$ y Future Fight Wiki. Uso personal.
+// Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
+// soportes, rotaciones, Alliance Battle, guía, retratos e íconos) y future-fight.fandom.com
+// (instintos y el contraste de docs/AUDITORIA.md). Crédito: THANO$VIB$ y Future Fight Wiki.
+// Uso personal.
 """
 # Las listas llegan con las filas rotuladas de la fuente; el rango S-D solo se usa
 # como plantilla para las listas que arme el usuario dentro de la app.
@@ -67,20 +71,6 @@ tl = tierlists
 parts = [header,
  'window.MFF_VERSION = ' + json.dumps(VERSION, ensure_ascii=False) + ';\n',
  'window.MFF_SEED = ' + json.dumps(SEED, ensure_ascii=False, indent=1) + ';\n',
- """
-function sk(slot, n, d, dmg, ii, tags, opts) {
-  opts = opts || {};
-  let cd = null, perm = false;
-  if (slot === 'Pasiva' || slot === 'Liderazgo') perm = true;
-  else if (slot === 'Definitiva') { cd = null; perm = false; }
-  else { const idx = parseInt(slot.replace(/\\D/g, ''), 10) || 1; cd = 6 + idx * 2; }
-  if (opts.cd !== undefined) cd = opts.cd;
-  if (opts.perm !== undefined) perm = opts.perm;
-  const iframe = opts.iframe !== undefined ? opts.iframe : (slot === 'Definitiva');
-  return { slot, n, d, dmg, ii: !!ii, tags: tags || [], cd, perm, iframe: !!iframe, gb: !!opts.gb, sgb: !!opts.sgb };
-}
-window.MFF_sk = sk;
-""",
  'window.MFF_SEED_CHARACTERS = ' + json.dumps(chars, ensure_ascii=False) + ';\n',
  '// Skills por retrato. Cada efecto guarda el índice de su patrón y sus números;\n'
  '// el texto se arma en la app desde MFF_TABLAS, en el idioma activo.\n',
@@ -102,7 +92,6 @@ window.MFF_sk = sk;
  'window.MFF_MODOS = ' + json.dumps(FUENTES['modos'], ensure_ascii=False) + ';\n',
  '// Traducciones de los textos de esas fuentes: inglés -> español (lo que falta viaja en inglés).\n',
  'window.MFF_TXT = ' + json.dumps(FUENTES['txt'], ensure_ascii=False) + ';\n',
- 'window.MFF_TEAM_SUGGESTIONS = [];\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
  'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',
  'window.MFF_DEFAULT_TIER_ROWS = ' + json.dumps(DEFAULT_ROWS, ensure_ascii=False) + ';\n',
