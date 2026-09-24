@@ -36,6 +36,11 @@ DMG_FLAT = re.compile(r'Additional\s*#\s*[A-Za-z ]*?Damage\.?\s*$')
 
 ORDEN = ['Leader Skill', 'Passive', 'Tier-2 Passive', 'Uniform Passive',
          'Active 1', 'Active 2', 'Active 3', 'Active 4', 'Active 5', 'Active Ult', 'Striker Skill']
+# Claves del objeto `skills` que no son skills. `cancels` dice qué skills aplican cada
+# control que corta los ataques especiales del jefe en Alliance Battle (Silence, Paralyze
+# y Burn en Extreme; Snare, Shock y Fracture en Legend). Se guarda aparte: tomarla como
+# skill creaba un slot "cancels" sin nombre ni etapas.
+NO_SKILLS = {'cancels'}
 
 def limpio(txt):
     return re.sub(r'\s{2,}', ' ', BOLD.sub('', txt or '')).strip()
@@ -71,7 +76,8 @@ def main():
          'tgt':  Tabla(traducir.traducir_objetivo),
          'act':  Tabla(lambda p: traducir.ACTIVACIONES.get(p), por_patron=True),
          'name': Tabla(traducir.traducir_skill)}
-    salida, buffs = {}, {}
+    salida, buffs, cancels = {}, {}, {}
+    desconocidas = {}
     n_sk = n_st = n_fx = 0
 
     def efecto(a):
@@ -100,9 +106,15 @@ def main():
         d = json.load(open(fn, encoding='utf-8'))
         p = d.get('portrait') or os.path.basename(fn)[:-5]
         sk = d.get('skills') or {}
-        orden = {t: i for i, t in enumerate(ORDEN)}
+        # Una clave que no es skill conocida ni dato conocido corta el build: tomarla
+        # como skill inventaría un slot, y descartarla en silencio perdería un dato.
+        for tipo in sk:
+            if tipo not in ORDEN and tipo not in NO_SKILLS:
+                desconocidas.setdefault(tipo, []).append(p)
+        if sk.get('cancels'):
+            cancels[p] = sk['cancels']
         lista = []
-        for tipo in sorted(sk, key=lambda t: (orden.get(t, 99), t)):
+        for tipo in [t for t in ORDEN if t in sk]:
             s = sk[tipo]
             out = {'sl': tipo, 'n': T['name'].id(s.get('name')), 'cd': s.get('cooldown'),
                    'st': [etapa(x) for x in s.get('stages', [])]}
@@ -115,13 +127,18 @@ def main():
         if d.get('key_abilities'):
             buffs[p] = {k: v.get('skills', []) for k, v in d['key_abilities'].items()}
 
+    if desconocidas:
+        raise SystemExit('claves de skills desconocidas en la API: ' +
+                         '; '.join(f'{k} (en {len(v)} retratos, p.ej. {v[0]})' for k, v in desconocidas.items()) +
+                         ' — decidir en scripts/skills_api.py si es skill (ORDEN) o dato aparte (NO_SKILLS)')
     tablas = {k: t.filas for k, t in T.items()}
-    json.dump({'skills': salida, 'buffs': buffs, 'tablas': tablas},
+    json.dump({'skills': salida, 'buffs': buffs, 'cancels': cancels, 'tablas': tablas},
               open('work/skills_parsed.json', 'w'), ensure_ascii=False)
     for k, t in T.items():
         json.dump(sorted(t.faltan), open(f'work/sin_traducir_{k}.json', 'w'), ensure_ascii=False, indent=1)
     tam = os.path.getsize('work/skills_parsed.json') / 1024 / 1024
-    print(f'portraits: {len(salida)} | skills: {n_sk} | etapas: {n_st} | efectos: {n_fx} | {tam:.1f} MB')
+    print(f'portraits: {len(salida)} | skills: {n_sk} | etapas: {n_st} | efectos: {n_fx} | {tam:.1f} MB'
+          f' | con cancels: {len(cancels)}')
     print('tablas: ' + ' | '.join(f'{k} {len(t.filas)}' for k, t in T.items()))
     faltan = {k: len(t.faltan) for k, t in T.items() if t.faltan}
     print('sin traducir:', faltan or 'nada')
