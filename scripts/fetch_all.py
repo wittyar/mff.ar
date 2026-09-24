@@ -92,9 +92,10 @@ if HACER_DATOS:
     os.makedirs('work/skills_api', exist_ok=True)
     ports_sk = sorted({r['portrait'] for r in chars} | {r['base_portrait'] for r in chars})
     fallos_sk = []
+    # Se bajan siempre, aunque ya haya copia: un rebalanceo cambia skills de retratos que
+    # ya existían, y saltear los archivos presentes dejaba esos cambios afuera para siempre.
     def get_skills(p):
         fn = f'work/skills_api/{p}.json'
-        if os.path.exists(fn): return
         for intento in range(3):
             try:
                 open(fn, 'wb').write(get(f'{TV}/api/characters/{urllib.parse.quote(p)}/skills'))
