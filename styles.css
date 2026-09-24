@@ -276,6 +276,12 @@ td.same{background:rgba(255,45,85,.055)}
 .tlchip .x{opacity:0;margin-left:2px;color:var(--text-3);cursor:pointer;font-size:12px;padding:0 2px}
 .tlchip:hover .x{opacity:1}
 .tlchip .x:hover{color:var(--accent)}
+.tlchip{cursor:pointer}
+.tlchip .multi{font-size:10px;font-weight:700;color:var(--gold);background:var(--gold-soft);border-radius:4px;padding:0 4px}
+/* En pantallas táctiles no hay hover: el ✕ se ve siempre. */
+@media (hover:none){ .tlchip .x{opacity:.7} }
+.filasel{display:flex;flex-wrap:wrap;gap:8px}
+.filasel .chk{padding:4px 8px 4px 6px}
 
 /* ---------- modal ---------- */
 .backdrop{position:fixed;inset:0;background:rgba(4,6,11,.72);backdrop-filter:blur(5px);

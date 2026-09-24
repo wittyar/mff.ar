@@ -127,6 +127,10 @@ for fn in TL_FILES:
     rows = [{'id': t['id'], 'label': t['label'].strip()} for t in v.get('tiers', [])
             if not t['id'].startswith('tier-landing')]
     valid = {r['id'] for r in rows}
+    orden_filas = {r['id']: i for i, r in enumerate(rows)}
+    # Una entrada puede estar en varias filas a la vez: muchas listas son por categoría
+    # ("PVE High Meta" y "PVE Support") y ponen al mismo personaje en las dos a
+    # propósito. Cada entrada guarda sus filas en el orden de la lista.
     a = {}
     for cellkey, items in v['cellContents'].items():
         row = cellkey.split(':', 1)[1]
@@ -136,18 +140,16 @@ for fn in TL_FILES:
             if not pair: continue
             cid, uid = pair
             key = f"{cid}::{uid}" if uid else f"{cid}::base"
-            # La fuente a veces coloca la misma entrada en dos filas: se avisa y gana
-            # la primera, en vez de pisarla en silencio.
-            if key in a and a[key] != row:
-                print(f"AVISO {slug}: {it.get('character')} / {it.get('uniform')} aparece"
-                      f" en '{a[key]}' y en '{row}'; queda en la primera")
-                continue
-            a[key] = row
+            filas = a.setdefault(key, [])
+            if row not in filas:   # la misma fila en dos columnas de la fuente es una sola ubicación
+                filas.append(row)
+    for filas in a.values():
+        filas.sort(key=orden_filas.get)
     tierlists.append({'id': slug, 'order': tl.get('order', 99), 'name': tl['name_es'], 'nameEn': tl['name_en'], 'source': tl['title'],
                       'author': v.get('author', ''), 'gameVersion': v.get('gameVersion', ''),
                       'rows': rows})
     assign[slug] = a
-    print(f"tier list {slug}: {len(rows)} filas, {len(a)} asignaciones"
+    print(f"tier list {slug}: {len(rows)} filas, {len(a)} entradas en {sum(len(f) for f in a.values())} ubicaciones"
           f" ({len([i for c in v['cellContents'].values() for i in c])} celdas en la fuente)")
 # íconos: el mapa valor-ES -> archivo es fijo; los archivos los baja fetch_all y son
 # insumo del build. Si falta alguno el build corta: un data.js sin íconos sería una
@@ -199,5 +201,5 @@ json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':t
            'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs']},
           open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images),
-      '| listas:', len(tierlists), '| asignaciones:', sum(len(a) for a in assign.values()),
+      '| listas:', len(tierlists), '| ubicaciones:', sum(len(f) for a in assign.values() for f in a.values()),
       '| sets de skills:', len(SK['skills']))

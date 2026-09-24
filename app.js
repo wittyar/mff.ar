@@ -38,7 +38,7 @@ function blankUser () {
     charNew: [],                      // personajes creados a mano
     teams: [],
     lists: [],                        // tier lists propias: {id,name,rows}
-    assign: {},                       // listId -> {clave: filaId | null}
+    assign: {},                       // listId -> {clave: [filaId, ...] | null}
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
     marcas: {},                       // '<retrato>::<tipo de skill>' -> {it:1, gb:1, ...}
     modes: JSON.parse(JSON.stringify(SEED.MODES)),
@@ -58,6 +58,11 @@ function loadUser () {
     u.prefs = Object.assign(base.prefs, saved.prefs || {});
     u.prefs.filters = Object.assign(base.prefs.filters, (saved.prefs||{}).filters || {});
     u.prefs.flags = Object.assign(base.prefs.flags, (saved.prefs||{}).flags || {});
+    // Una entrada guardaba una sola fila (texto); desde que puede estar en varias filas
+    // de la misma lista guarda una lista de filas. Las capas viejas se convierten acá.
+    for (const l in u.assign) for (const k in u.assign[l]) {
+      if (typeof u.assign[l][k] === 'string') u.assign[l][k] = [u.assign[l][k]];
+    }
     return u;
   } catch (e) { console.warn('capa de usuario ilegible, se arranca en limpio', e); return base; }
 }
@@ -87,9 +92,18 @@ function assignOf (listId) {
   for (const k in mine) { if (mine[k] === REMOVED) delete out[k]; else out[k] = mine[k]; }
   return out;
 }
-function setAssign (listId, key, rowId) {
+/** Filas en las que está una entrada (vacío si no está ubicada). Una entrada puede
+ *  estar en varias filas de la misma lista: muchas listas son por categoría. */
+function filasDe (listId, key) { return assignOf(listId)[key] || []; }
+/** Deja una entrada en exactamente estas filas, en el orden de la lista. Sin filas queda
+ *  sin ubicar: en una importada eso es una marca explícita (REMOVED) sobre la fuente. */
+function setFilas (listId, key, filas) {
+  const orden = rowsOf(listById(listId)).map(r => r.id);
+  const limpias = [...new Set(filas)].filter(r => orden.includes(r)).sort((a, b) => orden.indexOf(a) - orden.indexOf(b));
   U.assign[listId] = U.assign[listId] || {};
-  U.assign[listId][key] = rowId;
+  if (limpias.length) U.assign[listId][key] = limpias;
+  else if ((ASSIGN_SEED[listId] || {})[key]) U.assign[listId][key] = REMOVED;
+  else delete U.assign[listId][key];
   commit();
 }
 
@@ -219,6 +233,13 @@ const T = {
   tl_nothing:        { es:'Nada coincide.',      en:'Nothing matches.' },
   tl_more:           { es:'más: filtrá para acotar.', en:'more: filter to narrow it down.' },
   tl_confirm_del:    { es:'¿Borrar esta lista y sus asignaciones?', en:'Delete this list and its placements?' },
+  tl_spots:          { es:'ubicaciones',         en:'placements' },
+  tl_multi:          { es:'Está en más de una fila de esta lista', en:'It is in more than one row of this list' },
+  tl_remove_row:     { es:'Quitar de esta fila', en:'Remove from this row' },
+  tl_done:           { es:'Listo',               en:'Done' },
+  tl_rows_note:      { es:'Puede estar en varias filas a la vez: marcá todas las que correspondan.',
+                       en:'It can be in several rows at once: tick every row that applies.' },
+  tl_open_sheet:     { es:'Ver ficha',           en:'Open sheet' },
 
   tm_title:          { es:'Equipos',             en:'Teams' },
   tm_note:           { es:'Los que armás vos, con la sinergia estimada por la app.',
@@ -435,7 +456,7 @@ let ui = {
   teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
   newListName: '', poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
-  dragKey: null
+  dragKey: null, dragFrom: '', tlPick: null
 };
 
 // ============================================================================
@@ -755,18 +776,26 @@ const SORTS = {
   rank:   { k:'s_rank',   get: v => rankIndex(v.key) },
   skills: { k:'s_skills', get: v => -v.skills.length }
 };
+/** Índices de fila (en orden) de una entrada en una lista. */
+function indicesFila (list, key) {
+  const rows = rowsOf(list);
+  return filasDe(list.id, key).map(r => rows.findIndex(x => x.id === r)).filter(i => i > -1).sort((a, b) => a - b);
+}
+/** Posición en la lista de referencia: la mejor fila en la que esté. */
 function rankIndex (key) {
   const list = listById(U.prefs.refList); if (!list) return 999;
-  const rows = rowsOf(list); const r = assignOf(list.id)[key];
-  const i = rows.findIndex(x => x.id === r);
-  return i === -1 ? 999 : i;
+  const idx = indicesFila(list, key);
+  return idx.length ? idx[0] : 999;
 }
 function rankLabel (key) {
   const list = listById(U.prefs.refList); if (!list) return null;
-  const r = assignOf(list.id)[key]; if (!r) return null;
-  const rows = rowsOf(list); const i = rows.findIndex(x => x.id === r);
-  return i === -1 ? null : { label: rows[i].label, color: rowColor(i, rows.length) };
+  const idx = indicesFila(list, key); if (!idx.length) return null;
+  const rows = rowsOf(list);
+  return { label: rows[idx[0]].label, color: rowColor(idx[0], rows.length),
+           todas: idx.map(i => rows[i].label) };
 }
+/** Rótulo de la mejor fila, con "+N" si la entrada está en más filas. */
+function rankTexto (rank) { return rank.label + (rank.todas.length > 1 ? ' +' + (rank.todas.length - 1) : ''); }
 
 function rosterData () {
   const q = ui.search.trim().toLowerCase();
@@ -876,7 +905,7 @@ function cardHtml (v) {
       ${shot(v.id)}
       <div class="tl"><span class="classdot" title="${h(v.c)}">${icon(v.c) || '<b style="font-size:10px">' + h(v.c[0]) + '</b>'}</span></div>
       ${!ui.pickMode && rank ? `<div class="tr"><span class="tag solid rank" style="background:${rank.color}"
-          title="${h(((listById(U.prefs.refList)||{}).name||'') + ': ' + rank.label)}">${h(rank.label)}</span></div>` : ''}
+          title="${h(listName(listById(U.prefs.refList)) + ': ' + rank.todas.join(' · '))}">${h(rankTexto(rank))}</span></div>` : ''}
       <div class="bl">
         <div class="nm">${h(v.uid ? v.sub : v.name)}</div>
         ${v.uid ? `<div class="of">${h(v.name)}</div>` : ''}
@@ -911,7 +940,7 @@ function tableHtml (rows) {
         <td class="mono">${v.striker != null ? h(v.striker) : '—'}</td>
         <td class="muted">${h(dom(v.wba) || '—')}</td>
         <td class="mono">${v.skills.length}</td>
-        <td>${rank ? `<span class="tag solid" style="background:${rank.color}">${h(rank.label)}</span>` : '<span class="muted">—</span>'}</td>
+        <td>${rank ? `<span class="tag solid" style="background:${rank.color}" title="${h(rank.todas.join(' · '))}">${h(rankTexto(rank))}</span>` : '<span class="muted">—</span>'}</td>
       </tr>`;
     }).join('')}
   </tbody></table></div>`;
@@ -980,7 +1009,7 @@ function renderDetail () {
       <div class="meta">
         <h1>${h(ch.name)}</h1>
         ${rank ? `<div class="row"><span class="muted">${h(listName(listById(U.prefs.refList)))}:</span>
-          <span class="tag solid" style="background:${rank.color}">${h(rank.label)}</span></div>` : ''}
+          <span class="tag solid" style="background:${rank.color}" title="${h(rank.todas.join(' · '))}">${h(rankTexto(rank))}</span></div>` : ''}
         <div class="row">
           ${tagGhost(dom(v.c), classColor(v.c))}
           ${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid(t('transcended_tag'), 'var(--gold)') : ''}
@@ -1101,10 +1130,11 @@ function renderCompare () {
            · ${h(t('d_xp'))}: ${((v.up.uniform_xp || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k</div>`
         : '<span class="muted">—</span>'}</td>`).join('')}</tr>
       ${LISTS.filter(l => Object.keys(assignOf(l.id)).length).map(l => {
-        const a = assignOf(l.id), rows = rowsOf(l);
+        const rows = rowsOf(l);
         return `<tr><th>${h(listName(l))}</th>${vs.map(v => {
-          const i = rows.findIndex(x => x.id === a[v.key]);
-          return `<td>${i === -1 ? `<span class="muted">${h(t('cmp_unplaced'))}</span>` : `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`}</td>`;
+          const idx = indicesFila(l, v.key);
+          return `<td>${!idx.length ? `<span class="muted">${h(t('cmp_unplaced'))}</span>`
+            : idx.map(i => `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`).join(' ')}</td>`;
         }).join('')}</tr>`;
       }).join('')}
       ${slots.map(sl => `<tr class="slotrow"><th>${h(slotEs(sl))}</th>${vs.map(v => {
@@ -1159,12 +1189,20 @@ function renderTierList () {
   const vs = allVariants();
   const byRow = {}; rows.forEach(r => { byRow[r.id] = []; });
   const unset = [];
-  vs.forEach(v => { const r = a[v.key]; if (r && byRow[r]) byRow[r].push(v); else unset.push(v); });
+  vs.forEach(v => {
+    const fs = (a[v.key] || []).filter(r => byRow[r]);
+    if (fs.length) fs.forEach(r => byRow[r].push(v)); else unset.push(v);
+  });
+  const ubicaciones = Object.values(a).reduce((n, fs) => n + fs.length, 0);
   const imported = TIERLISTS_SEED.some(l => l.id === list.id);
-  const chip = (v) => `<span class="tlchip" draggable="true" data-a="drag" data-key="${v.key}" title="${h(fullLabel(v))}">
+  // Tocar una ficha abre el selector de filas (sirve en el celular, donde no hay
+  // arrastrar y soltar); en la compu también se puede arrastrar para moverla.
+  const chip = (v, fila) => `<span class="tlchip" draggable="true" data-a="tlAbrir" data-key="${v.key}" data-from="${h(fila)}"
+      title="${h(fullLabel(v))}">
       ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="" loading="lazy">` : ''}
       <span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}
-      <span class="x" data-a="unassign" data-key="${v.key}">✕</span></span>`;
+      ${(a[v.key] || []).length > 1 ? `<span class="multi" title="${h(t('tl_multi'))}">×${a[v.key].length}</span>` : ''}
+      ${fila ? `<span class="x" data-a="unassign" data-key="${v.key}" data-row="${h(fila)}" title="${h(t('tl_remove_row'))}">✕</span>` : ''}</span>`;
 
   return `
   <div class="page-head"><div><h1>${h(t('tl_title'))}</h1>
@@ -1180,15 +1218,15 @@ function renderTierList () {
       ? `<span>${h(t('tl_source'))} <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a> · «${h(list.source)}»</span>
          ${list.author ? `<span class="tag dim">${h(t('tl_author'))} ${h(list.author)}</span>` : ''}
          ${list.gameVersion ? `<span class="tag dim">${h(t('tl_game'))} ${h(list.gameVersion)}</span>` : ''}
-         <span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}</span>`
-      : `<span>${h(t('tl_own'))}</span><span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}</span>
+         <span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>`
+      : `<span>${h(t('tl_own'))}</span><span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>
          <button class="btn sm danger" data-a="removeList" data-id="${list.id}">${h(t('tl_delete'))}</button>`}
     ${U.assign[list.id] && Object.keys(U.assign[list.id]).length
       ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">${h(t('tl_undo'))} (${Object.keys(U.assign[list.id]).length})</button>` : ''}
   </div>
   ${rows.map((r, i) => `<div class="tierrow" data-a="drop" data-row="${h(r.id)}">
     <div class="tierlabel" style="background:${rowColor(i, rows.length)}">${h(r.label)}</div>
-    <div class="tieritems">${byRow[r.id].map(chip).join('') || `<span class="muted" style="align-self:center">${h(t('tl_drop_here'))}</span>`}</div>
+    <div class="tieritems">${byRow[r.id].map(v => chip(v, r.id)).join('') || `<span class="muted" style="align-self:center">${h(t('tl_drop_here'))}</span>`}</div>
   </div>`).join('')}
   <div style="margin-top:18px">
     <div class="row">
@@ -1200,11 +1238,35 @@ function renderTierList () {
       const pool = (q2 ? unset.filter(v => fullLabel(v).toLowerCase().includes(q2)) : unset);
       return `<div class="tieritems" data-a="drop" data-row="" style="margin-top:10px;max-height:360px;overflow-y:auto;
         border:1px dashed var(--line-2);border-radius:var(--r-md)">
-        ${pool.slice(0, 150).map(chip).join('') || `<span class="muted">${h(t('tl_nothing'))}</span>`}
+        ${pool.slice(0, 150).map(v => chip(v, '')).join('') || `<span class="muted">${h(t('tl_nothing'))}</span>`}
         ${pool.length > 150 ? `<span class="muted" style="align-self:center">…${pool.length - 150} ${h(t('tl_more'))}</span>` : ''}
       </div>`;
     })() : ''}
-  </div>`;
+  </div>
+  ${ui.tlPick ? selectorFilas(list, rows, a) : ''}`;
+}
+
+/** Selector de filas de una entrada: una casilla por fila, así puede estar en varias. */
+function selectorFilas (list, rows, a) {
+  const [cid, uid] = ui.tlPick.split('::');
+  const v = variant(cid, uid === 'base' ? null : uid);
+  if (!v) { ui.tlPick = null; return ''; }
+  const mias = a[v.key] || [];
+  return `<div class="backdrop" data-a="tlCerrar"><div class="modal" data-a="tlModal">
+    <div class="row" style="justify-content:space-between;margin-bottom:12px">
+      <div class="cellname">${imgUrl('portrait-' + v.id) ? `<img class="thumb" src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
+        <div><div style="font-weight:700">${h(v.uid ? v.sub : v.name)}</div>
+        <div class="muted">${h(v.uid ? v.name : t('base'))} · ${h(listName(list))}</div></div></div>
+      <button class="btn sm" data-a="tlCerrar">${h(t('tl_done'))}</button>
+    </div>
+    <p class="muted" style="margin-bottom:10px">${h(t('tl_rows_note'))}</p>
+    <div class="filasel">${rows.map((r, i) => `<label class="chk">
+      <input type="checkbox" data-a="tlFila" data-row="${h(r.id)}" ${mias.includes(r.id) ? 'checked' : ''}>
+      <span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(r.label)}</span></label>`).join('')}</div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn sm" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}">${h(t('tl_open_sheet'))}</button>
+    </div>
+  </div></div>`;
 }
 
 // ============================================================================
@@ -1498,6 +1560,7 @@ document.addEventListener('click', (e) => {
       render(); break; }
     case 'goCompare': ui.view = 'compare'; render(); window.scrollTo(0, 0); break;
     case 'open': {
+      ui.tlPick = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
       ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; render(); window.scrollTo(0, 0); break; }
     case 'uniform': ui.uniformId = d.uid; render(); break;
@@ -1512,7 +1575,10 @@ document.addEventListener('click', (e) => {
       ui.tierList = (LISTS[0] || {}).id || ''; commit(); break; }
     case 'resetList': delete U.assign[d.id]; commit(); break;
     case 'togglePool': ui.poolOpen = !ui.poolOpen; render(); break;
-    case 'unassign': e.stopPropagation(); setAssign(ui.tierList, d.key, REMOVED); break;
+    case 'unassign': e.stopPropagation();
+      setFilas(ui.tierList, d.key, filasDe(ui.tierList, d.key).filter(r => r !== d.row)); break;
+    case 'tlAbrir': ui.tlPick = d.key; render(); break;
+    case 'tlCerrar': ui.tlPick = null; render(); break;
 
     case 'goTeams': ui.view = 'teams'; render(); break;
     case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
@@ -1600,6 +1666,8 @@ document.addEventListener('change', (e) => {
     ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-(m ? m.teamSize : 3)); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'marca') { marcar(d.p, d.sl, d.k, el.checked); return; }
+  if (a === 'tlFila') { const actuales = filasDe(ui.tierList, ui.tlPick);
+    setFilas(ui.tierList, ui.tlPick, el.checked ? actuales.concat(d.row) : actuales.filter(r => r !== d.row)); return; }
   if (a === 'upload') { const f = el.files[0]; if (f) readFile(f, url => { U.images[d.img] = url; commit(); }); return; }
   if (a === 'importUser') { const f = el.files[0]; if (!f) return;
     const r = new FileReader();
@@ -1608,10 +1676,13 @@ document.addEventListener('change', (e) => {
     r.readAsText(f); return; }
 });
 
-// arrastrar y soltar en las tier lists
+// arrastrar y soltar en las tier lists: arrastrar mueve la entrada desde la fila de la
+// que sale (las otras filas en las que esté no cambian); para sumarla a otra fila sin
+// sacarla de esta está el selector que se abre al tocarla.
 document.addEventListener('dragstart', (e) => {
-  const el = e.target.closest('[data-a="drag"]'); if (!el) return;
-  ui.dragKey = el.dataset.key; e.dataTransfer.setData('text/plain', el.dataset.key); e.dataTransfer.effectAllowed = 'move';
+  const el = e.target.closest('[draggable="true"][data-key]'); if (!el) return;
+  ui.dragKey = el.dataset.key; ui.dragFrom = el.dataset.from || '';
+  e.dataTransfer.setData('text/plain', el.dataset.key); e.dataTransfer.effectAllowed = 'move';
 });
 document.addEventListener('dragover', (e) => {
   const z = e.target.closest('[data-a="drop"]'); if (!z) return;
@@ -1621,8 +1692,13 @@ document.addEventListener('dragleave', (e) => { e.target.closest('[data-a="drop"
 document.addEventListener('drop', (e) => {
   const z = e.target.closest('[data-a="drop"]'); if (!z) return;
   e.preventDefault();
-  const key = ui.dragKey; ui.dragKey = null; if (!key) return;
-  setAssign(ui.tierList, key, z.dataset.row || REMOVED);
+  const key = ui.dragKey, desde = ui.dragFrom; ui.dragKey = null; ui.dragFrom = ''; if (!key) return;
+  const hacia = z.dataset.row || '';
+  const resto = filasDe(ui.tierList, key).filter(r => r !== desde);
+  setFilas(ui.tierList, key, hacia ? resto.concat(hacia) : resto);
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
 });
 
 function download (name, text, type) {
