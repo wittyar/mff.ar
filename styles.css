@@ -481,3 +481,10 @@ details.usgrupo summary{cursor:pointer;font-size:12.5px;color:var(--text-2);marg
 .artlineas{font-size:12.5px;margin-bottom:6px}
 .artl{margin-bottom:3px}
 details.ctp summary .tag{margin-left:auto}
+
+/* ---------- ficha: rotaciones ---------- */
+.rots{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.rot{border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 11px;background:var(--surface)}
+.roth{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+.rotd{font-size:13px;overflow-wrap:anywhere}
+.rotd b{color:var(--gold)}

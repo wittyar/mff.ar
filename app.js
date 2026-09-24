@@ -298,6 +298,10 @@ const T = {
   ar_nodata:         { es:'sin dato',            en:'no data' },
   ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
   ar_obtain:         { es:'Cómo se consigue',    en:'How to get it' },
+  rot_title:         { es:'Rotaciones de skills', en:'Skill rotations' },
+  rot_none:          { es:'thanosvibs no publica rotaciones para este uniforme.', en:'thanosvibs publishes no rotations for this uniform.' },
+  rot_legend:        { es:'Cómo se leen',        en:'How to read them' },
+  rot_other:         { es:'Hay rotaciones para:', en:'There are rotations for:' },
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
 
@@ -1295,6 +1299,8 @@ function renderDetail () {
       : `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`}
   </div>
 
+  ${panelRotaciones(ch, v)}
+
   ${teams.length ? `<div class="section"><h3>${h(t('d_teams'))}</h3><div class="grid">
     ${teams.map(eq => `<div class="card"><div style="font-weight:600">${h(eq.name)}</div>
       <div class="muted">${eq.members.map(k => { const r = variant(...k.split('::')); return r ? fullLabel(r) : k; }).join(' + ')}</div>
@@ -1542,6 +1548,7 @@ const ABX    = window.MFF_ABX || { restricciones: [], equipos: [] };
 const CANCELS = window.MFF_CANCELS || {};
 const GUIA_PJ = window.MFF_GUIA_PJ || {};
 const SOPORTES = window.MFF_SOPORTES || {};
+const ROTACIONES = window.MFF_ROTACIONES || {};
 const TXT    = window.MFF_TXT || {};
 /** Texto de una fuente en inglés, en el idioma activo. Sin traducción cargada se muestra
  *  el inglés marcado, como las líneas de efecto: nunca se inventa una. Devuelve HTML.
@@ -1808,6 +1815,33 @@ function panelArmado (ch, v) {
       <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
       <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
     </div></div>`;
+}
+
+// ============================================================================
+// FICHA: ROTACIONES
+// ============================================================================
+/** Notación de las rotaciones: **tramo del proc** en negrita, *palabra* en cursiva. */
+function notacionHtml (s) {
+  return h(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\*(.+?)\*/g, '<i>$1</i>');
+}
+function rotacionHtml (r) {
+  const es = r.n || LANG === 'en' ? r.desc : TXT[r.desc];
+  const falta = es == null;
+  return `<div class="rot"><div class="roth"><span class="tag dim">${h(bi(GUIA.rotaciones.categorias[r.cat]))}</span><b>${trHtml(r.nom)}</b></div>
+    <div class="rotd ${falta ? 'sintrad' : ''}" ${falta ? `title="${h(t('untranslated'))}"` : ''}>${notacionHtml(falta ? r.desc : es)}</div></div>`;
+}
+/** Rotaciones de skills del retrato abierto, con la leyenda de la notación. */
+function panelRotaciones (ch, v) {
+  const rs = ROTACIONES[v.p] || [], G = GUIA.rotaciones;
+  const otras = rs.length ? [] : variantesDe(ch).filter(vv => vv.key !== v.key && (ROTACIONES[vv.p] || []).length);
+  return `<div class="section"><h3>${h(t('rot_title'))} · ${h(v.uid ? v.sub : t('base'))}</h3>
+    ${rs.length ? `<div class="rots">${rs.map(rotacionHtml).join('')}</div>` : `<p class="muted">${h(t('rot_none'))}</p>`}
+    ${otras.length ? `<div class="row" style="gap:5px;margin:6px 0"><span class="muted">${h(t('rot_other'))}</span>${otras.map(vv =>
+      `<button class="btn sm" data-a="uniform" data-uid="${vv.uid || 'base'}">${h(vv.uid ? vv.sub : t('base'))}</button>`).join('')}</div>` : ''}
+    <details class="usgrupo"><summary>${h(t('rot_legend'))}</summary>
+      <table class="abx"><tbody>${G.leyenda.map(x => `<tr><th>${h(x.k)}</th><td>${h(bi(x))}</td></tr>`).join('')}</tbody></table>
+      <p class="muted" style="margin-top:6px">${h(bi(G.nota))}</p></details>
+    <div class="fuentes">${fuentesHtml(G.fuente)}</div></div>`;
 }
 
 function panelUso (ch, v) {
