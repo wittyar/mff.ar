@@ -4,7 +4,8 @@
  *   - data.js es la ÚNICA fuente de personajes, uniformes, skills, imágenes y tier lists importadas.
  *     Nunca se copia a localStorage: regenerar data.js se ve al recargar, sin borrar nada.
  *   - localStorage guarda SOLO la capa del usuario: ediciones y personajes propios, equipos,
- *     tier lists propias, cambios sobre las importadas, imágenes subidas y preferencias.
+ *     tier lists propias, cambios sobre las importadas, imágenes subidas, atributos marcados,
+ *     hojas de ruta, topes cargados y preferencias.
  */
 (function () {
 'use strict';
@@ -44,6 +45,8 @@ function blankUser () {
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
     marcas: {},                       // '<retrato>::<tipo de skill>' -> {it:1, gb:1, ...}
     modes: [],                        // modos propios: {id, name, teamSize}; los del juego salen de MFF_MODOS
+    ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
+    topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
@@ -298,6 +301,29 @@ const T = {
   ar_nodata:         { es:'sin dato',            en:'no data' },
   ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
   ar_obtain:         { es:'Cómo se consigue',    en:'How to get it' },
+  ru_title:          { es:'Hoja de ruta',        en:'Roadmap' },
+  ru_note:           { es:'Los pasos de la guía para esta variante, según su tier máximo y si sube a Tier-3 o trasciende. Marcá hasta dónde llegaste con el personaje: queda guardado en este navegador.',
+                       en:'The guide’s steps for this variant, by its max tier and whether it goes Tier-3 or Transcends. Mark how far you got with the character: it is saved in this browser.' },
+  ru_done:           { es:'Hecho hasta acá',     en:'Done up to here' },
+  ru_undo:           { es:'Desmarcar',           en:'Unmark' },
+  ru_this_t3:        { es:'Esta variante sube a Tier-3.', en:'This variant goes to Tier-3.' },
+  ru_this_tp:        { es:'Esta variante trasciende su Potencial (no tiene Tier-3).', en:'This variant Transcends its Potential (it has no Tier-3).' },
+  ru_no_t3:          { es:'Esta variante no tiene Tier-3 ni Trascendencia: su techo es Tier-2.', en:'This variant has neither Tier-3 nor Transcendence: Tier-2 is its ceiling.' },
+  ru_no_t4:          { es:'Esta variante no tiene Tier-4.', en:'This variant has no Tier-4.' },
+  ru_notes:          { es:'Notas de la guía',    en:'Guide notes' },
+  cap_title:         { es:'Topes de stats',      en:'Stat caps' },
+  cap_note:          { es:'Poné lo que muestra la pantalla de stats del juego y, si querés, lo que suman los buffs con duración de sus skills (esa pantalla no los muestra). Se guarda por personaje en este navegador.',
+                       en:'Enter what the in-game stats page shows and, optionally, what the timed buffs from its skills add (that page does not show them). Saved per character in this browser.' },
+  cap_stat:          { es:'Stat',                en:'Stat' },
+  cap_cap:           { es:'Tope',                en:'Cap' },
+  cap_val:           { es:'Pantalla %',          en:'Stats page %' },
+  cap_buff:          { es:'+ buffs %',           en:'+ buffs %' },
+  cap_state:         { es:'Estado',              en:'Status' },
+  cap_short:         { es:'faltan {n}%',         en:'{n}% short' },
+  cap_ok:            { es:'en el tope',          en:'capped' },
+  cap_over:          { es:'pasado por {n}%: sobra', en:'over by {n}%: wasted' },
+  cap_base:          { es:'arranca en {n}%',     en:'starts at {n}%' },
+  cap_none:          { es:'Sin tope:',           en:'No cap:' },
   rot_title:         { es:'Rotaciones de skills', en:'Skill rotations' },
   rot_none:          { es:'thanosvibs no publica rotaciones para este uniforme.', en:'thanosvibs publishes no rotations for this uniform.' },
   rot_legend:        { es:'Cómo se leen',        en:'How to read them' },
@@ -572,6 +598,8 @@ const T = {
   at_done:           { es:'Listo',                en:'Done' },
   at_mark:           { es:'Marcar:',              en:'Mark:' },
   st_marks:          { es:'Skills con marcas',    en:'Skills with marks' },
+  st_routes:         { es:'Hojas de ruta marcadas', en:'Roadmaps marked' },
+  st_caps:           { es:'Topes cargados',      en:'Cap sheets' },
   f_targets:         { es:'Beneficia a (buffs de equipo)', en:'Buffs (team-wide effects)' },
   f_any_target:      { es:'— cualquiera —',        en:'— any —' },
   sy_title:          { es:'Sincronización',       en:'Sync' },
@@ -1849,6 +1877,59 @@ function armadoArtefacto (ch) {
       <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
     <div class="fuentes">${fuentesHtml(['tv-art'])}</div>`;
 }
+/** Hoja de ruta de la guía para esta variante: los pasos que le tocan según su tier
+ *  máximo y si sube a Tier-3 o trasciende, con los requisitos de la wiki. El usuario
+ *  marca hasta dónde llegó con ese personaje. */
+function armadoRuta (ch, v) {
+  const P = GUIA.progresion, R = Object.fromEntries(P.requisitos.items.map(x => [x.id, x]));
+  const techo = v.t === 'T2' ? 'n70' : v.t === 'T3' ? 'n80' : 't4';
+  const pasos = P.pasos.slice(0, P.pasos.findIndex(p => p.id === techo) + 1);
+  // El avance es del personaje: si marcó un paso que esta variante no tiene (Tier-4 en
+  // una sin Tier-4), todos los que sí tiene quedan hechos.
+  const hecho = Math.min(P.pasos.findIndex(p => p.id === U.ruta[ch.id]), pasos.length - 1);
+  const extra = (p) => {
+    if (p.id === 't3') return `<div class="req"><b>${h(t(v.trans ? 'ru_this_tp' : 'ru_this_t3'))}</b> ${h(bi(R[v.trans ? 'tp' : 't3']))}</div>`;
+    if (p.id === 't4') return `<div class="req">${h(bi(R.t4))}</div><div class="req aviso">${h(bi(P.requisitos.discrepancia))}</div>`;
+    return '';
+  };
+  return `<p class="muted">${h(t('ru_note'))}</p>
+    <ol class="ruta">${pasos.map((p, i) => `<li class="${i <= hecho ? 'hecho' : ''}">
+      <div class="row" style="gap:6px;flex-wrap:nowrap;align-items:flex-start"><span style="flex:1">${h(bi(p))}</span>
+        ${i === hecho ? `<button class="btn sm" data-a="ruta" data-cid="${ch.id}" data-v="${i ? pasos[i - 1].id : ''}">${h(t('ru_undo'))}</button>`
+                      : `<button class="btn sm" data-a="ruta" data-cid="${ch.id}" data-v="${p.id}">${h(t('ru_done'))}</button>`}</div>
+      ${extra(p)}</li>`).join('')}</ol>
+    ${v.t === 'T2' ? `<p class="muted">${h(t('ru_no_t3'))}</p>` : v.t === 'T3' ? `<p class="muted">${h(t('ru_no_t4'))}</p>` : ''}
+    <details class="usgrupo"><summary>${h(t('ru_notes'))}</summary>${P.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}</details>
+    <div class="fuentes">${fuentesHtml(P.fuente.concat(P.requisitos.fuente))}</div>`;
+}
+/** Estado de un stat frente a su tope: lo que falta, en el tope o lo que sobra. */
+function estadoTope (cid, k, tope) {
+  const x = (U.topes[cid] || {})[k] || {};
+  if (x.v == null && x.b == null) return '<span class="muted">—</span>';
+  const total = (x.v || 0) + (x.b || 0), dif = Math.round((total - tope) * 10) / 10;
+  return dif < 0 ? `<span style="color:var(--allies)">${h(t('cap_short').replace('{n}', -dif))}</span>`
+       : dif === 0 ? `<span style="color:var(--self)">${h(t('cap_ok'))}</span>`
+       : `<span style="color:var(--gold)">${h(t('cap_over').replace('{n}', dif))}</span>`;
+}
+/** Calculadora de topes: el usuario pone lo que muestra la pantalla de stats (y los
+ *  buffs con duración, que esa pantalla no suma) y ve cuánto le falta o le sobra. */
+function armadoTopes (ch) {
+  const T2 = GUIA.topes, mis = U.topes[ch.id] || {};
+  const conTope = T2.items.filter(x => x.tope != null).flatMap(x => x.stats.map(k => ({ k, tope: x.tope, base: x.base })));
+  const sinTope = T2.items.filter(x => x.tope == null).flatMap(x => x.stats);
+  const num = (k, f) => `<input type="number" step="0.1" inputmode="decimal" data-a="tope" data-cid="${ch.id}" data-k="${k}" data-f="${f}"
+      value="${(mis[k] || {})[f] != null ? mis[k][f] : ''}" aria-label="${h(statNom(k) + ' ' + t(f === 'v' ? 'cap_val' : 'cap_buff'))}">`;
+  return `<p class="muted">${h(t('cap_note'))}</p>
+    <div class="stagewrap"><table class="topes"><thead><tr><th>${h(t('cap_stat'))}</th><th>${h(t('cap_cap'))}</th>
+      <th>${h(t('cap_val'))}</th><th>${h(t('cap_buff'))}</th><th>${h(t('cap_state'))}</th></tr></thead><tbody>
+      ${conTope.map(x => `<tr><td>${h(statNom(x.k))}${x.base ? `<div class="muted">${h(t('cap_base').replace('{n}', x.base))}</div>` : ''}</td>
+        <td class="num">${x.tope}%</td><td>${num(x.k, 'v')}</td><td>${num(x.k, 'b')}</td>
+        <td data-estado="${x.k}">${estadoTope(ch.id, x.k, x.tope)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="muted">${h(t('cap_none'))} ${sinTope.map(statNom).map(h).join(', ')}.</p>
+    <details class="usgrupo"><summary>${h(t('ru_notes'))}</summary>${T2.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}</details>
+    <div class="fuentes">${fuentesHtml(T2.fuente)}</div>`;
+}
 function panelArmado (ch, v) {
   const ta = tipoAtaque(v.skills);
   return `<div class="section"><h3>${h(t('ar_title'))}</h3>
@@ -1859,6 +1940,8 @@ function panelArmado (ch, v) {
       <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}</div>
       <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
       <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
+      <div class="bloque"><h4>${h(t('ru_title'))}</h4>${armadoRuta(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
     </div></div>`;
 }
 
@@ -2190,6 +2273,8 @@ function renderSettings () {
       <div class="stat"><div class="k">${h(t('st_list_changes'))}</div><div class="v">${changed}</div></div>
       <div class="stat"><div class="k">${h(t('st_images'))}</div><div class="v">${Object.keys(U.images).length}</div></div>
       <div class="stat"><div class="k">${h(t('st_marks'))}</div><div class="v">${Object.keys(U.marcas || {}).length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_routes'))}</div><div class="v">${Object.keys(U.ruta).length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_caps'))}</div><div class="v">${Object.keys(U.topes).length}</div></div>
     </div>
     <div class="row" style="margin-top:12px">
       <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
@@ -2369,6 +2454,7 @@ document.addEventListener('click', (e) => {
     case 'irArmadoModos': e.preventDefault(); ui.view = 'modos'; render();
       document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
     case 'artEst': ui.artEst = d.v; render(); break;
+    case 'ruta': if (d.v) U.ruta[d.cid] = d.v; else delete U.ruta[d.cid]; commit(); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
       const id = 'mia-' + Date.now();
@@ -2488,6 +2574,17 @@ document.addEventListener('input', (e) => {
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'modeName') { U.modes[d.i].name = el.value; saveUser(); return; }
   if (a === 'modeSize') { U.modes[d.i].teamSize = Math.max(1, parseInt(el.value, 10) || 3); saveUser(); return; }
+  if (a === 'tope') {
+    const mis = U.topes[d.cid] = U.topes[d.cid] || {}, x = mis[d.k] = mis[d.k] || {};
+    const n = parseFloat(el.value);
+    if (el.value.trim() === '' || isNaN(n)) delete x[d.f]; else x[d.f] = n;
+    if (!Object.keys(x).length) delete mis[d.k];
+    if (!Object.keys(mis).length) delete U.topes[d.cid];
+    saveUser();
+    const it = GUIA.topes.items.find(i => i.stats.includes(d.k));
+    const celda = document.querySelector(`[data-estado="${d.k}"]`);
+    if (celda) celda.innerHTML = estadoTope(d.cid, d.k, it.tope);
+    return; }
 });
 
 document.addEventListener('change', (e) => {
