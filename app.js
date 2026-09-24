@@ -2672,6 +2672,14 @@ document.addEventListener('drop', (e) => {
   const resto = filasDe(ui.tierList, key).filter(r => r !== desde);
   setFilas(ui.tierList, key, hacia ? resto.concat(hacia) : resto);
 });
+// Íconos de C.T.P. y de artefacto (images/items/): thanosvibs no publica algunos (hoy
+// devuelve 404 para los artefactos de Annihilus, Galactus y Red Skull) y el resto puede
+// no haberse bajado todavía. Si uno no carga se quita: el nombre siempre va al lado.
+// Los retratos no entran acá: que falte uno se tiene que ver.
+document.addEventListener('error', (e) => {
+  const el = e.target;
+  if (el && el.tagName === 'IMG' && /\/images\/items\//.test(el.src)) el.remove();
+}, true);
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
 });
