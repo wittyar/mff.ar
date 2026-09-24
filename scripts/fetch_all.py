@@ -4,7 +4,7 @@
 Uso:
   python scripts/fetch_all.py                 # todo
   python scripts/fetch_all.py --datos         # personajes, skills, uniformes, instintos, iconos
-  python scripts/fetch_all.py --tierlists     # solo las cinco tier lists
+  python scripts/fetch_all.py --tierlists     # solo las tier lists (todas las públicas)
   python scripts/fetch_all.py --imagenes      # solo los retratos que falten
   python scripts/fetch_all.py --no-portraits  # todo menos los retratos (lo que usa el CI)
 
@@ -12,7 +12,7 @@ Las partes se pueden pedir sueltas para que cada boton de Ajustes actualice solo
 Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       work/skills_api/*.json, work/uniforms.json, work/wikitext/*.json,
       images/icons/*.png (insumo del build) e images/*.png (los retratos)."""
-import json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
+import glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
@@ -44,31 +44,46 @@ print('characters:', len(chars), 'filas')
 
 
 if HACER_TIERLISTS:
-    # 2) tier lists (por titulo, no por id hardcodeado), en work/tierlists/.
+    # 2) tier lists: todas las listas publicadas en thanosvibs, en work/tierlists/.
     # Son listas de autor: cada una trae sus propias filas rotuladas, que se respetan
-    # tal cual (ver _core.py). Si alguna cambia de titulo, el fetch avisa y sigue.
-    # (slug, título en thanosvibs, nombre ES en la app, nombre EN en la app)
-    TIERLISTS = [
-        ('tv-general',  'THANO$VIB$ General Tier List',   'General',               'General'),
-        ('tv-alianza',  'Alliance Battle',                'Batalla de Alianza',    'Alliance Battle'),
-        ('tv-arena',    'Team Battle Arena',              'Arena de Equipos',      'Team Battle Arena'),
-        ('tv-wbl',      'World Boss Legend (+)',          'World Boss Legend (+)', 'World Boss Legend (+)'),
-        ('tv-soportes', 'THANO$VIB$ Supports Tier List',  'Soportes',              'Supports'),
-    ]
+    # tal cual (ver _core.py). Las cinco principales (la general, soportes y las tres de
+    # modo) conservan el slug que ya tenían, porque la capa del usuario guarda sus
+    # cambios por slug, y se reconocen por id de proyecto y no por título: hay dos listas
+    # que se llaman parecido ("THANO$VIB$ Supports Tier List" y "Supports"). Las demás
+    # van con 'tv-' + id de proyecto.
+    # id de proyecto -> (slug, nombre ES en la app, nombre EN en la app)
+    PRINCIPALES = {
+        'proj-1787128586625-aucll': ('tv-general',  'General',               'General'),
+        'proj-1787505061964-ema1t': ('tv-alianza',  'Batalla de Alianza',    'Alliance Battle'),
+        'proj-1787507393380-56kpn': ('tv-arena',    'Arena de Equipos',      'Team Battle Arena'),
+        'proj-1787515240347-mnkz6': ('tv-wbl',      'World Boss Legend (+)', 'World Boss Legend (+)'),
+        'proj-1787128676713-qt4q4': ('tv-soportes', 'Soportes',              'Supports'),
+    }
     projects = get_json(TV + '/api/tierlists/projects')
-    by_title = {p['title']: p['id'] for p in projects}
+    faltan = [slug for pid, (slug, _, _) in PRINCIPALES.items() if pid not in {p['id'] for p in projects}]
+    if faltan:
+        print('AVISO: listas principales que thanosvibs ya no publica:', faltan)
+    # Se reescribe la carpeta entera: una lista que el autor despublicó no puede seguir
+    # entrando al build desde un archivo viejo.
     os.makedirs('work/tierlists', exist_ok=True)
-    for i, (slug, title, es, en) in enumerate(TIERLISTS):
-        pid = by_title.get(title)
-        if not pid:
-            print('AVISO: tier list sin encontrar (cambio de titulo?):', title)
-            continue
-        vers = get_json(TV + f'/api/tierlists/projects/{urllib.parse.quote(pid)}/versions')
+    for viejo in glob.glob('work/tierlists/*.json'):
+        os.remove(viejo)
+    orden_principal = list(PRINCIPALES)
+    for p in projects:
+        vers = get_json(TV + f"/api/tierlists/projects/{urllib.parse.quote(p['id'])}/versions")
         v0 = vers[0]
-        json.dump({'slug': slug, 'title': title, 'name_es': es, 'name_en': en, 'order': i, 'version': v0},
+        if p['id'] in PRINCIPALES:
+            slug, es, en = PRINCIPALES[p['id']]
+            orden, grupo = orden_principal.index(p['id']), 'principal'
+        else:
+            slug, es, en = 'tv-' + p['id'], p['title'], p['title']
+            orden, grupo = 100, 'comunidad'
+        json.dump({'slug': slug, 'title': p['title'], 'name_es': es, 'name_en': en, 'order': orden,
+                   'group': grupo, 'project': p, 'version': v0},
                   open(f'work/tierlists/{slug}.json', 'w'))
-        print('tier list:', title, '| juego', v0['gameVersion'], '| autor', v0.get('author'),
+        print('tier list:', p['title'], '| juego', v0['gameVersion'], '| autor', v0.get('author'),
               '| filas', len(v0.get('tiers', [])))
+    print('tier lists:', len(projects), 'publicadas')
 
 
 if HACER_DATOS:

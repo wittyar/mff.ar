@@ -1,4 +1,4 @@
-import glob, json, os, re, unicodedata
+import collections, glob, json, os, re, unicodedata
 d = json.load(open('work/characters.json'))
 inst = json.load(open('work/instintos.json'))
 SK = json.load(open('work/skills_parsed.json'))       # skills por retrato + tablas de texto
@@ -122,7 +122,7 @@ if sin_skills:
 tierlists, assign = [], {}
 for fn in TL_FILES:
     tl = json.load(open(fn))
-    v, slug = tl['version'], tl['slug']
+    v, slug, proj = tl['version'], tl['slug'], tl['project']
     # Las filas "Landing" son el area de descarte del editor de thanosvibs, no un nivel.
     rows = [{'id': t['id'], 'label': t['label'].strip()} for t in v.get('tiers', [])
             if not t['id'].startswith('tier-landing')]
@@ -131,13 +131,15 @@ for fn in TL_FILES:
     # Una entrada puede estar en varias filas a la vez: muchas listas son por categoría
     # ("PVE High Meta" y "PVE Support") y ponen al mismo personaje en las dos a
     # propósito. Cada entrada guarda sus filas en el orden de la lista.
-    a = {}
+    a, sin_cruzar = {}, []
     for cellkey, items in v['cellContents'].items():
         row = cellkey.split(':', 1)[1]
         if row not in valid: continue
         for it in items:
             pair = uindex.get((it['id'], it.get('uniform_id') if it['uniformed']=='True' else None))
-            if not pair: continue
+            if not pair:
+                sin_cruzar.append(f"{it.get('character')} / {it.get('uniform')}")
+                continue
             cid, uid = pair
             key = f"{cid}::{uid}" if uid else f"{cid}::base"
             filas = a.setdefault(key, [])
@@ -145,8 +147,20 @@ for fn in TL_FILES:
                 filas.append(row)
     for filas in a.values():
         filas.sort(key=orden_filas.get)
-    tierlists.append({'id': slug, 'order': tl.get('order', 99), 'name': tl['name_es'], 'nameEn': tl['name_en'], 'source': tl['title'],
+    if sin_cruzar:
+        # Una entrada que no cruza con el roster (un personaje o uniforme que thanosvibs ya
+        # no publica en /api/characters) no se puede ubicar: se avisa en vez de perderla.
+        print(f"AVISO {slug}: {len(sin_cruzar)} entradas sin personaje en el roster: {sin_cruzar[:5]}")
+    tierlists.append({'id': slug, 'order': tl['order'], 'group': tl['group'],
+                      'name': tl['name_es'], 'nameEn': tl['name_en'], 'source': tl['title'],
                       'author': v.get('author', ''), 'gameVersion': v.get('gameVersion', ''),
+                      'published': (v.get('publishDate') or '')[:10],
+                      # Textos del autor, en su idioma: igual que los rótulos de las filas,
+                      # no se traducen.
+                      'description': re.sub(r'\n{3,}', '\n\n', (v.get('description') or '').strip()),
+                      'notes': re.sub(r'\n{3,}', '\n\n', (v.get('updateNotes') or '').strip()),
+                      'tags': v.get('tags') or [],
+                      'rating': proj.get('averageRating'), 'ratings': proj.get('totalRatings'),
                       'rows': rows})
     assign[slug] = a
     print(f"tier list {slug}: {len(rows)} filas, {len(a)} entradas en {sum(len(f) for f in a.values())} ubicaciones"
@@ -196,7 +210,16 @@ VOCAB_EN.update({
  'lightning_resist':'Lightning Resist', 'poison_resist':'Poison Resist', 'mind_resist':'Mind Resist',
 })
 
-tierlists.sort(key=lambda t: t['order'])   # el orden de fetch_all manda: la general primero
+# Dos listas de la comunidad con el mismo título ("Personal Tier List") se distinguen por
+# su autor, que es lo único que las diferencia en el selector.
+_titulos = collections.Counter(t['source'] for t in tierlists if t['group'] == 'comunidad')
+for t in tierlists:
+    if t['group'] == 'comunidad' and _titulos[t['source']] > 1:
+        t['name'] = t['nameEn'] = f"{t['source']} ({t['author']})"
+# Primero las cinco principales en su orden fijo; después las de la comunidad, de la
+# publicada más recientemente a la más vieja.
+tierlists.sort(key=lambda t: t['published'], reverse=True)
+tierlists.sort(key=lambda t: t['order'])
 json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,
            'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs']},
           open('work/build2.json','w'), ensure_ascii=False)

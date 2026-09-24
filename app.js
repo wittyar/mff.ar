@@ -85,6 +85,13 @@ function listById (id) { return LISTS.find(l => l.id === id) || null; }
 /** Nombre de la lista en el idioma activo. Las listas propias solo tienen uno. */
 function listName (l) { return l ? ((LANG === 'en' && l.nameEn) || l.name) : ''; }
 function rowsOf (list) { return (list && list.rows && list.rows.length) ? list.rows : DEFAULT_ROWS; }
+/** Las listas se muestran agrupadas: las cinco principales de thanosvibs (general,
+ *  soportes y las de modo), el resto de las que publica la comunidad, y las propias. */
+const GRUPOS_LISTA = [['principal', 'tl_g_main'], ['comunidad', 'tl_g_community'], ['propia', 'tl_g_own']];
+function listasAgrupadas () {
+  return GRUPOS_LISTA.map(([g, k]) => ({ g, k, ls: LISTS.filter(l => (l.group || 'propia') === g) }))
+                     .filter(x => x.ls.length);
+}
 /** Asignaciones efectivas de una lista: las de data.js con los cambios del usuario encima. */
 function assignOf (listId) {
   const out = Object.assign({}, ASSIGN_SEED[listId] || {});
@@ -215,8 +222,8 @@ const T = {
   cmp_cost:          { es:'Costo',               en:'Cost' },
 
   tl_title:          { es:'Tier lists',          en:'Tier lists' },
-  tl_note:           { es:'Cada lista importada conserva las filas y los rótulos que le puso su autor. No son rangos S–D.',
-                       en:'Each imported list keeps the rows and labels its author wrote. They are not S–D ranks.' },
+  tl_note:           { es:'Las listas importadas son todas las que se publican en thanosvibs, con las filas y los rótulos que les puso su autor: no son rangos S–D.',
+                       en:'The imported lists are every list published on thanosvibs, with the rows and labels their author wrote: they are not S–D ranks.' },
   tl_new_ph:         { es:'Nombre de una lista nueva', en:'Name for a new list' },
   tl_create:         { es:'+ Crear lista',       en:'+ Create list' },
   tl_source:         { es:'Fuente:',             en:'Source:' },
@@ -234,6 +241,16 @@ const T = {
   tl_more:           { es:'más: filtrá para acotar.', en:'more: filter to narrow it down.' },
   tl_confirm_del:    { es:'¿Borrar esta lista y sus asignaciones?', en:'Delete this list and its placements?' },
   tl_spots:          { es:'ubicaciones',         en:'placements' },
+  tl_g_main:         { es:'Principales',         en:'Main' },
+  tl_g_community:    { es:'Comunidad',           en:'Community' },
+  tl_g_own:          { es:'Mías',                en:'Mine' },
+  tl_published:      { es:'publicada',           en:'published' },
+  tl_votes:          { es:'votos',               en:'votes' },
+  tl_rating_title:   { es:'Puntaje promedio que le dan los usuarios de thanosvibs', en:'Average score given by thanosvibs users' },
+  tl_description:    { es:'Descripción del autor', en:'Author\'s description' },
+  tl_notes:          { es:'Notas de esta versión', en:'Notes for this version' },
+  tl_author_lang:    { es:'Textos del autor, en su idioma original: igual que los rótulos de las filas, no se traducen.',
+                       en:'Author\'s texts, in their original language: like the row labels, they are not translated.' },
   tl_multi:          { es:'Está en más de una fila de esta lista', en:'It is in more than one row of this list' },
   tl_remove_row:     { es:'Quitar de esta fila', en:'Remove from this row' },
   tl_done:           { es:'Listo',               en:'Done' },
@@ -362,8 +379,8 @@ const T = {
   sy_data_note:       { es:'Personajes, uniformes, skills y costos. Tarda unos minutos.',
                         en:'Characters, uniforms, skills and costs. Takes a few minutes.' },
   sy_tier:            { es:'Actualizar tier lists',  en:'Update tier lists' },
-  sy_tier_note:       { es:'Solo las cinco listas de thanosvibs. Es rápido.',
-                        en:'Only the five thanosvibs lists. Quick.' },
+  sy_tier_note:       { es:'Todas las listas públicas de thanosvibs. Es rápido.',
+                        en:'Every public thanosvibs list. Quick.' },
   sy_img:             { es:'Bajar retratos que falten', en:'Download missing portraits' },
   sy_img_note:        { es:'Solo los que no estén en images/. La primera vez son 56 MB.',
                         en:'Only the ones missing from images/. The first time it is 56 MB.' },
@@ -889,7 +906,8 @@ function toolbar (total, shown) {
       <div class="filtergroup"><div class="lbl">${h(t('f_reflist'))}</div>
         <select data-a="refList" style="width:100%">
           <option value="">${h(t('none_f'))}</option>
-          ${LISTS.map(l => `<option value="${l.id}" ${l.id === U.prefs.refList ? 'selected' : ''}>${h(l.name)}</option>`).join('')}
+          ${listasAgrupadas().map(gr => `<optgroup label="${h(t(gr.k))}">${gr.ls.map(l =>
+            `<option value="${l.id}" ${l.id === U.prefs.refList ? 'selected' : ''}>${h(listName(l))}</option>`).join('')}</optgroup>`).join('')}
         </select>
       </div>
     </div>` : ''}
@@ -1129,7 +1147,7 @@ function renderCompare () {
            · ${h(t('d_gold'))}: ${((v.up.gold || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k
            · ${h(t('d_xp'))}: ${((v.up.uniform_xp || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k</div>`
         : '<span class="muted">—</span>'}</td>`).join('')}</tr>
-      ${LISTS.filter(l => Object.keys(assignOf(l.id)).length).map(l => {
+      ${LISTS.filter(l => vs.some(v => indicesFila(l, v.key).length)).map(l => {
         const rows = rowsOf(l);
         return `<tr><th>${h(listName(l))}</th>${vs.map(v => {
           const idx = indicesFila(l, v.key);
@@ -1212,18 +1230,28 @@ function renderTierList () {
       <button class="btn" data-a="addList">${h(t('tl_create'))}</button>
     </div>
   </div>
-  <div class="tlbar">${LISTS.map(l => `<button class="chip ${l.id === list.id ? 'on' : ''}" data-a="pickList" data-id="${l.id}">${h(listName(l))}</button>`).join('')}</div>
+  <div class="tlbar">${listasAgrupadas().map(gr => `<div class="tlgroup"><span class="tlglabel">${h(t(gr.k))}</span>
+    ${gr.ls.map(l => `<button class="chip ${l.id === list.id ? 'on' : ''}" data-a="pickList" data-id="${l.id}"
+      title="${h(l.author ? l.author + (l.gameVersion ? ' · ' + l.gameVersion : '') : '')}">${h(listName(l))}</button>`).join('')}</div>`).join('')}</div>
   <div class="tlsource">
     ${imported
-      ? `<span>${h(t('tl_source'))} <a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a> · «${h(list.source)}»</span>
+      ? `<span>${h(t('tl_source'))} <a href="https://thanosvibs.money/tierlist" target="_blank" rel="noopener">THANO$VIB$</a> · «${h(list.source)}»</span>
          ${list.author ? `<span class="tag dim">${h(t('tl_author'))} ${h(list.author)}</span>` : ''}
          ${list.gameVersion ? `<span class="tag dim">${h(t('tl_game'))} ${h(list.gameVersion)}</span>` : ''}
+         ${list.published ? `<span class="tag dim">${h(t('tl_published'))} ${h(list.published)}</span>` : ''}
+         ${list.ratings ? `<span class="tag dim" title="${h(t('tl_rating_title'))}">★ ${h(list.rating)} · ${h(list.ratings)} ${h(t('tl_votes'))}</span>` : ''}
+         ${(list.tags || []).map(x => `<span class="tag ghost" style="color:var(--text-3)">${h(x)}</span>`).join('')}
          <span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>`
       : `<span>${h(t('tl_own'))}</span><span class="tag dim">${Object.keys(a).length} ${h(t('tl_placed'))}${ubicaciones > Object.keys(a).length ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>
          <button class="btn sm danger" data-a="removeList" data-id="${list.id}">${h(t('tl_delete'))}</button>`}
     ${U.assign[list.id] && Object.keys(U.assign[list.id]).length
       ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">${h(t('tl_undo'))} (${Object.keys(U.assign[list.id]).length})</button>` : ''}
   </div>
+  ${list.description || list.notes ? `<div class="tlmeta">
+    ${list.description ? `<details><summary>${h(t('tl_description'))}</summary><p class="autor">${h(list.description)}</p></details>` : ''}
+    ${list.notes ? `<details><summary>${h(t('tl_notes'))}</summary><p class="autor">${h(list.notes)}</p></details>` : ''}
+    <span class="muted">${h(t('tl_author_lang'))}</span>
+  </div>` : ''}
   ${rows.map((r, i) => `<div class="tierrow" data-a="drop" data-row="${h(r.id)}">
     <div class="tierlabel" style="background:${rowColor(i, rows.length)}">${h(r.label)}</div>
     <div class="tieritems">${byRow[r.id].map(v => chip(v, r.id)).join('') || `<span class="muted" style="align-self:center">${h(t('tl_drop_here'))}</span>`}</div>
