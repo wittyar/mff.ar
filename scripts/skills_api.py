@@ -5,7 +5,8 @@ snapshot, en los dos idiomas.
 Por qué esta fuente y no la wiki: la API es el modelo de datos del juego. Trae las
 skills de cada uniforme, la Uniform Passive y la Striker Skill, el cooldown y el
 porcentaje de carga de ult y de striker, y cada efecto ya viene tipado (abilityId +
-etiqueta) en vez de ser texto libre. La wiki queda solo como fuente del instinto.
+etiqueta) en vez de ser texto libre. De la wiki sale solo el instinto; auditar.py la usa
+además para contrastar daño y recarga, sin cambiar nada de lo que sale de acá.
 Lo que se pierde: la geometría del golpe (hits, melee/ranged, área, empuje), que la
 API no publica.
 

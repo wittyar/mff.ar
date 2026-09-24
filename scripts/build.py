@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # va directo a la pantalla del usuario.
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
                        'work/updates.json', 'work/ctps.json', 'work/artifacts.json', 'work/abxl.json',
-                       'work/supports.json', 'work/rotations.json',
+                       'work/supports.json', 'work/rotations.json', 'work/wiki_artifact.json',
                        'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
            if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
@@ -21,12 +21,14 @@ if _faltan:
                      '  (o el boton "Actualizar datos del juego" en Ajustes)')
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'fuentes.py')], check=True)
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'auditar.py')], check=True)
 exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 
 b = json.load(open('work/build2.json'))
 chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
 vocab, SKILLS, TABLAS, BUFFS = b['vocab'], b['skills'], b['tablas'], b['buffs']
 FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
+VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato']
 # Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
 # que los retratos; si falta el archivo la app muestra el nombre sin ícono.
 for c in FUENTES['ctps']:
@@ -93,6 +95,8 @@ window.MFF_sk = sk;
  'window.MFF_CANCELS = ' + json.dumps(FUENTES['cancels'], ensure_ascii=False) + ';\n',
  'window.MFF_SOPORTES = ' + json.dumps(FUENTES['soportes'], ensure_ascii=False) + ';\n',
  'window.MFF_ROTACIONES = ' + json.dumps(FUENTES['rotaciones'], ensure_ascii=False) + ';\n',
+ '// Contraste con la wiki y chequeos internos por retrato (scripts/auditar.py; informe en docs/AUDITORIA.md).\n',
+ 'window.MFF_VERIFICACION = ' + json.dumps(VERIF, ensure_ascii=False) + ';\n',
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',
  'window.MFF_GUIA = ' + json.dumps({**FUENTES['guia'], 'version_fuente': FUENTES['version_guia_fuente']}, ensure_ascii=False) + ';\n',
  'window.MFF_MODOS = ' + json.dumps(FUENTES['modos'], ensure_ascii=False) + ';\n',

@@ -324,6 +324,25 @@ const T = {
   cap_over:          { es:'pasado por {n}%: sobra', en:'over by {n}%: wasted' },
   cap_base:          { es:'arranca en {n}%',     en:'starts at {n}%' },
   cap_none:          { es:'Sin tope:',           en:'No cap:' },
+  vf_title:          { es:'Verificación entre fuentes', en:'Cross-source check' },
+  vf_tag:            { es:'{n} diferencias entre fuentes', en:'{n} source differences' },
+  vf_resumen:        { es:'Skills de este uniforme contra la wiki — coinciden: {ok} · difieren: {d} · no están en la wiki: {nd}.',
+                       en:'Skills of this uniform against the wiki — match: {ok} · differ: {d} · not on the wiki: {nd}.' },
+  vf_sin_dif:        { es:'Nada distinto entre lo que se pudo contrastar.', en:'Nothing differs in what could be checked.' },
+  vf_nota:           { es:'La app muestra thanosvibs; una diferencia es para revisar en el juego (la wiki suele estar vieja), no un error confirmado. Informe completo:',
+                       en:'The app shows thanosvibs; a difference is something to check in-game (the wiki is often outdated), not a confirmed error. Full report:' },
+  vf_dano:           { es:'daño {a}% en thanosvibs, {w}% en la wiki', en:'damage {a}% on thanosvibs, {w}% on the wiki' },
+  vf_cd:             { es:'recarga {a} s en thanosvibs, {w} s en la wiki', en:'cooldown {a} s on thanosvibs, {w} s on the wiki' },
+  vf_atk:            { es:'Tipo de ataque: {a} según sus skills; el infobox de la wiki dice {w}', en:'Attack type: {a} per its skills; the wiki infobox says {w}' },
+  vf_inst:           { es:'Instinto: {a} en el infobox de la wiki (el que usa la app); la categoría de la página dice {w}', en:'Instinct: {a} in the wiki infobox (the one the app uses); the page category says {w}' },
+  vf_t4:             { es:'thanosvibs lo marca Tier-4 pero no trae su Striker Skill.', en:'thanosvibs marks it Tier-4 but has no Striker Skill for it.' },
+  vf_s6:             { es:'thanosvibs le marca skill 6 ({v}) pero no trae la Definitiva.', en:'thanosvibs marks a 6th skill ({v}) but has no Ultimate for it.' },
+  vf_art:            { es:'Artefacto a 6★: números solo en thanosvibs {a}; solo en la wiki {w}', en:'Artifact at 6★: numbers only on thanosvibs {a}; only on the wiki {w}' },
+  vf_art_inc:        { es:'Artefacto: la fuente no trae todos los valores de {v}.', en:'Artifact: the source lacks some values at {v}.' },
+  vf_type:           { es:'Clase: {a} en thanosvibs, {w} en la wiki', en:'Class: {a} on thanosvibs, {w} on the wiki' },
+  vf_side:           { es:'Bando: {a} en thanosvibs, {w} en la wiki', en:'Side: {a} on thanosvibs, {w} on the wiki' },
+  vf_gender:         { es:'Género: {a} en thanosvibs, {w} en la wiki', en:'Gender: {a} on thanosvibs, {w} on the wiki' },
+  vf_allies:         { es:'Raza: {a} en thanosvibs, {w} en la wiki', en:'Race: {a} on thanosvibs, {w} on the wiki' },
   rot_title:         { es:'Rotaciones de skills', en:'Skill rotations' },
   rot_none:          { es:'thanosvibs no publica rotaciones para este uniforme.', en:'thanosvibs publishes no rotations for this uniform.' },
   rot_legend:        { es:'Cómo se leen',        en:'How to read them' },
@@ -1324,6 +1343,8 @@ function renderDetail () {
           <span class="tag dim">${h(dom(v.f))}</span>
           ${insTag(v.ins)}
           ${v.nuevo ? tagSolid(t('new_tag'),'var(--gold)') : ''}
+          ${(() => { const n = verifDe(ch, v).dif.length;
+            return n ? `<a href="#verif" class="tag ghost" style="color:var(--gold)" data-a="irVerif" title="${h(t('vf_title'))}">⚠ ${h(t('vf_tag').replace('{n}', n))}</a>` : ''; })()}
           ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join('')}
         </div>
         <div class="statgrid">
@@ -1625,6 +1646,7 @@ const CANCELS = window.MFF_CANCELS || {};
 const GUIA_PJ = window.MFF_GUIA_PJ || {};
 const SOPORTES = window.MFF_SOPORTES || {};
 const ROTACIONES = window.MFF_ROTACIONES || {};
+const VERIF = window.MFF_VERIFICACION || {};
 const TXT    = window.MFF_TXT || {};
 /** Texto de una fuente en inglés, en el idioma activo. Sin traducción cargada se muestra
  *  el inglés marcado, como las líneas de efecto: nunca se inventa una. Devuelve HTML.
@@ -1975,6 +1997,40 @@ function panelRotaciones (ch, v) {
     <div class="fuentes">${fuentesHtml(G.fuente)}</div></div>`;
 }
 
+// ============================================================================
+// FICHA: VERIFICACIÓN ENTRE FUENTES (scripts/auditar.py)
+// ============================================================================
+/** Diferencias del retrato abierto y, para lo que es del personaje (artefacto), del base. */
+function verifDe (ch, v) {
+  const propio = VERIF[v.p] || { ok: 0, nd: 0, dif: [] };
+  const base = v.p !== ch.p ? (VERIF[ch.p] || { dif: [] }).dif.filter(d => d.t === 'art' || d.t === 'art_incompleto') : [];
+  return { ok: propio.ok, nd: propio.nd, dif: propio.dif.concat(base) };
+}
+const CAMPO_VERIF = { type: 'vf_type', side: 'vf_side', gender: 'vf_gender', allies: 'vf_allies' };
+function verifLinea (d) {
+  const n = (x) => Array.isArray(x) ? x.join(', ') : String(x);
+  const sk = () => `${slotEs(d.sl)} · <b>${h(d.n)}</b>: `;
+  switch (d.t) {
+    case 'dano': return sk() + h(t('vf_dano').replace('{a}', n(d.api)).replace('{w}', n(d.wiki)));
+    case 'cd': return sk() + h(t('vf_cd').replace('{a}', n(d.api)).replace('{w}', n(d.wiki)));
+    case 'atk': return h(t('vf_atk').replace('{a}', n(d.api)).replace('{w}', n(d.wiki)));
+    case 'instinto': return h(t('vf_inst').replace('{a}', n(d.api)).replace('{w}', n(d.wiki)));
+    case 't4': return h(t('vf_t4'));
+    case 's6': return h(t('vf_s6').replace('{v}', d.v));
+    case 'art': return h(t('vf_art').replace('{a}', n(d.api) || '—').replace('{w}', n(d.wiki) || '—'));
+    case 'art_incompleto': return h(t('vf_art_inc').replace('{v}', d.v.map(e => e + '★').join(', ')));
+  }
+  if (CAMPO_VERIF[d.t]) return h(t(CAMPO_VERIF[d.t]).replace('{a}', n(d.api)).replace('{w}', n(d.wiki)));
+  throw new Error('diferencia de verificación desconocida: ' + d.t);
+}
+function usoVerificacion (ch, v) {
+  const vf = verifDe(ch, v);
+  return `<p class="muted">${h(t('vf_resumen').replace('{ok}', vf.ok).replace('{d}', vf.dif.filter(d => d.t === 'dano' || d.t === 'cd').length).replace('{nd}', vf.nd))}</p>
+    ${vf.dif.length ? `<ul class="sopfx verif">${vf.dif.map(d => `<li>${verifLinea(d)}</li>`).join('')}</ul>`
+                    : `<p>${h(t('vf_sin_dif'))}</p>`}
+    <p class="muted">${h(t('vf_nota'))} <a href="docs/AUDITORIA.md" target="_blank" rel="noopener">docs/AUDITORIA.md</a></p>`;
+}
+
 function panelUso (ch, v) {
   return `<div class="section uso"><h3>${h(t('us_title'))}</h3>
     <p class="muted" style="margin-bottom:12px">${h(t('us_note'))}</p>
@@ -1983,6 +2039,7 @@ function panelUso (ch, v) {
       <div class="bloque"><h4>${h(t('us_sup'))}</h4>${usoSoportes(v)}</div>
       <div class="bloque"><h4>${h(t('us_guide'))}</h4>${usoGuia(ch, v)}</div>
       <div class="bloque"><h4>Alliance Battle</h4>${usoABX(ch, v)}</div>
+      <div class="bloque" id="verif"><h4>${h(t('vf_title'))}</h4>${usoVerificacion(ch, v)}</div>
     </div></div>`;
 }
 
@@ -2457,6 +2514,7 @@ document.addEventListener('click', (e) => {
     case 'irArmadoModos': e.preventDefault(); ui.view = 'modos'; render();
       document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
     case 'artEst': ui.artEst = d.v; render(); break;
+    case 'irVerif': e.preventDefault(); document.getElementById('verif')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); break;
     case 'ruta': if (d.v) U.ruta[d.cid] = d.v; else delete U.ruta[d.cid]; commit(); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;

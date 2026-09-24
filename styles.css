@@ -463,7 +463,8 @@ ol.prio{margin:0 0 6px;padding-left:20px;font-size:12.5px}
 .usf .tag{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .usgrupo{margin-bottom:6px}
 details.usgrupo summary{cursor:pointer;font-size:12.5px;color:var(--text-2);margin:6px 0}
-.tag.varx{font-size:10px}
+.tag.varx{font-size:10px;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+ul.verif li{margin-bottom:3px}
 .sops{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
 .sop{border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;background:rgba(255,255,255,.015)}
 .soph{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px}

@@ -82,7 +82,8 @@ REMOTA = {'juego': None, 'error': None}
 # sincronizacion de datos. En un paquete recien descomprimido no estan.
 INSUMOS = ('work/characters.json', 'work/instintos.json', 'work/uniforms.json', 'work/updates.json',
            'work/ctps.json', 'work/artifacts.json', 'work/abxl.json', 'work/supports.json',
-           'work/rotations.json', 'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
+           'work/rotations.json', 'work/wiki_artifact.json', 'work/guia/changelog.json',
+           'work/guia/parte1.txt', 'work/guia/parte2.txt')
 def pipeline_listo():
     if any(not os.path.exists(os.path.join(RAIZ, f)) for f in INSUMOS):
         return False

@@ -161,7 +161,8 @@ if HACER_DATOS:
     if still: print('AVISO: sin pagina de wiki:', still)
     json.dump(resolved, open('work/wiki_titles.json', 'w'))
 
-    # 4b) wikitexts (solo por el instinto)
+    # 4b) wikitexts: el instinto (parse_instinto.py) y el contraste de skills e infobox
+    # contra thanosvibs (auditar.py)
     def wslug(s): return re.sub(r'[^A-Za-z0-9]+', '_', s)
     for name, title in resolved.items():
         fn = f'work/wikitext/{wslug(name)}.json'
@@ -172,6 +173,11 @@ if HACER_DATOS:
             print('AVISO wikitext fallo:', name, e)
         time.sleep(0.1)
     print('wikitexts:', len(os.listdir('work/wikitext')))
+
+    # 4c) la página Artifact de la wiki: auditar.py contrasta con ella los valores de los
+    # artefactos (la wiki los lista a 6★, "Lv.4")
+    d = wiki_api({'action':'parse','page':'Artifact','prop':'wikitext','format':'json'})
+    json.dump({'title': 'Artifact', 'wt': d['parse']['wikitext']['*']}, open('work/wiki_artifact.json', 'w'))
 
 # 5) retratos: arte de terceros, gitignoreado y ajeno al build; se omiten en CI
 if HACER_IMAGENES:

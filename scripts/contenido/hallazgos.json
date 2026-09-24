@@ -1,0 +1,37 @@
+[
+ {
+  "id": "rotacion-mrknight-elsa",
+  "titulo": "Rotación de Mr. Knight que nombra a Elsa",
+  "es": "La rotación \"Awakened Ready (Hard)\" de Moon Knight (uniforme Mr. Knight) dice \"cancelá en la rotación normal cuando Elsa hace la voltereta hacia atrás\": parece copiada de la de Elsa Bloodstone. Se muestra como viene.",
+  "en": "Moon Knight's (Mr. Knight uniform) \"Awakened Ready (Hard)\" rotation says \"cancel into the normal rotation when Elsa backflips\": it looks copied from Elsa Bloodstone's. Shown as published.",
+  "fuente": ["tv-rot"]
+ },
+ {
+  "id": "iso-equipables-seguros",
+  "titulo": "ISO: \"equipables seguros\" de la guía",
+  "es": "La guía (parte 3) muestra como piedras que se pueden equipar antes de rolear el set dos Powerful, dos Amplifying, dos Impregnable, dos Absorbing y dos Chaotic. Según la composición de los tres sets de ataque (tabla de la wiki, que coincide con la imagen de la guía), lo que comparten los tres es una de cada una de las cuatro primeras, una Fierce y dos Chaotic: Power of Angry Hulk y Hawk's Eye llevan una sola Powerful y una sola Amplifying, y los tres llevan una Fierce. La app no repite esa lista.",
+  "en": "The guide (part 3) shows two each of Powerful, Amplifying, Impregnable, Absorbing and Chaotic as stones safe to equip before rolling the set. Per the three Attack sets' composition (the wiki table, which matches the guide's image), what all three share is one each of the first four, one Fierce and two Chaotic: Power of Angry Hulk and Hawk's Eye take a single Powerful and a single Amplifying, and all three take a Fierce. The app does not repeat that list.",
+  "fuente": ["tv-guia-3", "wiki-iso"]
+ },
+ {
+  "id": "opcion-heroic-evasion",
+  "titulo": "Opción de uniforme Heroic con evasión (PvP)",
+  "es": "Para PvP la guía sugiere evasión en la opción Heroic, pero su propia lista del pool de Heroic no tiene evasión (sí Advanced y Legendary). La app lo muestra con esa advertencia.",
+  "en": "For PvP the guide suggests Dodge on the Heroic option, but its own list of the Heroic pool has no Dodge (Advanced and Legendary do). The app shows it with that warning.",
+  "fuente": ["tv-guia-3"]
+ },
+ {
+  "id": "tier4-nivel-skills",
+  "titulo": "Nivel de skills para Tier-4: guía 12 y wiki 10",
+  "es": "La guía pone \"skills en Nv. 12\" en el paso previo al Tier-4; la wiki pide Nv. 10 como requisito. No hay una fuente que diga cuál es el requisito vigente: puede que la guía recomiende más del mínimo. La hoja de ruta muestra los dos.",
+  "en": "The guide lists \"Skill Lv.12\" in the step before Tier-4; the wiki requires Lv.10. No source states which requirement is current: the guide may recommend more than the minimum. The roadmap shows both.",
+  "fuente": ["tv-guia-1", "wiki-t4"]
+ },
+ {
+  "id": "tabla-artefacto-thanosvibs",
+  "titulo": "Tabla de efectos del artefacto en el sitio de thanosvibs",
+  "es": "En la sección Leads & Supports, el sitio muestra el tercer número de cada efecto de artefacto como duración (\"0.2s\"), con la columna \"Instinct\" corrida. Por la página Artifact de la wiki (Robbie Reyes, She-Hulk) ese número es el % adicional del instinto total, la duración va al final y, si el efecto acumula, el tope va antes de la duración. La app los muestra con ese significado.",
+  "en": "In Leads & Supports, the site shows the third number of each artifact effect as a duration (\"0.2s\"), with the \"Instinct\" column shifted. Per the wiki's Artifact page (Robbie Reyes, She-Hulk) that number is the extra % of total Instinct, the duration comes last and, for stacking effects, the cap comes before the duration. The app shows them with that meaning.",
+  "fuente": ["tv-sup", "tv-art"]
+ }
+]
