@@ -43,7 +43,7 @@ function blankUser () {
     assign: {},                       // listId -> {clave: [filaId, ...] | null}
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
     marcas: {},                       // '<retrato>::<tipo de skill>' -> {it:1, gb:1, ...}
-    modes: JSON.parse(JSON.stringify(SEED.MODES)),
+    modes: [],                        // modos propios: {id, name, teamSize}; los del juego salen de MFF_MODOS
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
@@ -65,6 +65,11 @@ function loadUser () {
     for (const l in u.assign) for (const k in u.assign[l]) {
       if (typeof u.assign[l][k] === 'string') u.assign[l][k] = [u.assign[l][k]];
     }
+    // Los modos de juego salen ahora de la sección Modos, con su tamaño de equipo según la
+    // fuente. Las capas viejas traían copiados cuatro modos de ejemplo sin fuente (uno,
+    // "Incursión", ni siquiera es un modo del juego): se quitan si siguen sin tocar.
+    const EJEMPLO = { pvp:'PvP|3', alianza:'Alianza|3', incursion:'Incursión|5', sombras:'Mundo de Sombras|3' };
+    u.modes = (u.modes || []).filter(m => EJEMPLO[m.id] !== m.name + '|' + m.teamSize);
     return u;
   } catch (e) { console.warn('capa de usuario ilegible, se arranca en limpio', e); return base; }
 }
@@ -436,7 +441,11 @@ const T = {
   st_no_logo:        { es:'Sin logo',            en:'No logo' },
   st_upload_logo:    { es:'Subir logo',          en:'Upload logo' },
   st_remove:         { es:'Quitar',              en:'Remove' },
-  st_modes:          { es:'Modos de juego (tamaño de equipo)', en:'Game modes (team size)' },
+  st_modes:          { es:'Modos propios (tamaño de equipo)', en:'Your own modes (team size)' },
+  st_modes_note:     { es:'Los modos del juego, con su tamaño de equipo según la fuente, están en la sección Modos. Acá podés sumar los tuyos para armar equipos.',
+                       en:'Game modes, with their team size per the source, are in the Modes section. Here you can add your own for building teams.' },
+  tm_modes_game:     { es:'Modos del juego',     en:'Game modes' },
+  tm_modes_own:      { es:'Modos propios',       en:'Your own modes' },
   st_add_mode:       { es:'+ Agregar modo',      en:'+ Add mode' },
   st_new_mode:       { es:'Modo nuevo',          en:'New mode' },
   st_sources:        { es:'Fuentes',             en:'Sources' },
@@ -1647,10 +1656,17 @@ function armadoHtml (tipo) {
 // ============================================================================
 // EQUIPOS
 // ============================================================================
+/** Modos para armar equipos: los del juego con tamaño de equipo según su fuente, y los
+ *  propios. {id, name, tam}. */
+function modosEquipo () {
+  return MODOS.filter(m => m.equipo && m.equipo.tam).map(m => ({ id: m.id, name: m.nombre, tam: m.equipo.tam, juego: true }))
+    .concat(U.modes.map(m => ({ id: m.id, name: m.name, tam: m.teamSize, juego: false })));
+}
+function tamModo (id) { const m = modosEquipo().find(x => x.id === id); return m ? m.tam : 3; }
 function renderTeams () {
   const eq = ui.team;                 // 't' es la función de idioma: el equipo se llama 'eq'
-  const mode = U.modes.find(m => m.id === eq.modeId);
-  const max = mode ? mode.teamSize : 3;
+  const max = tamModo(eq.modeId);
+  const modos = modosEquipo();
   const q = ui.teamSearch.trim().toLowerCase();
   const pool = allVariants().filter(v => !q || fullLabel(v).toLowerCase().includes(q)).sort((a, b) => rankIndex(a.key) - rankIndex(b.key));
   const PS = 40, pages = Math.max(1, Math.ceil(pool.length / PS));
@@ -1665,7 +1681,8 @@ function renderTeams () {
       <input placeholder="${h(t('tm_name_ph'))}" value="${h(eq.name)}" data-a="teamName" style="flex:2;min-width:180px">
       <select data-a="teamMode" style="flex:1;min-width:160px">
         <option value="">${h(t('tm_nomode'))}</option>
-        ${U.modes.map(m => `<option value="${m.id}" ${m.id === eq.modeId ? 'selected' : ''}>${h(m.name)} (${m.teamSize})</option>`).join('')}
+        ${[[true, 'tm_modes_game'], [false, 'tm_modes_own']].map(([juego, k]) => { const ms = modos.filter(m => m.juego === juego);
+          return ms.length ? `<optgroup label="${h(t(k))}">${ms.map(m => `<option value="${m.id}" ${m.id === eq.modeId ? 'selected' : ''}>${h(m.name)} (${m.tam})</option>`).join('')}</optgroup>` : ''; }).join('')}
       </select>
     </div>
     <div class="muted" style="margin-bottom:6px">${h(t('tm_members'))} ${eq.members.length} / ${max} — ${h(t('tm_sorted_by'))} ${h(listName(listById(U.prefs.refList)) || t('s_name'))}</div>
@@ -1691,6 +1708,7 @@ function renderTeams () {
       return `<div class="card" style="position:relative">
         <button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>
         <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
+        ${tt.modeId && modos.find(m => m.id === tt.modeId) ? `<div class="row" style="margin-bottom:6px"><span class="tag dim">${h(modos.find(m => m.id === tt.modeId).name)}</span></div>` : ''}
         <div class="row" style="gap:5px;margin-bottom:8px">${vs.map(v => imgUrl('portrait-' + v.id)
           ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
         <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
@@ -1795,6 +1813,7 @@ function renderSettings () {
   </div>
 
   <div class="section"><h3>${h(t('st_modes'))}</h3>
+    <p class="muted" style="margin-bottom:10px">${h(t('st_modes_note'))}</p>
     <div style="display:flex;flex-direction:column;gap:8px;max-width:520px">
       ${U.modes.map((m, i) => `<div class="row">
         <input value="${h(m.name)}" data-a="modeName" data-i="${i}" style="flex:1">
@@ -1994,7 +2013,7 @@ document.addEventListener('click', (e) => {
     case 'goTeams': ui.view = 'teams'; render(); break;
     case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
     case 'teamClose': ui.teamOpen = false; render(); break;
-    case 'teamToggle': { const eq = ui.team, mode = U.modes.find(m => m.id === eq.modeId), max = mode ? mode.teamSize : 3;
+    case 'teamToggle': { const eq = ui.team, max = tamModo(eq.modeId);
       const i = eq.members.indexOf(d.key);
       if (i > -1) eq.members.splice(i, 1); else { eq.members.push(d.key); if (eq.members.length > max) eq.members.shift(); }
       render(); break; }
@@ -2002,7 +2021,7 @@ document.addEventListener('click', (e) => {
     case 'teamSave': { const eq = ui.team; if (eq.members.length < 2) break;
       const vs = eq.members.map(k => variant(...k.split('::'))).filter(Boolean);
       U.teams.unshift({ id: 'eq-' + Date.now(), name: eq.name || vs.map(fullLabel).join(' + '),
-                        members: eq.members.slice(), reason: eq.reason });
+                        members: eq.members.slice(), reason: eq.reason, modeId: eq.modeId || '' });
       ui.teamOpen = false; commit(); break; }
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
 
@@ -2080,8 +2099,7 @@ document.addEventListener('change', (e) => {
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
   if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }
-  if (a === 'teamMode') { const m = U.modes.find(x => x.id === el.value);
-    ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-(m ? m.teamSize : 3)); render(); return; }
+  if (a === 'teamMode') { ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-tamModo(el.value)); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'marca') { marcar(d.p, d.sl, d.k, el.checked); return; }
   if (a === 'tlFila') { const actuales = filasDe(ui.tierList, ui.tlPick);

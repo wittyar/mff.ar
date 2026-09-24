@@ -65124,24 +65124,39 @@
  "teams": [],
  "modes": [
   {
-   "id": "pvp",
-   "name": "PvP",
+   "id": "world-boss",
+   "name": "World Boss (Ultimate / Legend)",
    "teamSize": 3
   },
   {
-   "id": "alianza",
-   "name": "Alianza",
+   "id": "alliance-battle",
+   "name": "Alliance Battle (Normal / Extreme / Legend)",
    "teamSize": 3
   },
   {
-   "id": "incursion",
-   "name": "Incursión",
+   "id": "dimension-rift",
+   "name": "Dimension Rift",
+   "teamSize": 3
+  },
+  {
+   "id": "timeline-battle",
+   "name": "Timeline Battle",
+   "teamSize": 3
+  },
+  {
+   "id": "otherworld-battle",
+   "name": "Otherworld Battle",
    "teamSize": 5
   },
   {
-   "id": "sombras",
-   "name": "Mundo de Sombras",
+   "id": "team-battle-arena",
+   "name": "Team Battle Arena",
    "teamSize": 3
+  },
+  {
+   "id": "alliance-conquest",
+   "name": "Alliance Conquest",
+   "teamSize": 6
   }
  ],
  "customTierLists": [

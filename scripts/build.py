@@ -44,11 +44,6 @@ SEED = {
  'RACES': ['Humano','Mutante','Inhumano','Alienígena','Criatura','Otro'],
  'GENDERS': ['Masculino','Femenino','Neutro'],
  'DAMAGE_TYPES': ['Físico','Energía','PG','Ninguno'],
- 'MODES': [
-   {'id':'pvp','name':'PvP','teamSize':3},
-   {'id':'alianza','name':'Alianza','teamSize':3},
-   {'id':'incursion','name':'Incursión','teamSize':5},
-   {'id':'sombras','name':'Mundo de Sombras','teamSize':3}],
  'SKILL_TAGS': ABIL_VALUES,
  'FACTIONS': ['Superhéroe','Supervillano','Neutral'],
  'CLASS_ADVANTAGE': {'Combate':'Velocidad','Velocidad':'Detonación','Detonación':'Combate','Universal':None}
@@ -109,7 +104,9 @@ window.MFF_sk = sk;
 """]
 open('data.js','w').write('\n'.join(parts))
 state = {
-  'characters': chars, 'teams': [], 'modes': SEED['MODES'],
+  'characters': chars, 'teams': [],
+  'modes': [{'id': m['id'], 'name': m['nombre'], 'teamSize': m['equipo']['tam']}
+            for m in FUENTES['modos'] if m.get('equipo')],
   'customTierLists': tl, 'tierAssignments': assign,
   'taxonomies': {
     'factions': [{'value':v,'icon':images.get('icon-'+v,'')} for v in SEED['FACTIONS']],

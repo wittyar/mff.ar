@@ -49,28 +49,6 @@ window.MFF_SEED = {
   "PG",
   "Ninguno"
  ],
- "MODES": [
-  {
-   "id": "pvp",
-   "name": "PvP",
-   "teamSize": 3
-  },
-  {
-   "id": "alianza",
-   "name": "Alianza",
-   "teamSize": 3
-  },
-  {
-   "id": "incursion",
-   "name": "Incursión",
-   "teamSize": 5
-  },
-  {
-   "id": "sombras",
-   "name": "Mundo de Sombras",
-   "teamSize": 3
-  }
- ],
  "SKILL_TAGS": [
   "Agente",
   "Agilidad",
