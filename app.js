@@ -275,6 +275,29 @@ const T = {
   us_abx_teams:      { es:'Equipos recomendados que lo incluyen:', en:'Recommended teams that include it:' },
   us_abx_none:       { es:'No está en los equipos recomendados.', en:'Not in the recommended teams.' },
   us_day:            { es:'Día',                 en:'Day' },
+  ar_title:          { es:'Cómo armarlo',        en:'How to build it' },
+  ar_note:           { es:'El C.T.P. que le asignan las fuentes, su artefacto y las reglas generales de la guía aplicadas a su tipo de ataque.',
+                       en:'The C.T.P. the sources assign it, its artifact and the guide’s general rules applied to its attack type.' },
+  ar_more:           { es:'Reglas completas en Modos ↓', en:'Full rules in Modes ↓' },
+  ar_ctp_nolist:     { es:'No está en esa lista.', en:'Not in that list.' },
+  ar_ctp_noimport:   { es:'Esa lista no está entre las importadas: sincronizá las tier lists.', en:'That list is not among the imported ones: sync the tier lists.' },
+  ar_ctp_guide:      { es:'Sugeridos por la guía de principiantes:', en:"Suggested by the Beginner's Guide:" },
+  ar_iso_pve:        { es:'PvE: uno de los tres sets de ataque.', en:'PvE: one of the three Attack sets.' },
+  ar_uru_fisico:     { es:'Urus de ataque físico.', en:'Physical Attack Urus.' },
+  ar_uru_energia:    { es:'Urus de ataque de energía.', en:'Energy Attack Urus.' },
+  ar_uru_vida:       { es:'Su daño escala con la vida: la guía no da una regla de urus para este caso (sí dice que para estos personajes la vida importa).',
+                       en:'Its damage scales with HP: the guide gives no Uru rule for this case (it does say HP matters for these characters).' },
+  ar_uru_mixto:      { es:'Pega con ataque físico y de energía: la guía no da una regla de urus para este caso.',
+                       en:'It hits with both Physical and Energy Attack: the guide gives no Uru rule for this case.' },
+  ar_uru_ninguno:    { es:'Sus skills activas no hacen daño: la regla de urus de ataque no aplica.',
+                       en:'Its active skills deal no damage: the attack Uru rule does not apply.' },
+  ar_art:            { es:'Artefacto',           en:'Artifact' },
+  ar_art_none:       { es:'thanosvibs no le lista artefacto exclusivo.', en:'thanosvibs lists no exclusive artifact for it.' },
+  ar_score_t:        { es:'Puntaje de thanosvibs, de 0 a 3', en:'thanosvibs score, 0 to 3' },
+  ar_since:          { es:'desde la',            en:'since' },
+  ar_nodata:         { es:'sin dato',            en:'no data' },
+  ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
+  ar_obtain:         { es:'Cómo se consigue',    en:'How to get it' },
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
 
@@ -658,7 +681,8 @@ let ui = {
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
-  modoFiltro: 'todos', modoAbierto: null, abxDia: 1
+  modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
+  artEst: '6'                        // nivel de estrellas que muestra el artefacto de la ficha
 };
 
 // ============================================================================
@@ -1244,6 +1268,7 @@ function renderDetail () {
   </div>
 
   ${panelUso(ch, v)}
+  ${panelArmado(ch, v)}
 
   <div class="section">
     <h3>${h(t('d_uni_section'))} · ${pluralUni(ch.uniforms.length)}</h3>
@@ -1553,6 +1578,11 @@ function miniPj (v, extra, nota) {
     ${u ? `<img src="${u}" alt="" loading="lazy">` : ''}<span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}${extra || ''}</span>`;
 }
 function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
+/** Un C.T.P. plegable con lo que hace según thanosvibs (normal y reforjado). */
+function ctpDetalle (c, extra) {
+  return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>C.T.P. of ${h(c.name)}</b>${extra || ''}</summary>
+    <p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}</details>`;
+}
 /** Controles de Alliance Battle que aplican las skills de un retrato, como etiquetas:
  *  "Parálisis: 1/4" = las skills 1 y 4 (6 = la definitiva). */
 function cortesHtml (p, tipos) {
@@ -1696,6 +1726,90 @@ function usoABX (ch, v) {
     <div class="fuentes">${fuentesHtml(['tv-abxl'])}</div>`;
 }
 
+// ============================================================================
+// FICHA: CÓMO ARMARLO
+// Las reglas generales de la guía (las mismas de Modos → Armado) aplicadas a su tipo
+// de ataque, el C.T.P. que le asignan las fuentes y su artefacto.
+// ============================================================================
+function slugId (s) { return String(s).toLowerCase().replace(/[^a-z0-9]/g, ''); }
+/** C.T.P. según la Ideal CTP List (una fila por C.T.P.) y según la guía de principiantes. */
+function armadoCTP (ch, v) {
+  const li = GUIA.ctp_ranking.lista_ideal, l = listById(li.id);
+  let lista;
+  if (!l) lista = `<p class="muted">${h(t('ar_ctp_noimport'))}</p>`;
+  else {
+    const rows = rowsOf(l), fs = [];
+    variantesDe(ch).forEach(vv => indicesFila(l, vv.key).forEach(i => fs.push({ r: rows[i], vv })));
+    lista = fs.length ? `<div class="ctps">${fs.map(f => { const c = CTPS.find(x => x.id === slugId(f.r.label));
+        return c ? ctpDetalle(c, otraVar(f.vv, v)) : `<div class="row" style="gap:6px"><b>${h(f.r.label)}</b>${otraVar(f.vv, v)}</div>`; }).join('')}</div>`
+      : `<p class="muted">${h(t('ar_ctp_nolist'))}</p>`;
+  }
+  const guia = [...new Set(variantesDe(ch).flatMap(vv => (GUIA_PJ[vv.p] || []).flatMap(e => e.ctps)))];
+  return `<p class="muted">${h(li.nombre)}: ${h(bi(li))}</p>${lista}
+    ${guia.length ? `<p class="muted" style="margin-top:8px">${h(t('ar_ctp_guide'))}</p>
+      <div class="ctps">${guia.map(id => { const c = CTPS.find(x => x.id === id);
+        return c ? ctpDetalle(c) : `<span class="tag dim">${h(id === 'obelisco6' ? t('us_obelisk') : id)}</span>`; }).join('')}</div>` : ''}
+    <div class="fuentes">${fuentesHtml(li.fuente.concat(['tv-guia-1', 'tv-guia-2', 'tv-ctps']))}</div>`;
+}
+/** Sets ISO de ataque (PvE) y la nota de piedra que corresponde a su tipo de ataque. */
+function armadoISO (ta) {
+  const G = GUIA.iso, P = G.piedras, k = ta ? ta.k : null;
+  const piedras = k === 'fisico' ? ['roja'] : k === 'energia' ? ['blanca'] : k === 'mixto' ? ['roja', 'blanca'] : [];
+  return `<p class="muted">${h(t('ar_iso_pve'))}</p>
+    ${G.sets_pve.map(s => `<div class="isoset"><b>${h(s.nombre)}</b> ${piedrasHtml(s.piedras)}
+      <div class="muted">${s.stats.map(statNom).join(' · ')}</div></div>`).join('')}
+    ${piedras.map(p => `<p>${piedrasHtml([p])} <b>${h(P[p].nombre)}</b>: ${h(bi(P[p]))}</p>`).join('')}
+    ${k === 'vida' ? `<p>${h(bi(G.notas_pve[2]))}</p>` : ''}
+    <p>${piedrasHtml(['caos'])} <b>${h(P.caos.nombre)}</b>: ${h(bi(P.caos))}</p>
+    <p class="muted">${h(bi(G.notas_pve[1]))}</p>
+    <p class="muted"><b>PvP:</b> ${h(bi(G.notas_pvp[0]))}</p>
+    <div class="fuentes">${fuentesHtml(G.fuente)}</div>`;
+}
+/** Urus: primero los del tipo de ataque del personaje; después, los topes en orden. */
+function armadoUrus (ta) {
+  const G = GUIA.urus, k = ta ? ta.k : 'ninguno';
+  return `<p><b>${h(t('ar_uru_' + k))}</b></p>
+    <p class="muted">${h(bi(G.ataque))}</p>
+    <p class="muted">${h(bi(G.prioridad_nota))}</p>
+    <ol class="prio">${G.prioridad.map(x => `<li>${h(statNom(x))}</li>`).join('')}</ol>
+    <p class="muted"><b>${h(t('md_gear4'))}:</b> ${GUIA.gear4.prioridad.map(x => h(statNom(x))).join(' › ')}. ${h(bi(GUIA.gear4.notas[1]))}</p>
+    <div class="fuentes">${fuentesHtml(G.fuente.concat(GUIA.gear4.fuente.filter(x => !G.fuente.includes(x))))}</div>`;
+}
+/** Artefacto exclusivo: el texto del juego con los valores del nivel de estrellas elegido. */
+function armadoArtefacto (ch) {
+  const a = ARTES.find(x => x.p === ch.p);
+  if (!a) return `<p class="muted">${h(t('ar_art_none'))}</p>`;
+  const est = ui.artEst, vals = a.valores[est] || [];
+  const linea = (ln) => {
+    const es = LANG === 'en' ? ln.t : TXT[ln.t];
+    const txt = h(es == null ? ln.t : es).replace(/\[P(\d+)\]/g, (_, n) => vals[n - 1] != null ? `<b>${h(vals[n - 1])}</b>`
+      : `<i class="tpl" title="${h(t('ar_nodata_t'))}">${h(t('ar_nodata'))}</i>`);
+    return `<div class="artl" style="padding-left:${ln.n * 14}px">${ln.b ? '• ' : ''}${es == null
+      ? `<span class="sintrad" title="${h(t('untranslated'))}">${txt}</span>` : txt}</div>`;
+  };
+  const puntaje = (lbl, n) => `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${'★'.repeat(n)}${'☆'.repeat(Math.max(0, 3 - n))}</span>`;
+  return `<div class="row" style="gap:8px;margin-bottom:6px;flex-wrap:nowrap">${imgUrl('art-' + a.p) ? `<img class="artico" src="${imgUrl('art-' + a.p)}" alt="">` : ''}
+      <div><b>${h(a.name)}</b><div class="muted">${h(a.pasiva)} · ${h(t('ar_since'))} ${h(a.desde)}</div></div></div>
+    <div class="row" style="gap:6px;margin-bottom:8px">${puntaje('PvE', a.pve)}${puntaje('PvP', a.pvp)}</div>
+    <div class="seg" style="margin-bottom:8px">${['3', '4', '5', '6'].map(e => `<button class="${e === est ? 'on' : ''}" data-a="artEst" data-v="${e}">${e}★</button>`).join('')}</div>
+    <div class="artlineas">${a.lineas.map(linea).join('')}</div>
+    ${a.obtencion.length ? `<details class="usgrupo"><summary>${h(t('ar_obtain'))} (${a.obtencion.length})</summary>
+      <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
+    <div class="fuentes">${fuentesHtml(['tv-art'])}</div>`;
+}
+function panelArmado (ch, v) {
+  const ta = tipoAtaque(v.skills);
+  return `<div class="section"><h3>${h(t('ar_title'))}</h3>
+    <p class="muted" style="margin-bottom:12px">${h(t('ar_note'))}
+      <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
+    <div class="usogrid">
+      <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}</div>
+      <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
+      <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
+    </div></div>`;
+}
+
 function panelUso (ch, v) {
   return `<div class="section uso"><h3>${h(t('us_title'))}</h3>
     <p class="muted" style="margin-bottom:12px">${h(t('us_note'))}</p>
@@ -1820,9 +1934,7 @@ function panelCTPs (tipo) {
   const grupos = (GUIA.ctp_ranking || { grupos: [] }).grupos.filter(g => g.id === tipo || (g.id === 'otros'));
   return `<div class="bloque"><h4>${h(t('md_ctps'))}</h4>
     ${grupos.map(g => `<p class="muted">${h(bi(g))}</p><div class="ctps">${g.ctps.map(id => {
-      const c = CTPS.find(x => x.id === id); if (!c) return '';
-      return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>C.T.P. of ${h(c.name)}</b></summary>
-        <p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}</details>`; }).join('')}</div>`).join('')}
+      const c = CTPS.find(x => x.id === id); return c ? ctpDetalle(c) : ''; }).join('')}</div>`).join('')}
     <div class="fuentes">${fuentesHtml(GUIA.ctp_ranking && GUIA.ctp_ranking.fuente)}</div>
   </div>`;
 }
@@ -2175,6 +2287,9 @@ document.addEventListener('click', (e) => {
     case 'modoAbrir': ui.modoAbierto = ui.modoAbierto === d.id ? null : d.id; render(); break;
     case 'verLista': ui.view = 'tierlist'; ui.tierList = d.id; render(); window.scrollTo(0, 0); break;
     case 'irArmado': e.preventDefault(); document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
+    case 'irArmadoModos': e.preventDefault(); ui.view = 'modos'; render();
+      document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
+    case 'artEst': ui.artEst = d.v; render(); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
       const id = 'mia-' + Date.now();
