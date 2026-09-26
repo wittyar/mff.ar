@@ -138,6 +138,13 @@ class Handler(SimpleHTTPRequestHandler):
         pass  # la consola es para el progreso de la sincronizacion, no para cada GET
 
     # --- proteccion minima: solo se aceptan llamadas de la propia app ---
+    def _host_valido(self):
+        # Una pagina de otro sitio puede hacer que su dominio apunte a 127.0.0.1 (DNS
+        # rebinding) y hablarle a este servidor como si fuera su propio origen, con
+        # cabeceras incluidas. El Host delata el nombre que uso: solo se acepta el nuestro.
+        puerto = self.server.server_port
+        return self.headers.get('Host') in (f'127.0.0.1:{puerto}', f'localhost:{puerto}')
+
     def _propio(self):
         # Una pagina de otro sitio no puede mandar esta cabecera sin un preflight,
         # y este servidor no responde CORS, asi que el preflight falla.
@@ -162,6 +169,8 @@ class Handler(SimpleHTTPRequestHandler):
         super().end_headers()
 
     def do_GET(self):
+        if not self._host_valido():
+            return self.send_error(403)
         if self.path.startswith('/api/'):
             if not self._propio():
                 return self._json({'error': 'origen no permitido'}, 403)
@@ -174,6 +183,8 @@ class Handler(SimpleHTTPRequestHandler):
         return super().do_GET()
 
     def do_POST(self):
+        if not self._host_valido():
+            return self.send_error(403)
         if not self.path.startswith('/api/'):
             return self._json({'error': 'no existe'}, 404)
         if not self._propio():
