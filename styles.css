@@ -302,6 +302,7 @@ td.same{background:rgba(255,45,85,.055)}
 @media (max-width:760px){
   main{padding:18px 12px 70px}
   .toolbar{margin:-18px -12px 14px;padding:10px 12px}
+  .avisos{padding:12px 12px 0}
   .grid{grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
   .grid.dense{grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:8px}
   .shot .nm{font-size:12px}
@@ -381,16 +382,19 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 .tpl{font-style:normal;color:var(--text-3);border-bottom:1px dotted var(--line-2);cursor:help;font-size:.94em}
 
 /* ---------- sincronización (app de escritorio) ---------- */
-.syncrow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
-  border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);
-  padding:11px 13px;margin-bottom:8px}
-.synclog{margin-top:12px;border:1px solid var(--line);border-radius:var(--r-sm);background:#0b0e17;
-  padding:10px 12px;max-height:260px;overflow:auto}
-.synclog.mal{border-color:rgba(255,45,85,.45)}
-.synclog pre{margin:0;font-family:var(--font-mono);font-size:11.5px;line-height:1.5;
-  color:var(--text-2);white-space:pre-wrap;word-break:break-word}
-.syncerr{color:var(--accent-2);font-weight:600;margin-bottom:6px}
-.syncok{color:var(--self);font-weight:600;margin-bottom:6px}
+/* Zona de avisos entre la barra de navegación y la vista (servidor caído, capa sin guardar,
+   actualizaciones). Va fuera de <main> para que la barra del roster no la tape. */
+.avisos{max-width:1360px;margin:0 auto;padding:14px 20px 0}
+.avisos:empty{display:none}
+.avisos > :last-child{margin-bottom:0}
+.avisos > *{overflow-wrap:anywhere}   /* los errores traen URLs largas sin espacios */
+/* Avisos de actualización arriba de la vista: descarga en curso, lista para usar, sin conexión. */
+.aviso-app{border:1px solid var(--line-2);border-left:3px solid var(--gold);background:var(--surface);
+  border-radius:var(--r-sm);padding:10px 14px;margin-bottom:12px;font-size:13px}
+.aviso-app.ok{border-left-color:var(--self)}
+.aviso-app .btn{margin-left:8px}
+.aviso-app .barra{height:4px;border-radius:2px;background:var(--surface-3);margin-top:8px;overflow:hidden}
+.aviso-app .barra i{display:block;height:100%;background:var(--gold);transition:width .3s}
 /* Servidor de escritorio cerrado con la pestaña abierta: va arriba de cualquier vista. */
 .srvcaido{border:1px solid rgba(255,45,85,.45);border-left:3px solid var(--accent);background:var(--accent-soft);
   border-radius:var(--r-sm);padding:10px 14px;margin-bottom:18px;font-size:13px}

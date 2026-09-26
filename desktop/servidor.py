@@ -1,33 +1,44 @@
 #!/usr/bin/env python3
 """Servidor local de TA GUIANAEL MFF.
 
-Por que hace falta: la API de thanosvibs no manda Access-Control-Allow-Origin, asi
-que el navegador bloquea sus llamadas desde la pagina. La sincronizacion tiene que
-correr fuera del sandbox, y este proceso es ese afuera: sirve la app en 127.0.0.1 y
-expone los botones de Ajustes como endpoints que ejecutan el pipeline de siempre.
+Sirve la app en 127.0.0.1 y hace lo que la página no puede: guardar la capa del
+usuario en disco y bajar actualizaciones (el navegador no puede escribir archivos, y
+las fuentes no habilitan CORS).
 
-Programa y datos van en carpetas distintas. De la carpeta del programa (la del repo)
-salen index.html, app.js y styles.css; de la carpeta de datos (--datos), data.js,
-docs/ e images/, y ahi escribe el pipeline. Fuera de esas rutas no se sirve nada.
+Programa y datos van en carpetas distintas. De la carpeta del programa salen
+index.html, app.js y styles.css; de la carpeta de datos, data.js, docs/ e images/.
+Fuera de esas rutas no se sirve nada.
 
-La capa del usuario (listas, equipos, rutas, topes, ediciones) vive en capa.json, en
-la carpeta de datos: la pagina la pide con GET /api/capa y la guarda con PUT. Antes
-de la primera escritura de cada dia se copia la anterior a respaldos/ (quedan 7).
+API (solo para la propia página: cabecera X-MFF y Host 127.0.0.1):
+  GET  /api/estado            versión de la app y de los datos locales, tareas en curso
+  GET  /api/capa              la capa del usuario ({"capa": null} si todavía no hay)
+  PUT  /api/capa              la guarda; antes de la primera escritura de cada día copia
+                              la anterior a respaldos/ (quedan 7)
+  POST /api/latido            la ventana sigue abierta
+  GET  /api/novedades         compara los datos locales con los publicados en GitHub
+  POST /api/datos/actualizar  baja los datos publicados (tarea en segundo plano)
+  GET  /api/progreso          avance de las tareas
 
-No se corre solo: lo arranca desktop/lanzador.py (crear), que tambien abre la ventana
-y lo apaga cuando ninguna ventana late (POST /api/latido) durante un rato.
+No se corre solo: lo arranca desktop/lanzador.py (crear), que también abre la ventana
+y lo apaga cuando ninguna ventana late durante un rato.
 
-Solo biblioteca estandar, para que corra con el Python embebido que viaja en la carpeta.
+Solo biblioteca estándar: corre con el Python embebido del instalador.
 """
-import datetime, glob, json, os, re, shutil, subprocess, sys, threading, time, urllib.parse, urllib.request
+import datetime, glob, json, os, re, shutil, threading, time, urllib.parse
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+
+import actualizador
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATOS = None                          # carpeta de datos; la fija crear()
-sys.path.insert(0, os.path.join(RAIZ, 'scripts'))
-from version_juego import ultima
-PY = sys.executable
-UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
+ORIGEN_DATOS = None                   # de dónde se bajan los datos; lo fija crear()
+# version.json viaja con el programa: versión de la app y formato de datos que entiende.
+try:
+    with open(os.path.join(RAIZ, 'version.json'), encoding='utf-8') as _f:
+        VERSION = json.load(_f)
+except OSError as _e:
+    raise RuntimeError(f'el programa está incompleto: no se pudo leer version.json ({_e})')
+TAREAS = {'datos': actualizador.Tarea()}
 
 # ---- vida del servidor: se apaga cuando ninguna ventana late ----
 ESPERA = 180                          # segundos sin latidos antes de apagarse; la fija crear()
@@ -39,119 +50,40 @@ def latido():
     _ultimo_latido = time.monotonic()
 
 def latido_cada():
-    """Cada cuanto late la pagina: holgado frente a ESPERA porque el navegador espacia los
+    """Cada cuánto late la página: holgado frente a ESPERA porque el navegador espacia los
     timers de una ventana minimizada (hasta uno por minuto)."""
     return max(1, min(30, ESPERA // 6))
 
 def debe_cerrar():
-    """Nadie late hace ESPERA segundos (o nunca latio nadie desde el arranque), y no hay
-    una sincronizacion a mitad de camino."""
-    if TRABAJO.estado()['corriendo']:
+    """Nadie late hace ESPERA segundos (o nunca latió nadie desde el arranque), y no hay
+    una tarea a mitad de camino."""
+    if any(t.estado()['corriendo'] for t in TAREAS.values()):
         return False
     return time.monotonic() - (_ultimo_latido or _ARRANQUE) > ESPERA
 
-# Lo unico que se sirve: los tres archivos del programa y, de la carpeta de datos,
-# data.js, los informes de docs/ y las imagenes. Cualquier otra ruta es 404.
+# Lo único que se sirve: los tres archivos del programa y, de la carpeta de datos,
+# data.js, los informes de docs/ y las imágenes. Cualquier otra ruta es 404.
 PROGRAMA = {'/': 'index.html', '/index.html': 'index.html', '/app.js': 'app.js', '/styles.css': 'styles.css'}
 DE_DATOS = re.compile(r'^/(?:data\.js|docs/[\w-]+\.md|images/(?:[\w-]+/)?[\w-]+\.png)$')
 
-def _script(nombre):
-    return os.path.join(RAIZ, 'scripts', nombre)
+def estado():
+    local = actualizador.leer_json(os.path.join(DATOS, 'datos.json'))
+    return {'app': 'mff-escritorio', 'raiz': RAIZ, 'datos': DATOS, 'latido_cada': latido_cada(),
+            'version': VERSION['version'], 'formato_datos': VERSION['formato_datos'],
+            'datos_local': actualizador.resumen(local),
+            'tareas': {n: t.estado() for n, t in TAREAS.items()}}
 
-# Cada boton de Ajustes es una secuencia de comandos. build.py se corre despues de
-# cualquier cambio de datos porque es el que regenera data.js. Corren con la carpeta
-# de datos como directorio de trabajo: ahi dejan work/, images/, docs/ y data.js.
-TAREAS = {
-    'datos':     [[PY, _script('fetch_all.py'), '--datos'],
-                  [PY, _script('parse_instinto.py')],
-                  [PY, _script('build.py')]],
-    'tierlists': [[PY, _script('fetch_all.py'), '--tierlists'],
-                  [PY, _script('build.py')]],
-    'imagenes':  [[PY, _script('fetch_all.py'), '--imagenes']],
-}
-
-class Trabajo:
-    """Una sincronizacion en curso. Solo puede haber una a la vez."""
-    def __init__(self):
-        self.lock = threading.Lock()
-        self.que = None
-        self.lineas = []
-        self.error = None
-        self.terminado = False
-        self.corriendo = False
-
-    def estado(self):
-        with self.lock:
-            return {'corriendo': self.corriendo, 'que': self.que, 'lineas': self.lineas[-200:],
-                    'error': self.error, 'terminado': self.terminado}
-
-    def arrancar(self, que):
-        with self.lock:
-            if self.corriendo:
-                return False
-            self.que, self.lineas, self.error, self.terminado, self.corriendo = que, [], None, False, True
-        threading.Thread(target=self._correr, args=(que,), daemon=True).start()
-        return True
-
-    def _log(self, txt):
-        with self.lock:
-            self.lineas.append(txt)
-
-    def _correr(self, que):
-        try:
-            for cmd in TAREAS[que]:
-                self._log('$ ' + ' '.join(os.path.basename(c) for c in cmd))
-                p = subprocess.Popen(cmd, cwd=DATOS, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                     text=True, encoding='utf-8', errors='replace', bufsize=1)
-                for linea in p.stdout:
-                    self._log(linea.rstrip())
-                if p.wait() != 0:
-                    raise RuntimeError(f'{os.path.basename(cmd[1])} termino con codigo {p.returncode}')
-            self._log('Listo.')
-        except Exception as e:
-            with self.lock:
-                self.error = str(e)
-            self._log('ERROR: ' + str(e))
-        finally:
-            with self.lock:
-                self.corriendo, self.terminado = False, True
-
-TRABAJO = Trabajo()
-REMOTA = {'juego': None, 'error': None}
-
-# 'tierlists' regenera data.js, y para eso el build necesita los insumos que deja la
-# sincronizacion de datos. En un paquete recien descomprimido no estan.
-INSUMOS = ('work/characters.json', 'work/instintos.json', 'work/uniforms.json', 'work/updates.json',
-           'work/ctps.json', 'work/artifacts.json', 'work/abxl.json', 'work/supports.json',
-           'work/rotations.json', 'work/wiki_artifact.json', 'work/guia/changelog.json',
-           'work/guia/parte1.txt', 'work/guia/parte2.txt')
-def pipeline_listo():
-    if any(not os.path.exists(os.path.join(DATOS, f)) for f in INSUMOS):
-        return False
-    d = os.path.join(DATOS, 'work', 'skills_api')
-    return os.path.isdir(d) and bool(os.listdir(d))
-
-def version_local():
-    """Lee window.MFF_VERSION del data.js que hay en disco."""
+def novedades():
+    """Cada canal por separado: si uno falla (sin conexión, GitHub caído), el error va en
+    su lugar y los demás siguen."""
     try:
-        with open(os.path.join(DATOS, 'data.js'), encoding='utf-8') as f:
-            cabecera = f.read(4000)
-        m = re.search(r'window\.MFF_VERSION\s*=\s*(\{.*?\});', cabecera, re.S)
-        return json.loads(m.group(1)) if m else {}
-    except Exception:
-        return {}
-
-def consultar_version_remota():
-    """La version de juego que publica thanosvibs, para avisar si hay una mas nueva.
-    Sale de /api/updates con la misma regla que usa build.py (version_juego.py)."""
-    try:
-        req = urllib.request.Request('https://thanosvibs.money/api/updates', headers=UA)
-        REMOTA['juego'] = ultima(json.loads(urllib.request.urlopen(req, timeout=25).read()))[1]
+        datos = actualizador.novedades_datos(ORIGEN_DATOS, DATOS, VERSION['formato_datos'])
     except Exception as e:
-        REMOTA['error'] = str(e)
+        datos = {'error': actualizador.explicar(e)}
+    return {'datos': datos}
 
 # ---- capa del usuario ----
-CAPA_MAX = 64 * 1024 * 1024        # las imagenes subidas viajan como data URL dentro de la capa
+CAPA_MAX = 64 * 1024 * 1024        # las imágenes subidas viajan como data URL dentro de la capa
 RESPALDOS = 7
 _capa_lock = threading.Lock()
 
@@ -159,9 +91,9 @@ def _ruta_capa():
     return os.path.join(DATOS, 'capa.json')
 
 def leer_capa():
-    """(codigo, cuerpo): {'capa': null} si todavia no hay capa (primer uso); 500 si el
-    archivo no es un objeto JSON valido. En ese caso la pagina no arranca: guardar
-    encima la pisaria."""
+    """(código, cuerpo): {'capa': null} si todavía no hay capa (primer uso); 500 si el
+    archivo no es un objeto JSON válido. En ese caso la página no arranca: guardar
+    encima la pisaría."""
     ruta = _ruta_capa()
     if not os.path.exists(ruta):
         return 200, {'capa': None}
@@ -175,8 +107,8 @@ def leer_capa():
         return 500, {'error': f'no se pudo leer {ruta}: {e}'}
 
 def guardar_capa(capa):
-    """Escribe capa.json de forma atomica (archivo temporal + reemplazo). Antes de la
-    primera escritura del dia copia la capa vigente a respaldos/capa-AAAA-MM-DD.json."""
+    """Escribe capa.json de forma atómica (archivo temporal + reemplazo). Antes de la
+    primera escritura del día copia la capa vigente a respaldos/capa-AAAA-MM-DD.json."""
     ruta = _ruta_capa()
     with _capa_lock:
         if os.path.exists(ruta):
@@ -202,19 +134,19 @@ class Handler(SimpleHTTPRequestHandler):
         return os.path.join(DATOS, 'no-existe')  # send_head responde 404
 
     def log_message(self, *a):
-        pass  # la consola es para el progreso de la sincronizacion, no para cada GET
+        pass  # un renglón por cada retrato no aporta; lo que importa va a registro.txt
 
-    # --- proteccion minima: solo se aceptan llamadas de la propia app ---
+    # --- protección mínima: solo se aceptan llamadas de la propia app ---
     def _host_valido(self):
-        # Una pagina de otro sitio puede hacer que su dominio apunte a 127.0.0.1 (DNS
+        # Una página de otro sitio puede hacer que su dominio apunte a 127.0.0.1 (DNS
         # rebinding) y hablarle a este servidor como si fuera su propio origen, con
-        # cabeceras incluidas. El Host delata el nombre que uso: solo se acepta el nuestro.
+        # cabeceras incluidas. El Host delata el nombre que usó: solo se acepta el nuestro.
         puerto = self.server.server_port
         return self.headers.get('Host') in (f'127.0.0.1:{puerto}', f'localhost:{puerto}')
 
     def _propio(self):
-        # Una pagina de otro sitio no puede mandar esta cabecera sin un preflight,
-        # y este servidor no responde CORS, asi que el preflight falla.
+        # Una página de otro sitio no puede mandar esta cabecera sin un preflight,
+        # y este servidor no responde CORS, así que el preflight falla.
         if self.headers.get('X-MFF') != '1':
             return False
         origen = self.headers.get('Origin')
@@ -230,43 +162,50 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(cuerpo)
 
     def end_headers(self):
-        # data.js cambia con cada sincronizacion: no puede quedar cacheado.
+        # data.js cambia con cada actualización: no puede quedar cacheado.
         if self.path.startswith('/data.js'):
             self.send_header('Cache-Control', 'no-store')
         super().end_headers()
 
+    def _api(self):
+        """Filtro común de la API. False (y ya respondido) si el pedido no es de la página."""
+        if not self._propio():
+            self._json({'error': 'origen no permitido'}, 403)
+            return False
+        return True
+
     def do_GET(self):
         if not self._host_valido():
             return self.send_error(403)
-        if self.path.startswith('/api/'):
-            if not self._propio():
-                return self._json({'error': 'origen no permitido'}, 403)
-            if self.path.startswith('/api/estado'):
-                return self._json({'app': 'mff-escritorio', 'raiz': RAIZ, 'datos': DATOS,
-                                   'latido_cada': latido_cada(), 'local': version_local(), 'remota': REMOTA,
-                                   'listo': pipeline_listo(), 'trabajo': TRABAJO.estado()})
-            if self.path.startswith('/api/progreso'):
-                return self._json(TRABAJO.estado())
-            if self.path == '/api/capa':
-                codigo, cuerpo = leer_capa()
-                return self._json(cuerpo, codigo)
-            return self._json({'error': 'no existe'}, 404)
-        return super().do_GET()
+        if not self.path.startswith('/api/'):
+            return super().do_GET()
+        if not self._api():
+            return
+        if self.path == '/api/estado':
+            return self._json(estado())
+        if self.path == '/api/capa':
+            codigo, cuerpo = leer_capa()
+            return self._json(cuerpo, codigo)
+        if self.path == '/api/novedades':
+            return self._json(novedades())
+        if self.path == '/api/progreso':
+            return self._json({n: t.estado() for n, t in TAREAS.items()})
+        return self._json({'error': 'no existe'}, 404)
 
     def do_PUT(self):
         if not self._host_valido():
             return self.send_error(403)
         if self.path != '/api/capa':
             return self._json({'error': 'no existe'}, 404)
-        if not self._propio():
-            return self._json({'error': 'origen no permitido'}, 403)
+        if not self._api():
+            return
         largo = int(self.headers.get('Content-Length') or 0)
         if not 0 < largo <= CAPA_MAX:
-            return self._json({'error': f'tamaño de capa invalido ({largo} bytes; maximo {CAPA_MAX})'}, 413)
+            return self._json({'error': f'tamaño de capa inválido ({largo} bytes; máximo {CAPA_MAX})'}, 413)
         try:
             capa = json.loads(self.rfile.read(largo).decode('utf-8'))
         except Exception as e:
-            return self._json({'error': f'la capa no es JSON valido: {e}'}, 400)
+            return self._json({'error': f'la capa no es JSON válido: {e}'}, 400)
         if not isinstance(capa, dict):
             return self._json({'error': 'la capa tiene que ser un objeto JSON'}, 400)
         try:
@@ -280,25 +219,21 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_error(403)
         if not self.path.startswith('/api/'):
             return self._json({'error': 'no existe'}, 404)
-        if not self._propio():
-            return self._json({'error': 'origen no permitido'}, 403)
+        if not self._api():
+            return
         if self.path == '/api/latido':
             latido()
             return self._json({'ok': True})
-        m = re.match(r'/api/sync/(datos|tierlists|imagenes)', self.path)
-        if not m:
-            return self._json({'error': 'no existe'}, 404)
-        que = m.group(1)
-        if que == 'tierlists' and not pipeline_listo():
-            return self._json({'error': 'sin-datos'}, 409)
-        if not TRABAJO.arrancar(que):
-            return self._json({'error': 'ya hay una sincronizacion en curso'}, 409)
-        return self._json(TRABAJO.estado())
+        if self.path == '/api/datos/actualizar':
+            tarea = lambda t: actualizador.actualizar_datos(ORIGEN_DATOS, DATOS, VERSION['formato_datos'], t)
+            if not TAREAS['datos'].arrancar(tarea):
+                return self._json({'error': 'ya se están bajando los datos'}, 409)
+            return self._json(TAREAS['datos'].estado())
+        return self._json({'error': 'no existe'}, 404)
 
-def crear(datos, puerto=0, espera=180):
-    """Servidor atado a 127.0.0.1. puerto 0 deja que el sistema elija uno libre: la capa ya
-    no depende del origen, asi que el puerto puede cambiar entre arranques."""
-    global DATOS, ESPERA, _ARRANQUE
-    DATOS, ESPERA, _ARRANQUE = os.path.abspath(datos), espera, time.monotonic()
-    threading.Thread(target=consultar_version_remota, daemon=True).start()
+def crear(datos, puerto, espera, origen_datos):
+    """Servidor atado a 127.0.0.1. puerto 0 deja que el sistema elija uno libre: la capa no
+    depende del origen, así que el puerto puede cambiar entre arranques."""
+    global DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS
+    DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS = os.path.abspath(datos), espera, time.monotonic(), origen_datos
     return ThreadingHTTPServer(('127.0.0.1', puerto), Handler)

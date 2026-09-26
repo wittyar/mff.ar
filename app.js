@@ -633,33 +633,33 @@ const T = {
   st_caps:           { es:'Topes cargados',      en:'Cap sheets' },
   f_targets:         { es:'Beneficia a (buffs de equipo)', en:'Buffs (team-wide effects)' },
   f_any_target:      { es:'— cualquiera —',        en:'— any —' },
-  sy_title:          { es:'Sincronización',       en:'Sync' },
-  sy_go:             { es:'Sincronizar',          en:'Sync now' },
-  sy_note:            { es:'Baja los datos de thanosvibs y regenera el snapshot local. La página se recarga sola al terminar.',
-                        en:'Downloads the data from thanosvibs and rebuilds the local snapshot. The page reloads when it finishes.' },
-  sy_local:           { es:'Datos locales',         en:'Local data' },
-  sy_remote:          { es:'Última versión publicada', en:'Latest published version' },
-  sy_snapshot:        { es:'snapshot',              en:'snapshot' },
-  sy_uptodate:        { es:'Estás al día.',         en:'You are up to date.' },
-  sy_outdated:        { es:'Hay una versión más nueva del juego que la de tus datos.',
-                        en:'There is a newer game version than the one in your data.' },
-  sy_unknown:         { es:'No se pudo consultar la versión publicada.',
-                        en:'Could not check the published version.' },
-  sy_data:            { es:'Actualizar datos del juego', en:'Update game data' },
-  sy_data_note:       { es:'Personajes, uniformes, skills y costos. Tarda unos minutos.',
-                        en:'Characters, uniforms, skills and costs. Takes a few minutes.' },
-  sy_tier:            { es:'Actualizar tier lists',  en:'Update tier lists' },
-  sy_tier_note:       { es:'Todas las listas públicas de thanosvibs. Es rápido.',
-                        en:'Every public thanosvibs list. Quick.' },
-  sy_img:             { es:'Bajar retratos que falten', en:'Download missing portraits' },
-  sy_img_note:        { es:'Solo los que no estén en images/. La primera vez son 56 MB.',
-                        en:'Only the ones missing from images/. The first time it is 56 MB.' },
-  sy_running:         { es:'Sincronizando…',        en:'Syncing…' },
-  sy_done:            { es:'Listo. Recargando…',    en:'Done. Reloading…' },
-  sy_failed:          { es:'Falló la sincronización', en:'Sync failed' },
-  sy_busy:            { es:'Ya hay una sincronización en curso.', en:'A sync is already running.' },
-  sy_needdata:        { es:'Primero hay que actualizar los datos del juego: las tier lists se arman sobre ellos.',
-                        en:'Update the game data first: the tier lists are built on top of it.' },
+  ac_title:           { es:'Actualizaciones',     en:'Updates' },
+  ac_note:            { es:'La app busca datos nuevos cada vez que se abre y los baja sola. Salen de GitHub, donde se arman cada lunes a partir de thanosvibs y la wiki.',
+                        en:'The app looks for new data every time it opens and downloads it on its own. It comes from GitHub, where it is built every Monday from thanosvibs and the wiki.' },
+  ac_app:             { es:'Versión de la app',   en:'App version' },
+  ac_local:           { es:'Datos del juego',     en:'Game data' },
+  ac_built:           { es:'armados el',          en:'built on' },
+  ac_remote:          { es:'Publicados en GitHub', en:'Published on GitHub' },
+  ac_checked:         { es:'consultado a las',    en:'checked at' },
+  ac_check:           { es:'Buscar ahora',        en:'Check now' },
+  ac_checking:        { es:'Buscando…',           en:'Checking…' },
+  ac_uptodate:        { es:'Estás al día.',       en:'You are up to date.' },
+  ac_new:             { es:'Hay datos nuevos.',   en:'New data available.' },
+  ac_folder:          { es:'Carpeta de datos',    en:'Data folder' },
+  ac_folder_note:     { es:'Ahí están capa.json (tus listas, equipos y ajustes) y respaldos/, con una copia por día.',
+                        en:'It holds capa.json (your lists, teams and settings) and respaldos/, with one copy per day.' },
+  av_dl:              { es:'Bajando datos nuevos del juego', en:'Downloading new game data' },
+  av_dl_done:         { es:'Datos del juego actualizados', en:'Game data updated' },
+  av_dl_use:          { es:'Usar ahora',          en:'Use now' },
+  av_dl_use_t:        { es:'Recarga la ventana',  en:'Reloads the window' },
+  av_dl_err:          { es:'No se pudieron bajar los datos nuevos:', en:'The new data could not be downloaded:' },
+  av_incompat:        { es:'Hay datos nuevos del juego, pero son para una versión más nueva de la app.',
+                        en:'There is new game data, but it is for a newer version of the app.' },
+  av_check_err:       { es:'No se pudo buscar actualizaciones:', en:'Could not check for updates:' },
+  av_hide:            { es:'Ocultar',             en:'Hide' },
+  pd_title:           { es:'Actualizando los datos del juego', en:'Updating game data' },
+  pd_note:            { es:'Esta versión de la app usa datos de otro formato: se bajan de GitHub y la ventana se recarga sola.',
+                        en:'This app version uses data in another format: it is downloaded from GitHub and the window reloads on its own.' },
   sy_srv_down:        { es:'Se cerró el programa de la app.', en:'The app program closed.' },
   sy_srv_down_note:   { es:'Esta ventana sigue con lo que ya había cargado, pero tus cambios no se guardan, los retratos e íconos que no estaban cargados no aparecen y la sincronización no anda. Cerrala y abrí la app de nuevo; si vuelve a pasar, el motivo queda en registro.txt, en la carpeta de datos.',
                         en:'This window keeps what it had already loaded, but your changes are not saved, portraits and icons that were not loaded yet do not show up and sync does not work. Close it and open the app again; if it happens again, the reason is in registro.txt, in the data folder.' },
@@ -695,27 +695,67 @@ let LANG = U.prefs.lang;
 // Access-Control-Allow-Origin).
 // ---------------------------------------------------------------------------
 let ESCRITORIO = null;               // respuesta de /api/estado (se pide en arrancar)
-let SYNC = { progreso: null, poll: null };
 async function apiLocal (ruta, metodo) {
   const r = await fetch(ruta, { method: metodo || 'GET', headers: { 'X-MFF': '1' } });
   const cuerpo = await r.json();
   if (!r.ok) throw new Error(cuerpo.error || ('HTTP ' + r.status));
   return cuerpo;
 }
-function pollProgreso () {
-  clearInterval(SYNC.poll);
-  SYNC.poll = setInterval(async () => {
+
+// ---- actualizaciones ----
+// Al abrir se pregunta a GitHub (vía el servidor) si hay datos nuevos. Si hay y son del
+// formato de esta versión, se bajan solos con el avance a la vista; al terminar, un botón
+// recarga la ventana para usarlos (no se recarga sola: podrías estar a mitad de algo).
+// Un error queda a la vista: nunca se traga.
+const NOV = { buscando: false, hora: null, datos: null, oculto: false };
+const PROG = { datos: null, poll: null };
+async function buscarNovedades () {
+  NOV.buscando = true; pintarActualizaciones();
+  try {
+    const n = await apiLocal('/api/novedades');
+    NOV.datos = n.datos; NOV.hora = new Date(); NOV.oculto = false;
+    if (n.datos.hay && n.datos.compatible) bajarDatos();
+  } catch (e) { NOV.datos = { error: e.message }; verificarServidor(); }
+  NOV.buscando = false;
+  pintarAvisos(); pintarActualizaciones();
+}
+async function bajarDatos () {
+  try { PROG.datos = await apiLocal('/api/datos/actualizar', 'POST'); }
+  catch (e) { PROG.datos = { error: e.message, terminado: true }; pintarAvisos(); return; }
+  pintarAvisos();
+  clearInterval(PROG.poll);
+  PROG.poll = setInterval(async () => {
     try {
-      const p = await apiLocal('/api/progreso');
-      SYNC.progreso = p;
-      if (p.terminado) {
-        clearInterval(SYNC.poll); SYNC.poll = null;
-        if (!p.error) { try { sessionStorage.setItem('mff_volver', 'settings'); } catch (e) {}
-                        setTimeout(() => location.reload(), 1200); }
-      }
-      if (ui.view === 'settings') render();
-    } catch (e) { clearInterval(SYNC.poll); SYNC.poll = null; verificarServidor(); }
-  }, 1500);
+      PROG.datos = (await apiLocal('/api/progreso')).datos;
+      if (PROG.datos.terminado) { clearInterval(PROG.poll); PROG.poll = null; }
+    } catch (e) { clearInterval(PROG.poll); PROG.poll = null; verificarServidor(); }
+    pintarAvisos(); pintarActualizaciones();
+  }, 700);
+}
+/** Recarga la ventana volviendo a la misma sección (la ficha abierta no se conserva). */
+const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'settings'];
+function recargar () {
+  try { sessionStorage.setItem('mff_volver', VISTAS_PRINCIPALES.includes(ui.view) ? ui.view : 'roster'); } catch (e) {}
+  location.reload();
+}
+function mb (bytes) { return (bytes / 1048576).toFixed(1).replace('.', LANG === 'es' ? ',' : '.') + ' MB'; }
+/** Primer arranque de una versión que usa otro formato de datos (o sin data.js): baja
+ *  los publicados antes de mostrar nada, porque la app no puede leer los que hay. */
+async function pantallaDatos () {
+  const pintar = (extra) => pantallaFatal(t('pd_title'), t('pd_note') + (extra ? ' ' + extra : ''));
+  pintar();
+  try { await apiLocal('/api/datos/actualizar', 'POST'); }
+  catch (e) { return pintar(t('av_dl_err') + ' ' + e.message); }
+  const poll = setInterval(async () => {
+    let p;
+    try { p = (await apiLocal('/api/progreso')).datos; }
+    catch (e) { clearInterval(poll); return pintar(t('av_dl_err') + ' ' + e.message); }
+    if (p.terminado) {
+      clearInterval(poll);
+      return p.error ? pintar(t('av_dl_err') + ' ' + p.error) : location.reload();
+    }
+    if (p.total) pintar(`${mb(p.hecho)} / ${mb(p.total)}`);
+  }, 700);
 }
 // Si el servidor se cae con la ventana abierta, la página sigue con app.js y data.js ya
 // cargados: lo que no esté cargado (retratos, íconos, guardar la capa, la sincronización)
@@ -737,6 +777,21 @@ function avisosHtml () {
   if (SERVIDOR_CAIDO) out.push(`<div class="srvcaido"><b>${h(t('sy_srv_down'))}</b> ${h(t('sy_srv_down_note'))}</div>`);
   if (GUARDADO.error) out.push(`<div class="srvcaido"><b>${h(t('gd_error'))}</b> ${h(GUARDADO.error)}
     <button class="btn sm" data-a="reintentarGuardado">${h(t('gd_retry'))}</button></div>`);
+  const p = PROG.datos, r = (NOV.datos && NOV.datos.remoto) || {};
+  if (p && p.corriendo) {
+    const pct = p.total ? Math.round(100 * p.hecho / p.total) : 0;
+    out.push(`<div class="aviso-app"><b>${h(t('av_dl'))} ${h(r.juego || '')}</b> ${p.total ? h(mb(p.hecho) + ' / ' + mb(p.total)) : ''}
+      <div class="barra"><i style="width:${pct}%"></i></div></div>`);
+  } else if (p && p.terminado && p.error) {
+    out.push(`<div class="srvcaido"><b>${h(t('av_dl_err'))}</b> ${h(p.error)}
+      <button class="btn sm" data-a="reintentarDatos">${h(t('gd_retry'))}</button></div>`);
+  } else if (p && p.terminado) {
+    out.push(`<div class="aviso-app ok"><b>${h(t('av_dl_done'))} ${h(r.juego || '')}.</b>
+      <button class="btn sm primary" data-a="usarDatos" title="${h(t('av_dl_use_t'))}">${h(t('av_dl_use'))}</button></div>`);
+  }
+  if (NOV.datos && NOV.datos.hay && !NOV.datos.compatible) out.push(`<div class="aviso-app">${h(t('av_incompat'))}</div>`);
+  if (NOV.datos && NOV.datos.error && !NOV.oculto) out.push(`<div class="aviso-app">${h(t('av_check_err'))} ${h(NOV.datos.error)}
+    <button class="btn sm" data-a="ocultarAviso">${h(t('av_hide'))}</button></div>`);
   return out.join('');
 }
 function pintarAvisos () { const el = $('#avisos'); if (el) el.innerHTML = avisosHtml(); }
@@ -2371,7 +2426,7 @@ function renderSettings () {
     </div>
   </div>
 
-  ${seccionSync()}
+  ${seccionActualizaciones()}
 
   <div class="section"><h3>${h(t('st_brand'))}</h3>
     <div style="width:200px;height:52px;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center">
@@ -2404,48 +2459,37 @@ function renderSettings () {
   </div>`;
 }
 
-/** Sección de sincronización. Solo tiene sentido dentro de la app de escritorio. */
-function seccionSync () {
-  const loc = ESCRITORIO.local || {}, rem = ESCRITORIO.remota || {};
-  const p = SYNC.progreso;
-  const corriendo = !!(p && p.corriendo);
-  let aviso;
-  if (!rem.juego) aviso = `<span class="muted">${h(t('sy_unknown'))}</span>`;
-  else if (rem.juego === loc.juego) aviso = `<span class="tag dim">${h(t('sy_uptodate'))}</span>`;
-  else aviso = `<span class="tag solid" style="background:var(--gold)">${h(t('sy_outdated'))}</span>`;
-
-  // Las tier lists regeneran data.js y para eso el build necesita los insumos de la
-  // sincronizacion de datos, que un paquete recien descomprimido todavia no tiene.
-  const listo = ESCRITORIO.listo !== false;
-  const boton = (clave, nota, que) => {
-    const bloqueado = (que === 'tierlists' && !listo);
-    return `<div class="syncrow">
-      <div><div style="font-weight:600">${h(t(clave))}</div>
-        <div class="muted">${h(bloqueado ? t('sy_needdata') : t(nota))}</div></div>
-      <button class="btn ${corriendo || bloqueado ? '' : 'primary'}" data-a="sync" data-v="${que}"
-        ${corriendo || bloqueado ? 'disabled' : ''}>
-        ${h(corriendo && p.que === que ? t('sy_running') : t('sy_go'))}</button>
-    </div>`;
-  };
-
-  return `<div class="section"><h3>${h(t('sy_title'))}</h3>
-    <p class="muted" style="margin-bottom:12px">${h(t('sy_note'))}</p>
+/** Sección de actualizaciones de Ajustes. Se repinta sola (pintarActualizaciones) cuando
+ *  llega la respuesta de GitHub o avanza una descarga. */
+function seccionActualizaciones () {
+  const loc = ESCRITORIO.datos_local || {}, n = NOV.datos || {}, rem = n.remoto || {};
+  const p = PROG.datos;
+  let estado;
+  if (NOV.buscando) estado = `<span class="muted">${h(t('ac_checking'))}</span>`;
+  else if (n.error) estado = `<span class="tag solid" style="background:var(--accent)">${h(t('av_check_err'))}</span> <span class="muted">${h(n.error)}</span>`;
+  else if (p && p.corriendo) estado = `<span class="muted">${h(t('av_dl'))}…</span>`;
+  else if (n.hay && !n.compatible) estado = `<span class="tag solid" style="background:var(--gold)">${h(t('av_incompat'))}</span>`;
+  else if (n.hay) estado = `<span class="tag solid" style="background:var(--gold)">${h(t('ac_new'))}</span>`;
+  else if (NOV.hora) estado = `<span class="tag dim">${h(t('ac_uptodate'))}</span>`;
+  else estado = '';
+  return `<div class="section" id="seccion-actualizaciones"><h3>${h(t('ac_title'))}</h3>
+    <p class="muted" style="margin-bottom:12px">${h(t('ac_note'))}</p>
     <div class="statgrid" style="margin-bottom:12px">
-      <div class="stat"><div class="k">${h(t('sy_local'))}</div>
-        <div class="v">${h(loc.juego || '?')}</div>
-        <div class="muted" style="font-size:11px">${h(t('sy_snapshot'))} ${h(loc.generado || '?')}</div></div>
-      <div class="stat"><div class="k">${h(t('sy_remote'))}</div><div class="v">${h(rem.juego || '—')}</div></div>
+      <div class="stat"><div class="k">${h(t('ac_app'))}</div><div class="v">${h(ESCRITORIO.version)}</div></div>
+      <div class="stat"><div class="k">${h(t('ac_local'))}</div><div class="v">${h(loc.juego || '?')}</div>
+        <div class="muted" style="font-size:11px">${h(t('ac_built'))} ${h(loc.generado || '?')}</div></div>
+      <div class="stat"><div class="k">${h(t('ac_remote'))}</div><div class="v">${h(rem.juego || '—')}</div>
+        <div class="muted" style="font-size:11px">${rem.generado ? h(t('ac_built') + ' ' + rem.generado) : ''}
+          ${NOV.hora ? ' · ' + h(t('ac_checked')) + ' ' + h(NOV.hora.toLocaleTimeString(LANG === 'es' ? 'es-AR' : 'en-US', { hour: '2-digit', minute: '2-digit', hour12: LANG !== 'es' })) : ''}</div></div>
     </div>
-    <div class="row" style="margin-bottom:12px">${aviso}</div>
-    ${boton('sy_data', 'sy_data_note', 'datos')}
-    ${boton('sy_tier', 'sy_tier_note', 'tierlists')}
-    ${boton('sy_img', 'sy_img_note', 'imagenes')}
-    ${p ? `<div class="synclog ${p.error ? 'mal' : ''}">
-      ${p.error ? `<div class="syncerr">${h(t('sy_failed'))}: ${h(p.error)}</div>` : ''}
-      ${p.terminado && !p.error ? `<div class="syncok">${h(t('sy_done'))}</div>` : ''}
-      <pre>${h((p.lineas || []).slice(-40).join('\n'))}</pre>
-    </div>` : ''}
+    <div class="row" style="margin-bottom:12px">${estado}
+      <button class="btn sm" data-a="buscarNovedades" ${NOV.buscando || (p && p.corriendo) ? 'disabled' : ''}>${h(t('ac_check'))}</button></div>
+    <p class="muted">${h(t('ac_folder'))}: <code>${h(ESCRITORIO.datos)}</code>. ${h(t('ac_folder_note'))}</p>
   </div>`;
+}
+function pintarActualizaciones () {
+  const el = $('#seccion-actualizaciones');
+  if (el) el.outerHTML = seccionActualizaciones();
 }
 
 // ============================================================================
@@ -2483,7 +2527,9 @@ function render () {
     case 'settings': body = renderSettings(); break;
     default:         body = renderRoster();
   }
-  $('#app').innerHTML = renderNav() + '<main><div id="avisos">' + avisosHtml() + '</div>' + body + '</main>';
+  // Los avisos van fuera de <main>: la barra del roster se pega arriba de main con margen
+  // negativo y los taparía.
+  $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div><main>' + body + '</main>';
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
@@ -2620,17 +2666,10 @@ document.addEventListener('click', (e) => {
 
     case 'marcarModo': ui.marcando = !ui.marcando; render(); break;
     case 'goSettings': ui.view = 'settings'; render(); break;
-    case 'sync': {
-      const que = d.v;
-      apiLocal('/api/sync/' + que, 'POST')
-        .then(p => { SYNC.progreso = p; render(); pollProgreso(); })
-        .catch(err => {
-          SYNC.progreso = null; render(); verificarServidor();
-          alert(err.message === 'sin-datos' ? t('sy_needdata')
-              : err.message === 'ya hay una sincronizacion en curso' ? t('sy_busy') : err.message);
-        });
-      SYNC.progreso = { corriendo: true, que, lineas: [], error: null, terminado: false };
-      render(); break; }
+    case 'buscarNovedades': buscarNovedades(); break;
+    case 'reintentarDatos': bajarDatos(); break;
+    case 'usarDatos': recargar(); break;
+    case 'ocultarAviso': NOV.oculto = true; pintarAvisos(); break;
     case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:t('st_new_mode'), teamSize:3 }); commit(); break;
     case 'modeDel': U.modes.splice(parseInt(d.i, 10), 1); commit(); break;
     case 'clearImg': delete U.images[d.img]; commit(); break;
@@ -2770,12 +2809,18 @@ async function arrancar () {
   try { U = await cargarCapa(); }
   catch (e) { return pantallaFatal(t('ar_capa_t'), e.message + ' ' + t('ar_capa')); }
   LANG = U.prefs.lang;
-  rebuild();
-  try { if (sessionStorage.getItem('mff_volver') === 'settings') { ui.view = 'settings'; sessionStorage.removeItem('mff_volver'); } } catch (e) {}
-  render();
   latir();
   setInterval(latir, ESCRITORIO.latido_cada * 1000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) latir(); });
+  if (!window.MFF_VERSION || window.MFF_VERSION.formato !== ESCRITORIO.formato_datos) return pantallaDatos();
+  rebuild();
+  try {
+    const v = sessionStorage.getItem('mff_volver');
+    if (VISTAS_PRINCIPALES.includes(v)) ui.view = v;
+    sessionStorage.removeItem('mff_volver');
+  } catch (e) {}
+  render();
+  buscarNovedades();
 }
 arrancar();
 })();

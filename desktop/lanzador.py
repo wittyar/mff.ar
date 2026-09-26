@@ -15,18 +15,20 @@ sistema, así que las dos usan los mismos datos y la misma capa.
 - Un error al arrancar se muestra en un cuadro de diálogo y queda en registro.txt.
 
 Opciones para probar fuera de Windows: --datos CARPETA, --sin-ventana, --puerto N,
---espera-latido S.
+--espera-latido S, --origen-datos URL (de dónde se bajan los datos; por defecto, GitHub).
 """
 import argparse, json, logging, os, shutil, sys, threading, time, traceback, urllib.request, webbrowser
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 # El Python embebido del instalador no suma la carpeta del script al path (a propósito,
-# bpo-34841): servidor.py hay que encontrarlo a mano.
+# bpo-34841): servidor.py y actualizador.py hay que encontrarlos a mano. Se importan
+# dentro de main(), después de armar el registro: si fallan (programa incompleto), el
+# error tiene que llegar al cuadro de diálogo, no perderse en una consola que no existe.
 sys.path.insert(0, AQUI)
-import servidor
 
 APP = 'TA GUIANAEL MFF'
-RAIZ = servidor.RAIZ
+RAIZ = os.path.dirname(AQUI)
+ORIGEN_DATOS = 'https://raw.githubusercontent.com/wittyar/mff.ar/main/'
 
 
 def carpeta_datos_por_defecto():
@@ -98,14 +100,15 @@ def instancia_abierta(datos, espera=15):
 
 def sembrar_datos(datos):
     """Primer arranque: la carpeta de datos todavía no tiene data.js, así que se copian los
-    datos que trae el programa (el instalador y el repo los traen). Después se actualizan
-    por su cuenta."""
+    datos que trae el programa (el instalador y el repo los traen), con su datos.json.
+    Después se actualizan solos desde GitHub."""
     if os.path.exists(os.path.join(datos, 'data.js')):
         return
-    origen = os.path.join(RAIZ, 'data.js')
-    if not os.path.exists(origen):
-        raise RuntimeError(f'no hay datos del juego: falta {origen}')
-    shutil.copy2(origen, os.path.join(datos, 'data.js'))
+    for f in ('data.js', 'datos.json'):
+        origen = os.path.join(RAIZ, f)
+        if not os.path.exists(origen):
+            raise RuntimeError(f'el programa no trae los datos iniciales: falta {origen}')
+        shutil.copy2(origen, os.path.join(datos, f))
     docs = os.path.join(RAIZ, 'docs')
     if os.path.isdir(docs):
         shutil.copytree(docs, os.path.join(datos, 'docs'), dirs_exist_ok=True)
@@ -129,10 +132,13 @@ def main():
     ap.add_argument('--puerto', type=int, default=0, help='puerto fijo (0: lo elige el sistema)')
     ap.add_argument('--espera-latido', type=int, default=180,
                     help='segundos sin latidos de ninguna ventana antes de apagarse')
+    ap.add_argument('--origen-datos', default=ORIGEN_DATOS,
+                    help='URL base de datos.json y de los datos publicados')
     args = ap.parse_args()
     datos = os.path.abspath(args.datos or carpeta_datos_por_defecto())
     os.makedirs(datos, exist_ok=True)
     configurar_registro(datos)
+    import servidor
 
     candado = tomar_candado(datos)
     if candado is None:
@@ -148,7 +154,7 @@ def main():
         return 0
 
     sembrar_datos(datos)
-    srv = servidor.crear(datos, args.puerto, args.espera_latido)
+    srv = servidor.crear(datos, args.puerto, args.espera_latido, args.origen_datos)
     puerto = srv.server_port
     url = f'http://127.0.0.1:{puerto}/index.html'
     ruta_instancia = os.path.join(datos, 'instancia.json')
