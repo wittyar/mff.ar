@@ -123,9 +123,13 @@ def sembrar_datos(datos):
 def abrir_ventana(url, datos):
     if sys.platform == 'win32':
         perfil = os.path.join(datos, 'ventana')
-        # ShellExecute encuentra msedge por App Paths, esté donde esté instalado.
-        os.startfile('msedge', 'open', f'--app={url} --user-data-dir="{perfil}" '
-                                       '--no-first-run --no-default-browser-check')
+        # ShellExecute encuentra msedge.exe por App Paths, esté donde esté instalado.
+        try:
+            os.startfile('msedge.exe', 'open', f'--app={url} --user-data-dir="{perfil}" '
+                                               '--no-first-run --no-default-browser-check')
+        except OSError as e:
+            raise RuntimeError(f'no se pudo abrir Microsoft Edge, que la app usa como ventana ({e}). '
+                               'Si no está instalado, se baja de microsoft.com/edge.')
     else:
         webbrowser.open(url)
 
