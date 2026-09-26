@@ -1280,24 +1280,26 @@ function renderRoster () {
        <button class="btn sm" style="margin-top:12px" data-a="clearFilters">${h(t('clear_filters'))}</button></div>`
     : U.prefs.view === 'table' ? tableHtml(slice)
     : `<div class="grid ${U.prefs.view === 'dense' ? 'dense' : ''}">${slice.map(cardHtml).join('')}</div>`;
-  return toolbar(total, rows.length) + body + pager(pages) +
+  return toolbar(total, rows.length) + body + pager(pages, ui.page, 'page') +
     (ui.pickMode && ui.picks.length >= 2
       ? `<div style="position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:16px;
            background:linear-gradient(to top,var(--bg) 62%,transparent);z-index:50">
            <button class="btn primary" data-a="goCompare">${h(t('compare'))} ${ui.picks.length} →</button></div>` : '');
 }
-function pager (pages) {
+/** Paginador del roster y del armador de equipos: extremos, vecinos de la actual y "…"
+ *  entre medio, así llega a todas las páginas sin una fila de veintitantos botones.
+ *  `accion` es el data-a que atiende el clic ('page' o 'teamPage'). */
+function pager (pages, cur, accion) {
   if (pages <= 1) return '';
-  const cur = ui.page;
   const nums = [];
   for (let i = 0; i < pages; i++) {
     if (i < 2 || i > pages - 3 || Math.abs(i - cur) <= 1) nums.push(i);
     else if (nums[nums.length - 1] !== '…') nums.push('…');
   }
   return `<div class="row" style="justify-content:center;margin-top:22px">
-    <button class="btn sm" data-a="page" data-p="${Math.max(0, cur - 1)}" ${cur === 0 ? 'disabled' : ''}>←</button>
-    ${nums.map(n => n === '…' ? '<span class="muted">…</span>' : `<button class="btn sm ${n === cur ? 'primary' : ''}" data-a="page" data-p="${n}">${n + 1}</button>`).join('')}
-    <button class="btn sm" data-a="page" data-p="${Math.min(pages - 1, cur + 1)}" ${cur === pages - 1 ? 'disabled' : ''}>→</button>
+    <button class="btn sm" data-a="${accion}" data-p="${Math.max(0, cur - 1)}" ${cur === 0 ? 'disabled' : ''}>←</button>
+    ${nums.map(n => n === '…' ? '<span class="muted">…</span>' : `<button class="btn sm ${n === cur ? 'primary' : ''}" data-a="${accion}" data-p="${n}">${n + 1}</button>`).join('')}
+    <button class="btn sm" data-a="${accion}" data-p="${Math.min(pages - 1, cur + 1)}" ${cur === pages - 1 ? 'disabled' : ''}>→</button>
   </div>`;
 }
 
@@ -2231,7 +2233,7 @@ function renderTeams () {
         ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" style="width:100%;height:100%;object-fit:cover" loading="lazy">` : ''}
       </div>`).join('')}
     </div>
-    ${pages > 1 ? `<div class="row" style="margin-top:10px">${Array.from({length: Math.min(pages, 12)}, (_, i) => `<button class="btn sm ${i === ui.teamPage ? 'primary' : ''}" data-a="teamPage" data-p="${i}">${i + 1}</button>`).join('')}</div>` : ''}
+    ${pager(pages, ui.teamPage, 'teamPage')}
     <textarea placeholder="${h(t('tm_reason_ph'))}" style="width:100%;margin-top:10px;min-height:54px" data-a="teamReason">${h(eq.reason)}</textarea>
     <div class="row" style="justify-content:flex-end;margin-top:10px">
       <button class="btn" data-a="teamClose">${h(t('tm_cancel'))}</button>
