@@ -17,6 +17,7 @@ API (solo para la propia página: cabecera X-MFF y Host 127.0.0.1):
   POST /api/latido            la ventana sigue abierta
   GET  /api/novedades         compara los datos locales con los publicados en GitHub
   POST /api/datos/actualizar  baja los datos publicados (tarea en segundo plano)
+  POST /api/imagenes/bajar    baja los retratos e íconos que falten (tarea en segundo plano)
   GET  /api/progreso          avance de las tareas
 
 No se corre solo: lo arranca desktop/lanzador.py (crear), que también abre la ventana
@@ -38,7 +39,7 @@ try:
         VERSION = json.load(_f)
 except OSError as _e:
     raise RuntimeError(f'el programa está incompleto: no se pudo leer version.json ({_e})')
-TAREAS = {'datos': actualizador.Tarea()}
+TAREAS = {'datos': actualizador.Tarea(), 'imagenes': actualizador.Tarea()}
 
 # ---- vida del servidor: se apaga cuando ninguna ventana late ----
 ESPERA = 180                          # segundos sin latidos antes de apagarse; la fija crear()
@@ -54,12 +55,22 @@ def latido_cada():
     timers de una ventana minimizada (hasta uno por minuto)."""
     return max(1, min(30, ESPERA // 6))
 
+# Las tareas que no se cortan a mitad de camino aunque se cierre la ventana. La de
+# imágenes sí: cada imagen se escribe entera o no se escribe, y las que falten se bajan
+# la próxima vez (seguir bajando 77 MB con la app cerrada no lo espera nadie).
+NO_SE_CORTAN = ('datos',)
+
 def debe_cerrar():
     """Nadie late hace ESPERA segundos (o nunca latió nadie desde el arranque), y no hay
-    una tarea a mitad de camino."""
-    if any(t.estado()['corriendo'] for t in TAREAS.values()):
+    una tarea de las que no se cortan a mitad de camino."""
+    if any(TAREAS[n].estado()['corriendo'] for n in NO_SE_CORTAN):
         return False
     return time.monotonic() - (_ultimo_latido or _ARRANQUE) > ESPERA
+
+def cancelar_tareas():
+    """Antes de apagar: las tareas que se pueden cortar dejan de tomar trabajo nuevo."""
+    for t in TAREAS.values():
+        t.cancelar.set()
 
 # Lo único que se sirve: los tres archivos del programa y, de la carpeta de datos,
 # data.js, los informes de docs/ y las imágenes. Cualquier otra ruta es 404.
@@ -71,7 +82,17 @@ def estado():
     return {'app': 'mff-escritorio', 'raiz': RAIZ, 'datos': DATOS, 'latido_cada': latido_cada(),
             'version': VERSION['version'], 'formato_datos': VERSION['formato_datos'],
             'datos_local': actualizador.resumen(local),
+            'imagenes': resumen_imagenes(),
             'tareas': {n: t.estado() for n, t in TAREAS.items()}}
+
+def resumen_imagenes():
+    """Cuántas imágenes lista datos.json y cuántas faltan en disco. Una lista inválida no
+    tira abajo el estado: vuelve como error para que la página lo muestre."""
+    try:
+        return {'total': len(actualizador.imagenes_publicadas(DATOS)),
+                'faltan': len(actualizador.imagenes_faltantes(DATOS))}
+    except Exception as e:
+        return {'total': 0, 'faltan': 0, 'error': str(e)}
 
 def novedades():
     """Cada canal por separado: si uno falla (sin conexión, GitHub caído), el error va en
@@ -229,6 +250,10 @@ class Handler(SimpleHTTPRequestHandler):
             if not TAREAS['datos'].arrancar(tarea):
                 return self._json({'error': 'ya se están bajando los datos'}, 409)
             return self._json(TAREAS['datos'].estado())
+        if self.path == '/api/imagenes/bajar':
+            if not TAREAS['imagenes'].arrancar(lambda t: actualizador.bajar_imagenes(DATOS, t)):
+                return self._json({'error': 'ya se están bajando las imágenes'}, 409)
+            return self._json(TAREAS['imagenes'].estado())
         return self._json({'error': 'no existe'}, 404)
 
 def crear(datos, puerto, espera, origen_datos):

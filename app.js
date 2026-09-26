@@ -657,6 +657,14 @@ const T = {
                         en:'There is new game data, but it is for a newer version of the app.' },
   av_check_err:       { es:'No se pudo buscar actualizaciones:', en:'Could not check for updates:' },
   av_hide:            { es:'Ocultar',             en:'Hide' },
+  av_img:             { es:'Bajando retratos e íconos:', en:'Downloading portraits and icons:' },
+  av_img_n:           { es:'{n} de {total}',      en:'{n} of {total}' },
+  av_img_err:         { es:'Faltan imágenes:',    en:'Missing images:' },
+  ac_img:             { es:'Retratos e íconos',   en:'Portraits and icons' },
+  ac_img_ok:          { es:'los {total}, completos.', en:'all {total}, complete.' },
+  ac_img_miss:        { es:'faltan {n} de {total}.', en:'{n} of {total} missing.' },
+  ac_img_np:          { es:'{n} no están publicados en thanosvibs (se muestra el nombre sin ícono).',
+                        en:'{n} are not published on thanosvibs (the name is shown without an icon).' },
   pd_title:           { es:'Actualizando los datos del juego', en:'Updating game data' },
   pd_note:            { es:'Esta versión de la app usa datos de otro formato: se bajan de GitHub y la ventana se recarga sola.',
                         en:'This app version uses data in another format: it is downloaded from GitHub and the window reloads on its own.' },
@@ -708,29 +716,48 @@ async function apiLocal (ruta, metodo) {
 // recarga la ventana para usarlos (no se recarga sola: podrías estar a mitad de algo).
 // Un error queda a la vista: nunca se traga.
 const NOV = { buscando: false, hora: null, datos: null, oculto: false };
-const PROG = { datos: null, poll: null };
+// Estado de las tareas que arrancó esta página (una tarea terminada antes de recargar no
+// vuelve a avisar).
+const PROG = { datos: null, imagenes: null, poll: null };
 async function buscarNovedades () {
   NOV.buscando = true; pintarActualizaciones();
   try {
     const n = await apiLocal('/api/novedades');
     NOV.datos = n.datos; NOV.hora = new Date(); NOV.oculto = false;
-    if (n.datos.hay && n.datos.compatible) bajarDatos();
+    if (n.datos.hay && n.datos.compatible) arrancarTarea('datos', '/api/datos/actualizar');
   } catch (e) { NOV.datos = { error: e.message }; verificarServidor(); }
   NOV.buscando = false;
   pintarAvisos(); pintarActualizaciones();
 }
-async function bajarDatos () {
-  try { PROG.datos = await apiLocal('/api/datos/actualizar', 'POST'); }
-  catch (e) { PROG.datos = { error: e.message, terminado: true }; pintarAvisos(); return; }
+async function arrancarTarea (nombre, ruta) {
+  try { PROG[nombre] = await apiLocal(ruta, 'POST'); }
+  catch (e) { PROG[nombre] = { error: e.message, terminado: true }; pintarAvisos(); pintarActualizaciones(); return; }
   pintarAvisos();
-  clearInterval(PROG.poll);
-  PROG.poll = setInterval(async () => {
-    try {
-      PROG.datos = (await apiLocal('/api/progreso')).datos;
-      if (PROG.datos.terminado) { clearInterval(PROG.poll); PROG.poll = null; }
-    } catch (e) { clearInterval(PROG.poll); PROG.poll = null; verificarServidor(); }
-    pintarAvisos(); pintarActualizaciones();
-  }, 700);
+  if (!PROG.poll) PROG.poll = setInterval(seguirTareas, 700);
+}
+async function seguirTareas () {
+  let p;
+  try { p = await apiLocal('/api/progreso'); }
+  catch (e) { clearInterval(PROG.poll); PROG.poll = null; verificarServidor(); return; }
+  let siguen = false;
+  for (const n of ['datos', 'imagenes']) {
+    if (!PROG[n] || PROG[n].terminado) continue;
+    PROG[n] = p[n];
+    if (p[n].corriendo) siguen = true;
+    if (n === 'imagenes') {
+      refrescarImagenes();
+      if (p[n].terminado) { try { ESCRITORIO = await apiLocal('/api/estado'); } catch (e) {} }
+    }
+  }
+  if (!siguen) { clearInterval(PROG.poll); PROG.poll = null; }
+  pintarAvisos(); pintarActualizaciones();
+}
+/** Mientras bajan las imágenes, las que se veían rotas se vuelven a pedir: van
+ *  apareciendo sin redibujar la vista. */
+function refrescarImagenes () {
+  document.querySelectorAll('img').forEach(img => {
+    if (img.complete && img.naturalWidth === 0 && /\/images\//.test(img.src)) img.src = img.src.split('?')[0] + '?r=' + Date.now();
+  });
 }
 /** Recarga la ventana volviendo a la misma sección (la ficha abierta no se conserva). */
 const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'settings'];
@@ -788,6 +815,16 @@ function avisosHtml () {
   } else if (p && p.terminado) {
     out.push(`<div class="aviso-app ok"><b>${h(t('av_dl_done'))} ${h(r.juego || '')}.</b>
       <button class="btn sm primary" data-a="usarDatos" title="${h(t('av_dl_use_t'))}">${h(t('av_dl_use'))}</button></div>`);
+  }
+  const im = PROG.imagenes;
+  if (ESCRITORIO.imagenes.error) out.push(`<div class="srvcaido"><b>${h(t('av_img_err'))}</b> ${h(ESCRITORIO.imagenes.error)}</div>`);
+  if (im && im.corriendo) {
+    const pct = im.total ? Math.round(100 * im.hecho / im.total) : 0;
+    out.push(`<div class="aviso-app"><b>${h(t('av_img'))}</b> ${h(t('av_img_n').replace('{n}', im.hecho).replace('{total}', im.total))}
+      <div class="barra"><i style="width:${pct}%"></i></div></div>`);
+  } else if (im && im.terminado && im.error) {
+    out.push(`<div class="srvcaido"><b>${h(t('av_img_err'))}</b> ${h(im.error)}
+      <button class="btn sm" data-a="reintentarImagenes">${h(t('gd_retry'))}</button></div>`);
   }
   if (NOV.datos && NOV.datos.hay && !NOV.datos.compatible) out.push(`<div class="aviso-app">${h(t('av_incompat'))}</div>`);
   if (NOV.datos && NOV.datos.error && !NOV.oculto) out.push(`<div class="aviso-app">${h(t('av_check_err'))} ${h(NOV.datos.error)}
@@ -2484,8 +2521,15 @@ function seccionActualizaciones () {
     </div>
     <div class="row" style="margin-bottom:12px">${estado}
       <button class="btn sm" data-a="buscarNovedades" ${NOV.buscando || (p && p.corriendo) ? 'disabled' : ''}>${h(t('ac_check'))}</button></div>
+    <p class="muted" style="margin-bottom:8px">${h(t('ac_img'))}: ${h(imagenesTexto())}</p>
     <p class="muted">${h(t('ac_folder'))}: <code>${h(ESCRITORIO.datos)}</code>. ${h(t('ac_folder_note'))}</p>
   </div>`;
+}
+function imagenesTexto () {
+  const im = ESCRITORIO.imagenes, r = PROG.imagenes && PROG.imagenes.resultado;
+  const np = r ? r.no_publicadas.length : 0;
+  if (!im.faltan) return t('ac_img_ok').replace('{total}', im.total);
+  return t('ac_img_miss').replace('{n}', im.faltan).replace('{total}', im.total) + (np ? ' ' + t('ac_img_np').replace('{n}', np) : '');
 }
 function pintarActualizaciones () {
   const el = $('#seccion-actualizaciones');
@@ -2667,7 +2711,8 @@ document.addEventListener('click', (e) => {
     case 'marcarModo': ui.marcando = !ui.marcando; render(); break;
     case 'goSettings': ui.view = 'settings'; render(); break;
     case 'buscarNovedades': buscarNovedades(); break;
-    case 'reintentarDatos': bajarDatos(); break;
+    case 'reintentarDatos': arrancarTarea('datos', '/api/datos/actualizar'); break;
+    case 'reintentarImagenes': arrancarTarea('imagenes', '/api/imagenes/bajar'); break;
     case 'usarDatos': recargar(); break;
     case 'ocultarAviso': NOV.oculto = true; pintarAvisos(); break;
     case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:t('st_new_mode'), teamSize:3 }); commit(); break;
@@ -2821,6 +2866,7 @@ async function arrancar () {
   } catch (e) {}
   render();
   buscarNovedades();
+  if (ESCRITORIO.imagenes.faltan) arrancarTarea('imagenes', '/api/imagenes/bajar');
 }
 arrancar();
 })();

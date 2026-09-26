@@ -171,6 +171,9 @@ def main():
     while not servidor.debe_cerrar():
         time.sleep(1)
     logging.info('ninguna ventana late hace %s s: se apaga', args.espera_latido)
+    if servidor.TAREAS['imagenes'].estado()['corriendo']:
+        logging.info('se corta la descarga de imágenes: las que falten se bajan la próxima vez')
+    servidor.cancelar_tareas()
     srv.shutdown()
     srv.server_close()
     os.remove(ruta_instancia)
