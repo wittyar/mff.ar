@@ -391,6 +391,10 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
   color:var(--text-2);white-space:pre-wrap;word-break:break-word}
 .syncerr{color:var(--accent-2);font-weight:600;margin-bottom:6px}
 .syncok{color:var(--self);font-weight:600;margin-bottom:6px}
+/* Servidor de escritorio cerrado con la pestaña abierta: va arriba de cualquier vista. */
+.srvcaido{border:1px solid rgba(255,45,85,.45);border-left:3px solid var(--accent);background:var(--accent-soft);
+  border-radius:var(--r-sm);padding:10px 14px;margin-bottom:18px;font-size:13px}
+.srvcaido b{color:var(--accent-2)}
 
 /* A quien le pega una skill: es un dato de cabecera, no una nota al pie. */
 .tag.objetivo{background:rgba(122,184,255,.16);color:var(--allies);font-weight:700}

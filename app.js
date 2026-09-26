@@ -645,6 +645,9 @@ const T = {
                         en:'Sync is available only in the desktop app' },
   sy_offline_note:    { es:'Estás viendo el HTML suelto. thanosvibs no habilita CORS, así que el navegador no puede bajar los datos por su cuenta: hace falta abrir la app con MFF.bat.',
                         en:'You are viewing the plain HTML. thanosvibs does not enable CORS, so the browser cannot fetch the data on its own: open the app with MFF.bat.' },
+  sy_srv_down:        { es:'Se cerró el servidor de la app.', en:'The app server was closed.' },
+  sy_srv_down_note:   { es:'Pasa al cerrar la ventana de MFF.bat. Esta pestaña sigue con lo que ya había cargado, pero los retratos e íconos que no estaban en la caché del navegador no cargan y la sincronización no anda. Abrí MFF.bat de nuevo: abre la app en otra pestaña.',
+                        en:'It happens when the MFF.bat window is closed. This tab keeps what it had already loaded, but portraits and icons that were not in the browser cache do not load and sync does not work. Run MFF.bat again: it opens the app in a new tab.' },
   lang_title:        { es:'Ver la app en inglés', en:'View the app in Spanish' },
   untranslated:      { es:'sin traducir',        en:'untranslated' },
 };
@@ -697,8 +700,21 @@ function pollProgreso () {
                         setTimeout(() => location.reload(), 1200); }
       }
       if (ui.view === 'settings') render();
-    } catch (e) { clearInterval(SYNC.poll); SYNC.poll = null; }
+    } catch (e) { clearInterval(SYNC.poll); SYNC.poll = null; verificarServidor(); }
   }, 1500);
+}
+// Cerrar la ventana de MFF.bat apaga el servidor, pero la pestaña sigue abierta con
+// app.js y data.js ya cargados: lo que no esté en la caché del navegador (retratos,
+// íconos, la sincronización) falla, y un retrato roto no dice por qué. Cuando algo no
+// carga se le pregunta al servidor si sigue ahí; si no contesta, se avisa arriba de todo.
+// Una consulta a la vez: una página de retratos rotos dispara decenas de errores juntos.
+let SERVIDOR_CAIDO = false, verificandoServidor = false;
+function verificarServidor () {
+  if (!ESCRITORIO || SERVIDOR_CAIDO || verificandoServidor) return;
+  verificandoServidor = true;
+  fetch('/api/estado', { headers: { 'X-MFF': '1' }, cache: 'no-store' })
+    .then(() => {}, () => { SERVIDOR_CAIDO = true; render(); })
+    .finally(() => { verificandoServidor = false; });
 }
 
 // ============================================================================
@@ -2440,7 +2456,8 @@ function render () {
     case 'settings': body = renderSettings(); break;
     default:         body = renderRoster();
   }
-  $('#app').innerHTML = renderNav() + '<main>' + body + '</main>';
+  const caido = SERVIDOR_CAIDO ? `<div class="srvcaido"><b>${h(t('sy_srv_down'))}</b> ${h(t('sy_srv_down_note'))}</div>` : '';
+  $('#app').innerHTML = renderNav() + '<main>' + caido + body + '</main>';
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
@@ -2582,7 +2599,7 @@ document.addEventListener('click', (e) => {
       apiLocal('/api/sync/' + que, 'POST')
         .then(p => { SYNC.progreso = p; render(); pollProgreso(); })
         .catch(err => {
-          SYNC.progreso = null; render();
+          SYNC.progreso = null; render(); verificarServidor();
           alert(err.message === 'sin-datos' ? t('sy_needdata')
               : err.message === 'ya hay una sincronizacion en curso' ? t('sy_busy') : err.message);
         });
@@ -2676,9 +2693,12 @@ document.addEventListener('drop', (e) => {
 // devuelve 404 para los artefactos de Annihilus, Galactus y Red Skull) y el resto puede
 // no haberse bajado todavía. Si uno no carga se quita: el nombre siempre va al lado.
 // Los retratos no entran acá: que falte uno se tiene que ver.
+// Toda imagen que falla puede ser el servidor de escritorio cerrado: se verifica.
 document.addEventListener('error', (e) => {
   const el = e.target;
-  if (el && el.tagName === 'IMG' && /\/images\/items\//.test(el.src)) el.remove();
+  if (!el || el.tagName !== 'IMG') return;
+  if (/\/images\/items\//.test(el.src)) el.remove();
+  verificarServidor();
 }, true);
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
