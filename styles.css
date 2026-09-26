@@ -395,6 +395,12 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 .srvcaido{border:1px solid rgba(255,45,85,.45);border-left:3px solid var(--accent);background:var(--accent-soft);
   border-radius:var(--r-sm);padding:10px 14px;margin-bottom:18px;font-size:13px}
 .srvcaido b{color:var(--accent-2)}
+.srvcaido .btn{margin-left:8px}
+/* Error que corta el arranque: capa ilegible o app abierta sin su servidor. */
+.fatal{max-width:640px;margin:12vh auto 0;padding:22px 24px;border:1px solid rgba(255,45,85,.45);
+  border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:var(--r-md)}
+.fatal h1{font-family:var(--font-display);font-size:24px;letter-spacing:.02em;margin:0 0 10px}
+.fatal p{margin:0;color:var(--text-2)}
 
 /* A quien le pega una skill: es un dato de cabecera, no una nota al pie. */
 .tag.objetivo{background:rgba(122,184,255,.16);color:var(--allies);font-weight:700}

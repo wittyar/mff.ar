@@ -1,11 +1,12 @@
-/* TA GUIANAEL MFF — app standalone en JS vanilla. Sin build: corre desde file:// o cualquier host estático.
+/* TA GUIANAEL MFF — app en JS vanilla, sin build. La sirve desktop/servidor.py (la app de
+ * escritorio): sin ese servidor no arranca, porque la capa del usuario se guarda a través de él.
  *
  * Reglas de datos (importante):
  *   - data.js es la ÚNICA fuente de personajes, uniformes, skills, imágenes y tier lists importadas.
- *     Nunca se copia a localStorage: regenerar data.js se ve al recargar, sin borrar nada.
- *   - localStorage guarda SOLO la capa del usuario: ediciones y personajes propios, equipos,
- *     tier lists propias, cambios sobre las importadas, imágenes subidas, atributos marcados,
- *     hojas de ruta, topes cargados y preferencias.
+ *     Nunca se copia a la capa: regenerar data.js se ve al recargar, sin borrar nada.
+ *   - La capa del usuario vive en capa.json, en la carpeta de datos (GET/PUT /api/capa): ediciones
+ *     y personajes propios, equipos, tier lists propias, cambios sobre las importadas, imágenes
+ *     subidas, atributos marcados, hojas de ruta, topes cargados y preferencias.
  */
 (function () {
 'use strict';
@@ -34,7 +35,6 @@ const REMOVED        = null; // marca explícita: entrada de una lista importada
 // ============================================================================
 // CAPA DE USUARIO
 // ============================================================================
-const LS_KEY = 'mff_user_v1';
 function blankUser () {
   return {
     charEdits: {},                    // id de data.js -> personaje editado (reemplaza al del seed)
@@ -52,39 +52,53 @@ function blankUser () {
              flags:{ t4:false, trans:false, nuevo:false } }
   };
 }
-let U = loadUser();
-function loadUser () {
+let U = blankUser();                   // la real llega del servidor en arrancar()
+/** Capa guardada (o importada) -> capa completa: completa lo que falte con los valores por
+ *  defecto y convierte formatos viejos. Es el único camino de entrada de una capa. */
+function normalizarCapa (saved) {
   const base = blankUser();
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) return base;
-    const saved = JSON.parse(raw);
-    const sp = saved.prefs || {};
-    // Los valores por defecto de las preferencias se toman antes de mezclar:
-    // Object.assign(base, saved) reemplaza base.prefs entera por la guardada, y una capa
-    // de una versión anterior (sin filters o sin flags) dejaba la app en blanco.
-    const prefs = base.prefs, filters = prefs.filters, flags = prefs.flags;
-    const u = Object.assign(base, saved);
-    u.prefs = Object.assign(prefs, sp);
-    u.prefs.filters = Object.assign(filters, sp.filters || {});
-    u.prefs.flags = Object.assign(flags, sp.flags || {});
-    // Una entrada guardaba una sola fila (texto); desde que puede estar en varias filas
-    // de la misma lista guarda una lista de filas. Las capas viejas se convierten acá.
-    for (const l in u.assign) for (const k in u.assign[l]) {
-      if (typeof u.assign[l][k] === 'string') u.assign[l][k] = [u.assign[l][k]];
-    }
-    // Los modos de juego salen ahora de la sección Modos, con su tamaño de equipo según la
-    // fuente. Las capas viejas traían copiados cuatro modos de ejemplo sin fuente (uno,
-    // "Incursión", ni siquiera es un modo del juego): se quitan si siguen sin tocar.
-    const EJEMPLO = { pvp:'PvP|3', alianza:'Alianza|3', incursion:'Incursión|5', sombras:'Mundo de Sombras|3' };
-    u.modes = (u.modes || []).filter(m => EJEMPLO[m.id] !== m.name + '|' + m.teamSize);
-    return u;
-  } catch (e) { console.warn('capa de usuario ilegible, se arranca en limpio', e); return base; }
+  const sp = saved.prefs || {};
+  // Los valores por defecto de las preferencias se toman antes de mezclar:
+  // Object.assign(base, saved) reemplaza base.prefs entera por la guardada, y una capa
+  // de una versión anterior (sin filters o sin flags) dejaba la app en blanco.
+  const prefs = base.prefs, filters = prefs.filters, flags = prefs.flags;
+  const u = Object.assign(base, saved);
+  u.prefs = Object.assign(prefs, sp);
+  u.prefs.filters = Object.assign(filters, sp.filters || {});
+  u.prefs.flags = Object.assign(flags, sp.flags || {});
+  // Una entrada guardaba una sola fila (texto); desde que puede estar en varias filas
+  // de la misma lista guarda una lista de filas. Las capas viejas se convierten acá.
+  for (const l in u.assign) for (const k in u.assign[l]) {
+    if (typeof u.assign[l][k] === 'string') u.assign[l][k] = [u.assign[l][k]];
+  }
+  // Los modos de juego salen ahora de la sección Modos, con su tamaño de equipo según la
+  // fuente. Las capas viejas traían copiados cuatro modos de ejemplo sin fuente (uno,
+  // "Incursión", ni siquiera es un modo del juego): se quitan si siguen sin tocar.
+  const EJEMPLO = { pvp:'PvP|3', alianza:'Alianza|3', incursion:'Incursión|5', sombras:'Mundo de Sombras|3' };
+  u.modes = (u.modes || []).filter(m => EJEMPLO[m.id] !== m.name + '|' + m.teamSize);
+  return u;
 }
+/** Lee capa.json. Sin archivo (primer uso) es una capa vacía; un archivo ilegible es un
+ *  error que corta el arranque: seguir con una capa vacía y guardar la pisaría. */
+async function cargarCapa () {
+  const { capa } = await apiLocal('/api/capa');
+  return capa ? normalizarCapa(capa) : blankUser();
+}
+/** Guarda la capa. Un PUT a la vez y siempre con el último estado: si llegan cambios
+ *  mientras uno viaja, sale uno más al terminar. Un error queda a la vista con un botón
+ *  para reintentar, y cerrar la ventana con algo sin guardar pide confirmación. */
+const GUARDADO = { enCurso: false, pendiente: false, error: null };
 function saveUser () {
-  try { localStorage.setItem(LS_KEY, JSON.stringify(U)); }
-  catch (e) { alert('No se pudo guardar en este navegador: ' + e.message); }
+  if (GUARDADO.enCurso) { GUARDADO.pendiente = true; return; }
+  GUARDADO.enCurso = true; GUARDADO.pendiente = false;
+  fetch('/api/capa', { method: 'PUT', headers: { 'X-MFF': '1', 'Content-Type': 'application/json' }, body: JSON.stringify(U) })
+    .then(async r => { if (!r.ok) throw new Error((await r.json()).error || ('HTTP ' + r.status)); GUARDADO.error = null; })
+    .catch(e => { GUARDADO.error = e.message; verificarServidor(); })
+    .finally(() => { GUARDADO.enCurso = false; pintarAvisos(); if (GUARDADO.pendiente) saveUser(); });
 }
+window.addEventListener('beforeunload', (e) => {
+  if (GUARDADO.enCurso || GUARDADO.pendiente || GUARDADO.error) { e.preventDefault(); e.returnValue = ''; }
+});
 
 // ---- vistas derivadas (data.js + capa de usuario) ----
 let CHARS = [], CHAR_BY_ID = {}, LISTS = [];
@@ -307,8 +321,8 @@ const T = {
   ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
   ar_obtain:         { es:'Cómo se consigue',    en:'How to get it' },
   ru_title:          { es:'Hoja de ruta',        en:'Roadmap' },
-  ru_note:           { es:'Los pasos de la guía para esta variante, según su tier máximo y si sube a Tier-3 o trasciende. Marcá hasta dónde llegaste con el personaje: queda guardado en este navegador.',
-                       en:'The guide’s steps for this variant, by its max tier and whether it goes Tier-3 or Transcends. Mark how far you got with the character: it is saved in this browser.' },
+  ru_note:           { es:'Los pasos de la guía para esta variante, según su tier máximo y si sube a Tier-3 o trasciende. Marcá hasta dónde llegaste con el personaje: queda guardado en tu capa.',
+                       en:'The guide’s steps for this variant, by its max tier and whether it goes Tier-3 or Transcends. Mark how far you got with the character: it is saved in your layer.' },
   ru_done:           { es:'Hecho hasta acá',     en:'Done up to here' },
   ru_undo:           { es:'Desmarcar',           en:'Unmark' },
   ru_this_t3:        { es:'Esta variante sube a Tier-3.', en:'This variant goes to Tier-3.' },
@@ -317,8 +331,8 @@ const T = {
   ru_no_t4:          { es:'Esta variante no tiene Tier-4.', en:'This variant has no Tier-4.' },
   ru_notes:          { es:'Notas de la guía',    en:'Guide notes' },
   cap_title:         { es:'Topes de stats',      en:'Stat caps' },
-  cap_note:          { es:'Poné lo que muestra la pantalla de stats del juego y, si querés, lo que suman los buffs con duración de sus skills (esa pantalla no los muestra). Se guarda por personaje en este navegador.',
-                       en:'Enter what the in-game stats page shows and, optionally, what the timed buffs from its skills add (that page does not show them). Saved per character in this browser.' },
+  cap_note:          { es:'Poné lo que muestra la pantalla de stats del juego y, si querés, lo que suman los buffs con duración de sus skills (esa pantalla no los muestra). Se guarda por personaje en tu capa.',
+                       en:'Enter what the in-game stats page shows and, optionally, what the timed buffs from its skills add (that page does not show them). Saved per character in your layer.' },
   cap_stat:          { es:'Stat',                en:'Stat' },
   cap_cap:           { es:'Tope',                en:'Cap' },
   cap_val:           { es:'Pantalla %',          en:'Stats page %' },
@@ -428,8 +442,8 @@ const T = {
                        en:'thanosvibs does not publish skills for this uniform yet.' },
   d_teams:           { es:'Equipos donde aparece', en:'Teams it appears in' },
   d_portraits:       { es:'Retratos propios',    en:'Custom portraits' },
-  d_portraits_note:  { es:'Si subís una imagen reemplaza la de thanosvibs solo en este navegador.',
-                       en:'Uploading an image replaces the thanosvibs one in this browser only.' },
+  d_portraits_note:  { es:'Si subís una imagen, reemplaza la de thanosvibs solo en tu capa.',
+                       en:'Uploading an image replaces the thanosvibs one in your layer only.' },
   d_upload:          { es:'Subir retrato',       en:'Upload portrait' },
   d_revert_img:      { es:'Volver al original',  en:'Back to original' },
 
@@ -532,8 +546,8 @@ const T = {
 
   ed_edit:           { es:'Editar personaje',    en:'Edit character' },
   ed_new:            { es:'Nuevo personaje',     en:'New character' },
-  ed_note:           { es:'Se guarda en tu navegador, aparte de data.js. Regenerar los datos no lo pisa.',
-                       en:'Saved in your browser, separate from data.js. Regenerating the data does not overwrite it.' },
+  ed_note:           { es:'Se guarda en tu capa, aparte de data.js. Regenerar los datos no lo pisa.',
+                       en:'Saved in your layer, separate from data.js. Regenerating the data does not overwrite it.' },
   ed_step_data:      { es:'Datos',               en:'Details' },
   ed_step_unis:      { es:'Uniformes',           en:'Uniforms' },
   ed_step_review:    { es:'Revisar',             en:'Review' },
@@ -646,13 +660,17 @@ const T = {
   sy_busy:            { es:'Ya hay una sincronización en curso.', en:'A sync is already running.' },
   sy_needdata:        { es:'Primero hay que actualizar los datos del juego: las tier lists se arman sobre ellos.',
                         en:'Update the game data first: the tier lists are built on top of it.' },
-  sy_offline:         { es:'Sincronización disponible solo en la app de escritorio',
-                        en:'Sync is available only in the desktop app' },
-  sy_offline_note:    { es:'Estás viendo el HTML suelto. thanosvibs no habilita CORS, así que el navegador no puede bajar los datos por su cuenta: hace falta abrir la app con MFF.bat.',
-                        en:'You are viewing the plain HTML. thanosvibs does not enable CORS, so the browser cannot fetch the data on its own: open the app with MFF.bat.' },
   sy_srv_down:        { es:'Se cerró el servidor de la app.', en:'The app server was closed.' },
-  sy_srv_down_note:   { es:'Pasa al cerrar la ventana de MFF.bat. Esta pestaña sigue con lo que ya había cargado, pero los retratos e íconos que no estaban en la caché del navegador no cargan y la sincronización no anda. Abrí MFF.bat de nuevo: abre la app en otra pestaña.',
-                        en:'It happens when the MFF.bat window is closed. This tab keeps what it had already loaded, but portraits and icons that were not in the browser cache do not load and sync does not work. Run MFF.bat again: it opens the app in a new tab.' },
+  sy_srv_down_note:   { es:'Pasa al cerrar la ventana de MFF.bat. Esta pestaña sigue con lo que ya había cargado, pero tus cambios no se guardan, los retratos e íconos que no estaban en la caché del navegador no cargan y la sincronización no anda. Abrí MFF.bat de nuevo: abre la app en otra pestaña.',
+                        en:'It happens when the MFF.bat window is closed. This tab keeps what it had already loaded, but your changes are not saved, portraits and icons that were not in the browser cache do not load and sync does not work. Run MFF.bat again: it opens the app in a new tab.' },
+  gd_error:           { es:'No se guardó tu último cambio.', en:'Your last change was not saved.' },
+  gd_retry:           { es:'Reintentar',            en:'Retry' },
+  ar_file_t:          { es:'Esta app se abre desde su acceso directo', en:'This app opens from its shortcut' },
+  ar_file:            { es:'Abrir index.html suelto no funciona: tus listas, equipos y ajustes se guardan a través del programa. Abrila con MFF.bat.',
+                        en:'Opening index.html directly does not work: your lists, teams and settings are saved through the program. Open it with MFF.bat.' },
+  ar_capa_t:          { es:'No se pudo cargar tu capa', en:'Your layer could not be loaded' },
+  ar_capa:            { es:'La app no arranca para no pisar lo que tenés guardado. Si el archivo capa.json se dañó, en la carpeta respaldos/ hay copias de los últimos días.',
+                        en:'The app does not start so it does not overwrite what you have saved. If capa.json got damaged, the respaldos/ folder has copies from the last few days.' },
   lang_title:        { es:'Ver la app en inglés', en:'View the app in Spanish' },
   untranslated:      { es:'sin traducir',        en:'untranslated' },
 };
@@ -672,26 +690,17 @@ let LANG = U.prefs.lang;
 
 // ---------------------------------------------------------------------------
 // APP DE ESCRITORIO
-// Cuando la app corre servida por desktop/servidor.py, ese proceso puede llamar a
-// thanosvibs (el navegador no: la API no manda Access-Control-Allow-Origin). Se
-// detecta preguntandole al servidor; si no contesta, es el HTML suelto.
+// La app corre servida por desktop/servidor.py: ese proceso guarda la capa del usuario
+// y puede llamar a thanosvibs (el navegador no: la API no manda
+// Access-Control-Allow-Origin).
 // ---------------------------------------------------------------------------
-let ESCRITORIO = null;               // respuesta de /api/estado, o null
+let ESCRITORIO = null;               // respuesta de /api/estado (se pide en arrancar)
 let SYNC = { progreso: null, poll: null };
 async function apiLocal (ruta, metodo) {
   const r = await fetch(ruta, { method: metodo || 'GET', headers: { 'X-MFF': '1' } });
   const cuerpo = await r.json();
   if (!r.ok) throw new Error(cuerpo.error || ('HTTP ' + r.status));
   return cuerpo;
-}
-async function detectarEscritorio () {
-  // Desde file:// no hay servidor al que preguntarle, y fetch tira un error de consola
-  // que no aporta nada. Se sale antes.
-  if (location.protocol === 'file:') return;
-  try {
-    const e = await apiLocal('/api/estado');
-    if (e && e.app === 'mff-escritorio') { ESCRITORIO = e; render(); }
-  } catch (e) { ESCRITORIO = null; }
 }
 function pollProgreso () {
   clearInterval(SYNC.poll);
@@ -715,12 +724,22 @@ function pollProgreso () {
 // Una consulta a la vez: una página de retratos rotos dispara decenas de errores juntos.
 let SERVIDOR_CAIDO = false, verificandoServidor = false;
 function verificarServidor () {
-  if (!ESCRITORIO || SERVIDOR_CAIDO || verificandoServidor) return;
+  if (SERVIDOR_CAIDO || verificandoServidor) return;
   verificandoServidor = true;
   fetch('/api/estado', { headers: { 'X-MFF': '1' }, cache: 'no-store' })
-    .then(() => {}, () => { SERVIDOR_CAIDO = true; render(); })
+    .then(() => {}, () => { SERVIDOR_CAIDO = true; pintarAvisos(); })
     .finally(() => { verificandoServidor = false; });
 }
+/** Avisos de la app que van arriba de cualquier vista: servidor cerrado y capa sin
+ *  guardar. Se repintan solos (pintarAvisos) sin redibujar la vista. */
+function avisosHtml () {
+  const out = [];
+  if (SERVIDOR_CAIDO) out.push(`<div class="srvcaido"><b>${h(t('sy_srv_down'))}</b> ${h(t('sy_srv_down_note'))}</div>`);
+  if (GUARDADO.error) out.push(`<div class="srvcaido"><b>${h(t('gd_error'))}</b> ${h(GUARDADO.error)}
+    <button class="btn sm" data-a="reintentarGuardado">${h(t('gd_retry'))}</button></div>`);
+  return out.join('');
+}
+function pintarAvisos () { const el = $('#avisos'); if (el) el.innerHTML = avisosHtml(); }
 
 // ============================================================================
 // ESTADO DE UI (no persistido)
@@ -2381,11 +2400,6 @@ function renderSettings () {
 
 /** Sección de sincronización. Solo tiene sentido dentro de la app de escritorio. */
 function seccionSync () {
-  if (!ESCRITORIO) {
-    return `<div class="section"><h3>${h(t('sy_title'))}</h3>
-      <div class="card"><div style="font-weight:600;margin-bottom:6px">${h(t('sy_offline'))}</div>
-      <p class="muted">${h(t('sy_offline_note'))}</p></div></div>`;
-  }
   const loc = ESCRITORIO.local || {}, rem = ESCRITORIO.remota || {};
   const p = SYNC.progreso;
   const corriendo = !!(p && p.corriendo);
@@ -2463,8 +2477,7 @@ function render () {
     case 'settings': body = renderSettings(); break;
     default:         body = renderRoster();
   }
-  const caido = SERVIDOR_CAIDO ? `<div class="srvcaido"><b>${h(t('sy_srv_down'))}</b> ${h(t('sy_srv_down_note'))}</div>` : '';
-  $('#app').innerHTML = renderNav() + '<main>' + caido + body + '</main>';
+  $('#app').innerHTML = renderNav() + '<main><div id="avisos">' + avisosHtml() + '</div>' + body + '</main>';
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
@@ -2617,6 +2630,7 @@ document.addEventListener('click', (e) => {
     case 'clearImg': delete U.images[d.img]; commit(); break;
     case 'resetUser': if (confirm(t('st_confirm_reset'))) {
       U = blankUser(); commit(); } break;
+    case 'reintentarGuardado': saveUser(); pintarAvisos(); break;
     case 'exportUser': download('mff-mi-capa.json', JSON.stringify(U, null, 2), 'application/json'); break;
     case 'exportCsv': exportCsv(); break;
   }
@@ -2670,7 +2684,7 @@ document.addEventListener('change', (e) => {
   if (a === 'upload') { const f = el.files[0]; if (f) readFile(f, url => { U.images[d.img] = url; commit(); }); return; }
   if (a === 'importUser') { const f = el.files[0]; if (!f) return;
     const r = new FileReader();
-    r.onload = () => { try { U = Object.assign(blankUser(), JSON.parse(r.result)); commit(); }
+    r.onload = () => { try { U = normalizarCapa(JSON.parse(r.result)); commit(); }
                        catch (err) { alert(t('st_bad_import') + err.message); } };
     r.readAsText(f); return; }
 });
@@ -2737,8 +2751,22 @@ function exportCsv () {
   download('mff-roster.csv', '﻿' + rows.map(r => r.map(c => '"' + String(c == null ? '' : c).replace(/"/g, '""') + '"').join(',')).join('\n'), 'text/csv');
 }
 
-rebuild();
-try { if (sessionStorage.getItem('mff_volver') === 'settings') { ui.view = 'settings'; sessionStorage.removeItem('mff_volver'); } } catch (e) {}
-render();
-detectarEscritorio();
+/** Pantalla de error que corta el arranque: dice qué pasó y qué hacer, en vez de una app
+ *  a medias. */
+function pantallaFatal (titulo, detalle) {
+  $('#app').innerHTML = `<main><div class="fatal"><h1>${h(titulo)}</h1><p>${h(detalle)}</p></div></main>`;
+}
+async function arrancar () {
+  // Sin su servidor (index.html suelto, o servido por otro programa) no hay dónde
+  // guardar la capa: se dice eso en vez de arrancar a medias.
+  try { ESCRITORIO = await apiLocal('/api/estado'); } catch (e) { ESCRITORIO = null; }
+  if (!ESCRITORIO || ESCRITORIO.app !== 'mff-escritorio') return pantallaFatal(t('ar_file_t'), t('ar_file'));
+  try { U = await cargarCapa(); }
+  catch (e) { return pantallaFatal(t('ar_capa_t'), e.message + ' ' + t('ar_capa')); }
+  LANG = U.prefs.lang;
+  rebuild();
+  try { if (sessionStorage.getItem('mff_volver') === 'settings') { ui.view = 'settings'; sessionStorage.removeItem('mff_volver'); } } catch (e) {}
+  render();
+}
+arrancar();
 })();

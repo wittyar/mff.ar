@@ -10,11 +10,15 @@ Programa y datos van en carpetas distintas. De la carpeta del programa (la del r
 salen index.html, app.js y styles.css; de la carpeta de datos (--datos), data.js,
 docs/ e images/, y ahi escribe el pipeline. Fuera de esas rutas no se sirve nada.
 
+La capa del usuario (listas, equipos, rutas, topes, ediciones) vive en capa.json, en
+la carpeta de datos: la pagina la pide con GET /api/capa y la guarda con PUT. Antes
+de la primera escritura de cada dia se copia la anterior a respaldos/ (quedan 7).
+
 Uso: python desktop/servidor.py --datos CARPETA
 
 Solo biblioteca estandar, para que corra con el Python embebido que viaja en la carpeta.
 """
-import argparse, json, os, re, socket, subprocess, sys, threading, urllib.parse, urllib.request, webbrowser
+import argparse, datetime, glob, json, os, re, shutil, socket, subprocess, sys, threading, urllib.parse, urllib.request, webbrowser
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -125,6 +129,48 @@ def consultar_version_remota():
     except Exception as e:
         REMOTA['error'] = str(e)
 
+# ---- capa del usuario ----
+CAPA_MAX = 64 * 1024 * 1024        # las imagenes subidas viajan como data URL dentro de la capa
+RESPALDOS = 7
+_capa_lock = threading.Lock()
+
+def _ruta_capa():
+    return os.path.join(DATOS, 'capa.json')
+
+def leer_capa():
+    """(codigo, cuerpo): {'capa': null} si todavia no hay capa (primer uso); 500 si el
+    archivo no es un objeto JSON valido. En ese caso la pagina no arranca: guardar
+    encima la pisaria."""
+    ruta = _ruta_capa()
+    if not os.path.exists(ruta):
+        return 200, {'capa': None}
+    try:
+        with open(ruta, encoding='utf-8') as f:
+            capa = json.load(f)
+        if not isinstance(capa, dict):
+            raise ValueError('no es un objeto JSON')
+        return 200, {'capa': capa}
+    except Exception as e:
+        return 500, {'error': f'no se pudo leer {ruta}: {e}'}
+
+def guardar_capa(capa):
+    """Escribe capa.json de forma atomica (archivo temporal + reemplazo). Antes de la
+    primera escritura del dia copia la capa vigente a respaldos/capa-AAAA-MM-DD.json."""
+    ruta = _ruta_capa()
+    with _capa_lock:
+        if os.path.exists(ruta):
+            carpeta = os.path.join(DATOS, 'respaldos')
+            os.makedirs(carpeta, exist_ok=True)
+            hoy = os.path.join(carpeta, f'capa-{datetime.date.today().isoformat()}.json')
+            if not os.path.exists(hoy):
+                shutil.copy2(ruta, hoy)
+                for viejo in sorted(glob.glob(os.path.join(carpeta, 'capa-*.json')))[:-RESPALDOS]:
+                    os.remove(viejo)
+        tmp = ruta + '.tmp'
+        with open(tmp, 'w', encoding='utf-8', newline='\n') as f:
+            json.dump(capa, f, ensure_ascii=False)
+        os.replace(tmp, ruta)
+
 class Handler(SimpleHTTPRequestHandler):
     def translate_path(self, path):
         ruta = urllib.parse.unquote(path.split('?', 1)[0].split('#', 1)[0])
@@ -179,8 +225,33 @@ class Handler(SimpleHTTPRequestHandler):
                                    'listo': pipeline_listo(), 'trabajo': TRABAJO.estado()})
             if self.path.startswith('/api/progreso'):
                 return self._json(TRABAJO.estado())
+            if self.path == '/api/capa':
+                codigo, cuerpo = leer_capa()
+                return self._json(cuerpo, codigo)
             return self._json({'error': 'no existe'}, 404)
         return super().do_GET()
+
+    def do_PUT(self):
+        if not self._host_valido():
+            return self.send_error(403)
+        if self.path != '/api/capa':
+            return self._json({'error': 'no existe'}, 404)
+        if not self._propio():
+            return self._json({'error': 'origen no permitido'}, 403)
+        largo = int(self.headers.get('Content-Length') or 0)
+        if not 0 < largo <= CAPA_MAX:
+            return self._json({'error': f'tamaño de capa invalido ({largo} bytes; maximo {CAPA_MAX})'}, 413)
+        try:
+            capa = json.loads(self.rfile.read(largo).decode('utf-8'))
+        except Exception as e:
+            return self._json({'error': f'la capa no es JSON valido: {e}'}, 400)
+        if not isinstance(capa, dict):
+            return self._json({'error': 'la capa tiene que ser un objeto JSON'}, 400)
+        try:
+            guardar_capa(capa)
+        except OSError as e:
+            return self._json({'error': f'no se pudo escribir la capa: {e}'}, 500)
+        return self._json({'ok': True})
 
     def do_POST(self):
         if not self._host_valido():
