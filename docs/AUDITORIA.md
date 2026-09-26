@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-09-24, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-09-26, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs. Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 

@@ -1,10 +1,10 @@
-// data.js — TA GUIANAEL MFF (generado por scripts/build.py el 2026-09-24; juego 12.2.5)
+// data.js — TA GUIANAEL MFF (generado por scripts/build.py el 2026-09-26; juego 12.2.5)
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
 // soportes, rotaciones, Alliance Battle, guía, retratos e íconos) y future-fight.fandom.com
 // (instintos y el contraste de docs/AUDITORIA.md). Crédito: THANO$VIB$ y Future Fight Wiki.
 // Uso personal.
 
-window.MFF_VERSION = {"juego": "12.2.5", "generado": "2026-09-24"};
+window.MFF_VERSION = {"juego": "12.2.5", "generado": "2026-09-26", "formato": 1};
 
 window.MFF_SEED = {
  "CLASSES": [

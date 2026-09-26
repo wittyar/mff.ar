@@ -525,7 +525,7 @@ def main():
     if malas:
         raise SystemExit(f'contenido/hallazgos.json cita fuentes sin definir en contenido/guia.json: {malas}')
     os.makedirs('docs', exist_ok=True)
-    open('docs/AUDITORIA.md', 'w', encoding='utf-8').write(informe(A, version, hallazgos, fuentes))
+    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes))
     por = {p: v for p, v in A.por_retrato.items() if v['ok'] or v['nd'] or v['dif']}
     json.dump({'resumen': dict(A.res), 'por_retrato': por}, open('work/verificacion.json', 'w', encoding='utf-8'),
               ensure_ascii=False)

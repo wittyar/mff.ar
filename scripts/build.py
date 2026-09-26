@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
-"""Reconstruye data.js, mff-thanosvibs-import.json y docs/AUDITORIA.md desde work/.
-Correr tras fetch_all.py y parse_instinto.py.
+"""Reconstruye data.js, datos.json, mff-thanosvibs-import.json y docs/AUDITORIA.md desde
+work/. Correr tras fetch_all.py y parse_instinto.py.
 
 Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
 auditar.py (work/verificacion.json y docs/AUDITORIA.md) y _core.py (personajes y tier
-lists, work/build2.json); acá se junta todo en data.js."""
-import json, os, datetime
+lists, work/build2.json); acá se junta todo en data.js.
+
+datos.json es lo que la app instalada consulta en GitHub para saber si hay datos nuevos:
+versión, formato, sha256 y tamaño de cada archivo que baja, y la lista de imágenes con
+su origen. Por eso data.js y el informe se escriben en UTF-8 con finales de línea \n
+en cualquier sistema, y .gitattributes impide que git los convierta: el hash publicado
+tiene que ser el de lo que se descarga."""
+import hashlib, json, os, datetime
 import subprocess, sys
 # Los módulos del pipeline (dominio, version_juego) viven al lado de este script.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -57,7 +63,10 @@ SEED = {
 hoy = hoy.isoformat()
 # Version del juego y fecha del snapshot, como dato de la app (no solo como comentario):
 # la app de escritorio las compara contra thanosvibs para avisar si hay una mas nueva.
-VERSION = {'juego': gv, 'generado': hoy}
+# FORMATO sube cuando data.js cambia de una forma que una app anterior no entiende: la app
+# solo acepta datos de su mismo formato (y avisa que hace falta actualizarla).
+FORMATO = 1
+VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
 // soportes, rotaciones, Alliance Battle, guía, retratos e íconos) y future-fight.fandom.com
@@ -99,7 +108,8 @@ parts = [header,
  'window.MFF_SEED_TIER_ASSIGNMENTS = ' + json.dumps(assign, ensure_ascii=False) + ';\n',
  """
 """]
-open('data.js','w').write('\n'.join(parts))
+with open('data.js', 'w', encoding='utf-8', newline='\n') as f:
+    f.write('\n'.join(parts))
 state = {
   'characters': chars, 'teams': [],
   'modes': [{'id': m['id'], 'name': m['nombre'], 'teamSize': m['equipo']['tam']}
@@ -114,5 +124,16 @@ state = {
   },
   'images': images, 'logo': ''}
 json.dump(state, open('mff-thanosvibs-import.json','w'), ensure_ascii=False, indent=1)
+from imagenes import origen
+def huella(ruta):
+    with open(ruta, 'rb') as f:
+        contenido = f.read()
+    return {'sha256': hashlib.sha256(contenido).hexdigest(), 'bytes': len(contenido)}
+manifiesto = {'formato': FORMATO, 'juego': gv, 'generado': hoy,
+              'archivos': {r: huella(r) for r in ('data.js', 'docs/AUDITORIA.md')},
+              'imagenes': [[r, origen(r)] for r in sorted(set(images.values()))]}
+with open('datos.json', 'w', encoding='utf-8', newline='\n') as f:
+    json.dump(manifiesto, f, ensure_ascii=False, indent=1)
+    f.write('\n')
 print(f"data.js {os.path.getsize('data.js')//1024} KB | import {os.path.getsize('mff-thanosvibs-import.json')//1024} KB"
       f" | juego {gv} | listas {len(tl)} | sets de skills {len(SKILLS)}")

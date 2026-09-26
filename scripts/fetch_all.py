@@ -16,6 +16,8 @@ Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       retratos) e images/items/*.png (íconos de C.T.P.s y artefactos)."""
 import glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from imagenes import origen      # de dónde sale cada imagen: la misma regla que publica build.py
 
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
 TV = 'https://thanosvibs.money'
@@ -185,7 +187,7 @@ if HACER_IMAGENES:
     def getp(p):
         fn = f'images/{p}.png'
         if os.path.exists(fn): return
-        try: open(fn, 'wb').write(get(f'{TV}/images/portraits/{p}.png'))
+        try: open(fn, 'wb').write(get(origen(fn)))
         except Exception as e: print('AVISO retrato fallo:', p, e)
     with ThreadPoolExecutor(6) as ex: list(ex.map(getp, ports))
     print('retratos:', len([f for f in os.listdir('images') if f.endswith('.png')]))
@@ -202,7 +204,7 @@ if HACER_IMAGENES:
         fn = f'images/items/{n}.png'
         if os.path.exists(fn): return
         try:
-            data = get(f'{TV}/images/items/{n}.png')
+            data = get(origen(fn))
             if data[:4] == b'\x89PNG': open(fn, 'wb').write(data)
             else: print('AVISO ícono de ítem no es PNG:', n)
         except Exception as e: print('AVISO ícono de ítem fallo:', n, e)
@@ -222,7 +224,7 @@ if HACER_DATOS:
         fn = f'images/icons/{s}.png'
         if os.path.exists(fn): return
         try:
-            data = get(f'{TV}/images/attributes/{s}.png')
+            data = get(origen(fn))
             if data[:4] == b'\x89PNG': open(fn, 'wb').write(data)
         except Exception as e: print('AVISO icono fallo:', s, e)
     with ThreadPoolExecutor(6) as ex: list(ex.map(geti, slugs))

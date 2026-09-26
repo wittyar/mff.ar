@@ -1,0 +1,6 @@
+# Lo que la app instalada baja de GitHub y verifica contra el sha256 de datos.json: git
+# lo guarda y lo entrega tal cual, sin convertir finales de línea, para que el hash
+# publicado sea el de lo que se descarga.
+data.js -text
+datos.json -text
+docs/AUDITORIA.md -text
