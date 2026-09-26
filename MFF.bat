@@ -25,7 +25,7 @@ if not defined PYEXE (
 )
 
 echo Iniciando TA GUIANAEL MFF...
-"%PYEXE%" desktop\servidor.py
+"%PYEXE%" desktop\servidor.py --datos .
 if errorlevel 1 (
   echo.
   echo La app termino con un error. La ventana queda abierta para que puedas leerlo.

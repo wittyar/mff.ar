@@ -6,27 +6,43 @@ que el navegador bloquea sus llamadas desde la pagina. La sincronizacion tiene q
 correr fuera del sandbox, y este proceso es ese afuera: sirve la app en 127.0.0.1 y
 expone los botones de Ajustes como endpoints que ejecutan el pipeline de siempre.
 
+Programa y datos van en carpetas distintas. De la carpeta del programa (la del repo)
+salen index.html, app.js y styles.css; de la carpeta de datos (--datos), data.js,
+docs/ e images/, y ahi escribe el pipeline. Fuera de esas rutas no se sirve nada.
+
+Uso: python desktop/servidor.py --datos CARPETA
+
 Solo biblioteca estandar, para que corra con el Python embebido que viaja en la carpeta.
 """
-import json, os, re, socket, subprocess, sys, threading, urllib.request, webbrowser
+import argparse, json, os, re, socket, subprocess, sys, threading, urllib.parse, urllib.request, webbrowser
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATOS = None                          # carpeta de datos; la fija main() con --datos
 sys.path.insert(0, os.path.join(RAIZ, 'scripts'))
 from version_juego import ultima
 PY = sys.executable
 PUERTO_PREFERIDO = 8731
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
 
+# Lo unico que se sirve: los tres archivos del programa y, de la carpeta de datos,
+# data.js, los informes de docs/ y las imagenes. Cualquier otra ruta es 404.
+PROGRAMA = {'/': 'index.html', '/index.html': 'index.html', '/app.js': 'app.js', '/styles.css': 'styles.css'}
+DE_DATOS = re.compile(r'^/(?:data\.js|docs/[\w-]+\.md|images/(?:[\w-]+/)?[\w-]+\.png)$')
+
+def _script(nombre):
+    return os.path.join(RAIZ, 'scripts', nombre)
+
 # Cada boton de Ajustes es una secuencia de comandos. build.py se corre despues de
-# cualquier cambio de datos porque es el que regenera data.js.
+# cualquier cambio de datos porque es el que regenera data.js. Corren con la carpeta
+# de datos como directorio de trabajo: ahi dejan work/, images/, docs/ y data.js.
 TAREAS = {
-    'datos':     [[PY, 'scripts/fetch_all.py', '--datos'],
-                  [PY, 'scripts/parse_instinto.py'],
-                  [PY, 'scripts/build.py']],
-    'tierlists': [[PY, 'scripts/fetch_all.py', '--tierlists'],
-                  [PY, 'scripts/build.py']],
-    'imagenes':  [[PY, 'scripts/fetch_all.py', '--imagenes']],
+    'datos':     [[PY, _script('fetch_all.py'), '--datos'],
+                  [PY, _script('parse_instinto.py')],
+                  [PY, _script('build.py')]],
+    'tierlists': [[PY, _script('fetch_all.py'), '--tierlists'],
+                  [PY, _script('build.py')]],
+    'imagenes':  [[PY, _script('fetch_all.py'), '--imagenes']],
 }
 
 class Trabajo:
@@ -60,7 +76,7 @@ class Trabajo:
         try:
             for cmd in TAREAS[que]:
                 self._log('$ ' + ' '.join(os.path.basename(c) for c in cmd))
-                p = subprocess.Popen(cmd, cwd=RAIZ, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                p = subprocess.Popen(cmd, cwd=DATOS, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                      text=True, encoding='utf-8', errors='replace', bufsize=1)
                 for linea in p.stdout:
                     self._log(linea.rstrip())
@@ -85,15 +101,15 @@ INSUMOS = ('work/characters.json', 'work/instintos.json', 'work/uniforms.json', 
            'work/rotations.json', 'work/wiki_artifact.json', 'work/guia/changelog.json',
            'work/guia/parte1.txt', 'work/guia/parte2.txt')
 def pipeline_listo():
-    if any(not os.path.exists(os.path.join(RAIZ, f)) for f in INSUMOS):
+    if any(not os.path.exists(os.path.join(DATOS, f)) for f in INSUMOS):
         return False
-    d = os.path.join(RAIZ, 'work', 'skills_api')
+    d = os.path.join(DATOS, 'work', 'skills_api')
     return os.path.isdir(d) and bool(os.listdir(d))
 
 def version_local():
     """Lee window.MFF_VERSION del data.js que hay en disco."""
     try:
-        with open(os.path.join(RAIZ, 'data.js'), encoding='utf-8') as f:
+        with open(os.path.join(DATOS, 'data.js'), encoding='utf-8') as f:
             cabecera = f.read(4000)
         m = re.search(r'window\.MFF_VERSION\s*=\s*(\{.*?\});', cabecera, re.S)
         return json.loads(m.group(1)) if m else {}
@@ -110,8 +126,13 @@ def consultar_version_remota():
         REMOTA['error'] = str(e)
 
 class Handler(SimpleHTTPRequestHandler):
-    def __init__(self, *a, **kw):
-        super().__init__(*a, directory=RAIZ, **kw)
+    def translate_path(self, path):
+        ruta = urllib.parse.unquote(path.split('?', 1)[0].split('#', 1)[0])
+        if ruta in PROGRAMA:
+            return os.path.join(RAIZ, PROGRAMA[ruta])
+        if DE_DATOS.match(ruta):
+            return os.path.join(DATOS, *ruta[1:].split('/'))
+        return os.path.join(DATOS, 'no-existe')  # send_head responde 404
 
     def log_message(self, *a):
         pass  # la consola es para el progreso de la sincronizacion, no para cada GET
@@ -177,9 +198,17 @@ def puerto_libre(preferido):
     return 0  # que elija el sistema
 
 def main():
-    faltan = [f for f in ('index.html', 'app.js', 'styles.css', 'data.js') if not os.path.exists(os.path.join(RAIZ, f))]
+    global DATOS
+    ap = argparse.ArgumentParser(description='Servidor local de TA GUIANAEL MFF')
+    ap.add_argument('--datos', required=True, help='carpeta de datos (data.js, docs/, images/, work/)')
+    ap.add_argument('--no-abrir', action='store_true', help='no abrir el navegador')
+    args = ap.parse_args()
+    DATOS = os.path.abspath(args.datos)
+    faltan = [os.path.join(RAIZ, f) for f in ('index.html', 'app.js', 'styles.css')
+              if not os.path.exists(os.path.join(RAIZ, f))]
+    faltan += [os.path.join(DATOS, f) for f in ('data.js',) if not os.path.exists(os.path.join(DATOS, f))]
     if faltan:
-        print('ERROR: faltan archivos de la app en', RAIZ, '->', ', '.join(faltan))
+        print('ERROR: faltan archivos de la app ->', ', '.join(faltan))
         input('Enter para cerrar...')
         return 1
     threading.Thread(target=consultar_version_remota, daemon=True).start()
@@ -191,7 +220,7 @@ def main():
     print(f'  datos locales: juego {v.get("juego", "?")} (snapshot {v.get("generado", "?")})')
     print(f'  abriendo {url}')
     print('  cerra esta ventana para apagar la app.')
-    if '--no-abrir' not in sys.argv:
+    if not args.no_abrir:
         threading.Timer(0.6, lambda: webbrowser.open(url)).start()
     try:
         servidor.serve_forever()
