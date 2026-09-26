@@ -78,9 +78,10 @@ def cancelar_tareas():
     for t in TAREAS.values():
         t.cancelar.set()
 
-# Lo único que se sirve: los tres archivos del programa y, de la carpeta de datos,
+# Lo único que se sirve: los archivos del programa (y su ícono) y, de la carpeta de datos,
 # data.js, los informes de docs/ y las imágenes. Cualquier otra ruta es 404.
-PROGRAMA = {'/': 'index.html', '/index.html': 'index.html', '/app.js': 'app.js', '/styles.css': 'styles.css'}
+PROGRAMA = {'/': 'index.html', '/index.html': 'index.html', '/app.js': 'app.js', '/styles.css': 'styles.css',
+            '/favicon.ico': 'desktop/mff.ico'}
 DE_DATOS = re.compile(r'^/(?:data\.js|docs/[\w-]+\.md|images/(?:[\w-]+/)?[\w-]+\.png)$')
 
 def estado():

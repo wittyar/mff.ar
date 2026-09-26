@@ -1,0 +1,45 @@
+name: Publicar versión
+# Se dispara al empujar una etiqueta vX.Y.Z que coincida con version.json. Arma el programa,
+# el parche y el instalador en Windows y los publica como release: la app instalada ve la
+# versión nueva en releases/latest/download/latest.json.
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  publicar:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    env:
+      # Sin esto, el bash de Git para Windows convierte los argumentos que empiezan con "/"
+      # (/VERYSILENT, /DAppVersion=...) en rutas.
+      MSYS_NO_PATHCONV: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Programa y parche
+        run: python desktop/construir.py programa
+      - name: Inno Setup 6.7.3 (de su release oficial, verificado)
+        run: |
+          curl -sSfL -o innosetup.exe https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe
+          echo "9c73c3bae7ed48d44112a0f48e66742c00090bdb5bef71d9d3c056c66e97b732  innosetup.exe" | sha256sum -c -
+          ./innosetup.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /CURRENTUSER '/DIR=C:\InnoSetup'
+      - name: Instalador
+        run: |
+          VERSION=$(python desktop/construir.py version)
+          '/c/InnoSetup/ISCC.exe' "/DAppVersion=$VERSION" 'desktop\instalador.iss'
+      - name: latest.json (verifica que la etiqueta coincida con version.json)
+        run: python desktop/construir.py manifiesto "${{ github.ref_name }}"
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(python desktop/construir.py version)
+          gh release create "${{ github.ref_name }}" \
+            "dist/TA-GUIANAEL-MFF-$VERSION.exe" "dist/mff-parche-$VERSION.zip" dist/latest.json \
+            --title "TA GUIANAEL MFF $VERSION" --notes-file dist/notas.md

@@ -212,8 +212,8 @@ def bajar_imagenes(carpeta, tarea):
 
 # ---- versión de la app ----
 
-# Lo único que un parche puede reemplazar: los archivos del programa.
-DEL_PROGRAMA = re.compile(r'^(?:index\.html|app\.js|styles\.css|version\.json|desktop/[\w-]+\.py)$')
+# Lo único que un parche puede reemplazar: los archivos del programa (PROGRAMA en construir.py).
+DEL_PROGRAMA = re.compile(r'^(?:index\.html|app\.js|styles\.css|version\.json|desktop/[\w-]+\.py|desktop/mff\.ico)$')
 
 
 def version_tupla(v):
