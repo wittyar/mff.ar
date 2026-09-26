@@ -1,8 +1,8 @@
 # TA GUIANAEL MFF
 
-App standalone (HTML/JS sin dependencias, sin build) para consultar y comparar personajes de
-MARVEL Future Fight, ver para qué se usa cada uno y cómo armarlo, armar equipos y trabajar sobre
-tier lists. 290 personajes, 598 uniformes, 9.147 skills con efectos estructurados por objetivo.
+App de escritorio para Windows (HTML/JS sin dependencias ni build, servida por un proceso Python
+local) para consultar y comparar personajes de MARVEL Future Fight, ver para qué se usa cada uno y
+cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 uniformes, 9.147 skills con efectos estructurados por objetivo.
 **Material de consulta de uso interno/personal, sin fin comercial.**
 
 **Fuentes de datos** (crédito correspondiente):
@@ -38,70 +38,95 @@ tier lists. 290 personajes, 598 uniformes, 9.147 skills con efectos estructurado
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.
 
-## App de escritorio (Windows)
-`MFF.bat` levanta un servidor local en 127.0.0.1 y abre la app en el navegador por defecto.
-Sirve para tener **botones de sincronización dentro de Ajustes**: la API de thanosvibs no manda
-`Access-Control-Allow-Origin`, así que el navegador no puede bajar los datos por su cuenta — hace
-falta un proceso afuera del sandbox, y ese proceso es `desktop/servidor.py`.
+## Instalar y usar
+1. Bajar `TA-GUIANAEL-MFF-X.Y.Z.exe` de la [última release](https://github.com/wittyar/mff.ar/releases/latest).
+2. Abrirlo. El instalador no está firmado, así que Windows muestra *"Windows protegió su PC"*:
+   **Más información → Ejecutar de todas formas**. No pide permisos de administrador.
+3. Queda un acceso directo en el menú Inicio (y, si lo marcaste, en el escritorio).
 
-Tres botones, cada uno actualiza solo lo suyo y muestra el progreso en vivo:
-- **Datos del juego** — `fetch_all --datos` + `parse_instinto` + `build`. Regenera `data.js` y
-  `docs/AUDITORIA.md`.
-- **Tier lists** — `fetch_all --tierlists` + `build`. Rápido. Necesita que ya se hayan bajado los
-  datos alguna vez (el botón se deshabilita solo y lo explica si no).
-- **Retratos** — `fetch_all --imagenes`. Baja los PNG de retratos, C.T.P. y artefactos que falten.
+La app abre en su propia ventana (Microsoft Edge en modo app, con un perfil aparte que no toca el
+navegador de todos los días) y se cierra sola unos minutos después de cerrar la ventana: no hay
+consola ni servidor que cerrar por separado. Abrirla dos veces abre otra ventana contra la misma
+instancia.
 
-Al terminar, la página se recarga sola y vuelve a Ajustes. Al abrir, la app compara la versión de
-juego de `data.js` contra la que publica thanosvibs y avisa si hay una más nueva.
+- **Programa**: `%LOCALAPPDATA%\Programs\TA GUIANAEL MFF`.
+- **Datos**: `%LOCALAPPDATA%\TA GUIANAEL MFF` — `capa.json` (lo tuyo), `respaldos/` (una copia de
+  la capa por día, quedan 7), `data.js` y `datos.json` (datos del juego), `images/` y `registro.txt`
+  (qué pasó en cada arranque). Ajustes muestra la ruta. Desinstalar borra el programa, no los datos.
 
-Si abrís el HTML suelto (sin `MFF.bat`), la sección de Ajustes explica por qué no hay sincronización
-en vez de mostrar botones rotos.
+La primera vez la app abre con los datos que trae el instalador y baja en segundo plano los
+retratos e íconos (77 MB de thanosvibs), con el avance a la vista.
 
-### Pasarle la app a otra persona
+### Actualizaciones
+Al abrir, la app consulta GitHub:
+- **Datos del juego**: `datos.json` (publicado por el workflow semanal, ver abajo) dice qué hay.
+  Si hay datos nuevos del formato que entiende esta versión, se bajan solos, se verifican contra
+  su sha256 y un botón recarga la ventana para usarlos. Si son de un formato más nuevo, se avisa
+  (hace falta actualizar la app).
+- **Versión de la app**: cada release publica `latest.json`. Si hay una versión nueva con el mismo
+  Python, un aviso muestra las novedades y, confirmado, baja el parche (solo los archivos del
+  programa, unos 100 KB), lo verifica, guarda el programa anterior en `programa-anterior/` y se
+  reinicia sola en la misma ventana. Si cambia Python, ofrece el instalador completo.
+- **Retratos e íconos** que falten: se bajan solos. Los que thanosvibs no publica se cuentan en
+  Ajustes y la app muestra el nombre sin ícono.
+
+Sin conexión, la app anda igual con lo que tiene y lo dice en un aviso.
+
+### Pasar lo que tenías en el navegador
+Hasta la versión anterior, la capa (listas, equipos, rutas, topes, marcas) vivía en el navegador.
+Se pasa una vez: en la versión vieja, **Ajustes → Exportar mi capa**; en la nueva, **Ajustes →
+Importar**.
+
+### Desde el repo
+`MFF.bat` (Windows, con Python instalado) o `MFF.sh` (Linux/macOS) corren el mismo lanzador sobre
+la copia del repo, con **la misma carpeta de datos** que la app instalada. Desde el repo no se
+aplican parches: la app avisa que hay versión nueva y se actualiza con `git pull`. No pueden estar
+abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
+
+### Publicar una versión
+1. En `version.json`: subir `version`, escribir `notas` (es lo que ve el usuario antes de
+   actualizar). Si cambia `python`, agregar su sha256 en `PYTHON_SHA256` de
+   `desktop/construir.py`: esa versión ya no se puede parchar y pide el instalador completo.
+2. Commit, etiqueta `vX.Y.Z` y push de la etiqueta:
+   ```
+   git tag v1.0.1
+   git push origin v1.0.1
+   ```
+3. El workflow **Publicar versión** arma en Windows el programa, el parche y el instalador (Inno
+   Setup) y publica la release con `latest.json`. Si la etiqueta no coincide con `version.json`,
+   falla sin publicar.
+
+`formato_datos` (en `version.json`) y `FORMATO` (en `scripts/build.py`) van juntos: se suben cuando
+`data.js` cambia de una forma que una versión anterior de la app no entiende.
+
+## Datos del juego (pipeline)
+El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
+Actions → Run workflow) baja todo de thanosvibs y la wiki, regenera `data.js`, `datos.json`,
+`docs/AUDITORIA.md` y el import, y los commitea. La app instalada baja ese resultado.
+
+A mano (Linux o macOS; en Windows ver Limitaciones):
 ```
-python desktop/preparar_paquete.py
-```
-Deja `dist/TA-GUIANAEL-MFF/` con la app, el pipeline, el lanzador y **un Python embebido de
-python.org adentro** (un ZIP sin instalador: no pide admin, no toca el PATH ni el registro).
-Quien lo recibe descomprime y hace doble clic en `MFF.bat`, sin instalar nada. Con `--sin-imagenes`
-el paquete sale más liviano y los retratos se bajan después desde Ajustes.
-
-Se eligió el Python embebido y no un `.exe` de PyInstaller a propósito: un ejecutable sin firmar
-dispara el aviso de SmartScreen y es un falso positivo habitual de varios antivirus. El `.bat`, en
-cambio, no dispara nada.
-
-**Sin verificar**: el paquete se probó entero en Linux (servidor, endpoints, botones, regeneración
-de `data.js`, arranque desde la carpeta armada). Lo que **no** se pudo probar desde acá es el
-`python\python.exe` embebido corriendo en Windows real.
-
-## Uso
-Las **imágenes no están en el repo** (PNGs de terceros, gitignoreados). Tras clonar:
-```
-python scripts/fetch_all.py    # baja datos + imágenes a images/
-```
-y abrir `index.html`. Si ya tenés la carpeta `images/` de una copia anterior, alcanza con copiarla al lado del HTML.
-
-## Actualizar datos (cuando el juego cambia de versión)
-Local:
-```
-python scripts/fetch_all.py
+python scripts/fetch_all.py        # datos, tier lists e imágenes (images/ no se versiona)
 python scripts/parse_instinto.py
-python scripts/build.py        # regenera data.js, mff-thanosvibs-import.json y docs/AUDITORIA.md
+python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md
 ```
-O desde GitHub: pestaña **Actions → "Actualizar datos MFF" → Run workflow** (regenera y commitea
-`data.js` y el informe si cambiaron; las imágenes nuevas se bajan localmente con `fetch_all.py`).
+`datos.json` lleva el sha256 y el tamaño de cada archivo que baja la app y la lista de imágenes con
+su origen (`scripts/imagenes.py`). `.gitattributes` evita que git cambie los finales de línea de
+esos archivos: el hash publicado tiene que ser el de lo que se descarga.
 
 La versión de juego del snapshot sale de `/api/updates` de thanosvibs (la última publicada con
 fecha pasada), no de una tier list: las listas se actualizan a su propio ritmo.
 
 ## Dónde viven los datos
 - `data.js` es la **única** fuente de personajes, uniformes, skills, imágenes, tier lists importadas
-  y del resto de lo que viene de las fuentes. La app nunca lo copia a `localStorage`: regenerarlo se
-  ve al recargar, sin borrar nada.
-- `localStorage` guarda **solo la capa del usuario** (clave `mff_user_v1`): personajes propios o
+  y del resto de lo que viene de las fuentes. La app nunca lo copia a la capa: actualizarlo se ve
+  al recargar, sin borrar nada.
+- `capa.json` (carpeta de datos) guarda **solo la capa del usuario**: personajes propios o
   editados, equipos, tier lists propias, cambios sobre las importadas, imágenes subidas, atributos
-  marcados, hojas de ruta, topes cargados y preferencias. Se exporta e importa desde **Ajustes**.
-  Las capas viejas (una sola fila por entrada, modos de ejemplo) se migran solas al abrir.
+  marcados, hojas de ruta, topes cargados y preferencias. Se guarda a través del servidor local
+  en cada cambio; si un guardado falla, la app lo dice y ofrece reintentar. Un `capa.json`
+  ilegible frena el arranque en vez de pisarlo. Se exporta e importa desde **Ajustes**, y las
+  capas viejas (una sola fila por entrada, modos de ejemplo) se convierten al cargarlas.
 - `scripts/contenido/` — lo curado a mano, cada bloque con su fuente: `guia.json` (armado,
   progresión, topes, ranking de C.T.P., reglas de ISO y urus), `modos.json` y `hallazgos.json`.
 
@@ -196,19 +221,30 @@ S–D, rango con SS, uso: líder/principal/soporte/striker, una fila por C.T.P.,
 ser de personajes, de C.T.P., de artefactos o de tus equipos.
 
 ## Estructura
-- `index.html` / `app.js` / `styles.css` — la app.
-- `data.js` — snapshot generado de los datos (autosuficiente; la app no necesita importar nada).
+- `index.html` / `app.js` / `styles.css` — la app (la página).
+- `version.json` — versión de la app, formato de datos que entiende, versión de Python y notas.
+- `data.js` / `datos.json` — snapshot generado de los datos y su manifiesto.
 - `scripts/` — pipeline: `fetch_all` → `parse_instinto` → `build`, que llama a `skills_api.py`,
   `fuentes.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
   `traducir.py` las tablas de las skills y `version_juego.py` la versión del snapshot.
 - `scripts/traducciones/` — las tablas de traducción, editables a mano.
 - `scripts/contenido/` — lo curado a mano, con fuentes.
 - `docs/AUDITORIA.md` — el informe de la auditoría entre fuentes (se regenera en cada build).
-- `desktop/` — servidor local (`servidor.py`) y armador del paquete (`preparar_paquete.py`).
-- `MFF.bat` / `MFF.sh` — lanzadores.
+- `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
+  `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
+  verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
+- `.github/workflows/` — `actualizar.yml` (datos, semanal) y `publicar.yml` (release al etiquetar).
+- `MFF.bat` / `MFF.sh` — lanzadores desde el repo.
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual).
 
 ## Limitaciones conocidas
+- El pipeline de datos no corre en Windows: los scripts leen y escriben texto con la codificación
+  del sistema (cp1252) y los datos traen caracteres que no entran (★, ↑). Corre en GitHub (Linux);
+  la app instalada ya no lo necesita.
+- Probado en Linux y bajo Wine (instalador compilado con Inno Setup, Python embebido de Windows):
+  instalación, arranque, carpeta de datos, instancia única, capa, apagado y desinstalación. **No
+  probado en un Windows real**: la ventana de Edge en modo app, el cuadro de error y el aviso de
+  SmartScreen.
 - No hay cantidad de hits ni melee/ranged/área/empuje: la API de skills no lo publica.
 - Roles derivados por reglas documentadas (el juego no tiene roles), a partir de las etiquetas
   tipadas de la API.
