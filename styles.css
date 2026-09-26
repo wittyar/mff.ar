@@ -395,6 +395,8 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 .aviso-app .btn{margin-left:8px}
 .aviso-app .barra{height:4px;border-radius:2px;background:var(--surface-3);margin-top:8px;overflow:hidden}
 .aviso-app .barra i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.aviso-app details.notas{margin-top:6px;color:var(--text-2)}
+.aviso-app details.notas summary{cursor:pointer;color:var(--text)}
 /* Servidor de escritorio cerrado con la pestaña abierta: va arriba de cualquier vista. */
 .srvcaido{border:1px solid rgba(255,45,85,.45);border-left:3px solid var(--accent);background:var(--accent-soft);
   border-radius:var(--r-sm);padding:10px 14px;margin-bottom:18px;font-size:13px}

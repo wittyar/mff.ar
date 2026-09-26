@@ -14,10 +14,14 @@ sistema, así que las dos usan los mismos datos y la misma capa.
   No hay una consola que cerrar por separado.
 - Un error al arrancar se muestra en un cuadro de diálogo y queda en registro.txt.
 
+- Tras aplicar un parche de versión, el proceso se relanza a sí mismo en el mismo puerto
+  y sin abrir otra ventana: la que está abierta se reconecta y recarga.
+
 Opciones para probar fuera de Windows: --datos CARPETA, --sin-ventana, --puerto N,
---espera-latido S, --origen-datos URL (de dónde se bajan los datos; por defecto, GitHub).
+--espera-latido S, --origen-datos URL (de dónde se bajan los datos; por defecto, GitHub),
+--origen-app URL (el latest.json de la última release).
 """
-import argparse, json, logging, os, shutil, sys, threading, time, traceback, urllib.request, webbrowser
+import argparse, json, logging, os, shutil, subprocess, sys, threading, time, traceback, urllib.request, webbrowser
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 # El Python embebido del instalador no suma la carpeta del script al path (a propósito,
@@ -29,6 +33,7 @@ sys.path.insert(0, AQUI)
 APP = 'TA GUIANAEL MFF'
 RAIZ = os.path.dirname(AQUI)
 ORIGEN_DATOS = 'https://raw.githubusercontent.com/wittyar/mff.ar/main/'
+ORIGEN_APP = 'https://github.com/wittyar/mff.ar/releases/latest/download/latest.json'
 
 
 def carpeta_datos_por_defecto():
@@ -134,6 +139,7 @@ def main():
                     help='segundos sin latidos de ninguna ventana antes de apagarse')
     ap.add_argument('--origen-datos', default=ORIGEN_DATOS,
                     help='URL base de datos.json y de los datos publicados')
+    ap.add_argument('--origen-app', default=ORIGEN_APP, help='URL del latest.json de la última release')
     args = ap.parse_args()
     datos = os.path.abspath(args.datos or carpeta_datos_por_defecto())
     os.makedirs(datos, exist_ok=True)
@@ -154,7 +160,7 @@ def main():
         return 0
 
     sembrar_datos(datos)
-    srv = servidor.crear(datos, args.puerto, args.espera_latido, args.origen_datos)
+    srv = servidor.crear(datos, args.puerto, args.espera_latido, args.origen_datos, args.origen_app)
     puerto = srv.server_port
     url = f'http://127.0.0.1:{puerto}/index.html'
     ruta_instancia = os.path.join(datos, 'instancia.json')
@@ -168,9 +174,13 @@ def main():
     if not args.sin_ventana:
         abrir_ventana(url, datos)
 
-    while not servidor.debe_cerrar():
+    while not servidor.debe_cerrar() and not servidor.REINICIAR.is_set():
         time.sleep(1)
-    logging.info('ninguna ventana late hace %s s: se apaga', args.espera_latido)
+    reiniciar = servidor.REINICIAR.is_set()
+    if reiniciar:
+        logging.info('se aplicó un parche de versión: se reinicia en el puerto %s', puerto)
+    else:
+        logging.info('ninguna ventana late hace %s s: se apaga', args.espera_latido)
     if servidor.TAREAS['imagenes'].estado()['corriendo']:
         logging.info('se corta la descarga de imágenes: las que falten se bajan la próxima vez')
     servidor.cancelar_tareas()
@@ -178,7 +188,22 @@ def main():
     srv.server_close()
     os.remove(ruta_instancia)
     candado.close()
+    if reiniciar:
+        relanzar(args, datos, puerto)
     return 0
+
+
+def relanzar(args, datos, puerto):
+    """Otro proceso con el programa ya parchado, en el mismo puerto y sin ventana nueva."""
+    cmd = [sys.executable, os.path.abspath(__file__), '--datos', datos, '--puerto', str(puerto), '--sin-ventana',
+           '--espera-latido', str(args.espera_latido), '--origen-datos', args.origen_datos,
+           '--origen-app', args.origen_app]
+    if sys.platform == 'win32':
+        subprocess.Popen(cmd, close_fds=True,
+                         creationflags=subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP)
+    else:
+        subprocess.Popen(cmd, close_fds=True, start_new_session=True,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 if __name__ == '__main__':

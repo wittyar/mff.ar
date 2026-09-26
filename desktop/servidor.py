@@ -15,9 +15,10 @@ API (solo para la propia página: cabecera X-MFF y Host 127.0.0.1):
   PUT  /api/capa              la guarda; antes de la primera escritura de cada día copia
                               la anterior a respaldos/ (quedan 7)
   POST /api/latido            la ventana sigue abierta
-  GET  /api/novedades         compara los datos locales con los publicados en GitHub
+  GET  /api/novedades         compara datos y versión de la app con lo publicado en GitHub
   POST /api/datos/actualizar  baja los datos publicados (tarea en segundo plano)
   POST /api/imagenes/bajar    baja los retratos e íconos que falten (tarea en segundo plano)
+  POST /api/app/actualizar    aplica el parche de la última versión y pide reiniciar
   GET  /api/progreso          avance de las tareas
 
 No se corre solo: lo arranca desktop/lanzador.py (crear), que también abre la ventana
@@ -33,13 +34,18 @@ import actualizador
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATOS = None                          # carpeta de datos; la fija crear()
 ORIGEN_DATOS = None                   # de dónde se bajan los datos; lo fija crear()
+ORIGEN_APP = None                     # latest.json de la última release; lo fija crear()
+# Corriendo desde el repo, las versiones nuevas llegan con git pull: un parche encima de
+# la copia de trabajo mezclaría archivos de la release con los de git.
+DESDE_REPO = os.path.isdir(os.path.join(RAIZ, '.git'))
+REINICIAR = threading.Event()         # lo mira el lanzador: se aplicó un parche
 # version.json viaja con el programa: versión de la app y formato de datos que entiende.
 try:
     with open(os.path.join(RAIZ, 'version.json'), encoding='utf-8') as _f:
         VERSION = json.load(_f)
 except OSError as _e:
     raise RuntimeError(f'el programa está incompleto: no se pudo leer version.json ({_e})')
-TAREAS = {'datos': actualizador.Tarea(), 'imagenes': actualizador.Tarea()}
+TAREAS = {'datos': actualizador.Tarea(), 'imagenes': actualizador.Tarea(), 'app': actualizador.Tarea()}
 
 # ---- vida del servidor: se apaga cuando ninguna ventana late ----
 ESPERA = 180                          # segundos sin latidos antes de apagarse; la fija crear()
@@ -58,7 +64,7 @@ def latido_cada():
 # Las tareas que no se cortan a mitad de camino aunque se cierre la ventana. La de
 # imágenes sí: cada imagen se escribe entera o no se escribe, y las que falten se bajan
 # la próxima vez (seguir bajando 77 MB con la app cerrada no lo espera nadie).
-NO_SE_CORTAN = ('datos',)
+NO_SE_CORTAN = ('datos', 'app')
 
 def debe_cerrar():
     """Nadie late hace ESPERA segundos (o nunca latió nadie desde el arranque), y no hay
@@ -80,7 +86,7 @@ DE_DATOS = re.compile(r'^/(?:data\.js|docs/[\w-]+\.md|images/(?:[\w-]+/)?[\w-]+\
 def estado():
     local = actualizador.leer_json(os.path.join(DATOS, 'datos.json'))
     return {'app': 'mff-escritorio', 'raiz': RAIZ, 'datos': DATOS, 'latido_cada': latido_cada(),
-            'version': VERSION['version'], 'formato_datos': VERSION['formato_datos'],
+            'version': VERSION['version'], 'formato_datos': VERSION['formato_datos'], 'desde_repo': DESDE_REPO,
             'datos_local': actualizador.resumen(local),
             'imagenes': resumen_imagenes(),
             'tareas': {n: t.estado() for n, t in TAREAS.items()}}
@@ -101,7 +107,19 @@ def novedades():
         datos = actualizador.novedades_datos(ORIGEN_DATOS, DATOS, VERSION['formato_datos'])
     except Exception as e:
         datos = {'error': actualizador.explicar(e)}
-    return {'datos': datos}
+    try:
+        app = actualizador.novedades_app(ORIGEN_APP, VERSION)
+    except Exception as e:
+        app = {'error': actualizador.explicar(e)}
+    return {'datos': datos, 'app': app}
+
+def tarea_app(t):
+    if DESDE_REPO:
+        raise RuntimeError('la app corre desde el repo: las versiones nuevas llegan con git pull')
+    resultado = actualizador.actualizar_app(ORIGEN_APP, RAIZ, os.path.join(DATOS, 'programa-anterior'), VERSION, t)
+    # Un par de segundos para que la página vea que terminó antes de que el servidor se vaya.
+    threading.Timer(2.0, REINICIAR.set).start()
+    return resultado
 
 # ---- capa del usuario ----
 CAPA_MAX = 64 * 1024 * 1024        # las imágenes subidas viajan como data URL dentro de la capa
@@ -250,15 +268,29 @@ class Handler(SimpleHTTPRequestHandler):
             if not TAREAS['datos'].arrancar(tarea):
                 return self._json({'error': 'ya se están bajando los datos'}, 409)
             return self._json(TAREAS['datos'].estado())
+        if self.path == '/api/app/actualizar':
+            if not TAREAS['app'].arrancar(tarea_app):
+                return self._json({'error': 'ya se está actualizando la app'}, 409)
+            return self._json(TAREAS['app'].estado())
         if self.path == '/api/imagenes/bajar':
             if not TAREAS['imagenes'].arrancar(lambda t: actualizador.bajar_imagenes(DATOS, t)):
                 return self._json({'error': 'ya se están bajando las imágenes'}, 409)
             return self._json(TAREAS['imagenes'].estado())
         return self._json({'error': 'no existe'}, 404)
 
-def crear(datos, puerto, espera, origen_datos):
+def crear(datos, puerto, espera, origen_datos, origen_app):
     """Servidor atado a 127.0.0.1. puerto 0 deja que el sistema elija uno libre: la capa no
-    depende del origen, así que el puerto puede cambiar entre arranques."""
-    global DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS
-    DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS = os.path.abspath(datos), espera, time.monotonic(), origen_datos
-    return ThreadingHTTPServer(('127.0.0.1', puerto), Handler)
+    depende del origen, así que el puerto puede cambiar entre arranques. Con un puerto
+    fijo (el reinicio tras un parche retoma el de la ventana abierta) se reintenta unos
+    segundos: el proceso anterior puede estar terminando de soltarlo."""
+    global DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS, ORIGEN_APP
+    DATOS, ESPERA, _ARRANQUE = os.path.abspath(datos), espera, time.monotonic()
+    ORIGEN_DATOS, ORIGEN_APP = origen_datos, origen_app
+    limite = time.monotonic() + 20
+    while True:
+        try:
+            return ThreadingHTTPServer(('127.0.0.1', puerto), Handler)
+        except OSError:
+            if not puerto or time.monotonic() > limite:
+                raise
+            time.sleep(0.5)

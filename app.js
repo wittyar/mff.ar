@@ -657,6 +657,20 @@ const T = {
                         en:'There is new game data, but it is for a newer version of the app.' },
   av_check_err:       { es:'No se pudo buscar actualizaciones:', en:'Could not check for updates:' },
   av_hide:            { es:'Ocultar',             en:'Hide' },
+  ac_new_app:         { es:'Hay una versión nueva de la app.', en:'There is a new app version.' },
+  ap_new:             { es:'Versión {v} disponible.', en:'Version {v} available.' },
+  ap_go:              { es:'Actualizar',          en:'Update' },
+  ap_notes:           { es:'Novedades',           en:"What's new" },
+  ap_confirm:         { es:'¿Actualizar la app a la versión {v}? Se reinicia sola; tus datos no se tocan.',
+                        en:'Update the app to version {v}? It restarts on its own; your data is not touched.' },
+  ap_updating:        { es:'Actualizando la app a la versión {v}…', en:'Updating the app to version {v}…' },
+  ap_restart:         { es:'Versión {v} instalada. Reiniciando…', en:'Version {v} installed. Restarting…' },
+  ap_err:             { es:'No se pudo actualizar la app:', en:'The app could not be updated:' },
+  ap_installer:       { es:'Cambia la base del programa: hace falta el instalador completo (tus datos no se tocan).',
+                        en:'The program base changes: the full installer is needed (your data is not touched).' },
+  ap_installer_go:    { es:'Bajar instalador',    en:'Download installer' },
+  ap_repo:            { es:'Estás usando la app desde el repo: se actualiza con git pull.',
+                        en:'You are running the app from the repo: update it with git pull.' },
   av_img:             { es:'Bajando retratos e íconos:', en:'Downloading portraits and icons:' },
   av_img_n:           { es:'{n} de {total}',      en:'{n} of {total}' },
   av_img_err:         { es:'Faltan imágenes:',    en:'Missing images:' },
@@ -715,15 +729,16 @@ async function apiLocal (ruta, metodo) {
 // formato de esta versión, se bajan solos con el avance a la vista; al terminar, un botón
 // recarga la ventana para usarlos (no se recarga sola: podrías estar a mitad de algo).
 // Un error queda a la vista: nunca se traga.
-const NOV = { buscando: false, hora: null, datos: null, oculto: false };
+const NOV = { buscando: false, hora: null, datos: null, app: null, oculto: false };
 // Estado de las tareas que arrancó esta página (una tarea terminada antes de recargar no
 // vuelve a avisar).
-const PROG = { datos: null, imagenes: null, poll: null };
+const PROG = { datos: null, imagenes: null, app: null, poll: null };
+let REINICIANDO = null;               // versión que se espera después de aplicar un parche
 async function buscarNovedades () {
   NOV.buscando = true; pintarActualizaciones();
   try {
     const n = await apiLocal('/api/novedades');
-    NOV.datos = n.datos; NOV.hora = new Date(); NOV.oculto = false;
+    NOV.datos = n.datos; NOV.app = n.app; NOV.hora = new Date(); NOV.oculto = false;
     if (n.datos.hay && n.datos.compatible) arrancarTarea('datos', '/api/datos/actualizar');
   } catch (e) { NOV.datos = { error: e.message }; verificarServidor(); }
   NOV.buscando = false;
@@ -738,12 +753,18 @@ async function arrancarTarea (nombre, ruta) {
 async function seguirTareas () {
   let p;
   try { p = await apiLocal('/api/progreso'); }
-  catch (e) { clearInterval(PROG.poll); PROG.poll = null; verificarServidor(); return; }
+  catch (e) {
+    clearInterval(PROG.poll); PROG.poll = null;
+    // Si se estaba aplicando un parche, lo más probable es que ya esté reiniciando.
+    if (PROG.app && PROG.app.corriendo) esperarReinicio(NOV.app.version); else verificarServidor();
+    return;
+  }
   let siguen = false;
-  for (const n of ['datos', 'imagenes']) {
+  for (const n of ['datos', 'imagenes', 'app']) {
     if (!PROG[n] || PROG[n].terminado) continue;
     PROG[n] = p[n];
     if (p[n].corriendo) siguen = true;
+    if (n === 'app' && p[n].terminado && !p[n].error) esperarReinicio(p[n].resultado.version);
     if (n === 'imagenes') {
       refrescarImagenes();
       if (p[n].terminado) { try { ESCRITORIO = await apiLocal('/api/estado'); } catch (e) {} }
@@ -751,6 +772,24 @@ async function seguirTareas () {
   }
   if (!siguen) { clearInterval(PROG.poll); PROG.poll = null; }
   pintarAvisos(); pintarActualizaciones();
+}
+/** Aplicado un parche, el programa se relanza en el mismo puerto: se espera a que conteste
+ *  con la versión nueva y se recarga la ventana. */
+function esperarReinicio (version) {
+  REINICIANDO = version; pintarAvisos();
+  const limite = Date.now() + 60000;
+  const intento = setInterval(async () => {
+    try {
+      const e = await apiLocal('/api/estado');
+      if (e.version === version) { clearInterval(intento); recargar(); }
+    } catch (e) {}
+    if (Date.now() > limite) { clearInterval(intento); REINICIANDO = null; SERVIDOR_CAIDO = true; pintarAvisos(); }
+  }, 1000);
+}
+function actualizarApp () {
+  const a = NOV.app;
+  if (!confirm(t('ap_confirm').replace('{v}', a.version) + (a.notas ? '\n\n' + a.notas : ''))) return;
+  arrancarTarea('app', '/api/app/actualizar');
 }
 /** Mientras bajan las imágenes, las que se veían rotas se vuelven a pedir: van
  *  apareciendo sin redibujar la vista. */
@@ -791,7 +830,7 @@ async function pantallaDatos () {
 // una página de retratos rotos dispara decenas de errores juntos.
 let SERVIDOR_CAIDO = false, verificandoServidor = false;
 function verificarServidor () {
-  if (SERVIDOR_CAIDO || verificandoServidor) return;
+  if (SERVIDOR_CAIDO || verificandoServidor || REINICIANDO) return;
   verificandoServidor = true;
   fetch('/api/estado', { headers: { 'X-MFF': '1' }, cache: 'no-store' })
     .then(() => {}, () => { SERVIDOR_CAIDO = true; pintarAvisos(); })
@@ -826,8 +865,25 @@ function avisosHtml () {
     out.push(`<div class="srvcaido"><b>${h(t('av_img_err'))}</b> ${h(im.error)}
       <button class="btn sm" data-a="reintentarImagenes">${h(t('gd_retry'))}</button></div>`);
   }
+  const ap = PROG.app, na = NOV.app;
+  if (REINICIANDO) out.push(`<div class="aviso-app ok"><b>${h(t('ap_restart').replace('{v}', REINICIANDO))}</b></div>`);
+  else if (ap && ap.corriendo) {
+    const pct = ap.total ? Math.round(100 * ap.hecho / ap.total) : 0;
+    out.push(`<div class="aviso-app"><b>${h(t('ap_updating').replace('{v}', na.version))}</b><div class="barra"><i style="width:${pct}%"></i></div></div>`);
+  } else if (ap && ap.terminado && ap.error) {
+    out.push(`<div class="srvcaido"><b>${h(t('ap_err'))}</b> ${h(ap.error)}
+      <button class="btn sm" data-a="actualizarApp">${h(t('gd_retry'))}</button></div>`);
+  } else if (na && na.hay) {
+    const notas = na.notas ? `<details class="notas"><summary>${h(t('ap_notes'))}</summary>${h(na.notas)}</details>` : '';
+    if (ESCRITORIO.desde_repo) out.push(`<div class="aviso-app"><b>${h(t('ap_new').replace('{v}', na.version))}</b> ${h(t('ap_repo'))}${notas}</div>`);
+    else if (na.aplicable) out.push(`<div class="aviso-app"><b>${h(t('ap_new').replace('{v}', na.version))}</b>
+      <button class="btn sm primary" data-a="actualizarApp">${h(t('ap_go'))}</button>${notas}</div>`);
+    else out.push(`<div class="aviso-app"><b>${h(t('ap_new').replace('{v}', na.version))}</b> ${h(t('ap_installer'))}
+      <a class="btn sm primary" href="${h(na.instalador)}" target="_blank" rel="noopener">${h(t('ap_installer_go'))}</a>${notas}</div>`);
+  }
   if (NOV.datos && NOV.datos.hay && !NOV.datos.compatible) out.push(`<div class="aviso-app">${h(t('av_incompat'))}</div>`);
-  if (NOV.datos && NOV.datos.error && !NOV.oculto) out.push(`<div class="aviso-app">${h(t('av_check_err'))} ${h(NOV.datos.error)}
+  const errores = [NOV.datos && NOV.datos.error, NOV.app && NOV.app.error].filter(Boolean);
+  if (errores.length && !NOV.oculto) out.push(`<div class="aviso-app">${h(t('av_check_err'))} ${h([...new Set(errores)].join(' · '))}
     <button class="btn sm" data-a="ocultarAviso">${h(t('av_hide'))}</button></div>`);
   return out.join('');
 }
@@ -2503,16 +2559,17 @@ function seccionActualizaciones () {
   const p = PROG.datos;
   let estado;
   if (NOV.buscando) estado = `<span class="muted">${h(t('ac_checking'))}</span>`;
-  else if (n.error) estado = `<span class="tag solid" style="background:var(--accent)">${h(t('av_check_err'))}</span> <span class="muted">${h(n.error)}</span>`;
+  else if (n.error || (NOV.app && NOV.app.error)) estado = `<span class="tag solid" style="background:var(--accent)">${h(t('av_check_err'))}</span> <span class="muted">${h([n.error, NOV.app && NOV.app.error].filter(Boolean).join(' · '))}</span>`;
   else if (p && p.corriendo) estado = `<span class="muted">${h(t('av_dl'))}…</span>`;
   else if (n.hay && !n.compatible) estado = `<span class="tag solid" style="background:var(--gold)">${h(t('av_incompat'))}</span>`;
-  else if (n.hay) estado = `<span class="tag solid" style="background:var(--gold)">${h(t('ac_new'))}</span>`;
+  else if (n.hay || (NOV.app && NOV.app.hay)) estado = `<span class="tag solid" style="background:var(--gold)">${h(t(n.hay ? 'ac_new' : 'ac_new_app'))}</span>`;
   else if (NOV.hora) estado = `<span class="tag dim">${h(t('ac_uptodate'))}</span>`;
   else estado = '';
   return `<div class="section" id="seccion-actualizaciones"><h3>${h(t('ac_title'))}</h3>
     <p class="muted" style="margin-bottom:12px">${h(t('ac_note'))}</p>
     <div class="statgrid" style="margin-bottom:12px">
-      <div class="stat"><div class="k">${h(t('ac_app'))}</div><div class="v">${h(ESCRITORIO.version)}</div></div>
+      <div class="stat"><div class="k">${h(t('ac_app'))}</div><div class="v">${h(ESCRITORIO.version)}</div>
+        <div class="muted" style="font-size:11px">${NOV.app && NOV.app.hay ? h(t('ap_new').replace('{v}', NOV.app.version)) : ''}</div></div>
       <div class="stat"><div class="k">${h(t('ac_local'))}</div><div class="v">${h(loc.juego || '?')}</div>
         <div class="muted" style="font-size:11px">${h(t('ac_built'))} ${h(loc.generado || '?')}</div></div>
       <div class="stat"><div class="k">${h(t('ac_remote'))}</div><div class="v">${h(rem.juego || '—')}</div>
@@ -2713,6 +2770,7 @@ document.addEventListener('click', (e) => {
     case 'buscarNovedades': buscarNovedades(); break;
     case 'reintentarDatos': arrancarTarea('datos', '/api/datos/actualizar'); break;
     case 'reintentarImagenes': arrancarTarea('imagenes', '/api/imagenes/bajar'); break;
+    case 'actualizarApp': actualizarApp(); break;
     case 'usarDatos': recargar(); break;
     case 'ocultarAviso': NOV.oculto = true; pintarAvisos(); break;
     case 'modeAdd': U.modes.push({ id:'modo-' + Date.now(), name:t('st_new_mode'), teamSize:3 }); commit(); break;

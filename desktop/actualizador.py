@@ -10,9 +10,14 @@ Imágenes: datos.json trae la lista de retratos e íconos con su URL de origen
 (thanosvibs). Se bajan las que falten; las que la fuente no publica (404) se informan
 aparte de las que fallaron por otra cosa.
 
+Versión de la app: cada release de GitHub publica latest.json (versión, notas, versión
+de Python, parche con su sha256 e instalador). Si la versión nueva usa el mismo Python,
+el parche (un zip con los archivos del programa) reemplaza esos archivos y la app se
+reinicia; si cambia Python, hace falta el instalador completo.
+
 Solo biblioteca estándar: corre con el Python embebido del instalador.
 """
-import hashlib, json, os, re, threading, urllib.error, urllib.request
+import hashlib, io, json, os, re, shutil, threading, urllib.error, urllib.request, zipfile
 from concurrent.futures import ThreadPoolExecutor
 
 UA = {'User-Agent': 'TA-GUIANAEL-MFF (app de escritorio; uso personal)'}
@@ -203,3 +208,79 @@ def bajar_imagenes(carpeta, tarea):
     if fallidas:
         raise RuntimeError(f'{len(fallidas)} imágenes no se pudieron bajar (la primera: {fallidas[0][0]}: {fallidas[0][1]})')
     return resultado
+
+
+# ---- versión de la app ----
+
+# Lo único que un parche puede reemplazar: los archivos del programa.
+DEL_PROGRAMA = re.compile(r'^(?:index\.html|app\.js|styles\.css|version\.json|desktop/[\w-]+\.py)$')
+
+
+def version_tupla(v):
+    return tuple(int(x) for x in v.split('.'))
+
+
+def novedades_app(url, version):
+    """Compara latest.json de la última release con la versión instalada. 'aplicable': la
+    nueva usa el mismo Python, así que alcanza con el parche."""
+    ult = json.loads(bajar(url, 15))
+    return {'hay': version_tupla(ult['version']) > version_tupla(version['version']),
+            'version': ult['version'], 'notas': ult.get('notas', ''),
+            'aplicable': ult['python'] == version['python'], 'instalador': ult['instalador']['url']}
+
+
+def actualizar_app(url, raiz, respaldo, version, tarea):
+    """Baja el parche de la última release, lo verifica y reemplaza los archivos del
+    programa. Antes de pisar nada copia los actuales a `respaldo`; si un reemplazo falla,
+    los vuelve a poner. version.json va último: hasta ahí el programa sigue siendo el
+    anterior."""
+    ult = json.loads(bajar(url, 15))
+    if version_tupla(ult['version']) <= version_tupla(version['version']):
+        raise RuntimeError(f'la última versión publicada ({ult["version"]}) no es más nueva que la instalada')
+    if ult['python'] != version['python']:
+        raise RuntimeError(f'la versión {ult["version"]} necesita el instalador completo (cambia Python)')
+    parche = ult['parche']
+    tarea.avance(0, parche['bytes'])
+    contenido = bajar(parche['url'], 120, tarea.avance)
+    if len(contenido) != parche['bytes'] or hashlib.sha256(contenido).hexdigest() != parche['sha256']:
+        raise RuntimeError('el parche llegó distinto de lo que anuncia la release: no se usa')
+    with zipfile.ZipFile(io.BytesIO(contenido)) as z:
+        nombres = [n for n in z.namelist() if not n.endswith('/')]
+        ajenos = [n for n in nombres if not DEL_PROGRAMA.match(n)]
+        if ajenos:
+            raise RuntimeError(f'el parche trae archivos que no son del programa: {", ".join(ajenos[:3])}')
+        if 'version.json' not in nombres or json.loads(z.read('version.json'))['version'] != ult['version']:
+            raise RuntimeError('el parche no es de la versión que anuncia la release')
+        nombres.sort(key=lambda n: n == 'version.json')
+        nuevos = []
+        try:
+            for n in nombres:
+                destino = os.path.join(raiz, *n.split('/'))
+                nuevos.append((_escribir(destino, z.read(n)), destino, n))
+        except Exception:
+            for tmp, _, _ in nuevos:
+                os.remove(tmp)
+            raise
+    if os.path.isdir(respaldo):
+        shutil.rmtree(respaldo)
+    hechos = []
+    try:
+        for tmp, destino, n in nuevos:
+            if os.path.exists(destino):
+                copia = os.path.join(respaldo, *n.split('/'))
+                os.makedirs(os.path.dirname(copia), exist_ok=True)
+                shutil.copy2(destino, copia)
+            os.replace(tmp, destino)
+            hechos.append((destino, n))
+    except Exception:
+        for destino, n in hechos:
+            copia = os.path.join(respaldo, *n.split('/'))
+            if os.path.exists(copia):
+                shutil.copy2(copia, destino)
+            else:
+                os.remove(destino)
+        for tmp, _, _ in nuevos:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        raise
+    return {'version': ult['version']}
