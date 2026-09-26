@@ -660,14 +660,14 @@ const T = {
   sy_busy:            { es:'Ya hay una sincronización en curso.', en:'A sync is already running.' },
   sy_needdata:        { es:'Primero hay que actualizar los datos del juego: las tier lists se arman sobre ellos.',
                         en:'Update the game data first: the tier lists are built on top of it.' },
-  sy_srv_down:        { es:'Se cerró el servidor de la app.', en:'The app server was closed.' },
-  sy_srv_down_note:   { es:'Pasa al cerrar la ventana de MFF.bat. Esta pestaña sigue con lo que ya había cargado, pero tus cambios no se guardan, los retratos e íconos que no estaban en la caché del navegador no cargan y la sincronización no anda. Abrí MFF.bat de nuevo: abre la app en otra pestaña.',
-                        en:'It happens when the MFF.bat window is closed. This tab keeps what it had already loaded, but your changes are not saved, portraits and icons that were not in the browser cache do not load and sync does not work. Run MFF.bat again: it opens the app in a new tab.' },
+  sy_srv_down:        { es:'Se cerró el programa de la app.', en:'The app program closed.' },
+  sy_srv_down_note:   { es:'Esta ventana sigue con lo que ya había cargado, pero tus cambios no se guardan, los retratos e íconos que no estaban cargados no aparecen y la sincronización no anda. Cerrala y abrí la app de nuevo; si vuelve a pasar, el motivo queda en registro.txt, en la carpeta de datos.',
+                        en:'This window keeps what it had already loaded, but your changes are not saved, portraits and icons that were not loaded yet do not show up and sync does not work. Close it and open the app again; if it happens again, the reason is in registro.txt, in the data folder.' },
   gd_error:           { es:'No se guardó tu último cambio.', en:'Your last change was not saved.' },
   gd_retry:           { es:'Reintentar',            en:'Retry' },
   ar_file_t:          { es:'Esta app se abre desde su acceso directo', en:'This app opens from its shortcut' },
-  ar_file:            { es:'Abrir index.html suelto no funciona: tus listas, equipos y ajustes se guardan a través del programa. Abrila con MFF.bat.',
-                        en:'Opening index.html directly does not work: your lists, teams and settings are saved through the program. Open it with MFF.bat.' },
+  ar_file:            { es:'Abrir index.html suelto no funciona: tus listas, equipos y ajustes se guardan a través del programa. Abrila desde su acceso directo (o con MFF.bat, desde el repo).',
+                        en:'Opening index.html directly does not work: your lists, teams and settings are saved through the program. Open it from its shortcut (or with MFF.bat, from the repo).' },
   ar_capa_t:          { es:'No se pudo cargar tu capa', en:'Your layer could not be loaded' },
   ar_capa:            { es:'La app no arranca para no pisar lo que tenés guardado. Si el archivo capa.json se dañó, en la carpeta respaldos/ hay copias de los últimos días.',
                         en:'The app does not start so it does not overwrite what you have saved. If capa.json got damaged, the respaldos/ folder has copies from the last few days.' },
@@ -717,11 +717,11 @@ function pollProgreso () {
     } catch (e) { clearInterval(SYNC.poll); SYNC.poll = null; verificarServidor(); }
   }, 1500);
 }
-// Cerrar la ventana de MFF.bat apaga el servidor, pero la pestaña sigue abierta con
-// app.js y data.js ya cargados: lo que no esté en la caché del navegador (retratos,
-// íconos, la sincronización) falla, y un retrato roto no dice por qué. Cuando algo no
-// carga se le pregunta al servidor si sigue ahí; si no contesta, se avisa arriba de todo.
-// Una consulta a la vez: una página de retratos rotos dispara decenas de errores juntos.
+// Si el servidor se cae con la ventana abierta, la página sigue con app.js y data.js ya
+// cargados: lo que no esté cargado (retratos, íconos, guardar la capa, la sincronización)
+// falla, y un retrato roto no dice por qué. Cuando algo no carga se le pregunta al
+// servidor si sigue ahí; si no contesta, se avisa arriba de todo. Una consulta a la vez:
+// una página de retratos rotos dispara decenas de errores juntos.
 let SERVIDOR_CAIDO = false, verificandoServidor = false;
 function verificarServidor () {
   if (SERVIDOR_CAIDO || verificandoServidor) return;
@@ -740,6 +740,12 @@ function avisosHtml () {
   return out.join('');
 }
 function pintarAvisos () { const el = $('#avisos'); if (el) el.innerHTML = avisosHtml(); }
+/** La ventana avisa que sigue abierta: el servidor se apaga solo cuando ninguna late
+ *  (desktop/lanzador.py). Al volver a primer plano late enseguida, porque minimizada el
+ *  navegador espacia los timers. */
+function latir () {
+  fetch('/api/latido', { method: 'POST', headers: { 'X-MFF': '1' } }).then(() => {}, () => verificarServidor());
+}
 
 // ============================================================================
 // ESTADO DE UI (no persistido)
@@ -2767,6 +2773,9 @@ async function arrancar () {
   rebuild();
   try { if (sessionStorage.getItem('mff_volver') === 'settings') { ui.view = 'settings'; sessionStorage.removeItem('mff_volver'); } } catch (e) {}
   render();
+  latir();
+  setInterval(latir, ESCRITORIO.latido_cada * 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) latir(); });
 }
 arrancar();
 })();

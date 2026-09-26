@@ -1,34 +1,27 @@
 @echo off
-REM TA GUIANAEL MFF - lanzador de escritorio.
-REM Levanta el servidor local y abre la app en el navegador por defecto.
-REM Usa el Python que viaja en la carpeta si existe; si no, el del sistema.
+REM TA GUIANAEL MFF desde el repo. La version instalada se abre desde su acceso directo.
+REM Hace lo mismo que el acceso directo: abre la app en su ventana, sin consola, con los
+REM datos en %LOCALAPPDATA%\TA GUIANAEL MFF (los mismos que usa la app instalada). Lo que
+REM pase queda en registro.txt, en esa carpeta.
 setlocal
 cd /d "%~dp0"
 
-set "PYEXE="
-if exist "python\python.exe" set "PYEXE=python\python.exe"
-if not defined PYEXE (
-  where py >nul 2>nul && set "PYEXE=py"
+set "PYW="
+if exist "python\pythonw.exe" set "PYW=python\pythonw.exe"
+if not defined PYW (
+  where pyw >nul 2>nul && set "PYW=pyw"
 )
-if not defined PYEXE (
-  where python >nul 2>nul && set "PYEXE=python"
+if not defined PYW (
+  where pythonw >nul 2>nul && set "PYW=pythonw"
 )
-if not defined PYEXE (
+if not defined PYW (
   echo No se encontro Python.
   echo.
-  echo Esta carpeta deberia traer Python adentro, en la subcarpeta "python".
-  echo Si la bajaste sin esa subcarpeta, instala Python desde https://www.python.org/downloads/
-  echo o pedi el paquete completo.
+  echo Instala Python desde https://www.python.org/downloads/ o usa la app instalada.
   echo.
   pause
   exit /b 1
 )
 
-echo Iniciando TA GUIANAEL MFF...
-"%PYEXE%" desktop\servidor.py --datos .
-if errorlevel 1 (
-  echo.
-  echo La app termino con un error. La ventana queda abierta para que puedas leerlo.
-  pause
-)
+start "" "%PYW%" desktop\lanzador.py %*
 endlocal

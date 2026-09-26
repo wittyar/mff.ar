@@ -14,20 +14,41 @@ La capa del usuario (listas, equipos, rutas, topes, ediciones) vive en capa.json
 la carpeta de datos: la pagina la pide con GET /api/capa y la guarda con PUT. Antes
 de la primera escritura de cada dia se copia la anterior a respaldos/ (quedan 7).
 
-Uso: python desktop/servidor.py --datos CARPETA
+No se corre solo: lo arranca desktop/lanzador.py (crear), que tambien abre la ventana
+y lo apaga cuando ninguna ventana late (POST /api/latido) durante un rato.
 
 Solo biblioteca estandar, para que corra con el Python embebido que viaja en la carpeta.
 """
-import argparse, datetime, glob, json, os, re, shutil, socket, subprocess, sys, threading, urllib.parse, urllib.request, webbrowser
+import datetime, glob, json, os, re, shutil, subprocess, sys, threading, time, urllib.parse, urllib.request
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATOS = None                          # carpeta de datos; la fija main() con --datos
+DATOS = None                          # carpeta de datos; la fija crear()
 sys.path.insert(0, os.path.join(RAIZ, 'scripts'))
 from version_juego import ultima
 PY = sys.executable
-PUERTO_PREFERIDO = 8731
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
+
+# ---- vida del servidor: se apaga cuando ninguna ventana late ----
+ESPERA = 180                          # segundos sin latidos antes de apagarse; la fija crear()
+_ARRANQUE = time.monotonic()
+_ultimo_latido = None
+
+def latido():
+    global _ultimo_latido
+    _ultimo_latido = time.monotonic()
+
+def latido_cada():
+    """Cada cuanto late la pagina: holgado frente a ESPERA porque el navegador espacia los
+    timers de una ventana minimizada (hasta uno por minuto)."""
+    return max(1, min(30, ESPERA // 6))
+
+def debe_cerrar():
+    """Nadie late hace ESPERA segundos (o nunca latio nadie desde el arranque), y no hay
+    una sincronizacion a mitad de camino."""
+    if TRABAJO.estado()['corriendo']:
+        return False
+    return time.monotonic() - (_ultimo_latido or _ARRANQUE) > ESPERA
 
 # Lo unico que se sirve: los tres archivos del programa y, de la carpeta de datos,
 # data.js, los informes de docs/ y las imagenes. Cualquier otra ruta es 404.
@@ -221,7 +242,8 @@ class Handler(SimpleHTTPRequestHandler):
             if not self._propio():
                 return self._json({'error': 'origen no permitido'}, 403)
             if self.path.startswith('/api/estado'):
-                return self._json({'app': 'mff-escritorio', 'local': version_local(), 'remota': REMOTA,
+                return self._json({'app': 'mff-escritorio', 'raiz': RAIZ, 'datos': DATOS,
+                                   'latido_cada': latido_cada(), 'local': version_local(), 'remota': REMOTA,
                                    'listo': pipeline_listo(), 'trabajo': TRABAJO.estado()})
             if self.path.startswith('/api/progreso'):
                 return self._json(TRABAJO.estado())
@@ -260,6 +282,9 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json({'error': 'no existe'}, 404)
         if not self._propio():
             return self._json({'error': 'origen no permitido'}, 403)
+        if self.path == '/api/latido':
+            latido()
+            return self._json({'ok': True})
         m = re.match(r'/api/sync/(datos|tierlists|imagenes)', self.path)
         if not m:
             return self._json({'error': 'no existe'}, 404)
@@ -270,45 +295,10 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json({'error': 'ya hay una sincronizacion en curso'}, 409)
         return self._json(TRABAJO.estado())
 
-def puerto_libre(preferido):
-    for p in [preferido] + list(range(preferido + 1, preferido + 20)):
-        with socket.socket() as s:
-            try:
-                s.bind(('127.0.0.1', p)); return p
-            except OSError:
-                continue
-    return 0  # que elija el sistema
-
-def main():
-    global DATOS
-    ap = argparse.ArgumentParser(description='Servidor local de TA GUIANAEL MFF')
-    ap.add_argument('--datos', required=True, help='carpeta de datos (data.js, docs/, images/, work/)')
-    ap.add_argument('--no-abrir', action='store_true', help='no abrir el navegador')
-    args = ap.parse_args()
-    DATOS = os.path.abspath(args.datos)
-    faltan = [os.path.join(RAIZ, f) for f in ('index.html', 'app.js', 'styles.css')
-              if not os.path.exists(os.path.join(RAIZ, f))]
-    faltan += [os.path.join(DATOS, f) for f in ('data.js',) if not os.path.exists(os.path.join(DATOS, f))]
-    if faltan:
-        print('ERROR: faltan archivos de la app ->', ', '.join(faltan))
-        input('Enter para cerrar...')
-        return 1
+def crear(datos, puerto=0, espera=180):
+    """Servidor atado a 127.0.0.1. puerto 0 deja que el sistema elija uno libre: la capa ya
+    no depende del origen, asi que el puerto puede cambiar entre arranques."""
+    global DATOS, ESPERA, _ARRANQUE
+    DATOS, ESPERA, _ARRANQUE = os.path.abspath(datos), espera, time.monotonic()
     threading.Thread(target=consultar_version_remota, daemon=True).start()
-    puerto = puerto_libre(PUERTO_PREFERIDO)
-    servidor = ThreadingHTTPServer(('127.0.0.1', puerto), Handler)
-    url = f'http://127.0.0.1:{servidor.server_port}/index.html'
-    v = version_local()
-    print('TA GUIANAEL MFF')
-    print(f'  datos locales: juego {v.get("juego", "?")} (snapshot {v.get("generado", "?")})')
-    print(f'  abriendo {url}')
-    print('  cerra esta ventana para apagar la app.')
-    if not args.no_abrir:
-        threading.Timer(0.6, lambda: webbrowser.open(url)).start()
-    try:
-        servidor.serve_forever()
-    except KeyboardInterrupt:
-        print('\nApagando.')
-    return 0
-
-if __name__ == '__main__':
-    sys.exit(main())
+    return ThreadingHTTPServer(('127.0.0.1', puerto), Handler)
