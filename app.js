@@ -59,10 +59,15 @@ function loadUser () {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return base;
     const saved = JSON.parse(raw);
+    const sp = saved.prefs || {};
+    // Los valores por defecto de las preferencias se toman antes de mezclar:
+    // Object.assign(base, saved) reemplaza base.prefs entera por la guardada, y una capa
+    // de una versión anterior (sin filters o sin flags) dejaba la app en blanco.
+    const prefs = base.prefs, filters = prefs.filters, flags = prefs.flags;
     const u = Object.assign(base, saved);
-    u.prefs = Object.assign(base.prefs, saved.prefs || {});
-    u.prefs.filters = Object.assign(base.prefs.filters, (saved.prefs||{}).filters || {});
-    u.prefs.flags = Object.assign(base.prefs.flags, (saved.prefs||{}).flags || {});
+    u.prefs = Object.assign(prefs, sp);
+    u.prefs.filters = Object.assign(filters, sp.filters || {});
+    u.prefs.flags = Object.assign(flags, sp.flags || {});
     // Una entrada guardaba una sola fila (texto); desde que puede estar en varias filas
     // de la misma lista guarda una lista de filas. Las capas viejas se convierten acá.
     for (const l in u.assign) for (const k in u.assign[l]) {
