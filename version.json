@@ -1,6 +1,6 @@
 {
- "version": "1.0.2",
+ "version": "1.0.3",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Después de actualizar, la ventana carga el programa nuevo: con la 1.0.1 podía seguir mostrando la versión anterior hasta cerrarla y volver a abrirla."
+ "notas": "La ficha de cada personaje ahora va en pestañas (Resumen, Skills, Armado, Progreso y Más), con la foto, el nombre y el selector de uniforme siempre a la vista."
 }
