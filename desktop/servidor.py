@@ -26,7 +26,7 @@ y lo apaga cuando ninguna ventana late durante un rato.
 
 Solo biblioteca estándar: corre con el Python embebido del instalador.
 """
-import datetime, glob, json, os, re, shutil, threading, time, urllib.parse
+import datetime, glob, json, logging, os, re, shutil, threading, time, urllib.parse
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 import actualizador
@@ -202,10 +202,31 @@ class Handler(SimpleHTTPRequestHandler):
         self.wfile.write(cuerpo)
 
     def end_headers(self):
-        # data.js cambia con cada actualización: no puede quedar cacheado.
-        if self.path.startswith('/data.js'):
-            self.send_header('Cache-Control', 'no-store')
+        # Todo lo que se sirve (programa, datos, informe, retratos) puede cambiar con un
+        # parche o una actualización de datos mientras la ventana sigue en el mismo puerto.
+        # Sin esta cabecera el navegador reusa su copia sin preguntar (caché heurística:
+        # hasta un 10% de la edad del archivo) y, tras un parche, la ventana seguía con el
+        # app.js viejo. Con no-cache pregunta siempre; lo que no cambió vuelve como 304.
+        if not self.path.startswith('/api/'):
+            self.send_header('Cache-Control', 'no-cache')
         super().end_headers()
+
+    def _index(self):
+        """index.html con la versión en las direcciones de app.js y styles.css. Las copias
+        que guardó el navegador de la 1.0.0 y la 1.0.1, que no mandaban Cache-Control,
+        todavía le valen un rato: con otra dirección no las usa."""
+        html = open(os.path.join(RAIZ, 'index.html'), encoding='utf-8').read()
+        for f in ('app.js', 'styles.css'):
+            if html.count(f'"{f}"') != 1:
+                logging.error('index.html no referencia "%s" una sola vez', f)
+                return self.send_error(500, f'index.html no referencia "{f}" una sola vez')
+            html = html.replace(f'"{f}"', f'"{f}?v={VERSION["version"]}"')
+        cuerpo = html.encode('utf-8')
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.send_header('Content-Length', str(len(cuerpo)))
+        self.end_headers()
+        self.wfile.write(cuerpo)
 
     def _api(self):
         """Filtro común de la API. False (y ya respondido) si el pedido no es de la página."""
@@ -218,6 +239,8 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._host_valido():
             return self.send_error(403)
         if not self.path.startswith('/api/'):
+            if urllib.parse.urlsplit(self.path).path in ('/', '/index.html'):
+                return self._index()
             return super().do_GET()
         if not self._api():
             return
