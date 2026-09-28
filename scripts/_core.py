@@ -71,9 +71,11 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
              'cost': r.get('uniform_cost',''), 'striker': r['striker_skill'],
              'wba': ABIL[r['world_boss_ability']], 'trans': r['skill6'] == 'Transcended',
              'new': r['new'] == 'True'}
-        # El uniforme puede cambiar tipo, bando o habilidades respecto de la base.
+        # El uniforme puede cambiar tipo, bando, raza o habilidades respecto de la base
+        # (Ms. Marvel es inhumana, salvo con los uniformes del MCU, que es humana).
         if TYPE[r['type']] != TYPE[base['type']]: u['c'] = TYPE[r['type']]
         if SIDE[r['side']] != SIDE[base['side']]: u['f'] = SIDE[r['side']]
+        if ALLIES[r['allies']] != ALLIES[base['allies']]: u['race'] = ALLIES[r['allies']]
         if r['ability'] != base['ability']: u['ab'] = [ABIL[a] for a in r['ability']]
         # Costos, materiales y XP de mejora, de /api/uniforms.
         up = UNI.get(r['portrait'])

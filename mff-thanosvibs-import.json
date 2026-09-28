@@ -28874,6 +28874,7 @@
      "trans": false,
      "new": false,
      "c": "Velocidad",
+     "race": "Humano",
      "ab": [
       "Fuerza",
       "Liderazgo"
@@ -28968,6 +28969,7 @@
      "trans": false,
      "new": false,
      "c": "Velocidad",
+     "race": "Humano",
      "ab": [
       "Fuerza",
       "Liderazgo"

@@ -946,11 +946,12 @@ function variant (cid, uid) {
   const p = u ? u.p : ch.p;
   const skills = SKILLS[p] || [];
   if (!u) return { cid: ch.id, uid: null, key: ch.id + '::base', id: ch.id, name: ch.name, sub: 'Base',
-                   c: ch.c, f: ch.f, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
+                   c: ch.c, f: ch.f, race: ch.race, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
                    striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '',
                    p, up: null, ch, skills };
   return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
-           c: u.c || ch.c, f: u.f || ch.f, t: u.tier || ch.t, ins: ch.ins, r: ch.r, ab: u.ab || ch.abilities || [],
+           c: u.c || ch.c, f: u.f || ch.f, race: u.race || ch.race, t: u.tier || ch.t, ins: ch.ins, r: ch.r,
+           ab: u.ab || ch.abilities || [],
            striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
            trans: u.trans, nuevo: u.new, cost: u.cost || '',
            p, up: u.up || null, ch, skills };
@@ -988,7 +989,7 @@ function aplicaA (x, b) {
   switch (cat) {
     case 'Ability':   return (b.ab || []).includes(val);
     case 'Type':      return b.c === val;
-    case 'Allies':    return b.ch.race === val;
+    case 'Allies':    return b.race === val;
     case 'Side':      return b.f === val;
     case 'Character': return b.name === val;
   }
@@ -1306,7 +1307,7 @@ function rosterData () {
     if (F.t.length && !F.t.includes(v.t)) return false;
     if (F.f.length && !F.f.includes(v.f)) return false;
     if (F.ins.length && !F.ins.includes(v.ins)) return false;
-    if (F.race.length && !F.race.includes(v.ch.race)) return false;
+    if (F.race.length && !F.race.includes(v.race)) return false;
     if (F.origin.length && !F.origin.includes(v.ch.origin)) return false;
     if (F.r.length && !F.r.some(r => v.r.includes(r))) return false;
     if (F.ab.length && !F.ab.some(a => v.ab.includes(a))) return false;
@@ -1524,7 +1525,7 @@ function renderDetail () {
         </div>
         <div class="statgrid">
           ${box(t('d_current_uniform'), h(v.uid ? v.sub : t('base')))}
-          ${box(t('d_race'), icon(ch.race) + h(dom(ch.race) || '—'))}
+          ${box(t('d_race'), icon(v.race) + h(dom(v.race) || '—'))}
           ${box(t('d_gender'), icon(ch.gender) + h(dom(ch.gender) || '—'))}
           ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
           ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
@@ -2885,7 +2886,7 @@ function exportCsv () {
                 'pct_ataque','dano_extra','elemento','duracion'];
   const rows = [head];
   allVariants().forEach(v => {
-    const base = [v.key, v.name, v.uid ? v.sub : '', v.c, v.f, v.t, v.trans ? 'sí' : 'no', v.ins, v.ch.race, v.ch.gender,
+    const base = [v.key, v.name, v.uid ? v.sub : '', v.c, v.f, v.t, v.trans ? 'sí' : 'no', v.ins, v.race, v.ch.gender,
                   v.ch.origin, v.r.join('|'), (v.ab || []).join('|'), v.striker, v.wba, v.cost];
     if (!v.skills.length) rows.push(base.concat(['', '', '', '', '', '', '', '', '']));
     v.skills.forEach(sk => (sk.st || []).forEach((st, i) => (st.fx || []).forEach(f => {
