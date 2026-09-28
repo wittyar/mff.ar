@@ -16,16 +16,20 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 ## Qué hay en la app
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
   atributos marcados) y orden por la tier list que elijas.
-- **Ficha** de cada personaje y uniforme:
-  - *Para qué se usa*: su fila en cada tier list, lo que le da al equipo (liderazgo, pasivas,
-    efecto de uniforme y artefacto, con a quién se aplican), dónde lo recomienda la guía, en qué
-    equipos de Alliance Battle aparece y qué controles aplica para cortar a los jefes, y la
-    verificación entre fuentes.
-  - *Cómo armarlo*: su C.T.P. (Ideal CTP List y guía), su artefacto con los valores por nivel de
-    estrellas, ISO y urus según su tipo de ataque (derivado de sus skills), la hoja de ruta de
-    progresión y la calculadora de topes de stats.
-  - Skills por uniforme, con tabla de daño por etapa, y las **rotaciones** de thanosvibs con la
-    leyenda de la notación.
+- **Ficha** de cada personaje y uniforme, en pestañas. Arriba, fijos, la foto, el nombre y el
+  selector de uniforme (el uniforme cambia casi todo lo de abajo):
+  - *Resumen*: los datos del uniforme puesto y *para qué se usa*: su fila en cada tier list, lo
+    que le da al equipo (liderazgo, pasivas, efecto de uniforme y artefacto, con a quién se
+    aplican), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece y qué
+    controles aplica para cortar a los jefes.
+  - *Skills*: cargas de ult y striker, buffs clave, las **rotaciones** de thanosvibs con la
+    leyenda de la notación y cada skill, con tabla de daño por etapa.
+  - *Armado*: su C.T.P. (Ideal CTP List y guía) y su artefacto con los valores por nivel de
+    estrellas; plegadas, las reglas generales de ISO y urus para su tipo de ataque (derivado de
+    sus skills).
+  - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
+    en tu capa.
+  - *Más*: la verificación entre fuentes, tus equipos con él y el retrato propio.
 - **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada.
 - **Tier lists**: todas las listas públicas de thanosvibs, con sus filas originales; listas
   propias de personajes, de C.T.P., de artefactos o de tus equipos, con filas a medida. Una entrada

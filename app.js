@@ -301,6 +301,8 @@ const T = {
   ar_note:           { es:'El C.T.P. que le asignan las fuentes, su artefacto y las reglas generales de la guía aplicadas a su tipo de ataque.',
                        en:'The C.T.P. the sources assign it, its artifact and the guide’s general rules applied to its attack type.' },
   ar_more:           { es:'Reglas completas en Modos ↓', en:'Full rules in Modes ↓' },
+  ar_rules:          { es:'Reglas generales de la guía para su tipo de ataque: ISO-8 y urus',
+                       en:'General guide rules for its attack type: ISO-8 and urus' },
   ar_ctp_nolist:     { es:'No está en esa lista.', en:'Not in that list.' },
   ar_ctp_noimport:   { es:'Esa lista no está entre las importadas: sincronizá las tier lists.', en:'That list is not among the imported ones: sync the tier lists.' },
   ar_ctp_guide:      { es:'Sugeridos por la guía de principiantes:', en:"Suggested by the Beginner's Guide:" },
@@ -427,17 +429,18 @@ const T = {
   back_roster:       { es:'← Roster',            en:'← Roster' },
   compare_this:      { es:'+ Comparar esta versión', en:'+ Compare this version' },
   edit:              { es:'Editar',              en:'Edit' },
-  d_current_uniform: { es:'Uniforme actual',     en:'Current uniform' },
+  d_uniform:         { es:'Uniforme',            en:'Uniform' },
+  ft_resumen:        { es:'Resumen',             en:'Overview' },
+  ft_skills:         { es:'Skills',              en:'Skills' },
+  ft_armado:         { es:'Armado',              en:'Build' },
+  ft_progreso:       { es:'Progreso',            en:'Progress' },
+  ft_mas:            { es:'Más',                 en:'More' },
   d_race:            { es:'Raza',                en:'Race' },
   d_gender:          { es:'Género',              en:'Gender' },
   d_origin:          { es:'Origen',              en:'Origin' },
   d_cost:            { es:'Costo del uniforme',  en:'Uniform cost' },
-  d_uniforms:        { es:'Uniformes',           en:'Uniforms' },
   d_abilities:       { es:'Habilidades:',        en:'Abilities:' },
   d_tuc:             { es:'Cartas TUC:',         en:'TUC cards:' },
-  d_uni_section:     { es:'Uniformes',           en:'Uniforms' },
-  d_uni_note:        { es:'Cada uniforme tiene su propio set completo de skills; elegí uno para verlo.',
-                       en:'Each uniform has its own complete skill set; pick one to see it.' },
   d_no_skills:       { es:'thanosvibs no publica skills para este uniforme todavía.',
                        en:'thanosvibs does not publish skills for this uniform yet.' },
   d_teams:           { es:'Equipos donde aparece', en:'Teams it appears in' },
@@ -916,6 +919,7 @@ let ui = {
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
   aliados: null,                     // objetivo de grupo cuya lista de personajes está abierta
+  fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   artEst: '6'                        // nivel de estrellas que muestra el artefacto de la ficha
 };
@@ -1546,16 +1550,16 @@ function pager (pages, cur, accion) {
 const STAT_ES = { recovery_rate:'Recuperación', fire_resist:'Res. fuego', cold_resist:'Res. frío',
                   lightning_resist:'Res. rayo', poison_resist:'Res. veneno', mind_resist:'Res. mental' };
 function statLabel (k) { return LANG === 'es' ? (STAT_ES[k] || k) : dom(k); }
+// La ficha va en pestañas, con una cabecera fija arriba (foto, nombre y uniforme): el
+// uniforme cambia casi todo lo de abajo, así que su selector tiene que estar siempre a la
+// vista. Cada pestaña responde una pregunta: qué es y para qué sirve, qué hace, cómo se
+// arma, cuánto avanzaste con él, y el resto.
+const FICHA_TABS = ['resumen', 'skills', 'armado', 'progreso', 'mas'];
 function renderDetail () {
   const ch = CHAR_BY_ID[ui.charId];
   if (!ch) { ui.view = 'roster'; return renderRoster(); }
   const v = variant(ch.id, ui.uniformId);
-  const rank = rankLabel(v.key);
-  const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
-  const teams = U.teams.filter(eq => eq.members.some(k => k.split('::')[0] === ch.id));
-  const car = cargas(v.skills);
-  const box = (k, val) => `<div class="stat"><div class="k">${h(k)}</div><div class="v">${val}</div></div>`;
-
+  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
   return `
   <div class="row" style="margin-bottom:14px">
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
@@ -1563,81 +1567,107 @@ function renderDetail () {
     <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
     <button class="btn sm ${ui.marcando ? 'primary' : ''}" data-a="marcarModo">${h(ui.marcando ? t('at_done') : t('at_edit'))}</button>
   </div>
-  <div class="hero">
-    <div class="glow" style="background:radial-gradient(60% 120% at 12% 0%, ${classColor(v.c)}22, transparent 70%)"></div>
-    <div class="inner">
-      <div class="face">${shot(v.id)}</div>
-      <div class="meta">
-        <h1>${h(ch.name)}</h1>
-        ${rank ? `<div class="row"><span class="muted">${h(listName(listById(U.prefs.refList)))}:</span>
-          <span class="tag solid" style="background:${rank.color}" title="${h(rank.todas.join(' · '))}">${h(rankTexto(rank))}</span></div>` : ''}
-        <div class="row">
-          ${tagGhost(dom(v.c), classColor(v.c))}
-          ${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid(t('transcended_tag'), 'var(--gold)') : ''}
-          <span class="tag dim">${h(dom(v.f))}</span>
-          ${insTag(v.ins)}
-          ${v.nuevo ? tagSolid(t('new_tag'),'var(--gold)') : ''}
-          ${(() => { const n = verifDe(ch, v).dif.length;
-            return n ? `<a href="#verif" class="tag ghost" style="color:var(--gold)" data-a="irVerif" title="${h(t('vf_title'))}">⚠ ${h(t('vf_tag').replace('{n}', n))}</a>` : ''; })()}
-          ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join('')}
-        </div>
-        <div class="statgrid">
-          ${box(t('d_current_uniform'), h(v.uid ? v.sub : t('base')))}
-          ${box(t('d_race'), icon(v.race) + h(dom(v.race) || '—'))}
-          ${box(t('d_gender'), icon(ch.gender) + h(dom(ch.gender) || '—'))}
-          ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
-          ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
-          ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
-          ${box(t('us_atk'), ataqueHtml(tipoAtaque(v.skills)))}
-          ${v.cost ? box(t('d_cost'), h(v.cost)) : ''}
-          ${box(t('d_uniforms'), h(String(ch.uniforms.length)))}
-          ${stats.map(([k, val]) => box(statLabel(k), h(val))).join('')}
-        </div>
-        <div class="row">
-          <span class="muted">${h(t('d_abilities'))}</span>
-          ${(v.ab || []).map(a => `<span class="tag dim">${icon(a)}${h(dom(a))}</span>`).join('') || '<span class="muted">—</span>'}
-        </div>
-        ${(ch.tuc || []).length ? `<div class="row"><span class="muted">${h(t('d_tuc'))}</span>${ch.tuc.map(x => `<span class="tag dim">${h(x)}</span>`).join('')}</div>` : ''}
-      </div>
+  ${fichaCabecera(ch, v)}
+  <div class="fcuerpo" id="fcuerpo">${cuerpo(ch, v)}</div>`;
+}
+/** Cabecera fija: quién es, con qué uniforme y qué parte de la ficha se está viendo. */
+function fichaCabecera (ch, v) {
+  const actual = v.uid || 'base';
+  const opcion = (uid, nombre, tier) => `<option value="${uid}" ${actual === uid ? 'selected' : ''}>${h(nombre)} · ${h(tier)}</option>`;
+  return `<div class="fcab">
+    <div class="fcab-id">
+      <div class="fcab-face shot">${shot(v.id)}</div>
+      <div class="fcab-nom"><h1>${h(ch.name)}</h1>
+        <div class="row">${tagGhost(dom(v.c), classColor(v.c))}${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid(t('transcended_tag'), 'var(--gold)') : ''}${
+          v.nuevo ? tagSolid(t('new_tag'), 'var(--gold)') : ''}</div></div>
+      <label class="fcab-uni"><span>${h(t('d_uniform'))}</span>
+        <select data-a="uniformSel">${opcion('base', t('base'), ch.t)}${ch.uniforms.map(u => opcion(u.id, u.name, u.tier)).join('')}</select></label>
     </div>
-  </div>
-
-  ${panelUso(ch, v)}
-  ${panelArmado(ch, v)}
-
-  <div class="section">
-    <h3>${h(t('d_uni_section'))} · ${pluralUni(ch.uniforms.length)}</h3>
-    <div class="unitabs">
-      <button class="unitab ${v.uid ? '' : 'on'}" data-a="uniform" data-uid="base">
-        ${imgUrl('portrait-' + ch.id) ? `<img src="${imgUrl('portrait-' + ch.id)}" alt="">` : ''}${h(t('base'))}</button>
-      ${ch.uniforms.map(u => `<button class="unitab ${v.uid === u.id ? 'on' : ''}" data-a="uniform" data-uid="${u.id}">
-        ${imgUrl('portrait-' + u.id) ? `<img src="${imgUrl('portrait-' + u.id)}" alt="">` : ''}${h(u.name)}
-        <span class="tag solid" style="background:${tierColor(u.tier)};font-size:9px">${h(u.tier)}</span></button>`).join('')}
+    <div class="ftabs" role="tablist">${FICHA_TABS.map(k => `<button class="ftab ${ui.fichaTab === k ? 'on' : ''}" role="tab"
+      aria-selected="${ui.fichaTab === k}" data-a="fichaTab" data-v="${k}">${h(t('ft_' + k))}</button>`).join('')}</div>
+  </div>`;
+}
+/** Resumen: qué es (datos del uniforme puesto) y para qué se usa según las fuentes. */
+function fichaResumen (ch, v) {
+  const rank = rankLabel(v.key), nDif = verifDe(ch, v).dif.length;
+  const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
+  const box = (k, val) => `<div class="stat"><div class="k">${h(k)}</div><div class="v">${val}</div></div>`;
+  return `<div class="fid">
+    <div class="row">
+      <span class="tag dim">${h(dom(v.f))}</span>${insTag(v.ins)}
+      ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join('')}
+      ${rank ? `<span class="muted">${h(listName(listById(U.prefs.refList)))}:</span>
+        <span class="tag solid" style="background:${rank.color}" title="${h(rank.todas.join(' · '))}">${h(rankTexto(rank))}</span>` : ''}
+      ${nDif ? `<a href="#verif" class="tag ghost" style="color:var(--gold)" data-a="irVerif" title="${h(t('vf_title'))}">⚠ ${h(t('vf_tag').replace('{n}', nDif))}</a>` : ''}
     </div>
-    <p class="muted" style="margin-bottom:12px">${h(t('d_uni_note'))}
-</p>
-    ${(() => { const kb = BUFFS[v.p] || {}; const ks = Object.keys(kb);
-       return ks.length ? `<div class="keybuffs">
-         <div class="kbhead">${h(t('c_keybuffs'))}</div>
-         ${ks.map(k => `<div class="kbrow"><span class="kbname">${h(k)}</span>
-            <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x === 'Leader Skill' ? 'Leader Skill' : x))}</span>`).join('')}</span></div>`).join('')}
-       </div>` : ''; })()}
-    ${v.skills.length
-      ? `<div class="chargebar">
-           <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult)}%;background:var(--accent)"></i></div><b>${car.ult}%</b>
-           <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk)}%;background:var(--role-control)"></i></div><b>${car.stk}%</b>
-         </div>` + v.skills.map(sk => skillCard(sk, v.p)).join('')
-      : `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`}
+    <div class="statgrid">
+      ${box(t('d_race'), icon(v.race) + h(dom(v.race) || '—'))}
+      ${box(t('d_gender'), icon(ch.gender) + h(dom(ch.gender) || '—'))}
+      ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
+      ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
+      ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
+      ${box(t('us_atk'), ataqueHtml(tipoAtaque(v.skills)))}
+      ${v.cost ? box(t('d_cost'), h(v.cost)) : ''}
+      ${stats.map(([k, val]) => box(statLabel(k), h(val))).join('')}
+    </div>
+    <div class="row">
+      <span class="muted">${h(t('d_abilities'))}</span>
+      ${(v.ab || []).map(a => `<span class="tag dim">${icon(a)}${h(dom(a))}</span>`).join('') || '<span class="muted">—</span>'}
+    </div>
+    ${(ch.tuc || []).length ? `<div class="row"><span class="muted">${h(t('d_tuc'))}</span>${ch.tuc.map(x => `<span class="tag dim">${h(x)}</span>`).join('')}</div>` : ''}
   </div>
-
-  ${panelRotaciones(ch, v)}
-
+  ${panelUso(ch, v)}`;
+}
+/** Skills del uniforme puesto: cargas, buffs clave, rotaciones y cada skill. */
+function fichaSkills (ch, v) {
+  if (!v.skills.length) return `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`;
+  const car = cargas(v.skills), kb = BUFFS[v.p] || {}, ks = Object.keys(kb);
+  return `<div class="chargebar">
+      <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult)}%;background:var(--accent)"></i></div><b>${car.ult}%</b>
+      <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk)}%;background:var(--role-control)"></i></div><b>${car.stk}%</b>
+    </div>
+    ${ks.length ? `<div class="keybuffs">
+      <div class="kbhead">${h(t('c_keybuffs'))}</div>
+      ${ks.map(k => `<div class="kbrow"><span class="kbname">${h(k)}</span>
+         <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x))}</span>`).join('')}</span></div>`).join('')}
+    </div>` : ''}
+    ${panelRotaciones(ch, v)}
+    ${v.skills.map(sk => skillCard(sk, v.p)).join('')}`;
+}
+/** Cómo armarlo: lo que las fuentes le asignan al personaje; las reglas generales de su
+ *  tipo de ataque (iguales para todos) van plegadas. */
+function fichaArmado (ch, v) {
+  const ta = tipoAtaque(v.skills);
+  return `<div class="section"><h3>${h(t('ar_title'))}</h3>
+    <p class="muted" style="margin-bottom:12px">${h(t('ar_note'))}
+      <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
+    <div class="usogrid par">
+      <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}</div>
+    </div>
+    <details class="reglas"><summary>${h(t('ar_rules'))}</summary>
+      <div class="usogrid par">
+        <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
+        <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
+      </div></details></div>`;
+}
+/** Tu avance con el personaje: hoja de ruta y topes de stats (se guardan en la capa). */
+function fichaProgreso (ch, v) {
+  return `<div class="section"><h3>${h(t('ft_progreso'))}</h3>
+    <div class="usogrid par">
+      <div class="bloque"><h4>${h(t('ru_title'))}</h4>${armadoRuta(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
+    </div></div>`;
+}
+/** El resto: verificación entre fuentes, tus equipos con él y el retrato propio. */
+function fichaMas (ch, v) {
+  const teams = U.teams.filter(eq => eq.members.some(k => k.split('::')[0] === ch.id));
+  return `<div class="section" id="verif"><h3>${h(t('vf_title'))}</h3><div class="bloque">${usoVerificacion(ch, v)}</div></div>
   ${teams.length ? `<div class="section"><h3>${h(t('d_teams'))}</h3><div class="grid">
     ${teams.map(eq => `<div class="card"><div style="font-weight:600">${h(eq.name)}</div>
       <div class="muted">${eq.members.map(k => { const r = variant(...k.split('::')); return r ? fullLabel(r) : k; }).join(' + ')}</div>
       <p class="muted" style="margin-top:6px">${h(eq.reason)}</p></div>`).join('')}
   </div></div>` : ''}
-
   <div class="section"><h3>${h(t('d_portraits'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('d_portraits_note'))}</p>
     <div class="row">
@@ -1645,6 +1675,14 @@ function renderDetail () {
       ${U.images['portrait-' + v.id] ? `<button class="btn sm danger" data-a="clearImg" data-img="portrait-${v.id}">${h(t('d_revert_img'))}</button>` : ''}
     </div>
   </div>`;
+}
+/** Al cambiar de pestaña, el contenido arranca desde arriba (un poco debajo de la cabecera
+ *  fija) si la página ya estaba más abajo. Sin animación: el contenido ya cambió. */
+function irAlCuerpo () {
+  const cab = document.querySelector('.fcab'), cuerpo = document.getElementById('fcuerpo');
+  if (!cab || !cuerpo) return;
+  const destino = cuerpo.getBoundingClientRect().top + scrollY - document.querySelector('nav.topnav').offsetHeight - cab.offsetHeight - 14;
+  if (scrollY > destino) window.scrollTo({ top: destino, behavior: 'instant' });
 }
 
 // ============================================================================
@@ -2189,21 +2227,6 @@ function armadoTopes (ch) {
     <details class="usgrupo"><summary>${h(t('ru_notes'))}</summary>${T2.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}</details>
     <div class="fuentes">${fuentesHtml(T2.fuente)}</div>`;
 }
-function panelArmado (ch, v) {
-  const ta = tipoAtaque(v.skills);
-  return `<div class="section"><h3>${h(t('ar_title'))}</h3>
-    <p class="muted" style="margin-bottom:12px">${h(t('ar_note'))}
-      <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
-    <div class="usogrid">
-      <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}</div>
-      <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
-      <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
-      <div class="bloque"><h4>${h(t('ru_title'))}</h4>${armadoRuta(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
-    </div></div>`;
-}
-
 // ============================================================================
 // FICHA: ROTACIONES
 // ============================================================================
@@ -2273,7 +2296,6 @@ function panelUso (ch, v) {
       <div class="bloque"><h4>${h(t('us_sup'))}</h4>${usoSoportes(v)}</div>
       <div class="bloque"><h4>${h(t('us_guide'))}</h4>${usoGuia(ch, v)}</div>
       <div class="bloque"><h4>Alliance Battle</h4>${usoABX(ch, v)}</div>
-      <div class="bloque" id="verif"><h4>${h(t('vf_title'))}</h4>${usoVerificacion(ch, v)}</div>
     </div></div>`;
 }
 
@@ -2733,6 +2755,7 @@ document.addEventListener('click', (e) => {
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
       ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; render(); window.scrollTo(0, 0); break; }
     case 'uniform': ui.uniformId = d.uid; render(); break;
+    case 'fichaTab': ui.fichaTab = d.v; render(); irAlCuerpo(); break;
     case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
     case 'aliadosCerrar': ui.aliados = null; render(); break;
 
@@ -2745,7 +2768,7 @@ document.addEventListener('click', (e) => {
     case 'irArmadoModos': e.preventDefault(); ui.view = 'modos'; render();
       document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
     case 'artEst': ui.artEst = d.v; render(); break;
-    case 'irVerif': e.preventDefault(); document.getElementById('verif')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); break;
+    case 'irVerif': e.preventDefault(); ui.fichaTab = 'mas'; render(); irAlCuerpo(); break;
     case 'ruta': if (d.v) U.ruta[d.cid] = d.v; else delete U.ruta[d.cid]; commit(); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
@@ -2827,7 +2850,7 @@ document.addEventListener('click', (e) => {
       else U.charNew.unshift(ch);
       ui.view = 'detail'; ui.charId = id; ui.uniformId = 'base'; ui.edId = null; commit(); break; }
 
-    case 'marcarModo': ui.marcando = !ui.marcando; render(); break;
+    case 'marcarModo': ui.marcando = !ui.marcando; if (ui.marcando) ui.fichaTab = 'skills'; render(); break;
     case 'goSettings': ui.view = 'settings'; render(); break;
     case 'buscarNovedades': buscarNovedades(); break;
     case 'reintentarDatos': arrancarTarea('datos', '/api/datos/actualizar'); break;
@@ -2882,6 +2905,7 @@ document.addEventListener('change', (e) => {
   if (a === 'newListTpl') { ui.newListTpl = el.value; return; }
   if (a === 'newListKind') { ui.newListKind = el.value; return; }
   if (a === 'abxDia') { ui.abxDia = parseInt(el.value, 10); render(); return; }
+  if (a === 'uniformSel') { ui.uniformId = el.value; render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
