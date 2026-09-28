@@ -1,6 +1,6 @@
 {
- "version": "1.0.1",
+ "version": "1.0.2",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Tocar un objetivo como «→ Aliados de magia» muestra los personajes que lo cumplen, con su retrato y el uniforme que haga falta. La raza ahora sale del uniforme puesto (Ms. Marvel es humana con los uniformes del MCU)."
+ "notas": "Después de actualizar, la ventana carga el programa nuevo: con la 1.0.1 podía seguir mostrando la versión anterior hasta cerrarla y volver a abrirla."
 }
