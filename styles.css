@@ -297,6 +297,20 @@ td.same{background:rgba(255,45,85,.055)}
   display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
 .modal{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-lg);padding:20px;
   width:min(620px,100%);max-height:86vh;overflow-y:auto;box-shadow:var(--sh-3)}
+.modal.ancho{width:min(800px,100%)}
+/* Personajes que cumplen un objetivo de grupo. */
+/* La cabecera (con Cerrar) queda fija arriba mientras se recorre una lista larga. */
+.alcab{position:sticky;top:-20px;z-index:2;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap;gap:12px;
+  margin:-20px -20px 10px;padding:20px 20px 10px;background:var(--surface);border-bottom:1px solid var(--line)}
+.altitulo{font-family:var(--font-display);font-weight:700;font-size:17px;margin-bottom:3px}
+.algrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.altile{display:flex;flex-direction:column;gap:3px;padding:0 0 7px;overflow:hidden;cursor:pointer;text-align:left;
+  font:inherit;color:inherit;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-md)}
+.altile:hover{border-color:var(--line-2)}
+.alnm{font-size:11.5px;font-weight:600;line-height:1.25;padding:3px 7px 0;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.alnota{font-size:10.5px;line-height:1.25;color:var(--text-2);padding:0 7px;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 
 /* ---------- responsive ---------- */
 @media (max-width:760px){
@@ -410,6 +424,11 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 
 /* A quien le pega una skill: es un dato de cabecera, no una nota al pie. */
 .tag.objetivo{background:rgba(122,184,255,.16);color:var(--allies);font-weight:700}
+/* Objetivo que es un grupo de aliados: se toca y muestra quiénes lo cumplen. */
+button.tag.objetivo{border:0;font-family:inherit;cursor:pointer;text-decoration:underline dotted;text-underline-offset:2px}
+button.tag.objetivo:hover{background:rgba(122,184,255,.3)}
+button.objlink{background:none;border:0;padding:0;font:inherit;color:var(--allies);cursor:pointer;
+  text-decoration:underline dotted;text-underline-offset:2px}
 
 /* Atributos que marca el usuario (la fuente no los publica). */
 .tag.atributo{background:rgba(255,176,32,.16);color:var(--gold);font-weight:700}

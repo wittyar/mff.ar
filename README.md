@@ -144,7 +144,10 @@ Lo que trae:
   más duración y tick. Los roles y los filtros por efecto salen de ahí, no de un regex sobre texto libre.
 - **A quién le pega cada skill**: 53 grupos de objetivo (todos los aliados, aliados mutantes,
   aliados de tipo Velocidad...). Se muestra como insignia en el encabezado de la skill, se compara
-  en la fila «Beneficia a» y se puede filtrar el roster por grupo.
+  en la fila «Beneficia a» y se puede filtrar el roster por grupo. Los 33 que son un tipo de
+  aliado (clase, bando, raza o habilidad) se tocan y muestran los personajes que lo cumplen, con
+  el uniforme que haga falta: `OBJETIVO_GRUPO` en `scripts/dominio.py` dice qué campo define cada
+  uno, contrastado con las restricciones de líder y soporte de `/api/supports`.
 - Qué controles aplica cada skill para cortar a los jefes de Alliance Battle (`cancels`).
 - De `/api/uniforms`, el costo de mejora de cada uniforme.
 

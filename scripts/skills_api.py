@@ -25,6 +25,7 @@ viajan una sola vez con las dos versiones.
 import json, glob, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import traducir
+from dominio import OBJETIVO_GRUPO, OBJETIVO_SIN_GRUPO, OBJETIVO_SIN_NOMBRE
 
 BOLD = re.compile(r'</?b>')
 NUM = re.compile(r'\d+(?:\.\d+)?')
@@ -145,6 +146,18 @@ def main():
         raise SystemExit('claves de skills desconocidas en la API: ' +
                          '; '.join(f'{k} (en {len(v)} retratos, p.ej. {v[0]})' for k, v in desconocidas.items()) +
                          ' — decidir en scripts/skills_api.py si es skill (ORDEN) o dato aparte (NO_SKILLS)')
+    # Un objetivo que es un grupo de aliados (clase, bando, raza o habilidad) lleva la
+    # restricción que lo define: la app muestra quiénes lo cumplen. Uno nuevo que no está
+    # clasificado en dominio.py se avisa; la app lo muestra sin lista.
+    sin_clasificar = []
+    for fila in T['tgt'].filas:
+        if fila['en'] in OBJETIVO_GRUPO:
+            fila['r'] = list(OBJETIVO_GRUPO[fila['en']])
+        elif fila['en'] not in OBJETIVO_SIN_GRUPO and not OBJETIVO_SIN_NOMBRE.match(fila['en']):
+            sin_clasificar.append(fila['en'])
+    if sin_clasificar:
+        print('AVISO: objetivos sin clasificar como grupo o no en scripts/dominio.py (la app no lista '
+              f'quiénes los cumplen): {sin_clasificar}')
     tablas = {k: t.filas for k, t in T.items()}
     json.dump({'skills': salida, 'buffs': buffs, 'cancels': cancels, 'tablas': tablas},
               open('work/skills_parsed.json', 'w'), ensure_ascii=False)
@@ -153,7 +166,8 @@ def main():
     tam = os.path.getsize('work/skills_parsed.json') / 1024 / 1024
     print(f'portraits: {len(salida)} | skills: {n_sk} | etapas: {n_st} | efectos: {n_fx} | {tam:.1f} MB'
           f' | con cancels: {len(cancels)} | de barra, sin recarga: {n_barra}')
-    print('tablas: ' + ' | '.join(f'{k} {len(t.filas)}' for k, t in T.items()))
+    print('tablas: ' + ' | '.join(f'{k} {len(t.filas)}' for k, t in T.items())
+          + f" | objetivos de grupo {sum('r' in f for f in T['tgt'].filas)}")
     faltan = {k: len(t.faltan) for k, t in T.items() if t.faltan}
     print('sin traducir:', faltan or 'nada')
 

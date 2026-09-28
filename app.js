@@ -607,6 +607,14 @@ const T = {
   st_element:        { es:'Elemento',            en:'Element' },
   st_activation:     { es:'Se activa',           en:'Activates' },
   st_target:         { es:'Objetivo',            en:'Target' },
+  al_ver:            { es:'Ver qué personajes cumplen este objetivo', en:'See which characters this target covers' },
+  al_count:          { es:'{n} personajes',      en:'{n} characters' },
+  al_by_uniform:     { es:'Cuenta el uniforme que lleva puesto: la clase, el bando, la raza y las habilidades pueden cambiar con el uniforme.',
+                       en:'The uniform worn is what counts: class, side, race and abilities can change with the uniform.' },
+  al_only_with:      { es:'Solo con',            en:'Only with' },
+  al_except_with:    { es:'Salvo con',           en:'Except with' },
+  al_none:           { es:'Ningún personaje lo cumple con los datos actuales.', en:'No character matches it with the current data.' },
+  al_close:          { es:'Cerrar',              en:'Close' },
   c_ult:             { es:'Ult',                 en:'Ult' },
   every:             { es:'cada',                en:'every' },
   permanent_fx:      { es:'permanente',          en:'permanent' },
@@ -907,6 +915,7 @@ let ui = {
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
+  aliados: null,                     // objetivo de grupo cuya lista de personajes está abierta
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   artEst: '6'                        // nivel de estrellas que muestra el artefacto de la ficha
 };
@@ -994,6 +1003,40 @@ function aplicaA (x, b) {
     case 'Character': return b.name === val;
   }
   throw new Error('restricción de soporte desconocida: ' + cat);
+}
+/** Personajes a los que alcanza una restricción, con las variantes que la cumplen: cuenta
+ *  el uniforme puesto, que puede cambiar la clase, el bando, la raza y las habilidades. */
+function alcanzados (r) {
+  return CHARS.map(ch => {
+    const vs = [variant(ch.id, null)].concat(ch.uniforms.map(u => variant(ch.id, u.id)));
+    const si = vs.filter(v => aplicaA({ r }, v));
+    return si.length ? { vs, si } : null;
+  }).filter(Boolean).sort((a, b) => a.vs[0].name.localeCompare(b.vs[0].name));
+}
+/** Ventana con los personajes que cumplen un objetivo de grupo. Uno por personaje con su
+ *  retrato base, salvo que la base no lo cumpla: ahí va cada uniforme que sí. */
+function aliadosModal () {
+  const i = ui.aliados, r = grupoDe(i), grupos = alcanzados(r);
+  const tile = (v, nota) => `<button class="altile" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}"
+      title="${h(v.name + (nota ? ' — ' + nota : ''))}">
+      <span class="shot">${shot(v.id)}</span><span class="alnm">${h(v.name)}</span>
+      ${nota ? `<span class="alnota">${h(nota)}</span>` : ''}</button>`;
+  const tiles = grupos.flatMap(g => {
+    const base = g.si.find(v => !v.uid);
+    if (!base) return g.si.map(v => tile(v, t('al_only_with') + ' ' + v.sub));
+    const fuera = g.vs.filter(v => !g.si.includes(v));
+    return [tile(base, fuera.length ? t('al_except_with') + ' ' + fuera.map(v => v.sub).join(', ') : '')];
+  });
+  const porUniforme = grupos.some(g => g.si.length !== g.vs.length);
+  return `<div class="backdrop" data-a="aliadosCerrar"><div class="modal ancho" data-a="aliadosModal">
+    <div class="row alcab">
+      <div><div class="altitulo">${h(txt('tgt', i))}</div>
+        <div>${restrHtml({ r })} <span class="muted">· ${h(t('al_count').replace('{n}', grupos.length))}</span></div></div>
+      <button class="btn sm" data-a="aliadosCerrar">${h(t('al_close'))}</button>
+    </div>
+    ${porUniforme ? `<p class="muted" style="margin-bottom:10px">${h(t('al_by_uniform'))}</p>` : ''}
+    ${tiles.length ? `<div class="algrid">${tiles.join('')}</div>` : `<p class="muted">${h(t('al_none'))}</p>`}
+  </div></div>`;
 }
 /** Un efecto de soporte en texto plano: "Ignorar evasión +25%". */
 function efectoSoporteTxt (f) {
@@ -1108,6 +1151,21 @@ function esAjeno (idxObjetivo) {
   const f = fila('tgt', idxObjetivo);
   return !!f && f.en.trim().toLowerCase() !== 'self';
 }
+/** Si el objetivo es un grupo de aliados (clase, bando, raza o habilidad), la restricción
+ *  que lo define: la misma forma que las de líder y soporte, así que vale aplicaA. */
+function grupoDe (idxObjetivo) { const f = fila('tgt', idxObjetivo); return f && f.r ? f.r : null; }
+/** Etiqueta de un objetivo. Si es un grupo de aliados se toca y muestra quiénes lo cumplen. */
+function objetivoTag (i, flecha) {
+  const texto = h((flecha ? '→ ' : '') + txt('tgt', i));
+  return grupoDe(i)
+    ? `<button class="tag objetivo grupo" data-a="verAliados" data-tg="${i}" title="${h(t('al_ver'))}">${texto}</button>`
+    : `<span class="tag objetivo">${texto}</span>`;
+}
+/** Lo mismo dentro de una línea de texto (el objetivo de una etapa). */
+function objetivoTexto (i) {
+  const texto = h(txt('tgt', i));
+  return grupoDe(i) ? `<button class="objlink" data-a="verAliados" data-tg="${i}" title="${h(t('al_ver'))}">${texto}</button>` : texto;
+}
 /** Si todas las etapas declaran el mismo valor, devuelve ese índice; si no, null. */
 function comunEnEtapas (sk, campo) {
   const vals = (sk.st || []).map(st => st[campo]).filter(x => x != null);
@@ -1191,7 +1249,7 @@ function skillCard (sk, portrait) {
   const tgComun = comunEnEtapas(sk, 'tg'), acComun = comunEnEtapas(sk, 'ac');
   const cabecera = [];
   ATRIBUTOS.forEach(a => { if (marcas[a.k]) cabecera.push(`<span class="tag atributo">${h(a[LANG])}</span>`); });
-  if (esAjeno(tgComun)) cabecera.push(`<span class="tag objetivo">→ ${h(txt('tgt', tgComun))}</span>`);
+  if (esAjeno(tgComun)) cabecera.push(objetivoTag(tgComun, true));
   if (acComun != null) {
     const st0 = sk.st.find(x => x.ac === acComun) || {};
     cabecera.push(`<span class="tag dim">${h(t('st_activation'))}: ${h(txt('act', acComun, st0.av))}</span>`);
@@ -1218,7 +1276,7 @@ function skillCard (sk, portrait) {
     const fx = (st.fx || []).filter(f => !esDano(f));
     const meta = [];
     if (st.ac != null && st.ac !== acComun) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
-    if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${h(txt('tgt', st.tg))}</span>`);
+    if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${objetivoTexto(st.tg)}</span>`);
     if (!fx.length && !meta.length) return '';
     return `<div class="stageblock">
       ${varias || meta.length ? `<div class="stagehead">${varias ? `<span class="stnum">${i + 1}</span>` : ''}${meta.join('')}</div>` : ''}
@@ -1631,7 +1689,7 @@ function renderCompare () {
         return `<td>${a.length ? a.map(k => `<span class="tag atributo">${h(atrNombre(k))}</span>`).join(' ')
                                : '<span class="muted">—</span>'}</td>`; }).join('')}</tr>
       <tr><th>${h(t('c_targets'))}</th>${vs.map(v => { const o = [...objetivosDe(v.skills)];
-        return `<td>${o.length ? o.map(i => `<span class="tag objetivo">${h(txt('tgt', i))}</span>`).join(' ')
+        return `<td>${o.length ? o.map(i => objetivoTag(i)).join(' ')
                                : '<span class="muted">—</span>'}</td>`; }).join('')}</tr>
       <tr><th>${h(t('c_keybuffs'))}</th>${vs.map(v => `<td>${
         Object.keys(BUFFS[v.p] || {}).map(b => `<span class="tag dim">${h(b)}</span>`).join(' ') || '—'}</td>`).join('')}</tr>
@@ -1660,11 +1718,11 @@ function renderCompare () {
         return `<td><div style="font-weight:600;margin-bottom:4px">${nombreSkill(sk)}</div>
           ${Object.keys(mk).length ? `<div class="row" style="margin-bottom:5px">${
             ATRIBUTOS.filter(a => mk[a.k]).map(a => `<span class="tag atributo">${h(a[LANG])}</span>`).join('')}</div>` : ''}
-          ${esAjeno(tgC) ? `<div class="row" style="margin-bottom:5px"><span class="tag objetivo">→ ${h(txt('tgt', tgC))}</span></div>` : ''}
+          ${esAjeno(tgC) ? `<div class="row" style="margin-bottom:5px">${objetivoTag(tgC, true)}</div>` : ''}
           ${acC != null ? `<div class="muted" style="margin-bottom:5px">${h(t('st_activation'))}: ${h(txt('act', acC, (sk.st.find(x => x.ac === acC) || {}).av))}</div>` : ''}
           ${(sk.st || []).some(st => st.tg != null && st.tg !== tgC)
             ? `<div class="muted" style="margin-bottom:5px">${(sk.st || []).filter(st => st.tg != null && st.tg !== tgC)
-                .map((st, i) => `${h(t('st_stage'))} ${(sk.st.indexOf(st) + 1)}: ${h(txt('tgt', st.tg))}`).join(' · ')}</div>` : ''}
+                .map((st, i) => `${h(t('st_stage'))} ${(sk.st.indexOf(st) + 1)}: ${objetivoTexto(st.tg)}`).join(' · ')}</div>` : ''}
           <div class="row" style="gap:4px;margin-bottom:6px">
             ${sk.cd ? `<span class="tag dim">CD ${h(sk.cd)}s</span>` : ''}
             ${sk.ult != null ? `<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>` : ''}
@@ -2631,7 +2689,8 @@ function render () {
   }
   // Los avisos van fuera de <main>: la barra del roster se pega arriba de main con margen
   // negativo y los taparía.
-  $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div><main>' + body + '</main>';
+  $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div><main>' + body + '</main>'
+    + (ui.aliados != null ? aliadosModal() : '');
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
 }
@@ -2670,10 +2729,12 @@ document.addEventListener('click', (e) => {
       render(); break; }
     case 'goCompare': ui.view = 'compare'; render(); window.scrollTo(0, 0); break;
     case 'open': {
-      ui.tlPick = null;
+      ui.tlPick = null; ui.aliados = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
       ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; render(); window.scrollTo(0, 0); break; }
     case 'uniform': ui.uniformId = d.uid; render(); break;
+    case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
+    case 'aliadosCerrar': ui.aliados = null; render(); break;
 
     case 'goTier': ui.view = 'tierlist'; render(); break;
     case 'goModos': ui.view = 'modos'; render(); break;
@@ -2872,6 +2933,7 @@ document.addEventListener('error', (e) => {
 }, true);
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
+  if (e.key === 'Escape' && ui.aliados != null) { ui.aliados = null; render(); }
 });
 
 function download (name, text, type) {
