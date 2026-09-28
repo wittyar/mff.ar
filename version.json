@@ -1,6 +1,6 @@
 {
- "version": "1.0.0",
+ "version": "1.0.1",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Primera versión instalable: ventana propia, tus datos en un archivo con respaldos diarios, datos del juego y retratos que se bajan solos, y parches de versión."
+ "notas": "Tocar un objetivo como «→ Aliados de magia» muestra los personajes que lo cumplen, con su retrato y el uniforme que haga falta. La raza ahora sale del uniforme puesto (Ms. Marvel es humana con los uniformes del MCU)."
 }
