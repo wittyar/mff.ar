@@ -102,7 +102,9 @@ window.addEventListener('beforeunload', (e) => {
 
 // ---- vistas derivadas (data.js + capa de usuario) ----
 let CHARS = [], CHAR_BY_ID = {}, LISTS = [];
+const MEMO_EQUIPOS = new Map();       // búsqueda de equipos por v.key|tamaño (ficha, pestaña Equipos); se vacía en rebuild()
 function rebuild () {
+  MEMO_EQUIPOS.clear();
   CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
   CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
   LISTS = TIERLISTS_SEED.concat(U.lists);
@@ -440,6 +442,27 @@ const T = {
   ft_armado:         { es:'Armado',              en:'Build' },
   ft_progreso:       { es:'Progreso',            en:'Progress' },
   ft_mas:            { es:'Más',                 en:'More' },
+  ft_equipos:        { es:'Equipos',             en:'Teams' },
+  eq_mine:           { es:'En tus equipos',      en:'In your teams' },
+  eq_none:           { es:'Todavía no armaste equipos. Cuando armes, acá vas a ver en cuáles está y cómo entraría en los demás.',
+                       en:'You have not built any team yet. Once you do, this shows which ones it is in and how it would fit the others.' },
+  eq_in_none:        { es:'No está en ninguno de tus equipos.', en:'It is not in any of your teams.' },
+  eq_build:          { es:'Armar este equipo',   en:'Build this team' },
+  eq_build_with:     { es:'Armar un equipo con él', en:'Build a team with it' },
+  eq_why:            { es:'Por qué',             en:'Why' },
+  eq_could:          { es:'Cómo entraría en tus otros equipos', en:'How it would fit your other teams' },
+  eq_could_note:     { es:'Con {v}: el mejor cambio en cada equipo según la sinergia de la app.',
+                       en:'With {v}: the best change in each team according to the app\'s synergy.' },
+  eq_instead:        { es:'en lugar de {x}',     en:'instead of {x}' },
+  eq_room:           { es:'hay lugar: sumándolo', en:'there is room: adding it' },
+  eq_before:         { es:'antes {n}',           en:'before {n}' },
+  eq_name_swap:      { es:'{e} (con {v})',       en:'{e} (with {v})' },
+  eq_no_gain:        { es:'No mejoran con él:',  en:'Not improved by it:' },
+  eq_new:            { es:'Equipos nuevos con él', en:'New teams with it' },
+  eq_new_note:       { es:'Según la sinergia de la app, sobre todo el roster. Búsqueda aproximada: arma el equipo de a un integrante, probando cada personaje y quedándose en cada paso con los {n} mejores; a igual puntaje, primero los mejor ubicados en tu lista de referencia.',
+                       en:'By the app\'s synergy, over the whole roster. Approximate search: builds the team one member at a time, trying every character and keeping the {n} best at each step; on ties, the best placed in your reference list come first.' },
+  eq_no_mode:        { es:'Sin modo',            en:'No mode' },
+  eq_size:           { es:'equipo de {n}',       en:'team of {n}' },
   d_race:            { es:'Raza',                en:'Race' },
   d_gender:          { es:'Género',              en:'Gender' },
   d_origin:          { es:'Origen',              en:'Origin' },
@@ -448,7 +471,6 @@ const T = {
   d_tuc:             { es:'Cartas TUC:',         en:'TUC cards:' },
   d_no_skills:       { es:'thanosvibs no publica skills para este uniforme todavía.',
                        en:'thanosvibs does not publish skills for this uniform yet.' },
-  d_teams:           { es:'Equipos donde aparece', en:'Teams it appears in' },
   d_portraits:       { es:'Retratos propios',    en:'Custom portraits' },
   d_portraits_note:  { es:'Si subís una imagen, reemplaza la de thanosvibs solo en tu capa.',
                        en:'Uploading an image replaces the thanosvibs one in your layer only.' },
@@ -1061,9 +1083,10 @@ function efectoSoporteTxt (f) {
  *  cuenta el mejor líder posible. Se suman dos lecturas propias, dichas como tales:
  *  los roles derivados de las skills y la ventaja de clase de la wiki (Combate > Velocidad
  *  > Detonación > Combate; Universal no tiene debilidad). No es un cálculo del juego. */
-function synergy (vs) {
+function synergy (vs, soloPuntaje) {
   if (vs.length < 2) return { score: 0, reasons: [] };
   const reasons = []; let score = 0;
+  const razon = soloPuntaje ? () => {} : (texto) => reasons.push(texto());
   const ES = LANG === 'es';
   const quienes = (bs) => bs.map(fullLabel).join(', ');
   const efectos = (x) => x.fx.map(efectoSoporteTxt).join(' · ');
@@ -1073,7 +1096,7 @@ function synergy (vs) {
       const bs = vs.filter(b => b !== a && aplicaA(s[k], b));
       if (!bs.length) return;
       score += s[k].sig ? 3 : 2;
-      reasons.push(`${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(s[k])}`);
+      razon(() => `${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(s[k])}`);
     }); });
   // Liderazgo: el del integrante que más alcanza a los demás.
   const lideres = vs.map(a => { const s = SOPORTES[a.p] || {};
@@ -1082,24 +1105,24 @@ function synergy (vs) {
   if (lideres.length) {
     const mejor = lideres.sort((p, q) => q.pts - p.pts)[0];
     score += mejor.pts;
-    mejor.xs.forEach(o => reasons.push(`${ES ? 'Con' : 'With'} ${fullLabel(mejor.a)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`));
+    mejor.xs.forEach(o => razon(() => `${ES ? 'Con' : 'With'} ${fullLabel(mejor.a)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`));
   }
   const roles = new Set(vs.flatMap(v => v.r));
   const covered = ['Tanque','Control','Daño','Soporte'].filter(r => roles.has(r));
   if (covered.length >= 2) { score += 1;
-    reasons.push((ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + covered.map(dom).join(' + ') + '.'); }
+    razon(() => (ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + covered.map(dom).join(' + ') + '.'); }
   const classes = new Set(vs.map(v => v.c));
   if (classes.size === vs.length) { score += 1;
-    reasons.push(ES ? 'Clases distintas: no comparten la misma debilidad.'
-                    : 'Different classes: they do not share the same weakness.'); }
+    razon(() => ES ? 'Clases distintas: no comparten la misma debilidad.'
+                   : 'Different classes: they do not share the same weakness.'); }
   // a cubre la debilidad de b si a le gana a la clase que le gana a b.
   const leGanaA = (c) => Object.keys(SEED.CLASS_ADVANTAGE).find(k => SEED.CLASS_ADVANTAGE[k] === c);
   vs.forEach(a => vs.forEach(b => {
     const amenaza = leGanaA(b.c);
     if (a !== b && amenaza && SEED.CLASS_ADVANTAGE[a.c] === amenaza) {
       score += 1;
-      reasons.push(ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}.`
-                      : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
+      razon(() => ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}.`
+                     : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
     }
   }));
   return { score, reasons: [...new Set(reasons)] };
@@ -1559,12 +1582,13 @@ function statLabel (k) { return LANG === 'es' ? (STAT_ES[k] || k) : dom(k); }
 // uniforme cambia casi todo lo de abajo, así que su selector tiene que estar siempre a la
 // vista. Cada pestaña responde una pregunta: qué es y para qué sirve, qué hace, cómo se
 // arma, cuánto avanzaste con él, y el resto.
-const FICHA_TABS = ['resumen', 'skills', 'armado', 'progreso', 'mas'];
+const FICHA_TABS = ['resumen', 'skills', 'armado', 'equipos', 'progreso', 'mas'];
 function renderDetail () {
   const ch = CHAR_BY_ID[ui.charId];
   if (!ch) { ui.view = 'roster'; return renderRoster(); }
   const v = variant(ch.id, ui.uniformId);
-  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
+  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, equipos: fichaEquipos,
+                   progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
   return `
   <div class="row" style="margin-bottom:14px">
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
@@ -1664,15 +1688,115 @@ function fichaProgreso (ch, v) {
       <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
     </div></div>`;
 }
-/** El resto: verificación entre fuentes, tus equipos con él y el retrato propio. */
+/** Equipos: cómo entra el personaje (con el uniforme elegido) en los equipos que armaste y
+ *  qué equipos nuevos le sugiere la sinergia de la app. */
+function fichaEquipos (ch, v) {
+  const suyos = U.teams.filter(tt => tt.members.some(k => k.split('::')[0] === ch.id));
+  const otros = U.teams.filter(tt => !suyos.includes(tt)).map(tt => comoEntra(v, tt));
+  const mejoran = otros.filter(o => o.delta > 0).sort((a, b) => b.delta - a.delta);
+  const no = otros.filter(o => o.delta <= 0);
+  const armar = (vs, modo, nombre, etiqueta) => `<button class="btn sm" data-a="teamDesde" data-m="${vs.map(x => x.key).join(',')}"
+    data-modo="${modo || ''}" data-nombre="${h(nombre || '')}">${h(etiqueta || t('eq_build'))}</button>`;
+  const porque = (mas, menos) => (mas.length || menos.length) ? `<details class="usgrupo"><summary>${h(t('eq_why'))}</summary>
+    <ul class="sopfx eqwhy">${mas.map(r => `<li class="mas">${h(r)}</li>`).join('')}${menos.map(r => `<li class="menos">${h(r)}</li>`).join('')}</ul></details>` : '';
+  return `<div class="section"><h3>${h(t('eq_mine'))}</h3>
+    ${!U.teams.length ? `<p class="muted" style="margin-bottom:10px">${h(t('eq_none'))}</p>` : ''}
+    ${suyos.length ? `<div class="grid eqgrid">${suyos.map(tt => equipoCard(tt)).join('')}</div>`
+                   : U.teams.length ? `<p class="muted">${h(t('eq_in_none'))}</p>` : ''}
+    <div class="row" style="margin-top:10px">${armar([v], '', '', t('eq_build_with'))}</div>
+  </div>
+  ${otros.length ? `<div class="section"><h3>${h(t('eq_could'))}</h3>
+    <p class="muted" style="margin-bottom:10px">${h(t('eq_could_note').replace('{v}', fullLabel(v)))}</p>
+    ${mejoran.map(o => `<div class="card eqsug">
+      <div class="row" style="justify-content:space-between">
+        <div><b>${h(o.tt.name)}</b>${o.modo ? ` <span class="tag dim">${h(o.modo)}</span>` : ''}
+          <div class="muted">${h(o.sale ? t('eq_instead').replace('{x}', fullLabel(o.sale)) : t('eq_room'))}</div></div>
+        <div class="eqpts"><b>${o.despues.score}</b> ${h(t('tm_synergy_pts'))} <span class="eqdelta">+${o.delta}</span>
+          <div class="muted">${h(t('eq_before').replace('{n}', o.antes.score))}</div></div>
+      </div>
+      ${retratosEquipo(o.vs, v)}
+      ${porque(o.gana, o.pierde)}
+      <div class="row">${armar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
+    </div>`).join('')}
+    ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
+  </div>` : ''}
+  ${equiposNuevosHtml(v, armar, porque)}`;
+}
+/** El mejor lugar para v en un equipo: reemplazando a cada integrante o, si hay lugar,
+ *  sumándolo. Con lo que se gana y se pierde según las razones de la sinergia. */
+function comoEntra (v, tt) {
+  const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
+  const antes = synergy(vs);
+  const opciones = vs.map((x, i) => ({ sale: x, vs: vs.map((y, j) => j === i ? v : y) }));
+  if (vs.length < tamModo(tt.modeId)) opciones.push({ sale: null, vs: vs.concat(v) });
+  const mejor = opciones.map(o => Object.assign(o, { despues: synergy(o.vs) }))
+    .sort((a, b) => b.despues.score - a.despues.score)[0];
+  const modo = modosEquipo().find(m => m.id === tt.modeId);
+  return { tt, antes, vs: mejor.vs, sale: mejor.sale, despues: mejor.despues, delta: mejor.despues.score - antes.score,
+           modo: modo ? modo.name : '', gana: mejor.despues.reasons.filter(r => !antes.reasons.includes(r)),
+           pierde: antes.reasons.filter(r => !mejor.despues.reasons.includes(r)) };
+}
+function retratosEquipo (vs, v) {
+  return `<div class="row eqfotos">${vs.map(x => `<button class="eqfoto ${x.key === v.key ? 'nuevo' : ''}" data-a="open" data-cid="${x.cid}"
+    data-uid="${x.uid || ''}" title="${h(fullLabel(x))}"><span class="shot">${shot(x.id)}</span><span>${h(x.name)}</span></button>`).join('')}</div>`;
+}
+// Equipos nuevos: sobre todo el roster, con la sinergia de la app. Probar todas las
+// combinaciones no escala (un equipo de 3 ya son ~390.000; uno de 6, billones), así que la
+// búsqueda es aproximada: arma el equipo de a un integrante, probando a cada personaje del
+// roster y quedándose en cada paso con los ANCHO mejores equipos parciales (un personaje por
+// lugar). Un corte previo por sinergia de a dos perdía equipos: el mejor de Wong con Doctor
+// Strange 2 lleva a Taskmaster, que de a dos con él queda en el puesto 54.
+const ANCHO = 10, SUGERIDOS = 3;
+/** Los ANCHO mejores equipos de `tam` con v. Cada tamaño sale de ampliar el anterior y
+ *  queda memorizado: el de 6 reusa el de 5, así usar varios tamaños no repite el trabajo. */
+function hazCon (v, tam) {
+  const clave = v.key + '|' + tam;
+  if (!MEMO_EQUIPOS.has(clave)) MEMO_EQUIPOS.set(clave, tam === 1 ? [[v]] : ampliarHaz(hazCon(v, tam - 1), v));
+  return MEMO_EQUIPOS.get(clave);
+}
+function ampliarHaz (haz, v) {
+  const pool = allVariants().filter(x => x.cid !== v.cid);
+  // A igual sinergia gana el equipo mejor ubicado en tu lista de referencia.
+  const rango = new Map([v].concat(pool).map(x => [x.key, rankIndex(x.key)]));
+  const orden = (a, b) => b.s - a.s || a.r - b.r;
+  const mejores = new Map();          // un equipo por conjunto de personajes
+  haz.forEach(eq => pool.forEach(x => {
+    if (eq.some(y => y.cid === x.cid)) return;
+    const vs = eq.concat(x), firma = vs.map(y => y.cid).sort().join('|');
+    const o = { vs, s: synergy(vs, true).score, r: vs.reduce((suma, y) => suma + rango.get(y.key), 0) };
+    const previo = mejores.get(firma);
+    if (!previo || orden(o, previo) < 0) mejores.set(firma, o);
+  }));
+  return [...mejores.values()].sort(orden).slice(0, ANCHO).map(o => o.vs);
+}
+/** Tamaños de equipo de los modos que usaste en tus equipos (3 si no hay ninguno), con esos
+ *  modos en el orden de tus equipos: primero el del más reciente. */
+function tamanosUsados () {
+  const por = new Map();
+  U.teams.forEach(tt => { const tam = tamModo(tt.modeId), m = modosEquipo().find(x => x.id === tt.modeId);
+    const lista = por.get(tam) || []; if (m && !lista.some(y => y.id === m.id)) lista.push(m); por.set(tam, lista); });
+  if (!por.size) por.set(3, []);
+  return [...por.entries()].sort((a, b) => a[0] - b[0]);
+}
+/** El armador se abre con el modo de ese tamaño (con varios, el de tu equipo más reciente;
+ *  se cambia ahí): sin modo el tope es 3 y no entraría un equipo de 5 o 6. */
+function equiposNuevosHtml (v, armar, porque) {
+  return `<div class="section"><h3>${h(t('eq_new'))}</h3>
+    <p class="muted" style="margin-bottom:10px">${h(t('eq_new_note').replace('{n}', ANCHO))}</p>
+    ${tamanosUsados().map(([tam, modos]) => `<h4 class="eqtam">${h(modos.length ? modos.map(m => m.name).join(', ') : t('eq_no_mode'))} · ${h(t('eq_size').replace('{n}', tam))}</h4>
+      ${hazCon(v, tam).slice(0, SUGERIDOS).map(vs => { const sc = synergy(vs);
+        return `<div class="card eqsug">
+          <div class="row" style="justify-content:space-between"><div class="muted">${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
+            <div class="eqpts"><b>${sc.score}</b> ${h(t('tm_synergy_pts'))}</div></div>
+          ${retratosEquipo(vs, v)}
+          ${porque(sc.reasons, [])}
+          <div class="row">${armar(vs, modos.length ? modos[0].id : '', '')}</div>
+        </div>`; }).join('')}`).join('')}
+  </div>`;
+}
+/** El resto: verificación entre fuentes y el retrato propio. */
 function fichaMas (ch, v) {
-  const teams = U.teams.filter(eq => eq.members.some(k => k.split('::')[0] === ch.id));
   return `<div class="section" id="verif"><h3>${h(t('vf_title'))}</h3><div class="bloque">${usoVerificacion(ch, v)}</div></div>
-  ${teams.length ? `<div class="section"><h3>${h(t('d_teams'))}</h3><div class="grid">
-    ${teams.map(eq => `<div class="card"><div style="font-weight:600">${h(eq.name)}</div>
-      <div class="muted">${eq.members.map(k => { const r = variant(...k.split('::')); return r ? fullLabel(r) : k; }).join(' + ')}</div>
-      <p class="muted" style="margin-top:6px">${h(eq.reason)}</p></div>`).join('')}
-  </div></div>` : ''}
   <div class="section"><h3>${h(t('d_portraits'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('d_portraits_note'))}</p>
     <div class="row">
@@ -2466,6 +2590,21 @@ function modosEquipo () {
     .concat(U.modes.map(m => ({ id: m.id, name: m.name, tam: m.teamSize, juego: false })));
 }
 function tamModo (id) { const m = modosEquipo().find(x => x.id === id); return m ? m.tam : 3; }
+/** Un equipo guardado, con su sinergia. En el armador se puede borrar; en la ficha, no. */
+function equipoCard (tt, borrable) {
+  const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
+  const sc = synergy(vs), modo = modosEquipo().find(m => m.id === tt.modeId);
+  return `<div class="card" style="position:relative">
+    ${borrable ? `<button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>` : ''}
+    <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
+    ${modo ? `<div class="row" style="margin-bottom:6px"><span class="tag dim">${h(modo.name)}</span></div>` : ''}
+    <div class="row" style="gap:5px;margin-bottom:8px">${vs.map(v => imgUrl('portrait-' + v.id)
+      ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
+    <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
+    ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
+    <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))}</div>
+  </div>`;
+}
 function renderTeams () {
   const eq = ui.team;                 // 't' es la función de idioma: el equipo se llama 'eq'
   const max = tamModo(eq.modeId);
@@ -2505,20 +2644,7 @@ function renderTeams () {
     </div>
   </div>` : ''}
   ${U.teams.length ? `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
-    ${U.teams.map(tt => {
-      const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
-      const sc = synergy(vs);
-      return `<div class="card" style="position:relative">
-        <button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>
-        <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
-        ${tt.modeId && modos.find(m => m.id === tt.modeId) ? `<div class="row" style="margin-bottom:6px"><span class="tag dim">${h(modos.find(m => m.id === tt.modeId).name)}</span></div>` : ''}
-        <div class="row" style="gap:5px;margin-bottom:8px">${vs.map(v => imgUrl('portrait-' + v.id)
-          ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
-        <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
-        ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
-        <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))}</div>
-      </div>`;
-    }).join('')}</div>`
+    ${U.teams.map(tt => equipoCard(tt, true)).join('')}</div>`
   : `<div class="empty"><div class="big">◇</div><div>${h(t('tm_empty'))}</div></div>`}`;
 }
 
@@ -2821,6 +2947,9 @@ document.addEventListener('click', (e) => {
     case 'goTeams': ui.view = 'teams'; render(); break;
     case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
     case 'teamClose': ui.teamOpen = false; render(); break;
+    case 'teamDesde': ui.view = 'teams'; ui.teamOpen = true; ui.teamSearch = ''; ui.teamPage = 0;
+      ui.team = { name: d.nombre, members: d.m.split(','), reason: '', modeId: d.modo };
+      render(); window.scrollTo(0, 0); break;
     case 'teamToggle': { const eq = ui.team, max = tamModo(eq.modeId);
       const i = eq.members.indexOf(d.key);
       if (i > -1) eq.members.splice(i, 1); else { eq.members.push(d.key); if (eq.members.length > max) eq.members.shift(); }

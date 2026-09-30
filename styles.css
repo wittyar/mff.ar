@@ -220,6 +220,23 @@ table.dt tbody tr:last-child td{border-bottom:none}
 /* Resumen: los datos del uniforme puesto. */
 .fid{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:var(--r-lg);
   background:linear-gradient(140deg,var(--surface-2),#0d111c);padding:16px;margin-bottom:24px}
+/* Equipos: los tuyos con él, cómo entraría en los otros y equipos nuevos. */
+.grid.eqgrid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}   /* también en el celular, sobre .grid */
+.eqsug{margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.eqpts{text-align:right;white-space:nowrap}
+.eqpts b{font-size:18px}
+.eqdelta{color:var(--role-soporte);font-weight:700;margin-left:4px}
+.eqfotos{gap:8px;align-items:flex-start}
+.eqfoto{display:flex;flex-direction:column;align-items:center;gap:4px;width:74px;padding:0;background:none;border:0;
+  color:inherit;font:inherit;cursor:pointer}
+.eqfoto .shot{width:56px;height:56px;border-radius:var(--r-md);box-shadow:0 0 0 1px var(--line-2)}
+.eqfoto.nuevo .shot{box-shadow:0 0 0 2px var(--accent)}
+.eqfoto > span:last-child{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.eqwhy li.mas::marker{content:'+ ';color:var(--role-soporte)}
+.eqwhy li.menos{color:var(--text-2)}
+.eqwhy li.menos::marker{content:'− ';color:var(--accent)}
+.eqtam{margin:14px 0 8px;color:var(--text-2)}
 /* Armado: las reglas generales de la guía, plegadas. */
 details.reglas{margin-top:12px}
 details.reglas > summary{cursor:pointer;color:var(--text-2);font-weight:600;padding:8px 0}
@@ -335,7 +352,7 @@ td.same{background:rgba(255,45,85,.055)}
   .fcab-nom h1{font-size:18px}
   .fcab-uni{flex:1 1 100%;min-width:0}
   .fcab-uni span{display:none}
-  .ftab{padding:8px 10px;font-size:12.5px}
+  .ftab{padding:8px 7px;font-size:12.5px}
   nav.topnav{overflow-x:auto;gap:2px}
   .tierlabel{width:96px;font-size:11px}
 }

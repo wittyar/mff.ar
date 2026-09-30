@@ -27,9 +27,14 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   - *Armado*: su C.T.P. (Ideal CTP List y guía) y su artefacto con los valores por nivel de
     estrellas; plegadas, las reglas generales de ISO y urus para su tipo de ataque (derivado de
     sus skills).
+  - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
+    (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
+    antes y después, y qué se gana y qué se pierde); y equipos nuevos con él, buscados en todo
+    el roster: los tres mejores para cada tamaño de equipo de los modos que usás (de 3 si
+    todavía no armaste ninguno). Cada sugerencia se abre en el armador para guardarla.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
     en tu capa.
-  - *Más*: la verificación entre fuentes, tus equipos con él y el retrato propio.
+  - *Más*: la verificación entre fuentes y el retrato propio.
 - **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada.
 - **Tier lists**: todas las listas públicas de thanosvibs, con sus filas originales; listas
   propias de personajes, de C.T.P., de artefactos o de tus equipos, con filas a medida. Una entrada
