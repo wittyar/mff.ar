@@ -1,6 +1,6 @@
 {
- "version": "1.0.3",
+ "version": "1.0.4",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "La ficha de cada personaje ahora va en pestañas (Resumen, Skills, Armado, Progreso y Más), con la foto, el nombre y el selector de uniforme siempre a la vista."
+ "notas": "Nueva pestaña Equipos en la ficha: en cuáles de tus equipos está el personaje, cómo entraría en los otros (a quién reemplaza y cuánto sube la sinergia) y equipos nuevos con él para los tamaños de los modos que usás. Además, ordenar por tier list y abrir el armador de equipos son mucho más rápidos."
 }
