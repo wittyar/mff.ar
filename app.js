@@ -164,8 +164,13 @@ function assignOf (listId) {
   return out;
 }
 /** Filas en las que está una entrada (vacío si no está ubicada). Una entrada puede
- *  estar en varias filas de la misma lista: muchas listas son por categoría. */
-function filasDe (listId, key) { return assignOf(listId)[key] || []; }
+ *  estar en varias filas de la misma lista: muchas listas son por categoría. Lee la
+ *  entrada sola (lo mismo que assignOf(listId)[key], sin copiar la lista entera). */
+function filasDe (listId, key) {
+  const mia = (U.assign[listId] || {})[key];
+  if (mia === REMOVED) return [];
+  return mia || (ASSIGN_SEED[listId] || {})[key] || [];
+}
 /** Deja una entrada en exactamente estas filas, en el orden de la lista. Sin filas queda
  *  sin ubicar: en una importada eso es una marca explícita (REMOVED) sobre la fuente. */
 function setFilas (listId, key, filas) {
