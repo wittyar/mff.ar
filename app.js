@@ -445,6 +445,12 @@ const T = {
   ft_progreso:       { es:'Progreso',            en:'Progress' },
   ft_mas:            { es:'Más',                 en:'More' },
   ft_equipos:        { es:'Equipos',             en:'Teams' },
+  nav_prev:          { es:'Anterior del listado', en:'Previous in the list' },
+  nav_next:          { es:'Siguiente del listado', en:'Next in the list' },
+  nav_pos:           { es:'{i} de {n}',          en:'{i} of {n}' },
+  nav_out:           { es:'fuera del listado',   en:'not in the list' },
+  nav_title:         { es:'Posición en el listado del roster, con sus filtros y su orden (también con ← y →)',
+                       en:'Position in the roster list, with its filters and order (also with ← and →)' },
   eq_mine:           { es:'En tus equipos',      en:'In your teams' },
   eq_none:           { es:'Todavía no armaste equipos. Cuando armes, acá vas a ver en cuáles está y cómo entraría en los demás.',
                        en:'You have not built any team yet. Once you do, this shows which ones it is in and how it would fit the others.' },
@@ -1665,6 +1671,29 @@ function renderDetail () {
   <div class="fcuerpo" id="fcuerpo">${cuerpo(ch, v)}</div>`;
 }
 /** Cabecera fija: quién es, con qué uniforme y qué parte de la ficha se está viendo. */
+/** Abre la ficha de un personaje (con un uniforme) desde el roster o desde las flechas. */
+function abrirFicha (cid, uid) {
+  ui.view = 'detail'; ui.charId = cid; ui.uniformId = uid || 'base';
+  ui.eqPagina = 0; ui.eqCon = ''; ui.eqVerDescartados = false;
+  render(); window.scrollTo(0, 0);
+}
+/** Anterior y siguiente en el listado del roster tal como está filtrado y ordenado: la misma
+ *  entrada (personaje y uniforme) o, si esa no está, la primera de ese personaje. */
+function vecinosEnListado (v) {
+  const lista = rosterData();
+  let i = lista.findIndex(x => x.key === v.key);
+  if (i < 0) i = lista.findIndex(x => x.cid === v.cid);
+  return { i, n: lista.length, prev: i > 0 ? lista[i - 1] : null, next: i > -1 && i < lista.length - 1 ? lista[i + 1] : null };
+}
+function navFicha (v) {
+  const nav = vecinosEnListado(v);
+  const flecha = (x, txt, k) => x
+    ? `<button class="btn icon fnavb" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}" title="${h(t(k) + ': ' + fullLabel(x))}">${txt}</button>`
+    : `<button class="btn icon fnavb" disabled title="${h(t(k))}">${txt}</button>`;
+  return `<div class="fnav">${flecha(nav.prev, '‹', 'nav_prev')}
+    <span class="muted" title="${h(t('nav_title'))}">${h(nav.i > -1 ? t('nav_pos').replace('{i}', nav.i + 1).replace('{n}', nav.n) : t('nav_out'))}</span>
+    ${flecha(nav.next, '›', 'nav_next')}</div>`;
+}
 function fichaCabecera (ch, v) {
   const actual = v.uid || 'base';
   const opcion = (uid, nombre, tier) => `<option value="${uid}" ${actual === uid ? 'selected' : ''}>${h(nombre)} · ${h(tier)}</option>`;
@@ -1674,6 +1703,7 @@ function fichaCabecera (ch, v) {
       <div class="fcab-nom"><h1>${h(ch.name)}</h1>
         <div class="row">${tagGhost(dom(v.c), classColor(v.c))}${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid(t('transcended_tag'), 'var(--gold)') : ''}${
           v.nuevo ? tagSolid(t('new_tag'), 'var(--gold)') : ''}</div></div>
+      ${navFicha(v)}
       <label class="fcab-uni"><span>${h(t('d_uniform'))}</span>
         <select data-a="uniformSel">${opcion('base', t('base'), ch.t)}${ch.uniforms.map(u => opcion(u.id, u.name, u.tier)).join('')}</select></label>
     </div>
@@ -3108,8 +3138,8 @@ document.addEventListener('click', (e) => {
     case 'open': {
       ui.tlPick = null; ui.aliados = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
-      ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; ui.eqPagina = 0; ui.eqCon = ''; ui.eqVerDescartados = false;
-      render(); window.scrollTo(0, 0); break; }
+      abrirFicha(d.cid, d.uid); break; }
+    case 'fichaVecina': abrirFicha(d.cid, d.uid); break;
     case 'uniform': ui.uniformId = d.uid; ui.eqPagina = 0; render(); break;
     case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
     case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
@@ -3332,6 +3362,13 @@ document.addEventListener('error', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
   if (e.key === 'Escape' && ui.aliados != null) { ui.aliados = null; render(); }
+  // En la ficha, ← y → pasan al anterior y al siguiente del listado (no mientras se escribe).
+  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && ui.view === 'detail' && ui.aliados == null
+      && !e.target.closest('input, select, textarea') && !e.altKey && !e.ctrlKey && !e.metaKey) {
+    const ch = CHAR_BY_ID[ui.charId], v = ch && variant(ch.id, ui.uniformId);
+    const x = v && vecinosEnListado(v)[e.key === 'ArrowLeft' ? 'prev' : 'next'];
+    if (x) { e.preventDefault(); abrirFicha(x.cid, x.uid); }
+  }
 });
 
 function download (name, text, type) {

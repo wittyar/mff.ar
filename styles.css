@@ -210,6 +210,10 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .fcab-nom{flex:1;min-width:180px;display:flex;flex-direction:column;gap:6px}
 .fcab-nom h1{font-size:22px;line-height:1.1}
 .fcab-uni{display:flex;flex-direction:column;gap:3px;flex:0 1 340px;min-width:220px}
+/* Flechas: anterior y siguiente del listado del roster. */
+.fnav{display:flex;align-items:center;gap:6px;flex:none}
+.fnav .muted{font-size:12px;min-width:64px;text-align:center;white-space:nowrap}
+.fnavb{font-size:20px;line-height:1;width:36px;height:36px;justify-content:center;padding:0}
 .fcab-uni span{font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);font-weight:700}
 .fcab-uni select{width:100%}
 .ftabs{display:flex;gap:2px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
@@ -369,7 +373,11 @@ td.same{background:rgba(255,45,85,.055)}
   .fcab{margin:0 -12px 14px;padding:10px 12px 0}
   .fcab-face{width:44px;height:44px}
   .fcab-nom h1{font-size:18px}
-  .fcab-uni{flex:1 1 100%;min-width:0}
+  .fcab-nom{flex:1 1 calc(100% - 70px)}      /* foto y nombre en la primera línea; uniforme y flechas, en la segunda */
+  .fcab-uni{flex:1 1 0;min-width:0;order:2}
+  .fnav{order:3;gap:4px}
+  .fnav .muted{min-width:0;font-size:11px}
+  .fnavb{width:32px;height:32px}
   .fcab-uni span{display:none}
   .ftab{padding:8px 7px;font-size:12.5px}
   nav.topnav{overflow-x:auto;gap:2px}
