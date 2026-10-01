@@ -1,6 +1,6 @@
 {
  "version": "1.0.10",
- "formato_datos": 1,
+ "formato_datos": 2,
  "python": "3.14.7",
  "notas": "Índice para armar equipos: cada liderazgo y soporte dice qué da (ataque físico o de energía, todos los ataques, daño de un elemento o de todos, ignorar evasión, todas las defensas, vida, quita todos los debuffs); el Resumen dice qué le sirve al personaje, con atajos a los líderes y soportes que se lo dan; el roster filtra por lo que da su liderazgo o su soporte, y para quién; y cada combinación de 3 muestra lo que recibe él en ese equipo. La facción, el tipo o la raza que thanosvibs publica sin especificar (Ebony Maw, entre otros) se completan con la wiki o a mano, marcados con su origen. El panel de filtros abierto ya no tapa sus últimos grupos."
 }

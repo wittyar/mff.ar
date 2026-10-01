@@ -8,6 +8,7 @@ UNI = json.load(open('work/uniforms.json'))           # costos y materiales por 
 # como "D". Se importan con sus filas tal cual y el orden de la fuente.
 TL_FILES = sorted(glob.glob('work/tierlists/*.json'))
 from dominio import TYPE, ALLIES, GENDER, SIDE, ORIGIN, INSTINCT, ABIL
+import modelo
 def slug(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode()
     return re.sub(r'[^a-z0-9]+','-', s.lower()).strip('-')
@@ -209,8 +210,12 @@ for t in tierlists:
 # publicada más recientemente a la más vieja.
 tierlists.sort(key=lambda t: t['published'], reverse=True)
 tierlists.sort(key=lambda t: t['order'])
+# Perfil de combate de cada retrato (modelo.py, docs/MODELO.md): con qué pega, según el
+# daño de sus skills activas. Por retrato, como las skills.
+perfiles = {p: modelo.perfil(sks, SK['tablas']['desc']) for p, sks in SK['skills'].items()}
 json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,
-           'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs']},
+           'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs'],
+           'perfiles':perfiles},
           open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images),
       '| listas:', len(tierlists), '| ubicaciones:', sum(len(f) for a in assign.values() for f in a.values()),

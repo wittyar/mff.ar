@@ -37,6 +37,7 @@ exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 b = json.load(open('work/build2.json'))
 chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b['tierlists']
 vocab, SKILLS, TABLAS, BUFFS = b['vocab'], b['skills'], b['tablas'], b['buffs']
+PERFILES = b['perfiles']
 FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
 VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato']
 # Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
@@ -63,9 +64,13 @@ SEED = {
 hoy = hoy.isoformat()
 # Version del juego y fecha del snapshot, como dato de la app (no solo como comentario):
 # la app de escritorio las compara contra thanosvibs para avisar si hay una mas nueva.
-# FORMATO sube cuando data.js cambia de una forma que una app anterior no entiende: la app
-# solo acepta datos de su mismo formato (y avisa que hace falta actualizarla).
-FORMATO = 1
+# FORMATO sube cuando una app y unos datos de versiones distintas ya no se entienden: a la
+# app nueva le falta algo que los datos viejos no traen, o la anterior leería mal los nuevos.
+# La app solo acepta datos de su mismo formato: con datos de otro, los baja al arrancar o
+# avisa que hace falta actualizarla.
+# 2: el perfil de combate de cada retrato viene calculado (MFF_PERFIL) y la app ya no lo
+#    deduce de las skills: la app nueva no puede usar datos sin él.
+FORMATO = 2
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -87,6 +92,9 @@ parts = [header,
  'window.MFF_SKILLS = ' + json.dumps(SKILLS, ensure_ascii=False) + ';\n',
  'window.MFF_TABLAS = ' + json.dumps(TABLAS, ensure_ascii=False) + ';\n',
  'window.MFF_BUFFS = ' + json.dumps(BUFFS, ensure_ascii=False) + ';\n',
+ '// Perfil de combate por retrato (scripts/modelo.py, docs/MODELO.md): de qué ataque sale su daño\n'
+ '// (esc: [ataque, % del total]), los tipos de daño (tip) y los elementos (ele).\n',
+ 'window.MFF_PERFIL = ' + json.dumps(PERFILES, ensure_ascii=False) + ';\n',
  '// C.T.P.s, artefactos, Alliance Battle, soportes, rotaciones, guía y modos\n'
  '// (scripts/fuentes.py y scripts/contenido/).\n',
  'window.MFF_CTPS = ' + json.dumps(FUENTES['ctps'], ensure_ascii=False) + ';\n',

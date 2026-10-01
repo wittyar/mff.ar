@@ -20,6 +20,7 @@ const IMAGES_SEED    = window.MFF_SEED_IMAGES || {};
 const TIERLISTS_SEED = window.MFF_SEED_TIERLISTS || [];
 const ASSIGN_SEED    = window.MFF_SEED_TIER_ASSIGNMENTS || {};
 const SKILLS         = window.MFF_SKILLS || {};   // skills por retrato
+const PERFIL         = window.MFF_PERFIL;         // con qué pega cada retrato (scripts/modelo.py)
 const TB             = window.MFF_TABLAS || {};   // patrones y etiquetas, en los dos idiomas
 const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
 const CTPS           = window.MFF_CTPS || [];     // C.T.P.s (scripts/fuentes.py)
@@ -1198,22 +1199,19 @@ const PARA_TODOS = new Set(['1s Pierce Duration Increase', '1s Snare Duration In
   'Incapacitation Immunity', 'Lightning Immunity Chance', 'Max HP Shield', 'Mind Immunity Chance', 'Mind Resist',
   'Physical Immunity Chance', 'Recovery Rate', 'Remove All Debuffs', 'Revive with % HP', 'Skill Cooldown', 'Skill Damage',
   'Stun Immunity', 'Summon', 'Super Armor, All Basic Defenses']);
-/** Con qué pega un retrato según sus skills activas: de qué ataque sale el daño (src), de qué
- *  tipo es (físico o de energía) y qué elementos lleva. Un personaje propio sin skills no
- *  pega con nada conocido: ningún efecto que pida algo le sirve. */
+/** Perfil de combate de un retrato, calculado en el build (scripts/modelo.py): de qué ataque
+ *  sale su daño (esc), de qué tipo es (tip) y qué elementos lleva (ele). Un personaje agregado
+ *  a mano no tiene skills ni perfil: no pega con nada conocido y ningún efecto que pida algo
+ *  le sirve. */
+const SIN_PERFIL = { esc: [], tip: [], ele: [] };
+function perfilDe (v) { return PERFIL[v.p] || SIN_PERFIL; }
+/** El perfil en conjuntos, para preguntarle millones de veces en la consulta de combinaciones. */
 const _PERFIL = new Map();
 function perfilDano (v) {
   let pf = _PERFIL.get(v.p);
   if (pf) return pf;
-  pf = { src: new Set(), tipo: new Set(), elem: new Set() };
-  for (const sk of v.skills) {
-    if (!/^Active/.test(sk.sl)) continue;
-    for (const st of sk.st || []) for (const f of st.fx || []) {
-      const d = dano(f); if (!d || !d.pct) continue;
-      const [tipo, elem] = d.elem.split(' ');
-      pf.src.add(d.src); pf.tipo.add(tipo); if (elem) pf.elem.add(elem);
-    }
-  }
+  const m = perfilDe(v);
+  pf = { src: new Set(m.esc.map(e => e[0])), tipo: new Set(m.tip), elem: new Set(m.ele) };
   if (v.p) _PERFIL.set(v.p, pf);
   return pf;
 }
@@ -2033,7 +2031,7 @@ function fichaResumen (ch, v) {
       ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
       ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
       ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
-      ${box(t('us_atk'), ataqueHtml(tipoAtaque(v.skills)))}
+      ${box(t('us_atk'), ataqueHtml(tipoAtaque(v)))}
       ${v.cost ? box(t('d_cost'), h(v.cost)) : ''}
       ${stats.map(([k, val]) => box(statLabel(k), h(val))).join('')}
     </div>
@@ -2065,7 +2063,7 @@ function fichaSkills (ch, v) {
 /** Cómo armarlo: lo que las fuentes le asignan al personaje; las reglas generales de su
  *  tipo de ataque (iguales para todos) van plegadas. */
 function fichaArmado (ch, v) {
-  const ta = tipoAtaque(v.skills);
+  const ta = tipoAtaque(v);
   return `<div class="section"><h3>${h(t('ar_title'))}</h3>
     <p class="muted" style="margin-bottom:12px">${h(t('ar_note'))}
       <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
@@ -2656,14 +2654,11 @@ function otraVar (vv, v) { return vv.key === v.key ? '' : `<span class="tag dim 
 const SRC_ATAQUE = { 'Physical Attack': 'fisico', 'Energy Attack': 'energia', 'HP': 'vida' };
 /** Tipo de ataque derivado de las skills activas: con qué stat escala su % de daño.
  *  {k: fisico|energia|vida|mixto, reparto: [{src, k, pct}]}, o null si no hacen daño. */
-function tipoAtaque (skills) {
-  const suma = {};
-  skills.forEach(sk => { if (!/^Active/.test(sk.sl)) return;
-    (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d && d.pct) suma[d.src] = (suma[d.src] || 0) + d.pct; })); });
-  const total = Object.values(suma).reduce((a, b) => a + b, 0);
-  if (!total) return null;
-  const reparto = Object.entries(suma).sort((a, b) => b[1] - a[1])
-    .map(([src, n]) => ({ src, k: SRC_ATAQUE[src], pct: Math.round(n * 100 / total) }));
+/** Tipo de ataque de la variante, del perfil: físico, energía, vida o mixto (con el reparto). */
+function tipoAtaque (v) {
+  const esc = perfilDe(v).esc;
+  if (!esc.length) return null;
+  const reparto = esc.map(([src, pct]) => ({ src, k: SRC_ATAQUE[src], pct }));
   return { k: reparto.length === 1 ? reparto[0].k : 'mixto', reparto };
 }
 function ataqueHtml (ta) {
