@@ -1630,7 +1630,9 @@ function toolbar (total, shown) {
   const group = (clave, cat, values) => `<div class="filtergroup"><div class="lbl">${h(t(clave))}</div><div class="row">${
     values.map(v => `<button class="chip ${F[cat].includes(v) ? 'on' : ''}" data-a="filter" data-cat="${cat}" data-v="${h(v)}">${icon(v)}${h(dom(v))}</button>`).join('')
   }</div></div>`;
-  return `<div class="toolbar">
+  // Con el panel de filtros abierto la barra no queda fija: el panel es más alto que la
+  // pantalla y, fijo arriba, sus últimos grupos solo se veían al llegar al final de la página.
+  return `<div class="toolbar ${P.filtersOpen ? 'conpanel' : ''}">
     <div class="line">
       <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search"></div>
       <button class="btn ${U.prefs.filtersOpen ? 'primary' : ''}" data-a="toggleFilters">${h(t('filters'))}${active ? ' · ' + active : ''}</button>
