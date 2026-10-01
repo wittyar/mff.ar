@@ -18,14 +18,16 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 
 ## Qué hay en la app
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
-  atributos marcados) y orden por la tier list que elijas.
+  atributos marcados, y lo que da su liderazgo o su soporte: ver *Índice para armar equipos*) y
+  orden por la tier list que elijas.
 - **Ficha** de cada personaje y uniforme, en pestañas. Arriba, fijos, la foto, el nombre, las
   flechas ‹ › para pasar al anterior o al siguiente del listado del roster tal como está
   filtrado y ordenado (también con ← y →; la pestaña se conserva) y el selector de uniforme (el
   uniforme cambia casi todo lo de abajo):
-  - *Resumen*: los datos del uniforme puesto y *para qué se usa*: su fila en cada tier list, lo
-    que le da al equipo (liderazgo, pasivas, efecto de uniforme y artefacto, con a quién se
-    aplican), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
+  - *Resumen*: los datos del uniforme puesto, lo que **le sirve** de un liderazgo o un soporte
+    (con atajos al roster: «Líderes que se lo dan», «Soportes que se lo dan») y *para qué se
+    usa*: su fila en cada tier list, lo que le da al equipo (liderazgo, pasivas, efecto de
+    uniforme y artefacto, con a quién se aplican y sus categorías del índice), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
     controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
     su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
     consigue y la nota.
@@ -50,7 +52,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     vínculo con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para
     él* (la sinergia contando solo lo que lo involucra), por PvP (Arena de Equipos), por PvE
     (Batalla de Alianza y World Boss Legend) o por cualquier tier list, también las tuyas; se
-    filtran con «Con» y «Sin»; cada una dice su líder, se marca con ★ como favorita, se arma
+    filtran con «Con» y «Sin»; cada una dice su líder y su **cobertura** (lo que recibe él en
+    ese equipo, por categoría del índice), se marca con ★ como favorita, se arma
     para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
     personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
@@ -131,6 +134,38 @@ abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
 
 `formato_datos` (en `version.json`) y `FORMATO` (en `scripts/build.py`) van juntos: se suben cuando
 `data.js` cambia de una forma que una versión anterior de la app no entiende.
+
+## Índice para armar equipos
+Lo que da cada liderazgo y cada soporte de thanosvibs (Leads & Supports), en las categorías con
+las que se arman los equipos:
+
+| Categoría | Stats de thanosvibs | Le sirve a |
+|---|---|---|
+| Ataque físico | Physical Attack | quien pega con ataque físico |
+| Ataque de energía | Energy Attack | quien pega con ataque de energía |
+| Todos los ataques | All Basic Attacks (también la acumulable) | cualquiera |
+| Daño de fuego, hielo, eléctrico, veneno, mental | Fire Damage (y Fire Damage by % Fire Resist), Cold, Lightning, Poison, Mind Damage | quien hace daño de ese elemento |
+| Daño de todos los elementos | All Element Damage | quien hace daño de algún elemento |
+| Ignorar evasión | Ignore Dodge | cualquiera |
+| Todas las defensas | All Basic Defenses, Super Armor + All Basic Defenses | cualquiera |
+| Vida | HP | cualquiera |
+| Quita todos los debuffs | Remove All Debuffs | cualquiera |
+
+«Le sirve» es la misma regla de la sinergia: según el daño de sus skills activas (con qué ataque
+escala y qué elementos lleva). Se usa en tres lugares:
+- **Ficha**: cada liderazgo y soporte muestra sus categorías; el Resumen dice cuáles le sirven.
+- **Roster**: «Su liderazgo da» y «Su soporte da» (dentro de cada grupo, cualquiera de las
+  categorías elegidas; entre los dos, ambos), «Liderazgo o soporte solo para» (una clase, bando,
+  raza, habilidad o personaje) y «Que le llegue y le sirva a», que se elige desde la ficha del
+  personaje: cuenta solo lo que le llega (la restricción del liderazgo o soporte) y le sirve.
+  Cada tarjeta dice qué encontró.
+- **Combinaciones de 3**: lo que recibe el personaje en cada equipo: los soportes de sus
+  compañeros y el liderazgo del líder elegido, también si el líder es él, en cinco grupos
+  (ataque, ignorar evasión, defensas, vida, quita debuffs), con * si solo llega con el artefacto
+  del compañero.
+
+No cambia los puntos de la sinergia. Lo que no está en ninguna categoría (velocidad, crítico,
+daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.
 
 ## Datos del juego (pipeline)
 El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
@@ -345,6 +380,9 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   para todos, también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que
   las skills no marcan de forma legible. Un efecto nuevo que la app no conoce cuenta para todos y
   la sinergia lo dice. Cada efecto vale lo mismo, sin importar cuánto sube.
+- La cobertura de las combinaciones cuenta el liderazgo del líder también para el líder mismo:
+  no hay una fuente a mano que diga si el juego se lo aplica (se ve en el juego, con el
+  personaje de líder y sus stats en el equipo).
 - Los números reflejan lo que publica thanosvibs, que puede atrasarse respecto de un rebalanceo.
 - La guía curada está escrita sobre la versión 12.1.5 de la Beginner's Guide: si thanosvibs
   publica otra, el build avisa y la sección Modos lo muestra.
