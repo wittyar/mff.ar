@@ -69,8 +69,9 @@ FORMATO = 1
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
-// soportes, rotaciones, Alliance Battle, guía, retratos e íconos) y future-fight.fandom.com
-// (instintos y el contraste de docs/AUDITORIA.md). Crédito: THANO$VIB$ y Future Fight Wiki.
+// soportes, rotaciones, Alliance Battle, guía, retratos e íconos), future-fight.fandom.com
+// (instintos y el contraste de docs/AUDITORIA.md) y la guía de armado de Cynicalex Mega
+// Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex Mega Guides.
 // Uso personal.
 """
 # Las listas llegan con las filas rotuladas de la fuente; el rango S-D solo se usa
@@ -99,6 +100,9 @@ parts = [header,
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',
  'window.MFF_GUIA = ' + json.dumps({**FUENTES['guia'], 'version_fuente': FUENTES['version_guia_fuente']}, ensure_ascii=False) + ';\n',
  'window.MFF_MODOS = ' + json.dumps(FUENTES['modos'], ensure_ascii=False) + ';\n',
+ '// Guía de armado de Cynicalex (copia en uso de fuentes/guia-armado/, por retrato del mejor\n'
+ '// uniforme) y el estado de su última comprobación (scripts/guia_armado.py).\n',
+ 'window.MFF_GUIA_ARMADO = ' + json.dumps(FUENTES['armado'], ensure_ascii=False) + ';\n',
  '// Traducciones de los textos de esas fuentes: inglés -> español (lo que falta viaja en inglés).\n',
  'window.MFF_TXT = ' + json.dumps(FUENTES['txt'], ensure_ascii=False) + ';\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',

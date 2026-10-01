@@ -7,11 +7,13 @@
   skills (/api/rotations/default) y la Beginner's Guide (/api/beginners/mff-content/1..5).
 - scripts/contenido/: lo curado a mano de la guía y la wiki (guia.json, modos.json),
   con la fuente de cada bloque.
+- La guía de armado de Cynicalex (planilla de Google), de su copia en uso en
+  fuentes/guia-armado/ (la acepta o la rechaza scripts/guia_armado.py al bajarla).
 
 Lo llama build.py y deja work/fuentes.json.
 
 Traducción: los textos en inglés se traducen por texto exacto desde
-scripts/traducciones/ (ctps, abx, guia, soportes, rotaciones). Las líneas de los
+scripts/traducciones/ (ctps, abx, guia, soportes, rotaciones, armado). Las líneas de los
 artefactos cambian solo en sus números, así que se traducen por patrón
 (traducciones/artefactos.json, con '#' en lugar de cada número). Lo que falta no se
 inventa: viaja en inglés, la app lo marca y el build lo lista en
@@ -21,6 +23,7 @@ inglés, como los de personaje: son el identificador del juego.
 import glob, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
+import guia_armado as GA
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -49,7 +52,7 @@ class Textos:
         return en
 
 
-TX = Textos('ctps.json', 'abx.json', 'guia.json', 'soportes.json', 'rotaciones.json')
+TX = Textos('ctps.json', 'abx.json', 'guia.json', 'soportes.json', 'rotaciones.json', 'armado.json')
 
 # Números de una línea de artefacto: los marcadores [P1]..[Pn] (el valor según las
 # estrellas) y los números literales. El patrón es la línea con '#' en cada uno.
@@ -372,6 +375,39 @@ def guia_personajes(retratos, modos):
     return out
 
 
+def guia_armado(chars):
+    """La guía de armado de Cynicalex, de la copia en uso: por retrato del mejor uniforme
+    de cada personaje, con la leyenda que usa la app y el estado de la última comprobación.
+    Los C.T.P. van por id (los de /api/ctps); lo que no se entiende viaja crudo y se lista."""
+    try:
+        r = GA.leer(GA.texto_en_uso('armado'), GA.texto_en_uso('tierlist'), chars, cargar('work/ctps.json'))
+    except GA.Incompatible as e:
+        raise SystemExit('la copia en uso de la guía de armado (fuentes/guia-armado/) no se puede leer: '
+                         + '; '.join(e.motivos))
+    for e in r['pj'].values():
+        for x in e.get('iso', []) + e.get('ob', []):
+            TX(x)
+        if 'art' in e:
+            TX(e['art']['t'])
+        if 'nota' in e:
+            TX(e['nota'])
+    sets = dict(GA.LEY_ISO_SET)
+    leyenda = {
+        'adq': dict(GA.LEY_ADQ),
+        'art': [[k, TX(v)] for k, v in GA.LEY_ART],
+        'rot': [[k, TX(v)] for k, v in GA.LEY_ROT],
+        'ctp': [TX(x) for x in GA.LEY_CTP],
+        'iso': {cat: [sets[x] for x in xs] for cat, xs in GA.LEY_ISO_CAT},
+        'emojis': {k: TX(v) for k, v in r['emojis'].items()},
+    }
+    if r['sin_pj']:
+        print('AVISO guía de armado: filas sin personaje en thanosvibs:', r['sin_pj'])
+    if r['raros']:
+        print('AVISO guía de armado: valores que no se interpretan:', r['raros'])
+    return {'version': r['version'], 'estado': GA.estado(), 'leyenda': leyenda, 'pj': r['pj'],
+            'sin_pj': r['sin_pj'], 'raros': r['raros']}
+
+
 def validar_contenido(guia, modos, listas, stats_ok):
     """Las claves que usa lo curado a mano tienen que existir: una fuente mal escrita o un
     stat inexistente se mostraría vacío en la app sin que nadie se entere."""
@@ -448,6 +484,7 @@ def main():
         'rotaciones': rotaciones(retratos),
         'guia_pj': guia_personajes(retratos, modos['modos']),
         'guia': guia, 'modos': modos['modos'], 'version_guia_fuente': version_fuente,
+        'armado': guia_armado(chars),
     }
     salida['txt'] = dict(sorted(TX.usados.items()))
     json.dump(salida, open('work/fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False)
@@ -455,7 +492,8 @@ def main():
     print(f"fuentes: {len(salida['ctps'])} C.T.P.s | {len(salida['artefactos'])} artefactos | "
           f"ABX {len(salida['abx']['restricciones'])} restricciones, {len(salida['abx']['equipos'])} equipos | "
           f"soportes de {len(salida['soportes'])} retratos | rotaciones de {len(salida['rotaciones'])} retratos | "
-          f"guía: {len(salida['guia_pj'])} personajes mencionados | textos traducidos {len(salida['txt'])}, "
+          f"guía: {len(salida['guia_pj'])} personajes mencionados | guía de armado {salida['armado']['version']}: "
+          f"{len(salida['armado']['pj'])} personajes | textos traducidos {len(salida['txt'])}, "
           f"sin traducir {len(TX.faltan)}")
 
 
