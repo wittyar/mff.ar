@@ -1,6 +1,6 @@
 {
- "version": "1.0.5",
+ "version": "1.0.6",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Equipos más coherentes: en las sugerencias de la pestaña Equipos, cada compañero tiene que darle algo al personaje (un soporte o el liderazgo) o recibir algo de él. Ya no aparecen compañeros sin ninguna relación con él, como Nick Fury (que solo potencia a héroes) en un equipo de Annihilus."
+ "notas": "Pestaña Equipos renovada: todas las combinaciones de 3 con cada personaje, ordenables por puntos, PvP, PvE o cualquier tier list, con filtros, líder y favoritos (★). Los equipos de un personaje ahora cuentan solo lo que lo involucra (sin compañeros que potencian a otros, como Phil Coulson con Apocalypse). Al armar un equipo para tu cuenta, avisa si un personaje ya está en otro equipo del mismo modo; Alliance Conquest pasa a ser dos escuadras de 3."
 }
