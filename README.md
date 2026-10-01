@@ -146,6 +146,14 @@ final) y lista las dudas abiertas. La etapa 1 ya está: la identidad de cada var
 género, que 11 uniformes cambian) y su **perfil de combate** (con qué ataque escala, tipos de daño y
 elementos), que calcula `scripts/modelo.py` en el build y la app lee de `data.js`.
 
+Las etapas 2 y 3 arrancan con el **catálogo de efectos** (`scripts/contenido/catalogo.json`): cada
+etiqueta de efecto de las skills de thanosvibs y cada stat de Leads & Supports, que son el mismo
+efecto visto de dos lados, apuntan a efectos únicos, y cada efecto dice qué es, a quién le sirve y
+cómo se lee en PvE y en PvP, con su certeza y su fuente. `scripts/catalogo.py` lo valida en el build
+(un error del contenido corta; una etiqueta o un stat nuevo que no está se avisa y va a la sección 9
+de la auditoría) y genera `docs/CATALOGO.md`, el catálogo entero para leerlo y revisarlo. La ficha
+todavía no lo usa: es el paso siguiente.
+
 ## Índice para armar equipos
 Lo que da cada liderazgo y cada soporte de thanosvibs (Leads & Supports), en las categorías con
 las que se arman los equipos:
@@ -181,14 +189,15 @@ daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.
 ## Datos del juego (pipeline)
 El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
 Actions → Run workflow) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
-regenera `data.js`, `datos.json`, `docs/AUDITORIA.md` y el import, y los commitea junto con la
-copia en uso de la guía de armado (ver abajo). La app instalada baja ese resultado.
+regenera `data.js`, `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y el import, y los
+commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja ese
+resultado.
 
 A mano (Linux o macOS; en Windows ver Limitaciones):
 ```
 python scripts/fetch_all.py        # datos, tier lists e imágenes (images/ no se versiona)
 python scripts/parse_instinto.py
-python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md
+python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md, docs/CATALOGO.md
 ```
 `datos.json` lleva el sha256 y el tamaño de cada archivo que baja la app y la lista de imágenes con
 su origen (`scripts/imagenes.py`). `.gitattributes` evita que git cambie los finales de línea de
@@ -237,8 +246,9 @@ uniformes y coincide con la planilla en sus 213 filas.
   pisarlo. Se exporta e importa desde **Ajustes**, y las capas viejas (una sola fila por
   entrada, modos de ejemplo) se convierten al cargarlas.
 - `scripts/contenido/` — lo curado a mano, cada bloque con su fuente: `guia.json` (armado,
-  progresión, topes, ranking de C.T.P., reglas de ISO y urus), `modos.json`, `hallazgos.json` y
-  `marcadores.csv` (la facción, el tipo o la raza que la fuente no publica en algunos efectos).
+  progresión, topes, ranking de C.T.P., reglas de ISO y urus), `modos.json`, `hallazgos.json`,
+  `marcadores.csv` (la facción, el tipo o la raza que la fuente no publica en algunos efectos) y
+  `catalogo.json` (el catálogo de efectos del modelo).
 - `fuentes/guia-armado/` — la copia en uso de la guía de armado (los dos CSV tal como se bajaron)
   y `estado.json` (versión, cuándo se tomó, la última revisión y, si se rechazó, por qué).
 
@@ -354,7 +364,7 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `version.json` — versión de la app, formato de datos que entiende, versión de Python y notas.
 - `data.js` / `datos.json` — snapshot generado de los datos y su manifiesto.
 - `scripts/` — pipeline: `fetch_all` → `parse_instinto` → `build`, que llama a `skills_api.py`,
-  `fuentes.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
+  `fuentes.py`, `catalogo.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
   `traducir.py` las tablas de las skills, `version_juego.py` la versión del snapshot,
   `guia_armado.py` el lector de la guía de armado (y si se acepta), `marcadores.py` lo que
   completa los marcadores de facción, tipo o raza, y `modelo.py` lo que se deduce de cada variante
@@ -364,6 +374,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `scripts/contenido/` — lo curado a mano, con fuentes.
 - `docs/AUDITORIA.md` — el informe de la auditoría entre fuentes (se regenera en cada build).
 - `docs/MODELO.md` — el modelo del juego: características de cada variante, reglas y dudas.
+- `docs/CATALOGO.md` — el catálogo de efectos entero (se regenera en cada build desde
+  `scripts/contenido/catalogo.json`).
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
   `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
   verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.

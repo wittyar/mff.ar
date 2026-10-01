@@ -22,6 +22,8 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 
 Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvibs, 2270 (39%) se pudieron comparar; 1222 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 305 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
 
+Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports en los datos; todos clasificados.
+
 ## 1. Skills: daño y recarga
 
 Método: cada skill de thanosvibs se busca por nombre en la página de la wiki del personaje, en la sección de su uniforme o en la general (la de "All Uniforms"; en las páginas viejas, sin secciones por uniforme, la general solo vale para el uniforme base). Nombres parecidos al 85% cuentan, porque la wiki tiene erratas como "Turque Chain". Se comparan los % de daño distintos de la skill (de ataque físico, de energía o de vida) y la recarga. "Menos etapas" = la wiki lista solo algunos de los % que trae thanosvibs: no es una contradicción. La Definitiva de Tier-3 y la Striker no tienen recarga (se cargan con su barra), así que solo se compara su daño.
@@ -468,3 +470,9 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Wong — What If... Zombies?! | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009279012 |
 | Yellowjacket — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1005250011 |
 | Yondu — Summer Vacation | Exploit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1004652011 |
+
+## 9. Efectos que el catálogo no clasifica
+
+Cada etiqueta de efecto de las skills y cada stat de Leads & Supports apunta a efectos del catálogo (scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs agregue y el catálogo no tenga se lista acá hasta que se clasifique a mano.
+
+Ninguno: todo lo que traen los datos está clasificado.

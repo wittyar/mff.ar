@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Reconstruye data.js, datos.json, mff-thanosvibs-import.json y docs/AUDITORIA.md desde
-work/. Correr tras fetch_all.py y parse_instinto.py.
+"""Reconstruye data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md y
+docs/CATALOGO.md desde work/. Correr tras fetch_all.py y parse_instinto.py.
 
 Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
+catalogo.py (valida el catálogo de efectos contra los datos; docs/CATALOGO.md),
 auditar.py (work/verificacion.json y docs/AUDITORIA.md) y _core.py (personajes y tier
 lists, work/build2.json); acá se junta todo en data.js.
 
@@ -31,6 +32,7 @@ if _faltan:
                      '  (o el boton "Actualizar datos del juego" en Ajustes)')
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'fuentes.py')], check=True)
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'catalogo.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'auditar.py')], check=True)
 exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 

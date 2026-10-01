@@ -30,10 +30,11 @@ marcado como probable o como duda.
 
 1. **Personajes y características**: qué es cada variante (identidad y perfil de combate).
 2. **Skills**: qué hace cada efecto (las 228 etiquetas tipadas de thanosvibs), a quién apunta y
-   cómo se lee en PvE y en PvP. Los roles se rehacen acá.
+   cómo se lee en PvE y en PvP. Los roles se rehacen acá. En curso: el catálogo de efectos.
 3. **Pasivas, liderazgos y soportes**: su efecto sobre los stats y para quién sirven. Junta las
    skills con Leads & Supports de thanosvibs, que son el mismo efecto visto de dos lados (de ahí
-   sale, por ejemplo, que el efecto de uniforme de General's Hand es contra Universales).
+   sale, por ejemplo, que el efecto de uniforme de General's Hand es contra Universales). En curso:
+   el mismo catálogo clasifica los 72 stats de Leads & Supports.
 4. **La tabla del modelo**: la definición final.
 
 ## Etapa 1: personajes y características
@@ -97,11 +98,59 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 - **Roles.** Salen de juntar las skills de todos los uniformes del personaje, no de cada variante.
   Se rehacen en la etapa 2.
 
+## Etapas 2 y 3: el catálogo de efectos
+
+thanosvibs publica el mismo efecto de dos lados: la API de skills como una etiqueta tipada (228
+distintas, como `ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (72, como
+`All Basic Attacks`). El catálogo (`scripts/contenido/catalogo.json`, contenido curado) hace que
+las dos apunten a los mismos efectos (124, en 16 grupos) y responde una sola vez, por efecto, lo
+que después la ficha va a decir de cada variante:
+
+| Pregunta | Dónde está la respuesta |
+|---|---|
+| Qué es | El efecto y su grupo (ataque, daño, elemento, control, reducción de daño...). |
+| Cuándo aplica | Lo propio del efecto, en su condición: solo contra ciertos rivales (una facción, los jefes, los que tienen más vida...), crece o baja (se acumula, según la vida...) o dura unos ataques. Lo demás es de cada skill o soporte: su activación y su duración. |
+| A quién le llega | Si lo recibe su lado o el rival, en la etiqueta. A qué aliados, el objetivo de la skill o la restricción del soporte. |
+| A quién le sirve | Una regla por efecto: a cualquiera del equipo, a quien escala con un ataque, a quien tiene un elemento, a quien hace daño físico, aplica debuffs, invoca o perfora, o solo a él. Se compara con el perfil de combate de la etapa 1. |
+| PvE y PvP | Una lectura por modo, del grupo o propia del efecto. |
+| Fuente y certeza | Cada lectura dice su certeza: comprobado (lo dice una fuente, que se cita), probable (se deduce del texto del efecto) o conjetura. |
+
+Las etiquetas que la fuente usa para dos cosas se clasifican por el texto (el patrón): `MINIATURIZE`
+achica al personaje y le sube ataques y defensas, o achica al rival y le baja los suyos;
+`Counter Reflect` protege de todo reflejo o solo del físico.
+
+`scripts/catalogo.py` lo valida en cada build. Un error del contenido (un efecto que no existe, una
+lectura «comprobada» sin fuente) corta el build. Una etiqueta, un patrón o un stat nuevo que el
+catálogo no tiene se avisa y queda en la sección 9 de `docs/AUDITORIA.md` hasta clasificarlo, sin
+frenar la actualización semanal. El catálogo entero, para leerlo, está en `docs/CATALOGO.md`.
+
+### Dudas abiertas del catálogo
+
+- **Fractura.** Ninguna fuente dice qué hace. Se sabe que se aplica al rival y que corta el ataque
+  especial de los jefes de Alliance Battle Legend; que sea un control es una suposición.
+- **«Bonus Damage».** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y
+  «Additional Damage» al daño fijo extra; no dice si «Bonus Damage» es ese daño fijo.
+- **«Adaptation».** «Inmune al mayor daño recibido»: no está claro si es el golpe más fuerte o el
+  tipo de daño que más recibe.
+- **Códigos sin nombre.** 401, 577 y 108 en «Natural Enemy», y los de otras etiquetas; ninguna
+  fuente los nombra.
+
+### Lo que sigue
+
+1. La ficha muestra, por variante, lo que da cada skill, liderazgo y soporte según el catálogo: qué
+   es, cuándo, a quién le llega, a quién le sirve y cómo se lee en PvE y en PvP.
+2. Los marcadores (`$HEROSUBTYPE1`) se completan también con Leads & Supports, que publica el mismo
+   efecto con la facción, el tipo o la raza escritos.
+3. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
+   sinergia y el índice de equipos.
+
 ## Fuentes
 
 - thanosvibs: API de personajes, de skills y de [Leads & Supports](https://thanosvibs.money/supports);
-  Beginner's Guide, [parte 3](https://thanosvibs.money/beginners/3) y
-  [parte 4](https://thanosvibs.money/beginners/4) (versión 12.1.5).
+  Beginner's Guide, [parte 1](https://thanosvibs.money/beginners/1),
+  [parte 3](https://thanosvibs.money/beginners/3) y [parte 4](https://thanosvibs.money/beginners/4)
+  (versión 12.1.5); [Alliance Battle](https://thanosvibs.money/abxl) (qué controles cortan el ataque
+  especial de los jefes).
 - Future Fight Wiki: infobox de cada personaje; páginas
   [Combat](https://future-fight.fandom.com/wiki/Combat), [Blast](https://future-fight.fandom.com/wiki/Blast),
   [Speed](https://future-fight.fandom.com/wiki/Speed) y [Universal](https://future-fight.fandom.com/wiki/Universal).

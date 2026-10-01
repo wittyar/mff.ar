@@ -12,7 +12,8 @@ Deja:
 - work/verificacion.json: por retrato, lo que la ficha muestra en "Verificación".
 - docs/AUDITORIA.md: el informe completo.
 
-Lo llama build.py después de skills_api.py y fuentes.py.
+Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la sección 9 lista lo que el
+catálogo de efectos no clasifica, de work/catalogo.json).
 """
 import collections, datetime, difflib, glob, json, os, re, sys
 
@@ -406,7 +407,7 @@ def fmt(xs):
     return ', '.join(f'{x:g}' for x in xs) if isinstance(xs, list) else f'{xs:g}' if isinstance(xs, float) else str(xs)
 
 
-def informe(A, version, hallazgos, fuentes):
+def informe(A, version, hallazgos, fuentes, catalogo):
     R, L = A.res, A.listas
     hoy = datetime.date.today().isoformat()
     s = []
@@ -434,6 +435,11 @@ def informe(A, version, hallazgos, fuentes):
              f"no aparece (sobre todo uniformes que la wiki no documenta). Infobox: {R['infobox_con']} retratos "
              f"con pestaña en la wiki, {R['infobox_sin_pestana']} sin pestaña de su uniforme y {R['infobox_sin']} "
              f"de personajes sin infobox legible.\n")
+    falta = catalogo['falta']
+    n_falta = len(falta['etiquetas']) + len(falta['patrones']) + len(falta['stats'])
+    s.append(f"Catálogo de efectos (docs/CATALOGO.md): {catalogo['total']['etiquetas']} etiquetas de skills y "
+             f"{catalogo['total']['stats']} stats de Leads & Supports en los datos; "
+             + ('todos clasificados.\n' if not n_falta else f'{n_falta} sin clasificar (sección 9).\n'))
 
     s.append('## 1. Skills: daño y recarga\n')
     s.append('Método: cada skill de thanosvibs se busca por nombre en la página de la wiki del personaje, '
@@ -551,6 +557,25 @@ def informe(A, version, hallazgos, fuentes):
         for ide, pjs, sk, tx in M['pendientes']:
             s.append(f"| {' / '.join(pjs)} | {sk} | `{tx}` | {ide} |")
         s.append('')
+
+    sobra = catalogo['sobra']
+    s.append('## 9. Efectos que el catálogo no clasifica\n')
+    s.append('Cada etiqueta de efecto de las skills y cada stat de Leads & Supports apunta a efectos del catálogo '
+             '(scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs agregue y el '
+             'catálogo no tenga se lista acá hasta que se clasifique a mano.\n')
+    if not n_falta:
+        s.append('Ninguno: todo lo que traen los datos está clasificado.\n')
+    else:
+        s.append('| Qué | Texto de la fuente | Ejemplos |')
+        s.append('|---|---|---|')
+        s += [f"| Etiqueta | `{l}` | {', '.join(ej)} |" for l, ej in falta['etiquetas'].items()]
+        s += [f"| Patrón de `{l}` | `{p}` | {', '.join(ej)} |" for l, p, ej in falta['patrones']]
+        s += [f"| Stat | `{x}` | {', '.join(ej)} |" for x, ej in falta['stats'].items()]
+        s.append('')
+    if any(sobra.values()):
+        s.append('En el catálogo pero ya no en los datos (thanosvibs los cambió o los sacó): '
+                 + '; '.join(f'`{x}`' if isinstance(x, str) else f'`{x[0]}` con `{x[1]}`'
+                             for k in ('etiquetas', 'patrones', 'stats') for x in sobra[k]) + '.\n')
     return '\n'.join(s)
 
 
@@ -564,7 +589,8 @@ def main():
     if malas:
         raise SystemExit(f'contenido/hallazgos.json cita fuentes sin definir en contenido/guia.json: {malas}')
     os.makedirs('docs', exist_ok=True)
-    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes))
+    catalogo = cargar('work/catalogo.json')
+    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes, catalogo))
     por = {p: v for p, v in A.por_retrato.items() if v['ok'] or v['nd'] or v['dif']}
     json.dump({'resumen': dict(A.res), 'por_retrato': por}, open('work/verificacion.json', 'w', encoding='utf-8'),
               ensure_ascii=False)
