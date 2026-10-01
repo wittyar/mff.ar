@@ -84,6 +84,9 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
                        if up.get(k)}
             for mk in ('material1','material2'):
                 if up.get(mk): u['up'][mk] = up[mk]
+            # Opciones de uniforme: los retratos de los uniformes que habilitan sus opciones
+            # Advanced, Rare, Heroic, Legendary y Mythic, en ese orden.
+            if up.get('options'): u['op'] = up['options']
         skills_de(r['portrait'], f"{base['character']} / {r['uniform']}")
         uniforms.append(u)
         images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'

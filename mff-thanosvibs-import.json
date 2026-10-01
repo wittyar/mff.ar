@@ -124,7 +124,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "redskull1",
+      "captainamerica5",
+      "squirrelgirl1",
+      "blade1",
+      "captainamerica2"
+     ]
     },
     {
      "id": "captain-america-10200001",
@@ -213,7 +220,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman2",
+      "blackwidow1",
+      "blackwidow2",
+      "angela1",
+      "kingpin1"
+     ]
     },
     {
      "id": "captain-america-10300001",
@@ -302,7 +316,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "gamora1",
+      "ghostrider2",
+      "wasp1",
+      "groot1",
+      "captainmarvel2"
+     ]
     },
     {
      "id": "captain-america-10400001",
@@ -391,7 +412,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wasp1",
+      "falcon2",
+      "blackpanther1",
+      "ronan1",
+      "ironman3"
+     ]
     },
     {
      "id": "captain-america-10500001",
@@ -480,7 +508,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "moonknight1",
+      "daisyjohnson1",
+      "doctoroctopus1",
+      "lukecage1",
+      "ironman3"
+     ]
     },
     {
      "id": "captain-america-10600001",
@@ -569,7 +604,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier2",
+      "falcon2",
+      "crossbones1",
+      "philcoulson1",
+      "sharoncarter1"
+     ]
     },
     {
      "id": "captain-america-10700001",
@@ -659,7 +701,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier3",
+      "angel1",
+      "hulkbuster2",
+      "cyclops1",
+      "blackbolt2"
+     ]
     },
     {
      "id": "captain-america-10800001",
@@ -749,7 +798,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier3",
+      "angel1",
+      "hulkbuster2",
+      "cyclops1",
+      "blackbolt2"
+     ]
     },
     {
      "id": "captain-america-10900001",
@@ -838,7 +894,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "antman4",
+      "blackdwarf1",
+      "sharonrogers2",
+      "humantorch1",
+      "cyclops2"
+     ]
     },
     {
      "id": "captain-america-11000001",
@@ -933,7 +996,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher4",
+      "colossus2",
+      "wolverine2",
+      "shehulk2",
+      "mysterio1"
+     ]
     },
     {
      "id": "captain-america-11100001",
@@ -1027,7 +1097,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rogue3",
+      "milesmorales1",
+      "lunasnow2",
+      "blackdwarf2",
+      "shehulk3"
+     ]
     },
     {
      "id": "captain-america-11200001",
@@ -1116,7 +1193,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow10",
+      "gambit1",
+      "scarletwitch3",
+      "heimdall1",
+      "sharonrogers4"
+     ]
     },
     {
      "id": "captain-america-11300001",
@@ -1211,7 +1295,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "stryfe1",
+      "antiman1",
+      "sabretooth2",
+      "spiderman20992",
+      "sentry1"
+     ]
     },
     {
      "id": "captain-america-11400001",
@@ -1300,7 +1391,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho3",
+      "cyclops4",
+      "elektra3",
+      "odin2",
+      "ironheart2"
+     ]
     }
    ]
   },
@@ -1430,7 +1528,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "lash1",
+      "malekith1",
+      "hulk2",
+      "deathlok1",
+      "drax1"
+     ]
     },
     {
      "id": "hulk-10200002",
@@ -1520,7 +1625,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye1",
+      "blackwidow1",
+      "ultron1",
+      "squirrelgirl1",
+      "thor7"
+     ]
     },
     {
      "id": "hulk-10300002",
@@ -1609,7 +1721,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman4",
+      "ironfist3",
+      "wolverine1",
+      "yondu1",
+      "antman1"
+     ]
     },
     {
      "id": "hulk-10400002",
@@ -1699,7 +1818,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow4",
+      "blackpanther2",
+      "daisyjohnson1",
+      "beast1",
+      "spidergwen1"
+     ]
     },
     {
      "id": "hulk-10500002",
@@ -1789,7 +1915,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow4",
+      "blackpanther2",
+      "daisyjohnson1",
+      "beast1",
+      "spidergwen1"
+     ]
     },
     {
      "id": "hulk-10600002",
@@ -1879,7 +2012,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shehulk2",
+      "ironman7",
+      "domino1",
+      "crescent1",
+      "warmachine5"
+     ]
     },
     {
      "id": "hulk-10700002",
@@ -1969,7 +2109,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "bluemarvel1",
+      "greengoblin3",
+      "wintersoldier4",
+      "kingo1",
+      "jeangrey2"
+     ]
     },
     {
      "id": "hulk-10800002",
@@ -2059,7 +2206,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "nightcrawler2",
+      "odin2",
+      "wenwu1",
+      "blackpanther4",
+      "hela3"
+     ]
     },
     {
      "id": "hulk-10900002",
@@ -2148,7 +2302,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher7",
+      "doctorvoodoo2",
+      "professorx1",
+      "silversurfer2",
+      "yelenabelova3"
+     ]
     }
    ]
   },
@@ -2276,7 +2437,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wasp1",
+      "punisher1",
+      "daisyjohnson2",
+      "rocketraccoon1",
+      "spiderman1"
+     ]
     },
     {
      "id": "iron-man-10200003",
@@ -2365,7 +2533,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "mockingbird1",
+      "wintersoldier2",
+      "redskull1",
+      "hulk2",
+      "punisher1"
+     ]
     },
     {
      "id": "iron-man-10300003",
@@ -2454,7 +2629,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "starlord1",
+      "sharoncarter1",
+      "ironfist2",
+      "modok1",
+      "nebula1"
+     ]
     },
     {
      "id": "iron-man-10400003",
@@ -2543,7 +2725,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "warmachine3",
+      "hulk3",
+      "angela2",
+      "gamora2",
+      "rocketraccoon2"
+     ]
     },
     {
      "id": "iron-man-10500003",
@@ -2633,7 +2822,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vulture1",
+      "hela1",
+      "kingpin1",
+      "punisher4",
+      "rogue1"
+     ]
     },
     {
      "id": "iron-man-10600003",
@@ -2723,7 +2919,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vulture1",
+      "hela1",
+      "kingpin1",
+      "punisher4",
+      "rogue1"
+     ]
     },
     {
      "id": "iron-man-10700003",
@@ -2812,7 +3015,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman5",
+      "psylocke2",
+      "mysterio1",
+      "rocketraccoon4",
+      "wolverine3"
+     ]
     },
     {
      "id": "iron-man-10800003",
@@ -2902,7 +3112,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord4",
+      "doctorstrange3",
+      "warmachine6",
+      "killmonger1",
+      "blackwidow8"
+     ]
     },
     {
      "id": "iron-man-10900003",
@@ -2991,7 +3208,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "warmachine7",
+      "spiderman8",
+      "hulkbuster3",
+      "cable4",
+      "aero1"
+     ]
     },
     {
      "id": "iron-man-11000003",
@@ -3080,7 +3304,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wartiger1",
+      "shadowshell1",
+      "namor2",
+      "agentvenom2",
+      "doctordoom1"
+     ]
     }
    ]
   },
@@ -3208,7 +3439,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "daisyjohnson2",
+      "doctorstrange1",
+      "groot1",
+      "ancientone1",
+      "ronan1"
+     ]
     },
     {
      "id": "ghost-rider-10200004",
@@ -3297,7 +3535,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sif1",
+      "ghostrider1",
+      "wintersoldier2",
+      "bullseye1",
+      "yondu1"
+     ]
     },
     {
      "id": "ghost-rider-10300004",
@@ -3386,7 +3631,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch1",
+      "crescent1",
+      "captainamerica11",
+      "whitefox1",
+      "namor1"
+     ]
     },
     {
      "id": "ghost-rider-10400004",
@@ -3478,7 +3730,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman8",
+      "wasp3",
+      "venom4",
+      "valkyrie2",
+      "deadpool4"
+     ]
     },
     {
      "id": "ghost-rider-10500004",
@@ -3567,7 +3826,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk8",
+      "wong3",
+      "sabretooth2",
+      "elektra3",
+      "apocalypse2"
+     ]
     }
    ]
   },
@@ -3694,7 +3960,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman3",
+      "thor7",
+      "ultron2",
+      "mockingbird2",
+      "crossbones1"
+     ]
     },
     {
      "id": "rocket-raccoon-10200005",
@@ -3783,7 +4056,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "punisher3",
+      "hawkeye1",
+      "greengoblin1",
+      "captainamerica2",
+      "yondu1"
+     ]
     },
     {
      "id": "rocket-raccoon-10300005",
@@ -3872,7 +4152,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier3",
+      "starlord2",
+      "yondu2",
+      "thor4",
+      "groot3"
+     ]
     },
     {
      "id": "rocket-raccoon-10400005",
@@ -3962,7 +4249,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor4",
+      "ronan1",
+      "blackcat1",
+      "angela1",
+      "satana1"
+     ]
     },
     {
      "id": "rocket-raccoon-10500005",
@@ -4052,7 +4346,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor4",
+      "ronan1",
+      "blackcat1",
+      "angela1",
+      "satana1"
+     ]
     },
     {
      "id": "rocket-raccoon-10600005",
@@ -4145,7 +4446,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "supergiant1",
+      "valkyrie2",
+      "juggernaut1",
+      "electro1",
+      "wintersoldier4"
+     ]
     }
    ]
   },
@@ -4273,7 +4581,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier1",
+      "daredevil1",
+      "thor7",
+      "elsabloodstone1",
+      "bullseye1"
+     ]
     },
     {
      "id": "blade-10200006",
@@ -4362,7 +4677,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "redskull2",
+      "emmafrost2",
+      "warmachine5",
+      "blackwidow8",
+      "thing1"
+     ]
     },
     {
      "id": "blade-10300006",
@@ -4451,7 +4773,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "colossus3",
+      "captainmarvel5",
+      "ironfist4",
+      "hela2",
+      "scarletwitch2"
+     ]
     }
    ]
   },
@@ -4579,7 +4908,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica4",
+      "thor2",
+      "punisher2",
+      "ironman3",
+      "ultron1"
+     ]
     },
     {
      "id": "black-widow-10200007",
@@ -4668,7 +5004,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "daisyjohnson2",
+      "groot1",
+      "spiderman1",
+      "ancientone1",
+      "sharoncarter1"
+     ]
     },
     {
      "id": "black-widow-10300007",
@@ -4757,7 +5100,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "redhulk1",
+      "warmachine1",
+      "daredevil2",
+      "modok1",
+      "malekith1"
+     ]
     },
     {
      "id": "black-widow-10400007",
@@ -4846,7 +5196,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kamalakhan1",
+      "daredevil1",
+      "wintersoldier1",
+      "hawkeye2",
+      "captainamerica5"
+     ]
     },
     {
      "id": "black-widow-10500007",
@@ -4936,7 +5293,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gamora1",
+      "rocketraccoon3",
+      "ghost1",
+      "inferno1",
+      "venom2"
+     ]
     },
     {
      "id": "black-widow-10600007",
@@ -5026,7 +5390,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gamora1",
+      "rocketraccoon3",
+      "ghost1",
+      "inferno1",
+      "venom2"
+     ]
     },
     {
      "id": "black-widow-10700007",
@@ -5115,7 +5486,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor6",
+      "crystal2",
+      "starlord3",
+      "moongirl1",
+      "ghost1"
+     ]
     },
     {
      "id": "black-widow-10800007",
@@ -5205,7 +5583,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk4",
+      "spiderman7",
+      "captainamerica8",
+      "nickfury2",
+      "nightcrawler1"
+     ]
     },
     {
      "id": "black-widow-10900007",
@@ -5295,7 +5680,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk4",
+      "spiderman7",
+      "captainamerica8",
+      "nickfury2",
+      "nightcrawler1"
+     ]
     },
     {
      "id": "black-widow-11000007",
@@ -5384,7 +5776,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ironman8",
+      "lunasnow3",
+      "proximamidnight2",
+      "falcon4",
+      "storm3"
+     ]
     },
     {
      "id": "black-widow-11100007",
@@ -5478,7 +5877,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher6",
+      "modok3",
+      "blackdwarf2",
+      "gambit1",
+      "hulkbuster4"
+     ]
     }
    ]
   },
@@ -5606,7 +6012,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "venom1",
+      "thor2",
+      "deathlok1",
+      "punisher2",
+      "ironfist1"
+     ]
     },
     {
      "id": "thor-10200008",
@@ -5695,7 +6108,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt1",
+      "hulkbuster1",
+      "blackcat2",
+      "bullseye1",
+      "malekith1"
+     ]
     },
     {
      "id": "thor-10300008",
@@ -5784,7 +6204,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon2",
+      "elsabloodstone2",
+      "vulture1",
+      "rogue1",
+      "mockingbird2"
+     ]
     },
     {
      "id": "thor-10400008",
@@ -5873,7 +6300,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sif1",
+      "hulk3",
+      "falcon3",
+      "groot2",
+      "loki2"
+     ]
     },
     {
      "id": "thor-10600008",
@@ -5963,7 +6397,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wasp2",
+      "elektra1",
+      "magneto1",
+      "ultron2",
+      "falcon3"
+     ]
     },
     {
      "id": "thor-10500008",
@@ -6053,7 +6494,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wasp2",
+      "elektra1",
+      "magneto1",
+      "ultron2",
+      "falcon3"
+     ]
     },
     {
      "id": "thor-10700008",
@@ -6147,7 +6595,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "invisiblewoman1",
+      "doctoroctopus2",
+      "hawkeye4",
+      "deadpool2",
+      "milesmorales1"
+     ]
     },
     {
      "id": "thor-10800008",
@@ -6236,7 +6691,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gamora3",
+      "swordmaster1",
+      "adamwarlock1",
+      "daredevil3",
+      "emmafrost3"
+     ]
     },
     {
      "id": "thor-10900008",
@@ -6325,7 +6787,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "nebula6",
+      "sabretooth2",
+      "shuri3",
+      "ikaris1",
+      "cable5"
+     ]
     }
    ]
   },
@@ -6449,7 +6918,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "redskull1",
+      "elsabloodstone1",
+      "warmachine2",
+      "wintersoldier1",
+      "destroyer1"
+     ]
     },
     {
      "id": "black-cat-10200009",
@@ -6538,7 +7014,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "thor7",
+      "vision1",
+      "hulkbuster1",
+      "spiderman2",
+      "venom1"
+     ]
     },
     {
      "id": "black-cat-10300009",
@@ -6629,7 +7112,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "jessicajones1",
+      "iceman1",
+      "loki4",
+      "doctordoom1",
+      "greengoblin2"
+     ]
     },
     {
      "id": "black-cat-10400009",
@@ -6720,7 +7210,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gwenpool4",
+      "falcon5",
+      "bishop1",
+      "nickfury3",
+      "misterfantastic3"
+     ]
     }
    ]
   },
@@ -6851,7 +7348,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye2",
+      "ironman2",
+      "ancientone1",
+      "crossbones1",
+      "mockingbird1"
+     ]
     },
     {
      "id": "spider-man-10200010",
@@ -6940,7 +7444,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sistergrimm1",
+      "doctoroctopus1",
+      "warmachine3",
+      "antman1",
+      "spiderman3"
+     ]
     },
     {
      "id": "spider-man-10300010",
@@ -7029,7 +7540,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho1",
+      "ironfist1",
+      "sharoncarter1",
+      "blackwidow2",
+      "destroyer1"
+     ]
     },
     {
      "id": "spider-man-10400010",
@@ -7118,7 +7636,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon2",
+      "crystal1",
+      "elsabloodstone1",
+      "daisyjohnson2",
+      "kingpin1"
+     ]
     },
     {
      "id": "spider-man-10500010",
@@ -7207,7 +7732,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ironman3",
+      "venom2",
+      "vulture1",
+      "kamalakhan1",
+      "ironfist3"
+     ]
     },
     {
      "id": "spider-man-10600010",
@@ -7297,7 +7829,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord1",
+      "groot2",
+      "modok1",
+      "silk1",
+      "shehulk1"
+     ]
     },
     {
      "id": "spider-man-10700010",
@@ -7387,7 +7926,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord1",
+      "groot2",
+      "modok1",
+      "silk1",
+      "shehulk1"
+     ]
     },
     {
      "id": "spider-man-10800010",
@@ -7477,7 +8023,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rogue3",
+      "blackpanther3",
+      "dormammu1",
+      "kamalakhan2",
+      "bluemarvel1"
+     ]
     },
     {
      "id": "spider-man-10900010",
@@ -7567,7 +8120,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rogue3",
+      "blackpanther3",
+      "dormammu1",
+      "kamalakhan2",
+      "bluemarvel1"
+     ]
     },
     {
      "id": "spider-man-11000010",
@@ -7656,7 +8216,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "katebishop1",
+      "juggernaut1",
+      "warmachine7",
+      "ultron4",
+      "odin1"
+     ]
     },
     {
      "id": "spider-man-11100010",
@@ -7750,7 +8317,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "nebula6",
+      "venom4",
+      "cyclops4",
+      "thane1",
+      "doctorstrange5"
+     ]
     },
     {
      "id": "spider-man-11200010",
@@ -7844,7 +8418,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "whitetiger1",
+      "thing4",
+      "domino1",
+      "betaraybill1",
+      "carnage3"
+     ]
     }
    ]
   },
@@ -7971,7 +8552,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica5",
+      "sif1",
+      "wong1",
+      "shehulk1",
+      "daisyjohnson1"
+     ]
     },
     {
      "id": "groot-10200011",
@@ -8061,7 +8649,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "warmachine3",
+      "squirrelgirl1",
+      "ronan1",
+      "ironfist3",
+      "destroyer1"
+     ]
     },
     {
      "id": "groot-10300011",
@@ -8150,7 +8745,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "crystal1",
+      "drax1",
+      "yondu2",
+      "thor3",
+      "rocketraccoon2"
+     ]
     },
     {
      "id": "groot-10400011",
@@ -8243,7 +8845,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord4",
+      "sabretooth1",
+      "thing1",
+      "thanos3",
+      "rogue2"
+     ]
     },
     {
      "id": "groot-10500011",
@@ -8336,7 +8945,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kingo1",
+      "hyperion2",
+      "echo1",
+      "nebula4",
+      "shehulk4"
+     ]
     },
     {
      "id": "groot-10600011",
@@ -8432,7 +9048,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spidergwen3",
+      "warmachine8",
+      "wong2",
+      "arachknight1",
+      "doctordoom2"
+     ]
     }
    ]
   },
@@ -8559,7 +9182,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil1",
+      "captainamerica3",
+      "doctoroctopus1",
+      "hawkeye2",
+      "daredevil2"
+     ]
     },
     {
      "id": "gamora-10200012",
@@ -8648,7 +9278,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "vision1",
+      "ultron1",
+      "mockingbird2",
+      "punisher2",
+      "lukecage2"
+     ]
     },
     {
      "id": "gamora-10300012",
@@ -8738,7 +9375,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulkbuster3",
+      "proximamidnight2",
+      "nightcrawler1",
+      "aero1",
+      "spiderman7"
+     ]
     },
     {
      "id": "gamora-10400012",
@@ -8832,7 +9476,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "jessicajones1",
+      "emmafrost3",
+      "blade3",
+      "loki6",
+      "hela2"
+     ]
     },
     {
      "id": "gamora-10500012",
@@ -8926,7 +9577,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctoroctopus4",
+      "milesmorales3",
+      "x-232",
+      "victorious1",
+      "scarletwitch4"
+     ]
     }
    ]
   },
@@ -9052,7 +9710,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "angela2",
+      "ronan1",
+      "spiderman2",
+      "gamora1",
+      "squirrelgirl1"
+     ]
     },
     {
      "id": "ultron-10200013",
@@ -9141,7 +9806,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "destroyer1",
+      "captainamerica3",
+      "blackcat2",
+      "captainmarvel2",
+      "daisyjohnson1"
+     ]
     },
     {
      "id": "ultron-10300013",
@@ -9230,7 +9902,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "punisher2",
+      "hulk2",
+      "yellowjacket1",
+      "lash1",
+      "captainamerica3"
+     ]
     },
     {
      "id": "ultron-10400013",
@@ -9319,7 +9998,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "carnage1",
+      "ironman6",
+      "redhulk2",
+      "misterfantastic1",
+      "emmafrost1"
+     ]
     },
     {
      "id": "ultron-10500013",
@@ -9408,7 +10094,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "professorx2",
+      "ronan3",
+      "captainamerica14",
+      "thane1",
+      "mephisto1"
+     ]
     }
    ]
   },
@@ -9534,7 +10227,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hulkbuster1",
+      "ironfist1",
+      "spiderman1",
+      "lukecage1",
+      "redskull1"
+     ]
     },
     {
      "id": "loki-10200014",
@@ -9623,7 +10323,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt2",
+      "kamalakhan1",
+      "starlord2",
+      "beast1",
+      "lash1"
+     ]
     },
     {
      "id": "loki-10300014",
@@ -9712,7 +10419,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "satana1",
+      "crystal1",
+      "hela1",
+      "gamora2",
+      "lukecage2"
+     ]
     },
     {
      "id": "loki-10400014",
@@ -9801,7 +10515,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "minn-erva1",
+      "doctorstrange2",
+      "storm1",
+      "redguardian1",
+      "captainamerica11"
+     ]
     },
     {
      "id": "loki-10500014",
@@ -9891,7 +10612,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor8",
+      "colossus2",
+      "thanos2",
+      "hyperion1",
+      "spidergwen2"
+     ]
     },
     {
      "id": "loki-10600014",
@@ -9981,7 +10709,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor8",
+      "colossus2",
+      "thanos2",
+      "hyperion1",
+      "spidergwen2"
+     ]
     },
     {
      "id": "loki-10700014",
@@ -10070,7 +10805,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "cyclops3",
+      "apocalypse1",
+      "baronzemo1",
+      "sif2",
+      "gamora4"
+     ]
     },
     {
      "id": "loki-10800014",
@@ -10165,7 +10907,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier5",
+      "robbiereyes1",
+      "domino2",
+      "nickfury3",
+      "gladiator1"
+     ]
     }
    ]
   },
@@ -10292,7 +11041,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "nebula1",
+      "sif1",
+      "captainamerica2",
+      "spiderman3",
+      "angela1"
+     ]
     },
     {
      "id": "red-skull-10200015",
@@ -10386,7 +11142,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica9",
+      "moongirl1",
+      "storm1",
+      "ironman5",
+      "cable1"
+     ]
     },
     {
      "id": "red-skull-10300015",
@@ -10482,7 +11245,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow10",
+      "vision3",
+      "ares1",
+      "beast3",
+      "deadpool8"
+     ]
     }
    ]
   },
@@ -10611,7 +11381,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "falcon1",
+      "modok2",
+      "silk1",
+      "thor7",
+      "nebula1"
+     ]
     },
     {
      "id": "daredevil-10200016",
@@ -10700,7 +11477,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironman1",
+      "hawkeye1",
+      "venom1",
+      "baronmordo1",
+      "falcon1"
+     ]
     },
     {
      "id": "daredevil-10300016",
@@ -10789,7 +11573,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "redguardian1",
+      "iceman1",
+      "captainamerica9",
+      "misterfantastic1",
+      "doctoroctopus2"
+     ]
     },
     {
      "id": "daredevil-10400016",
@@ -10878,7 +11669,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sistergrimm2",
+      "malekith2",
+      "mystique1",
+      "scarletspider1",
+      "adamwarlock2"
+     ]
     }
    ]
   },
@@ -11013,7 +11811,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "baronmordo1",
+      "hawkeye1",
+      "greengoblin1",
+      "sistergrimm1",
+      "modok1"
+     ]
     },
     {
      "id": "doctor-octopus-10200017",
@@ -11108,7 +11913,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman6",
+      "warmachine6",
+      "captainmarvel3",
+      "spiderman20991",
+      "invisiblewoman1"
+     ]
     },
     {
      "id": "doctor-octopus-10300017",
@@ -11197,7 +12009,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sabretooth1",
+      "sharonrogers4",
+      "supergiant1",
+      "invisiblewoman1",
+      "ghostrider3"
+     ]
     },
     {
      "id": "doctor-octopus-10400017",
@@ -11286,7 +12105,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "scarletwitch1",
+      "rogue2",
+      "yelenabelova1",
+      "agentvenom2",
+      "invisiblewoman2"
+     ]
     }
    ]
   },
@@ -11422,7 +12248,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ultron2",
+      "ironman1",
+      "ultron3",
+      "daredevil2",
+      "mockingbird2"
+     ]
     },
     {
      "id": "green-goblin-10200018",
@@ -11517,7 +12350,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "crossbones2",
+      "blackwidow7",
+      "redhulk2",
+      "shehulk2",
+      "silversurfer1"
+     ]
     },
     {
      "id": "green-goblin-10300018",
@@ -11606,7 +12446,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "swordmaster1",
+      "angel1",
+      "americachavez1",
+      "lunasnow2",
+      "quicksilver2"
+     ]
     },
     {
      "id": "green-goblin-10400018",
@@ -11700,7 +12547,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainmarvel4",
+      "thena1",
+      "spiderman8",
+      "cyclops4",
+      "thanos4"
+     ]
     },
     {
      "id": "green-goblin-10500018",
@@ -11790,7 +12644,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier6",
+      "vision4",
+      "rachelsummers1",
+      "mephisto1",
+      "sentinel2"
+     ]
     }
    ]
   },
@@ -11917,7 +12778,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "doctorstrange1",
+      "lash1",
+      "loki1",
+      "hulk2",
+      "vision1"
+     ]
     },
     {
      "id": "m-o-d-o-k-10200019",
@@ -12006,7 +12874,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blade1",
+      "warmachine1",
+      "daredevil2",
+      "ghostrider2",
+      "antman1"
+     ]
     },
     {
      "id": "m-o-d-o-k-10300019",
@@ -12095,7 +12970,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "elektra2",
+      "sif2",
+      "adamwarlock1",
+      "hulk7",
+      "psylocke3"
+     ]
     }
    ]
   },
@@ -12222,7 +13104,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "falcon2",
+      "giantman1",
+      "warmachine2",
+      "amadeuscho1",
+      "vision1"
+     ]
     },
     {
      "id": "malekith-10200020",
@@ -12315,7 +13204,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kittypryde1",
+      "sharonrogers4",
+      "thanos1",
+      "drax2",
+      "katebishop1"
+     ]
     }
    ]
   },
@@ -12445,7 +13341,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "antman1",
+      "captainamerica5",
+      "ultron1",
+      "hulkbuster1",
+      "blackpanther1"
+     ]
     },
     {
      "id": "destroyer-10200021",
@@ -12538,7 +13441,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ghostrider5",
+      "spiderman20992",
+      "thor10",
+      "scarletwitch6",
+      "x-233"
+     ]
     }
    ]
   },
@@ -12665,7 +13575,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ultron3",
+      "wintersoldier1",
+      "destroyer1",
+      "sif1",
+      "blackcat1"
+     ]
     },
     {
      "id": "drax-10200022",
@@ -12754,7 +13671,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shangchi1",
+      "psylocke2",
+      "shehulk2",
+      "sharonrogers2",
+      "blackdwarf2"
+     ]
     },
     {
      "id": "drax-10300022",
@@ -12843,7 +13767,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "angela3",
+      "spiderman10",
+      "milesmorales3",
+      "polaris1",
+      "jeangrey3"
+     ]
     }
    ]
   },
@@ -12970,7 +13901,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "falcon1",
+      "ancientone1",
+      "elsabloodstone1",
+      "punisher1",
+      "lash1"
+     ]
     },
     {
      "id": "hawkeye-10200023",
@@ -13059,7 +13997,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ultron2",
+      "wintersoldier1",
+      "captainamerica1",
+      "amadeuscho1",
+      "groot1"
+     ]
     },
     {
      "id": "hawkeye-10300023",
@@ -13148,7 +14093,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "angela2",
+      "giantman2",
+      "gwenpool1",
+      "cyclops1",
+      "kidkaiju1"
+     ]
     },
     {
      "id": "hawkeye-10400023",
@@ -13237,7 +14189,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "quicksilver1",
+      "spiderman1",
+      "squirrelgirl1",
+      "colossus1",
+      "warmachine4"
+     ]
     },
     {
      "id": "hawkeye-10500023",
@@ -13326,7 +14285,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "falcon4",
+      "humantorch2",
+      "ikaris1",
+      "scarletwitch4",
+      "storm1"
+     ]
     },
     {
      "id": "hawkeye-10600023",
@@ -13415,7 +14381,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shehulk4",
+      "spiderman10",
+      "magneto2",
+      "enchantress2",
+      "gladiator1"
+     ]
     }
    ]
   },
@@ -13539,7 +14512,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "warmachine2",
+      "amadeuscho1",
+      "wong1",
+      "blackwidow2",
+      "lukecage1"
+     ]
     },
     {
      "id": "mockingbird-10200024",
@@ -13628,7 +14608,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil1",
+      "warmachine1",
+      "mockingbird1",
+      "redhulk1",
+      "modok2"
+     ]
     }
    ]
   },
@@ -13755,7 +14742,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wasp1",
+      "doctorstrange1",
+      "captainamerica4",
+      "blackwidow3",
+      "punisher1"
+     ]
     },
     {
      "id": "red-hulk-10200025",
@@ -13850,7 +14844,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye4",
+      "thanos3",
+      "redskull2",
+      "mysterio1",
+      "blackwidow7"
+     ]
     },
     {
      "id": "red-hulk-10300025",
@@ -13944,7 +14945,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon6",
+      "greengoblin4",
+      "domino2",
+      "scarletwitch5",
+      "aero1"
+     ]
     }
    ]
   },
@@ -14073,7 +15081,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironman1",
+      "warmachine3",
+      "groot1",
+      "vision1",
+      "hulk1"
+     ]
     },
     {
      "id": "captain-marvel-10200026",
@@ -14162,7 +15177,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "greengoblin1",
+      "ironman1",
+      "ironman3",
+      "modok2",
+      "captainamerica2"
+     ]
     },
     {
      "id": "captain-marvel-10300026",
@@ -14252,7 +15274,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "magneto1",
+      "thor4",
+      "elektra1",
+      "giantman2",
+      "philcoulson1"
+     ]
     },
     {
      "id": "captain-marvel-10400026",
@@ -14342,7 +15371,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "magneto1",
+      "thor4",
+      "elektra1",
+      "giantman2",
+      "philcoulson1"
+     ]
     },
     {
      "id": "captain-marvel-10500026",
@@ -14432,7 +15468,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk6",
+      "moongirl1",
+      "starlord4",
+      "dormammu1",
+      "psylocke2"
+     ]
     },
     {
      "id": "captain-marvel-10600026",
@@ -14521,7 +15564,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackdwarf2",
+      "carnage2",
+      "x-232",
+      "mantis1",
+      "hulk7"
+     ]
     },
     {
      "id": "captain-marvel-10700026",
@@ -14616,7 +15666,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "makkari1",
+      "wintersoldier6",
+      "angel2",
+      "groot5",
+      "ultron4"
+     ]
     }
    ]
   },
@@ -14742,7 +15799,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica1",
+      "doctoroctopus1",
+      "squirrelgirl1",
+      "warmachine2",
+      "blade1"
+     ]
     },
     {
      "id": "war-machine-10200027",
@@ -14831,7 +15895,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackcat1",
+      "ironman1",
+      "sistergrimm1",
+      "blackwidow1",
+      "vision1"
+     ]
     },
     {
      "id": "war-machine-10300027",
@@ -14920,7 +15991,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "lukecage1",
+      "destroyer1",
+      "angela1",
+      "sif1",
+      "antman1"
+     ]
     },
     {
      "id": "war-machine-10400027",
@@ -15009,7 +16087,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher4",
+      "cyclops1",
+      "ironman4",
+      "inferno1",
+      "spiderman4"
+     ]
     },
     {
      "id": "war-machine-10500027",
@@ -15099,7 +16184,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "medusa1",
+      "cable1",
+      "ghostrider1",
+      "groot3",
+      "milesmorales1"
+     ]
     },
     {
      "id": "war-machine-10600027",
@@ -15189,7 +16281,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "medusa1",
+      "cable1",
+      "ghostrider1",
+      "groot3",
+      "milesmorales1"
+     ]
     },
     {
      "id": "war-machine-10700027",
@@ -15278,7 +16377,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "nickfury2",
+      "scarletwitch1",
+      "magneto2",
+      "punisher5",
+      "jessicajones1"
+     ]
     },
     {
      "id": "war-machine-10800027",
@@ -15367,7 +16473,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "greengoblin4",
+      "milesmorales4",
+      "rachelsummers1",
+      "thane1",
+      "misterfantastic1"
+     ]
     }
    ]
   },
@@ -15497,7 +16610,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shehulk1",
+      "wintersoldier2",
+      "deathlok1",
+      "greengoblin1",
+      "blackcat1"
+     ]
     },
     {
      "id": "doctor-strange-10200028",
@@ -15587,7 +16707,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk3",
+      "wong1",
+      "ebonymaw1",
+      "spiderman5",
+      "ironman4"
+     ]
     },
     {
      "id": "doctor-strange-10300028",
@@ -15677,7 +16804,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "corvusglaive1",
+      "taskmaster1",
+      "quicksilver2",
+      "magik1",
+      "magneto2"
+     ]
     },
     {
      "id": "doctor-strange-10400028",
@@ -15767,7 +16901,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gilgamesh1",
+      "rescue1",
+      "scarletwitch3",
+      "thing2",
+      "rogue3"
+     ]
     },
     {
      "id": "doctor-strange-10500028",
@@ -15857,7 +16998,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "invisiblewoman2",
+      "hela2",
+      "hyperion2",
+      "nightcrawler2",
+      "scarletwitch4"
+     ]
     },
     {
      "id": "doctor-strange-10600028",
@@ -15953,7 +17101,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "mantis1",
+      "odin2",
+      "jeangrey3",
+      "spectrum1",
+      "hulk8"
+     ]
     }
    ]
   },
@@ -16083,7 +17238,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt1",
+      "daredevil1",
+      "ghostrider1",
+      "yellowjacket1",
+      "mockingbird2"
+     ]
     },
     {
      "id": "vision-10200029",
@@ -16172,7 +17334,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hulk4",
+      "ronan2",
+      "scarletwitch1",
+      "agentvenom1",
+      "rocketraccoon2"
+     ]
     },
     {
      "id": "vision-10300029",
@@ -16262,7 +17431,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blade2",
+      "hyperion1",
+      "scarletwitch2",
+      "antman4",
+      "kamalakhan2"
+     ]
     },
     {
      "id": "vision-10400029",
@@ -16352,7 +17528,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thing4",
+      "hellstorm1",
+      "hela3",
+      "wolverine7",
+      "rescue2"
+     ]
     }
    ]
   },
@@ -16478,7 +17661,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ghostrider2",
+      "hulk1",
+      "thor2",
+      "ironfist2",
+      "antman2"
+     ]
     },
     {
      "id": "falcon-10200030",
@@ -16567,7 +17757,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackpanther1",
+      "giantman1",
+      "sharoncarter1",
+      "blackwidow1",
+      "ironman3"
+     ]
     },
     {
      "id": "falcon-10300030",
@@ -16656,7 +17853,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "loki2",
+      "venom2",
+      "punisher3",
+      "gwenpool1",
+      "squirrelgirl1"
+     ]
     },
     {
      "id": "falcon-10400030",
@@ -16750,7 +17954,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "storm3",
+      "thor6",
+      "bullseye2",
+      "cable4",
+      "spiderman20991"
+     ]
     },
     {
      "id": "falcon-10500030",
@@ -16845,7 +18056,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "quicksilver4",
+      "echo2",
+      "thor10",
+      "sistergrimm2",
+      "psylocke3"
+     ]
     },
     {
      "id": "falcon-10600030",
@@ -16939,7 +18157,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord5",
+      "hela3",
+      "deadpool7",
+      "ikaris1",
+      "shadowshell1"
+     ]
     }
    ]
   },
@@ -17064,7 +18289,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "antman1",
+      "giantman1",
+      "ultron2",
+      "antman2",
+      "hawkeye1"
+     ]
     },
     {
      "id": "winter-soldier-10200031",
@@ -17153,7 +18385,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "moonknight1",
+      "spiderman2",
+      "modok1",
+      "yondu1",
+      "captainamerica2"
+     ]
     },
     {
      "id": "winter-soldier-10300031",
@@ -17242,7 +18481,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers1",
+      "shuri1",
+      "blackpanther2",
+      "falcon1",
+      "captainamerica3"
+     ]
     },
     {
      "id": "winter-soldier-10400031",
@@ -17335,7 +18581,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "medusa2",
+      "scarletwitch2",
+      "rogue3",
+      "valkyrie1",
+      "redskull2"
+     ]
     },
     {
      "id": "winter-soldier-10500031",
@@ -17430,7 +18683,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackpanther4",
+      "antman6",
+      "namor2",
+      "doctorstrange4",
+      "ironman10"
+     ]
     },
     {
      "id": "winter-soldier-10600031",
@@ -17524,7 +18784,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "angel2",
+      "lunasnow3",
+      "wolverine7",
+      "humantorch3",
+      "captainamerica14"
+     ]
     }
    ]
   },
@@ -17650,7 +18917,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica2",
+      "nebula1",
+      "drax1",
+      "yellowjacket1",
+      "blackwidow1"
+     ]
     },
     {
      "id": "punisher-10200032",
@@ -17739,7 +19013,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye2",
+      "captainmarvel2",
+      "nebula1",
+      "falcon1",
+      "redhulk1"
+     ]
     },
     {
      "id": "punisher-10300032",
@@ -17828,7 +19109,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "elektra1",
+      "ironfist2",
+      "blackbolt2",
+      "crossbones1",
+      "giantman1"
+     ]
     },
     {
      "id": "punisher-10400032",
@@ -17922,7 +19210,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil1",
+      "lukecage2",
+      "mockingbird1",
+      "ironfist3",
+      "philcoulson1"
+     ]
     },
     {
      "id": "punisher-10500032",
@@ -18017,7 +19312,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vision2",
+      "storm1",
+      "spiderman20991",
+      "deadpool1",
+      "moongirl1"
+     ]
     },
     {
      "id": "punisher-10600032",
@@ -18106,7 +19408,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil3",
+      "elektra2",
+      "psylocke3",
+      "americachavez2",
+      "ebonymaw2"
+     ]
     },
     {
      "id": "punisher-10700032",
@@ -18195,7 +19504,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainmarvel6",
+      "greengoblin3",
+      "sabretooth2",
+      "rescue2",
+      "thanos6"
+     ]
     }
    ]
   },
@@ -18318,7 +19634,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironfist2",
+      "drax1",
+      "hulk1",
+      "hawkeye2",
+      "crossbones1"
+     ]
     }
    ]
   },
@@ -18448,7 +19771,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ultron1",
+      "captainamerica5",
+      "wintersoldier2",
+      "ironman2",
+      "blackwidow3"
+     ]
     },
     {
      "id": "luke-cage-10200034",
@@ -18537,7 +19867,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironfist3",
+      "malekith1",
+      "loki1",
+      "spiderman1",
+      "antman1"
+     ]
     },
     {
      "id": "luke-cage-10300034",
@@ -18626,7 +19963,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher5",
+      "blackdwarf1",
+      "hulk6",
+      "lunasnow2",
+      "spidergwen2"
+     ]
     }
    ]
   },
@@ -18756,7 +20100,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "angela1",
+      "blackcat1",
+      "wong1",
+      "blackcat2",
+      "blackwidow3"
+     ]
     },
     {
      "id": "iron-fist-10200035",
@@ -18845,7 +20196,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "yondu1",
+      "kingpin1",
+      "blackbolt1",
+      "malekith1",
+      "lash1"
+     ]
     },
     {
      "id": "iron-fist-10300035",
@@ -18934,7 +20292,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "lukecage2",
+      "wintersoldier2",
+      "kamalakhan1",
+      "blackwidow2",
+      "warmachine1"
+     ]
     },
     {
      "id": "iron-fist-10400035",
@@ -19023,7 +20388,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "nickfury2",
+      "vision2",
+      "shehulk3",
+      "venom3",
+      "apocalypse1"
+     ]
     }
    ]
   },
@@ -19150,7 +20522,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hulkbuster1",
+      "spiderman3",
+      "ironman2",
+      "blade1",
+      "daisyjohnson1"
+     ]
     },
     {
      "id": "star-lord-10200036",
@@ -19239,7 +20618,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "nebula1",
+      "kamalakhan1",
+      "mockingbird1",
+      "warmachine1",
+      "sif1"
+     ]
     },
     {
      "id": "star-lord-10300036",
@@ -19328,7 +20714,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica6",
+      "drax1",
+      "ironman4",
+      "yondu2",
+      "gamora2"
+     ]
     },
     {
      "id": "star-lord-10400036",
@@ -19417,7 +20810,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon3",
+      "captainmarvel3",
+      "blackdwarf1",
+      "magik1",
+      "thor5"
+     ]
     },
     {
      "id": "star-lord-10500036",
@@ -19511,7 +20911,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctordoom1",
+      "ironheart1",
+      "scream1",
+      "ultron4",
+      "americachavez2"
+     ]
     },
     {
      "id": "star-lord-10600036",
@@ -19605,7 +21012,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "scream1",
+      "juggernaut1",
+      "rogue3",
+      "wasp3",
+      "doctordoom2"
+     ]
     }
    ]
   },
@@ -19733,7 +21147,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "loki1",
+      "ghostrider1",
+      "daredevil1",
+      "yondu1",
+      "redskull1"
+     ]
     },
     {
      "id": "black-panther-10200037",
@@ -19822,7 +21243,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica4",
+      "falcon3",
+      "lukecage2",
+      "philcoulson1",
+      "wintersoldier1"
+     ]
     },
     {
      "id": "black-panther-10300037",
@@ -19911,7 +21339,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye4",
+      "deadpool4",
+      "greengoblin2",
+      "doctoroctopus2",
+      "x-232"
+     ]
     },
     {
      "id": "black-panther-10400037",
@@ -20000,7 +21435,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sersi1",
+      "doctoroctopus3",
+      "thena1",
+      "mistersinister1",
+      "supergiant1"
+     ]
     }
    ]
   },
@@ -20126,7 +21568,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "antman2",
+      "yondu1",
+      "captainamerica4",
+      "blackcat2",
+      "falcon2"
+     ]
     },
     {
      "id": "black-bolt-10200038",
@@ -20215,7 +21664,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt1",
+      "blackpanther1",
+      "blackcat2",
+      "ironman1",
+      "hulk2"
+     ]
     },
     {
      "id": "black-bolt-10300038",
@@ -20304,7 +21760,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch1",
+      "emmafrost2",
+      "wolverine3",
+      "captainamerica9",
+      "vision2"
+     ]
     },
     {
      "id": "black-bolt-10400038",
@@ -20397,7 +21860,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki5",
+      "baronzemo1",
+      "cyclops2",
+      "scarletwitch5",
+      "ironfist4"
+     ]
     }
    ]
   },
@@ -20521,7 +21991,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "redhulk1",
+      "mockingbird2",
+      "sistergrimm1",
+      "daisyjohnson1",
+      "loki1"
+     ]
     },
     {
      "id": "angela-10200039",
@@ -20614,7 +22091,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "thor2",
+      "modok2",
+      "warmachine3",
+      "crossbones1",
+      "mockingbird1"
+     ]
     },
     {
      "id": "angela-10300039",
@@ -20703,7 +22187,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "yelenabelova2",
+      "psylocke3",
+      "corvusglaive1",
+      "sersi1",
+      "spiderman6"
+     ]
     }
    ]
   },
@@ -20828,7 +22319,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "punisher3",
+      "elsabloodstone2",
+      "modok2",
+      "baronmordo1",
+      "hulk1"
+     ]
     },
     {
      "id": "elektra-10200040",
@@ -20917,7 +22415,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch2",
+      "corvusglaive1",
+      "thor8",
+      "mistersinister1",
+      "milesmorales2"
+     ]
     },
     {
      "id": "elektra-10300040",
@@ -21006,7 +22511,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "angela3",
+      "heimdall1",
+      "psylocke3",
+      "carnage2",
+      "quicksilver4"
+     ]
     }
    ]
   },
@@ -21133,7 +22645,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctoroctopus2",
+      "minn-erva1",
+      "colossus2",
+      "thing1",
+      "crescent1"
+     ]
     },
     {
      "id": "enchantress-10200041",
@@ -21222,7 +22741,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "arachknight1",
+      "moonknight3",
+      "cable1",
+      "ironman9",
+      "ancientone2"
+     ]
     }
    ]
   },
@@ -21351,7 +22877,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "greengoblin1",
+      "squirrelgirl1",
+      "rocketraccoon1",
+      "warmachine2",
+      "hawkeye1"
+     ]
     },
     {
      "id": "venom-10200042",
@@ -21441,7 +22974,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "starlord2",
+      "gwenpool1",
+      "bullseye1",
+      "kamalakhan1",
+      "wong1"
+     ]
     },
     {
      "id": "venom-10300042",
@@ -21531,7 +23071,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "magneto2",
+      "hawkeye4",
+      "misterfantastic1",
+      "captainamerica10",
+      "lunasnow2"
+     ]
     },
     {
      "id": "venom-10400042",
@@ -21621,7 +23168,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wolverine4",
+      "lukecage3",
+      "ancientone2",
+      "ultron4",
+      "warmachine7"
+     ]
     },
     {
      "id": "venom-10500042",
@@ -21716,7 +23270,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "milesmorales4",
+      "shuri3",
+      "emmafrost3",
+      "silversurfer2",
+      "spiderwoman1"
+     ]
     },
     {
      "id": "venom-10600042",
@@ -21806,7 +23367,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman11",
+      "kamalakhan5",
+      "mystique1",
+      "nickfury4",
+      "doctorstrange6"
+     ]
     }
    ]
   },
@@ -21938,7 +23506,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "redhulk1",
+      "wong1",
+      "ironman2",
+      "hulk1",
+      "daredevil2"
+     ]
     },
     {
      "id": "kingpin-10200043",
@@ -22030,7 +23605,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "x-232",
+      "thor8",
+      "medusa2",
+      "thing2",
+      "misterfantastic2"
+     ]
     },
     {
      "id": "kingpin-10300043",
@@ -22119,7 +23701,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk8",
+      "sharonrogers5",
+      "antiman1",
+      "daken1",
+      "apocalypse2"
+     ]
     }
    ]
   },
@@ -22244,7 +23833,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "antman2",
+      "punisher2",
+      "hawkeye2",
+      "silk1",
+      "loki1"
+     ]
     },
     {
      "id": "bullseye-10200044",
@@ -22338,7 +23934,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow9",
+      "wolverine4",
+      "redskull2",
+      "hulk6",
+      "magik1"
+     ]
     },
     {
      "id": "bullseye-10300044",
@@ -22428,7 +24031,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "titania1",
+      "gamora4",
+      "blade3",
+      "professorx1",
+      "betaraybill1"
+     ]
     }
    ]
   },
@@ -22554,7 +24164,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainmarvel2",
+      "spiderman3",
+      "doctoroctopus1",
+      "rocketraccoon1",
+      "drax1"
+     ]
     },
     {
      "id": "hulkbuster-iron-man-mark-44-10200045",
@@ -22643,7 +24260,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vulture1",
+      "cyclops2",
+      "hulk3",
+      "shuri1",
+      "gwenpool1"
+     ]
     },
     {
      "id": "hulkbuster-iron-man-mark-44-10300045",
@@ -22732,7 +24356,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt3",
+      "daredevil3",
+      "wolverine3",
+      "venom3",
+      "sentinel1"
+     ]
     },
     {
      "id": "hulkbuster-iron-man-mark-44-10400045",
@@ -22821,7 +24452,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "modok3",
+      "arachknight1",
+      "domino2",
+      "carnage2",
+      "cable2"
+     ]
     }
    ]
   },
@@ -22946,7 +24584,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sharoncarter1",
+      "spiderman2",
+      "venom1",
+      "angela1",
+      "giantman1"
+     ]
     },
     {
      "id": "yondu-10200046",
@@ -23035,7 +24680,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "groot1",
+      "rocketraccoon1",
+      "lukecage1",
+      "starlord1",
+      "lash1"
+     ]
     },
     {
      "id": "yondu-10300046",
@@ -23127,7 +24779,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon6",
+      "doctoroctopus3",
+      "angel2",
+      "spiderwoman1",
+      "doctorstrange4"
+     ]
     }
    ]
   },
@@ -23253,7 +24912,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "doctorstrange1",
+      "shehulk1",
+      "starlord1",
+      "captainamerica5",
+      "ghostrider2"
+     ]
     },
     {
      "id": "nebula-10200047",
@@ -23344,7 +25010,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wolverine2",
+      "sharonrogers1",
+      "sistergrimm1",
+      "crystal1",
+      "philcoulson1"
+     ]
     },
     {
      "id": "nebula-10300047",
@@ -23435,7 +25108,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wolverine2",
+      "sharonrogers1",
+      "sistergrimm1",
+      "crystal1",
+      "philcoulson1"
+     ]
     },
     {
      "id": "nebula-10400047",
@@ -23529,7 +25209,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "groot5",
+      "corvusglaive2",
+      "satana1",
+      "emmafrost3",
+      "starlord5"
+     ]
     }
    ]
   },
@@ -23656,7 +25343,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "yellowjacket1",
+      "ghostrider2",
+      "silk1",
+      "angela2",
+      "hulk1"
+     ]
     },
     {
      "id": "ronan-10200048",
@@ -23745,7 +25439,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier3",
+      "vulture1",
+      "nebula1",
+      "crystal2",
+      "beast1"
+     ]
     },
     {
      "id": "ronan-10300048",
@@ -23835,7 +25536,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers5",
+      "milesmorales4",
+      "doctorvoodoo1",
+      "valkyrie2",
+      "doctorstrange5"
+     ]
     }
    ]
   },
@@ -23963,7 +25671,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "modok1",
+      "ghostrider1",
+      "moonknight1",
+      "angela2",
+      "ultron3"
+     ]
     },
     {
      "id": "ant-man-10200049",
@@ -24052,7 +25767,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow3",
+      "starlord1",
+      "kingpin1",
+      "falcon2",
+      "wintersoldier1"
+     ]
     },
     {
      "id": "ant-man-10300049",
@@ -24141,7 +25863,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica6",
+      "giantman1",
+      "wintersoldier3",
+      "wasp1",
+      "starlord2"
+     ]
     },
     {
      "id": "ant-man-10400049",
@@ -24231,7 +25960,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman4",
+      "malekith1",
+      "daisyjohnson2",
+      "blackwidow2",
+      "giantman2"
+     ]
     },
     {
      "id": "ant-man-10500049",
@@ -24321,7 +26057,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman4",
+      "malekith1",
+      "daisyjohnson2",
+      "blackwidow2",
+      "giantman2"
+     ]
     },
     {
      "id": "ant-man-10600049",
@@ -24410,7 +26153,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "absorbingman1",
+      "apocalypse1",
+      "kingo1",
+      "heimdall1",
+      "baronzemo1"
+     ]
     }
    ]
   },
@@ -24534,7 +26284,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ultron2",
+      "thor2",
+      "wong1",
+      "captainamerica1",
+      "baronmordo1"
+     ]
     },
     {
      "id": "giant-man-10200050",
@@ -24625,7 +26382,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "vision1",
+      "ultron1",
+      "thor4",
+      "hela1",
+      "kidkaiju1"
+     ]
     }
    ]
   },
@@ -24752,7 +26516,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironfist1",
+      "moonknight1",
+      "baronmordo1",
+      "blade1",
+      "drax1"
+     ]
     },
     {
      "id": "wasp-10200051",
@@ -24841,7 +26612,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "cyclops2",
+      "spidergwen1",
+      "rocketraccoon3",
+      "groot3",
+      "captainmarvel2"
+     ]
     },
     {
      "id": "wasp-10300051",
@@ -24930,7 +26708,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica12",
+      "scream1",
+      "americachavez2",
+      "valkyrie1",
+      "deadpool4"
+     ]
     }
    ]
   },
@@ -25055,7 +26840,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "doctorstrange1",
+      "elsabloodstone1",
+      "deathlok1",
+      "warmachine3",
+      "falcon1"
+     ]
     }
    ]
   },
@@ -25180,7 +26972,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironfist1",
+      "blackbolt1",
+      "mockingbird2",
+      "daisyjohnson2",
+      "spiderman1"
+     ]
     },
     {
      "id": "sister-grimm-10200053",
@@ -25269,7 +27068,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "americachavez1",
+      "elektra2",
+      "echo1",
+      "angel2",
+      "misterfantastic2"
+     ]
     },
     {
      "id": "sister-grimm-10300053",
@@ -25359,7 +27165,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers5",
+      "blackpanther4",
+      "malekith2",
+      "dazzler1",
+      "cable5"
+     ]
     }
    ]
   },
@@ -25520,7 +27333,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow3",
+      "captainmarvel2",
+      "ronan1",
+      "antman2",
+      "blackwidow2"
+     ]
     },
     {
      "id": "she-hulk-10200055",
@@ -25614,7 +27434,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "angel1",
+      "agentvenom1",
+      "medusa1",
+      "antman3",
+      "hyperion1"
+     ]
     },
     {
      "id": "she-hulk-10300055",
@@ -25703,7 +27530,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ronan2",
+      "sabretooth1",
+      "humantorch1",
+      "captainmarvel4",
+      "vision2"
+     ]
     },
     {
      "id": "she-hulk-10400055",
@@ -25792,7 +27626,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sersi1",
+      "corvusglaive2",
+      "nightcrawler2",
+      "blackpanther3",
+      "electro1"
+     ]
     }
    ]
   },
@@ -25920,7 +27761,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackcat1",
+      "punisher2",
+      "captainamerica1",
+      "ghostrider1",
+      "greengoblin1"
+     ]
     },
     {
      "id": "daisy-johnson-10200056",
@@ -26009,7 +27857,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt1",
+      "captainamerica4",
+      "ultron3",
+      "starlord1",
+      "sistergrimm1"
+     ]
     }
    ]
   },
@@ -26134,7 +27989,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho1",
+      "elsabloodstone1",
+      "crossbones1",
+      "gamora1",
+      "hulk2"
+     ]
     },
     {
      "id": "sif-10200057",
@@ -26223,7 +28085,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil3",
+      "namor1",
+      "vision3",
+      "doctorstrange3",
+      "ghostrider3"
+     ]
     }
    ]
   },
@@ -26348,7 +28217,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "starlord1",
+      "ultron2",
+      "spiderman1",
+      "ironman1",
+      "captainamerica1"
+     ]
     }
    ]
   },
@@ -26504,7 +28380,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "malekith1",
+      "captainamerica1",
+      "ironman2",
+      "kingpin1",
+      "giantman1"
+     ]
     }
    ]
   },
@@ -26630,7 +28513,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica4",
+      "karnak1",
+      "yondu2",
+      "kidkaiju1",
+      "beast1"
+     ]
     },
     {
      "id": "phil-coulson-10200061",
@@ -26722,7 +28612,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow10",
+      "killmonger1",
+      "thanos3",
+      "greengoblin4",
+      "namor2"
+     ]
     }
    ]
   },
@@ -26881,7 +28778,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "silk1",
+      "wintersoldier2",
+      "ronan1",
+      "rocketraccoon1",
+      "warmachine3"
+     ]
     },
     {
      "id": "elsa-bloodstone-10200063",
@@ -26970,7 +28874,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho1",
+      "redskull1",
+      "sistergrimm1",
+      "angela1",
+      "blade1"
+     ]
     }
    ]
   },
@@ -27099,7 +29010,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thing1",
+      "medusa2",
+      "quicksilver2",
+      "sharonrogers3",
+      "carnage1"
+     ]
     }
    ]
   },
@@ -27228,7 +29146,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman5",
+      "blackpanther2",
+      "antman3",
+      "cable1",
+      "ghost1"
+     ]
     },
     {
      "id": "spider-man-miles-morales-10200065",
@@ -27324,7 +29249,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "antman5",
+      "namor1",
+      "mysterio1",
+      "yelenabelova1",
+      "sabretooth1"
+     ]
     },
     {
      "id": "spider-man-miles-morales-10300065",
@@ -27413,7 +29345,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ancientone2",
+      "hulkbuster3",
+      "doctorstrange3",
+      "makkari1",
+      "emmafrost3"
+     ]
     },
     {
      "id": "spider-man-miles-morales-10400065",
@@ -27502,7 +29441,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ebonymaw2",
+      "gamora3",
+      "wave1",
+      "carnage2",
+      "wolverine5"
+     ]
     },
     {
      "id": "spider-man-miles-morales-10500065",
@@ -27595,7 +29541,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "redguardian2",
+      "juggernaut1",
+      "shuri2",
+      "aero1",
+      "colossus2"
+     ]
     }
    ]
   },
@@ -27722,7 +29675,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackcat1",
+      "daredevil1",
+      "doctoroctopus1",
+      "spiderman2",
+      "silk1"
+     ]
     },
     {
      "id": "spider-gwen-10200066",
@@ -27817,7 +29777,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vision2",
+      "psylocke2",
+      "crystal2",
+      "rocketraccoon5",
+      "sharonrogers3"
+     ]
     },
     {
      "id": "spider-gwen-10300066",
@@ -27906,7 +29873,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "emmafrost3",
+      "lukecage3",
+      "greengoblin3",
+      "jeangrey3",
+      "blackwidow9"
+     ]
     }
    ]
   },
@@ -28032,7 +30006,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wasp1",
+      "ironfist2",
+      "venom1",
+      "lukecage1",
+      "rocketraccoon1"
+     ]
     },
     {
      "id": "silk-10200067",
@@ -28123,7 +30104,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "iceman1",
+      "blackwidow5",
+      "cyclops3",
+      "ghost1",
+      "odin1"
+     ]
     }
    ]
   },
@@ -28249,7 +30237,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "moonknight1",
+      "ancientone1",
+      "shehulk1",
+      "gamora1",
+      "falcon2"
+     ]
     },
     {
      "id": "hulk-amadeus-cho-10200068",
@@ -28338,7 +30333,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "beast2",
+      "lunasnow2",
+      "rocketraccoon4",
+      "captainamerica10",
+      "antman5"
+     ]
     },
     {
      "id": "hulk-amadeus-cho-10300068",
@@ -28428,7 +30430,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "cyclops5",
+      "spiderman11",
+      "nickfury4",
+      "hulkbuster4",
+      "doctorstrange6"
+     ]
     }
    ]
   },
@@ -28555,7 +30564,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "satana1",
+      "inferno1",
+      "hulk2",
+      "gwenpool1",
+      "lukecage2"
+     ]
     },
     {
      "id": "proxima-midnight-10200069",
@@ -28645,7 +30661,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher5",
+      "odin1",
+      "magneto2",
+      "ironman5",
+      "valkyrie1"
+     ]
     }
    ]
   },
@@ -28772,7 +30795,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica5",
+      "amadeuscho1",
+      "captainamerica1",
+      "captainmarvel2",
+      "modok2"
+     ]
     },
     {
      "id": "ms-marvel-kamala-khan-10200070",
@@ -28861,7 +30891,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sentinel1",
+      "nightcrawler1",
+      "captainamerica11",
+      "proximamidnight1",
+      "magneto1"
+     ]
     },
     {
      "id": "ms-marvel-kamala-khan-10300070",
@@ -28956,7 +30993,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "jessicajones1",
+      "gilgamesh1",
+      "echo1",
+      "thing1",
+      "wolverine5"
+     ]
     },
     {
      "id": "ms-marvel-kamala-khan-10400070",
@@ -29051,7 +31095,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "agentvenom2",
+      "proximamidnight1",
+      "redguardian1",
+      "juggernaut1",
+      "doctoroctopus4"
+     ]
     },
     {
      "id": "ms-marvel-kamala-khan-10500070",
@@ -29145,7 +31196,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman20992",
+      "scarletspider1",
+      "greengoblin4",
+      "sentry2",
+      "antiman1"
+     ]
     }
    ]
   },
@@ -29270,7 +31328,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hyperion2",
+      "starlord4",
+      "bullseye2",
+      "loki6",
+      "cable2"
+     ]
     }
    ]
   },
@@ -29399,7 +31464,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "domino1",
+      "punisher5",
+      "sentinel1",
+      "scarletwitch2",
+      "doctoroctopus2"
+     ]
     },
     {
      "id": "carnage-10200072",
@@ -29488,7 +31560,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wong2",
+      "humantorch2",
+      "odin1",
+      "magneto1",
+      "crescent2"
+     ]
     },
     {
      "id": "carnage-10300072",
@@ -29577,7 +31656,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch3",
+      "bluedragon1",
+      "professorx2",
+      "wolverine6",
+      "nickfury3"
+     ]
     }
    ]
   },
@@ -29705,7 +31791,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "corvusglaive1",
+      "proximamidnight1",
+      "blackpanther2",
+      "killmonger1",
+      "groot2"
+     ]
     },
     {
      "id": "black-dwarf-10200073",
@@ -29796,7 +31889,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shehulk3",
+      "beast2",
+      "crescent1",
+      "sharonrogers3",
+      "scarletwitch3"
+     ]
     }
    ]
   },
@@ -29924,7 +32024,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "killmonger1",
+      "punisher4",
+      "rogue1",
+      "wolverine1",
+      "thanos1"
+     ]
     },
     {
      "id": "corvus-glaive-10200074",
@@ -30015,7 +32122,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sentinel1",
+      "thor8",
+      "redhulk2",
+      "jeangrey2",
+      "invisiblewoman1"
+     ]
     }
    ]
   },
@@ -30143,7 +32257,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "yondu2",
+      "kidkaiju1",
+      "spidergwen1",
+      "captainamerica2",
+      "ironman2"
+     ]
     },
     {
      "id": "thanos-10200075",
@@ -30233,7 +32354,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "corvusglaive1",
+      "proximamidnight1",
+      "starlord2",
+      "gamora2",
+      "hela1"
+     ]
     },
     {
      "id": "thanos-10300075",
@@ -30323,7 +32451,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "killmonger1",
+      "daredevil2",
+      "elsabloodstone1",
+      "gwenpool1",
+      "starlord2"
+     ]
     },
     {
      "id": "thanos-10400075",
@@ -30413,7 +32548,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "crescent2",
+      "storm3",
+      "odin1",
+      "warmachine7",
+      "redguardian1"
+     ]
     },
     {
      "id": "thanos-10500075",
@@ -30506,7 +32648,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "doctoroctopus3",
+      "doctorstrange3",
+      "sunbird1",
+      "loki5",
+      "hulk5"
+     ]
     },
     {
      "id": "thanos-10600075",
@@ -30596,7 +32745,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "ironman9",
+      "spidergwen3",
+      "professorx2",
+      "hyperion2",
+      "doctorstrange4"
+     ]
     },
     {
      "id": "thanos-10700075",
@@ -30686,7 +32842,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "moonknight4",
+      "loki7",
+      "ironheart2",
+      "cyclops5",
+      "gladiator1"
+     ]
     }
    ]
   },
@@ -30814,7 +32977,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki4",
+      "blackbolt3",
+      "thanos2",
+      "moonknight2",
+      "iceman1"
+     ]
     }
    ]
   },
@@ -30942,7 +33112,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman5",
+      "elektra1",
+      "thor3",
+      "loki2",
+      "thanos2"
+     ]
     },
     {
      "id": "ebony-maw-10200077",
@@ -31033,7 +33210,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spidergwen2",
+      "namor1",
+      "venom3",
+      "silversurfer1",
+      "redguardian1"
+     ]
     },
     {
      "id": "ebony-maw-10300077",
@@ -31124,7 +33308,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "janefoster1",
+      "punisher6",
+      "emmafrost2",
+      "agentvenom2",
+      "scarletwitch5"
+     ]
     }
    ]
   },
@@ -31248,7 +33439,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackcat2",
+      "blackpanther1",
+      "gamora1",
+      "yellowjacket1",
+      "ironfist2"
+     ]
     },
     {
      "id": "crossbones-10200078",
@@ -31337,7 +33535,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulk5",
+      "beast2",
+      "cyclops3",
+      "psylocke2",
+      "quicksilver1"
+     ]
     }
    ]
   },
@@ -31465,7 +33670,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "baronmordo1",
+      "silk1",
+      "kingpin1",
+      "bullseye1",
+      "daisyjohnson2"
+     ]
     },
     {
      "id": "moon-knight-10200079",
@@ -31554,7 +33766,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers2",
+      "domino1",
+      "yelenabelova2",
+      "blackwidow6",
+      "ironman7"
+     ]
     },
     {
      "id": "moon-knight-10300079",
@@ -31643,7 +33862,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shangchi1",
+      "crescent2",
+      "lukecage3",
+      "kingo1",
+      "apocalypse1"
+     ]
     },
     {
      "id": "moon-knight-10400079",
@@ -31733,7 +33959,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "redguardian2",
+      "cyclops5",
+      "daredevil4",
+      "misterfantastic4",
+      "victorious1"
+     ]
     }
    ]
   },
@@ -31860,7 +34093,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shuri1",
+      "ironman4",
+      "wasp2",
+      "hulkbuster2",
+      "medusa1"
+     ]
     },
     {
      "id": "hyperion-10200080",
@@ -31954,7 +34194,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor8",
+      "captainamerica11",
+      "proximamidnight2",
+      "blade2",
+      "iceman1"
+     ]
     }
    ]
   },
@@ -32082,7 +34329,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica12",
+      "absorbingman1",
+      "spiderman10",
+      "colossus2",
+      "quicksilver2"
+     ]
     }
    ]
   },
@@ -32208,7 +34462,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "punisher1",
+      "angela2",
+      "karnak1",
+      "gamora1",
+      "deathlok1"
+     ]
     },
     {
      "id": "captain-america-sharon-rogers-10200082",
@@ -32297,7 +34558,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica6",
+      "sharoncarter1",
+      "starlord3",
+      "punisher4",
+      "agentvenom1"
+     ]
     },
     {
      "id": "captain-america-sharon-rogers-10300082",
@@ -32386,7 +34654,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica6",
+      "magik1",
+      "ronan2",
+      "ebonymaw1",
+      "spiderman7"
+     ]
     },
     {
      "id": "captain-america-sharon-rogers-10400082",
@@ -32475,7 +34750,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho2",
+      "spiderman5",
+      "milesmorales2",
+      "professorx1",
+      "misterfantastic2"
+     ]
     },
     {
      "id": "captain-america-sharon-rogers-10500082",
@@ -32564,7 +34846,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman9",
+      "katebishop1",
+      "dormammu1",
+      "drax2",
+      "bluedragon1"
+     ]
     },
     {
      "id": "captain-america-sharon-rogers-10600082",
@@ -32655,7 +34944,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kraventhehunter1",
+      "groot5",
+      "nightcrawler2",
+      "ironheart1",
+      "deadpool8"
+     ]
     }
    ]
   },
@@ -32780,7 +35076,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor10",
+      "robbiereyes1",
+      "wong3",
+      "namor1",
+      "ebonymaw3"
+     ]
     }
    ]
   },
@@ -33009,7 +35312,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow2",
+      "modok2",
+      "deathlok1",
+      "captainamerica4",
+      "loki1"
+     ]
     },
     {
      "id": "squirrel-girl-10200087",
@@ -33106,7 +35416,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "deadpool2",
+      "blackwidow8",
+      "thor9",
+      "carnage2",
+      "ikaris1"
+     ]
     }
    ]
   },
@@ -33230,7 +35547,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "punisher3",
+      "groot2",
+      "moonknight1",
+      "thor7",
+      "falcon1"
+     ]
     },
     {
      "id": "gwenpool-10200088",
@@ -33321,7 +35645,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "antman3",
+      "warmachine4",
+      "crystal2",
+      "hela1",
+      "falcon1"
+     ]
     },
     {
      "id": "gwenpool-10300088",
@@ -33412,7 +35743,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "bullseye2",
+      "deadpool1",
+      "wave1",
+      "sharonrogers3",
+      "mysterio1"
+     ]
     },
     {
      "id": "gwenpool-10400088",
@@ -33502,7 +35840,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wasp3",
+      "wong2",
+      "beast3",
+      "kittypryde1",
+      "betaraybill1"
+     ]
     }
    ]
   },
@@ -33628,7 +35973,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "carnage1",
+      "storm3",
+      "ghostrider3",
+      "crossbones2",
+      "scarletwitch4"
+     ]
     },
     {
      "id": "shang-chi-10200089",
@@ -33717,7 +36069,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil4",
+      "yelenabelova3",
+      "adamwarlock1",
+      "absorbingman1",
+      "whitetiger1"
+     ]
     }
    ]
   },
@@ -33887,7 +36246,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ultron1",
+      "blackwidow1",
+      "warmachine1",
+      "punisher1",
+      "doctorstrange1"
+     ]
     },
     {
      "id": "baron-mordo-10200091",
@@ -33983,7 +36349,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackpanther3",
+      "valkyrie1",
+      "deadpool4",
+      "sif2",
+      "greengoblin2"
+     ]
     }
    ]
   },
@@ -34110,7 +36483,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica3",
+      "warmachine1",
+      "angela2",
+      "ultron3",
+      "shehulk1"
+     ]
     },
     {
      "id": "wong-10200092",
@@ -34204,7 +36584,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica12",
+      "doctorstrange3",
+      "invisiblewoman2",
+      "nightcrawler2",
+      "bluemarvel1"
+     ]
     },
     {
      "id": "wong-10300092",
@@ -34299,7 +36686,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "iceman1",
+      "captainmarvel6",
+      "nightcrawler1",
+      "ebonymaw3",
+      "ronan3"
+     ]
     }
    ]
   },
@@ -34459,7 +36853,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackpanther1",
+      "angela2",
+      "captainamerica3",
+      "bullseye1",
+      "mockingbird1"
+     ]
     },
     {
      "id": "ancient-one-10200094",
@@ -34548,7 +36949,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki4",
+      "sersi1",
+      "professorx1",
+      "blade2",
+      "misterfantastic2"
+     ]
     },
     {
      "id": "ancient-one-10300094",
@@ -34640,7 +37048,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ronan3",
+      "doctoroctopus3",
+      "loki5",
+      "colossus2",
+      "stryfe1"
+     ]
     }
    ]
   },
@@ -34766,7 +37181,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers1",
+      "gamora2",
+      "cyclops1",
+      "blackbolt2",
+      "inferno1"
+     ]
     },
     {
      "id": "satana-10200095",
@@ -34857,7 +37279,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "arachknight1",
+      "scream1",
+      "shuri3",
+      "lunasnow3",
+      "adamwarlock1"
+     ]
     }
    ]
   },
@@ -34983,7 +37412,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "malekith2",
+      "sharonrogers5",
+      "mystique1",
+      "rescue2",
+      "quicksilver4"
+     ]
     }
    ]
   },
@@ -35284,7 +37720,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "thor6",
+      "ebonymaw1",
+      "cyclops3",
+      "storm1",
+      "cable2"
+     ]
     },
     {
      "id": "odin-10200105",
@@ -35374,7 +37817,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "namor2",
+      "hawkeye4",
+      "proximamidnight2",
+      "captainamerica13",
+      "shadowshell1"
+     ]
     },
     {
      "id": "odin-10300105",
@@ -35464,7 +37914,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "katebishop2",
+      "kingpin3",
+      "storm5",
+      "agentvenom3",
+      "thanos6"
+     ]
     }
    ]
   },
@@ -35590,7 +38047,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers1",
+      "lukecage2",
+      "gamora2",
+      "hulk1",
+      "karnak1"
+     ]
     },
     {
      "id": "hela-10200106",
@@ -35679,7 +38143,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "falcon4",
+      "domino1",
+      "scarletwitch4",
+      "warmachine4",
+      "valkyrie1"
+     ]
     },
     {
      "id": "hela-10300106",
@@ -35768,7 +38239,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shuri2",
+      "ikaris1",
+      "kraventhehunter1",
+      "iceman1",
+      "adamwarlock2"
+     ]
     }
    ]
   },
@@ -35894,7 +38372,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "daredevil3",
+      "sentinel1",
+      "vision3",
+      "cyclops1",
+      "ebonymaw2"
+     ]
     },
     {
      "id": "hawkeye-kate-bishop-10200107",
@@ -35988,7 +38473,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "bullseye3",
+      "kamalakhan4",
+      "blackwidow11",
+      "daken1",
+      "thanos6"
+     ]
     }
    ]
   },
@@ -36113,7 +38605,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "x-232",
+      "doctorstrange4",
+      "wave1",
+      "spiderman9",
+      "loki6"
+     ]
     },
     {
      "id": "ironheart-10200108",
@@ -36202,7 +38701,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord6",
+      "baronmordo2",
+      "valkyrie1",
+      "rogue2",
+      "betaraybill1"
+     ]
     }
    ]
   },
@@ -36328,7 +38834,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackbolt1",
+      "thor3",
+      "thor4",
+      "hela1",
+      "blackwidow4"
+     ]
     },
     {
      "id": "medusa-10200109",
@@ -36417,7 +38930,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "crystal2",
+      "spiderman20991",
+      "hulk5",
+      "cyclops3",
+      "lunasnow1"
+     ]
     },
     {
      "id": "medusa-10300109",
@@ -36508,7 +39028,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gilgamesh1",
+      "invisiblewoman3",
+      "beast3",
+      "ghost2",
+      "carnage2"
+     ]
     }
    ]
   },
@@ -36635,7 +39162,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ghost1",
+      "hulkbuster2",
+      "giantman2",
+      "warmachine4",
+      "satana1"
+     ]
     }
    ]
   },
@@ -36759,7 +39293,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "elsabloodstone2",
+      "blackbolt2",
+      "ghostrider2",
+      "daredevil2",
+      "ironman2"
+     ]
     }
    ]
   },
@@ -36917,7 +39458,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "loki2",
+      "elsabloodstone2",
+      "crystal1",
+      "ironman2",
+      "hulk3"
+     ]
     }
    ]
   },
@@ -37045,7 +39593,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "elektra1",
+      "gamora2",
+      "blackbolt1",
+      "ultron3",
+      "drax1"
+     ]
     },
     {
      "id": "crystal-10200114",
@@ -37139,7 +39694,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "killmonger1",
+      "rocketraccoon3",
+      "starlord3",
+      "colossus1",
+      "wasp2"
+     ]
     },
     {
      "id": "crystal-10300114",
@@ -37230,7 +39792,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher7",
+      "hulk8",
+      "beast3",
+      "carnage3",
+      "scarletwitch7"
+     ]
     }
    ]
   },
@@ -37392,7 +39961,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "crossbones2",
+      "jeangrey1",
+      "invisiblewoman1",
+      "cable2",
+      "redguardian1"
+     ]
     }
    ]
   },
@@ -37517,7 +40093,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackdwarf2",
+      "magneto2",
+      "moonknight2",
+      "loki5",
+      "thena1"
+     ]
     }
    ]
   },
@@ -37674,7 +40257,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho1",
+      "elsabloodstone2",
+      "ironfist1",
+      "ghostrider1",
+      "modok1"
+     ]
     }
    ]
   },
@@ -37806,7 +40396,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "quicksilver2",
+      "aero1",
+      "spiderman6",
+      "moonknight3",
+      "taskmaster1"
+     ]
     }
    ]
   },
@@ -37935,7 +40532,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sharoncarter1",
+      "venom2",
+      "rocketraccoon3",
+      "philcoulson1",
+      "quicksilver1"
+     ]
     },
     {
      "id": "agent-venom-10200121",
@@ -38024,7 +40628,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctoroctopus3",
+      "misterfantastic2",
+      "ikaris1",
+      "emmafrost2",
+      "katebishop1"
+     ]
     },
     {
      "id": "agent-venom-10300121",
@@ -38113,7 +40724,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kamalakhan3",
+      "loki7",
+      "kittypryde1",
+      "beast3",
+      "misterfantastic3"
+     ]
     }
    ]
   },
@@ -38276,7 +40894,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "thor2",
+      "hawkeye2",
+      "blackbolt2",
+      "captainamerica3",
+      "kamalakhan1"
+     ]
     },
     {
      "id": "cyclops-10200123",
@@ -38366,7 +40991,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "karnak1",
+      "kamalakhan1",
+      "sharonrogers1",
+      "amadeuscho1",
+      "wolverine1"
+     ]
     },
     {
      "id": "cyclops-10300123",
@@ -38462,7 +41094,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "loki2",
+      "antman3",
+      "x-231",
+      "emmafrost1",
+      "spidergwen1"
+     ]
     },
     {
      "id": "cyclops-10400123",
@@ -38552,7 +41191,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "quasar1",
+      "americachavez1",
+      "thanos4",
+      "storm3",
+      "hela2"
+     ]
     },
     {
      "id": "cyclops-10500123",
@@ -38642,7 +41288,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "bullseye3",
+      "venom4",
+      "rachelsummers1",
+      "victorious1",
+      "silversurfer2"
+     ]
     }
    ]
   },
@@ -38771,7 +41424,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "nightcrawler1",
+      "agentvenom1",
+      "ironfist3",
+      "warmachine2",
+      "blackcat2"
+     ]
     },
     {
      "id": "jean-grey-10200124",
@@ -38863,7 +41523,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "captainmarvel4",
+      "namor1",
+      "hawkeye4",
+      "thanos2",
+      "humantorch1"
+     ]
     },
     {
      "id": "jean-grey-10300124",
@@ -38956,7 +41623,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "blade3",
+      "echo1",
+      "professorx1",
+      "gilgamesh1",
+      "scarletwitch4"
+     ]
     },
     {
      "id": "jean-grey-10400124",
@@ -39050,7 +41724,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hellstorm1",
+      "ultron5",
+      "juggernaut1",
+      "wong3",
+      "apocalypse2"
+     ]
     }
    ]
   },
@@ -39180,7 +41861,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironman3",
+      "karnak1",
+      "redhulk1",
+      "wintersoldier1",
+      "thanos1"
+     ]
     },
     {
      "id": "wolverine-10200125",
@@ -39271,7 +41959,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "beast1",
+      "rogue1",
+      "falcon3",
+      "cyclops1",
+      "doctoroctopus1"
+     ]
     },
     {
      "id": "wolverine-10300125",
@@ -39362,7 +42057,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "colossus1",
+      "kidkaiju1",
+      "crystal1",
+      "agentvenom1",
+      "satana1"
+     ]
     },
     {
      "id": "wolverine-10400125",
@@ -39453,7 +42155,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "lunasnow1",
+      "jeangrey1",
+      "x-231",
+      "nebula4",
+      "hulk5"
+     ]
     },
     {
      "id": "wolverine-10500125",
@@ -39549,7 +42258,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "venom3",
+      "jeangrey1",
+      "sharonrogers3",
+      "ironfist4",
+      "sentinel1"
+     ]
     },
     {
      "id": "wolverine-10600125",
@@ -39640,7 +42356,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "janefoster1",
+      "adamwarlock1",
+      "punisher6",
+      "spiderman7",
+      "rescue1"
+     ]
     },
     {
      "id": "wolverine-10700125",
@@ -39731,7 +42454,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "venom4",
+      "greengoblin3",
+      "spiderman8",
+      "ironman5",
+      "cable2"
+     ]
     }
    ]
   },
@@ -39860,7 +42590,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shuri1",
+      "deathlok1",
+      "angel1",
+      "ironfist3",
+      "redhulk1"
+     ]
     },
     {
      "id": "storm-10200126",
@@ -39950,7 +42687,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "emmafrost2",
+      "spiderman6",
+      "rogue2",
+      "moongirl1",
+      "hyperion1"
+     ]
     },
     {
      "id": "storm-10300126",
@@ -40042,7 +42786,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "deadpool2",
+      "medusa2",
+      "sharonrogers4",
+      "americachavez1",
+      "baronzemo1"
+     ]
     },
     {
      "id": "storm-10400126",
@@ -40132,7 +42883,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow10",
+      "moonknight3",
+      "cyclops4",
+      "valkyrie2",
+      "ebonymaw2"
+     ]
     }
    ]
   },
@@ -40260,7 +43018,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ancientone1",
+      "yellowjacket1",
+      "shehulk1",
+      "antman2",
+      "spiderman3"
+     ]
     },
     {
      "id": "beast-10200127",
@@ -40350,7 +43115,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "destroyer1",
+      "rocketraccoon1",
+      "ironfist1",
+      "punisher2",
+      "redskull1"
+     ]
     },
     {
      "id": "beast-10300127",
@@ -40440,7 +43212,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wolverine3",
+      "blackpanther3",
+      "lunasnow3",
+      "wintersoldier4",
+      "janefoster1"
+     ]
     },
     {
      "id": "beast-10400127",
@@ -40530,7 +43309,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye6",
+      "killmonger1",
+      "cyclops3",
+      "humantorch2",
+      "cable5"
+     ]
     }
    ]
   },
@@ -40657,7 +43443,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica4",
+      "hulkbuster1",
+      "sharoncarter1",
+      "warmachine2",
+      "wasp1"
+     ]
     },
     {
      "id": "rogue-10200128",
@@ -40747,7 +43540,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "storm1",
+      "groot1",
+      "nebula5",
+      "thor5",
+      "ghost1"
+     ]
     },
     {
      "id": "rogue-10300128",
@@ -40837,7 +43637,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "colossus2",
+      "spiderman6",
+      "storm3",
+      "odin1",
+      "blackwidow9"
+     ]
     },
     {
      "id": "rogue-10400128",
@@ -40929,7 +43736,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "baronmordo2",
+      "rocketraccoon6",
+      "sabretooth2",
+      "spiderman20992",
+      "wolverine5"
+     ]
     }
    ]
   },
@@ -41056,7 +43870,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "inferno1",
+      "ironman4",
+      "colossus1",
+      "warmachine4",
+      "modok2"
+     ]
     },
     {
      "id": "magneto-10200129",
@@ -41146,7 +43967,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon5",
+      "emmafrost1",
+      "thing1",
+      "blackwidow5",
+      "doctorstrange2"
+     ]
     },
     {
      "id": "magneto-10300129",
@@ -41239,7 +44067,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "bluemarvel1",
+      "ironman9",
+      "jeangrey1",
+      "hawkeye5",
+      "jessicajones1"
+     ]
     },
     {
      "id": "magneto-10400129",
@@ -41330,7 +44165,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "spidergwen3",
+      "kamalakhan4",
+      "ironheart1",
+      "x-233",
+      "ebonymaw3"
+     ]
     }
    ]
   },
@@ -41461,7 +44303,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "falcon6",
+      "ghostrider5",
+      "rescue2",
+      "thing3",
+      "deadpool7"
+     ]
     }
    ]
   },
@@ -41627,7 +44476,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye5",
+      "greengoblin3",
+      "crescent1",
+      "angel2",
+      "proximamidnight1"
+     ]
     }
    ]
   },
@@ -41754,7 +44610,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch4",
+      "destroyer2",
+      "kidomega1",
+      "scarletwitch7",
+      "phylavell1"
+     ]
     }
    ]
   },
@@ -41882,7 +44745,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki1",
+      "hulkbuster1",
+      "spiderman2",
+      "punisher1",
+      "mockingbird2"
+     ]
     },
     {
      "id": "mysterio-10200134",
@@ -41974,7 +44844,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "quasar1",
+      "professorx2",
+      "silversurfer1",
+      "titania1",
+      "shuri2"
+     ]
     }
    ]
   },
@@ -42101,7 +44978,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sharonrogers1",
+      "venom1",
+      "falcon2",
+      "daisyjohnson1",
+      "blackwidow3"
+     ]
     }
    ]
   },
@@ -42228,7 +45112,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow3",
+      "greengoblin1",
+      "elsabloodstone2",
+      "moonknight1",
+      "punisher3"
+     ]
     },
     {
      "id": "spider-man-2099-10200136",
@@ -42317,7 +45208,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "whitefox1",
+      "doctorstrange4",
+      "swordmaster1",
+      "antman5",
+      "beast3"
+     ]
     }
    ]
   },
@@ -42442,7 +45340,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye5",
+      "captainmarvel5",
+      "invisiblewoman2",
+      "x-232",
+      "scarletwitch4"
+     ]
     }
    ]
   },
@@ -42567,7 +45472,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "greengoblin2",
+      "supergiant1",
+      "hela2",
+      "heimdall1",
+      "professorx1"
+     ]
     }
    ]
   },
@@ -42694,7 +45606,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "scarletwitch1",
+      "elektra1",
+      "spidergwen1",
+      "beast1",
+      "doctorstrange2"
+     ]
     },
     {
      "id": "quicksilver-10200139",
@@ -42784,7 +45703,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hawkeye4",
+      "proximamidnight1",
+      "invisiblewoman1",
+      "blackwidow6",
+      "wolverine3"
+     ]
     },
     {
      "id": "quicksilver-10300139",
@@ -42877,7 +45803,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow9",
+      "doctorstrange3",
+      "captainamerica6",
+      "loki4",
+      "sabretooth1"
+     ]
     },
     {
      "id": "quicksilver-10400139",
@@ -42967,7 +45900,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "milesmorales3",
+      "sunbird1",
+      "supergiant1",
+      "kittypryde1",
+      "kraventhehunter1"
+     ]
     }
    ]
   },
@@ -43094,7 +46034,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "satana1",
+      "falcon3",
+      "rogue1",
+      "wolverine1",
+      "blackwidow4"
+     ]
     },
     {
      "id": "scarlet-witch-10200140",
@@ -43184,7 +46131,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "moongirl1",
+      "doctorstrange1",
+      "starlord2",
+      "crystal2",
+      "blackdwarf1"
+     ]
     },
     {
      "id": "scarlet-witch-10300140",
@@ -43274,7 +46228,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "minn-erva1",
+      "warmachine6",
+      "wolverine3",
+      "mysterio1",
+      "emmafrost2"
+     ]
     },
     {
      "id": "scarlet-witch-10400140",
@@ -43365,7 +46326,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "deadpool2",
+      "ghostrider3",
+      "taskmaster1",
+      "dormammu1",
+      "storm3"
+     ]
     },
     {
      "id": "scarlet-witch-10500140",
@@ -43456,7 +46424,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier4",
+      "jessicajones1",
+      "magik1",
+      "doctordoom1",
+      "makkari1"
+     ]
     },
     {
      "id": "scarlet-witch-10600140",
@@ -43547,7 +46522,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "modok3",
+      "greengoblin4",
+      "namor2",
+      "wolverine6",
+      "stryfe1"
+     ]
     },
     {
      "id": "scarlet-witch-10700140",
@@ -43644,7 +46626,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctorstrange4",
+      "lunasnow3",
+      "taskmaster2",
+      "wolverine5",
+      "ancientone2"
+     ]
     }
    ]
   },
@@ -43773,7 +46762,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "crystal1",
+      "doctorstrange2",
+      "wasp2",
+      "rocketraccoon5",
+      "spiderman20991"
+     ]
     },
     {
      "id": "apocalypse-10200141",
@@ -43864,7 +46860,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "blackpanther4",
+      "venom4",
+      "angel2",
+      "valkyrie2",
+      "adamwarlock2"
+     ]
     },
     {
      "id": "apocalypse-10300141",
@@ -43955,7 +46958,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "antman6",
+      "mantis1",
+      "sunbird1",
+      "professorx2",
+      "scarletwitch6"
+     ]
     }
    ]
   },
@@ -44086,7 +47096,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "rogue1",
+      "falcon3",
+      "cyclops1",
+      "captainamerica6",
+      "blackdwarf1"
+     ]
     },
     {
      "id": "cable-10200142",
@@ -44177,7 +47194,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow4",
+      "hyperion1",
+      "rogue1",
+      "warmachine5",
+      "corvusglaive1"
+     ]
     },
     {
      "id": "cable-10300142",
@@ -44271,7 +47295,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "crossbones2",
+      "namor1",
+      "nebula5",
+      "apocalypse1",
+      "psylocke2"
+     ]
     },
     {
      "id": "cable-10400142",
@@ -44362,7 +47393,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ronan2",
+      "deadpool1",
+      "vision2",
+      "punisher5",
+      "scarletwitch3"
+     ]
     },
     {
      "id": "cable-10500142",
@@ -44453,7 +47491,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shangchi1",
+      "spiderman9",
+      "magneto2",
+      "crescent2",
+      "thanos4"
+     ]
     }
    ]
   },
@@ -44615,7 +47660,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "medusa2",
+      "shehulk3",
+      "jeangrey2",
+      "thor5",
+      "whitefox1"
+     ]
     },
     {
      "id": "valkyrie-10200144",
@@ -44704,7 +47756,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vision3",
+      "gambit1",
+      "ebonymaw2",
+      "ultron4",
+      "wave1"
+     ]
     },
     {
      "id": "valkyrie-10300144",
@@ -44793,7 +47852,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki8",
+      "blackwidow11",
+      "warmachine8",
+      "kittypryde1",
+      "adamwarlock2"
+     ]
     }
    ]
   },
@@ -44922,7 +47988,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ronan2",
+      "baronzemo1",
+      "blackbolt3",
+      "americachavez1",
+      "supergiant1"
+     ]
     }
    ]
   },
@@ -45048,7 +48121,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blade2",
+      "emmafrost2",
+      "thanos3",
+      "captainamerica11",
+      "minn-erva1"
+     ]
     }
    ]
   },
@@ -45174,7 +48254,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wolverine4",
+      "lunasnow2",
+      "crossbones2",
+      "humantorch1",
+      "amadeuscho2"
+     ]
     },
     {
      "id": "america-chavez-10200147",
@@ -45263,7 +48350,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "iceman1",
+      "corvusglaive2",
+      "hulk6",
+      "taskmaster1",
+      "heimdall1"
+     ]
     },
     {
      "id": "america-chavez-10300147",
@@ -45357,7 +48451,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gamora4",
+      "angela3",
+      "storm5",
+      "agentvenom3",
+      "ebonymaw3"
+     ]
     }
    ]
   },
@@ -45519,7 +48620,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ghostrider3",
+      "agentvenom1",
+      "milesmorales2",
+      "gambit1",
+      "quicksilver2"
+     ]
     }
    ]
   },
@@ -45645,7 +48753,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord5",
+      "emmafrost3",
+      "wartiger1",
+      "blackdwarf2",
+      "spiderwoman1"
+     ]
     }
    ]
   },
@@ -45773,7 +48888,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "punisher3",
+      "killmonger1",
+      "giantman2",
+      "cable1",
+      "ironfist3"
+     ]
     },
     {
      "id": "x-23-10200151",
@@ -45864,7 +48986,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blade2",
+      "yelenabelova2",
+      "starlord4",
+      "mysterio1",
+      "emmafrost2"
+     ]
     },
     {
      "id": "x-23-10300151",
@@ -45954,7 +49083,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "spidergwen3",
+      "hela3",
+      "professorx2",
+      "lunasnow3",
+      "scarletwitch5"
+     ]
     }
    ]
   },
@@ -46083,7 +49219,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "punisher5",
+      "thanos3",
+      "cyclops3",
+      "spidergwen2",
+      "lunasnow3"
+     ]
     },
     {
      "id": "adam-warlock-10200152",
@@ -46173,7 +49316,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "thena1",
+      "quasar1",
+      "sif2",
+      "kamalakhan3",
+      "falcon4"
+     ]
     }
    ]
   },
@@ -46299,7 +49449,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman4",
+      "ironman4",
+      "thor3",
+      "rocketraccoon3",
+      "cyclops2"
+     ]
     },
     {
      "id": "luna-snow-10200153",
@@ -46388,7 +49545,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "warmachine4",
+      "emmafrost1",
+      "nickfury2",
+      "nightcrawler1",
+      "ebonymaw1"
+     ]
     },
     {
      "id": "luna-snow-10300153",
@@ -46477,7 +49641,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "whitefox1",
+      "vision3",
+      "nightcrawler2",
+      "jeangrey2",
+      "greengoblin2"
+     ]
     },
     {
      "id": "luna-snow-10400153",
@@ -46568,7 +49739,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blade3",
+      "colossus3",
+      "doctorstrange2",
+      "thor5",
+      "carnage2"
+     ]
     },
     {
      "id": "luna-snow-10500153",
@@ -46657,7 +49835,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord6",
+      "shangchi2",
+      "ares1",
+      "beast4",
+      "sentry2"
+     ]
     }
    ]
   },
@@ -46783,7 +49968,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon2",
+      "spidergwen1",
+      "giantman1",
+      "groot2",
+      "yondu2"
+     ]
     },
     {
      "id": "shuri-10200154",
@@ -46872,7 +50064,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "emmafrost3",
+      "vision3",
+      "adamwarlock1",
+      "robbiereyes1",
+      "drax2"
+     ]
     },
     {
      "id": "shuri-10300154",
@@ -46961,7 +50160,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor9",
+      "hawkeye5",
+      "milesmorales3",
+      "gambit1",
+      "cable4"
+     ]
     }
    ]
   },
@@ -47086,7 +50292,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hela1",
+      "yellowjacket1",
+      "elektra1",
+      "crossbones1",
+      "blackpanther1"
+     ]
     }
    ]
   },
@@ -47252,7 +50465,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "nickfury2",
+      "vulture1",
+      "killmonger1",
+      "ironfist2",
+      "venom1"
+     ]
     },
     {
      "id": "magik-10200157",
@@ -47344,7 +50564,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "sersi1",
+      "rescue1",
+      "moonknight3",
+      "wolverine5",
+      "swordmaster1"
+     ]
     },
     {
      "id": "magik-10300157",
@@ -47434,7 +50661,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica13",
+      "gwenpool4",
+      "storm3",
+      "colossus3",
+      "supergiant1"
+     ]
     }
    ]
   },
@@ -47561,7 +50795,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "blade1",
+      "hulk3",
+      "cyclops2",
+      "wolverine2",
+      "lukecage1"
+     ]
     },
     {
      "id": "colossus-10200158",
@@ -47657,7 +50898,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ancientone1",
+      "blackpanther2",
+      "spiderman3",
+      "thor2",
+      "baronmordo1"
+     ]
     },
     {
      "id": "colossus-10300158",
@@ -47747,7 +50995,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironman8",
+      "gambit1",
+      "ironfist4",
+      "cable4",
+      "loki5"
+     ]
     }
    ]
   },
@@ -47876,7 +51131,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "elsabloodstone2",
+      "spidergwen1",
+      "rocketraccoon2",
+      "quicksilver1",
+      "karnak1"
+     ]
     },
     {
      "id": "angel-10200159",
@@ -47966,7 +51228,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "colossus3",
+      "supergiant1",
+      "ironman8",
+      "greengoblin3",
+      "shangchi1"
+     ]
     },
     {
      "id": "angel-10300159",
@@ -48059,7 +51328,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shadowshell1",
+      "malekith2",
+      "domino2",
+      "nickfury3",
+      "silversurfer1"
+     ]
     }
    ]
   },
@@ -48186,7 +51462,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "yondu2",
+      "shuri1",
+      "groot2",
+      "medusa1",
+      "cyclops2"
+     ]
     },
     {
      "id": "emma-frost-10200160",
@@ -48282,7 +51565,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "thor3",
+      "spiderman4",
+      "minn-erva1",
+      "gwenpool1",
+      "starlord3"
+     ]
     },
     {
      "id": "emma-frost-10300160",
@@ -48372,7 +51662,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "scarletwitch2",
+      "blade2",
+      "lunasnow1",
+      "nightcrawler2",
+      "milesmorales2"
+     ]
     },
     {
      "id": "emma-frost-10400160",
@@ -48464,7 +51761,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hela3",
+      "falcon6",
+      "rogue3",
+      "electro1",
+      "thanos4"
+     ]
     }
    ]
   },
@@ -48625,7 +51929,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "lukecage2",
+      "venom2",
+      "punisher4",
+      "wolverine2",
+      "spiderman5"
+     ]
     },
     {
      "id": "ghost-10200162",
@@ -48720,7 +52031,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kamalakhan4",
+      "deadpool8",
+      "thane1",
+      "misterfantastic3",
+      "professorx2"
+     ]
     }
    ]
   },
@@ -48885,7 +52203,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "groot3",
+      "spiderman4",
+      "wolverine2",
+      "starlord3",
+      "venom2"
+     ]
     },
     {
      "id": "deadpool-10200164",
@@ -48977,7 +52302,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "misterfantastic1",
+      "angel1",
+      "milesmorales1",
+      "quicksilver1",
+      "groot2"
+     ]
     },
     {
      "id": "deadpool-10300164",
@@ -49072,7 +52404,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "misterfantastic1",
+      "angel1",
+      "milesmorales1",
+      "quicksilver1",
+      "groot2"
+     ]
     },
     {
      "id": "deadpool-10400164",
@@ -49164,7 +52503,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho2",
+      "blackbolt3",
+      "thanos1",
+      "cable2",
+      "taskmaster1"
+     ]
     },
     {
      "id": "deadpool-10500164",
@@ -49256,7 +52602,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho2",
+      "blackbolt3",
+      "thanos1",
+      "cable2",
+      "taskmaster1"
+     ]
     },
     {
      "id": "deadpool-10600164",
@@ -49350,7 +52703,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "quasar1",
+      "captainmarvel5",
+      "shehulk3",
+      "wolverine5",
+      "amadeuscho2"
+     ]
     },
     {
      "id": "deadpool-10800164",
@@ -49442,7 +52802,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hulk7",
+      "katebishop1",
+      "sharonrogers4",
+      "captainamerica9",
+      "thanos1"
+     ]
     },
     {
      "id": "deadpool-10700164",
@@ -49534,7 +52901,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "hulk7",
+      "katebishop1",
+      "sharonrogers4",
+      "captainamerica9",
+      "thanos1"
+     ]
     }
    ]
   },
@@ -49663,7 +53037,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironman6",
+      "yondu2",
+      "sharonrogers2",
+      "punisher3",
+      "colossus1"
+     ]
     },
     {
      "id": "domino-10200165",
@@ -49753,7 +53134,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wartiger1",
+      "scarletspider1",
+      "cyclops4",
+      "aero1",
+      "ultron4"
+     ]
     }
    ]
   },
@@ -49915,7 +53303,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "medusa1",
+      "colossus1",
+      "greengoblin1",
+      "bullseye1",
+      "ghostrider2"
+     ]
     },
     {
      "id": "psylocke-10200167",
@@ -50005,7 +53400,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier4",
+      "corvusglaive2",
+      "lukecage3",
+      "hulk6",
+      "professorx1"
+     ]
     },
     {
      "id": "psylocke-10300167",
@@ -50097,7 +53499,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "kraventhehunter1",
+      "starlord5",
+      "domino2",
+      "crescent2",
+      "gladiator1"
+     ]
     }
    ]
   },
@@ -50225,7 +53634,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "heimdall1",
+      "antman6",
+      "wolverine4",
+      "electro1",
+      "scarletwitch5"
+     ]
     },
     {
      "id": "stryfe-10200168",
@@ -50319,7 +53735,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "taskmaster2",
+      "sistergrimm2",
+      "yelenabelova3",
+      "emmafrost3",
+      "doctorstrange5"
+     ]
     }
    ]
   },
@@ -50446,7 +53869,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "medusa2",
+      "doctoroctopus3",
+      "sunbird1",
+      "nightcrawler2",
+      "scarletwitch5"
+     ]
     }
    ]
   },
@@ -50655,7 +54085,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "cable5",
+      "mistersinister1",
+      "sharonrogers5",
+      "malekith2",
+      "baronzemo1"
+     ]
     }
    ]
   },
@@ -50782,7 +54219,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "kamalakhan2",
+      "rogue2",
+      "spiderman20991",
+      "domino1",
+      "ghostrider3"
+     ]
     },
     {
      "id": "gambit-10200173",
@@ -50875,7 +54319,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shuri2",
+      "invisiblewoman3",
+      "sif2",
+      "hyperion2",
+      "wolverine7"
+     ]
     }
    ]
   },
@@ -51003,7 +54454,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wolverine1",
+      "hulkbuster2",
+      "karnak1",
+      "inferno1",
+      "gamora2"
+     ]
     },
     {
      "id": "nightcrawler-10200174",
@@ -51093,7 +54551,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "magneto2",
+      "lunasnow1",
+      "sharonrogers3",
+      "hyperion1",
+      "moonknight2"
+     ]
     }
    ]
   },
@@ -51219,7 +54684,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica8",
+      "sharonrogers2",
+      "hyperion1",
+      "antman4",
+      "deadpool1"
+     ]
     },
     {
      "id": "sentinel-10200175",
@@ -51308,7 +54780,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "juggernaut2",
+      "antman6",
+      "sentry1",
+      "nebula6",
+      "hawkeye6"
+     ]
     }
    ]
   },
@@ -51435,7 +54914,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shehulk2",
+      "captainmarvel3",
+      "deadpool1",
+      "antman3",
+      "starlord3"
+     ]
     },
     {
      "id": "crescent-10200176",
@@ -51524,7 +55010,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "valkyrie1",
+      "thanos3",
+      "hulk6",
+      "medusa2",
+      "domino1"
+     ]
     },
     {
      "id": "crescent-10300176",
@@ -51615,7 +55108,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "mantis1",
+      "shangchi1",
+      "x-233",
+      "echo2",
+      "sentry1"
+     ]
     }
    ]
   },
@@ -51743,7 +55243,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman8",
+      "blackdwarf2",
+      "gamora3",
+      "hulkbuster3",
+      "mistersinister1"
+     ]
     }
    ]
   },
@@ -51869,7 +55376,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "lunasnow1",
+      "minn-erva1",
+      "groot3",
+      "antman5",
+      "thing1"
+     ]
     },
     {
      "id": "white-fox-10200178",
@@ -51960,7 +55474,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "amadeuscho2",
+      "apocalypse1",
+      "cyclops3",
+      "beast2",
+      "crescent1"
+     ]
     },
     {
      "id": "white-fox-10300178",
@@ -52049,7 +55570,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulkbuster4",
+      "venom5",
+      "redhulk3",
+      "daken1",
+      "quicksilver4"
+     ]
     }
    ]
   },
@@ -52179,7 +55707,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "x-231",
+      "thor3",
+      "cyclops2",
+      "emmafrost1",
+      "wintersoldier3"
+     ]
     },
     {
      "id": "mister-fantastic-10200179",
@@ -52275,7 +55810,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "redskull2",
+      "emmafrost1",
+      "groot3",
+      "greengoblin2",
+      "silversurfer1"
+     ]
     },
     {
      "id": "mister-fantastic-10300179",
@@ -52365,7 +55907,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica13",
+      "dormammu1",
+      "ironheart1",
+      "rachelsummers1",
+      "doctorvoodoo1"
+     ]
     },
     {
      "id": "mister-fantastic-10400179",
@@ -52455,7 +56004,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gwenpool4",
+      "ironman10",
+      "domino2",
+      "nickfury4",
+      "wolverine6"
+     ]
     }
    ]
   },
@@ -52583,7 +56139,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "wasp2",
+      "hulkbuster2",
+      "nickfury2",
+      "minn-erva1",
+      "agentvenom1"
+     ]
     },
     {
      "id": "invisible-woman-10200180",
@@ -52672,7 +56235,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "magik1",
+      "medusa1",
+      "crossbones2",
+      "sabretooth1",
+      "sharonrogers2"
+     ]
     },
     {
      "id": "invisible-woman-10300180",
@@ -52761,7 +56331,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "cyclops2",
+      "enchantress2",
+      "sharonrogers5",
+      "apocalypse1",
+      "mystique1"
+     ]
     },
     {
      "id": "invisible-woman-10400180",
@@ -52850,7 +56427,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki7",
+      "blackwidow11",
+      "starlord5",
+      "magik3",
+      "odin2"
+     ]
     }
    ]
   },
@@ -52979,7 +56563,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman5",
+      "shehulk2",
+      "angel1",
+      "kidkaiju1",
+      "milesmorales1"
+     ]
     },
     {
      "id": "human-torch-10200181",
@@ -53068,7 +56659,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "lunasnow2",
+      "rocketraccoon4",
+      "namor1",
+      "captainamerica11",
+      "redhulk2"
+     ]
     },
     {
      "id": "human-torch-10300181",
@@ -53157,7 +56755,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "mistersinister1",
+      "bluedragon1",
+      "storm3",
+      "spiderman20992",
+      "deadpool4"
+     ]
     },
     {
      "id": "human-torch-10400181",
@@ -53246,7 +56851,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shuri3",
+      "hulkbuster4",
+      "emmafrost3",
+      "spiderwoman1",
+      "doctorstrange5"
+     ]
     }
    ]
   },
@@ -53375,7 +56987,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki2",
+      "ronan2",
+      "colossus1",
+      "warmachine4",
+      "nightcrawler1"
+     ]
     },
     {
      "id": "the-thing-10200182",
@@ -53464,7 +57083,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "yelenabelova1",
+      "nebula5",
+      "storm1",
+      "milesmorales2",
+      "sentinel1"
+     ]
     },
     {
      "id": "the-thing-10300182",
@@ -53553,7 +57179,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "quasar1",
+      "corvusglaive2",
+      "antman6",
+      "rogue3",
+      "scarletspider1"
+     ]
     },
     {
      "id": "the-thing-10400182",
@@ -53642,7 +57275,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gamora5",
+      "redhulk3",
+      "kraventhehunter1",
+      "kittypryde1",
+      "gladiator1"
+     ]
     }
    ]
   },
@@ -53769,7 +57409,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "ironfist4",
+      "x-231",
+      "moonknight2",
+      "jeangrey1",
+      "redhulk2"
+     ]
     },
     {
      "id": "doctor-doom-10200183",
@@ -53859,7 +57506,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "doctoroctopus4",
+      "yelenabelova1",
+      "gamora4",
+      "heimdall1",
+      "doctorstrange5"
+     ]
     }
    ]
   },
@@ -53985,7 +57639,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher6",
+      "jeangrey3",
+      "electro1",
+      "absorbingman1",
+      "spiderman10"
+     ]
     }
    ]
   },
@@ -54112,7 +57773,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "emmafrost1",
+      "captainamerica6",
+      "moonknight1",
+      "shehulk2",
+      "loki2"
+     ]
     },
     {
      "id": "nick-fury-10200185",
@@ -54201,7 +57869,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ebonymaw1",
+      "yelenabelova2",
+      "storm3",
+      "wong2",
+      "titania1"
+     ]
     },
     {
      "id": "nick-fury-10300185",
@@ -54290,7 +57965,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spidergwen3",
+      "arachknight1",
+      "agentvenom2",
+      "cable4",
+      "warmachine8"
+     ]
     }
    ]
   },
@@ -54417,7 +58099,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "x-231",
+      "blackwidow4",
+      "punisher3",
+      "moongirl1",
+      "thor3"
+     ]
     }
    ]
   },
@@ -54619,7 +58308,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "thing2",
+      "rescue1",
+      "drax2",
+      "deadpool4",
+      "makkari1"
+     ]
     },
     {
      "id": "juggernaut-10200189",
@@ -54710,7 +58406,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "thing3",
+      "kingpin3",
+      "ronan3",
+      "daken1",
+      "ebonymaw3"
+     ]
     }
    ]
   },
@@ -54837,7 +58540,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "x-231",
+      "antman3",
+      "beast2",
+      "shuri1",
+      "magneto1"
+     ]
     },
     {
      "id": "sabretooth-10200190",
@@ -54927,7 +58637,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "lunasnow3",
+      "deadpool1",
+      "hulk7",
+      "makkari1",
+      "professorx1"
+     ]
     }
    ]
   },
@@ -55053,7 +58770,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "deadpool2",
+      "shehulk3",
+      "lukecage3",
+      "lunasnow1",
+      "redguardian1"
+     ]
     },
     {
      "id": "rescue-10200191",
@@ -55142,7 +58866,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "starlord5",
+      "spiderwoman1",
+      "mystique1",
+      "wenwu1",
+      "scarletwitch3"
+     ]
     }
    ]
   },
@@ -55271,7 +59002,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "ironman5",
+      "deadpool2",
+      "captainmarvel3",
+      "magik1",
+      "sharonrogers3"
+     ]
     },
     {
      "id": "iceman-10200192",
@@ -55364,7 +59102,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "venom3",
+      "silversurfer1",
+      "psylocke3",
+      "spiderman9",
+      "ikaris1"
+     ]
     }
    ]
   },
@@ -55492,7 +59237,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "nightcrawler2",
+      "milesmorales4",
+      "doctorvoodoo1",
+      "baronzemo1",
+      "misterfantastic1"
+     ]
     }
    ]
   },
@@ -55618,7 +59370,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "nebula6",
+      "humantorch3",
+      "wenwu1",
+      "sabretooth2",
+      "proximamidnight2"
+     ]
     }
    ]
   },
@@ -55819,7 +59578,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "baronzemo1",
+      "x-232",
+      "captainamerica11",
+      "doctorstrange2",
+      "loki6"
+     ]
     }
    ]
   },
@@ -55954,7 +59720,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "shuri1",
+      "wolverine1",
+      "hulk3",
+      "antman2",
+      "kidkaiju1"
+     ]
     },
     {
      "id": "namor-10200198",
@@ -56045,7 +59818,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "baronmordo2",
+      "milesmorales2",
+      "hyperion2",
+      "cable4",
+      "kingo1"
+     ]
     }
    ]
   },
@@ -56175,7 +59955,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow6",
+      "quicksilver2",
+      "cyclops3",
+      "psylocke2",
+      "scarletwitch1"
+     ]
     },
     {
      "id": "silver-surfer-10200199",
@@ -56271,7 +60058,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "thor9",
+      "captainamerica13",
+      "electro1",
+      "ironheart1",
+      "adamwarlock2"
+     ]
     }
    ]
   },
@@ -56396,7 +60190,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "bullseye2",
+      "invisiblewoman2",
+      "starlord4",
+      "ebonymaw1",
+      "x-232"
+     ]
     }
    ]
   },
@@ -56522,7 +60323,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "gambit1",
+      "baronmordo2",
+      "robbiereyes1",
+      "scarletwitch2",
+      "blackwidow10"
+     ]
     }
    ]
   },
@@ -56650,7 +60458,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "colossus3",
+      "juggernaut1",
+      "kittypryde1",
+      "domino2",
+      "cable5"
+     ]
     }
    ]
   },
@@ -56776,7 +60591,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "captainmarvel7",
+      "loki7",
+      "rachelsummers1",
+      "ghost2",
+      "silversurfer2"
+     ]
     }
    ]
   },
@@ -56903,7 +60725,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "vision3",
+      "warmachine7",
+      "thing2",
+      "magik1",
+      "doctordoom1"
+     ]
     },
     {
      "id": "doctor-voodoo-10200204",
@@ -56992,7 +60821,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "punisher7",
+      "angela3",
+      "x-233",
+      "nickfury3",
+      "stryfe1"
+     ]
     }
    ]
   },
@@ -57118,7 +60954,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch2",
+      "antman3",
+      "dormammu1",
+      "rogue2",
+      "yelenabelova2"
+     ]
     }
    ]
   },
@@ -57244,7 +61087,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "taskmaster1",
+      "cable4",
+      "thing2",
+      "gambit1",
+      "kamalakhan2"
+     ]
     }
    ]
   },
@@ -57480,7 +61330,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "captainamerica12",
+      "ironman8",
+      "thanos4",
+      "quasar1",
+      "rogue3"
+     ]
     }
    ]
   },
@@ -57607,7 +61464,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "loki4",
+      "electro1",
+      "titania1",
+      "blackdwarf2",
+      "beast2"
+     ]
     }
    ]
   },
@@ -57735,7 +61599,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "gamora3",
+      "thing2",
+      "kamalakhan3",
+      "valkyrie2",
+      "jeangrey2"
+     ]
     }
    ]
   },
@@ -57861,7 +61732,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "shangchi1",
+      "sif2",
+      "colossus3",
+      "doctordoom1",
+      "carnage1"
+     ]
     }
    ]
   },
@@ -57987,7 +61865,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "kamalakhan2",
+      "carnage1",
+      "vision2",
+      "nightcrawler2",
+      "apocalypse1"
+     ]
     }
    ]
   },
@@ -58147,7 +62032,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ronan2",
+      "blackwidow5",
+      "sharonrogers2",
+      "x-231",
+      "beast2"
+     ]
     },
     {
      "id": "taskmaster-10200216",
@@ -58242,7 +62134,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "enchantress2",
+      "wartiger1",
+      "spectrum1",
+      "scarletwitch6",
+      "wasp3"
+     ]
     }
    ]
   },
@@ -58370,7 +62269,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "bullseye2",
+      "wolverine4",
+      "wasp2",
+      "domino1",
+      "spiderman20991"
+     ]
     },
     {
      "id": "professor-x-10200217",
@@ -58460,7 +62366,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "crescent2",
+      "captainmarvel5",
+      "shehulk4",
+      "venom4",
+      "wolverine4"
+     ]
     }
    ]
   },
@@ -58587,7 +62500,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "rogue3",
+      "stryfe1",
+      "angel2",
+      "mistersinister1",
+      "namor2"
+     ]
     }
    ]
   },
@@ -58715,7 +62635,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "moonknight2",
+      "rescue1",
+      "invisiblewoman2",
+      "venom3",
+      "jeangrey2"
+     ]
     }
    ]
   },
@@ -58842,7 +62769,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hulkbuster2",
+      "invisiblewoman1",
+      "sabretooth1",
+      "captainmarvel3",
+      "lunasnow1"
+     ]
     },
     {
      "id": "red-guardian-10200220",
@@ -58937,7 +62871,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "falcon5",
+      "agentvenom3",
+      "jeangrey3",
+      "nebula6",
+      "knull1"
+     ]
     }
    ]
   },
@@ -59065,7 +63006,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rogue2",
+      "ironman6",
+      "whitefox1",
+      "nebula4",
+      "colossus2"
+     ]
     },
     {
      "id": "yelena-belova-10200221",
@@ -59156,7 +63104,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "rogue2",
+      "ironman6",
+      "whitefox1",
+      "nebula4",
+      "colossus2"
+     ]
     },
     {
      "id": "yelena-belova-10300221",
@@ -59251,7 +63206,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "beast3",
+      "doctorstrange6",
+      "doctoroctopus4",
+      "echo2",
+      "spiderman11"
+     ]
     }
    ]
   },
@@ -59386,7 +63348,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "spiderman10",
+      "shehulk4",
+      "doctoroctopus4",
+      "enchantress2",
+      "jeangrey3"
+     ]
     }
    ]
   },
@@ -59514,7 +63483,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctorvoodoo2",
+      "mistersinister1",
+      "modok3",
+      "wasp3",
+      "deadpool8"
+     ]
     }
    ]
   },
@@ -59676,7 +63652,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "humantorch4",
+      "blackpanther4",
+      "deadpool7",
+      "sabretooth2",
+      "agentvenom2"
+     ]
     }
    ]
   },
@@ -59804,7 +63787,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "wasp3",
+      "cyclops4",
+      "milesmorales4",
+      "robbiereyes1",
+      "wolverine6"
+     ]
     }
    ]
   },
@@ -59974,7 +63964,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "mystique1",
+      "angela3",
+      "thanos6",
+      "kamalakhan4",
+      "electro1"
+     ]
     }
    ]
   },
@@ -60100,7 +64097,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "gamora5",
+      "whitetiger1",
+      "echo2",
+      "colossus3",
+      "knull1"
+     ]
     }
    ]
   },
@@ -60232,7 +64236,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "moonknight3",
+      "captainmarvel6",
+      "psylocke3",
+      "kamalakhan3",
+      "cable1"
+     ]
     }
    ]
   },
@@ -60362,7 +64373,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "thor9",
+      "mistersinister1",
+      "wong2",
+      "misterfantastic2",
+      "crossbones2"
+     ]
     },
     {
      "id": "scarlet-spider-10200231",
@@ -60454,7 +64472,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctorvoodoo1",
+      "venom5",
+      "kingpin3",
+      "namor2",
+      "quicksilver4"
+     ]
     }
    ]
   },
@@ -60617,7 +64642,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "robbiereyes1",
+      "corvusglaive2",
+      "gilgamesh1",
+      "daredevil3",
+      "ironman5"
+     ]
     }
    ]
   },
@@ -60751,7 +64783,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "falcon4",
+      "aero1",
+      "thena1",
+      "proximamidnight2",
+      "colossus1"
+     ]
     }
    ]
   },
@@ -60879,7 +64918,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "kamalakhan4",
+      "misterfantastic2",
+      "beast3",
+      "carnage2",
+      "loki7"
+     ]
     },
     {
      "id": "sentry-10200235",
@@ -60973,7 +65019,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "carnage3",
+      "venom5",
+      "thanos6",
+      "iceman1",
+      "wenwu1"
+     ]
     }
    ]
   },
@@ -61100,7 +65153,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "taskmaster2",
+      "captainmarvel7",
+      "domino2",
+      "knull1",
+      "ghost2"
+     ]
     }
    ]
   },
@@ -61233,7 +65293,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ironman10",
+      "ironheart2",
+      "misterfantastic4",
+      "falcon5",
+      "beast4"
+     ]
     }
    ]
   },
@@ -61360,7 +65427,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "rocketraccoon6",
+      "loki7",
+      "cyclops4",
+      "nickfury3",
+      "silversurfer2"
+     ]
     }
    ]
   },
@@ -61561,7 +65635,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "doctorvoodoo1",
+      "thing3",
+      "angel2",
+      "wenwu1",
+      "scarletwitch6"
+     ]
     }
    ]
   },
@@ -61688,7 +65769,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "ironman8",
+      "yelenabelova1",
+      "redhulk2",
+      "deadpool4",
+      "moonknight2"
+     ]
     }
    ]
   },
@@ -61815,7 +65903,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "magneto2",
+      "scarletwitch3",
+      "lukecage3",
+      "loki4",
+      "ghost1"
+     ]
     }
    ]
   },
@@ -61944,7 +66039,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "sistergrimm2",
+      "thor10",
+      "wintersoldier5",
+      "colossus3",
+      "sentry1"
+     ]
     }
    ]
   },
@@ -62070,7 +66172,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "blackwidow8",
+      "bullseye2",
+      "carnage1",
+      "captainmarvel5",
+      "wolverine4"
+     ]
     }
    ]
   },
@@ -62196,7 +66305,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "redskull2",
+      "silversurfer1",
+      "humantorch2",
+      "magneto1",
+      "whitefox1"
+     ]
     }
    ]
   },
@@ -62322,7 +66438,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "dormammu1",
+      "rogue3",
+      "modok3",
+      "jessicajones1",
+      "spiderwoman1"
+     ]
     }
    ]
   },
@@ -62448,7 +66571,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "sunbird1",
+      "beast3",
+      "bluedragon1",
+      "angela3",
+      "odin2"
+     ]
     }
    ]
   },
@@ -62610,7 +66740,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "doctoroctopus2",
+      "crescent1",
+      "beast2",
+      "spidergwen2",
+      "corvusglaive2"
+     ]
     }
    ]
   },
@@ -62738,7 +66875,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "storm1",
+      "quasar1",
+      "rogue2",
+      "ebonymaw2",
+      "crystal2"
+     ]
     }
    ]
   },
@@ -62868,7 +67012,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "hyperion2",
+      "blackbolt3",
+      "jeangrey1",
+      "doctoroctopus2",
+      "humantorch1"
+     ]
     },
     {
      "id": "echo-10200252",
@@ -62961,7 +67112,14 @@
         "qty": 285
        }
       ]
-     }
+     },
+     "op": [
+      "groot5",
+      "sistergrimm2",
+      "magneto2",
+      "spectrum1",
+      "thanos4"
+     ]
     }
    ]
   },
@@ -63094,7 +67252,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier5",
+      "americachavez3",
+      "bullseye3",
+      "magik3",
+      "doctordoom2"
+     ]
     }
    ]
   },
@@ -63297,7 +67462,14 @@
         "qty": 190
        }
       ]
-     }
+     },
+     "op": [
+      "wintersoldier6",
+      "shuri3",
+      "spectrum1",
+      "angel2",
+      "betaraybill1"
+     ]
     }
    ]
   },
@@ -63495,7 +67667,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "warmachine8",
+      "falcon6",
+      "starlord5",
+      "magik3",
+      "doctordoom2"
+     ]
     }
    ]
   },
@@ -63884,7 +68063,14 @@
         "qty": 380
        }
       ]
-     }
+     },
+     "op": [
+      "gwenpool4",
+      "redhulk3",
+      "bishop1",
+      "enchantress2",
+      "misterfantastic3"
+     ]
     }
    ]
   },
