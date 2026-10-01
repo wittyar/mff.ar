@@ -1,6 +1,6 @@
 {
- "version": "1.0.8",
+ "version": "1.0.9",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Flechas ‹ › en la ficha para pasar al personaje anterior o siguiente del listado (también con ← y →). Guía de armado de Cynicalex en la ficha: mejor uniforme, su tier list con emojis, cómo se consigue y notas (Resumen); rotación y skill de proc (Skills); C.T.P. por lugar, artefacto, ISO-8 y obelisco (Armado). Opciones de cada uniforme en Armado. La planilla se revisa cada lunes: si cambia de formato, se sigue con la última compatible y Ajustes avisa por qué."
+ "notas": "Sinergia de equipos: un liderazgo o un soporte suma solo si le sirve a quien lo recibe. Los que suben el ataque físico o el de energía, o un daño elemental (fuego, frío, rayo, veneno, mente), cuentan solo para quien pega con eso según sus skills: Satana de líder ya no aparece con quien pega físico, y sí con los que pegan con fuego. «Por qué» muestra a cada uno solo lo que le sirve."
 }
