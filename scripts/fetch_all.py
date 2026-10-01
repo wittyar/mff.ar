@@ -13,11 +13,14 @@ Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       work/skills_api/*.json, work/uniforms.json, work/ctps.json, work/artifacts.json,
       work/abxl.json, work/supports.json, work/rotations.json, work/guia/*,
       work/wikitext/*.json, images/icons/*.png (insumo del build), images/*.png (los
-      retratos) e images/items/*.png (íconos de C.T.P.s y artefactos)."""
-import glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
+      retratos) e images/items/*.png (íconos de C.T.P.s y artefactos).
+Y actualiza fuentes/guia-armado/ (la guía de armado de Cynicalex, versionada en el repo)
+si la planilla bajada es compatible; si no, anota por qué en su estado.json."""
+import datetime, glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from imagenes import origen      # de dónde sale cada imagen: la misma regla que publica build.py
+import guia_armado
 
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
 TV = 'https://thanosvibs.money'
@@ -133,6 +136,18 @@ if HACER_DATOS:
     for parte in range(1, 6):
         open(f'work/guia/parte{parte}.txt', 'wb').write(get(f'{TV}/api/beginners/mff-content/{parte}'))
     print('guía de principiantes:', json.load(open('work/guia/changelog.json'))[0]['update_version'])
+
+    # 3e) la guía de armado de Cynicalex (planilla de Google, dos pestañas como CSV). Pasa
+    # a ser la copia en uso solo si scripts/guia_armado.py la entiende; si no se puede
+    # bajar o cambió de formato, sigue la última compatible y estado.json dice por qué.
+    # No corta el resto de la actualización.
+    hoy = datetime.date.today().isoformat()
+    try:
+        crudo = {k: get(guia_armado.url_csv(k), timeout=60) for k in guia_armado.GID}
+    except Exception as e:
+        print(guia_armado.rechazar([f'no se pudo bajar la planilla: {e}'], hoy))
+    else:
+        print(guia_armado.aceptar(crudo, chars, json.load(open('work/ctps.json')), hoy))
 
 
 if HACER_DATOS:

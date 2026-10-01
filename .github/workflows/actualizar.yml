@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - name: Bajar datos (sin retratos; los íconos sí, son insumo del build)
+      - name: Bajar datos (sin retratos; los íconos sí, son insumo del build) y aceptar o no la guía de armado
         run: python scripts/fetch_all.py --no-portraits
       - name: Sacar instintos de la wiki
         run: python scripts/parse_instinto.py
@@ -26,7 +26,7 @@ jobs:
         run: |
           git config user.name "mff-bot"
           git config user.email "mff-bot@users.noreply.github.com"
-          git add data.js datos.json mff-thanosvibs-import.json docs/AUDITORIA.md
+          git add data.js datos.json mff-thanosvibs-import.json docs/AUDITORIA.md fuentes/guia-armado
           git diff --cached --quiet && echo "Sin cambios" || {
             git commit -m "Datos actualizados $(date +%F)"
             git push

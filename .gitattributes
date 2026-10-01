@@ -4,3 +4,6 @@
 data.js -text
 datos.json -text
 docs/AUDITORIA.md -text
+
+# Copia en uso de la guía de armado: el sha256 de estado.json es el de lo que se bajó.
+fuentes/guia-armado/* -text
