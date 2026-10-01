@@ -43,7 +43,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
     antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo de soporte*
-    con alguien del equipo: le da un soporte o el liderazgo, o recibe uno suyo); y **todas las
+    con alguien del equipo: le da un soporte o el liderazgo, o recibe uno suyo, y le sirve: un
+    efecto que sube un ataque o un daño elemental solo cuenta para quien pega con eso según sus
+    skills, así que un liderazgo de daño de fuego no vincula a uno que pega físico); y **todas las
     combinaciones de 3 con él**, una consulta sobre los datos: cada pareja de compañeros con
     vínculo con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para
     él* (la sinergia contando solo lo que lo involucra), por PvP (Arena de Equipos), por PvE
@@ -320,7 +322,14 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - 15 de 290 personajes sin instinto: sus páginas de la wiki no lo declaran.
 - Los personajes que agregues a mano no llevan skills: las skills vienen tipadas de la API.
 - La sinergia se apoya en los efectos de líder y de soporte de thanosvibs; roles y ventaja de
-  clase son lecturas propias. No es un cálculo del juego.
+  clase son lecturas propias. No es un cálculo del juego. Cada efecto cuenta solo para quien le
+  sirve: los que suben el ataque físico o el de energía, para quien pega con ese ataque; los de
+  un elemento (fuego, frío, rayo, veneno, mente, o todos), para quien hace daño de ese elemento;
+  la reducción del reflejo físico, para quien hace daño físico; todo según el daño de sus skills
+  activas. Los demás (daño básico, crítico, ignorar evasión, defensas, vida, inmunidades) cuentan
+  para todos, también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que
+  las skills no marcan de forma legible. Un efecto nuevo que la app no conoce cuenta para todos y
+  la sinergia lo dice. Cada efecto vale lo mismo, sin importar cuánto sube.
 - Los números reflejan lo que publica thanosvibs, que puede atrasarse respecto de un rebalanceo.
 - La guía curada está escrita sobre la versión 12.1.5 de la Beginner's Guide: si thanosvibs
   publica otra, el build avisa y la sección Modos lo muestra.
