@@ -50,7 +50,8 @@ function blankUser () {
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
-             kind:'todo', objetivo:'', atributo:'', filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] },
+             kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
+             filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
   };
 }
@@ -770,10 +771,22 @@ const T = {
   ct_defensas:       { es:'Todas las defensas',   en:'All Defenses' },
   ct_vida:           { es:'Vida',                 en:'HP' },
   ct_mermas:         { es:'Quita todos los debuffs', en:'Removes All Debuffs' },
+  f_lid:             { es:'Su liderazgo da',      en:'Its leadership gives' },
+  f_sop:             { es:'Su soporte da',        en:'Its support gives' },
+  f_para:            { es:'Que le llegue y le sirva a', en:'Reaching and useful to' },
+  f_para_how:        { es:'Se elige desde la ficha de un personaje: Resumen › «Líderes que se lo dan».',
+                       en:'Chosen from a character sheet: Summary › "Leaders that give it".' },
+  f_para_rm:         { es:'Quitar',               en:'Remove' },
+  f_para_gone:       { es:'un personaje que ya no está en los datos (no filtra)', en:'a character no longer in the data (not filtering)' },
+  f_restr:           { es:'Liderazgo o soporte solo para', en:'Leadership or support only for' },
+  cd_lid:            { es:'Liderazgo',            en:'Leadership' },
+  cd_sop:            { es:'Soporte',              en:'Support' },
   ls_title:          { es:'Le sirve de un liderazgo o un soporte:', en:'Useful to it from a leadership or support:' },
   ls_note:           { es:'El ataque, según el daño de sus skills activas: con qué ataque escala y qué elementos lleva.',
                        en:'Attack, by the damage of its active skills: which attack it scales with and which elements it carries.' },
   ls_also:           { es:'y, como a cualquiera:', en:'and, like anyone:' },
+  ls_leaders:        { es:'Líderes que se lo dan', en:'Leaders that give it' },
+  ls_supports:       { es:'Soportes que se lo dan', en:'Supports that give it' },
   c_targets:         { es:'Beneficia a',          en:'Buffs' },
   c_attrs:           { es:'Atributos marcados',   en:'Marked attributes' },
   f_attrs:           { es:'Atributo marcado por vos', en:'Attribute you marked' },
@@ -1220,7 +1233,7 @@ function leSirve (x, b) {
 // ÍNDICE PARA ARMAR EQUIPOS: lo que da cada liderazgo y cada soporte, en las categorías con
 // las que se arman los equipos (las pidió el usuario), con los stats de thanosvibs que entran
 // en cada una. Las de ataque le sirven solo a quien pega con eso (sirve()); las otras cuatro,
-// a cualquiera. Se ven en la ficha. No cambian los puntos de la sinergia.
+// a cualquiera. Se ven en la ficha y filtran el roster. No cambian los puntos de la sinergia.
 const CATEGORIAS = [
   { k: 'fis',      s: ['Physical Attack'], ataque: true },
   { k: 'ene',      s: ['Energy Attack'], ataque: true },
@@ -1252,6 +1265,36 @@ function categoriasDe (x, b) {
 /** Las categorías que le sirven a b: las de ataque según con qué pega, y las demás. */
 function categoriasQueSirven (b) {
   return CATEGORIAS.filter(c => c.s.some(s => sirve({ s }, b))).map(c => c.k);
+}
+/** ¿Este liderazgo o soporte pasa el filtro del índice? Con restr ('Tipo|valor'), solo si es
+ *  para esa restricción; con para (una variante), solo lo que le llega y le sirve; con
+ *  categorías, alguno de sus efectos tiene que ser de una de ellas. */
+function slotPasa (x, cats, para, restr) {
+  if (restr && (!x.r || x.r.join('|') !== restr)) return false;
+  if (para && !aplicaA(x, para)) return false;
+  if (!cats.length) return !para || leSirve(x, para);
+  return x.fx.some(f => cats.includes(CAT_DE[f.s]) && (!para || sirve(f, para)));
+}
+/** Lo que el filtro del índice encontró en v, para mostrarlo en el roster:
+ *  { lid: [categorías], sop: [categorías] }, o null si v no pasa. */
+function indiceDe (v, F, para, restr) {
+  if (para && v.cid === para.cid) return null;
+  const s = SOPORTES[v.p]; if (!s) return null;
+  const da = (ks, cats) => {
+    const out = new Set(); let pasa = false;
+    for (const k of ks) {
+      const x = s[k]; if (!x || !slotPasa(x, cats, para, restr)) continue;
+      pasa = true;
+      for (const c of categoriasDe(x, para)) if (!cats.length || cats.includes(c)) out.add(c);
+    }
+    return pasa ? CATEGORIAS.filter(c => out.has(c.k)).map(c => c.k) : null;
+  };
+  if (!F.lid.length && !F.sop.length) {
+    const lid = da(LIDERAZGOS, []), sop = da(SLOTS_SOPORTE, []);
+    return lid || sop ? { lid: lid || [], sop: sop || [] } : null;
+  }
+  const lid = F.lid.length ? da(LIDERAZGOS, F.lid) : [], sop = F.sop.length ? da(SLOTS_SOPORTE, F.sop) : [];
+  return lid && sop ? { lid, sop } : null;
 }
 /** Personajes a los que alcanza una restricción, con las variantes que la cumplen: cuenta
  *  el uniforme puesto, que puede cambiar la clase, el bando, la raza y las habilidades. */
@@ -1644,9 +1687,17 @@ function rankLabel (key) {
 /** Rótulo de la mejor fila, con "+N" si la entrada está en más filas. */
 function rankTexto (rank) { return rank.label + (rank.todas.length > 1 ? ' +' + (rank.todas.length - 1) : ''); }
 
+/** El filtro del índice (lo que da su liderazgo o su soporte) con su personaje de destino, o
+ *  null si no se está usando. para.falta: el personaje elegido ya no está en los datos. */
+function filtroIndice () {
+  const P = U.prefs, F = P.filters;
+  if (!F.lid.length && !F.sop.length && !P.para && !P.restr) return null;
+  const para = P.para ? variant(...P.para.split('::')) : null;
+  return { F, para, restr: P.restr, falta: !!P.para && !para };
+}
 function rosterData () {
   const q = ui.search.trim().toLowerCase();
-  const P = U.prefs, F = P.filters, G = P.flags;
+  const P = U.prefs, F = P.filters, G = P.flags, FI = filtroIndice();
   let list = allVariants().filter(v => {
     if (P.kind === 'base' && v.uid) return false;
     if (P.kind === 'uni' && !v.uid) return false;
@@ -1664,6 +1715,7 @@ function rosterData () {
     if (G.nuevo && !v.nuevo) return false;
     if (P.objetivo !== '' && !objetivosDe(v.skills).has(Number(P.objetivo))) return false;
     if (P.atributo !== '' && !atributosDe(v.p, v.skills).has(P.atributo)) return false;
+    if (FI && !indiceDe(v, FI.F, FI.para, FI.restr)) return false;
     return true;
   });
   const s = SORTS[U.prefs.sort] || SORTS.name;
@@ -1676,10 +1728,48 @@ function rosterData () {
   return list;
 }
 
+/** Las restricciones que tienen los liderazgos y soportes de los datos, por tipo:
+ *  [[tipo, [valores]]] en un orden fijo. */
+function restriccionesSoporte () {
+  const por = {};
+  for (const s of Object.values(SOPORTES)) for (const [k] of TIPOS_SOPORTE) {
+    const x = s[k]; if (x && x.r) (por[x.r[0]] = por[x.r[0]] || new Set()).add(x.r[1]);
+  }
+  const orden = ['Type', 'Side', 'Allies', 'Ability', 'Character'];
+  for (const cat in por) if (!orden.includes(cat)) throw new Error('restricción de soporte desconocida: ' + cat);
+  return orden.filter(cat => por[cat]).map(cat => [cat, [...por[cat]].sort()]);
+}
+/** Filtros del índice: qué da su liderazgo, qué da su soporte, para quién (el personaje que
+ *  se elige desde su ficha) y si es un liderazgo o soporte solo para una clase, un bando, una
+ *  raza, una etiqueta o un personaje. */
+function filtrosIndice () {
+  const P = U.prefs, F = P.filters, FI = filtroIndice();
+  const chips = (cat) => CATEGORIAS.map(c => `<button class="chip ${F[cat].includes(c.k) ? 'on' : ''}" data-a="filter"
+    data-cat="${cat}" data-v="${c.k}">${h(t('ct_' + c.k))}</button>`).join('');
+  return `<div class="filtergroup ancho"><div class="lbl">${h(t('f_lid'))}</div><div class="row">${chips('lid')}</div></div>
+    <div class="filtergroup ancho"><div class="lbl">${h(t('f_sop'))}</div><div class="row">${chips('sop')}</div></div>
+    <div class="filtergroup"><div class="lbl">${h(t('f_para'))}</div>
+      ${P.para ? `<button class="tag dim eqfuera" data-a="paraQuitar" title="${h(t('f_para_rm'))}">${
+        h(FI.falta ? t('f_para_gone') : fullLabel(FI.para))} ✕</button>`
+               : `<div class="muted" style="font-size:12px">${h(t('f_para_how'))}</div>`}</div>
+    <div class="filtergroup"><div class="lbl">${h(t('f_restr'))}</div>
+      <select data-a="restr" style="width:100%">
+        <option value="">${h(t('f_any_target'))}</option>
+        ${restriccionesSoporte().map(([cat, vals]) => `<optgroup label="${h(t('sp_r_' + cat))}">${vals.map(val =>
+          `<option value="${h(cat + '|' + val)}" ${cat + '|' + val === P.restr ? 'selected' : ''}>${h(cat === 'Character' ? val : dom(val))}</option>`).join('')}</optgroup>`).join('')}
+      </select></div>`;
+}
+/** En el roster, con el filtro del índice: lo que encontró en el liderazgo y el soporte. */
+function indiceLinea (v) {
+  const FI = filtroIndice(); if (!FI) return '';
+  const x = indiceDe(v, FI.F, FI.para, FI.restr); if (!x) return '';
+  const parte = (k, cats) => cats.length ? `<div><span class="muted">${h(t(k))}:</span> ${cats.map(c => h(t('ct_' + c))).join(' · ')}</div>` : '';
+  return `<div class="indlinea">${parte('cd_lid', x.lid)}${parte('cd_sop', x.sop)}</div>`;
+}
 function toolbar (total, shown) {
   const P = U.prefs, F = P.filters, G = P.flags;
   const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length
-               + (P.objetivo !== '' ? 1 : 0) + (P.atributo !== '' ? 1 : 0);
+               + (P.objetivo !== '' ? 1 : 0) + (P.atributo !== '' ? 1 : 0) + (P.para ? 1 : 0) + (P.restr ? 1 : 0);
   // El valor que viaja en data-v es siempre el del snapshot (español): el idioma solo
   // cambia lo que se ve, nunca la clave con la que se filtra ni la del ícono.
   const group = (clave, cat, values, ancho) => `<div class="filtergroup ${ancho ? 'ancho' : ''}"><div class="lbl">${h(t(clave))}</div><div class="row">${
@@ -1716,6 +1806,7 @@ function toolbar (total, shown) {
       ${group('f_race','race',SEED.RACES)}
       ${group('f_origin','origin',[...new Set(CHARS.map(c => c.origin).filter(Boolean))].sort())}
       ${group('f_ability','ab',SEED.SKILL_TAGS, true)}
+      ${filtrosIndice()}
       <div class="filtergroup"><div class="lbl">${h(t('f_shortcuts'))}</div><div class="row">
         <button class="chip ${G.t4 ? 'on' : ''}" data-a="flag" data-v="t4">${h(t('f_only_t4'))}</button>
         <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">${h(t('f_transcended'))}</button>
@@ -1770,6 +1861,7 @@ function cardHtml (v) {
       </div>
       <div class="rolebar" title="${h(v.r.map(dom).join(' · '))}">${SEED.ROLES.map(r => `<span style="background:${v.r.includes(r) ? roleColor(r) : 'var(--line)'}"></span>`).join('')}</div>
       <div class="muted" style="font-size:11.5px">${h(dom(v.f))} · ${v.skills.length} skills</div>
+      ${indiceLinea(v)}
     </div>
   </div>`;
 }
@@ -1782,7 +1874,7 @@ function tableHtml (rows) {
       const u = imgUrl('portrait-' + v.id);
       return `<tr data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}">
         <td><div class="cellname">${u ? `<img class="thumb" src="${u}" alt="" loading="lazy">` : '<span class="thumb"></span>'}
-          <div><div style="font-weight:600">${h(v.uid ? v.sub : v.name)}</div>${v.uid ? `<div class="muted" style="font-size:11.5px">${h(v.name)}</div>` : `<div class="muted" style="font-size:11.5px">${h(t('base'))}</div>`}</div></div></td>
+          <div><div style="font-weight:600">${h(v.uid ? v.sub : v.name)}</div>${v.uid ? `<div class="muted" style="font-size:11.5px">${h(v.name)}</div>` : `<div class="muted" style="font-size:11.5px">${h(t('base'))}</div>`}${indiceLinea(v)}</div></div></td>
         <td>${tagGhost(dom(v.c), classColor(v.c))}</td>
         <td style="white-space:nowrap">${tagSolid(v.t, tierColor(v.t))}${transTag(v.trans)}</td>
         <td class="muted">${h(dom(v.f))}</td>
@@ -2574,6 +2666,7 @@ function nombreTabla (en) {
 }
 const TIPOS_SOPORTE = [['leader', 'sp_leader'], ['leader2', 'sp_leader2'], ['passive', 'sp_passive'], ['passive2', 'sp_passive2'],
   ['t2', 'sp_t2'], ['t22', 'sp_t22'], ['uniform', 'sp_uniform'], ['uniform2', 'sp_uniform2'], ['artifact', 'sp_artifact']];
+const SLOTS_SOPORTE = TIPOS_SOPORTE.map(([k]) => k).filter(k => !LIDERAZGOS.includes(k));
 function efectoSoporteHtml (x) {
   const val = [];
   if (x.v != null) val.push(typeof x.v === 'number' ? h((x.v > 0 ? '+' : '') + x.v + '%') : trHtml(x.v));
@@ -2608,7 +2701,8 @@ function soporteHtml (tipo, clave, x) {
   </div>`;
 }
 /** Qué le sirve de un liderazgo o un soporte: las categorías de ataque según con qué pega
- *  (el daño de sus skills activas) y las que le sirven a cualquiera. */
+ *  (el daño de sus skills activas) y las que le sirven a cualquiera, con atajos al roster
+ *  filtrado por los que se lo dan. */
 function leSirveHtml (v) {
   const cats = categoriasQueSirven(v);
   const atq = cats.filter(k => CAT[k].ataque), resto = cats.filter(k => !CAT[k].ataque);
@@ -2616,6 +2710,9 @@ function leSirveHtml (v) {
     <span class="muted" title="${h(t('ls_note'))}">${h(t('ls_title'))}</span>
     ${atq.map(k => `<span class="tag dim">${h(t('ct_' + k))}</span>`).join('')}
     <span class="muted">${h(t('ls_also'))} ${resto.map(k => h(t('ct_' + k))).join(' · ')}</span>
+    <span class="row" style="gap:6px">
+      <button class="btn sm" data-a="paraVer" data-tipo="lid">${h(t('ls_leaders'))}</button>
+      <button class="btn sm" data-a="paraVer" data-tipo="sop">${h(t('ls_supports'))}</button></span>
   </div>`;
 }
 /** Lo que el retrato le da al equipo según thanosvibs (Leads & Supports). */
@@ -3466,13 +3563,20 @@ document.addEventListener('click', (e) => {
     case 'back': ui.view = 'roster'; ui.charId = null; ui.focusSearch = false; render(); break;
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
-    case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[] };
+    case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[] };
       P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = ''; P.atributo = '';
+      P.para = ''; P.restr = '';
       ui.search = ''; ui.page = 0; commit(); break;
     case 'filter': { const cur = P.filters[d.cat];
       P.filters[d.cat] = cur.includes(d.v) ? cur.filter(x => x !== d.v) : cur.concat(d.v);
       ui.page = 0; commit(); break; }
     case 'flag': P.flags[d.v] = !P.flags[d.v]; ui.page = 0; commit(); break;
+    case 'paraQuitar': P.para = ''; ui.page = 0; commit(); break;
+    case 'paraVer': { const v = variant(ui.charId, ui.uniformId), cats = categoriasQueSirven(v);
+      P.filters.lid = d.tipo === 'lid' ? cats : []; P.filters.sop = d.tipo === 'sop' ? cats : [];
+      // La búsqueda se vacía: casi siempre es la que se usó para llegar a este personaje.
+      P.para = v.key; P.restr = ''; P.filtersOpen = true; ui.search = '';
+      ui.view = 'roster'; ui.charId = null; ui.page = 0; commit(); window.scrollTo(0, 0); break; }
     case 'view': P.view = d.v; ui.page = 0; commit(); break;
     case 'kind': P.kind = d.v; ui.page = 0; commit(); break;
     case 'dir': P.dir = -P.dir; commit(); break;
@@ -3667,6 +3771,7 @@ document.addEventListener('change', (e) => {
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
   if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }
+  if (a === 'restr') { U.prefs.restr = el.value; ui.page = 0; commit(); return; }
   if (a === 'teamMode') { ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-tamModo(el.value)); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'marca') { marcar(d.p, d.sl, d.k, el.checked); return; }
