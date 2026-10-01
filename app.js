@@ -501,8 +501,8 @@ const T = {
   eq_no_gain:        { es:'No mejoran con él:',  en:'Not improved by it:' },
   eq_no_link:        { es:'Sin vínculo de soporte con nadie del equipo:', en:'No support link with anyone in the team:' },
   eq_new:            { es:'Combinaciones de 3 con él', en:'Combinations of 3 with it' },
-  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo de soporte con él (le dan un soporte o el liderazgo, o reciben uno suyo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el que más le suma.',
-                       en:'Every pair of teammates with a support link with it (they give it a support or the leadership, or receive one of its own), one per trio of characters, with each one\'s best uniform for the chosen order. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, class advantage with it, and the team\'s roles and classes. The leader is the one that adds the most for it.' },
+  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo de soporte con él (le dan un soporte o el liderazgo, o reciben uno suyo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Un efecto cuenta solo si le sirve a quien lo recibe: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el que más le suma.',
+                       en:'Every pair of teammates with a support link with it (they give it a support or the leadership, or receive one of its own), one per trio of characters, with each one\'s best uniform for the chosen order. An effect only counts if it is useful to whoever receives it: attack or elemental damage boosts, only for those whose skills hit with that. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, class advantage with it, and the team\'s roles and classes. The leader is the one that adds the most for it.' },
   eq_calc:           { es:'Calculando las combinaciones…', en:'Working out the combinations…' },
   eq_sort:           { es:'Ordenar por',         en:'Sort by' },
   eq_sort_foco:      { es:'Puntos para él',      en:'Points for it' },
@@ -553,8 +553,9 @@ const T = {
   cmp_pts:           { es:'pts',                 en:'pts' },
   cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
                        en:'No strong synergy signals in this selection.' },
-  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante (el liderazgo, con el mejor líder posible). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase según la wiki. No es un cálculo del juego.',
-                       en:'What weighs most are the thanosvibs lead and support effects that reach another member (leadership, with the best possible leader). Two readings of our own are added: roles derived from skills and class advantage per the wiki. Not a game calculation.' },
+  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills (el liderazgo, con el mejor líder posible). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase según la wiki. No es un cálculo del juego.',
+                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it: attack or elemental damage boosts only for those whose skills hit with that (leadership, with the best possible leader). Two readings of our own are added: roles derived from skills and class advantage per the wiki. Not a game calculation.' },
+  sy_unclassified:   { es:'efecto sin clasificar: cuenta para todos', en:'unclassified effect: counts for everyone' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
   cmp_cost:          { es:'Costo',               en:'Cost' },
 
@@ -1128,6 +1129,71 @@ function aplicaA (x, b) {
   }
   throw new Error('restricción de soporte desconocida: ' + cat);
 }
+// Para quién sirve cada efecto de líder y de soporte. Los que suben un ataque o un daño
+// elemental solo le sirven a quien pega con eso, según el daño de sus skills activas (la 6
+// incluida): un liderazgo de daño de fuego no le aporta nada a uno que pega físico sin
+// elemento. Todos los personajes hacen daño con sus activas, así que el resto (daño básico,
+// crítico, ignorar evasión, vida, defensas, inmunidades...) le sirve a cualquiera; también
+// los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que las skills no
+// marcan de una forma que se pueda leer sin suponer. Un efecto que no está en ninguna de las
+// dos listas (thanosvibs sumó uno nuevo) cuenta para todos y la sinergia lo dice.
+const PIDE = {
+  'Physical Attack': ['src', 'Physical Attack'], 'Energy Attack': ['src', 'Energy Attack'],
+  'Fire Damage': ['elem', 'Fire'], 'Fire Damage by % Fire Resist': ['elem', 'Fire'], 'Cold Damage': ['elem', 'Cold'],
+  'Lightning Damage': ['elem', 'Lightning'], 'Poison Damage': ['elem', 'Poison'], 'Mind Damage': ['elem', 'Mind'],
+  'All Element Damage': ['elem', null], 'Physical Reflect Damage Received': ['tipo', 'Physical'],
+};
+const PARA_TODOS = new Set(['1s Pierce Duration Increase', '1s Snare Duration Increase', 'Additional Pierce Damage',
+  'All Basic Attacks', 'All Basic Attacks (Stackable)', 'All Basic Defenses', 'All Debuffs Effect', 'All Reflect Damage Received',
+  'All Resistances', 'All Speeds', 'Barrier', 'Basic Damage Dealt to Boss Types', 'Basic Damage Dealt to Enemies except Mutant Characters',
+  'Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect', 'Basic Damage Dealt to Enemies with "Removes All Debuffs" Effect',
+  'Basic Damage Dealt to Enemies with 25% HP or Higher', 'Basic Damage Dealt to Females', 'Basic Damage Dealt to Heroes',
+  'Basic Damage Dealt to Males', 'Basic Damage Dealt to Universals', 'Basic Damage Dealt to Villains', 'Basic Damage Received',
+  'Basic Damage Received from Heroes', 'Basic Damage Received from Universals', 'Basic Damage Received from Villains', 'Bonus Damage',
+  'Burn Immunity', 'Chain Hit Damage', 'Chain Hit Damage Received', 'Critical Damage', 'Critical Rate', 'Debuff Duration',
+  'Debuff Immunity', 'Dodge', 'Energy Defense', 'Fear Immunity', 'Fire Immunity Chance', 'Fire Resist', 'Guaranteed Critical Rate',
+  'Guard Break Immunity', 'HP', 'Heal', 'Ignore Defense', 'Ignore Dodge', 'Ignore Non-Boss Damage Decrease',
+  'Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction', 'Immortality + Death', 'Immortality + Heal',
+  'Incapacitation Immunity', 'Lightning Immunity Chance', 'Max HP Shield', 'Mind Immunity Chance', 'Mind Resist',
+  'Physical Immunity Chance', 'Recovery Rate', 'Remove All Debuffs', 'Revive with % HP', 'Skill Cooldown', 'Skill Damage',
+  'Stun Immunity', 'Summon', 'Super Armor, All Basic Defenses']);
+/** Con qué pega un retrato según sus skills activas: de qué ataque sale el daño (src), de qué
+ *  tipo es (físico o de energía) y qué elementos lleva. Un personaje propio sin skills no
+ *  pega con nada conocido: ningún efecto que pida algo le sirve. */
+const _PERFIL = new Map();
+function perfilDano (v) {
+  let pf = _PERFIL.get(v.p);
+  if (pf) return pf;
+  pf = { src: new Set(), tipo: new Set(), elem: new Set() };
+  for (const sk of v.skills) {
+    if (!/^Active/.test(sk.sl)) continue;
+    for (const st of sk.st || []) for (const f of st.fx || []) {
+      const d = dano(f); if (!d || !d.pct) continue;
+      const [tipo, elem] = d.elem.split(' ');
+      pf.src.add(d.src); pf.tipo.add(tipo); if (elem) pf.elem.add(elem);
+    }
+  }
+  if (v.p) _PERFIL.set(v.p, pf);
+  return pf;
+}
+/** ¿Le sirve a b este efecto (una línea de un soporte o liderazgo)? */
+function sirve (f, b) {
+  const q = PIDE[f.s];
+  if (!q) return true;
+  const pf = perfilDano(b);
+  return q[0] === 'elem' ? (q[1] ? pf.elem.has(q[1]) : pf.elem.size > 0) : pf[q[0]].has(q[1]);
+}
+/** ¿Le sirve a b algo de este soporte o liderazgo? (Que le llegue lo dice aplicaA.) La mayoría
+ *  no pide nada: se anota cuáles piden, porque la consulta de combinaciones pregunta esto
+ *  millones de veces. */
+const _PIDE_ALGO = new WeakMap();
+function leSirve (x, b) {
+  let pide = _PIDE_ALGO.get(x);
+  if (pide === undefined) { pide = x.fx.some(f => PIDE[f.s]); _PIDE_ALGO.set(x, pide); }
+  if (!pide) return true;
+  for (const f of x.fx) if (sirve(f, b)) return true;
+  return false;
+}
 /** Personajes a los que alcanza una restricción, con las variantes que la cumplen: cuenta
  *  el uniforme puesto, que puede cambiar la clase, el bando, la raza y las habilidades. */
 function alcanzados (r) {
@@ -1175,8 +1241,8 @@ const ROLES_EQUIPO = ['Tanque', 'Control', 'Daño', 'Soporte'];
 /** La clase que le gana a cada una: la inversa de CLASS_ADVANTAGE (Universal no le gana a nadie). */
 const LE_GANA_A = Object.fromEntries(Object.entries(SEED.CLASS_ADVANTAGE).filter(([, c]) => c).map(([k, c]) => [c, k]));
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
- *  soporte de thanosvibs que alcanzan a otro integrante: los de soporte valen en
- *  cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
+ *  soporte de thanosvibs que alcanzan a otro integrante y le sirven (sirve()): los de soporte
+ *  valen en cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
  *  cuenta el mejor líder posible. Se suman dos lecturas propias, dichas como tales:
  *  los roles derivados de las skills y la ventaja de clase de la wiki (Combate > Velocidad
  *  > Detonación > Combate; Universal no tiene debilidad). No es un cálculo del juego.
@@ -1188,11 +1254,22 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
   const reasons = [], aplicados = []; let score = 0;     // aplicados: { de, a: [integrantes] }, lo que suma
   const ES = LANG === 'es';
   const quienes = (bs) => bs.map(fullLabel).join(', ');
-  const efectos = (x) => x.fx.map(efectoSoporteTxt).join(' · ');
-  // Con foco (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le
-  // dan a él y lo que da él. Lo que los demás se dan entre ellos no suma para él.
-  const cuenta = (a, x) => !foco || a === foco || aplicaA(x, foco);
-  const alcanza = (a, x) => { const bs = []; for (const b of vs) if (b !== a && aplicaA(x, b)) bs.push(b); return bs; };
+  // A cada integrante, solo los efectos que le sirven: los que reciben lo mismo van en una línea.
+  const lineas = (prefijo, x, bs) => {
+    const grupos = new Map();
+    for (const b of bs) {
+      const fx = x.fx.filter(f => sirve(f, b)), k = fx.map(f => x.fx.indexOf(f)).join(',');
+      if (!grupos.has(k)) grupos.set(k, { fx, bs: [] });
+      grupos.get(k).bs.push(b);
+    }
+    for (const g of grupos.values()) reasons.push(`${prefijo} → ${quienes(g.bs)}: ${g.fx.map(f =>
+      efectoSoporteTxt(f) + (PARA_TODOS.has(f.s) || PIDE[f.s] ? '' : ' (' + t('sy_unclassified') + ')')).join(' · ')}`);
+  };
+  // Un soporte o un liderazgo suma si le llega a otro integrante y le sirve (sirve()). Con foco
+  // (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le dan a él y
+  // lo que da él. Lo que los demás se dan entre ellos no suma para él.
+  const cuenta = (a, x) => !foco || a === foco || (aplicaA(x, foco) && leSirve(x, foco));
+  const alcanza = (a, x) => { const bs = []; for (const b of vs) if (b !== a && aplicaA(x, b) && leSirve(x, b)) bs.push(b); return bs; };
   // Soportes: pasivas de 4★ y Tier-2, efecto de uniforme y artefacto (si lo lleva).
   for (const a of vs) {
     const s = SOPORTES[a.p]; if (!s) continue;
@@ -1200,7 +1277,7 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
       const x = s[k]; if (!x || LIDERAZGOS.includes(k) || !cuenta(a, x)) continue;
       const bs = alcanza(a, x); if (!bs.length) continue;
       score += x.sig ? 3 : 2; aplicados.push({ de: a, a: bs });
-      if (!soloPuntaje) reasons.push(`${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(x)}`);
+      if (!soloPuntaje) lineas(`${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''}`, x, bs);
     }
   }
   // Liderazgo: el del integrante que más alcanza a los demás (con foco, el que más le sirve a
@@ -1219,7 +1296,7 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
   if (lider) {
     score += ptsLider;
     for (const o of xsLider) { aplicados.push({ de: lider, a: o.bs });
-      if (!soloPuntaje) reasons.push(`${ES ? 'Con' : 'With'} ${fullLabel(lider)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`); }
+      if (!soloPuntaje) lineas(`${ES ? 'Con' : 'With'} ${fullLabel(lider)} ${ES ? 'de líder' : 'as leader'}`, o.x, o.bs); }
   }
   const covered = ROLES_EQUIPO.filter(r => vs.some(v => v.r.includes(r)));
   if (covered.length >= 2) { score += 1;
@@ -1903,7 +1980,7 @@ function retratosEquipo (vs, resaltada) {
 // roles y clases). Antes eran tres equipos por tamaño de una búsqueda aproximada, y salían
 // siempre los mismos seis soportes sin forma de ver los demás.
 // Solo se recorren las parejas en que cada uno puede vincularse con él (puedeVincular): si
-// ningún soporte ni liderazgo de uno le llega al otro, en ningún equipo se vinculan. La
+// ningún soporte ni liderazgo de uno le llega al otro y le sirve, en ningún equipo se vinculan. La
 // consulta queda en memoria (la última) hasta el próximo cambio de datos (rebuild()); el
 // orden, los filtros y las páginas trabajan sobre ella.
 const POR_PAGINA = 20;
@@ -1912,7 +1989,7 @@ const POR_PAGINA = 20;
 const LISTAS_PVP = ['tv-arena'], LISTAS_PVE = ['tv-alianza', 'tv-wbl'];
 function puedeVincular (de, a) {
   const s = SOPORTES[de.p];
-  return !!s && TIPOS_SOPORTE.some(([k]) => s[k] && aplicaA(s[k], a));
+  return !!s && TIPOS_SOPORTE.some(([k]) => s[k] && aplicaA(s[k], a) && leSirve(s[k], a));
 }
 function consultaCon (v) {
   if (CONSULTA && CONSULTA.clave === v.key) return CONSULTA;
