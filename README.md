@@ -29,11 +29,14 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     sus skills).
   - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
-    antes y después, y qué se gana y qué se pierde); y equipos nuevos con él, buscados en todo
-    el roster: los tres mejores para cada tamaño de equipo de los modos que usás (de 3 si
-    todavía no armaste ninguno). Cada compañero sugerido tiene un *vínculo de soporte* con él:
-    le da un soporte o el liderazgo, o recibe uno suyo (para entrar en un equipo tuyo alcanza
-    con un vínculo con alguien del equipo). Cada sugerencia se abre en el armador para guardarla.
+    antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo de soporte*
+    con alguien del equipo: le da un soporte o el liderazgo, o recibe uno suyo); y **todas las
+    combinaciones de 3 con él**, una consulta sobre los datos: cada pareja de compañeros con
+    vínculo con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para
+    él* (la sinergia contando solo lo que lo involucra), por PvP (Arena de Equipos), por PvE
+    (Batalla de Alianza y World Boss Legend) o por cualquier tier list, también las tuyas; se
+    filtran con «Con» y «Sin»; cada una dice su líder, se marca con ★ como favorita y se arma
+    para tu cuenta.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
     en tu capa.
   - *Más*: la verificación entre fuentes y el retrato propio.
@@ -44,7 +47,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - **Modos**: los 14 modos que la guía marca como importantes, con qué dan, cómo armar el equipo,
   personajes y C.T.P. recomendados, y el armado general (ISO, urus, 4.º gear, opciones de
   uniforme, obelisco) para PvE y PvP.
-- **Equipos** con el modo y su tamaño de equipo según la fuente.
+- **Equipos**: los favoritos (★) y los equipos de tu cuenta, con el modo y su tamaño según la
+  fuente (Alliance Conquest: dos escuadras de 3). Al armar uno, avisa si un personaje ya está
+  en otro equipo tuyo del mismo modo.
 
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.
@@ -133,7 +138,7 @@ fecha pasada), no de una tier list: las listas se actualizan a su propio ritmo.
   y del resto de lo que viene de las fuentes. La app nunca lo copia a la capa: actualizarlo se ve
   al recargar, sin borrar nada.
 - `capa.json` (carpeta de datos) guarda **solo la capa del usuario**: personajes propios o
-  editados, equipos, tier lists propias, cambios sobre las importadas, imágenes subidas, atributos
+  editados, equipos, favoritos, tier lists propias, cambios sobre las importadas, imágenes subidas, atributos
   marcados, hojas de ruta, topes cargados y preferencias. Se guarda a través del servidor local
   en cada cambio; si un guardado falla, la app lo dice y ofrece reintentar. Un `capa.json`
   ilegible frena el arranque en vez de pisarlo. Se exporta e importa desde **Ajustes**, y las
