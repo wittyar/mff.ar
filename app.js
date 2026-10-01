@@ -307,8 +307,8 @@ const T = {
   us_abx_none:       { es:'No está en los equipos recomendados.', en:'Not in the recommended teams.' },
   us_day:            { es:'Día',                 en:'Day' },
   ar_title:          { es:'Cómo armarlo',        en:'How to build it' },
-  ar_note:           { es:'El C.T.P. que le asignan las fuentes, su artefacto, el ISO-8 y el obelisco de la guía de armado, y las reglas generales de la guía de principiantes aplicadas a su tipo de ataque.',
-                       en:'The C.T.P. the sources assign it, its artifact, the building guide’s ISO-8 and Obelisk, and the Beginner’s Guide general rules applied to its attack type.' },
+  ar_note:           { es:'El C.T.P. que le asignan las fuentes, su artefacto, el ISO-8 y el obelisco de la guía de armado, las opciones del uniforme y las reglas generales de la guía de principiantes aplicadas a su tipo de ataque.',
+                       en:'The C.T.P. the sources assign it, its artifact, the building guide’s ISO-8 and Obelisk, the uniform’s options and the Beginner’s Guide general rules applied to its attack type.' },
   ar_more:           { es:'Reglas completas en Modos ↓', en:'Full rules in Modes ↓' },
   ar_rules:          { es:'Reglas generales de la guía para su tipo de ataque: ISO-8 y urus',
                        en:'General guide rules for its attack type: ISO-8 and urus' },
@@ -358,6 +358,12 @@ const T = {
   ga_iso_title:      { es:'ISO-8 y obelisco',    en:'ISO-8 and Obelisk' },
   ga_iso:            { es:'Set de ISO-8:',       en:'ISO-8 set:' },
   ga_obelisk:        { es:'Obelisco (SL/AC):',   en:'Obelisk (SL/AC):' },
+  op_note:           { es:'Cada opción se habilita teniendo el uniforme de su fila; debajo, el stat que conviene elegir según la guía de principiantes.',
+                       en:'Each option unlocks by owning the uniform in its row; below it, the stat worth picking per the Beginner’s Guide.' },
+  op_base:           { es:'El uniforme base no tiene opciones: elegí un uniforme arriba.', en:'The base uniform has no options: pick a uniform above.' },
+  op_none:           { es:'thanosvibs no le lista opciones a este uniforme.', en:'thanosvibs lists no options for this uniform.' },
+  op_no_data:        { es:'Los datos cargados no traen las opciones de uniforme: son de antes de que la app las sumara. Actualizá los datos desde Ajustes.',
+                       en:'The loaded data has no uniform options: it predates the app adding them. Update the data from Settings.' },
   ru_title:          { es:'Hoja de ruta',        en:'Roadmap' },
   ru_note:           { es:'Los pasos de la guía para esta variante, según su tier máximo y si sube a Tier-3 o trasciende. Marcá hasta dónde llegaste con el personaje: queda guardado en tu capa.',
                        en:'The guide’s steps for this variant, by its max tier and whether it goes Tier-3 or Transcends. Mark how far you got with the character: it is saved in your layer.' },
@@ -1075,13 +1081,13 @@ function variant (cid, uid) {
   if (!u) return { cid: ch.id, uid: null, key: ch.id + '::base', id: ch.id, name: ch.name, sub: 'Base',
                    c: ch.c, f: ch.f, race: ch.race, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
                    striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '',
-                   p, up: null, ch, skills };
+                   p, up: null, op: null, ch, skills };
   return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
            c: u.c || ch.c, f: u.f || ch.f, race: u.race || ch.race, t: u.tier || ch.t, ins: ch.ins, r: ch.r,
            ab: u.ab || ch.abilities || [],
            striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
            trans: u.trans, nuevo: u.new, cost: u.cost || '',
-           p, up: u.up || null, ch, skills };
+           p, up: u.up || null, op: u.op || null, ch, skills };
 }
 /** Totales que muestra thanosvibs: carga combinada de las cinco activas. */
 function cargas (skills) {
@@ -1810,6 +1816,7 @@ function fichaArmado (ch, v) {
       <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
       <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}${artArmado(ch)}</div>
       <div class="bloque"><h4>${h(t('ga_iso_title'))}</h4>${isoArmado(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('md_uni_opts'))}</h4>${armadoOpciones(v)}</div>
     </div>
     <details class="reglas"><summary>${h(t('ar_rules'))}</summary>
       <div class="usogrid par">
@@ -2663,6 +2670,23 @@ function armadoArtefacto (ch) {
     ${a.obtencion.length ? `<details class="usgrupo"><summary>${h(t('ar_obtain'))} (${a.obtencion.length})</summary>
       <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
     <div class="fuentes">${fuentesHtml(['tv-art'])}</div>`;
+}
+// Las opciones llegan en los datos desde que la app las muestra: con datos anteriores no las
+// trae ningún uniforme, y no es que thanosvibs no las liste.
+const HAY_OPCIONES = CHARS_SEED.some(c => (c.uniforms || []).some(u => u.op));
+/** Opciones del uniforme abierto: qué uniforme habilita cada una (thanosvibs) y qué stat
+ *  conviene elegir en cada rango (guía de principiantes). */
+function armadoOpciones (v) {
+  if (!v.uid) return `<p class="muted">${h(t('op_base'))}</p>`;
+  if (!HAY_OPCIONES) return `<p class="muted">${h(t('op_no_data'))}</p>`;
+  if (!v.op) return `<p class="muted">${h(t('op_none'))}</p>`;
+  const G = GUIA.opciones_uniforme;
+  return `<p class="muted" style="margin-bottom:6px">${h(t('op_note'))}</p>
+    <div class="opuni">${v.op.map((p, i) => { const vv = varDeRetrato(p);
+      return `<div class="opfila"><b>${h(G.rangos[i].rango)}</b>${vv ? miniPj(vv) : `<span class="muted">${h(p)}</span>`}
+        <div class="muted opstat">${G.rangos[i].mejor.map(k => k === 'ataque' ? h(t('md_own_attack')) : h(statNom(k))).join(' › ')}</div></div>`; }).join('')}</div>
+    <p class="muted" style="margin-top:6px">${h(bi(G.pvp))}</p>
+    <div class="fuentes">${fuentesHtml(['tv-uni'].concat(G.fuente))}</div>`;
 }
 /** Hoja de ruta de la guía para esta variante: los pasos que le tocan según su tier
  *  máximo y si sube a Tier-3 o trasciende, con los requisitos de la wiki. El usuario
