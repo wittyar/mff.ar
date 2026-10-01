@@ -320,7 +320,8 @@
     "tv-guia-4"
    ],
    "equipo": {
-    "tam": 6,
+    "tam": 3,
+    "escuadras": 2,
     "es": "Dos escuadras de 3 (cada batalla son dos partidas de 3 contra 3).",
     "en": "Two squads of 3 (each battle is two 3v3 matches).",
     "fuente": [

@@ -2488,7 +2488,7 @@ function modoCard (m) {
       <span class="tag solid" style="background:${m.tipo === 'pvp' ? 'var(--role-control)' : 'var(--role-soporte)'}">${m.tipo === 'pvp' ? 'PvP' : 'PvE'}</span>
       <span class="modonom">${h(m.nombre)}</span>
       <span class="tag dim">${h(t('md_f_' + m.frecuencia))}</span>
-      ${eq ? `<span class="tag dim">${h(t('md_team'))} ${eq.tam}</span>` : ''}
+      ${eq ? `<span class="tag dim">${h(t('md_team'))} ${eq.tam}${eq.escuadras ? ' × ' + eq.escuadras : ''}</span>` : ''}
       <span class="flecha">${abierto ? '▾' : '▸'}</span>
     </div>
     ${abierto ? `<div class="modobody">
