@@ -615,3 +615,9 @@ table.topes{border-collapse:collapse;font-size:12.5px;width:100%}
 table.topes th{text-align:left;color:var(--text-2);font-weight:600;padding:4px 6px 4px 0;white-space:nowrap}
 table.topes td{padding:4px 6px 4px 0;vertical-align:top}
 table.topes input{width:70px;padding:5px 7px}
+
+/* Índice para armar equipos: categorías de cada liderazgo y soporte en la ficha y lo que le
+   sirve al personaje (Resumen). */
+.sopcats{gap:4px;margin:4px 0 2px}
+.sopcats .tag{color:var(--allies)}
+.lesirve{gap:6px;align-items:center}

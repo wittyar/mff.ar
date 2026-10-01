@@ -755,6 +755,25 @@ const T = {
                        en:'From the Future Fight wiki: thanosvibs publishes this effect without saying whom it refers to.' },
   tpl_manual:        { es:'Dato cargado a mano (scripts/contenido/marcadores.csv): thanosvibs publica este efecto sin decir a quién se refiere.',
                        en:'Entered by hand (scripts/contenido/marcadores.csv): thanosvibs publishes this effect without saying whom it refers to.' },
+  // índice para armar equipos (CATEGORIAS)
+  ct_title:          { es:'Lo que da, en las categorías para armar equipos', en:'What it gives, in the team-building categories' },
+  ct_fis:            { es:'Ataque físico',        en:'Physical Attack' },
+  ct_ene:            { es:'Ataque de energía',    en:'Energy Attack' },
+  ct_atk:            { es:'Todos los ataques',    en:'All Attacks' },
+  ct_fuego:          { es:'Daño de fuego',        en:'Fire Damage' },
+  ct_hielo:          { es:'Daño de hielo',        en:'Cold Damage' },
+  ct_rayo:           { es:'Daño eléctrico',       en:'Lightning Damage' },
+  ct_veneno:         { es:'Daño de veneno',       en:'Poison Damage' },
+  ct_mente:          { es:'Daño mental',          en:'Mind Damage' },
+  ct_elems:          { es:'Daño de todos los elementos', en:'All Element Damage' },
+  ct_evasion:        { es:'Ignorar evasión',      en:'Ignore Dodge' },
+  ct_defensas:       { es:'Todas las defensas',   en:'All Defenses' },
+  ct_vida:           { es:'Vida',                 en:'HP' },
+  ct_mermas:         { es:'Quita todos los debuffs', en:'Removes All Debuffs' },
+  ls_title:          { es:'Le sirve de un liderazgo o un soporte:', en:'Useful to it from a leadership or support:' },
+  ls_note:           { es:'El ataque, según el daño de sus skills activas: con qué ataque escala y qué elementos lleva.',
+                       en:'Attack, by the damage of its active skills: which attack it scales with and which elements it carries.' },
+  ls_also:           { es:'y, como a cualquiera:', en:'and, like anyone:' },
   c_targets:         { es:'Beneficia a',          en:'Buffs' },
   c_attrs:           { es:'Atributos marcados',   en:'Marked attributes' },
   f_attrs:           { es:'Atributo marcado por vos', en:'Attribute you marked' },
@@ -1197,6 +1216,42 @@ function leSirve (x, b) {
   if (!pide) return true;
   for (const f of x.fx) if (sirve(f, b)) return true;
   return false;
+}
+// ÍNDICE PARA ARMAR EQUIPOS: lo que da cada liderazgo y cada soporte, en las categorías con
+// las que se arman los equipos (las pidió el usuario), con los stats de thanosvibs que entran
+// en cada una. Las de ataque le sirven solo a quien pega con eso (sirve()); las otras cuatro,
+// a cualquiera. Se ven en la ficha. No cambian los puntos de la sinergia.
+const CATEGORIAS = [
+  { k: 'fis',      s: ['Physical Attack'], ataque: true },
+  { k: 'ene',      s: ['Energy Attack'], ataque: true },
+  { k: 'atk',      s: ['All Basic Attacks', 'All Basic Attacks (Stackable)'], ataque: true },
+  { k: 'fuego',    s: ['Fire Damage', 'Fire Damage by % Fire Resist'], ataque: true },
+  { k: 'hielo',    s: ['Cold Damage'], ataque: true },
+  { k: 'rayo',     s: ['Lightning Damage'], ataque: true },
+  { k: 'veneno',   s: ['Poison Damage'], ataque: true },
+  { k: 'mente',    s: ['Mind Damage'], ataque: true },
+  { k: 'elems',    s: ['All Element Damage'], ataque: true },
+  { k: 'evasion',  s: ['Ignore Dodge'] },
+  { k: 'defensas', s: ['All Basic Defenses', 'Super Armor, All Basic Defenses'] },
+  { k: 'vida',     s: ['HP'] },
+  { k: 'mermas',   s: ['Remove All Debuffs'] },
+];
+const CAT = Object.fromEntries(CATEGORIAS.map(c => [c.k, c]));
+const CAT_DE = {};                    // stat de thanosvibs -> categoría
+for (const c of CATEGORIAS) for (const s of c.s) {
+  if (!PIDE[s] && !PARA_TODOS.has(s)) throw new Error('categoría con un stat que no dice a quién le sirve: ' + s);
+  CAT_DE[s] = c.k;
+}
+/** Categorías de un liderazgo o un soporte, en el orden de CATEGORIAS; con b, solo las de
+ *  los efectos que le sirven a b (que le llegue lo dice aplicaA). */
+function categoriasDe (x, b) {
+  const ks = new Set();
+  for (const f of x.fx) { const k = CAT_DE[f.s]; if (k && (!b || sirve(f, b))) ks.add(k); }
+  return CATEGORIAS.filter(c => ks.has(c.k)).map(c => c.k);
+}
+/** Las categorías que le sirven a b: las de ataque según con qué pega, y las demás. */
+function categoriasQueSirven (b) {
+  return CATEGORIAS.filter(c => c.s.some(s => sirve({ s }, b))).map(c => c.k);
 }
 /** Personajes a los que alcanza una restricción, con las variantes que la cumplen: cuenta
  *  el uniforme puesto, que puede cambiar la clase, el bando, la raza y las habilidades. */
@@ -1873,6 +1928,7 @@ function fichaResumen (ch, v) {
       ${(v.ab || []).map(a => `<span class="tag dim">${icon(a)}${h(dom(a))}</span>`).join('') || '<span class="muted">—</span>'}
     </div>
     ${(ch.tuc || []).length ? `<div class="row"><span class="muted">${h(t('d_tuc'))}</span>${ch.tuc.map(x => `<span class="tag dim">${h(x)}</span>`).join('')}</div>` : ''}
+    ${leSirveHtml(v)}
   </div>
   ${panelUso(ch, v)}`;
 }
@@ -2545,8 +2601,21 @@ function soporteHtml (tipo, clave, x) {
       ${x.sig ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('sp_notable_t'))}">${h(t('sp_notable'))}</span>` : ''}
       ${x.est ? `<span class="tag dim">${h(t('sp_at6'))}</span>` : ''}</div>
     <div class="sopr">${restrHtml(x)}</div>
+    ${categoriasDe(x).length ? `<div class="row sopcats" title="${h(t('ct_title'))}">${categoriasDe(x).map(k =>
+      `<span class="tag ghost">${h(t('ct_' + k))}</span>`).join('')}</div>` : ''}
     <ul class="sopfx">${x.fx.map(efectoSoporteHtml).join('')}</ul>
     ${extra.length ? `<div class="muted">${extra.join(' · ')}</div>` : ''}
+  </div>`;
+}
+/** Qué le sirve de un liderazgo o un soporte: las categorías de ataque según con qué pega
+ *  (el daño de sus skills activas) y las que le sirven a cualquiera. */
+function leSirveHtml (v) {
+  const cats = categoriasQueSirven(v);
+  const atq = cats.filter(k => CAT[k].ataque), resto = cats.filter(k => !CAT[k].ataque);
+  return `<div class="row lesirve">
+    <span class="muted" title="${h(t('ls_note'))}">${h(t('ls_title'))}</span>
+    ${atq.map(k => `<span class="tag dim">${h(t('ct_' + k))}</span>`).join('')}
+    <span class="muted">${h(t('ls_also'))} ${resto.map(k => h(t('ct_' + k))).join(' · ')}</span>
   </div>`;
 }
 /** Lo que el retrato le da al equipo según thanosvibs (Leads & Supports). */
