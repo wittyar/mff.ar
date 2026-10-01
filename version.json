@@ -1,6 +1,6 @@
 {
- "version": "1.0.4",
+ "version": "1.0.5",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Nueva pestaña Equipos en la ficha: en cuáles de tus equipos está el personaje, cómo entraría en los otros (a quién reemplaza y cuánto sube la sinergia) y equipos nuevos con él para los tamaños de los modos que usás. Además, ordenar por tier list y abrir el armador de equipos son mucho más rápidos."
+ "notas": "Equipos más coherentes: en las sugerencias de la pestaña Equipos, cada compañero tiene que darle algo al personaje (un soporte o el liderazgo) o recibir algo de él. Ya no aparecen compañeros sin ninguna relación con él, como Nick Fury (que solo potencia a héroes) en un equipo de Annihilus."
 }
