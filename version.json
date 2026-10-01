@@ -1,6 +1,6 @@
 {
- "version": "1.0.6",
+ "version": "1.0.7",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Pestaña Equipos renovada: todas las combinaciones de 3 con cada personaje, ordenables por puntos, PvP, PvE o cualquier tier list, con filtros, líder y favoritos (★). Los equipos de un personaje ahora cuentan solo lo que lo involucra (sin compañeros que potencian a otros, como Phil Coulson con Apocalypse). Al armar un equipo para tu cuenta, avisa si un personaje ya está en otro equipo del mismo modo; Alliance Conquest pasa a ser dos escuadras de 3."
+ "notas": "Descartar equipos: en las combinaciones de cada personaje, «Descartar» oculta ese trío en los tres personajes, con cualquier uniforme. «Ver descartados» los muestra para restaurarlos, y en Equipos está la lista de todos."
 }
