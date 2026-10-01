@@ -574,6 +574,13 @@ ul.verif li{margin-bottom:3px}
 .artlineas{font-size:12.5px;margin-bottom:6px}
 .artl{margin-bottom:3px}
 details.ctp summary .tag{margin-left:auto}
+/* guía de armado de Cynicalex */
+details.ctp summary .ctproles{margin-left:auto;display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;min-width:0}
+details.ctp summary .ctproles .tag{margin-left:0}
+.isocat{margin-bottom:8px}
+.isocat > b{display:block;margin-bottom:3px}
+.isocat .isoset{margin:0 0 3px 10px;font-size:12.5px}
+.sinint{color:var(--gold);border-bottom:1px dotted rgba(255,176,32,.5);cursor:help}
 
 /* ---------- ficha: rotaciones ---------- */
 .rots{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
@@ -581,6 +588,7 @@ details.ctp summary .tag{margin-left:auto}
 .roth{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
 .rotd{font-size:13px;overflow-wrap:anywhere}
 .rotd b{color:var(--gold)}
+h4.subrot{margin:16px 0 8px;color:var(--text-2)}
 
 /* ---------- ficha: hoja de ruta y topes ---------- */
 ol.ruta{margin:6px 0;padding-left:20px;font-size:12.5px}

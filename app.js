@@ -307,8 +307,8 @@ const T = {
   us_abx_none:       { es:'No está en los equipos recomendados.', en:'Not in the recommended teams.' },
   us_day:            { es:'Día',                 en:'Day' },
   ar_title:          { es:'Cómo armarlo',        en:'How to build it' },
-  ar_note:           { es:'El C.T.P. que le asignan las fuentes, su artefacto y las reglas generales de la guía aplicadas a su tipo de ataque.',
-                       en:'The C.T.P. the sources assign it, its artifact and the guide’s general rules applied to its attack type.' },
+  ar_note:           { es:'El C.T.P. que le asignan las fuentes, su artefacto, el ISO-8 y el obelisco de la guía de armado, y las reglas generales de la guía de principiantes aplicadas a su tipo de ataque.',
+                       en:'The C.T.P. the sources assign it, its artifact, the building guide’s ISO-8 and Obelisk, and the Beginner’s Guide general rules applied to its attack type.' },
   ar_more:           { es:'Reglas completas en Modos ↓', en:'Full rules in Modes ↓' },
   ar_rules:          { es:'Reglas generales de la guía para su tipo de ataque: ISO-8 y urus',
                        en:'General guide rules for its attack type: ISO-8 and urus' },
@@ -331,6 +331,33 @@ const T = {
   ar_nodata:         { es:'sin dato',            en:'no data' },
   ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
   ar_obtain:         { es:'Cómo se consigue',    en:'How to get it' },
+  ga_title:          { es:'Guía de armado de Cynicalex', en:"Cynicalex's Character Building Guide" },
+  ga_none:           { es:'La guía de armado no lo incluye.', en:'The building guide does not include it.' },
+  ga_no_data:        { es:'Los datos cargados no traen la guía de armado: son de antes de que la app la sumara. Actualizá los datos desde Ajustes.',
+                       en:'The loaded data has no building guide: it predates the app adding it. Update the data from Settings.' },
+  ga_best_uni:       { es:'Mejor uniforme:',     en:'Best uniform:' },
+  ga_this_uni:       { es:'el que estás viendo', en:'the one you are viewing' },
+  ga_tier:           { es:'Su tier list:',       en:'Its tier list:' },
+  ga_acq:            { es:'Cómo se consigue:',   en:'How to get it:' },
+  ga_unknown:        { es:'La app no interpreta este valor de la guía: va tal cual.', en:'The app does not interpret this guide value: shown as is.' },
+  ga_rot:            { es:'Rotación de proc',    en:'Proc rotation' },
+  ga_rotc:           { es:'Rotación con su mejor C.T.P.', en:'Best C.T.P. rotation' },
+  ga_proc:           { es:'Skill de proc / frenesí', en:'Proc / Frenzy skill' },
+  ga_rot_none:       { es:'La guía de armado no le da rotación.', en:'The building guide gives it no rotation.' },
+  ga_rot_legend:     { es:'Notación de la guía de armado', en:"Building guide's notation" },
+  ga_ctp_title:      { es:'Según la guía de armado de Cynicalex:', en:"Per Cynicalex's building guide:" },
+  ga_ctp_none:       { es:'La guía de armado no le asigna C.T.P.', en:'The building guide assigns it no C.T.P.' },
+  ga_ctp_mejor:      { es:'Mejor',               en:'Best' },
+  ga_ctp_segundo:    { es:'2.º mejor',           en:'2nd best' },
+  ga_ctp_pve:        { es:'Meta PvE',            en:'PvE meta' },
+  ga_ctp_pve_alt:    { es:'Fuera del meta PvE',  en:'PvE off-meta' },
+  ga_ctp_pvp:        { es:'Meta PvP',            en:'PvP meta' },
+  ga_ctp_pvp_alt:    { es:'Fuera del meta PvP',  en:'PvP off-meta' },
+  ga_ctp_notes:      { es:'Notas de la guía sobre C.T.P.', en:"The guide's C.T.P. notes" },
+  ga_art:            { es:'¿Necesita artefacto? Según la guía de armado:', en:'Needs an artifact? Per the building guide:' },
+  ga_iso_title:      { es:'ISO-8 y obelisco',    en:'ISO-8 and Obelisk' },
+  ga_iso:            { es:'Set de ISO-8:',       en:'ISO-8 set:' },
+  ga_obelisk:        { es:'Obelisco (SL/AC):',   en:'Obelisk (SL/AC):' },
   ru_title:          { es:'Hoja de ruta',        en:'Roadmap' },
   ru_note:           { es:'Los pasos de la guía para esta variante, según su tier máximo y si sube a Tier-3 o trasciende. Marcá hasta dónde llegaste con el personaje: queda guardado en tu capa.',
                        en:'The guide’s steps for this variant, by its max tier and whether it goes Tier-3 or Transcends. Mark how far you got with the character: it is saved in your layer.' },
@@ -1767,7 +1794,8 @@ function fichaArmado (ch, v) {
       <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
     <div class="usogrid par">
       <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}</div>
+      <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}${artArmado(ch)}</div>
+      <div class="bloque"><h4>${h(t('ga_iso_title'))}</h4>${isoArmado(ch, v)}</div>
     </div>
     <details class="reglas"><summary>${h(t('ar_rules'))}</summary>
       <div class="usogrid par">
@@ -2271,6 +2299,9 @@ const SOPORTES = window.MFF_SOPORTES || {};
 const ROTACIONES = window.MFF_ROTACIONES || {};
 const VERIF = window.MFF_VERIFICACION || {};
 const TXT    = window.MFF_TXT || {};
+// Guía de armado de Cynicalex (scripts/guia_armado.py). null: los datos cargados son
+// anteriores a que la app la sumara.
+const GUIA_ARMADO = window.MFF_GUIA_ARMADO || null;
 /** Texto de una fuente en inglés, en el idioma activo. Sin traducción cargada se muestra
  *  el inglés marcado, como las líneas de efecto: nunca se inventa una. Devuelve HTML.
  *  '[n]' es el salto de línea de la guía de thanosvibs. */
@@ -2454,6 +2485,51 @@ function usoABX (ch, v) {
     <div class="fuentes">${fuentesHtml(['tv-abxl'])}</div>`;
 }
 
+/** La fila de la guía de armado del personaje: la de su mejor uniforme (hay una por
+ *  personaje). {e, vv} o null. */
+function armadoDe (ch) {
+  for (const vv of variantesDe(ch)) { const e = GUIA_ARMADO.pj[vv.p]; if (e) return { e, vv }; }
+  return null;
+}
+/** Chip de la fuente, con la versión de la planilla en uso. */
+function fuenteArmado () {
+  return `<div class="fuentes">${fuentesHtml(['cyn-armado'])}<span class="tag dim">${h(GUIA_ARMADO.version)}</span></div>`;
+}
+/** Un valor de la guía que la app no interpreta: va tal cual, marcado. */
+function sinInterpretar (x) { return `<span class="sinint" title="${h(t('ga_unknown'))}">${h(x)}</span>`; }
+/** Lo que dice la guía de armado del personaje: su mejor uniforme, su lugar en la tier list
+ *  de la guía con los emojis y su leyenda, cómo se consigue y la nota. */
+function usoArmado (ch, v) {
+  if (!GUIA_ARMADO) return `<p class="muted">${h(t('ga_no_data'))}</p>`;
+  const a = armadoDe(ch);
+  if (!a) return `<p class="muted">${h(t('ga_none'))}</p>`;
+  const { e, vv } = a, L = GUIA_ARMADO.leyenda;
+  return `<div class="row ga-mejor" style="gap:6px;margin-bottom:6px"><span class="muted">${h(t('ga_best_uni'))}</span>${miniPj(vv)}
+      ${vv.key === v.key ? `<span class="muted">(${h(t('ga_this_uni'))})</span>` : ''}</div>
+    ${e.rank || e.bl || e.bl_x ? `<div class="row ga-tier" style="gap:5px;margin-bottom:6px"><span class="muted">${h(t('ga_tier'))}</span>
+      ${e.rank ? `<span class="tag ghost">${h(e.rank)}</span>` : ''}
+      ${(e.bl || []).map(k => `<span class="tag dim">${k} ${trHtml(L.emojis[k])}</span>`).join('')}
+      ${e.bl_x ? sinInterpretar(e.bl_x) : ''}</div>` : ''}
+    ${e.adq ? `<div class="row ga-adq" style="gap:5px;margin-bottom:6px"><span class="muted">${h(t('ga_acq'))}</span>
+      ${e.adq.map(x => `<span class="tag dim">${h(x)}${L.adq[x] ? ' · ' + h(L.adq[x]) : ''}</span>`).join('')}</div>` : ''}
+    ${e.nota ? `<p class="ga-nota">${trHtml(e.nota)}</p>` : ''}
+    ${fuenteArmado()}`;
+}
+/** Rotación y skill de proc según la guía de armado, con su notación. Son de su mejor
+ *  uniforme: si es otro, se dice cuál. */
+function rotacionArmado (ch, v) {
+  if (!GUIA_ARMADO) return `<p class="muted">${h(t('ga_no_data'))}</p>`;
+  const a = armadoDe(ch);
+  if (!a) return `<p class="muted">${h(t('ga_none'))}</p>`;
+  const filas = [['ga_rot', a.e.rot], ['ga_rotc', a.e.rotc], ['ga_proc', a.e.proc]].filter(x => x[1]);
+  return `${filas.length ? `<div class="rots ga-rot">${filas.map(([k, x]) => `<div class="rot" data-k="${k}"><div class="roth"><b>${h(t(k))}</b>${otraVar(a.vv, v)}</div>
+      <div class="rotd">${h(x)}</div></div>`).join('')}</div>
+    <details class="usgrupo"><summary>${h(t('ga_rot_legend'))}</summary>
+      <table class="abx"><tbody>${GUIA_ARMADO.leyenda.rot.map(([k, x]) => `<tr><th>${h(k)}</th><td>${trHtml(x)}</td></tr>`).join('')}</tbody></table></details>`
+    : `<p class="muted">${h(t('ga_rot_none'))}</p>`}
+    ${fuenteArmado()}`;
+}
+
 // ============================================================================
 // FICHA: CÓMO ARMARLO
 // Las reglas generales de la guía (las mismas de Modos → Armado) aplicadas a su tipo
@@ -2477,7 +2553,56 @@ function armadoCTP (ch, v) {
     ${guia.length ? `<p class="muted" style="margin-top:8px">${h(t('ar_ctp_guide'))}</p>
       <div class="ctps">${guia.map(id => { const c = CTPS.find(x => x.id === id);
         return c ? ctpDetalle(c) : `<span class="tag dim">${h(id === 'obelisco6' ? t('us_obelisk') : id)}</span>`; }).join('')}</div>` : ''}
-    <div class="fuentes">${fuentesHtml(li.fuente.concat(['tv-guia-1', 'tv-guia-2', 'tv-ctps']))}</div>`;
+    <div class="fuentes">${fuentesHtml(li.fuente.concat(['tv-guia-1', 'tv-guia-2', 'tv-ctps']))}</div>
+    ${ctpsArmado(ch, v)}`;
+}
+/** C.T.P. según la guía de armado: uno por C.T.P. (y reforjado o no), con los lugares en los
+ *  que lo pone (mejor, segundo, meta y fuera del meta de PvE y de PvP). */
+function ctpsArmado (ch, v) {
+  const titulo = (variante) => `<p class="muted" style="margin-top:12px">${h(t('ga_ctp_title'))} ${variante}</p>`;
+  if (!GUIA_ARMADO) return titulo('') + `<p class="muted">${h(t('ga_no_data'))}</p>`;
+  const a = armadoDe(ch);
+  if (!a) return titulo('') + `<p class="muted">${h(t('ga_none'))}</p>`;
+  const grupos = [];
+  (a.e.ctp || []).forEach(x => { const id = x.c ? x.c + (x.r ? '+' : '') : '?' + x.x;
+    let g = grupos.find(y => y.id === id); if (!g) grupos.push(g = { id, x, ks: [] }); g.ks.push(x.k); });
+  const extra = (g) => `<span class="ctproles">${g.x.r ? `<span class="tag solid" style="background:var(--gold)">${h(t('md_reforged'))}</span>` : ''}${
+    g.ks.map(k => `<span class="tag ghost">${h(t('ga_ctp_' + k))}</span>`).join('')}</span>`;
+  return `${titulo(otraVar(a.vv, v))}
+    ${grupos.length ? `<div class="ctps ga-ctp">${grupos.map(g => { const c = g.x.c && CTPS.find(y => y.id === g.x.c);
+        return c ? ctpDetalle(c, extra(g)) : `<div class="row" style="gap:6px">${sinInterpretar(g.x.x)}${extra(g)}</div>`; }).join('')}</div>`
+      : `<p class="muted">${h(t('ga_ctp_none'))}</p>`}
+    <details class="usgrupo"><summary>${h(t('ga_ctp_notes'))}</summary>
+      <ul class="sopfx">${GUIA_ARMADO.leyenda.ctp.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>
+    ${fuenteArmado()}`;
+}
+/** Si necesita artefacto, según la guía de armado (con su leyenda). */
+function artArmado (ch) {
+  if (!GUIA_ARMADO) return '';
+  const a = armadoDe(ch);
+  if (!a || !(a.e.art || a.e.art_x)) return '';
+  const x = a.e.art;
+  return `<p class="ga-art" style="margin-top:10px"><span class="muted">${h(t('ga_art'))}</span>
+    ${x ? `<b title="${h(x.v)}">${trHtml(x.t)}${x.modo ? ' (' + h(x.modo) + ')' : ''}</b>` : sinInterpretar(a.e.art_x)}</p>${fuenteArmado()}`;
+}
+/** ISO-8 y obelisco según la guía de armado: cada categoría con sus sets (y las piedras de los
+ *  que tiene la guía de principiantes). */
+function isoArmado (ch, v) {
+  if (!GUIA_ARMADO) return `<p class="muted">${h(t('ga_no_data'))}</p>`;
+  const a = armadoDe(ch);
+  if (!a) return `<p class="muted">${h(t('ga_none'))}</p>`;
+  const e = a.e, L = GUIA_ARMADO.leyenda, sets = GUIA.iso.sets_pve.concat(GUIA.iso.sets_pvp);
+  const set = (nombre) => { const s = sets.find(x => x.nombre === nombre);
+    return `<div class="isoset">${h(nombre)}${s ? piedrasHtml(s.piedras) : ''}</div>`; };
+  return `${otraVar(a.vv, v) ? `<div class="row" style="margin-bottom:6px">${otraVar(a.vv, v)}</div>` : ''}
+    <p class="muted">${h(t('ga_iso'))}</p>
+    ${(e.iso || []).map(k => `<div class="isocat"><b>${trHtml(k)}</b>${(L.iso[k] || []).map(set).join('')}</div>`).join('')}
+    ${e.iso_x ? `<p class="ga-iso-x">${sinInterpretar(e.iso_x)}</p>` : ''}
+    ${!e.iso && !e.iso_x ? '<p class="muted">—</p>' : ''}
+    <p class="muted" style="margin-top:8px">${h(t('ga_obelisk'))}</p>
+    ${e.ob || e.ob_x ? `<div class="row ga-ob" style="gap:5px">${(e.ob || []).map(x => `<span class="tag dim">${trHtml(x)}</span>`).join('')}${
+      (e.ob_x || []).map(sinInterpretar).join('')}</div>` : '<p class="muted">—</p>'}
+    ${fuenteArmado()}`;
 }
 /** Sets ISO de ataque (PvE) y la nota de piedra que corresponde a su tipo de ataque. */
 function armadoISO (ta) {
@@ -2602,7 +2727,8 @@ function panelRotaciones (ch, v) {
     <details class="usgrupo"><summary>${h(t('rot_legend'))}</summary>
       <table class="abx"><tbody>${G.leyenda.map(x => `<tr><th>${h(x.k)}</th><td>${h(bi(x))}</td></tr>`).join('')}</tbody></table>
       <p class="muted" style="margin-top:6px">${h(bi(G.nota))}</p></details>
-    <div class="fuentes">${fuentesHtml(G.fuente)}</div></div>`;
+    <div class="fuentes">${fuentesHtml(G.fuente)}</div>
+    <h4 class="subrot">${h(t('ga_title'))}</h4>${rotacionArmado(ch, v)}</div>`;
 }
 
 // ============================================================================
@@ -2647,6 +2773,7 @@ function panelUso (ch, v) {
       <div class="bloque"><h4>${h(t('us_sup'))}</h4>${usoSoportes(v)}</div>
       <div class="bloque"><h4>${h(t('us_guide'))}</h4>${usoGuia(ch, v)}</div>
       <div class="bloque"><h4>Alliance Battle</h4>${usoABX(ch, v)}</div>
+      <div class="bloque"><h4>${h(t('ga_title'))}</h4>${usoArmado(ch, v)}</div>
     </div></div>`;
 }
 
