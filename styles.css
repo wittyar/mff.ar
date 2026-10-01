@@ -253,6 +253,9 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .combolider{color:var(--text-2);font-weight:600}
 .combo .eqpts{flex:none}
 .combo details{margin-top:6px}
+/* Armador: personaje que ya está en otro equipo del mismo modo. */
+.avisoeq{color:var(--gold);font-size:13px;margin-bottom:6px}
+.enuso{opacity:.45}
 /* Armado: las reglas generales de la guía, plegadas. */
 details.reglas{margin-top:12px}
 details.reglas > summary{cursor:pointer;color:var(--text-2);font-weight:600;padding:8px 0}

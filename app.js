@@ -590,6 +590,8 @@ const T = {
   tm_synergy_pts:    { es:'pts de sinergia',     en:'synergy pts' },
   tm_empty:          { es:'Todavía no armaste ningún equipo.', en:'You have not built any team yet.' },
   tm_mine:           { es:'Equipos de tu cuenta', en:'Your account\'s teams' },
+  tm_dup:            { es:'{x} ya está en «{e}», del mismo modo.', en:'{x} is already in «{e}», same mode.' },
+  tm_in_use:         { es:'ya está en «{e}» (mismo modo)', en:'already in «{e}» (same mode)' },
   tm_favs:           { es:'Favoritos',           en:'Favorites' },
   tm_favs_note:      { es:'Los que marcaste con ★ en las combinaciones de cada personaje. Desde acá los armás para tu cuenta.',
                        en:'The ones you starred in each character\'s combinations. Build them for your account from here.' },
@@ -2782,6 +2784,12 @@ function renderTeams () {
   const PS = 40, pages = Math.max(1, Math.ceil(pool.length / PS));
   ui.teamPage = Math.min(ui.teamPage, pages - 1);
   const slice = pool.slice(ui.teamPage * PS, (ui.teamPage + 1) * PS);
+  // Personajes que ya están en otro equipo de tu cuenta del mismo modo: dentro de un modo no se
+  // repiten (por ejemplo, las dos escuadras de Alliance Conquest). Se avisa; no se impide.
+  const enModo = new Map();
+  if (eq.modeId) U.teams.filter(tt => tt.modeId === eq.modeId)
+    .forEach(tt => tt.members.forEach(k => { const cid = k.split('::')[0]; if (!enModo.has(cid)) enModo.set(cid, tt.name); }));
+  const repetidos = eq.members.map(k => k.split('::')[0]).filter(cid => enModo.has(cid));
   return `
   <div class="page-head"><div><h1>${h(t('tm_title'))}</h1>
     <div class="sub">${h(t('tm_note'))}</div></div>
@@ -2796,9 +2804,11 @@ function renderTeams () {
       </select>
     </div>
     <div class="muted" style="margin-bottom:6px">${h(t('tm_members'))} ${eq.members.length} / ${max} — ${h(t('tm_sorted_by'))} ${h(listName(listById(U.prefs.refList)) || t('s_name'))}</div>
+    ${repetidos.map(cid => `<div class="avisoeq">⚠ ${h(t('tm_dup').replace('{x}', CHAR_BY_ID[cid].name).replace('{e}', enModo.get(cid)))}</div>`).join('')}
     <input placeholder="${h(t('tm_search'))}" value="${h(ui.teamSearch)}" data-a="teamSearch" style="width:100%;margin-bottom:10px">
     <div class="row" style="gap:6px">
-      ${slice.map(v => `<div title="${h(fullLabel(v))}" data-a="teamToggle" data-key="${v.key}"
+      ${slice.map(v => `<div title="${h(fullLabel(v) + (enModo.has(v.cid) ? ' — ' + t('tm_in_use').replace('{e}', enModo.get(v.cid)) : ''))}" data-a="teamToggle" data-key="${v.key}"
+        class="${enModo.has(v.cid) && !eq.members.includes(v.key) ? 'enuso' : ''}"
         style="width:50px;height:50px;border-radius:9px;overflow:hidden;cursor:pointer;flex:none;
         box-shadow:0 0 0 ${eq.members.includes(v.key) ? '2px var(--accent)' : '1px var(--line-2)'}">
         ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" style="width:100%;height:100%;object-fit:cover" loading="lazy">` : ''}
