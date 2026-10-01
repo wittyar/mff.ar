@@ -41,6 +41,7 @@ function blankUser () {
     charNew: [],                      // personajes creados a mano
     teams: [],
     favoritos: [],                    // equipos de 3 marcados con ★ en las combinaciones: {id, members}
+    descartados: [],                  // equipos de 3 ocultos de las combinaciones: sus tres personajes (ids, en orden), con cualquier uniforme
     lists: [],                        // tier lists propias: {id,name,rows}
     assign: {},                       // listId -> {clave: [filaId, ...] | null}
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
@@ -472,10 +473,20 @@ const T = {
   eq_excluir_ph:     { es:'excluir a…',          en:'exclude…' },
   eq_incluir:        { es:'Volver a incluirlo',  en:'Include it again' },
   eq_count:          { es:'{n} combinaciones',   en:'{n} combinations' },
+  eq_count_1:        { es:'1 combinación',       en:'1 combination' },
   eq_none_q:         { es:'Ninguna combinación con estos filtros.', en:'No combination with these filters.' },
   eq_leader:         { es:'Líder: {x}',          en:'Leader: {x}' },
   eq_no_leader:      { es:'Ningún liderazgo le suma', en:'No leadership adds for it' },
   eq_fav_add:        { es:'Marcar como favorito', en:'Mark as favorite' },
+  eq_descartar:      { es:'Descartar',           en:'Discard' },
+  eq_descartar_title:{ es:'Ocultarlo en las combinaciones de los tres personajes, con cualquier uniforme',
+                       en:'Hide it from the combinations of all three characters, with any uniform' },
+  eq_restaurar:      { es:'Restaurar',           en:'Restore' },
+  eq_count_desc:     { es:'{n} descartados',     en:'{n} discarded' },
+  eq_count_desc_1:   { es:'1 descartado',        en:'1 discarded' },
+  eq_ver_desc:       { es:'Ver descartados ({n})', en:'Show discarded ({n})' },
+  eq_ver_lista:      { es:'Volver a la lista',   en:'Back to the list' },
+  eq_none_desc:      { es:'No hay descartados con él (con estos filtros).', en:'No discarded teams with it (with these filters).' },
   eq_fav_rm:         { es:'Quitar de favoritos', en:'Remove from favorites' },
   eq_pts_for:        { es:'pts para él',         en:'pts for it' },
   eq_pts_team:       { es:'{n} del equipo',      en:'{n} for the team' },
@@ -596,6 +607,9 @@ const T = {
   tm_favs_note:      { es:'Los que marcaste con ★ en las combinaciones de cada personaje. Desde acá los armás para tu cuenta.',
                        en:'The ones you starred in each character\'s combinations. Build them for your account from here.' },
   tm_no_leader:      { es:'Ningún liderazgo suma', en:'No leadership adds' },
+  tm_desc:           { es:'Descartados ({n})',   en:'Discarded ({n})' },
+  tm_desc_note:      { es:'Los equipos que ocultaste de las combinaciones de sus tres personajes, con cualquier uniforme. Restaurarlos los vuelve a mostrar.',
+                       en:'The teams you hid from their three characters\' combinations, with any uniform. Restoring brings them back.' },
 
   ed_edit:           { es:'Editar personaje',    en:'Edit character' },
   ed_new:            { es:'Nuevo personaje',     en:'New character' },
@@ -973,7 +987,8 @@ let ui = {
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
-  eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null
+  eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
+  eqVerDescartados: false            // la lista muestra solo los descartados, para restaurarlos
 };
 
 // ============================================================================
@@ -1771,7 +1786,7 @@ function fichaEquipos (ch, v) {
         <div class="eqpts"><b>${o.despues.score}</b> ${h(t('tm_synergy_pts'))} <span class="eqdelta">+${o.delta}</span>
           <div class="muted">${h(t('eq_before').replace('{n}', o.antes.score))}</div></div>
       </div>
-      ${retratosEquipo(o.vs, v)}
+      ${retratosEquipo(o.vs, v.key)}
       ${porqueHtml(o.gana, o.pierde)}
       <div class="row">${botonArmar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
@@ -1797,8 +1812,9 @@ function comoEntra (v, tt) {
            modo: modo ? modo.name : '', gana: mejor.despues.reasons.filter(r => !antes.reasons.includes(r)),
            pierde: antes.reasons.filter(r => !mejor.despues.reasons.includes(r)) };
 }
-function retratosEquipo (vs, v) {
-  return `<div class="row eqfotos">${vs.map(x => `<button class="eqfoto ${x.key === v.key ? 'nuevo' : ''}" data-a="open" data-cid="${x.cid}"
+/** Retratos de un equipo; el de la clave `resaltada` (el personaje de la ficha) va marcado. */
+function retratosEquipo (vs, resaltada) {
+  return `<div class="row eqfotos">${vs.map(x => `<button class="eqfoto ${x.key === resaltada ? 'nuevo' : ''}" data-a="open" data-cid="${x.cid}"
     data-uid="${x.uid || ''}" title="${h(fullLabel(x))}"><span class="shot">${shot(x.id)}</span><span>${h(x.name)}</span></button>`).join('')}</div>`;
 }
 // COMBINACIONES DE 3 CON ÉL: una consulta sobre los datos, no listas armadas de antemano.
@@ -1840,7 +1856,7 @@ function consultaCon (v) {
       A[n] = i; B[n] = j; P[n] = sc.score; n++;
     }
   }
-  CONSULTA = { clave: v.key, pool, A, B, P, n, vista: null };
+  CONSULTA = { clave: v.key, cid: v.cid, pool, A, B, P, n, vista: null };
   return CONSULTA;
 }
 /** Tier lists del orden elegido: las de PvP, las de PvE o una sola (cualquiera de personajes). */
@@ -1856,10 +1872,13 @@ function puestoTexto (l, key) { const i = indicesFila(l, key); return i.length ?
 /** Filas de la consulta en el orden elegido y con los filtros, una por trío de personajes: la
  *  primera en ese orden (el mejor uniforme de cada uno para ese orden). Con tier lists, gana
  *  el trío mejor ubicado (suma de puestos); a igual puesto, más puntos para él; después, el
- *  mejor ubicado en tu lista de referencia. */
+ *  mejor ubicado en tu lista de referencia. Los tríos descartados no van (o van solos, si se
+ *  piden): { filas, ocultos }. */
 function vistaConsulta (q) {
-  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon].join('|');
-  if (q.vista && q.vista.clave === clave) return q.vista.filas;
+  // Descartes en los que está él: los otros dos personajes de cada uno.
+  const descartes = new Set(U.descartados.filter(d => d.includes(q.cid)).map(d => d.filter(c => c !== q.cid).join('|')));
+  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon, ui.eqVerDescartados, [...descartes].join(',')].join('|');
+  if (q.vista && q.vista.clave === clave) return q.vista;
   const ls = listasOrden();
   const pos = q.pool.map(x => ls.reduce((suma, l) => suma + puesto(l, x.key), 0));
   const ref = q.pool.map(x => rankIndex(x.key));
@@ -1874,17 +1893,24 @@ function vistaConsulta (q) {
   }
   claves.sort();
   const fuera = new Set(ui.eqExcluir), vistos = new Set(), filas = [];
+  let ocultos = 0;
   for (const k of claves) {
     const i = k % 1048576;
     const a = q.pool[q.A[i]], b = q.pool[q.B[i]];
     if (fuera.has(a.cid) || fuera.has(b.cid) || (ui.eqCon && a.cid !== ui.eqCon && b.cid !== ui.eqCon)) continue;
-    const trio = a.cid < b.cid ? a.cid + '|' + b.cid : b.cid + '|' + a.cid;
-    if (vistos.has(trio)) continue;
-    vistos.add(trio); filas.push(i);
+    const pareja = a.cid < b.cid ? a.cid + '|' + b.cid : b.cid + '|' + a.cid;
+    if (vistos.has(pareja)) continue;
+    vistos.add(pareja);
+    const descartado = descartes.has(pareja);
+    if (descartado) ocultos++;
+    if (descartado === ui.eqVerDescartados) filas.push(i);
   }
-  q.vista = { clave, filas };
-  return filas;
+  q.vista = { clave, filas, ocultos };
+  return q.vista;
 }
+/** Un descarte: los tres personajes, en orden (vale para cualquier uniforme de cada uno). */
+function trioDe (cids) { return cids.slice().sort(); }
+function estaDescartado (cids) { const k = trioDe(cids).join('|'); return U.descartados.some(d => d.join('|') === k); }
 function claveFavorito (keys) { return keys.slice().sort().join('|'); }
 function esFavorito (keys) { const c = claveFavorito(keys); return U.favoritos.some(f => claveFavorito(f.members) === c); }
 function estrella (keys) {
@@ -1903,7 +1929,7 @@ function combinacionesHtml (v) {
     }
     return `<div class="section" id="combos">${cab}<p class="muted">${h(t('eq_calc'))}</p></div>`;
   }
-  const q = CONSULTA, filas = vistaConsulta(q), ls = listasOrden();
+  const q = CONSULTA, { filas, ocultos } = vistaConsulta(q), ls = listasOrden();
   const paginas = Math.max(1, Math.ceil(filas.length / POR_PAGINA));
   ui.eqPagina = Math.min(ui.eqPagina, paginas - 1);
   const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
@@ -1914,7 +1940,7 @@ function combinacionesHtml (v) {
     const sc = synergy(vs, { foco: v });
     return `<div class="card combo">
       <div class="combofila">
-        ${estrella(keys)}${retratosEquipo(vs, v)}
+        ${estrella(keys)}${retratosEquipo(vs, v.key)}
         <div class="combotx">
           <div>${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
           <div class="combolider">${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('eq_no_leader'))}</div>
@@ -1923,10 +1949,15 @@ function combinacionesHtml (v) {
         <div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}
           <div class="muted">${h(t('eq_pts_team').replace('{n}', synergy(vs).score))}</div></div>
         ${botonArmar(vs, '', '')}
+        ${ui.eqVerDescartados
+          ? `<button class="btn sm" data-a="restaurar" data-c="${vs.map(x => x.cid).join(',')}">${h(t('eq_restaurar'))}</button>`
+          : `<button class="btn sm" data-a="descartar" data-c="${vs.map(x => x.cid).join(',')}" title="${h(t('eq_descartar_title'))}">${h(t('eq_descartar'))}</button>`}
       </div>
       ${porqueHtml(sc.reasons, [])}
     </div>`;
   };
+  const numero = (n) => n.toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US');
+  const cuantos = (n, k) => t(n === 1 ? k + '_1' : k).replace('{n}', numero(n));
   return `<div class="section" id="combos">${cab}
     <div class="row eqfiltros">
       <label>${h(t('eq_sort'))}
@@ -1944,9 +1975,14 @@ function combinacionesHtml (v) {
     </div>
     ${ui.eqExcluir.length ? `<div class="row" style="gap:6px;margin-bottom:10px">${ui.eqExcluir.map(cid =>
       `<button class="tag dim eqfuera" data-a="eqIncluir" data-cid="${h(cid)}" title="${h(t('eq_incluir'))}">${h(CHAR_BY_ID[cid].name)} ✕</button>`).join('')}</div>` : ''}
-    <p class="muted" style="margin-bottom:10px">${h(t('eq_count').replace('{n}', filas.length.toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US')))}</p>
+    <div class="row" style="justify-content:space-between;margin-bottom:10px">
+      <span class="muted">${h(ui.eqVerDescartados ? cuantos(ocultos, 'eq_count_desc')
+        : cuantos(filas.length, 'eq_count') + (ocultos ? ' · ' + cuantos(ocultos, 'eq_count_desc') : ''))}</span>
+      ${ocultos || ui.eqVerDescartados ? `<button class="btn sm ${ui.eqVerDescartados ? 'primary' : ''}" data-a="eqVerDescartados">${h(ui.eqVerDescartados
+        ? t('eq_ver_lista') : t('eq_ver_desc').replace('{n}', numero(ocultos)))}</button>` : ''}
+    </div>
     ${filas.length ? filas.slice(ui.eqPagina * POR_PAGINA, (ui.eqPagina + 1) * POR_PAGINA).map(fila).join('')
-                   : `<p class="muted">${h(t('eq_none_q'))}</p>`}
+                   : `<p class="muted">${h(t(ui.eqVerDescartados ? 'eq_none_desc' : 'eq_none_q'))}</p>`}
     ${pager(paginas, ui.eqPagina, 'eqPagina')}
   </div>`;
 }
@@ -2767,7 +2803,7 @@ function favoritoCard (f) {
   const sc = synergy(vs);
   return `<div class="card eqsug">
     <div class="row" style="justify-content:space-between;align-items:flex-start">
-      <div class="row" style="gap:10px;align-items:flex-start">${estrella(f.members)}${retratosEquipo(vs, vs[0])}</div>
+      <div class="row" style="gap:10px;align-items:flex-start">${estrella(f.members)}${retratosEquipo(vs, vs[0].key)}</div>
       <div class="eqpts"><b>${sc.score}</b> ${h(t('tm_synergy_pts'))}</div>
     </div>
     <div class="muted">${h(vs.map(fullLabel).join(' + '))}</div>
@@ -2821,6 +2857,13 @@ function renderTeams () {
       <button class="btn primary" data-a="teamSave" ${eq.members.length < 2 ? 'disabled' : ''}>${h(t('tm_save'))}</button>
     </div>
   </div>` : ''}
+  ${U.descartados.length ? `<div class="section"><details class="usgrupo"><summary>${h(t('tm_desc').replace('{n}', U.descartados.length))}</summary>
+    <p class="muted" style="margin:8px 0 10px">${h(t('tm_desc_note'))}</p>
+    ${U.descartados.map(d => { const vs = d.map(c => variant(c, null)).filter(Boolean);
+      return `<div class="card combo"><div class="combofila">${retratosEquipo(vs, '')}
+        <div class="combotx">${h(vs.map(x => x.name).join(' + '))}</div>
+        <button class="btn sm" data-a="restaurar" data-c="${d.join(',')}">${h(t('eq_restaurar'))}</button></div></div>`; }).join('')}
+  </details></div>` : ''}
   ${U.favoritos.length ? `<div class="section"><h3>${h(t('tm_favs'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('tm_favs_note'))}</p>
     <div class="grid eqgrid">${U.favoritos.map(favoritoCard).join('')}</div></div>` : ''}
@@ -3065,7 +3108,7 @@ document.addEventListener('click', (e) => {
     case 'open': {
       ui.tlPick = null; ui.aliados = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
-      ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; ui.eqPagina = 0; ui.eqCon = '';
+      ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; ui.eqPagina = 0; ui.eqCon = ''; ui.eqVerDescartados = false;
       render(); window.scrollTo(0, 0); break; }
     case 'uniform': ui.uniformId = d.uid; ui.eqPagina = 0; render(); break;
     case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
@@ -3130,6 +3173,11 @@ document.addEventListener('click', (e) => {
     case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
     case 'teamClose': ui.teamOpen = false; render(); break;
     case 'eqIncluir': ui.eqExcluir = ui.eqExcluir.filter(c => c !== d.cid); ui.eqPagina = 0; render(); break;
+    // Descartar y restaurar no cambian los datos del juego: sin rebuild(), la consulta queda.
+    case 'descartar': if (!estaDescartado(d.c.split(','))) U.descartados.unshift(trioDe(d.c.split(','))); saveUser(); render(); break;
+    case 'restaurar': { const k = trioDe(d.c.split(',')).join('|');
+      U.descartados = U.descartados.filter(x => x.join('|') !== k); saveUser(); render(); break; }
+    case 'eqVerDescartados': ui.eqVerDescartados = !ui.eqVerDescartados; ui.eqPagina = 0; render(); break;
     case 'eqPagina': ui.eqPagina = parseInt(d.p, 10); render(); irA('combos'); break;
     // ★ no cambia los datos del juego: se guarda sin rebuild() para no rehacer la consulta.
     case 'favorito': { const keys = d.m.split(','), c = claveFavorito(keys);
