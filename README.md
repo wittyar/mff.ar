@@ -12,6 +12,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — el instinto (thanosvibs no lo
   publica), los requisitos de Tier-3/Trascendencia/Tier-4, las reglas de ISO, urus y gear, y el
   contraste de `docs/AUDITORIA.md`.
+- [Cynicalex Mega Guides](https://docs.google.com/spreadsheets/d/1H0Hcl9oVZV9gA266xkJAqPv5bD1qwqhC5NeVbLj_-FE)
+  (planilla de Google) — la **guía de armado** por personaje (pestaña CHAMP BUILDING) y la
+  leyenda de los emojis de su tier list (pestaña TIER LIST).
 
 ## Qué hay en la app
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
@@ -22,13 +25,21 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   uniforme cambia casi todo lo de abajo):
   - *Resumen*: los datos del uniforme puesto y *para qué se usa*: su fila en cada tier list, lo
     que le da al equipo (liderazgo, pasivas, efecto de uniforme y artefacto, con a quién se
-    aplican), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece y qué
-    controles aplica para cortar a los jefes.
+    aplican), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
+    controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
+    su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
+    consigue y la nota.
   - *Skills*: cargas de ult y striker, buffs clave, las **rotaciones** de thanosvibs con la
-    leyenda de la notación y cada skill, con tabla de daño por etapa.
-  - *Armado*: su C.T.P. (Ideal CTP List y guía) y su artefacto con los valores por nivel de
-    estrellas; plegadas, las reglas generales de ISO y urus para su tipo de ataque (derivado de
-    sus skills).
+    leyenda de la notación, las de la guía de armado (de proc, con su mejor C.T.P. y la skill de
+    proc / frenesí, con su propia notación) y cada skill, con tabla de daño por etapa.
+  - *Armado*: su C.T.P. según la Ideal CTP List, la guía de principiantes y la guía de armado
+    (esta dice en qué lugar lo pone —mejor, segundo, meta y fuera del meta de PvE y de PvP— y
+    si va reforjado); su artefacto con los valores por nivel de estrellas y si lo necesita
+    según la guía de armado; el ISO-8 (cada categoría con sus sets) y el obelisco de la guía de
+    armado; las **opciones del uniforme** abierto (qué uniforme habilita cada una y qué stat
+    conviene elegir); plegadas, las reglas generales de ISO y urus para su tipo de ataque
+    (derivado de sus skills). Lo de la guía de armado es de su mejor uniforme: si está abierto
+    otro, lo dice.
   - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
     antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo de soporte*
@@ -81,7 +92,8 @@ Al abrir, la app consulta GitHub:
 - **Datos del juego**: `datos.json` (publicado por el workflow semanal, ver abajo) dice qué hay.
   Si hay datos nuevos del formato que entiende esta versión, se bajan solos, se verifican contra
   su sha256 y un botón recarga la ventana para usarlos. Si son de un formato más nuevo, se avisa
-  (hace falta actualizar la app).
+  (hace falta actualizar la app). La guía de armado llega con los datos; Ajustes dice qué versión
+  de la planilla se usa, cuándo se revisó y, si la última no se pudo usar, por qué.
 - **Versión de la app**: cada release publica `latest.json`. Si hay una versión nueva con el mismo
   Python, un aviso muestra las novedades y, confirmado, baja el parche (solo los archivos del
   programa, unos 100 KB), lo verifica, guarda el programa anterior en `programa-anterior/` y se
@@ -120,8 +132,9 @@ abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
 
 ## Datos del juego (pipeline)
 El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
-Actions → Run workflow) baja todo de thanosvibs y la wiki, regenera `data.js`, `datos.json`,
-`docs/AUDITORIA.md` y el import, y los commitea. La app instalada baja ese resultado.
+Actions → Run workflow) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
+regenera `data.js`, `datos.json`, `docs/AUDITORIA.md` y el import, y los commitea junto con la
+copia en uso de la guía de armado (ver abajo). La app instalada baja ese resultado.
 
 A mano (Linux o macOS; en Windows ver Limitaciones):
 ```
@@ -136,6 +149,34 @@ esos archivos: el hash publicado tiene que ser el de lo que se descarga.
 La versión de juego del snapshot sale de `/api/updates` de thanosvibs (la última publicada con
 fecha pasada), no de una tier list: las listas se actualizan a su propio ritmo.
 
+### La guía de armado de Cynicalex
+La planilla se edita a mano, seguido, y su formato es libre, así que no se lee directo:
+`fetch_all.py` baja las dos pestañas como CSV y `scripts/guia_armado.py` decide si se usan. Se
+aceptan solo si este lector las entiende:
+- la fila de encabezados (la que empieza con «PK») tiene todas las columnas que se usan (se
+  ubican por nombre: una columna nueva no rompe nada) y arriba está la versión («V12.2.0»);
+- siguen estando, textuales, las líneas de la leyenda cuyo significado usa la app (las siglas de
+  cómo se consigue, los códigos de artefacto, la notación de rotaciones, «CTP+ = Reforged
+  required», las categorías de ISO-8 y sus sets): si cambian, lo que diría la app podría no ser
+  lo que dice la planilla;
+- la pestaña TIER LIST tiene la línea de leyenda de los emojis;
+- hay al menos 200 filas y se entiende el 80% o más de los nombres (personaje + mejor uniforme,
+  contra thanosvibs) y de cada columna que se interpreta (C.T.P., ISO-8, obelisco, artefacto,
+  emojis).
+
+Si se acepta, pasa a ser la **copia en uso**, `fuentes/guia-armado/` (versionada; el workflow
+semanal la commitea con los datos). Si no se acepta, o no se pudo bajar, la copia en uso queda
+como está y `estado.json` anota la fecha y los motivos; la app lo muestra en **Ajustes** y
+sigue con la última versión compatible. Un valor suelto que no se entiende (un C.T.P. nuevo, un
+emoji sin leyenda) no la rechaza: viaja tal cual, la app lo marca y Ajustes lo lista.
+
+`fuentes.py` lee siempre la copia en uso. La planilla da una fila por personaje, con su mejor
+uniforme; los nombres se cruzan con los de thanosvibs fila por fila (un uniforme puede cambiar
+el nombre: «Amadeus Cho» con Heroic Age). Las columnas que repiten lo que ya trae thanosvibs
+(tier, tipo de ataque, aliados, bando, instinto, opciones de uniforme) no se usan, y «Story
+Mode» no tiene leyenda. Las opciones de uniforme salen de thanosvibs, que las da para los 598
+uniformes y coincide con la planilla en sus 213 filas.
+
 ## Dónde viven los datos
 - `data.js` es la **única** fuente de personajes, uniformes, skills, imágenes, tier lists importadas
   y del resto de lo que viene de las fuentes. La app nunca lo copia a la capa: actualizarlo se ve
@@ -149,6 +190,8 @@ fecha pasada), no de una tier list: las listas se actualizan a su propio ritmo.
   entrada, modos de ejemplo) se convierten al cargarlas.
 - `scripts/contenido/` — lo curado a mano, cada bloque con su fuente: `guia.json` (armado,
   progresión, topes, ranking de C.T.P., reglas de ISO y urus), `modos.json` y `hallazgos.json`.
+- `fuentes/guia-armado/` — la copia en uso de la guía de armado (los dos CSV tal como se bajaron)
+  y `estado.json` (versión, cuándo se tomó, la última revisión y, si se rechazó, por qué).
 
 ## De dónde salen las skills
 De `/api/characters/<retrato>/skills`, que es el modelo de datos del juego. Cada retrato (el base y
@@ -208,8 +251,8 @@ Cómo funciona la traducción:
   números en orden. Una traducción cubre todas las variantes numéricas. Nombres de skill,
   etiquetas, elementos, objetivos y activaciones tienen su propia tabla.
 - Resto de las fuentes (`scripts/fuentes.py`): por texto exacto (`ctps`, `abx`, `guia`,
-  `soportes`, `rotaciones`), y las líneas de artefacto por patrón (`artefactos.json`, con `#` por
-  número). Las rotaciones que son solo notación no se traducen.
+  `soportes`, `rotaciones`, `armado`), y las líneas de artefacto por patrón (`artefactos.json`,
+  con `#` por número). Las rotaciones que son solo notación no se traducen.
 - Un patrón con otra cantidad de `#` que el original corta el build. Lo que no tiene traducción
   viaja en inglés, la app lo marca y el build lo lista en `work/sin_traducir_*.json`. **Nunca se
   emite una traducción aproximada.**
@@ -217,8 +260,9 @@ Cómo funciona la traducción:
   como `MFF_VOCAB_EN`, generado invirtiendo los mismos mapas de `scripts/dominio.py`.
 
 Cobertura actual, sin nada pendiente: 299 patrones de descripción, 228 etiquetas, 85
-activaciones, 53 objetivos, 13 elementos, 5.025 nombres de skill y 1.260 textos de las demás
-fuentes (entre ellos 681 descripciones y 70 nombres de rotación).
+activaciones, 53 objetivos, 13 elementos, 5.025 nombres de skill y 1.336 textos de las demás
+fuentes (entre ellos 681 descripciones, 70 nombres de rotación y las 41 notas de la guía de
+armado).
 
 **Los nombres de personaje, uniforme, C.T.P., artefacto y modo quedan en inglés a propósito**: son
 el identificador con el que se cruza la app con el juego, con la wiki y con thanosvibs. Los
@@ -249,7 +293,9 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `data.js` / `datos.json` — snapshot generado de los datos y su manifiesto.
 - `scripts/` — pipeline: `fetch_all` → `parse_instinto` → `build`, que llama a `skills_api.py`,
   `fuentes.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
-  `traducir.py` las tablas de las skills y `version_juego.py` la versión del snapshot.
+  `traducir.py` las tablas de las skills, `version_juego.py` la versión del snapshot y
+  `guia_armado.py` el lector de la guía de armado (y si se acepta).
+- `fuentes/guia-armado/` — la copia en uso de la guía de armado y su estado.
 - `scripts/traducciones/` — las tablas de traducción, editables a mano.
 - `scripts/contenido/` — lo curado a mano, con fuentes.
 - `docs/AUDITORIA.md` — el informe de la auditoría entre fuentes (se regenera en cada build).
