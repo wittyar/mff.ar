@@ -35,8 +35,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     vínculo con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para
     él* (la sinergia contando solo lo que lo involucra), por PvP (Arena de Equipos), por PvE
     (Batalla de Alianza y World Boss Legend) o por cualquier tier list, también las tuyas; se
-    filtran con «Con» y «Sin»; cada una dice su líder, se marca con ★ como favorita y se arma
-    para tu cuenta.
+    filtran con «Con» y «Sin»; cada una dice su líder, se marca con ★ como favorita, se arma
+    para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
+    personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
     en tu capa.
   - *Más*: la verificación entre fuentes y el retrato propio.
@@ -47,9 +48,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - **Modos**: los 14 modos que la guía marca como importantes, con qué dan, cómo armar el equipo,
   personajes y C.T.P. recomendados, y el armado general (ISO, urus, 4.º gear, opciones de
   uniforme, obelisco) para PvE y PvP.
-- **Equipos**: los favoritos (★) y los equipos de tu cuenta, con el modo y su tamaño según la
-  fuente (Alliance Conquest: dos escuadras de 3). Al armar uno, avisa si un personaje ya está
-  en otro equipo tuyo del mismo modo.
+- **Equipos**: los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
+  Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
+  restaurarlos. Al armar uno, avisa si un personaje ya está en otro equipo tuyo del mismo modo.
 
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.
@@ -138,11 +139,12 @@ fecha pasada), no de una tier list: las listas se actualizan a su propio ritmo.
   y del resto de lo que viene de las fuentes. La app nunca lo copia a la capa: actualizarlo se ve
   al recargar, sin borrar nada.
 - `capa.json` (carpeta de datos) guarda **solo la capa del usuario**: personajes propios o
-  editados, equipos, favoritos, tier lists propias, cambios sobre las importadas, imágenes subidas, atributos
-  marcados, hojas de ruta, topes cargados y preferencias. Se guarda a través del servidor local
-  en cada cambio; si un guardado falla, la app lo dice y ofrece reintentar. Un `capa.json`
-  ilegible frena el arranque en vez de pisarlo. Se exporta e importa desde **Ajustes**, y las
-  capas viejas (una sola fila por entrada, modos de ejemplo) se convierten al cargarlas.
+  editados, equipos, favoritos, descartados, tier lists propias, cambios sobre las
+  importadas, imágenes subidas, atributos marcados, hojas de ruta, topes cargados y
+  preferencias. Se guarda a través del servidor local en cada cambio; si un guardado falla,
+  la app lo dice y ofrece reintentar. Un `capa.json` ilegible frena el arranque en vez de
+  pisarlo. Se exporta e importa desde **Ajustes**, y las capas viejas (una sola fila por
+  entrada, modos de ejemplo) se convierten al cargarlas.
 - `scripts/contenido/` — lo curado a mano, cada bloque con su fuente: `guia.json` (armado,
   progresión, topes, ranking de C.T.P., reglas de ISO y urus), `modos.json` y `hallazgos.json`.
 
