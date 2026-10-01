@@ -40,6 +40,7 @@ function blankUser () {
     charEdits: {},                    // id de data.js -> personaje editado (reemplaza al del seed)
     charNew: [],                      // personajes creados a mano
     teams: [],
+    favoritos: [],                    // equipos de 3 marcados con ★ en las combinaciones: {id, members}
     lists: [],                        // tier lists propias: {id,name,rows}
     assign: {},                       // listId -> {clave: [filaId, ...] | null}
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
@@ -102,9 +103,9 @@ window.addEventListener('beforeunload', (e) => {
 
 // ---- vistas derivadas (data.js + capa de usuario) ----
 let CHARS = [], CHAR_BY_ID = {}, LISTS = [];
-const MEMO_EQUIPOS = new Map();       // búsqueda de equipos por v.key|tamaño (ficha, pestaña Equipos); se vacía en rebuild()
+let CONSULTA = null;                   // última consulta de combinaciones de 3 (pestaña Equipos); se vacía en rebuild()
 function rebuild () {
-  MEMO_EQUIPOS.clear();
+  CONSULTA = null;
   CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
   CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
   LISTS = TIERLISTS_SEED.concat(U.lists);
@@ -447,7 +448,7 @@ const T = {
   eq_none:           { es:'Todavía no armaste equipos. Cuando armes, acá vas a ver en cuáles está y cómo entraría en los demás.',
                        en:'You have not built any team yet. Once you do, this shows which ones it is in and how it would fit the others.' },
   eq_in_none:        { es:'No está en ninguno de tus equipos.', en:'It is not in any of your teams.' },
-  eq_build:          { es:'Armar este equipo',   en:'Build this team' },
+  eq_build:          { es:'Armar para mi cuenta', en:'Build for my account' },
   eq_build_with:     { es:'Armar un equipo con él', en:'Build a team with it' },
   eq_why:            { es:'Por qué',             en:'Why' },
   eq_could:          { es:'Cómo entraría en tus otros equipos', en:'How it would fit your other teams' },
@@ -459,15 +460,25 @@ const T = {
   eq_name_swap:      { es:'{e} (con {v})',       en:'{e} (with {v})' },
   eq_no_gain:        { es:'No mejoran con él:',  en:'Not improved by it:' },
   eq_no_link:        { es:'Sin vínculo de soporte con nadie del equipo:', en:'No support link with anyone in the team:' },
-  eq_few:            { es:'No hay más equipos de {n} en los que cada compañero tenga vínculo de soporte con él.',
-                       en:'No more teams of {n} where every teammate has a support link with it.' },
-  eq_new:            { es:'Equipos nuevos con él', en:'New teams with it' },
-  eq_new_note:       { es:'Armados para él, sobre todo el roster. El puntaje es la sinergia de la app contando solo lo que lo involucra: lo que le dan sus compañeros (soportes y el liderazgo que más le sirve), lo que da él, la ventaja de clase con él, y los roles y las clases del equipo. Lo que los compañeros se dan entre ellos no suma, y cada uno tiene que tener vínculo de soporte con él. Búsqueda aproximada: arma el equipo de a un integrante, probando cada personaje y quedándose en cada paso con los {n} mejores; a igual puntaje, primero los mejor ubicados en tu lista de referencia.',
-                       en:'Built for it, over the whole roster. The score is the app\'s synergy counting only what involves it: what its teammates give it (supports and the leadership that helps it most), what it gives, class advantage with it, and the team\'s roles and classes. What teammates give each other does not count, and every one of them must have a support link with it. Approximate search: builds the team one member at a time, trying every character and keeping the {n} best at each step; on ties, the best placed in your reference list come first.' },
-  eq_no_mode:        { es:'Sin modo',            en:'No mode' },
+  eq_new:            { es:'Combinaciones de 3 con él', en:'Combinations of 3 with it' },
+  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo de soporte con él (le dan un soporte o el liderazgo, o reciben uno suyo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el que más le suma.',
+                       en:'Every pair of teammates with a support link with it (they give it a support or the leadership, or receive one of its own), one per trio of characters, with each one\'s best uniform for the chosen order. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, class advantage with it, and the team\'s roles and classes. The leader is the one that adds the most for it.' },
+  eq_calc:           { es:'Calculando las combinaciones…', en:'Working out the combinations…' },
+  eq_sort:           { es:'Ordenar por',         en:'Sort by' },
+  eq_sort_foco:      { es:'Puntos para él',      en:'Points for it' },
+  eq_con:            { es:'Con',                 en:'With' },
+  eq_con_any:        { es:'cualquiera',          en:'anyone' },
+  eq_excluir:        { es:'Sin',                 en:'Without' },
+  eq_excluir_ph:     { es:'excluir a…',          en:'exclude…' },
+  eq_incluir:        { es:'Volver a incluirlo',  en:'Include it again' },
+  eq_count:          { es:'{n} combinaciones',   en:'{n} combinations' },
+  eq_none_q:         { es:'Ninguna combinación con estos filtros.', en:'No combination with these filters.' },
+  eq_leader:         { es:'Líder: {x}',          en:'Leader: {x}' },
+  eq_no_leader:      { es:'Ningún liderazgo le suma', en:'No leadership adds for it' },
+  eq_fav_add:        { es:'Marcar como favorito', en:'Mark as favorite' },
+  eq_fav_rm:         { es:'Quitar de favoritos', en:'Remove from favorites' },
   eq_pts_for:        { es:'pts para él',         en:'pts for it' },
   eq_pts_team:       { es:'{n} del equipo',      en:'{n} for the team' },
-  eq_size:           { es:'equipo de {n}',       en:'team of {n}' },
   d_race:            { es:'Raza',                en:'Race' },
   d_gender:          { es:'Género',              en:'Gender' },
   d_origin:          { es:'Origen',              en:'Origin' },
@@ -578,6 +589,11 @@ const T = {
   tm_save:           { es:'Guardar',             en:'Save' },
   tm_synergy_pts:    { es:'pts de sinergia',     en:'synergy pts' },
   tm_empty:          { es:'Todavía no armaste ningún equipo.', en:'You have not built any team yet.' },
+  tm_mine:           { es:'Equipos de tu cuenta', en:'Your account\'s teams' },
+  tm_favs:           { es:'Favoritos',           en:'Favorites' },
+  tm_favs_note:      { es:'Los que marcaste con ★ en las combinaciones de cada personaje. Desde acá los armás para tu cuenta.',
+                       en:'The ones you starred in each character\'s combinations. Build them for your account from here.' },
+  tm_no_leader:      { es:'Ningún liderazgo suma', en:'No leadership adds' },
 
   ed_edit:           { es:'Editar personaje',    en:'Edit character' },
   ed_new:            { es:'Nuevo personaje',     en:'New character' },
@@ -953,7 +969,9 @@ let ui = {
   aliados: null,                     // objetivo de grupo cuya lista de personajes está abierta
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
-  artEst: '6'                        // nivel de estrellas que muestra el artefacto de la ficha
+  artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
+  // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
+  eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null
 };
 
 // ============================================================================
@@ -1154,7 +1172,8 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
  *  si es el líder que cuenta la sinergia) o recibe algo de él. Las clases y los roles no
  *  cuentan: un equipo armado alrededor de v no lleva compañeros que no tengan nada que ver con él. */
 function vinculo (v, x, aplicados) {
-  return aplicados.some(e => (e.de === v && e.a.includes(x)) || (e.de === x && e.a.includes(v)));
+  for (const e of aplicados) if ((e.de === v && e.a.includes(x)) || (e.de === x && e.a.includes(v))) return true;
+  return false;
 }
 
 // ---------------------------------------------------------------------------
@@ -1717,23 +1736,29 @@ function fichaProgreso (ch, v) {
       <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
     </div></div>`;
 }
+/** Abre el armador con estos integrantes, para guardarlo como equipo de tu cuenta. */
+function botonArmar (vs, modo, nombre, etiqueta) {
+  return `<button class="btn sm" data-a="teamDesde" data-m="${vs.map(x => x.key).join(',')}"
+    data-modo="${modo || ''}" data-nombre="${h(nombre || '')}">${h(etiqueta || t('eq_build'))}</button>`;
+}
+/** Las razones de la sinergia, plegadas: las que suman y, si se compara, las que se pierden. */
+function porqueHtml (mas, menos) {
+  return (mas.length || menos.length) ? `<details class="usgrupo"><summary>${h(t('eq_why'))}</summary>
+    <ul class="sopfx eqwhy">${mas.map(r => `<li class="mas">${h(r)}</li>`).join('')}${menos.map(r => `<li class="menos">${h(r)}</li>`).join('')}</ul></details>` : '';
+}
 /** Equipos: cómo entra el personaje (con el uniforme elegido) en los equipos que armaste y
- *  qué equipos nuevos le sugiere la sinergia de la app. */
+ *  todas las combinaciones de 3 con él. */
 function fichaEquipos (ch, v) {
   const suyos = U.teams.filter(tt => tt.members.some(k => k.split('::')[0] === ch.id));
   const otros = U.teams.filter(tt => !suyos.includes(tt)).map(tt => comoEntra(v, tt));
   const sinVinculo = otros.filter(o => o.sinVinculo), entra = otros.filter(o => !o.sinVinculo);
   const mejoran = entra.filter(o => o.delta > 0).sort((a, b) => b.delta - a.delta);
   const no = entra.filter(o => o.delta <= 0);
-  const armar = (vs, modo, nombre, etiqueta) => `<button class="btn sm" data-a="teamDesde" data-m="${vs.map(x => x.key).join(',')}"
-    data-modo="${modo || ''}" data-nombre="${h(nombre || '')}">${h(etiqueta || t('eq_build'))}</button>`;
-  const porque = (mas, menos) => (mas.length || menos.length) ? `<details class="usgrupo"><summary>${h(t('eq_why'))}</summary>
-    <ul class="sopfx eqwhy">${mas.map(r => `<li class="mas">${h(r)}</li>`).join('')}${menos.map(r => `<li class="menos">${h(r)}</li>`).join('')}</ul></details>` : '';
   return `<div class="section"><h3>${h(t('eq_mine'))}</h3>
     ${!U.teams.length ? `<p class="muted" style="margin-bottom:10px">${h(t('eq_none'))}</p>` : ''}
     ${suyos.length ? `<div class="grid eqgrid">${suyos.map(tt => equipoCard(tt)).join('')}</div>`
                    : U.teams.length ? `<p class="muted">${h(t('eq_in_none'))}</p>` : ''}
-    <div class="row" style="margin-top:10px">${armar([v], '', '', t('eq_build_with'))}</div>
+    <div class="row" style="margin-top:10px">${botonArmar([v], '', '', t('eq_build_with'))}</div>
   </div>
   ${otros.length ? `<div class="section"><h3>${h(t('eq_could'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('eq_could_note').replace('{v}', fullLabel(v)))}</p>
@@ -1745,13 +1770,13 @@ function fichaEquipos (ch, v) {
           <div class="muted">${h(t('eq_before').replace('{n}', o.antes.score))}</div></div>
       </div>
       ${retratosEquipo(o.vs, v)}
-      ${porque(o.gana, o.pierde)}
-      <div class="row">${armar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
+      ${porqueHtml(o.gana, o.pierde)}
+      <div class="row">${botonArmar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
     ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
     ${sinVinculo.length ? `<p class="muted">${h(t('eq_no_link'))} ${sinVinculo.map(o => h(o.tt.name)).join(' · ')}</p>` : ''}
   </div>` : ''}
-  ${equiposNuevosHtml(v, armar, porque)}`;
+  ${combinacionesHtml(v)}`;
 }
 /** El mejor lugar para v en un equipo: reemplazando a cada integrante o, si hay lugar,
  *  sumándolo. Solo valen los lugares donde queda con vínculo de soporte con alguien del
@@ -1774,68 +1799,153 @@ function retratosEquipo (vs, v) {
   return `<div class="row eqfotos">${vs.map(x => `<button class="eqfoto ${x.key === v.key ? 'nuevo' : ''}" data-a="open" data-cid="${x.cid}"
     data-uid="${x.uid || ''}" title="${h(fullLabel(x))}"><span class="shot">${shot(x.id)}</span><span>${h(x.name)}</span></button>`).join('')}</div>`;
 }
-// Equipos nuevos: sobre todo el roster, con la sinergia de la app. Probar todas las
-// combinaciones no escala (un equipo de 3 ya son ~390.000; uno de 6, billones), así que la
-// búsqueda es aproximada: arma el equipo de a un integrante, probando a cada personaje del
-// roster y quedándose en cada paso con los ANCHO mejores equipos parciales (un personaje por
-// lugar). Un corte previo por sinergia de a dos perdía equipos: el mejor de Wong con Doctor
-// Strange 2 lleva a Taskmaster, que de a dos con él queda en el puesto 54.
-// El puntaje es la sinergia con foco en él (synergy con foco): con la del equipo entero ganaban
-// compañeros que se potencian entre ellos y no a él (a Annihilus, villano, le tocaba Nick Fury,
-// que solo da a héroes; a Apocalypse, Phil Coulson con Dazzler: dos de sus tres soportes son
-// para héroes). Y cada compañero tiene que tener vínculo de soporte con él (vinculo()): sin eso,
-// los lugares que nadie llena se completaban con quien sumara por clase o rol.
-const ANCHO = 10, SUGERIDOS = 3;
-/** Los ANCHO mejores equipos de `tam` con v. Cada tamaño sale de ampliar el anterior y
- *  queda memorizado: el de 6 reusa el de 5, así usar varios tamaños no repite el trabajo. */
-function hazCon (v, tam) {
-  const clave = v.key + '|' + tam;
-  if (!MEMO_EQUIPOS.has(clave)) MEMO_EQUIPOS.set(clave, tam === 1 ? [[v]] : ampliarHaz(hazCon(v, tam - 1), v));
-  return MEMO_EQUIPOS.get(clave);
+// COMBINACIONES DE 3 CON ÉL: una consulta sobre los datos, no listas armadas de antemano.
+// Para el personaje (con el uniforme elegido) recorre todas las parejas de compañeros y se
+// queda con los equipos en que los dos tienen vínculo de soporte con él (vinculo()), con el
+// puntaje para él (synergy con foco: lo que le dan, lo que da él, la ventaja de clase con él,
+// roles y clases). Antes eran tres equipos por tamaño de una búsqueda aproximada, y salían
+// siempre los mismos seis soportes sin forma de ver los demás.
+// Solo se recorren las parejas en que cada uno puede vincularse con él (puedeVincular): si
+// ningún soporte ni liderazgo de uno le llega al otro, en ningún equipo se vinculan. La
+// consulta queda en memoria (la última) hasta el próximo cambio de datos (rebuild()); el
+// orden, los filtros y las páginas trabajan sobre ella.
+const POR_PAGINA = 20;
+// Orden PvP y PvE: las tier lists de thanosvibs de esos modos (Arena de Equipos; Batalla de
+// Alianza y World Boss Legend).
+const LISTAS_PVP = ['tv-arena'], LISTAS_PVE = ['tv-alianza', 'tv-wbl'];
+function puedeVincular (de, a) {
+  const s = SOPORTES[de.p];
+  return !!s && TIPOS_SOPORTE.some(([k]) => s[k] && aplicaA(s[k], a));
 }
-function ampliarHaz (haz, v) {
+function consultaCon (v) {
+  if (CONSULTA && CONSULTA.clave === v.key) return CONSULTA;
   const pool = allVariants().filter(x => x.cid !== v.cid);
-  // A igual sinergia gana el equipo mejor ubicado en tu lista de referencia.
-  const rango = new Map([v].concat(pool).map(x => [x.key, rankIndex(x.key)]));
-  const orden = (a, b) => b.s - a.s || a.r - b.r;
-  const mejores = new Map();          // un equipo por conjunto de personajes
-  haz.forEach(eq => pool.forEach(x => {
-    if (eq.some(y => y.cid === x.cid)) return;
-    const vs = eq.concat(x), sc = synergy(vs, { soloPuntaje: true, foco: v });
-    if (vs.some(y => y !== v && !vinculo(v, y, sc.aplicados))) return;
-    const firma = vs.map(y => y.cid).sort().join('|');
-    const o = { vs, s: sc.score, r: vs.reduce((suma, y) => suma + rango.get(y.key), 0) };
-    const previo = mejores.get(firma);
-    if (!previo || orden(o, previo) < 0) mejores.set(firma, o);
-  }));
-  return [...mejores.values()].sort(orden).slice(0, ANCHO).map(o => o.vs);
+  const puede = pool.map(x => puedeVincular(x, v) || puedeVincular(v, x));
+  const max = pool.length * (pool.length - 1) / 2;
+  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max);
+  // Un solo arreglo de equipo y unas solas opciones para los cientos de miles de llamadas
+  // (synergy no se los guarda: lo que devuelve se usa acá mismo y se descarta).
+  const vs = [v, null, null], op = { soloPuntaje: true, foco: v };
+  let n = 0;
+  for (let i = 0; i < pool.length; i++) {
+    if (!puede[i]) continue;
+    vs[1] = pool[i];
+    for (let j = i + 1; j < pool.length; j++) {
+      if (!puede[j] || pool[i].cid === pool[j].cid) continue;
+      vs[2] = pool[j];
+      const sc = synergy(vs, op);
+      if (!vinculo(v, pool[i], sc.aplicados) || !vinculo(v, pool[j], sc.aplicados)) continue;
+      A[n] = i; B[n] = j; P[n] = sc.score; n++;
+    }
+  }
+  CONSULTA = { clave: v.key, pool, A, B, P, n, vista: null };
+  return CONSULTA;
 }
-/** Tamaños de equipo de los modos que usaste en tus equipos (3 si no hay ninguno), con esos
- *  modos en el orden de tus equipos: primero el del más reciente. */
-function tamanosUsados () {
-  const por = new Map();
-  U.teams.forEach(tt => { const tam = tamModo(tt.modeId), m = modosEquipo().find(x => x.id === tt.modeId);
-    const lista = por.get(tam) || []; if (m && !lista.some(y => y.id === m.id)) lista.push(m); por.set(tam, lista); });
-  if (!por.size) por.set(3, []);
-  return [...por.entries()].sort((a, b) => a[0] - b[0]);
+/** Tier lists del orden elegido: las de PvP, las de PvE o una sola (cualquiera de personajes). */
+function listasOrden () {
+  const o = ui.eqOrden;
+  const ids = o === 'pvp' ? LISTAS_PVP : o === 'pve' ? LISTAS_PVE : o.startsWith('lista:') ? [o.slice(6)] : [];
+  return ids.map(id => { const l = listById(id); if (!l) throw new Error('falta la tier list ' + id); return l; });
 }
-/** El armador se abre con el modo de ese tamaño (con varios, el de tu equipo más reciente;
- *  se cambia ahí): sin modo el tope es 3 y no entraría un equipo de 5 o 6. */
-function equiposNuevosHtml (v, armar, porque) {
-  return `<div class="section"><h3>${h(t('eq_new'))}</h3>
-    <p class="muted" style="margin-bottom:10px">${h(t('eq_new_note').replace('{n}', ANCHO))}</p>
-    ${tamanosUsados().map(([tam, modos]) => { const eqs = hazCon(v, tam).slice(0, SUGERIDOS);
-      return `<h4 class="eqtam">${h(modos.length ? modos.map(m => m.name).join(', ') : t('eq_no_mode'))} · ${h(t('eq_size').replace('{n}', tam))}</h4>
-      ${eqs.map(vs => { const sc = synergy(vs, { foco: v });
-        return `<div class="card eqsug">
-          <div class="row" style="justify-content:space-between"><div class="muted">${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
-            <div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}
-              <div class="muted">${h(t('eq_pts_team').replace('{n}', synergy(vs).score))}</div></div></div>
-          ${retratosEquipo(vs, v)}
-          ${porque(sc.reasons, [])}
-          <div class="row">${armar(vs, modos.length ? modos[0].id : '', '')}</div>
-        </div>`; }).join('')}
-      ${eqs.length < SUGERIDOS ? `<p class="muted">${h(t('eq_few').replace('{n}', tam))}</p>` : ''}`; }).join('')}
+/** Puesto de una variante en una lista: su mejor fila (0 es la de arriba); sin ubicar, una
+ *  fila más abajo que la última. */
+function puesto (l, key) { const i = indicesFila(l, key); return i.length ? i[0] : rowsOf(l).length; }
+function puestoTexto (l, key) { const i = indicesFila(l, key); return i.length ? rowsOf(l)[i[0]].label : '—'; }
+/** Filas de la consulta en el orden elegido y con los filtros, una por trío de personajes: la
+ *  primera en ese orden (el mejor uniforme de cada uno para ese orden). Con tier lists, gana
+ *  el trío mejor ubicado (suma de puestos); a igual puesto, más puntos para él; después, el
+ *  mejor ubicado en tu lista de referencia. */
+function vistaConsulta (q) {
+  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon].join('|');
+  if (q.vista && q.vista.clave === clave) return q.vista.filas;
+  const ls = listasOrden();
+  const pos = q.pool.map(x => ls.reduce((suma, l) => suma + puesto(l, x.key), 0));
+  const ref = q.pool.map(x => rankIndex(x.key));
+  // Orden por una sola clave numérica por fila (puestos, puntos al revés, referencia, fila):
+  // el orden nativo de un Float64Array es varias veces más rápido que comparar de a pares.
+  // Cada parte entra en su lugar: si no entrara, el orden saldría mal sin avisar.
+  const claves = new Float64Array(q.n);
+  for (let i = 0; i < q.n; i++) {
+    const ps = pos[q.A[i]] + pos[q.B[i]], pts = q.P[i], rf = ref[q.A[i]] + ref[q.B[i]];
+    if (ps >= 4096 || pts < 0 || pts >= 128 || rf >= 2048) throw new Error('orden de combinaciones fuera de rango: ' + [ps, pts, rf]);
+    claves[i] = ((ps * 128 + (127 - pts)) * 2048 + rf) * 1048576 + i;
+  }
+  claves.sort();
+  const fuera = new Set(ui.eqExcluir), vistos = new Set(), filas = [];
+  for (const k of claves) {
+    const i = k % 1048576;
+    const a = q.pool[q.A[i]], b = q.pool[q.B[i]];
+    if (fuera.has(a.cid) || fuera.has(b.cid) || (ui.eqCon && a.cid !== ui.eqCon && b.cid !== ui.eqCon)) continue;
+    const trio = a.cid < b.cid ? a.cid + '|' + b.cid : b.cid + '|' + a.cid;
+    if (vistos.has(trio)) continue;
+    vistos.add(trio); filas.push(i);
+  }
+  q.vista = { clave, filas };
+  return filas;
+}
+function claveFavorito (keys) { return keys.slice().sort().join('|'); }
+function esFavorito (keys) { const c = claveFavorito(keys); return U.favoritos.some(f => claveFavorito(f.members) === c); }
+function estrella (keys) {
+  const on = esFavorito(keys);
+  return `<button class="btn sm icon estrella ${on ? 'on' : ''}" data-a="favorito" data-m="${keys.join(',')}"
+    title="${h(t(on ? 'eq_fav_rm' : 'eq_fav_add'))}">${on ? '★' : '☆'}</button>`;
+}
+function combinacionesHtml (v) {
+  const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))}</p>`;
+  if (!CONSULTA || CONSULTA.clave !== v.key) {
+    // La consulta tarda (más de un segundo con quien tiene un liderazgo para todos): primero
+    // se pinta la pestaña con el aviso y recién después se calcula.
+    if (ui.eqCalculando !== v.key) {
+      ui.eqCalculando = v.key;
+      requestAnimationFrame(() => setTimeout(() => { consultaCon(v); ui.eqCalculando = null; render(); }, 0));
+    }
+    return `<div class="section" id="combos">${cab}<p class="muted">${h(t('eq_calc'))}</p></div>`;
+  }
+  const q = CONSULTA, filas = vistaConsulta(q), ls = listasOrden();
+  const paginas = Math.max(1, Math.ceil(filas.length / POR_PAGINA));
+  ui.eqPagina = Math.min(ui.eqPagina, paginas - 1);
+  const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
+  const opcion = (val, txt, sel) => `<option value="${h(val)}" ${val === sel ? 'selected' : ''}>${h(txt)}</option>`;
+  const nombres = (ids) => ids.map(id => listName(listById(id))).join(' + ');
+  const fila = (i) => {
+    const vs = [v, q.pool[q.A[i]], q.pool[q.B[i]]], keys = vs.map(x => x.key);
+    const sc = synergy(vs, { foco: v });
+    return `<div class="card combo">
+      <div class="combofila">
+        ${estrella(keys)}${retratosEquipo(vs, v)}
+        <div class="combotx">
+          <div>${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
+          <div class="combolider">${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('eq_no_leader'))}</div>
+          ${ls.map(l => `<div class="muted">${h(listName(l))}: ${vs.map(x => h(puestoTexto(l, x.key))).join(' · ')}</div>`).join('')}
+        </div>
+        <div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}
+          <div class="muted">${h(t('eq_pts_team').replace('{n}', synergy(vs).score))}</div></div>
+        ${botonArmar(vs, '', '')}
+      </div>
+      ${porqueHtml(sc.reasons, [])}
+    </div>`;
+  };
+  return `<div class="section" id="combos">${cab}
+    <div class="row eqfiltros">
+      <label>${h(t('eq_sort'))}
+        <select data-a="eqOrden">
+          ${opcion('foco', t('eq_sort_foco'), ui.eqOrden)}
+          ${opcion('pvp', 'PvP · ' + nombres(LISTAS_PVP), ui.eqOrden)}
+          ${opcion('pve', 'PvE · ' + nombres(LISTAS_PVE), ui.eqOrden)}
+          ${listasAgrupadas().map(gr => ({ k: gr.k, ls: gr.ls.filter(l => tipoLista(l) === 'personajes') })).filter(gr => gr.ls.length)
+            .map(gr => `<optgroup label="${h(t(gr.k))}">${gr.ls.map(l => opcion('lista:' + l.id, listName(l), ui.eqOrden)).join('')}</optgroup>`).join('')}
+        </select></label>
+      <label>${h(t('eq_con'))}
+        <select data-a="eqCon">${opcion('', t('eq_con_any'), ui.eqCon)}${personajes.map(c => opcion(c.id, c.name, ui.eqCon)).join('')}</select></label>
+      <label>${h(t('eq_excluir'))}
+        <select data-a="eqExcluir">${opcion('', t('eq_excluir_ph'), '')}${personajes.filter(c => !ui.eqExcluir.includes(c.id)).map(c => opcion(c.id, c.name, '')).join('')}</select></label>
+    </div>
+    ${ui.eqExcluir.length ? `<div class="row" style="gap:6px;margin-bottom:10px">${ui.eqExcluir.map(cid =>
+      `<button class="tag dim eqfuera" data-a="eqIncluir" data-cid="${h(cid)}" title="${h(t('eq_incluir'))}">${h(CHAR_BY_ID[cid].name)} ✕</button>`).join('')}</div>` : ''}
+    <p class="muted" style="margin-bottom:10px">${h(t('eq_count').replace('{n}', filas.length.toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US')))}</p>
+    ${filas.length ? filas.slice(ui.eqPagina * POR_PAGINA, (ui.eqPagina + 1) * POR_PAGINA).map(fila).join('')
+                   : `<p class="muted">${h(t('eq_none_q'))}</p>`}
+    ${pager(paginas, ui.eqPagina, 'eqPagina')}
   </div>`;
 }
 /** El resto: verificación entre fuentes y el retrato propio. */
@@ -1851,8 +1961,8 @@ function fichaMas (ch, v) {
 }
 /** Al cambiar de pestaña, el contenido arranca desde arriba (un poco debajo de la cabecera
  *  fija) si la página ya estaba más abajo. Sin animación: el contenido ya cambió. */
-function irAlCuerpo () {
-  const cab = document.querySelector('.fcab'), cuerpo = document.getElementById('fcuerpo');
+function irA (id) {
+  const cab = document.querySelector('.fcab'), cuerpo = document.getElementById(id);
   if (!cab || !cuerpo) return;
   const destino = cuerpo.getBoundingClientRect().top + scrollY - document.querySelector('nav.topnav').offsetHeight - cab.offsetHeight - 14;
   if (scrollY > destino) window.scrollTo({ top: destino, behavior: 'instant' });
@@ -2646,7 +2756,21 @@ function equipoCard (tt, borrable) {
       ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
     <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
     ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
-    <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))}</div>
+    <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
+  </div>`;
+}
+/** Un favorito: equipo de 3 marcado con ★ en las combinaciones de un personaje (el primero). */
+function favoritoCard (f) {
+  const vs = f.members.map(k => variant(...k.split('::'))).filter(Boolean);
+  const sc = synergy(vs);
+  return `<div class="card eqsug">
+    <div class="row" style="justify-content:space-between;align-items:flex-start">
+      <div class="row" style="gap:10px;align-items:flex-start">${estrella(f.members)}${retratosEquipo(vs, vs[0])}</div>
+      <div class="eqpts"><b>${sc.score}</b> ${h(t('tm_synergy_pts'))}</div>
+    </div>
+    <div class="muted">${h(vs.map(fullLabel).join(' + '))}</div>
+    <div><b>${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</b></div>
+    <div class="row">${botonArmar(vs, '', '')}</div>
   </div>`;
 }
 function renderTeams () {
@@ -2687,9 +2811,12 @@ function renderTeams () {
       <button class="btn primary" data-a="teamSave" ${eq.members.length < 2 ? 'disabled' : ''}>${h(t('tm_save'))}</button>
     </div>
   </div>` : ''}
-  ${U.teams.length ? `<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
-    ${U.teams.map(tt => equipoCard(tt, true)).join('')}</div>`
-  : `<div class="empty"><div class="big">◇</div><div>${h(t('tm_empty'))}</div></div>`}`;
+  ${U.favoritos.length ? `<div class="section"><h3>${h(t('tm_favs'))}</h3>
+    <p class="muted" style="margin-bottom:10px">${h(t('tm_favs_note'))}</p>
+    <div class="grid eqgrid">${U.favoritos.map(favoritoCard).join('')}</div></div>` : ''}
+  <div class="section"><h3>${h(t('tm_mine'))}</h3>
+  ${U.teams.length ? `<div class="grid eqgrid">${U.teams.map(tt => equipoCard(tt, true)).join('')}</div>`
+  : `<div class="empty"><div class="big">◇</div><div>${h(t('tm_empty'))}</div></div>`}</div>`;
 }
 
 // ============================================================================
@@ -2928,9 +3055,10 @@ document.addEventListener('click', (e) => {
     case 'open': {
       ui.tlPick = null; ui.aliados = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
-      ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; render(); window.scrollTo(0, 0); break; }
-    case 'uniform': ui.uniformId = d.uid; render(); break;
-    case 'fichaTab': ui.fichaTab = d.v; render(); irAlCuerpo(); break;
+      ui.view = 'detail'; ui.charId = d.cid; ui.uniformId = d.uid || 'base'; ui.eqPagina = 0; ui.eqCon = '';
+      render(); window.scrollTo(0, 0); break; }
+    case 'uniform': ui.uniformId = d.uid; ui.eqPagina = 0; render(); break;
+    case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
     case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
     case 'aliadosCerrar': ui.aliados = null; render(); break;
 
@@ -2943,7 +3071,7 @@ document.addEventListener('click', (e) => {
     case 'irArmadoModos': e.preventDefault(); ui.view = 'modos'; render();
       document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
     case 'artEst': ui.artEst = d.v; render(); break;
-    case 'irVerif': e.preventDefault(); ui.fichaTab = 'mas'; render(); irAlCuerpo(); break;
+    case 'irVerif': e.preventDefault(); ui.fichaTab = 'mas'; render(); irA('fcuerpo'); break;
     case 'ruta': if (d.v) U.ruta[d.cid] = d.v; else delete U.ruta[d.cid]; commit(); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
@@ -2991,6 +3119,13 @@ document.addEventListener('click', (e) => {
     case 'goTeams': ui.view = 'teams'; render(); break;
     case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
     case 'teamClose': ui.teamOpen = false; render(); break;
+    case 'eqIncluir': ui.eqExcluir = ui.eqExcluir.filter(c => c !== d.cid); ui.eqPagina = 0; render(); break;
+    case 'eqPagina': ui.eqPagina = parseInt(d.p, 10); render(); irA('combos'); break;
+    // ★ no cambia los datos del juego: se guarda sin rebuild() para no rehacer la consulta.
+    case 'favorito': { const keys = d.m.split(','), c = claveFavorito(keys);
+      const i = U.favoritos.findIndex(f => claveFavorito(f.members) === c);
+      if (i > -1) U.favoritos.splice(i, 1); else U.favoritos.unshift({ id: 'fav-' + Date.now(), members: keys });
+      saveUser(); render(); break; }
     case 'teamDesde': ui.view = 'teams'; ui.teamOpen = true; ui.teamSearch = ''; ui.teamPage = 0;
       ui.team = { name: d.nombre, members: d.m.split(','), reason: '', modeId: d.modo };
       render(); window.scrollTo(0, 0); break;
@@ -3083,7 +3218,10 @@ document.addEventListener('change', (e) => {
   if (a === 'newListTpl') { ui.newListTpl = el.value; return; }
   if (a === 'newListKind') { ui.newListKind = el.value; return; }
   if (a === 'abxDia') { ui.abxDia = parseInt(el.value, 10); render(); return; }
-  if (a === 'uniformSel') { ui.uniformId = el.value; render(); return; }
+  if (a === 'uniformSel') { ui.uniformId = el.value; ui.eqPagina = 0; render(); return; }
+  if (a === 'eqOrden') { ui.eqOrden = el.value; ui.eqPagina = 0; render(); return; }
+  if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
+  if (a === 'eqExcluir') { if (el.value) ui.eqExcluir = ui.eqExcluir.concat(el.value); ui.eqPagina = 0; render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
