@@ -1082,61 +1082,73 @@ function efectoSoporteTxt (f) {
   if (f.c) val.push(trTxt(f.c));
   return trTxt(f.s) + (val.length ? ' ' + val.join(' ') : '');
 }
+const LIDERAZGOS = ['leader', 'leader2'];
+const ROLES_EQUIPO = ['Tanque', 'Control', 'Daño', 'Soporte'];
+/** La clase que le gana a cada una: la inversa de CLASS_ADVANTAGE (Universal no le gana a nadie). */
+const LE_GANA_A = Object.fromEntries(Object.entries(SEED.CLASS_ADVANTAGE).filter(([, c]) => c).map(([k, c]) => [c, k]));
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
  *  soporte de thanosvibs que alcanzan a otro integrante: los de soporte valen en
  *  cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
  *  cuenta el mejor líder posible. Se suman dos lecturas propias, dichas como tales:
  *  los roles derivados de las skills y la ventaja de clase de la wiki (Combate > Velocidad
  *  > Detonación > Combate; Universal no tiene debilidad). No es un cálculo del juego.
- *  foco: cuenta solo lo que involucra a ese integrante (los equipos armados para él). */
+ *  foco: cuenta solo lo que involucra a ese integrante (los equipos armados para él).
+ *  Escrita con bucles y sin armar textos si no hacen falta: la consulta de combinaciones la
+ *  llama cientos de miles de veces. */
 function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
-  if (vs.length < 2) return { score: 0, reasons: [], aplicados: [] };
+  if (vs.length < 2) return { score: 0, reasons: [], aplicados: [], lider: null };
   const reasons = [], aplicados = []; let score = 0;     // aplicados: { de, a: [integrantes] }, lo que suma
-  const razon = soloPuntaje ? () => {} : (texto) => reasons.push(texto());
-  // Con foco (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le
-  // dan a él y lo que da él. Lo que los demás se dan entre ellos no suma para él.
-  const cuenta = (a, x) => !foco || a === foco || aplicaA(x, foco);
   const ES = LANG === 'es';
   const quienes = (bs) => bs.map(fullLabel).join(', ');
   const efectos = (x) => x.fx.map(efectoSoporteTxt).join(' · ');
+  // Con foco (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le
+  // dan a él y lo que da él. Lo que los demás se dan entre ellos no suma para él.
+  const cuenta = (a, x) => !foco || a === foco || aplicaA(x, foco);
+  const alcanza = (a, x) => { const bs = []; for (const b of vs) if (b !== a && aplicaA(x, b)) bs.push(b); return bs; };
   // Soportes: pasivas de 4★ y Tier-2, efecto de uniforme y artefacto (si lo lleva).
-  vs.forEach(a => { const s = SOPORTES[a.p]; if (!s) return;
-    TIPOS_SOPORTE.filter(([k]) => s[k] && !k.startsWith('leader') && cuenta(a, s[k])).forEach(([k, clave]) => {
-      const bs = vs.filter(b => b !== a && aplicaA(s[k], b));
-      if (!bs.length) return;
-      score += s[k].sig ? 3 : 2; aplicados.push({ de: a, a: bs });
-      razon(() => `${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(s[k])}`);
-    }); });
-  // Liderazgo: el del integrante que más alcanza a los demás (con foco, el que más le sirve a él).
-  const lideres = vs.map(a => { const s = SOPORTES[a.p] || {};
-    const xs = ['leader', 'leader2'].filter(k => s[k] && cuenta(a, s[k])).map(k => ({ x: s[k], bs: vs.filter(b => b !== a && aplicaA(s[k], b)) }))
-      .filter(o => o.bs.length);
-    return { a, xs, pts: xs.reduce((n, o) => n + (o.x.sig ? 3 : 2), 0) }; }).filter(o => o.pts);
-  if (lideres.length) {
-    const mejor = lideres.sort((p, q) => q.pts - p.pts)[0];
-    score += mejor.pts;
-    mejor.xs.forEach(o => { aplicados.push({ de: mejor.a, a: o.bs });
-      razon(() => `${ES ? 'Con' : 'With'} ${fullLabel(mejor.a)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`); });
+  for (const a of vs) {
+    const s = SOPORTES[a.p]; if (!s) continue;
+    for (const [k, clave] of TIPOS_SOPORTE) {
+      const x = s[k]; if (!x || LIDERAZGOS.includes(k) || !cuenta(a, x)) continue;
+      const bs = alcanza(a, x); if (!bs.length) continue;
+      score += x.sig ? 3 : 2; aplicados.push({ de: a, a: bs });
+      if (!soloPuntaje) reasons.push(`${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(x)}`);
+    }
   }
-  const roles = new Set(vs.flatMap(v => v.r));
-  const covered = ['Tanque','Control','Daño','Soporte'].filter(r => roles.has(r));
+  // Liderazgo: el del integrante que más alcanza a los demás (con foco, el que más le sirve a
+  // él); si empatan, el primero.
+  let lider = null, ptsLider = 0, xsLider = null;
+  for (const a of vs) {
+    const s = SOPORTES[a.p]; if (!s) continue;
+    let pts = 0; const xs = [];
+    for (const k of LIDERAZGOS) {
+      const x = s[k]; if (!x || !cuenta(a, x)) continue;
+      const bs = alcanza(a, x); if (!bs.length) continue;
+      pts += x.sig ? 3 : 2; xs.push({ x, bs });
+    }
+    if (pts > ptsLider) { lider = a; ptsLider = pts; xsLider = xs; }
+  }
+  if (lider) {
+    score += ptsLider;
+    for (const o of xsLider) { aplicados.push({ de: lider, a: o.bs });
+      if (!soloPuntaje) reasons.push(`${ES ? 'Con' : 'With'} ${fullLabel(lider)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`); }
+  }
+  const covered = ROLES_EQUIPO.filter(r => vs.some(v => v.r.includes(r)));
   if (covered.length >= 2) { score += 1;
-    razon(() => (ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + covered.map(dom).join(' + ') + '.'); }
-  const classes = new Set(vs.map(v => v.c));
-  if (classes.size === vs.length) { score += 1;
-    razon(() => ES ? 'Clases distintas: no comparten la misma debilidad.'
-                   : 'Different classes: they do not share the same weakness.'); }
+    if (!soloPuntaje) reasons.push((ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + covered.map(dom).join(' + ') + '.'); }
+  if (vs.every((v, i) => vs.findIndex(w => w.c === v.c) === i)) { score += 1;
+    if (!soloPuntaje) reasons.push(ES ? 'Clases distintas: no comparten la misma debilidad.'
+                                      : 'Different classes: they do not share the same weakness.'); }
   // a cubre la debilidad de b si a le gana a la clase que le gana a b.
-  const leGanaA = (c) => Object.keys(SEED.CLASS_ADVANTAGE).find(k => SEED.CLASS_ADVANTAGE[k] === c);
-  vs.forEach(a => vs.forEach(b => {
-    const amenaza = leGanaA(b.c);
+  for (const a of vs) for (const b of vs) {
+    const amenaza = LE_GANA_A[b.c];
     if (a !== b && amenaza && SEED.CLASS_ADVANTAGE[a.c] === amenaza && (!foco || a === foco || b === foco)) {
       score += 1;
-      razon(() => ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}.`
-                     : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
+      if (!soloPuntaje) reasons.push(ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}.`
+                                        : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
     }
-  }));
-  return { score, reasons: [...new Set(reasons)], aplicados };
+  }
+  return { score, reasons: soloPuntaje ? reasons : [...new Set(reasons)], aplicados, lider };
 }
 /** ¿x tiene un vínculo de soporte con v en el equipo? Le da algo (un soporte, o el liderazgo
  *  si es el líder que cuenta la sinergia) o recibe algo de él. Las clases y los roles no
