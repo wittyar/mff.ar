@@ -1,6 +1,6 @@
 {
- "version": "1.0.9",
+ "version": "1.0.10",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Sinergia de equipos: un liderazgo o un soporte suma solo si le sirve a quien lo recibe. Los que suben el ataque físico o el de energía, o un daño elemental (fuego, frío, rayo, veneno, mente), cuentan solo para quien pega con eso según sus skills: Satana de líder ya no aparece con quien pega físico, y sí con los que pegan con fuego. «Por qué» muestra a cada uno solo lo que le sirve."
+ "notas": "Índice para armar equipos: cada liderazgo y soporte dice qué da (ataque físico o de energía, todos los ataques, daño de un elemento o de todos, ignorar evasión, todas las defensas, vida, quita todos los debuffs); el Resumen dice qué le sirve al personaje, con atajos a los líderes y soportes que se lo dan; el roster filtra por lo que da su liderazgo o su soporte, y para quién; y cada combinación de 3 muestra lo que recibe él en ese equipo. La facción, el tipo o la raza que thanosvibs publica sin especificar (Ebony Maw, entre otros) se completan con la wiki o a mano, marcados con su origen. El panel de filtros abierto ya no tapa sus últimos grupos."
 }
