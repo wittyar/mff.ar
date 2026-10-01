@@ -16,8 +16,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 ## Qué hay en la app
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
   atributos marcados) y orden por la tier list que elijas.
-- **Ficha** de cada personaje y uniforme, en pestañas. Arriba, fijos, la foto, el nombre y el
-  selector de uniforme (el uniforme cambia casi todo lo de abajo):
+- **Ficha** de cada personaje y uniforme, en pestañas. Arriba, fijos, la foto, el nombre, las
+  flechas ‹ › para pasar al anterior o al siguiente del listado del roster tal como está
+  filtrado y ordenado (también con ← y →; la pestaña se conserva) y el selector de uniforme (el
+  uniforme cambia casi todo lo de abajo):
   - *Resumen*: los datos del uniforme puesto y *para qué se usa*: su fila en cada tier list, lo
     que le da al equipo (liderazgo, pasivas, efecto de uniforme y artefacto, con a quién se
     aplican), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece y qué
