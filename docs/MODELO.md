@@ -1,14 +1,25 @@
 # Modelo del juego
 
-La app arma un modelo por **variante** (un personaje con un uniforme) a partir de las fuentes, en
-vez de mostrar cada fuente por separado. Cada dato dice de dónde sale y lo que se deduce dice con
-qué regla. La ficha, el roster, la sinergia y las combinaciones leen del modelo.
+## Para qué
+
+La meta de la app (Ezequiel): unificar la información de todos los lugares posibles para poder
+razonar cómo funciona el juego. thanosvibs tiene muchísima información, pero suelta: cada página es
+un módulo aparte y los mismos datos se repiten de un lado a otro sin unirse (lo que una skill
+publica con un marcador sin resolver, Leads & Supports lo publica resuelto). La wiki, las guías y
+las planillas de la comunidad agregan otras piezas.
+
+Por eso la app arma un modelo por **variante** (un personaje con un uniforme) que junta las
+fuentes, en vez de mostrar cada una por separado. Cada dato dice de dónde sale y lo que se deduce
+dice con qué regla. Sobre ese modelo va el análisis: qué hace cada cosa, cuándo, a quién le llega,
+a quién le sirve y cómo se lee en PvE y en PvP. La ficha, el roster, la sinergia y las combinaciones
+leen del modelo.
 
 Este documento es el mapa de ese modelo y se completa por etapas. Lo que no está comprobado va
 marcado como probable o como duda.
 
 ## Decisiones (Ezequiel, 1 de octubre de 2026)
 
+- La meta es unificar las fuentes para razonar el juego, no copiar lo que muestra cada una.
 - PvE y PvP se evalúan a la par, cada uno con su lectura.
 - Sin topes: un efecto cuenta por lo que da, aunque ese stat ya esté al tope.
 - Sin números: el modelo dice qué da cada cosa, a quién le llega y si le sirve; no estima el daño.
