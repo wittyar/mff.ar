@@ -693,7 +693,21 @@ const T = {
                        en:"Characters, uniforms, skills, tier lists, C.T.P.s, artifacts, supports, rotations, Alliance Battle, Beginner's Guide, portraits and icons: " },
   st_sources_txt2:   { es:'. Instintos, requisitos de tier, reglas de ISO, urus y gear, y el contraste de docs/AUDITORIA.md: ',
                        en:'. Instincts, tier requirements, ISO, Uru and gear rules, and the cross-check in docs/AUDITORIA.md: ' },
-  st_sources_txt3:   { es:'. Uso personal, sin fin comercial.', en:'. Personal use, non-commercial.' },
+  st_sources_txt3:   { es:'. Guía de armado por personaje (mejor uniforme, C.T.P., ISO-8, obelisco, rotación, artefacto y su tier list): ',
+                       en:'. Per-character building guide (best uniform, C.T.P., ISO-8, Obelisk, rotation, artifact and its tier list): ' },
+  st_sources_txt4:   { es:'. Uso personal, sin fin comercial.', en:'. Personal use, non-commercial.' },
+  ga_st_note:        { es:'La planilla se revisa cada lunes, con los datos. Si cambió de formato y la app ya no la entiende, se sigue usando la última versión compatible y acá se avisa por qué.',
+                       en:'The spreadsheet is checked every Monday along with the data. If its format changed and the app no longer understands it, the last compatible version stays in use and this section says why.' },
+  ga_st_version:     { es:'Versión en uso',      en:'Version in use' },
+  ga_st_taken:       { es:'tomada el {f}',       en:'taken on {f}' },
+  ga_st_checked:     { es:'Última revisión',     en:'Last check' },
+  ga_st_ok:          { es:'compatible',          en:'compatible' },
+  ga_st_bad:         { es:'no se pudo usar',     en:'could not be used' },
+  ga_st_chars:       { es:'Personajes',          en:'Characters' },
+  ga_st_rejected:    { es:'El {f} la planilla{n} no se pudo usar: se sigue con la {v}, tomada el {t}. Motivos:',
+                       en:'On {f} the spreadsheet{n} could not be used: still on {v}, taken on {t}. Reasons:' },
+  ga_st_nopj:        { es:'Filas de la guía sin personaje en la app ({n})', en:'Guide rows with no character in the app ({n})' },
+  ga_st_raros:       { es:'Valores que la app no interpreta y muestra tal cual ({n})', en:'Values the app does not interpret and shows as is ({n})' },
   st_confirm_reset:  { es:'Se borran tus equipos, listas, ediciones e imágenes. Los datos del juego no se tocan. ¿Seguimos?',
                        en:'This deletes your teams, lists, edits and images. Game data is untouched. Continue?' },
   st_bad_import:     { es:'Ese archivo no es una capa de usuario válida: ', en:'That file is not a valid user layer: ' },
@@ -742,8 +756,8 @@ const T = {
   f_targets:         { es:'Beneficia a (buffs de equipo)', en:'Buffs (team-wide effects)' },
   f_any_target:      { es:'— cualquiera —',        en:'— any —' },
   ac_title:           { es:'Actualizaciones',     en:'Updates' },
-  ac_note:            { es:'La app busca datos nuevos cada vez que se abre y los baja sola. Salen de GitHub, donde se arman cada lunes a partir de thanosvibs y la wiki.',
-                        en:'The app looks for new data every time it opens and downloads it on its own. It comes from GitHub, where it is built every Monday from thanosvibs and the wiki.' },
+  ac_note:            { es:'La app busca datos nuevos cada vez que se abre y los baja sola. Salen de GitHub, donde se arman cada lunes a partir de thanosvibs, la wiki y la guía de armado de Cynicalex.',
+                        en:'The app looks for new data every time it opens and downloads it on its own. It comes from GitHub, where it is built every Monday from thanosvibs, the wiki and Cynicalex’s building guide.' },
   ac_app:             { es:'Versión de la app',   en:'App version' },
   ac_local:           { es:'Datos del juego',     en:'Game data' },
   ac_built:           { es:'armados el',          en:'built on' },
@@ -3114,6 +3128,8 @@ function renderSettings () {
 
   ${seccionActualizaciones()}
 
+  ${seccionGuiaArmado()}
+
   <div class="section"><h3>${h(t('st_brand'))}</h3>
     <div style="width:200px;height:52px;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);display:flex;align-items:center;justify-content:center">
       ${U.images['brand-logo'] ? `<img src="${U.images['brand-logo']}" style="max-width:100%;max-height:100%">` : `<span class="muted">${h(t('st_no_logo'))}</span>`}
@@ -3141,7 +3157,37 @@ function renderSettings () {
   </div>
 
   <div class="section"><h3>${h(t('st_sources'))}</h3>
-    <p class="muted">${h(t('st_sources_txt'))}<a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a>${h(t('st_sources_txt2'))}<a href="https://future-fight.fandom.com" target="_blank" rel="noopener">Future Fight Wiki</a>${h(t('st_sources_txt3'))}</p>
+    <p class="muted">${h(t('st_sources_txt'))}<a href="https://thanosvibs.money" target="_blank" rel="noopener">THANO$VIB$</a>${h(t('st_sources_txt2'))}<a href="https://future-fight.fandom.com" target="_blank" rel="noopener">Future Fight Wiki</a>${
+      h(t('st_sources_txt3'))}<a href="https://docs.google.com/spreadsheets/d/1H0Hcl9oVZV9gA266xkJAqPv5bD1qwqhC5NeVbLj_-FE" target="_blank" rel="noopener">Cynicalex Mega Guides</a>${h(t('st_sources_txt4'))}</p>
+  </div>`;
+}
+
+/** Estado de la guía de armado de Cynicalex: qué versión se usa, cuándo se revisó por
+ *  última vez y, si la planilla de esa revisión no se pudo usar, por qué. También lo que la
+ *  app no cruza o no interpreta. */
+function seccionGuiaArmado () {
+  const G = GUIA_ARMADO;
+  if (!G) return `<div class="section"><h3>${h(t('ga_title'))}</h3><p class="muted">${h(t('ga_no_data'))}</p></div>`;
+  const E = G.estado, rx = E.rechazo, raros = Object.entries(G.raros);
+  const nRaros = raros.reduce((n, [, xs]) => n + xs.length, 0);
+  const COL = { ctp: 'C.T.P.', iso: 'Best ISO-8 Set', obelisco: 'Obelisk (SL/AC)', art: 'Needs Artifact?', bling: 'Tier List Bling' };
+  return `<div class="section" id="guia-armado"><h3>${h(t('ga_title'))}</h3>
+    <p class="muted" style="margin-bottom:12px">${h(t('ga_st_note'))}</p>
+    <div class="statgrid" style="margin-bottom:12px">
+      <div class="stat"><div class="k">${h(t('ga_st_version'))}</div><div class="v">${h(G.version)}</div>
+        <div class="muted" style="font-size:11px">${h(t('ga_st_taken').replace('{f}', E.tomada))}</div></div>
+      <div class="stat"><div class="k">${h(t('ga_st_checked'))}</div><div class="v">${h(E.comprobada)}</div>
+        <div class="muted" style="font-size:11px">${h(t(rx ? 'ga_st_bad' : 'ga_st_ok'))}</div></div>
+      <div class="stat"><div class="k">${h(t('ga_st_chars'))}</div><div class="v">${Object.keys(G.pj).length}</div></div>
+    </div>
+    ${rx ? `<div class="bloque aviso ga-rechazo" style="margin-bottom:12px"><p><b>⚠ ${h(t('ga_st_rejected').replace('{f}', E.comprobada)
+        .replace('{n}', rx.version && rx.version !== G.version ? ' (' + rx.version + ')' : '').replace('{v}', G.version).replace('{t}', E.tomada))}</b></p>
+      <ul class="sopfx">${rx.motivos.map(m => `<li>${h(m)}</li>`).join('')}</ul></div>` : ''}
+    ${G.sin_pj.length ? `<details class="usgrupo"><summary>${h(t('ga_st_nopj').replace('{n}', G.sin_pj.length))}</summary>
+      <ul class="sopfx">${G.sin_pj.map(x => `<li>${h(x)}</li>`).join('')}</ul></details>` : ''}
+    ${nRaros ? `<details class="usgrupo"><summary>${h(t('ga_st_raros').replace('{n}', nRaros))}</summary>
+      <ul class="sopfx">${raros.map(([k, xs]) => xs.map(x => `<li>${h(COL[k])}: <span class="sinint">${h(x)}</span></li>`).join('')).join('')}</ul></details>` : ''}
+    <div class="fuentes">${fuentesHtml(['cyn-armado', 'cyn-tierlist'])}</div>
   </div>`;
 }
 

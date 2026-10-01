@@ -139,8 +139,8 @@ if HACER_DATOS:
 
     # 3e) la guía de armado de Cynicalex (planilla de Google, dos pestañas como CSV). Pasa
     # a ser la copia en uso solo si scripts/guia_armado.py la entiende; si no se puede
-    # bajar o cambió de formato, sigue la última compatible y estado.json dice por qué.
-    # No corta el resto de la actualización.
+    # bajar o cambió de formato, sigue la última compatible y estado.json dice por qué
+    # (la app lo muestra en Ajustes). No corta el resto de la actualización.
     hoy = datetime.date.today().isoformat()
     try:
         crudo = {k: get(guia_armado.url_csv(k), timeout=60) for k in guia_armado.GID}

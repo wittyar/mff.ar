@@ -8,7 +8,7 @@ La planilla se edita a mano, seguido, y su formato es libre. Por eso no se lee d
 fetch_all.py la baja y llama a aceptar(), que la compara con lo que este lector entiende.
 Si es compatible pasa a ser la copia en uso (fuentes/guia-armado/, versionada en el repo:
 el workflow semanal la commitea con los datos); si no, la copia en uso no se toca y
-estado.json anota la fecha y los motivos.
+estado.json anota la fecha y los motivos, que la app muestra en Ajustes.
 
 Compatible quiere decir:
 - CHAMP BUILDING tiene la fila de encabezados (la que empieza con «PK») con todas las
@@ -21,7 +21,8 @@ Compatible quiere decir:
   artefacto, emojis), se entiende al menos el 80% de los valores (MIN_ENTENDIDO): menos que eso
   es otro formato, no un valor nuevo suelto.
 Un valor suelto que no se entiende (un C.T.P. nuevo, un emoji sin leyenda, una fila sin
-personaje en thanosvibs) no hace incompatible la planilla: viaja tal cual y se lista."""
+personaje en thanosvibs) no hace incompatible la planilla: viaja tal cual, la app lo
+muestra marcado y Ajustes lo lista."""
 import csv, hashlib, io, json, os, re, unicodedata
 
 _RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
