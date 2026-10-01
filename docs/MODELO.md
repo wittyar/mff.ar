@@ -38,7 +38,7 @@ y Detonación con Dark Obsidian Armor y con General's Hand. Todo lo que sigue es
 
 | Característica | Valores | Qué hace en el juego | Fuente |
 |---|---|---|---|
-| Clase | Combate, Detonación, Velocidad, Universal | Ventaja de tipo: más daño contra la clase a la que le gana y menos daño recibido de ella. Combate le gana a Velocidad, Velocidad a Detonación y Detonación a Combate; para Universal, ver *Dudas*. Restringe liderazgos y soportes. | thanosvibs (`type`); wiki (páginas de cada clase); guía de thanosvibs, parte 3 |
+| Clase | Combate, Detonación, Velocidad, Universal | Ventaja de tipo: más daño contra la clase a la que le gana y menos daño recibido de ella. Combate le gana a Velocidad, Velocidad a Detonación y Detonación a Combate. Universal le gana a las otras tres con una ventaja menor y no tiene debilidad. Restringe liderazgos y soportes. | thanosvibs (`type`); wiki (páginas de cada clase); guía de thanosvibs, parte 3 (Type Enhancement); la ventaja de Universal, confirmada por Ezequiel |
 | Bando | Superhéroe, Supervillano, Neutral | Restringe liderazgos y soportes; hay efectos de daño contra héroes o villanos. | thanosvibs (`side`) |
 | Raza | Humano, Mutante, Inhumano, Alienígena, Criatura, Otro | Restringe liderazgos y soportes; hay efectos contra una raza («excepto mutantes»). | thanosvibs (`allies`) |
 | Género | Masculino, Femenino, Neutro | Hay efectos de daño contra un género. | thanosvibs (`gender`) |
@@ -74,12 +74,13 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 
 - **Género por uniforme**: 11 uniformes cambian el género (Lady Loki, Lady Deadpool, Ancient One
   del MCU, Ghost del MCU, entre otros) y la ficha mostraba el de la base.
+- **Ventaja de Universal**: la app no le daba ninguna (la wiki solo dice que no tiene debilidad).
+  Le gana a las otras tres con ventaja menor, como dice la guía de thanosvibs. En la sinergia, un
+  Universal cubre la debilidad de un compañero y suma igual que una ventaja normal; la razón lo
+  aclara. Pesarla menos es una decisión abierta.
 
 ### Dudas abiertas
 
-- **Ventaja de Universal.** La guía de thanosvibs (parte 3) dice que Universal tiene una ventaja
-  menor contra las otras tres clases; la wiki solo dice que no tiene debilidad. La app hoy no le da
-  ventaja. Probable: la de la guía.
 - **Habilidad de World Boss.** Cada variante tiene una, siempre una de sus habilidades. Falta saber
   para qué se usa en el juego.
 - **Roles.** Salen de juntar las skills de todos los uniformes del personaje, no de cada variante.

@@ -59,7 +59,13 @@ SEED = {
  'GENDERS': ['Masculino','Femenino','Neutro'],
  'SKILL_TAGS': ABIL_VALUES,
  'FACTIONS': ['Superhéroe','Supervillano','Neutral'],
- 'CLASS_ADVANTAGE': {'Combate':'Velocidad','Velocidad':'Detonación','Detonación':'Combate','Universal':None}
+ # Ventaja de tipo: a qué clases le gana cada una y con qué fuerza. Combate > Velocidad >
+ # Detonación > Combate (wiki, páginas de cada clase); Universal le gana a las otras tres con
+ # una ventaja menor y no tiene debilidad (guía de thanosvibs, parte 3, Type Enhancement;
+ # confirmado por Ezequiel). docs/MODELO.md, etapa 1.
+ 'VENTAJA_TIPO': {'Combate': {'Velocidad': 'normal'}, 'Velocidad': {'Detonación': 'normal'},
+                  'Detonación': {'Combate': 'normal'},
+                  'Universal': {'Combate': 'menor', 'Velocidad': 'menor', 'Detonación': 'menor'}}
 }
 hoy = hoy.isoformat()
 # Version del juego y fecha del snapshot, como dato de la app (no solo como comentario):

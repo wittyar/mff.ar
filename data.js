@@ -94,11 +94,21 @@ window.MFF_SEED = {
   "Supervillano",
   "Neutral"
  ],
- "CLASS_ADVANTAGE": {
-  "Combate": "Velocidad",
-  "Velocidad": "Detonación",
-  "Detonación": "Combate",
-  "Universal": null
+ "VENTAJA_TIPO": {
+  "Combate": {
+   "Velocidad": "normal"
+  },
+  "Velocidad": {
+   "Detonación": "normal"
+  },
+  "Detonación": {
+   "Combate": "normal"
+  },
+  "Universal": {
+   "Combate": "menor",
+   "Velocidad": "menor",
+   "Detonación": "menor"
+  }
  }
 };
 

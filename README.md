@@ -385,7 +385,9 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - 15 de 290 personajes sin instinto: sus páginas de la wiki no lo declaran.
 - Los personajes que agregues a mano no llevan skills: las skills vienen tipadas de la API.
 - La sinergia se apoya en los efectos de líder y de soporte de thanosvibs; roles y ventaja de
-  clase son lecturas propias. No es un cálculo del juego. Cada efecto cuenta solo para quien le
+  clase son lecturas propias (la ventaja: Combate > Velocidad > Detonación > Combate, y Universal le
+  gana a las tres con ventaja menor, que en la sinergia suma igual y se dice). No es un cálculo del
+  juego. Cada efecto cuenta solo para quien le
   sirve: los que suben el ataque físico o el de energía, para quien pega con ese ataque; los de
   un elemento (fuego, frío, rayo, veneno, mente, o todos), para quien hace daño de ese elemento;
   la reducción del reflejo físico, para quien hace daño físico; todo según el daño de sus skills

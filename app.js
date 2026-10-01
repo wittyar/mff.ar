@@ -555,8 +555,8 @@ const T = {
   cmp_pts:           { es:'pts',                 en:'pts' },
   cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
                        en:'No strong synergy signals in this selection.' },
-  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills (el liderazgo, con el mejor líder posible). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase según la wiki. No es un cálculo del juego.',
-                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it: attack or elemental damage boosts only for those whose skills hit with that (leadership, with the best possible leader). Two readings of our own are added: roles derived from skills and class advantage per the wiki. Not a game calculation.' },
+  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills (el liderazgo, con el mejor líder posible). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase (la guía de thanosvibs y la wiki). No es un cálculo del juego.',
+                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it: attack or elemental damage boosts only for those whose skills hit with that (leadership, with the best possible leader). Two readings of our own are added: roles derived from skills and class advantage (per the thanosvibs guide and the wiki). Not a game calculation.' },
   sy_unclassified:   { es:'efecto sin clasificar: cuenta para todos', en:'unclassified effect: counts for everyone' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
   cmp_cost:          { es:'Costo',               en:'Cost' },
@@ -1360,14 +1360,19 @@ function efectoSoporteTxt (f) {
 }
 const LIDERAZGOS = ['leader', 'leader2'];
 const ROLES_EQUIPO = ['Tanque', 'Control', 'Daño', 'Soporte'];
-/** La clase que le gana a cada una: la inversa de CLASS_ADVANTAGE (Universal no le gana a nadie). */
-const LE_GANA_A = Object.fromEntries(Object.entries(SEED.CLASS_ADVANTAGE).filter(([, c]) => c).map(([k, c]) => [c, k]));
+/** Ventaja de tipo (SEED.VENTAJA_TIPO): a qué clases le gana cada una, 'normal' o 'menor'
+ *  (la de Universal sobre las otras tres). La amenaza de una clase es la que le gana con
+ *  ventaja normal; Universal no tiene. */
+const VENTAJA = SEED.VENTAJA_TIPO;
+const LE_GANA_A = {};
+for (const [c, sobre] of Object.entries(VENTAJA)) for (const [d, f] of Object.entries(sobre)) if (f === 'normal') LE_GANA_A[d] = c;
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
  *  soporte de thanosvibs que alcanzan a otro integrante y le sirven (sirve()): los de soporte
  *  valen en cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
  *  cuenta el mejor líder posible. Se suman dos lecturas propias, dichas como tales:
- *  los roles derivados de las skills y la ventaja de clase de la wiki (Combate > Velocidad
- *  > Detonación > Combate; Universal no tiene debilidad). No es un cálculo del juego.
+ *  los roles derivados de las skills y la ventaja de tipo (Combate > Velocidad > Detonación >
+ *  Combate; Universal le gana a las tres con ventaja menor y no tiene debilidad). No es un
+ *  cálculo del juego.
  *  foco: cuenta solo lo que involucra a ese integrante (los equipos armados para él).
  *  Escrita con bucles y sin armar textos si no hacen falta: la consulta de combinaciones la
  *  llama cientos de miles de veces. */
@@ -1426,13 +1431,15 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
   if (vs.every((v, i) => vs.findIndex(w => w.c === v.c) === i)) { score += 1;
     if (!soloPuntaje) reasons.push(ES ? 'Clases distintas: no comparten la misma debilidad.'
                                       : 'Different classes: they do not share the same weakness.'); }
-  // a cubre la debilidad de b si a le gana a la clase que le gana a b.
+  // a cubre la debilidad de b si a le gana a la clase que le gana a b (un Universal también,
+  // con su ventaja menor: suma lo mismo y la razón lo dice).
   for (const a of vs) for (const b of vs) {
-    const amenaza = LE_GANA_A[b.c];
-    if (a !== b && amenaza && SEED.CLASS_ADVANTAGE[a.c] === amenaza && (!foco || a === foco || b === foco)) {
+    const amenaza = LE_GANA_A[b.c], fuerza = amenaza && VENTAJA[a.c][amenaza];
+    if (a !== b && fuerza && (!foco || a === foco || b === foco)) {
       score += 1;
-      if (!soloPuntaje) reasons.push(ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}.`
-                                        : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
+      if (!soloPuntaje) reasons.push((ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}`
+                                         : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}`)
+        + (fuerza === 'menor' ? (ES ? ' (ventaja menor).' : ' (minor advantage).') : '.'));
     }
   }
   return { score, reasons: soloPuntaje ? reasons : [...new Set(reasons)], aplicados, lider };
