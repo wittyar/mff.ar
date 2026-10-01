@@ -1,6 +1,6 @@
 {
- "version": "1.0.7",
+ "version": "1.0.8",
  "formato_datos": 1,
  "python": "3.14.7",
- "notas": "Descartar equipos: en las combinaciones de cada personaje, «Descartar» oculta ese trío en los tres personajes, con cualquier uniforme. «Ver descartados» los muestra para restaurarlos, y en Equipos está la lista de todos."
+ "notas": "Flechas ‹ › en la ficha para pasar al personaje anterior o siguiente del listado (también con ← y →). Guía de armado de Cynicalex en la ficha: mejor uniforme, su tier list con emojis, cómo se consigue y notas (Resumen); rotación y skill de proc (Skills); C.T.P. por lugar, artefacto, ISO-8 y obelisco (Armado). Opciones de cada uniforme en Armado. La planilla se revisa cada lunes: si cambia de formato, se sigue con la última compatible y Ajustes avisa por qué."
 }
