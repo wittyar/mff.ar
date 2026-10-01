@@ -82,7 +82,7 @@ Sube un ataque, el stat del que sale el daño.
   - `Camouflage` (8 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate each #% of pure damage accumulated` (7 retratos) — varía: crece con el daño puro acumulado
   - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según su vida
-  - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: La misma etiqueta sirve para achicarse él (y subir sus ataques y defensas) y para achicar al rival (y bajarle los suyos): lo distingue el texto. Que el segundo vaya al rival se deduce del texto y de la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `Attack per Recharge Shield (Consumption) Increase` (5 retratos) — varía: crece con el escudo que gasta
   - `Absorb` (4 retratos) — varía: el ataque crece con cada absorción
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
@@ -471,7 +471,7 @@ Daño que sigue unos segundos después del golpe.
 
 `continuo_encanto` · Charm · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Además lo cura con parte de ese daño; la recuperación no sube esa curación (guía, parte 3).
+- **Nota:** Además cura a quien lo aplica con parte de ese daño; la recuperación no sube esa curación (guía, parte 3).
 - **Skills:**
   - `CHARM` (24 retratos)
 
@@ -479,7 +479,7 @@ Daño que sigue unos segundos después del golpe.
 
 `continuo_maldicion` · Curse · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Además lo cura con parte de ese daño.
+- **Nota:** Además cura a quien la aplica con parte de ese daño.
 - **Skills:**
   - `CURSE` (3 retratos)
 
@@ -635,7 +635,7 @@ Le baja algo al rival o le quita buffs.
   - `ALL BASIC DEFENSES DECREASE` (58 retratos)
   - `DECREASES ALL BASIC DEFENSES (CAN STACK)` (58 retratos)
   - `PHYSICAL DEFENSE ↓` (17 retratos)
-  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (15 retratos) — Nota: La misma etiqueta sirve para achicarse él (y subir sus ataques y defensas) y para achicar al rival (y bajarle los suyos): lo distingue el texto. Que el segundo vaya al rival se deduce del texto y de la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (15 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `All Basic Defenses Decrease` (13 retratos)
   - `VULNERABILITY` (4 retratos)
   - `ENERGY DEFENSE ↓` (3 retratos)
@@ -648,7 +648,7 @@ Le baja algo al rival o le quita buffs.
 - **PvP:** Ese rival pega menos. [Probable]
 - **Skills:**
   - `ALL BASIC ATTACKS DECREASE` (26 retratos)
-  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (15 retratos) — Nota: La misma etiqueta sirve para achicarse él (y subir sus ataques y defensas) y para achicar al rival (y bajarle los suyos): lo distingue el texto. Que el segundo vaya al rival se deduce del texto y de la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (15 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `DECREASES ALL BASIC ATTACKS (CAN STACK)` (11 retratos)
   - `VULNERABILITY` (4 retratos)
 
@@ -787,7 +787,7 @@ Sube las defensas.
   - `ALL BASIC DEFENSES INCREASE` (91 retratos)
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según su vida
-  - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: La misma etiqueta sirve para achicarse él (y subir sus ataques y defensas) y para achicar al rival (y bajarle los suyos): lo distingue el texto. Que el segundo vaya al rival se deduce del texto y de la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `Condensed Power` (1 retrato) — varía: se acumula
 - **Leads & Supports:**
   - `All Basic Defenses` (49 retratos)
@@ -1252,7 +1252,7 @@ Velocidades, recarga de skills y cargas.
 
 ### Carga de la definitiva
 
-`carga_definitiva` · Ultimate gauge · Se aplica a su lado · Le sirve: a cualquiera del equipo.
+`carga_definitiva` · Ultimate gauge · Se aplica a su lado · Le sirve: a quien tiene la definitiva de Tier-3 (la que se carga con la barra).
 
 - **Skills:**
   - `Ultimate Skill Gauge Recharge` (13 retratos)
@@ -1260,7 +1260,7 @@ Velocidades, recarga de skills y cargas.
 
 ### Striker más seguido
 
-`striker` · More frequent striker · Se aplica a su lado · Le sirve: a cualquiera del equipo.
+`striker` · More frequent striker · Se aplica a su lado · Le sirve: a quien tiene Striker (Tier-4).
 
 - **Skills:**
   - `STRIKER COOLDOWN ↓` (2 retratos)
@@ -1358,7 +1358,7 @@ Mecánicas propias de un personaje.
 
 - **Skills:**
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
-  - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: La misma etiqueta sirve para achicarse él (y subir sus ataques y defensas) y para achicar al rival (y bajarle los suyos): lo distingue el texto. Que el segundo vaya al rival se deduce del texto y de la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
 
 ## Fuentes
