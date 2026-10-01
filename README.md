@@ -31,7 +31,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
     antes y después, y qué se gana y qué se pierde); y equipos nuevos con él, buscados en todo
     el roster: los tres mejores para cada tamaño de equipo de los modos que usás (de 3 si
-    todavía no armaste ninguno). Cada sugerencia se abre en el armador para guardarla.
+    todavía no armaste ninguno). Cada compañero sugerido tiene un *vínculo de soporte* con él:
+    le da un soporte o el liderazgo, o recibe uno suyo (para entrar en un equipo tuyo alcanza
+    con un vínculo con alguien del equipo). Cada sugerencia se abre en el armador para guardarla.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
     en tu capa.
   - *Más*: la verificación entre fuentes y el retrato propio.

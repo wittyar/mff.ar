@@ -451,16 +451,19 @@ const T = {
   eq_build_with:     { es:'Armar un equipo con él', en:'Build a team with it' },
   eq_why:            { es:'Por qué',             en:'Why' },
   eq_could:          { es:'Cómo entraría en tus otros equipos', en:'How it would fit your other teams' },
-  eq_could_note:     { es:'Con {v}: el mejor cambio en cada equipo según la sinergia de la app.',
-                       en:'With {v}: the best change in each team according to the app\'s synergy.' },
+  eq_could_note:     { es:'Con {v}: el mejor cambio en cada equipo según la sinergia de la app, siempre que quede con vínculo de soporte con alguien del equipo (le da un soporte o el liderazgo, o recibe uno suyo).',
+                       en:'With {v}: the best change in each team according to the app\'s synergy, as long as it has a support link with someone in the team (gives it a support or the leadership, or receives one of its own).' },
   eq_instead:        { es:'en lugar de {x}',     en:'instead of {x}' },
   eq_room:           { es:'hay lugar: sumándolo', en:'there is room: adding it' },
   eq_before:         { es:'antes {n}',           en:'before {n}' },
   eq_name_swap:      { es:'{e} (con {v})',       en:'{e} (with {v})' },
   eq_no_gain:        { es:'No mejoran con él:',  en:'Not improved by it:' },
+  eq_no_link:        { es:'Sin vínculo de soporte con nadie del equipo:', en:'No support link with anyone in the team:' },
+  eq_few:            { es:'No hay más equipos de {n} en los que cada compañero tenga vínculo de soporte con él.',
+                       en:'No more teams of {n} where every teammate has a support link with it.' },
   eq_new:            { es:'Equipos nuevos con él', en:'New teams with it' },
-  eq_new_note:       { es:'Según la sinergia de la app, sobre todo el roster. Búsqueda aproximada: arma el equipo de a un integrante, probando cada personaje y quedándose en cada paso con los {n} mejores; a igual puntaje, primero los mejor ubicados en tu lista de referencia.',
-                       en:'By the app\'s synergy, over the whole roster. Approximate search: builds the team one member at a time, trying every character and keeping the {n} best at each step; on ties, the best placed in your reference list come first.' },
+  eq_new_note:       { es:'Según la sinergia de la app, sobre todo el roster, y cada compañero tiene que tener vínculo de soporte con él: le da un soporte o el liderazgo, o recibe uno suyo. Búsqueda aproximada: arma el equipo de a un integrante, probando cada personaje y quedándose en cada paso con los {n} mejores; a igual puntaje, primero los mejor ubicados en tu lista de referencia.',
+                       en:'By the app\'s synergy, over the whole roster, and every teammate must have a support link with it: gives it a support or the leadership, or receives one of its own. Approximate search: builds the team one member at a time, trying every character and keeping the {n} best at each step; on ties, the best placed in your reference list come first.' },
   eq_no_mode:        { es:'Sin modo',            en:'No mode' },
   eq_size:           { es:'equipo de {n}',       en:'team of {n}' },
   d_race:            { es:'Raza',                en:'Race' },
@@ -1084,8 +1087,8 @@ function efectoSoporteTxt (f) {
  *  los roles derivados de las skills y la ventaja de clase de la wiki (Combate > Velocidad
  *  > Detonación > Combate; Universal no tiene debilidad). No es un cálculo del juego. */
 function synergy (vs, soloPuntaje) {
-  if (vs.length < 2) return { score: 0, reasons: [] };
-  const reasons = []; let score = 0;
+  if (vs.length < 2) return { score: 0, reasons: [], aplicados: [] };
+  const reasons = [], aplicados = []; let score = 0;     // aplicados: { de, a: [integrantes] }, lo que suma
   const razon = soloPuntaje ? () => {} : (texto) => reasons.push(texto());
   const ES = LANG === 'es';
   const quienes = (bs) => bs.map(fullLabel).join(', ');
@@ -1095,7 +1098,7 @@ function synergy (vs, soloPuntaje) {
     TIPOS_SOPORTE.filter(([k]) => s[k] && !k.startsWith('leader')).forEach(([k, clave]) => {
       const bs = vs.filter(b => b !== a && aplicaA(s[k], b));
       if (!bs.length) return;
-      score += s[k].sig ? 3 : 2;
+      score += s[k].sig ? 3 : 2; aplicados.push({ de: a, a: bs });
       razon(() => `${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''} → ${quienes(bs)}: ${efectos(s[k])}`);
     }); });
   // Liderazgo: el del integrante que más alcanza a los demás.
@@ -1105,7 +1108,8 @@ function synergy (vs, soloPuntaje) {
   if (lideres.length) {
     const mejor = lideres.sort((p, q) => q.pts - p.pts)[0];
     score += mejor.pts;
-    mejor.xs.forEach(o => razon(() => `${ES ? 'Con' : 'With'} ${fullLabel(mejor.a)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`));
+    mejor.xs.forEach(o => { aplicados.push({ de: mejor.a, a: o.bs });
+      razon(() => `${ES ? 'Con' : 'With'} ${fullLabel(mejor.a)} ${ES ? 'de líder' : 'as leader'} → ${quienes(o.bs)}: ${efectos(o.x)}`); });
   }
   const roles = new Set(vs.flatMap(v => v.r));
   const covered = ['Tanque','Control','Daño','Soporte'].filter(r => roles.has(r));
@@ -1125,7 +1129,13 @@ function synergy (vs, soloPuntaje) {
                      : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}.`);
     }
   }));
-  return { score, reasons: [...new Set(reasons)] };
+  return { score, reasons: [...new Set(reasons)], aplicados };
+}
+/** ¿x tiene un vínculo de soporte con v en el equipo? Le da algo (un soporte, o el liderazgo
+ *  si es el líder que cuenta la sinergia) o recibe algo de él. Las clases y los roles no
+ *  cuentan: un equipo armado alrededor de v no lleva compañeros que no tengan nada que ver con él. */
+function vinculo (v, x, aplicados) {
+  return aplicados.some(e => (e.de === v && e.a.includes(x)) || (e.de === x && e.a.includes(v)));
 }
 
 // ---------------------------------------------------------------------------
@@ -1693,8 +1703,9 @@ function fichaProgreso (ch, v) {
 function fichaEquipos (ch, v) {
   const suyos = U.teams.filter(tt => tt.members.some(k => k.split('::')[0] === ch.id));
   const otros = U.teams.filter(tt => !suyos.includes(tt)).map(tt => comoEntra(v, tt));
-  const mejoran = otros.filter(o => o.delta > 0).sort((a, b) => b.delta - a.delta);
-  const no = otros.filter(o => o.delta <= 0);
+  const sinVinculo = otros.filter(o => o.sinVinculo), entra = otros.filter(o => !o.sinVinculo);
+  const mejoran = entra.filter(o => o.delta > 0).sort((a, b) => b.delta - a.delta);
+  const no = entra.filter(o => o.delta <= 0);
   const armar = (vs, modo, nombre, etiqueta) => `<button class="btn sm" data-a="teamDesde" data-m="${vs.map(x => x.key).join(',')}"
     data-modo="${modo || ''}" data-nombre="${h(nombre || '')}">${h(etiqueta || t('eq_build'))}</button>`;
   const porque = (mas, menos) => (mas.length || menos.length) ? `<details class="usgrupo"><summary>${h(t('eq_why'))}</summary>
@@ -1719,18 +1730,22 @@ function fichaEquipos (ch, v) {
       <div class="row">${armar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
     ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
+    ${sinVinculo.length ? `<p class="muted">${h(t('eq_no_link'))} ${sinVinculo.map(o => h(o.tt.name)).join(' · ')}</p>` : ''}
   </div>` : ''}
   ${equiposNuevosHtml(v, armar, porque)}`;
 }
 /** El mejor lugar para v en un equipo: reemplazando a cada integrante o, si hay lugar,
- *  sumándolo. Con lo que se gana y se pierde según las razones de la sinergia. */
+ *  sumándolo. Solo valen los lugares donde queda con vínculo de soporte con alguien del
+ *  equipo; si no hay ninguno, no encaja. Con lo que se gana y se pierde según las razones. */
 function comoEntra (v, tt) {
   const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
-  const antes = synergy(vs);
   const opciones = vs.map((x, i) => ({ sale: x, vs: vs.map((y, j) => j === i ? v : y) }));
   if (vs.length < tamModo(tt.modeId)) opciones.push({ sale: null, vs: vs.concat(v) });
-  const mejor = opciones.map(o => Object.assign(o, { despues: synergy(o.vs) }))
-    .sort((a, b) => b.despues.score - a.despues.score)[0];
+  const validas = opciones.map(o => Object.assign(o, { despues: synergy(o.vs) }))
+    .filter(o => o.vs.some(x => x !== v && vinculo(v, x, o.despues.aplicados)));
+  if (!validas.length) return { tt, sinVinculo: true };
+  const antes = synergy(vs);
+  const mejor = validas.sort((a, b) => b.despues.score - a.despues.score)[0];
   const modo = modosEquipo().find(m => m.id === tt.modeId);
   return { tt, antes, vs: mejor.vs, sale: mejor.sale, despues: mejor.despues, delta: mejor.despues.score - antes.score,
            modo: modo ? modo.name : '', gana: mejor.despues.reasons.filter(r => !antes.reasons.includes(r)),
@@ -1746,6 +1761,9 @@ function retratosEquipo (vs, v) {
 // roster y quedándose en cada paso con los ANCHO mejores equipos parciales (un personaje por
 // lugar). Un corte previo por sinergia de a dos perdía equipos: el mejor de Wong con Doctor
 // Strange 2 lleva a Taskmaster, que de a dos con él queda en el puesto 54.
+// Cada compañero tiene que tener vínculo de soporte con él (vinculo()): con la sinergia del
+// equipo sola ganaban compañeros que se potencian entre ellos y no con él (a Annihilus, villano
+// sin soportes, le tocaba Nick Fury, que solo da a héroes).
 const ANCHO = 10, SUGERIDOS = 3;
 /** Los ANCHO mejores equipos de `tam` con v. Cada tamaño sale de ampliar el anterior y
  *  queda memorizado: el de 6 reusa el de 5, así usar varios tamaños no repite el trabajo. */
@@ -1762,8 +1780,10 @@ function ampliarHaz (haz, v) {
   const mejores = new Map();          // un equipo por conjunto de personajes
   haz.forEach(eq => pool.forEach(x => {
     if (eq.some(y => y.cid === x.cid)) return;
-    const vs = eq.concat(x), firma = vs.map(y => y.cid).sort().join('|');
-    const o = { vs, s: synergy(vs, true).score, r: vs.reduce((suma, y) => suma + rango.get(y.key), 0) };
+    const vs = eq.concat(x), sc = synergy(vs, true);
+    if (vs.some(y => y !== v && !vinculo(v, y, sc.aplicados))) return;
+    const firma = vs.map(y => y.cid).sort().join('|');
+    const o = { vs, s: sc.score, r: vs.reduce((suma, y) => suma + rango.get(y.key), 0) };
     const previo = mejores.get(firma);
     if (!previo || orden(o, previo) < 0) mejores.set(firma, o);
   }));
@@ -1783,15 +1803,17 @@ function tamanosUsados () {
 function equiposNuevosHtml (v, armar, porque) {
   return `<div class="section"><h3>${h(t('eq_new'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('eq_new_note').replace('{n}', ANCHO))}</p>
-    ${tamanosUsados().map(([tam, modos]) => `<h4 class="eqtam">${h(modos.length ? modos.map(m => m.name).join(', ') : t('eq_no_mode'))} · ${h(t('eq_size').replace('{n}', tam))}</h4>
-      ${hazCon(v, tam).slice(0, SUGERIDOS).map(vs => { const sc = synergy(vs);
+    ${tamanosUsados().map(([tam, modos]) => { const eqs = hazCon(v, tam).slice(0, SUGERIDOS);
+      return `<h4 class="eqtam">${h(modos.length ? modos.map(m => m.name).join(', ') : t('eq_no_mode'))} · ${h(t('eq_size').replace('{n}', tam))}</h4>
+      ${eqs.map(vs => { const sc = synergy(vs);
         return `<div class="card eqsug">
           <div class="row" style="justify-content:space-between"><div class="muted">${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
             <div class="eqpts"><b>${sc.score}</b> ${h(t('tm_synergy_pts'))}</div></div>
           ${retratosEquipo(vs, v)}
           ${porque(sc.reasons, [])}
           <div class="row">${armar(vs, modos.length ? modos[0].id : '', '')}</div>
-        </div>`; }).join('')}`).join('')}
+        </div>`; }).join('')}
+      ${eqs.length < SUGERIDOS ? `<p class="muted">${h(t('eq_few').replace('{n}', tam))}</p>` : ''}`; }).join('')}
   </div>`;
 }
 /** El resto: verificación entre fuentes y el retrato propio. */
