@@ -143,6 +143,7 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -10150,6 +10151,7 @@
      "wba": "Congelación",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -17451,6 +17453,7 @@
      "trans": false,
      "new": false,
      "c": "Universal",
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -34999,6 +35002,7 @@
      "wba": "Agilidad",
      "trans": true,
      "new": false,
+     "gender": "Masculino",
      "up": {
       "uniform_xp": [
        10000,
@@ -36776,6 +36780,7 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -36872,6 +36877,7 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -51852,6 +51858,7 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -51949,6 +51956,7 @@
      "trans": false,
      "new": false,
      "f": "Superhéroe",
+     "gender": "Femenino",
      "ab": [
       "Maestro de Armas",
       "Máquina",
@@ -52222,6 +52230,7 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -52321,6 +52330,7 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "gender": "Femenino",
      "up": {
       "uniform_xp": [
        10000,
@@ -62052,6 +62062,7 @@
      "trans": false,
      "new": false,
      "f": "Superhéroe",
+     "gender": "Femenino",
      "ab": [
       "Maestro de Armas",
       "Maldad Pura",

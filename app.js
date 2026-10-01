@@ -1120,11 +1120,12 @@ function variant (cid, uid) {
   const p = u ? u.p : ch.p;
   const skills = SKILLS[p] || [];
   if (!u) return { cid: ch.id, uid: null, key: ch.id + '::base', id: ch.id, name: ch.name, sub: 'Base',
-                   c: ch.c, f: ch.f, race: ch.race, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
+                   c: ch.c, f: ch.f, race: ch.race, gender: ch.gender, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
                    striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '',
                    p, up: null, op: null, ch, skills };
   return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
-           c: u.c || ch.c, f: u.f || ch.f, race: u.race || ch.race, t: u.tier || ch.t, ins: ch.ins, r: ch.r,
+           c: u.c || ch.c, f: u.f || ch.f, race: u.race || ch.race, gender: u.gender || ch.gender,
+           t: u.tier || ch.t, ins: ch.ins, r: ch.r,
            ab: u.ab || ch.abilities || [],
            striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
            trans: u.trans, nuevo: u.new, cost: u.cost || '',
@@ -2028,7 +2029,7 @@ function fichaResumen (ch, v) {
     </div>
     <div class="statgrid">
       ${box(t('d_race'), icon(v.race) + h(dom(v.race) || '—'))}
-      ${box(t('d_gender'), icon(ch.gender) + h(dom(ch.gender) || '—'))}
+      ${box(t('d_gender'), icon(v.gender) + h(dom(v.gender) || '—'))}
       ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
       ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
       ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
@@ -3878,7 +3879,7 @@ function exportCsv () {
                 'pct_ataque','dano_extra','elemento','duracion'];
   const rows = [head];
   allVariants().forEach(v => {
-    const base = [v.key, v.name, v.uid ? v.sub : '', v.c, v.f, v.t, v.trans ? 'sí' : 'no', v.ins, v.race, v.ch.gender,
+    const base = [v.key, v.name, v.uid ? v.sub : '', v.c, v.f, v.t, v.trans ? 'sí' : 'no', v.ins, v.race, v.gender,
                   v.ch.origin, v.r.join('|'), (v.ab || []).join('|'), v.striker, v.wba, v.cost];
     if (!v.skills.length) rows.push(base.concat(['', '', '', '', '', '', '', '', '']));
     v.skills.forEach(sk => (sk.st || []).forEach((st, i) => (st.fx || []).forEach(f => {
