@@ -787,6 +787,10 @@ const T = {
   ls_also:           { es:'y, como a cualquiera:', en:'and, like anyone:' },
   ls_leaders:        { es:'Líderes que se lo dan', en:'Leaders that give it' },
   ls_supports:       { es:'Soportes que se lo dan', en:'Supports that give it' },
+  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos.',
+                       en:'Under each one, what it gets: its teammates\' supports and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points.' },
+  cb_ataque:         { es:'Ataque',               en:'Attack' },
+  cb_art:            { es:'* Solo si el compañero que lo da lleva su artefacto.', en:'* Only if the teammate who gives it has its artifact.' },
   c_targets:         { es:'Beneficia a',          en:'Buffs' },
   c_attrs:           { es:'Atributos marcados',   en:'Marked attributes' },
   f_attrs:           { es:'Atributo marcado por vos', en:'Attribute you marked' },
@@ -1233,7 +1237,8 @@ function leSirve (x, b) {
 // ÍNDICE PARA ARMAR EQUIPOS: lo que da cada liderazgo y cada soporte, en las categorías con
 // las que se arman los equipos (las pidió el usuario), con los stats de thanosvibs que entran
 // en cada una. Las de ataque le sirven solo a quien pega con eso (sirve()); las otras cuatro,
-// a cualquiera. Se ven en la ficha y filtran el roster. No cambian los puntos de la sinergia.
+// a cualquiera. Se ven en la ficha, filtran el roster y dicen en cada combinación de 3 qué le
+// dan al personaje sus compañeros. No cambian los puntos de la sinergia.
 const CATEGORIAS = [
   { k: 'fis',      s: ['Physical Attack'], ataque: true },
   { k: 'ene',      s: ['Energy Attack'], ataque: true },
@@ -1295,6 +1300,22 @@ function indiceDe (v, F, para, restr) {
   }
   const lid = F.lid.length ? da(LIDERAZGOS, F.lid) : [], sop = F.sop.length ? da(SLOTS_SOPORTE, F.sop) : [];
   return lid && sop ? { lid, sop } : null;
+}
+/** Lo que recibe el foco en el equipo: los soportes de los otros integrantes y el liderazgo
+ *  del líder elegido (también si el líder es él: el liderazgo es para todo el equipo); lo
+ *  que le llega y le sirve, por categoría. { categoría: true, o false si solo llega con un
+ *  artefacto }. */
+function cobertura (foco, vs, lider) {
+  const out = {};
+  for (const a of vs) {
+    const s = SOPORTES[a.p]; if (!s) continue;
+    for (const [k] of TIPOS_SOPORTE) {
+      const x = s[k];
+      if (!x || !(LIDERAZGOS.includes(k) ? a === lider : a !== foco) || !aplicaA(x, foco)) continue;
+      for (const c of categoriasDe(x, foco)) out[c] = out[c] || k !== 'artifact';
+    }
+  }
+  return out;
 }
 /** Personajes a los que alcanza una restricción, con las variantes que la cumplen: cuenta
  *  el uniforme puesto, que puede cambiar la clase, el bando, la raza y las habilidades. */
@@ -2232,8 +2253,23 @@ function estrella (keys) {
   return `<button class="btn sm icon estrella ${on ? 'on' : ''}" data-a="favorito" data-m="${keys.join(',')}"
     title="${h(t(on ? 'eq_fav_rm' : 'eq_fav_add'))}">${on ? '★' : '☆'}</button>`;
 }
+// Cobertura de un trío: lo que le dan al personaje sus compañeros, en cinco grupos (el ataque
+// junta todas las categorías de ataque que le sirven).
+const COBERTURA = [{ k: 'ataque', cats: CATEGORIAS.filter(c => c.ataque).map(c => c.k) },
+  ...CATEGORIAS.filter(c => !c.ataque).map(c => ({ k: c.k, cats: [c.k] }))];
+function coberturaHtml (cob) {
+  // ' *': solo le llega si el compañero lleva su artefacto.
+  const nom = (c) => t('ct_' + c) + (c in cob && !cob[c] ? ' *' : '');
+  return `<div class="row cobertura">${COBERTURA.map(g => {
+    const cs = g.cats.filter(c => c in cob);
+    const estado = !cs.length ? 'no' : cs.some(c => cob[c]) ? 'si' : 'art';
+    const nombre = g.k === 'ataque' ? t('cb_ataque') + (cs.length ? ': ' + cs.map(nom).join(', ') : '') : nom(g.k);
+    return `<span class="tag cob ${estado}" ${cs.some(c => !cob[c]) ? `title="${h(t('cb_art'))}"` : ''}>${estado === 'no' ? '✗' : '✓'} ${h(nombre)}</span>`;
+  }).join('')}</div>`;
+}
 function combinacionesHtml (v) {
-  const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))}</p>`;
+  const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))}</p>
+    <p class="muted" style="margin-bottom:10px">${h(t('cb_note'))}</p>`;
   if (!CONSULTA || CONSULTA.clave !== v.key) {
     // La consulta tarda (más de un segundo con quien tiene un liderazgo para todos): primero
     // se pinta la pestaña con el aviso y recién después se calcula.
@@ -2258,6 +2294,7 @@ function combinacionesHtml (v) {
         <div class="combotx">
           <div>${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
           <div class="combolider">${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('eq_no_leader'))}</div>
+          ${coberturaHtml(cobertura(v, vs, sc.lider))}
           ${ls.map(l => `<div class="muted">${h(listName(l))}: ${vs.map(x => h(puestoTexto(l, x.key))).join(' · ')}</div>`).join('')}
         </div>
         <div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}

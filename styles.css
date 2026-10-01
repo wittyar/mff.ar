@@ -259,6 +259,12 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .combo .eqfoto > span:last-child{display:none}
 .combotx{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:2px}
 .combolider{color:var(--text-2);font-weight:600}
+/* Cobertura de un trío: lo que le dan al personaje sus compañeros. */
+.cobertura{gap:4px;margin-top:3px}
+.tag.cob{font-weight:600}
+.tag.cob.si{background:rgba(74,222,128,.14);color:var(--role-soporte)}
+.tag.cob.art{background:var(--gold-soft);color:var(--gold);cursor:help}
+.tag.cob.no{background:rgba(255,255,255,.04);color:var(--text-3)}
 .combo .eqpts{flex:none}
 .combo details{margin-top:6px}
 /* Armador: personaje que ya está en otro equipo del mismo modo. */
