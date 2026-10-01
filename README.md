@@ -133,7 +133,18 @@ abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
    falla sin publicar.
 
 `formato_datos` (en `version.json`) y `FORMATO` (en `scripts/build.py`) van juntos: se suben cuando
-`data.js` cambia de una forma que una versión anterior de la app no entiende.
+una app y unos datos de versiones distintas ya no se entienden (a la app nueva le falta algo que los
+datos viejos no traen, o la anterior leería mal los nuevos). La app solo usa datos de su formato: con
+otros, los baja al arrancar o avisa que hay que actualizarla. Formato 2: el perfil de combate viene
+calculado en `data.js` (ver *Modelo del juego*).
+
+## Modelo del juego
+`docs/MODELO.md` es el mapa del modelo que arma la app por variante (un personaje con un uniforme):
+qué características tiene, qué hacen en el juego, de dónde sale cada una y lo que se deduce, con su
+regla. Se construye por etapas (personajes y características, skills, pasivas y soportes, la tabla
+final) y lista las dudas abiertas. La etapa 1 ya está: la identidad de cada variante (incluido el
+género, que 11 uniformes cambian) y su **perfil de combate** (con qué ataque escala, tipos de daño y
+elementos), que calcula `scripts/modelo.py` en el build y la app lee de `data.js`.
 
 ## Índice para armar equipos
 Lo que da cada liderazgo y cada soporte de thanosvibs (Leads & Supports), en las categorías con
@@ -345,12 +356,14 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `scripts/` — pipeline: `fetch_all` → `parse_instinto` → `build`, que llama a `skills_api.py`,
   `fuentes.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
   `traducir.py` las tablas de las skills, `version_juego.py` la versión del snapshot,
-  `guia_armado.py` el lector de la guía de armado (y si se acepta) y `marcadores.py` lo que
-  completa los marcadores de facción, tipo o raza.
+  `guia_armado.py` el lector de la guía de armado (y si se acepta), `marcadores.py` lo que
+  completa los marcadores de facción, tipo o raza, y `modelo.py` lo que se deduce de cada variante
+  (el perfil de combate).
 - `fuentes/guia-armado/` — la copia en uso de la guía de armado y su estado.
 - `scripts/traducciones/` — las tablas de traducción, editables a mano.
 - `scripts/contenido/` — lo curado a mano, con fuentes.
 - `docs/AUDITORIA.md` — el informe de la auditoría entre fuentes (se regenera en cada build).
+- `docs/MODELO.md` — el modelo del juego: características de cada variante, reglas y dudas.
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
   `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
   verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
