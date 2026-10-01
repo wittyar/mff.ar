@@ -1140,7 +1140,7 @@ Le saca los debuffs o lo hace inmune a ellos.
 `quita_debuffs` · Removes all debuffs · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1))
-- **Nota:** La API de skills a veces publica «Give Power» sin decir qué otorga; Leads & Supports trae que es esto.
+- **Nota:** La API de skills a veces publica «Give Power» sin decir qué otorga; Leads & Supports trae que es esto (docs/AUDITORIA.md, sección 7).
 - **Skills:**
   - `Removes all Debuffs. ` (409 retratos)
   - `Parry` (2 retratos)

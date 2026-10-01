@@ -33,5 +33,26 @@
   "es": "En la sección Leads & Supports, el sitio muestra el tercer número de cada efecto de artefacto como duración (\"0.2s\"), con la columna \"Instinct\" corrida. Por la página Artifact de la wiki (Robbie Reyes, She-Hulk) ese número es el % adicional del instinto total, la duración va al final y, si el efecto acumula, el tope va antes de la duración. La app los muestra con ese significado.",
   "en": "In Leads & Supports, the site shows the third number of each artifact effect as a duration (\"0.2s\"), with the \"Instinct\" column shifted. Per the wiki's Artifact page (Robbie Reyes, She-Hulk) that number is the extra % of total Instinct, the duration comes last and, for stacking effects, the cap comes before the duration. The app shows them with that meaning.",
   "fuente": ["tv-sup", "tv-art"]
+ },
+ {
+  "id": "soporte-signo-reduccion",
+  "titulo": "Leads & Supports: reducciones de daño con signo positivo",
+  "es": "En 17 soportes, Leads & Supports publica la reducción de daño recibido con valor positivo: 16 «Basic Damage Received from Villains» y un «Physical Reflect Damage Received» (Black Dwarf, Dwarf Charge). La skill del mismo personaje dice siempre que reduce (Shuri, Panther God's Protection: +40 en Leads & Supports; «Decreases basic damage received from … faction by 40%» en la skill), y en otros soportes el mismo stat viene negativo. El catálogo de efectos los lee siempre como reducción.",
+  "en": "In 17 supports, Leads & Supports publishes the damage-taken reduction as a positive value: 16 \"Basic Damage Received from Villains\" and one \"Physical Reflect Damage Received\" (Black Dwarf, Dwarf Charge). The same character's skill always says it reduces (Shuri, Panther God's Protection: +40 in Leads & Supports; \"Decreases basic damage received from … faction by 40%\" in the skill), and in other supports the same stat is negative. The effect catalog always reads them as a reduction.",
+  "fuente": ["tv-sup", "tv-pj"]
+ },
+ {
+  "id": "skills-give-power-sin-efecto",
+  "titulo": "API de skills: «Give Power» sin lo que otorga",
+  "es": "En 27 retratos, la skill trae «Give Power» («Acquires the following effect for … sec.») sin el efecto que sigue, y Leads & Supports dice cuál es: casi siempre «Remove All Debuffs» (Deadpool en Marvel's Savior, Odin, Thanos, Sentry, Blue Dragon, Gorr, Kang, entre otros), y también inmunidad a debuffs (Invisible Woman, First Steps), curación y reducción de daño (Jessica Jones, Jewel), curación (Groot, Bloom) o ataque físico (Toxin). La ficha muestra la skill como viene y el soporte con su efecto.",
+  "en": "In 27 portraits, the skill has \"Give Power\" (\"Acquires the following effect for … sec.\") without the effect that follows, and Leads & Supports says what it is: almost always \"Remove All Debuffs\" (Deadpool in Marvel's Savior, Odin, Thanos, Sentry, Blue Dragon, Gorr, Kang, among others), and also debuff immunity (Invisible Woman, First Steps), healing and damage reduction (Jessica Jones, Jewel), healing (Groot, Bloom) or physical attack (Toxin). The profile shows the skill as published and the support with its effect.",
+  "fuente": ["tv-pj", "tv-sup"]
+ },
+ {
+  "id": "skills-codigos",
+  "titulo": "API de skills: códigos en lugar de nombres",
+  "es": "Algunas descripciones traen un número donde va el nombre de un efecto o de un elemento, y la app los muestra como vienen: «Natural Enemy» («Increases damage dealt to targets with 206 effect by 50%»), «DURATION INCREASE», «ELEMENT CONVERSION», «Accumulate All True Element Damage Dealt», «REMOVE», «Selective Removal», «DEBUFF EFFECT ↓» y «Counter Reflect». Leads & Supports nombra dos: en el soporte de Kahhori (Hero's Decree), 206 es «Removes All Debuffs» y 407 «Debuff Removal (Instinct)». La wiki nombra otro: el «REMOVE» del Striker de Spider-Man le quita al rival sus buffs activos.",
+  "en": "Some descriptions carry a number where the name of an effect or an element goes, and the app shows them as published: \"Natural Enemy\" (\"Increases damage dealt to targets with 206 effect by 50%\"), \"DURATION INCREASE\", \"ELEMENT CONVERSION\", \"Accumulate All True Element Damage Dealt\", \"REMOVE\", \"Selective Removal\", \"DEBUFF EFFECT ↓\" and \"Counter Reflect\". Leads & Supports names two: in Kahhori's support (Hero's Decree), 206 is \"Removes All Debuffs\" and 407 \"Debuff Removal (Instinct)\". The wiki names another: the \"REMOVE\" in Spider-Man's Striker strips the foe's active buffs.",
+  "fuente": ["tv-pj", "tv-sup"]
  }
 ]

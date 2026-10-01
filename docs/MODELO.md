@@ -124,6 +124,22 @@ lectura «comprobada» sin fuente) corta el build. Una etiqueta, un patrón o un
 catálogo no tiene se avisa y queda en la sección 9 de `docs/AUDITORIA.md` hasta clasificarlo, sin
 frenar la actualización semanal. El catálogo entero, para leerlo, está en `docs/CATALOGO.md`.
 
+### Lo que dejó el primer cruce
+
+Con el catálogo, cada soporte de Leads & Supports se puede comparar con la skill de la que sale
+(por su nombre): de 1.020 efectos de soporte (sin los de artefacto, que no tienen skill), 986 están
+entre las etiquetas de su skill. Lo que dejó el cruce está en `docs/AUDITORIA.md` (sección 7):
+
+- **«Give Power» sin contenido.** En 27 retratos (29 efectos) la skill dice que otorga un efecto y no
+  dice cuál; Leads & Supports sí (casi siempre «Remove All Debuffs»).
+- **Signo.** Leads & Supports publica algunas reducciones de daño recibido con signo positivo; la
+  skill dice siempre que reduce.
+- **Códigos.** Algunas descripciones traen un número donde va el nombre de un efecto o de un elemento
+  (`206`, que Leads & Supports nombra «Removes All Debuffs»).
+
+Quedan 5 efectos, en 4 retratos, que no aparecen en la skill del mismo nombre; se revisan cuando el
+cruce sea parte del build.
+
 ### Dudas abiertas del catálogo
 
 - **Fractura.** Ninguna fuente dice qué hace. Se sabe que se aplica al rival y que corta el ataque
