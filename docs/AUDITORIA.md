@@ -230,7 +230,7 @@ thanosvibs no publica el instinto: la app lo toma del infobox de la wiki. Acá, 
 
 - Retratos marcados Tier-4 sin Striker Skill en sus skills: 6: Red Skull (Captain America: The First Avenger); Red Skull (Hydra Armor); Red Skull (Secret Wars: Red Skull); Sister Grimm (All-New, All-Different); Sister Grimm (Runaways); Sister Grimm (Secret Wars: A-Force)
 - Retratos con skill 6 (Tier-3 o Trascendido) sin Definitiva en sus skills: 1: Black Swan (Modern, Tier-3)
-- Textos de efecto con marcadores de plantilla sin resolver ($HEROSUBTYPE, $HEROCLASS...): 18 patrones, usados por 320 retratos. La app los muestra como "sin especificar en la fuente" en vez de inventar el valor.
+- Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 320 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
 
 ## 5. Efectos de líder y soporte: restricciones corregidas
 
@@ -286,3 +286,185 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 - **Opción de uniforme Heroic con evasión (PvP)** — Para PvP la guía sugiere evasión en la opción Heroic, pero su propia lista del pool de Heroic no tiene evasión (sí Advanced y Legendary). La app lo muestra con esa advertencia. ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Nivel de skills para Tier-4: guía 12 y wiki 10** — La guía pone "skills en Nv. 12" en el paso previo al Tier-4; la wiki pide Nv. 10 como requisito. No hay una fuente que diga cuál es el requisito vigente: puede que la guía recomiende más del mínimo. La hoja de ruta muestra los dos. ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1), [Future Fight Wiki — Tier-4](https://future-fight.fandom.com/wiki/Tier-4))
 - **Tabla de efectos del artefacto en el sitio de thanosvibs** — En la sección Leads & Supports, el sitio muestra el tercer número de cada efecto de artefacto como duración ("0.2s"), con la columna "Instinct" corrida. Por la página Artifact de la wiki (Robbie Reyes, She-Hulk) ese número es el % adicional del instinto total, la duración va al final y, si el efecto acumula, el tope va antes de la duración. La app los muestra con ese significado. ([THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Artifacts](https://thanosvibs.money/artifacts))
+
+## 8. Facción, tipo o raza que la fuente no publica
+
+thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa con la tabla a mano (scripts/contenido/marcadores.csv) y, lo que no está ahí, con la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). En la ficha, el valor completado va subrayado y dice de dónde salió.
+
+De los 249: 78 de la wiki, 0 a mano y 171 sin resolver (la app los muestra "sin especificar").
+
+Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el juego. `python3 scripts/marcadores.py` agrega las filas que falten.
+
+| Personaje | Skill | Efecto | id |
+|---|---|---|---|
+| Abomination — Infected Bioweapon | Fists of the World Ravager | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1022830012 |
+| Abomination — Infected Bioweapon | Fists of the World Ravager | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1022830013 |
+| Agent Venom — Agent Anti-Venom | Agent Anti-Venom | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1012150011 |
+| Amadeus Cho — Heroic Age | Heroic Age | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1006857011 |
+| Angela — Asgard's Assassin | Asgard's Assassin | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1003928011 |
+| Angela — Secret Wars: 1602 Witch Hunter Angela | Secret Wars: 1602 Witch Hunter Angela | `Increases basic damage dealt to $HEROCLASS1 types by 20%.` | 1003950011 |
+| Athena | Righteous Wisdom | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1028604011 |
+| Beta Ray Bill — Beta Ray Bill | Beta Ray Bill | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1022247011 |
+| Captain America (Sam Wilson) — Marvel Studios' Captain America: Brave New World | New Captain America | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1203012012 |
+| Captain Marvel — Marvel Animation's Marvel Zombies | Marvel Animation's Marvel Zombies | `Increases basic damage by 55% when attacking characters without $HEROSUBTYPE1 Ability.` | 1202629012 |
+| Captain Marvel — Marvel Studios' Avengers: Endgame | Marvel Studios' Avengers: Endgame | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1002654012 |
+| Captain Marvel — Marvel Studios' Avengers: Endgame | Marvel Studios' Avengers: Endgame | `Decreases basic damage received from $HEROSUBTYPE1 faction by 10%.` | 1002654013 |
+| Captain Marvel — Marvel Studios' The Marvels | Marvel Studios' The Marvels | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1202608012 |
+| Captain Marvel — Marvel Studios' The Marvels | Marvel Studios' The Marvels | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1202608013 |
+| Colossus / Colossus — X-Force | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015814011 |
+| Colossus — Hellfire Gala | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015883011 |
+| Colossus — Hellfire Gala | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015883013 |
+| Colossus — Phoenix Five | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015834011 |
+| Colossus — Phoenix Five | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015834013 |
+| Cyclops — Marvel Animation's X-Men '97 | Leader of X-Men | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1012391012 |
+| Deathlok / Deathlok — Modern | Centipede Serum | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804011 |
+| Deathlok / Deathlok — Modern | Centipede Serum | `Decreases basic damage received from enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804012 |
+| Doctor Voodoo — Savage Avengers | Savage Avengers | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1020441011 |
+| Doctor Voodoo — Savage Avengers | Savage Avengers | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1020441012 |
+| Dormammu — Damnation | Dread One | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1011631061 |
+| Drax — Annihilation | Annihilation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 60%.` | 1002239012 |
+| Drax — Annihilation | Annihilation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 60%.` | 1002239013 |
+| Ebony Maw — Dark Obsidian Armor | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007771012 |
+| Ebony Maw — Dark Obsidian Armor | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1007771013 |
+| Ebony Maw — General's Hand | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007760012 |
+| Ebony Maw — General's Hand | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1007760013 |
+| Ebony Maw — General's Hand | General's Hand | `Increases basic damage dealt to $HEROCLASS1 types by 40%.` | 1007761011 |
+| Ebony Maw — General's Hand | General's Hand | `Decreases basic damage received from $HEROCLASS1 types by 35%.` | 1007761012 |
+| Electro — Spider-Man: No Way Home | Electric Battlefield | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1019733011 |
+| Electro — Spider-Man: No Way Home | Electric Battlefield | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1019733012 |
+| Falcon / Falcon — All-New Captain America / Falcon — Marvel Studios' Captain America: Civil War / Falcon — Marvel Legacy / Captain America (Sam Wilson) — Marvel Studios' The Falcon and the Winter Soldier / Falcon — What If... Zombies?! / Captain America (Sam Wilson) — Marvel Studios' Captain America: Brave New World | Hero's Rise | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 70%.` | 1003080013 |
+| Falcon (Joaquin Torres) | Captain's Wingman | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1027770011 |
+| Falcon — What If... Zombies?! | Hero Meat.. Villain Meat.. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003091011 |
+| Falcon — What If... Zombies?! | Hero Meat.. Villain Meat.. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003091012 |
+| Gamora — Requiem / Gamora — Marvel Studios' Guardians of the Galaxy 3 | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001247012 |
+| Gamora — Requiem / Gamora — Marvel Studios' Guardians of the Galaxy 3 | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001247013 |
+| Gamora — Wastelanders | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001297012 |
+| Gamora — Wastelanders | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001297013 |
+| Ghost Rider / Ghost Rider — 70's Classic / Ghost Rider — Inhumans: Attilan Rising | Repentance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000470011 |
+| Ghost Rider (Robbie Reyes) — Lord of Vengeance | Lord of Vengeance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1011750012 |
+| Ghost Rider (Robbie Reyes) — Lord of Vengeance | Lord of Vengeance | `Decreases basic damage received from $HEROSUBTYPE1 faction by 70%.` | 1011750013 |
+| Ghost Rider — King of Hell | Repentance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000471011 |
+| Ghost Rider — Rage Returned / Ghost Rider — Savage Avengers | Hell's Wrath | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000443011 |
+| Gorgon | War Cry | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1011203062 |
+| Green Goblin — Dark Avengers | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1001844011 |
+| Green Goblin — Dark Avengers | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1001844012 |
+| Green Goblin — Gold Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1201811011 |
+| Green Goblin — Gold Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1201811012 |
+| Green Goblin — Red Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001886011 |
+| Green Goblin — Red Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001886012 |
+| Green Goblin — Spider-Man: No Way Home | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001864011 |
+| Green Goblin — Spider-Man: No Way Home | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001864012 |
+| Hela — Asgard Invasion | Asgard Invasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1010639011 |
+| Hela — Asgard Invasion | Asgard Invasion | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1010639012 |
+| Hela — Marvel Studios' Thor: Ragnarok | Marvel Studios' Thor: Ragnarok | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1010650011 |
+| Hela — Marvel Studios' Thor: Ragnarok | Marvel Studios' Thor: Ragnarok | `Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.` | 1010650012 |
+| Hela — Marvel Studios' What If...? | Marvel Studios' What If...? | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1010676011 |
+| Hela — Marvel Studios' What If...? | Marvel Studios' What If...? | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1010676012 |
+| Infinity Ultron — Marvel Studios' What If...? | Marvel Studios' What If...? | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001331012 |
+| Iron Man — Marvel Studios' Avengers: Endgame / Iron Man — Team Suit | Overdrive Beam | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1000372102 |
+| Jeff the Land Shark | Guardian of the Deep | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1029004012 |
+| Jeff the Land Shark | Guardian of the Deep | `Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.` | 1029004013 |
+| Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1019417011 |
+| Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.` | 1019417012 |
+| Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.` | 1019417013 |
+| Kraven The Hunter — Interdimensional Hunter | Interdimensional Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1013233011 |
+| Kraven The Hunter — Interdimensional Hunter | Interdimensional Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1013233012 |
+| Leader | Evil Leadership | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1027604011 |
+| Leader | Evil Leadership | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1027604012 |
+| Loki — Young Avengers | The Young Avengers' Clever One | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1201424011 |
+| Magneto — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 45%.` | 1012950011 |
+| Malekith / Malekith — All-New, All-Different | Malicious Manipulation | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002008011 |
+| Malekith / Malekith — All-New, All-Different | Malicious Manipulation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1002008012 |
+| Malekith — War of the Realms | Dark Blessing | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002036011 |
+| Maximus | Mad Scientist | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1011504012 |
+| Medusa — Ancient Curse | Ancient Curse | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1010942011 |
+| Medusa — Inhumans vs X-Men | Queenly Gaze | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1010940011 |
+| Mephisto | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024470012 |
+| Mephisto — Master of Hell | Hell Fire | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1224401102 |
+| Mephisto — Master of Hell | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024493012 |
+| Molten Man | Fire Eater | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 30%.` | 1019504012 |
+| Morph | Gender Equality | `Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.` | 1029170011 |
+| Morph | Gender Equality | `Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.` | 1029170012 |
+| Mystique | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1021870011 |
+| Mystique | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021870012 |
+| Mystique — Hellfire Gala | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021844011 |
+| Mystique — Hellfire Gala | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1021844012 |
+| Nick Fury — Marvel Studios' Captain Marvel / Nick Fury — Marvel Studios' The Marvels | Director of S.H.I.E.L.D. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1018571011 |
+| Nick Fury — Secret Avengers | Director of S.H.I.E.L.D. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1018563011 |
+| Nova (Richard Rider) — Marvel Cosmic Invasion | Worldmind Knowledge | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1022550011 |
+| Phil Coulson — Winter Ops | Director's Orders | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1006114012 |
+| Phil Coulson — Winter Ops | Director's Orders | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1006114013 |
+| Proxima Midnight — Dark Obsidian Armor | Dark Obsidian Armor | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1006951012 |
+| Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243012 |
+| Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243013 |
+| Punisher — Fist of the Beast | Fist of the Beast | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003288011 |
+| Punisher — Marvel Television's Daredevil: Born Again | Marvel Television's Daredevil: Born Again | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1203209011 |
+| Red Hulk — Marvel Studios' Captain America: Brave New World | Marvel Studios' Captain America: Brave New World | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1002558012 |
+| Red Skull / Red Skull — Secret Wars: Red Skull | Hero Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1001506011 |
+| Red Skull / Red Skull — Secret Wars: Red Skull | Hero Hunter | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1001506012 |
+| Red Skull — Hydra Armor | Hero Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1001571011 |
+| Red Skull — Hydra Armor | Hero Hunter | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1001571012 |
+| Red Skull — The Crimson Fall | Age of Malice | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1001545011 |
+| Red Skull — The Crimson Fall | Age of Malice | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1001545012 |
+| Ronan — Annihilators | Annihilators | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1004861011 |
+| Ronan — Annihilators | Annihilators | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1004861012 |
+| Ronan — Marvel Studios' Captain Marvel | Marvel Studios' Captain Marvel | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1004851011 |
+| Scarlet Spider — Gift Deliverer | Good Guy, Bad Guy | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1023167012 |
+| Scarlet Spider — Gift Deliverer | Good Guy, Bad Guy | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1023167013 |
+| Sentinel — Stark Sentinels Mk II | Mutant Suppressor | `Increases basic damage dealt to $HEROSUBTYPE1 characters by 100%.` | 1017563012 |
+| Sentinel — Stark Sentinels Mk II | Mutant Suppressor | `Decreases basic damage received from $HEROSUBTYPE1 characters by 60%.` | 1017563013 |
+| Sersi — Marvel Studios' Eternals | Cosmic Focus | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1024324012 |
+| Sersi — Marvel Studios' Eternals | Cosmic Focus | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1024324013 |
+| Sleeper | Symbiote Heroes | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1027522011 |
+| Sleeper | Symbiote Heroes | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1027522012 |
+| Spider-Man (Miles Morales) / Spider-Man (Miles Morales) — Into the Spider-Verse | Ultimate Spider-Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1006570011 |
+| Spider-Man (Miles Morales) — Absolute Carnage | Ultimate Spider-Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1006571011 |
+| Spider-Man (Miles Morales) — Ancient Curse | Ancient Curse | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1206529011 |
+| Spider-Man (Miles Morales) — Spider-Man: Across the Spider-Verse | Spider-Man: Across the Spider-Verse | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1206502011 |
+| Spider-Man 2099 — All-New, All-Different | All-New, All-Different | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 10%.` | 1013635011 |
+| Taskmaster — Marvel Studios' Black Widow | Marvel Studios' Black Widow | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1021650011 |
+| Taskmaster — Marvel Studios' Black Widow | Marvel Studios' Black Widow | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1021650012 |
+| Taskmaster — Marvel Studios' Thunderbolts* | Marvel Studios' Thunderbolts* | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021691011 |
+| Taskmaster — Marvel Studios' Thunderbolts* | Marvel Studios' Thunderbolts* | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021691012 |
+| Thanos — Obsidian King | Mad Titan | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007590011 |
+| Thanos — Thanos Wins / Thanos — Annihilation | Hero Slayer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1207527011 |
+| Thanos — Wise Harvester | True Peace | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1207502011 |
+| Thanos — Wise Harvester | True Peace | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 20%.` | 1207502012 |
+| The Thing — Marvel Studios' The Fantastic Four: First Steps | Family Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 201820901 |
+| Thor (Jane Foster) — Marvel Studios' Thor: Love and Thunder | Marvel Studios' Thor: Love and Thunder | `Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.` | 1007150012 |
+| Ulik | Troll's Roar | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1009803062 |
+| Ultron Mark 1 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001351011 |
+| Ultron Mark 1 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001351012 |
+| Ultron Mark 3 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001352011 |
+| Ultron Mark 3 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001352012 |
+| Ultron Prime — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001350011 |
+| Ultron Prime — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001350012 |
+| Ultron — All-Father Ultron | All-Father Ultron | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001363012 |
+| Valkyrie | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1014470011 |
+| Valkyrie | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.` | 1014470012 |
+| Valkyrie — Asgardians of the Galaxy | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1014486011 |
+| Valkyrie — Asgardians of the Galaxy | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.` | 1014486012 |
+| Valkyrie — Fearless Defenders | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1014446011 |
+| Valkyrie — Fearless Defenders | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.` | 1014446012 |
+| Valkyrie — Marvel Studios' Thor: Love and Thunder | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1014448011 |
+| Valkyrie — Marvel Studios' Thor: Love and Thunder | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.` | 1014448012 |
+| Venus (Aphrodite) | Olympian Hymn | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1028770011 |
+| Venus (Aphrodite) | Olympian Hymn | `Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.` | 1028770012 |
+| Vulture — Spider-Man: Homecoming | Spider-Man: Homecoming | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1013550011 |
+| War Machine — Invincible Iron Man | Machine Army | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1002794011 |
+| War Machine — Invincible Iron Man | Machine Army | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1002794012 |
+| Wave — Classic | Wrath of the Waves | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1020071011 |
+| Weapon Hex — Infected Bioweapon | Infected Bioweapon | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1017248011 |
+| Weapon Hex — Infected Bioweapon | Infected Bioweapon | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1017248012 |
+| Whiplash | Mechanical Engineering | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 80%.` | 1012204011 |
+| White Fox / White Fox — Lifestyle Series 1 | Kumiho Stance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1017870011 |
+| White Fox — Agent F-One | Villain Specialist | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 65%.` | 1017854011 |
+| White Fox — Agent F-One | Villain Specialist | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1017854012 |
+| White Fox — Lifestyle Series 2 | Kumiho Stance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 65%.` | 1017871011 |
+| White Fox — Lifestyle Series 2 | Kumiho Stance | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1017871012 |
+| Wong — Marvel Studios' Doctor Strange 2 | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009222011 |
+| Wong — Marvel Studios' Doctor Strange 2 | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009222012 |
+| Wong — What If... Zombies?! | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009279011 |
+| Wong — What If... Zombies?! | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009279012 |
+| Yellowjacket — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1005250011 |
+| Yondu — Summer Vacation | Exploit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1004652011 |

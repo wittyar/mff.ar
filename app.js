@@ -748,9 +748,13 @@ const T = {
   d_xp:              { es:'XP',                  en:'XP' },
   tpl_title:         { es:'La fuente no especifica cuál: publica un marcador de plantilla sin resolver.',
                        en:'The source does not say which: it publishes an unresolved template marker.' },
-  tpl_faction:       { es:'sin especificar',      en:'unspecified' },
-  tpl_class:         { es:'sin especificar',      en:'unspecified' },
-  tpl_time:          { es:'sin especificar',      en:'unspecified' },
+  tpl_unspec:        { es:'sin especificar',      en:'unspecified' },
+  tpl_pending:       { es:'thanosvibs publica este efecto sin decir a quién se refiere y la wiki de Future Fight no lo dice. Se completa a mano en scripts/contenido/marcadores.csv (la lista está en docs/AUDITORIA.md).',
+                       en:'thanosvibs publishes this effect without saying whom it refers to, and the Future Fight wiki does not say either. It is filled in by hand in scripts/contenido/marcadores.csv (the list is in docs/AUDITORIA.md).' },
+  tpl_wiki:          { es:'Dato de la wiki de Future Fight: thanosvibs publica este efecto sin decir a quién se refiere.',
+                       en:'From the Future Fight wiki: thanosvibs publishes this effect without saying whom it refers to.' },
+  tpl_manual:        { es:'Dato cargado a mano (scripts/contenido/marcadores.csv): thanosvibs publica este efecto sin decir a quién se refiere.',
+                       en:'Entered by hand (scripts/contenido/marcadores.csv): thanosvibs publishes this effect without saying whom it refers to.' },
   c_targets:         { es:'Beneficia a',          en:'Buffs' },
   c_attrs:           { es:'Atributos marcados',   en:'Marked attributes' },
   f_attrs:           { es:'Atributo marcado por vos', en:'Attribute you marked' },
@@ -1330,16 +1334,20 @@ function vinculo (v, x, aplicados) {
 /** Fila de una tabla de data.js. */
 function fila (tabla, i) { return (i == null || !TB[tabla]) ? null : TB[tabla][i]; }
 // thanosvibs publica algunas descripciones con marcadores de plantilla sin resolver
-// ($HEROSUBTYPE1, $HEROCLASS2, $TIME). Los que tienen un campo real detrás se resuelven
-// con ese campo; los que no, se marcan como "sin especificar en la fuente" en vez de
-// inventarles un valor o dejar el marcador crudo a la vista.
+// ($HEROSUBTYPE1, $HEROCLASS1, $TIME). $TIME y $TICK tienen un campo real detrás y se
+// resuelven con él. La facción, el tipo o la raza no vienen en ningún campo: el build los
+// completa con la tabla a mano o con la wiki (f.g, y de dónde salió en f.gs) y se muestran
+// marcados con su origen. Lo que no se completó se marca "sin especificar" en vez de
+// inventarle un valor o dejar el marcador crudo a la vista.
 function marcadores (texto, f) {
-  const chip = (clave) => `<i class="tpl" title="${h(t('tpl_title'))}">${h(t(clave))}</i>`;
+  const chip = (clave, titulo) => `<i class="tpl" title="${h(t(titulo))}">${h(t(clave))}</i>`;
+  const grupo = () => (f && f.g)
+    ? `<span class="tpl-ok" title="${h(t(f.gs === 'm' ? 'tpl_manual' : 'tpl_wiki'))}">${h(dom(f.g))}</span>`
+    : chip('tpl_unspec', 'tpl_pending');
   return texto
-    .replace(/\$TIME/g, () => (f && f.d != null) ? f.d + ' s' : chip('tpl_time'))
-    .replace(/\$TICK/g, () => (f && f.t != null) ? f.t + ' s' : chip('tpl_time'))
-    .replace(/\$HEROSUBTYPE\d*/g, () => chip('tpl_faction'))
-    .replace(/\$HEROCLASS\d*/g, () => chip('tpl_class'));
+    .replace(/\$TIME/g, () => (f && f.d != null) ? f.d + ' s' : chip('tpl_unspec', 'tpl_title'))
+    .replace(/\$TICK/g, () => (f && f.t != null) ? f.t + ' s' : chip('tpl_unspec', 'tpl_title'))
+    .replace(/\$HERO(?:SUBTYPE|CLASS)\d*/g, grupo);
 }
 /** Reemplaza cada '#' del patrón por el número que le toca, en orden. */
 function rellenar (patron, nums) {

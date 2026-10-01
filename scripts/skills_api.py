@@ -21,10 +21,15 @@ guarda el índice del patrón y sus números, y el texto se arma en el navegador
 
 Los diccionarios (patrones, etiquetas, elementos, objetivos, activaciones, nombres)
 viajan una sola vez con las dos versiones.
+
+Algunos textos traen un marcador sin resolver ($HEROSUBTYPE1, $HEROCLASS1: la facción,
+el tipo, la raza o la habilidad a la que se refiere el efecto). marcadores.py lo completa
+con la tabla a mano o con la wiki; el efecto lleva el valor (g) y de dónde salió (gs).
 """
 import json, glob, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import traducir
+import marcadores
 from dominio import OBJETIVO_GRUPO, OBJETIVO_SIN_GRUPO, OBJETIVO_SIN_NOMBRE
 
 BOLD = re.compile(r'</?b>')
@@ -90,6 +95,7 @@ def main():
     salida, buffs, cancels = {}, {}, {}
     desconocidas = {}
     n_sk = n_st = n_fx = n_barra = 0
+    grupos, con_marcador, avisos = marcadores.resolver()
 
     def efecto(a):
         d = limpio(a.get('description'))
@@ -100,6 +106,7 @@ def main():
         if a.get('tick') is not None: f['t'] = a['tick']
         if a.get('persistent'): f['m'] = 1
         if a.get('team_buff'): f['b'] = 1
+        if a.get('id') in grupos: f['g'], f['gs'] = grupos[a['id']]
         return f
 
     def etapa(st):
@@ -163,6 +170,17 @@ def main():
               open('work/skills_parsed.json', 'w'), ensure_ascii=False)
     for k, t in T.items():
         json.dump(sorted(t.faltan), open(f'work/sin_traducir_{k}.json', 'w'), ensure_ascii=False, indent=1)
+    # Lo que sigue sin resolver va a docs/AUDITORIA.md (auditar.py), para cargarlo a mano,
+    # con los avisos de la tabla a mano y de la wiki.
+    pend = [e for e in con_marcador if e['id'] not in grupos]
+    n_wiki = sum(1 for x in grupos.values() if x[1] == 'w')
+    n_mano = sum(1 for x in grupos.values() if x[1] == 'm')
+    n_ids = len({e['id'] for e in con_marcador})
+    json.dump({'pendientes': pend, 'wiki': n_wiki, 'manual': n_mano, 'ids': n_ids, **avisos},
+              open('work/marcadores.json', 'w', encoding='utf-8'), ensure_ascii=False)
+    print(f"marcadores ($HEROSUBTYPE1/$HEROCLASS1): {n_ids} efectos | de la wiki {n_wiki} | a mano {n_mano} | "
+          f"sin resolver {len({e['id'] for e in pend})}"
+          + ''.join(f' | AVISO {k}: {v}' for k, v in avisos.items() if v))
     tam = os.path.getsize('work/skills_parsed.json') / 1024 / 1024
     print(f'portraits: {len(salida)} | skills: {n_sk} | etapas: {n_st} | efectos: {n_fx} | {tam:.1f} MB'
           f' | con cancels: {len(cancels)} | de barra, sin recarga: {n_barra}')

@@ -449,6 +449,8 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 
 /* Marcador de plantilla que thanosvibs deja sin resolver. */
 .tpl{font-style:normal;color:var(--text-3);border-bottom:1px dotted var(--line-2);cursor:help;font-size:.94em}
+/* facción, tipo o raza que completó el build (wiki o tabla a mano): se lee normal, marcado */
+.tpl-ok{border-bottom:1px dotted var(--text-3);cursor:help}
 
 /* ---------- sincronización (app de escritorio) ---------- */
 /* Zona de avisos entre la barra de navegación y la vista (servidor caído, capa sin guardar,

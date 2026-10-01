@@ -319,6 +319,18 @@ class Auditoria:
                             usos[p] += 1
         self.res['marcadores_patrones'] = len(marcas)
         self.res['marcadores_retratos'] = len(usos)
+        # Los de facción, tipo o raza: cómo los completó skills_api.py (marcadores.py).
+        m = cargar('work/marcadores.json')
+        nombre = {r['portrait']: r['character'] + ('' if r['uniformed'] == 'False' else f" — {r['uniform']}")
+                  for r in self.chars}
+        pend = {}
+        for e in m['pendientes']:
+            x = pend.setdefault(e['id'], [[], e['skill'], e['texto']])
+            if nombre[e['p']] not in x[0]:
+                x[0].append(nombre[e['p']])
+        self.marcadores = {**m, 'sin_resolver': len(pend),
+                           'pendientes': sorted(((i, pjs, sk, tx) for i, (pjs, sk, tx) in pend.items()),
+                                                key=lambda x: (x[1][0], x[2], x[0]))}
 
     # -- fuentes: soportes y artefactos ----------------------------------------
     def fuentes(self):
@@ -475,9 +487,10 @@ def informe(A, version, hallazgos, fuentes):
              + (': ' + '; '.join(f'{n} ({u})' for n, u in sorted(L['t4'])) if L['t4'] else '.'))
     s.append(f"- Retratos con skill 6 (Tier-3 o Trascendido) sin Definitiva en sus skills: {R['s6_sin_ult']}"
              + (': ' + '; '.join(f'{n} ({u}, {k})' for n, u, k in sorted(L['s6'])) if L['s6'] else '.'))
-    s.append(f"- Textos de efecto con marcadores de plantilla sin resolver ($HEROSUBTYPE, $HEROCLASS...): "
-             f"{R['marcadores_patrones']} patrones, usados por {R['marcadores_retratos']} retratos. La app los "
-             f"muestra como \"sin especificar en la fuente\" en vez de inventar el valor.")
+    s.append(f"- Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): "
+             f"{R['marcadores_patrones']} patrones, usados por {R['marcadores_retratos']} retratos. La facción, el "
+             f"tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra \"sin especificar\" "
+             f"en vez de inventar el valor.")
     s.append('')
 
     s.append('## 5. Efectos de líder y soporte: restricciones corregidas\n')
@@ -512,6 +525,32 @@ def informe(A, version, hallazgos, fuentes):
         citas = ', '.join(f"[{fuentes[k]['nombre']}]({fuentes[k]['url']})" for k in x['fuente'])
         s.append(f"- **{x['titulo']}** — {x['es']} ({citas})")
     s.append('')
+
+    M = A.marcadores
+    s.append('## 8. Facción, tipo o raza que la fuente no publica\n')
+    s.append(f"thanosvibs publica {M['ids']} efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la "
+             'facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to '
+             '$HEROSUBTYPE1 faction by 30%`). El build los completa con la tabla a mano (scripts/contenido/marcadores.csv) y, lo que '
+             'no está ahí, con la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o '
+             'recibido). En la ficha, el valor completado va subrayado y dice de dónde salió.\n')
+    s.append(f"De los {M['ids']}: {M['wiki']} de la wiki, {M['manual']} a mano y {M['sin_resolver']} sin resolver "
+             '(la app los muestra "sin especificar").\n')
+    for clave, texto in (('conflictos', 'La wiki da valores distintos para el mismo efecto en dos skills (no se usa)'),
+                         ('huerfanos', 'Ids de la tabla a mano que la API ya no trae'),
+                         ('distintos', 'Valores a mano distintos de la wiki (gana la tabla)')):
+        if M[clave]:
+            s.append(f"- **{texto}:** {', '.join(str(i) for i in M[clave])}")
+    if any(M[k] for k in ('conflictos', 'huerfanos', 'distintos')):
+        s.append('')
+    if M['pendientes']:
+        s.append('Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la '
+                 'muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el '
+                 'juego. `python3 scripts/marcadores.py` agrega las filas que falten.\n')
+        s.append('| Personaje | Skill | Efecto | id |')
+        s.append('|---|---|---|---|')
+        for ide, pjs, sk, tx in M['pendientes']:
+            s.append(f"| {' / '.join(pjs)} | {sk} | `{tx}` | {ide} |")
+        s.append('')
     return '\n'.join(s)
 
 
