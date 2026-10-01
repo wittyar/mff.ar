@@ -1627,7 +1627,7 @@ function toolbar (total, shown) {
                + (P.objetivo !== '' ? 1 : 0) + (P.atributo !== '' ? 1 : 0);
   // El valor que viaja en data-v es siempre el del snapshot (español): el idioma solo
   // cambia lo que se ve, nunca la clave con la que se filtra ni la del ícono.
-  const group = (clave, cat, values) => `<div class="filtergroup"><div class="lbl">${h(t(clave))}</div><div class="row">${
+  const group = (clave, cat, values, ancho) => `<div class="filtergroup ${ancho ? 'ancho' : ''}"><div class="lbl">${h(t(clave))}</div><div class="row">${
     values.map(v => `<button class="chip ${F[cat].includes(v) ? 'on' : ''}" data-a="filter" data-cat="${cat}" data-v="${h(v)}">${icon(v)}${h(dom(v))}</button>`).join('')
   }</div></div>`;
   // Con el panel de filtros abierto la barra no queda fija: el panel es más alto que la
@@ -1660,7 +1660,7 @@ function toolbar (total, shown) {
       ${group('f_instinct','ins',SEED.INSTINCTS)}
       ${group('f_race','race',SEED.RACES)}
       ${group('f_origin','origin',[...new Set(CHARS.map(c => c.origin).filter(Boolean))].sort())}
-      ${group('f_ability','ab',SEED.SKILL_TAGS)}
+      ${group('f_ability','ab',SEED.SKILL_TAGS, true)}
       <div class="filtergroup"><div class="lbl">${h(t('f_shortcuts'))}</div><div class="row">
         <button class="chip ${G.t4 ? 'on' : ''}" data-a="flag" data-v="t4">${h(t('f_only_t4'))}</button>
         <button class="chip ${G.trans ? 'on' : ''}" data-a="flag" data-v="trans">${h(t('f_transcended'))}</button>
