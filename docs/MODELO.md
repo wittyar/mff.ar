@@ -53,13 +53,13 @@ y Detonación con Dark Obsidian Armor y con General's Hand. Todo lo que sigue es
 
 | Característica | Valores | Qué hace en el juego | Fuente |
 |---|---|---|---|
-| Clase | Combate, Detonación, Velocidad, Universal | Ventaja de tipo: más daño contra la clase a la que le gana y menos daño recibido de ella. Combate le gana a Velocidad, Velocidad a Detonación y Detonación a Combate. Universal le gana a las otras tres con una ventaja menor y no tiene debilidad. Restringe liderazgos y soportes. | thanosvibs (`type`); wiki (páginas de cada clase); guía de thanosvibs, parte 3 (Type Enhancement); la ventaja de Universal, confirmada por Ezequiel |
-| Bando | Superhéroe, Supervillano, Neutral | Restringe liderazgos y soportes; hay efectos de daño contra héroes o villanos. | thanosvibs (`side`) |
+| Clase | Combate, Detonación, Velocidad, Universal | Ventaja de tipo: más daño contra la clase a la que le gana y menos daño recibido de ella. Combate le gana a Velocidad, Velocidad a Detonación y Detonación a Combate. Universal le gana a las otras tres con una ventaja menor y no tiene debilidad. Restringe liderazgos y soportes. | thanosvibs (`type`); wiki (páginas de cada clase); guía de thanosvibs, parte 3 (Type Enhancement); la ventaja de Universal, confirmada por Ezequiel; el ciclo, también la guía del juego (Type Affinity) |
+| Bando | Superhéroe, Supervillano, Neutral | Restringe liderazgos y soportes; hay efectos de daño contra héroes o villanos. Dentro de una etapa, los Super Villains (jefes) y los Villains son facciones distintas (ver *Dudas*). | thanosvibs (`side`); guía del juego (Side) |
 | Raza | Humano, Mutante, Inhumano, Alienígena, Criatura, Otro | Restringe liderazgos y soportes; hay efectos contra una raza («excepto mutantes»). | thanosvibs (`allies`) |
 | Género | Masculino, Femenino, Neutro | Hay efectos de daño contra un género. | thanosvibs (`gender`) |
 | Habilidades | 44 etiquetas (Agente, Orden Negra, Simbionte...), de 1 a 3 por variante | Restringen liderazgos, soportes y skills de artefacto («Restricted by Ability: Black Order»). | thanosvibs (`ability`) |
 | Habilidad de World Boss | una de sus habilidades | Ver *Dudas*. | thanosvibs (`world_boss_ability`) |
-| Instinto | Justicia, Orden, Destrucción, Crueldad | Capa de daño de instinto, la de los artefactos; la guía la da por irrelevante por ahora. | wiki (infobox): thanosvibs no lo publica; 15 de 290 personajes sin dato |
+| Instinto | Justicia, Orden, Destrucción, Crueldad | Capa de daño de instinto, la de los artefactos; la guía de thanosvibs la da por irrelevante por ahora. Según la guía del juego, los ataques básicos suman daño de instinto según los stats de instinto, que crecen con el rango y el nivel; ese daño solo se defiende con habilidades de instinto, y los buffs y debuffs de stats básicos no lo tocan. Sus porcentajes (crítico, evasión) rinden más contra quien tiene menos instinto total. Los escudos de los C.T.P. Regeneration y Veteran también lo bloquean. | wiki (infobox): thanosvibs no lo publica; 15 de 290 personajes sin dato; guía del juego (Instinct); C.T.P. en el juego |
 | Origen | MCU, Cómic, Animación... | Sin efecto conocido en combate. | thanosvibs (`original`) |
 | Progresión | Tier (T2, T3, T4); skill 6 (Tier-3 o Trascendido); Striker (T4) | La skill 6 de un Trascendido se recarga aunque no esté en pantalla (guía, parte 4). | thanosvibs (`skill6`, `tier-4`, `striker_skill`) |
 | Stats propios | recuperación y resistencias elementales | Los únicos stats que la fuente publica por variante. | thanosvibs (`stats`) |
@@ -98,6 +98,11 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 
 - **Habilidad de World Boss.** Cada variante tiene una, siempre una de sus habilidades. Falta saber
   para qué se usa en el juego.
+- **Villains en las etapas.** El juego llama «SUPER VILLAIN faction» al bando Supervillano (C.T.P.
+  Insight; los artefactos de thanosvibs, igual) y Leads & Supports lo llama «Villains». La guía del
+  juego dice que dentro de una etapa los Super Villains, que son jefes, y los Villains son facciones
+  distintas; la línea siguiente quedó cortada en la captura. Falta saber si un efecto contra el bando
+  Supervillano les pega a los Villains comunes de una etapa.
 - **Roles.** Salían de juntar las skills de todos los uniformes del personaje. Se rehicieron en la
   etapa 2, por variante.
 
@@ -153,6 +158,9 @@ cruce sea parte del build.
   tipo de daño que más recibe.
 - **Códigos sin nombre.** 401, 577 y 108 en «Natural Enemy», y los de otras etiquetas; ninguna
   fuente los nombra.
+- **Efectos para todo el equipo que se repiten.** Los C.T.P. Insight y Liberation dicen en el juego
+  que su efecto para todo el equipo no se aplica dos veces si lo llevan dos. Falta saber si pasa lo
+  mismo con los soportes de los personajes; la sinergia hoy cuenta cada uno por quien lo da.
 
 ## Etapa 2: lo que hace cada variante con sus skills
 
@@ -213,3 +221,5 @@ el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
 - Future Fight Wiki: infobox de cada personaje; páginas
   [Combat](https://future-fight.fandom.com/wiki/Combat), [Blast](https://future-fight.fandom.com/wiki/Blast),
   [Speed](https://future-fight.fandom.com/wiki/Speed) y [Universal](https://future-fight.fandom.com/wiki/Universal).
+- El juego (capturas de Ezequiel, octubre de 2026): la guía (Type Affinity, Side, Instinct y el
+  glosario de skills: Guard Break) y la ficha de cada C.T.P.
