@@ -32,18 +32,14 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
 
 ## Estado (2 de octubre de 2026)
 
-- Publicada: la 1.0.14 (datos de formato 5). La 1.0.13 no se publicó; las notas de la 1.0.14
-  anuncian su Glosario.
-- Entregada sin publicar: la 1.0.15 (en PvP cuentan las defensas del liderazgo; sin lista de
-  contexto para quien no tiene función en ese contexto). Los datos siguen en el formato 5: el push no
-  le cambia nada a la 1.0.14 instalada, y la etiqueta `v1.0.15` publica la release.
-- Entregado después de la 1.0.15, sin versión: en los órdenes PvP y PvE, un líder por trío, el mismo
-  en las listas de los tres, con el liderazgo condicional a la mitad; y el build que les da a los
-  uniformes que Leads & Supports no lista el liderazgo de su base si la Leader Skill es idéntica.
-  `version.json` no cambió: falta decidir si entra en la 1.0.15, que todavía no tiene etiqueta (y
-  entonces se actualizan sus notas), o si es la 1.0.16. Si la 1.0.15 sale sin esto, su etiqueta va en
-  `c9812f5`. Los liderazgos completados llegan a los datos con el próximo workflow «Actualizar datos
-  MFF» (a mano o el lunes); el formato no cambia.
+- Publicadas: la 1.0.14 y la 1.0.15 (datos de formato 5). La 1.0.13 no se publicó; las notas de la
+  1.0.14 anuncian su Glosario.
+- Entregada sin publicar: la 1.0.16 (en los órdenes PvP y PvE, un líder por trío, el mismo en las
+  listas de los tres, con el liderazgo condicional a la mitad). La primera etiqueta `v1.0.16` se
+  empujó sobre `a8fd93d`, con `version.json` todavía en 1.0.15, y no hay release: publicar.yml para
+  si la etiqueta no coincide con `version.json`. La etiqueta va sobre el commit de la versión.
+- Los liderazgos que el build completa por Leader Skill idéntica a la de la base llegan a los datos
+  con el próximo workflow «Actualizar datos MFF» (a mano o el lunes); el formato no cambia.
 
 ## Pendiente
 
