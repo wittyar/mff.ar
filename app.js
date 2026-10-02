@@ -473,6 +473,7 @@ const T = {
   new_tag:           { es:'NUEVO',               en:'NEW' },
 
   back_roster:       { es:'← Roster',            en:'← Roster' },
+  back_to:           { es:'Volver a {x}',        en:'Back to {x}' },
   compare_this:      { es:'+ Comparar esta versión', en:'+ Compare this version' },
   edit:              { es:'Editar',              en:'Edit' },
   d_uniform:         { es:'Uniforme',            en:'Uniform' },
@@ -1085,7 +1086,8 @@ let ui = {
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
-  eqVerDescartados: false            // la lista muestra solo los descartados, para restaurarlos
+  eqVerDescartados: false,           // la lista muestra solo los descartados, para restaurarlos
+  volverY: null                      // posición a la que se vuelve con «Atrás» (ver HISTORIAL)
 };
 
 // ============================================================================
@@ -1968,8 +1970,10 @@ function renderDetail () {
   const v = variant(ch.id, ui.uniformId);
   const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, equipos: fichaEquipos,
                    progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
+  const ant = lugarAnterior();
   return `
   <div class="row" style="margin-bottom:14px">
+    ${ant && ant.view !== 'roster' ? `<button class="btn sm primary" data-a="atras" title="${h(t('back_to').replace('{x}', nombreLugar(ant, true)))}">← ${h(nombreLugar(ant))}</button>` : ''}
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
     <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}">${h(t('compare_this'))}</button>
     <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
@@ -2281,7 +2285,7 @@ function combinacionesHtml (v) {
     // se pinta la pestaña con el aviso y recién después se calcula.
     if (ui.eqCalculando !== v.key) {
       ui.eqCalculando = v.key;
-      requestAnimationFrame(() => setTimeout(() => { consultaCon(v); ui.eqCalculando = null; render(); }, 0));
+      requestAnimationFrame(() => setTimeout(() => { consultaCon(v); ui.eqCalculando = null; render(); volverAPosicion(); }, 0));
     }
     return `<div class="section" id="combos">${cab}<p class="muted">${h(t('eq_calc'))}</p></div>`;
   }
@@ -3569,6 +3573,7 @@ function renderNav () {
   </nav>`;
 }
 function render () {
+  anotarLugar();
   let body;
   switch (ui.view) {
     case 'detail':   body = renderDetail(); break;
@@ -3586,6 +3591,65 @@ function render () {
     + (ui.aliados != null ? aliadosModal() : '');
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+  sincronizarLugar();
+}
+
+// ============================================================================
+// HISTORIAL («Atrás»)
+// Cada lugar (una vista; en la ficha, un personaje) es una entrada del historial de la
+// ventana. Al irse de un lugar queda anotado cómo estaba (uniforme, pestaña, página de las
+// combinaciones o del roster, posición), y «Atrás» —el botón de la ficha, Alt+← o el botón
+// de volver del mouse— vuelve a ese lugar tal cual.
+// ============================================================================
+function lugar () { return ui.view === 'detail' ? 'detail:' + ui.charId : ui.view; }
+function fotoLugar () {
+  return { lugar: lugar(), view: ui.view, charId: ui.charId, uniformId: ui.uniformId, fichaTab: ui.fichaTab,
+           eqPagina: ui.eqPagina, eqCon: ui.eqCon, eqVerDescartados: ui.eqVerDescartados, page: ui.page, tierList: ui.tierList };
+}
+/** Antes de pintar: si cambió el lugar, el anterior queda anotado con su posición y se abre
+ *  una entrada nueva que recuerda de dónde se vino. */
+function anotarLugar () {
+  const previo = history.state;
+  if (!previo || !previo.lugar) { history.replaceState({ ...fotoLugar(), n: 0, y: 0, desde: null }, ''); return; }
+  if (previo.lugar === lugar()) return;
+  history.replaceState({ ...previo, y: scrollY }, '');
+  ui.volverY = null;
+  history.pushState({ ...fotoLugar(), n: previo.n + 1, y: 0,
+                      desde: { view: previo.view, charId: previo.charId, uniformId: previo.uniformId, fichaTab: previo.fichaTab } }, '');
+}
+/** Después de pintar: la entrada actual sigue lo que cambió en el lugar (pestaña, uniforme,
+ *  página), para volver a él como quedó. */
+function sincronizarLugar () {
+  const s = history.state, nuevo = { ...s, ...fotoLugar() };
+  if (JSON.stringify(nuevo) !== JSON.stringify(s)) history.replaceState(nuevo, '');
+}
+/** El lugar del que se vino, si lo hay. */
+function lugarAnterior () { const s = history.state; return s && s.n > 0 ? s.desde : null; }
+/** Nombre de un lugar: el personaje (con su uniforme y la pestaña) o la sección. */
+function nombreLugar (d, largo) {
+  if (d.view === 'detail') {
+    const v = variant(d.charId, d.uniformId);
+    if (!v) return t('nav_roster');
+    return largo ? fullLabel(v) + ' · ' + t('ft_' + d.fichaTab) : v.name;
+  }
+  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', settings: 'nav_settings',
+             editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
+}
+window.addEventListener('popstate', (e) => {
+  const s = e.state;
+  if (!s || !s.lugar) return;
+  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, eqPagina: s.eqPagina,
+                      eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
+                      aliados: null, tlPick: null, focusSearch: false, volverY: s.y });
+  render();
+  volverAPosicion();
+});
+/** Vuelve a la posición anotada. Si la pestaña Equipos todavía calcula las combinaciones, la
+ *  posición se aplica cuando termina (la lista cambia el alto de la página). */
+function volverAPosicion () {
+  if (ui.volverY == null || ui.eqCalculando) return;
+  window.scrollTo({ top: ui.volverY, behavior: 'instant' });   // sin la animación de html{scroll-behavior}
+  ui.volverY = null;
 }
 
 // ============================================================================
@@ -3596,7 +3660,11 @@ document.addEventListener('click', (e) => {
   const a = el.getAttribute('data-a'), d = el.dataset;
   const P = U.prefs;
   switch (a) {
-    case 'back': ui.view = 'roster'; ui.charId = null; ui.focusSearch = false; render(); break;
+    case 'back': {
+      const ant = lugarAnterior();
+      if (ant && ant.view === 'roster') { history.back(); break; }
+      ui.view = 'roster'; ui.charId = null; ui.focusSearch = false; render(); break; }
+    case 'atras': history.back(); break;
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[] };

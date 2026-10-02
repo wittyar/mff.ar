@@ -23,7 +23,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - **Ficha** de cada personaje y uniforme, en pestañas. Arriba, fijos, la foto, el nombre, las
   flechas ‹ › para pasar al anterior o al siguiente del listado del roster tal como está
   filtrado y ordenado (también con ← y →; la pestaña se conserva) y el selector de uniforme (el
-  uniforme cambia casi todo lo de abajo):
+  uniforme cambia casi todo lo de abajo). Si se llegó desde otro personaje (por ejemplo, desde
+  sus combinaciones), «← Nombre» vuelve a él tal como estaba: pestaña, página y posición; también
+  con Alt+← o el botón de volver del mouse. «← Roster» vuelve al roster donde se lo dejó:
   - *Resumen*: los datos del uniforme puesto, lo que **le sirve** de un liderazgo o un soporte
     (con atajos al roster: «Líderes que se lo dan», «Soportes que se lo dan») y *para qué se
     usa*: su fila en cada tier list, lo que le da al equipo (liderazgo, pasivas, efecto de
