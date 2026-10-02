@@ -157,6 +157,13 @@ entre las etiquetas de su skill. Lo que dejó el cruce está en `docs/AUDITORIA.
 Quedan 5 efectos, en 4 retratos, que no aparecen en la skill del mismo nombre; se revisan cuando el
 cruce sea parte del build.
 
+A algunos uniformes Leads & Supports no los incluye en ninguna entrada, aunque su Leader Skill es la
+de su base: Knull — Ancient History (`knull1`) quedaba sin liderazgo. El build les da el liderazgo de
+su base (solo `leader` y `leader2`, no los soportes) cuando su Leader Skill, en la API de skills, es
+idéntica a la de la base (Ezequiel, 2 de octubre de 2026; `completar_liderazgos` en
+`scripts/fuentes.py`). Los completados y los que no cierran, con su diferencia, están en la sección
+12 de `docs/AUDITORIA.md`.
+
 ### Lo que corrigió el glosario del juego
 
 El juego trae un glosario de skills (Skill Name Glossary; capturas de Ezequiel, octubre de 2026).
@@ -374,6 +381,10 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
   nada a ningún equipo (relleno); Black Cat sirve de soporte o de líder, no de DPS; hay quien es
   las tres cosas, como Apocalypse.
 - **Sinergia y strikers:** relevantes, no definitorios. El striker tiene que estar en el mismo equipo.
+- **Líder:** un trío tiene un solo líder, el mismo en las listas de los tres: el orden solo cambia
+  cuando hay un peso real distinto entre las opciones. Un liderazgo que se activa con una condición
+  (al recibir un debuff, por ejemplo) pesa la mitad, sin mirar los porcentajes (Ezequiel, 2 de
+  octubre de 2026: «único + condicional a la mitad»; ver *Casos de referencia*).
 - **Ataque contra daño a una facción:** para hacer daño hay que tener ataque suficiente para
   superar la defensa o la esquiva del rival, y eso pesa al armar un equipo. Lo dudoso es comparar
   un porcentaje de ataque con un daño agregado contra una facción: no está claro cuál aporta más,
@@ -393,11 +404,16 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   anti-mermas (Remove All Debuffs o Debuff Immunity). Cada compañero tiene vínculo con él o es DPS
   de ese contexto.
 - Puntaje: 2 por cada stat del liderazgo que vale y cada integrante al que le llega y le sirve
-  (cada stat una vez, aunque el liderazgo lo traiga en varias líneas); 2 por cada nivel de fila de
-  cada DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve, por cada bono de
-  equipo activo y por cada striker del trío. El líder es el que más suma de los que cumplen; a
-  igual puntaje, ordena la tier list. Cada combinación muestra de dónde sale cada punto. Los pesos
-  se revisaron con casos y quedaron así (ver *Casos de referencia*).
+  (cada stat una vez, aunque el liderazgo lo traiga en varias líneas; 1 si solo le llega por un
+  liderazgo que se activa con una condición, el slot con `ac`); 2 por cada nivel de fila de cada
+  DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo
+  activo y por cada striker del trío. El líder es el que más suma de los que cumplen y no depende
+  del orden del trío: a igual puntaje, el mejor ubicado en las tier lists del contexto (la suma de
+  su puesto en cada una) y después la clave. Hasta la 1.0.15, a igual puntaje ganaba el primero del
+  trío, que es siempre el personaje de la ficha, así que el mismo trío salía con otro líder en cada
+  lista (con los datos de la 1.0.14, en 44.583 tríos de PvP). Cada combinación muestra de dónde sale
+  cada punto, y el liderazgo condicional dice que cuenta la mitad. Los pesos se revisaron con casos y
+  quedaron así (ver *Casos de referencia*).
 - Con los datos actuales, la lista de PvP de Knull — Ancient History tiene 1.993 equipos. Las de
   Galactus y de Jean Grey — Summer Flare Phoenix tienen unos 37.000: sus liderazgos dan
   anti-mermas a cualquiera, así que con ellos de líder cualquier trío con un DPS cumple.
@@ -405,29 +421,41 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
 ### Casos de referencia
 
 Los pesos se revisaron con cuatro pares reales que Ezequiel comparó (2 de octubre de 2026). Quedaron
-como estaban; lo que cambió es que en PvP cuentan las defensas del liderazgo.
+como estaban; lo que cambió es que en PvP cuentan las defensas del liderazgo. Con el líder único y
+el condicional a la mitad solo cambia el de Thor en PvP, que ahora gana por puntaje.
 
-| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → ahora |
-|---|---|---|---|
-| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 |
-| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual |
-| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 |
-| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual |
+| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → con defensas | Con líder único |
+|---|---|---|---|---|
+| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 | 27 a 22 |
+| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual | 25 a 24 |
+| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 | 27 a 21 |
+| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual | 26 a 21 |
 
 - **Galactus.** «Thanos es el mejor líder por el agregado de las mermas y mejoras de daños y
   defensa, y los 3 son DPS»; Black Cat + Wasp «es una opción depositando todo el peso en que
   Galactus haga el trabajo». El liderazgo de Thanos trae Remove All Debuffs, todos los ataques +50%
   y todas las defensas +40%; con los stats de antes solo contaban los ataques (6), y a Black Cat
-  (ataques +65%, ignorar evasión +35%) le contaban los dos (12).
+  (ataques +65%, ignorar evasión +35%) le contaban los dos (12). Con el líder único, Black Cat y
+  Wasp empatan en puntos y en puesto, y lidera Black Cat por la clave.
 - **Thor.** No tiene función en PvP ni en PvE (Ezequiel): los pares valen por los otros dos. En PvP
-  eligió el primero «en caso de que haya que sumarlo»: empatan y desempata la tier list, que pone
-  primero al segundo. Para que gane el primero, los strikers tendrían que valer 2, y entonces
-  deciden listas enteras (con Apocalypse — Heralds of Apocalypse, Deadpool + Stryfe queda arriba de
-  Jean Grey + Wolverine solo por cuatro strikers), contra la regla de que no son definitorios.
+  eligió el primero «en caso de que haya que sumarlo». Con la 1.0.15 empataban y desempataba la tier
+  list, que ponía primero al segundo; con los strikers a 2 ganaba el primero, pero decidían listas
+  enteras (con Apocalypse — Heralds of Apocalypse, Deadpool + Stryfe quedaba arriba de Jean Grey +
+  Wolverine solo por cuatro strikers), contra la regla de que no son definitorios. Con el
+  condicional a la mitad gana el primero, 27 a 21: los ataques y las defensas de Silver Surfer —
+  Void Knight se activan al recibir un debuff, y su liderazgo baja de 12 a 6.
 - **Jean Grey.** Knull y Gorr no pueden liderar: solo Jean Grey, con su liderazgo, les da
   anti-mermas a los tres, y ese liderazgo no trae nada que valga en PvP. El liderazgo de Black Cat
   no trae anti-mermas, así que solo sirve si un soporte se los da a los tres (Ezequiel): acá, el de
   Invisible Woman; con Galactus, el de Wasp.
+- **Silver Surfer — Void Knight, Knull — Ancient History y Gorr — The God Butcher (PvP).** Ezequiel:
+  «Gorr es notoriamente mejor liderazgo para villanos», y no tiene sentido contar como dos equipos el
+  mismo trío con otro orden. Los dos dan el mismo anti-mermas (al recibir un debuff, 12 s, recarga
+  20 s). Gorr da PG +35% permanente a los supervillanos, y el uniforme Void Knight lo es: 6. Silver
+  Surfer da ataques y defensas +30% solo al recibir un debuff: 12 con la 1.0.15, 6 a la mitad.
+  Empatan y lidera Gorr por la tier list de Arena (GOd contra Niche), con 26 puntos en las listas de
+  los tres: gana por desempate, no por peso. Antes lideraba Silver Surfer: con la 1.0.14, en su lista
+  y en la de Knull; con la 1.0.15, en las tres, con 32.
 
 Lo que todavía no está:
 - El artefacto de Robbie Reyes (fuego según la resistencia, para los aliados Llama) depende de que
