@@ -168,8 +168,36 @@ Corrigió el catálogo en cinco puntos:
 
 También dio la lectura comprobada de lo que frena cada protección (invencible, superarmadura,
 barrera, escudo, inmunidad al daño) y de los controles (miedo, atrapar, detención del tiempo,
-seducir, control mental, pánico). Dentro del mismo juego hay diferencias de traducción: el glosario
-dice que la barrera frena el daño «por un tiempo» y las skills la cuentan en golpes («# time(s)»).
+seducir, control mental, pánico).
+
+### Lo que agrega el glosario en coreano
+
+El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ezequiel, 2 de octubre de
+2026) dice lo mismo que el inglés casi siempre. Donde no, el inglés traduce mal:
+
+- **피격 모션**, la reacción al recibir un golpe, sale en inglés como «basic attacks» o «basic
+  attack motions» en invencible, superarmadura, escudo e inmunidad al daño. La invencibilidad no
+  tiene que ver con el stat de ataque básico: los golpes no lo interrumpen ni lo mueven. El catálogo
+  corrigió la lectura de invencible (y el inglés de la del escudo); las otras ya hablaban del
+  movimiento de los golpes.
+- **Barrera:** dura un tiempo y una cantidad de golpes, y no frena la rotura de guardia ni los
+  debuffs. El inglés dice solo el tiempo, y las skills cuentan los golpes («# time(s)»): las dos
+  cosas son ciertas.
+- **Escudo:** frena una cantidad fija de daño.
+- **Type Amplification** es 속성 증폭, amplificación de elemento: el reforjado de Judgement que en
+  inglés se llama así es un problema de traducción (el hallazgo de los C.T.P., en
+  `docs/AUDITORIA.md`).
+- **Penetration** es 간파, «ver a través»: no es la Perforación. Es el efecto del reforjado de
+  Regeneration que corta el ataque del rival con una rotura de guardia, como dice la guía de
+  thanosvibs.
+
+Confirma lo que el catálogo ya decía del encanto (frena también los ataques que se activan solos),
+la elasticidad (la saca el sangrado; la cancelación y la incapacitación, no), la fractura y lo que
+no se le aplica a quien quita todos los debuffs (la marca, en cambio, sí). Y dice cosas de efectos
+que el catálogo todavía no tiene: el contraataque no se activa mientras el personaje es invencible,
+el muro (Wall) no se usa junto con la barrera ni se suma a la reducción de daño, Enraged (reforjado
+de Rage) ignora el tope de daño crítico y Vitality (reforjado de Refinement) da inmunidad a la
+rotura y a la superrotura de guardia, y vida por segundo.
 
 ### Dudas abiertas del catálogo
 

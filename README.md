@@ -15,8 +15,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - [Cynicalex Mega Guides](https://docs.google.com/spreadsheets/d/1H0Hcl9oVZV9gA266xkJAqPv5bD1qwqhC5NeVbLj_-FE)
   (planilla de Google) — la **guía de armado** por personaje (pestaña CHAMP BUILDING) y la
   leyenda de los emojis de su tier list (pestaña TIER LIST).
-- MARVEL Future Fight, el juego (capturas de Ezequiel, octubre de 2026) — su glosario de skills
-  (qué hace cada efecto, en el catálogo), su guía de contenidos y de crecimiento, la ficha de cada
+- MARVEL Future Fight, el juego (capturas de Ezequiel, octubre de 2026) — su glosario de skills,
+  en inglés y en coreano (qué hace cada efecto, en el catálogo), su guía de contenidos y de crecimiento, la ficha de cada
   C.T.P. (contrastada con thanosvibs en `docs/AUDITORIA.md`) y los bonos de equipo de los personajes
   que la wiki todavía no tiene.
 

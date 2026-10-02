@@ -847,8 +847,8 @@ Sube las defensas.
 
 `superarmadura` · Super armor · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `SUPER ARMOR` (329 retratos)
 - **Leads & Supports:**
@@ -910,8 +910,8 @@ Vida, curación, escudos y revivir.
 
 `escudo` · Shield · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Frena el daño (las skills le dan un tope: un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
-- **PvP:** Frena el daño (las skills le dan un tope: un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvE:** Frena una cantidad fija de daño (las skills la dan como un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvP:** Frena una cantidad fija de daño (las skills la dan como un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **Skills:**
   - `Recharge Shield` (14 retratos) — Nota: Se recarga solo. Un escudo del mismo tipo se absorbe y lo hace más fuerte; uno de otro tipo se suma aparte (glosario del juego).
   - `SHIELD` (14 retratos)
@@ -925,8 +925,9 @@ Vida, curación, escudos y revivir.
 
 `barrera` · Barrier · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño (las skills lo cuentan en golpes: «Barrier # time(s)»; el glosario dice «por un tiempo»), pero la rotura de guardia lo afecta igual. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
-- **PvP:** Mientras dura no recibe daño (las skills lo cuentan en golpes: «Barrier # time(s)»; el glosario dice «por un tiempo»), pero la rotura de guardia lo afecta igual. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvE:** No recibe daño por un tiempo y una cantidad de golpes (las skills dicen cuántos: «Barrier # time(s)»), pero no frena la rotura de guardia ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvP:** No recibe daño por un tiempo y una cantidad de golpes (las skills dicen cuántos: «Barrier # time(s)»), pero no frena la rotura de guardia ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **Nota:** El glosario en inglés dice solo «por un tiempo»; el coreano, por un tiempo y una cantidad de golpes, como la cuentan las skills.
 - **Skills:**
   - `BARRIER` (251 retratos)
 - **Leads & Supports:**
@@ -965,8 +966,9 @@ Recibe menos daño o lo evita.
 
 `invencible` · Invincible · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No lo afectan los ataques básicos, la rotura de guardia, el daño ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** No lo afectan los ataques básicos, la rotura de guardia, el daño ni los debuffs. Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni los debuffs. Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **Nota:** El glosario en inglés dice que es inmune a los «basic attacks»; el coreano dice 피격 모션, la reacción al recibir un golpe. No tiene que ver con el stat de ataque básico.
 - **Skills:**
   - `INVINCIBLE` (817 retratos)
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
@@ -975,8 +977,8 @@ Recibe menos daño o lo evita.
 
 `inmune_todo` · All damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `ALL DAMAGE IMMUNE` (555 retratos)
   - `Parry` (2 retratos)
@@ -1029,8 +1031,8 @@ Recibe menos daño o lo evita.
 
 `inmune_fisico` · Physical damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `PHYSICAL IMMUNITY` (27 retratos)
 - **Leads & Supports:**
@@ -1040,8 +1042,8 @@ Recibe menos daño o lo evita.
 
 `inmune_energia` · Energy damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `Absorb` (4 retratos) — varía: el ataque crece con cada absorción
   - `ENERGY IMMUNITY` (3 retratos)
@@ -1410,6 +1412,7 @@ Mecánicas propias de un personaje.
 ## Fuentes
 
 - MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026)
+- MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026)
 - [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl)
 - [THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1)
 - [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)
