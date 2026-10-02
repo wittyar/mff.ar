@@ -48,6 +48,29 @@ CATALOGO = {k: _CAT[k] for k in ('certeza', 'sirve', 'contra', 'grupos', 'efecto
 # validado por catalogo.py): la solapa Glosario de la app.
 GLOSARIO = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'glosario.json'), encoding='utf-8'))
 FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
+# Roles por contexto (scripts/contenido/roles_listas.json): qué rol le da a quien está en ella cada
+# fila de las tier lists de thanosvibs de PvP (Arena) y de PvE (Alianza y WBL), para el puntaje de
+# los equipos. Tienen que estar todas las filas de esas listas, con el rótulo de la fuente: si
+# thanosvibs cambia una, el build para en vez de darle a alguien un rol que la lista ya no dice.
+_ROLES = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'roles_listas.json'), encoding='utf-8'))
+_filas_de = {t['id']: {r['id']: r['label'] for r in t['rows']} for t in tierlists}
+_mal = []
+for _ctx in ('pvp', 'pve'):
+    for _lid, _fs in _ROLES[_ctx].items():
+        if _lid not in _filas_de:
+            _mal.append(f'{_ctx}: la lista {_lid} no se importó')
+            continue
+        _dadas = {f['fila']: f for f in _fs}
+        if set(_dadas) != set(_filas_de[_lid]):
+            _mal.append(f'{_ctx}/{_lid}: sobran o faltan las filas {sorted(set(_dadas) ^ set(_filas_de[_lid]))}')
+        for f in _fs:
+            if f['fila'] in _filas_de[_lid] and _filas_de[_lid][f['fila']] != f['rotulo']:
+                _mal.append(f"{_ctx}/{_lid}: la fila {f['fila']} se llama {_filas_de[_lid][f['fila']]!r}, no {f['rotulo']!r}")
+            if f['rol'] not in ('dps', 'soporte', 'lider', 'striker', 'fuera') or f['nivel'] not in (0, 1, 2, 3):
+                _mal.append(f"{_ctx}/{_lid}: rol o nivel desconocido en la fila {f['fila']}: {f['rol']!r}, {f['nivel']!r}")
+if _mal:
+    raise SystemExit('scripts/contenido/roles_listas.json no coincide con las tier lists de thanosvibs:\n- ' + '\n- '.join(_mal))
+ROLES_LISTAS = {c: {lid: {f['fila']: [f['rol'], f['nivel']] for f in fs} for lid, fs in _ROLES[c].items()} for c in ('pvp', 'pve')}
 # Bonos de equipo (scripts/bonos.py): fuentes.py los deja con los nombres de sus integrantes; la app
 # los busca por id de personaje.
 _CID = {c['name']: c['id'] for c in chars}
@@ -96,7 +119,7 @@ hoy = hoy.isoformat()
 # 4: el glosario de skills del juego (MFF_GLOSARIO) para la solapa Glosario.
 # 5: el perfil de combate trae res (los elementos cuya resistencia le sube el daño), con el que
 #    la app decide a quién le sirve un liderazgo o un soporte de resistencias; los strikers de cada
-#    personaje (MFF_STRIKERS).
+#    personaje (MFF_STRIKERS); el rol que da cada fila de las listas de PvP y PvE (MFF_ROLES_LISTAS).
 FORMATO = 5
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
@@ -134,6 +157,9 @@ parts = [header,
  '// que se repiten en el inglés y cada término con lo que dice, lo que el inglés traduce distinto y los\n'
  '// efectos del catálogo a los que corresponde.\n',
  'window.MFF_GLOSARIO = ' + json.dumps(GLOSARIO, ensure_ascii=False) + ';\n',
+ '// Roles por contexto (scripts/contenido/roles_listas.json): por contexto (pvp, pve) y tier list, el rol\n'
+ '// [dps, soporte, lider, striker o fuera] y su nivel (3, la mejor fila) que da cada fila.\n',
+ 'window.MFF_ROLES_LISTAS = ' + json.dumps(ROLES_LISTAS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Bonos de equipo (scripts/bonos.py): nombre (n), integrantes (m, ids de personaje), stats (v: más de\n'
  '// una versión si las páginas de la wiki empatan; la recarga y la duración de control, en negativo) y\n'
  '// fuentes (f).\n',

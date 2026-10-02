@@ -1,0 +1,31 @@
+{
+ "nota": {"es": "Qué rol le da a un personaje cada fila de las tier lists de thanosvibs, por contexto: PvP con la de Arena de Equipos y PvE con las de Batalla de Alianza y World Boss Legend. Según Ezequiel, quién es DPS, soporte o líder sale de estas filas, y un trío sin DPS para su contexto no sirve. nivel: la calidad dentro del rol (3, la fila más alta). rotulo: el de la fuente; si thanosvibs cambia una fila, el build para.", "en": "Which role each row of the thanosvibs tier lists gives a character, by context: PvP with Team Battle Arena and PvE with Alliance Battle and World Boss Legend. Per Ezequiel, who is DPS, support or leader comes from these rows, and a trio with no DPS for its context is no good. nivel: quality within the role (3, the highest row). rotulo: the source label; if thanosvibs changes a row, the build stops."},
+ "pvp": {
+  "tv-arena": [
+   {"fila": "tier-s", "rotulo": "GOd", "rol": "dps", "nivel": 3},
+   {"fila": "tier-a", "rotulo": "Niche", "rol": "dps", "nivel": 2},
+   {"fila": "tier-b", "rotulo": "decent", "rol": "dps", "nivel": 1},
+   {"fila": "tier-c", "rotulo": "supports", "rol": "soporte", "nivel": 2},
+   {"fila": "tier-d", "rotulo": "less useful supps", "rol": "soporte", "nivel": 1},
+   {"fila": "tier-1787508220220", "rotulo": "rigged leaders *", "rol": "lider", "nivel": 1}
+  ]
+ },
+ "pve": {
+  "tv-alianza": [
+   {"fila": "tier-s", "rotulo": "Best dealer on their days", "rol": "dps", "nivel": 3},
+   {"fila": "tier-a", "rotulo": "Decent dealer or f2p option", "rol": "dps", "nivel": 2},
+   {"fila": "tier-b", "rotulo": "best support", "rol": "soporte", "nivel": 2},
+   {"fila": "tier-c", "rotulo": "decent/f2p support", "rol": "soporte", "nivel": 1},
+   {"fila": "tier-d", "rotulo": "strikers", "rol": "striker", "nivel": 1},
+   {"fila": "tier-1787506105323", "rotulo": "2nd dealer (for coop button)", "rol": "dps", "nivel": 1}
+  ],
+  "tv-wbl": [
+   {"fila": "tier-s", "rotulo": "God meta", "rol": "dps", "nivel": 3},
+   {"fila": "tier-a", "rotulo": "Meta", "rol": "dps", "nivel": 2},
+   {"fila": "tier-b", "rotulo": "Less meta", "rol": "dps", "nivel": 1},
+   {"fila": "tier-c", "rotulo": "Not for wbl", "rol": "fuera", "nivel": 0},
+   {"fila": "tier-d", "rotulo": "T4 support (WBL+)", "rol": "soporte", "nivel": 2},
+   {"fila": "tier-1787516128292", "rotulo": "T3 support (WBL)", "rol": "soporte", "nivel": 1}
+  ]
+ }
+}
