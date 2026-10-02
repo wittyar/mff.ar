@@ -374,6 +374,10 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
   nada a ningún equipo (relleno); Black Cat sirve de soporte o de líder, no de DPS; hay quien es
   las tres cosas, como Apocalypse.
 - **Sinergia y strikers:** relevantes, no definitorios. El striker tiene que estar en el mismo equipo.
+- **Ataque contra daño a una facción:** para hacer daño hay que tener ataque suficiente para
+  superar la defensa o la esquiva del rival, y eso pesa al armar un equipo. Lo dudoso es comparar
+  un porcentaje de ataque con un daño agregado contra una facción: no está claro cuál aporta más,
+  siempre que haya anti-mermas. La excepción rara es el liderazgo de Molecule Man.
 
 Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órdenes PvP y PvE):
 
@@ -431,6 +435,17 @@ Lo que todavía no está:
 - Las filas de soporte y de líder (rigged leaders de Arena) no suman por sí mismas: un soporte vale
   por lo que les da a los otros.
 - Los efectos de artefacto cuentan como si lo llevara.
+- El daño contra una facción no cuenta en el liderazgo de PvP: es la comparación dudosa de las
+  reglas. Con los datos actuales lo trae un solo liderazgo, el de Dormammu — Damnation (daño a
+  héroes +60%).
+- Molecule Man, «la excepción rara» (Ezequiel). Su liderazgo ignora los aumentos y las bajas de
+  daño entre facciones («Ignores Damage Increase/Decrease Effect Between Self and Opposing
+  Faction») y baja 15% el daño recibido de golpes en cadena, y el segundo les quita todos los
+  debuffs a todos. En PvP no le suma nada fuera de los anti-mermas, y no está en la tier list de
+  Arena, así que tampoco tiene lista de PvP. Falta decidir cómo cuenta.
+- Los compañeros sin función en el contexto entran igual si tienen vínculo con él: con Knull —
+  Ancient History en PvP, Thor — All-Father Reborn queda en el puesto 18. Ezequiel decidió que el
+  personaje de la ficha sin función no tiene lista; para los compañeros, falta decidir.
 
 ## Fuentes
 
