@@ -650,3 +650,26 @@ table.topes input{width:70px;padding:5px 7px}
 .cert.probable{color:var(--gold)}
 .cert.conjetura{color:var(--text-3)}
 .tag.nosirve{background:var(--accent);cursor:help}
+/* Glosario: el glosario de skills del juego (términos y lo que el inglés traduce mal) y los efectos
+   del catálogo, que usan las filas del análisis. Los enlaces internos llevan el destino a la vista
+   debajo de la barra de arriba y lo marcan un momento. */
+.glbusca{gap:12px;margin-bottom:18px}
+.glbusca .search{flex:0 1 420px}
+.glnota{margin-bottom:10px}
+.glterms{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:10px}
+.glterm,.glerr{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:11px 13px;
+  display:flex;flex-direction:column;gap:6px}
+.glterm .row,.glerr .row{gap:6px}
+.glterm p,.glerr p{margin:0;font-size:13px}
+.glerr{margin-bottom:10px}
+.tag.gldif{background:var(--gold)}
+.gldifbox{border-left:3px solid var(--gold);padding:6px 10px;background:var(--gold-soft);border-radius:4px;font-size:12.5px;
+  display:flex;flex-direction:column;gap:6px}
+.glh4{margin:14px 0 6px;color:var(--text-2)}
+.glotra{font-size:12.5px;margin:6px 0}
+.glet{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px}
+/* Enlaces y etiquetas largos (el título de un error, una etiqueta de skill): en el celular no entran
+   en una línea, así que acá cortan como el texto. */
+.glterm .tag,.glerr .tag,.glotra .tag,.glef .tag{white-space:normal}
+.glterm,.glef,.glerr{scroll-margin-top:calc(var(--nav-h) + 12px)}
+.glfoco{outline:2px solid var(--accent);outline-offset:3px}
