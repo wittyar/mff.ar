@@ -44,6 +44,9 @@ PERFILES, ANALISIS = b['perfiles'], b['analisis']
 # app necesita para mostrar el análisis de cada variante.
 _CAT = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'catalogo.json'), encoding='utf-8'))
 CATALOGO = {k: _CAT[k] for k in ('certeza', 'sirve', 'contra', 'grupos', 'efectos', 'skills')}
+# El glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json,
+# validado por catalogo.py): la solapa Glosario de la app.
+GLOSARIO = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'glosario.json'), encoding='utf-8'))
 FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
 # Bonos de equipo (scripts/bonos.py): fuentes.py los deja con los nombres de sus integrantes; la app
 # los busca por id de personaje.
@@ -88,7 +91,8 @@ hoy = hoy.isoformat()
 #    deduce de las skills: la app nueva no puede usar datos sin él.
 # 3: el análisis de cada variante (MFF_ANALISIS) y el catálogo de efectos (MFF_CATALOGO) para
 #    mostrarlo; los uniformes traen sus propios roles; los bonos de equipo (MFF_BONOS).
-FORMATO = 3
+# 4: el glosario de skills del juego (MFF_GLOSARIO) para la solapa Glosario.
+FORMATO = 4
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -121,6 +125,10 @@ parts = [header,
  'window.MFF_ANALISIS = ' + json.dumps(ANALISIS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Catálogo de efectos (scripts/contenido/catalogo.json, docs/CATALOGO.md).\n',
  'window.MFF_CATALOGO = ' + json.dumps(CATALOGO, ensure_ascii=False) + ';\n',
+ '// Glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json): los errores\n'
+ '// que se repiten en el inglés y cada término con lo que dice, lo que el inglés traduce distinto y los\n'
+ '// efectos del catálogo a los que corresponde.\n',
+ 'window.MFF_GLOSARIO = ' + json.dumps(GLOSARIO, ensure_ascii=False) + ';\n',
  '// Bonos de equipo (scripts/bonos.py): nombre (n), integrantes (m, ids de personaje), stats (v: más de\n'
  '// una versión si las páginas de la wiki empatan; la recarga y la duración de control, en negativo) y\n'
  '// fuentes (f).\n',

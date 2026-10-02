@@ -14,8 +14,13 @@ Acá se valida contra los datos de la sincronización:
   tienen que estar clasificados. Uno nuevo que no está se avisa y va a la auditoría (sección 9),
   sin cortar la actualización semanal, igual que un marcador o una traducción que falta.
 
-Escribe docs/CATALOGO.md (el catálogo entero, para leerlo y revisarlo) y work/catalogo.json
-(lo que falta clasificar, para auditar.py)."""
+También el glosario de skills del juego (scripts/contenido/glosario.json), en inglés y en coreano:
+cada término con lo que dice, lo que el inglés traduce distinto del coreano y los efectos del
+catálogo a los que corresponde. Un término que nombra un efecto, un error que se repite o un
+C.T.P. que no existen corta el build.
+
+Escribe docs/CATALOGO.md (el catálogo entero y el glosario, para leerlos y revisarlos) y
+work/catalogo.json (lo que falta clasificar, para auditar.py)."""
 import collections, datetime, json, os, sys
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +28,9 @@ sys.path.insert(0, _DIR)
 from version_juego import ultima
 
 RUTA = os.path.join(_DIR, 'contenido', 'catalogo.json')
+RUTA_GLOSARIO = os.path.join(_DIR, 'contenido', 'glosario.json')
+# La fuente de cada idioma del glosario: un término sin la captura de un idioma no la cita.
+CAPTURA = {'en': 'juego-glosario', 'ko': 'juego-glosario-ko'}
 SLOTS_SOPORTE = ('leader', 'leader2', 'passive', 'passive2', 't2', 't22', 'uniform', 'uniform2', 'artifact')
 EFECTOS_ARTEFACTO = ('effect3', 'effect4', 'effect5', 'effect6')
 
@@ -125,6 +133,62 @@ def validar(cat, fuentes):
 
 
 # -- uso en los datos --------------------------------------------------------------
+def validar_glosario(glos, cat, fuentes, ctps):
+    """Lista de problemas del glosario del juego (vacía si está bien): cada término con sus tres
+    nombres y lo que dice; lo que difiere entre el inglés y el coreano, solo con las dos capturas;
+    los efectos del catálogo, los errores que se repiten y los C.T.P. que nombra, existentes."""
+    mal = []
+    ids_efecto = {e['id'] for e in cat['efectos']}
+    ids_error = [e['id'] for e in glos['errores']]
+    ids = [x['id'] for x in glos['terminos']]
+    mal += [f'glosario: id repetido: {i}' for i, n in collections.Counter(ids + ids_error).items() if n > 1]
+
+    def texto(x, donde):
+        if not (isinstance(x, dict) and set(x) == {'es', 'en'} and all(isinstance(x[k], str) and x[k] for k in x)):
+            mal.append(f'{donde}: tiene que ser {{"es": ..., "en": ...}} con los dos textos')
+
+    for e in glos['errores']:
+        if set(e) != {'id', 'titulo', 'texto'}:
+            mal.append(f"glosario: el error {e.get('id')} lleva id, titulo y texto")
+            continue
+        texto(e['titulo'], f"glosario: error {e['id']}, titulo")
+        texto(e['texto'], f"glosario: error {e['id']}, texto")
+        if not any(x.get('error') == e['id'] for x in glos['terminos']):
+            mal.append(f"glosario: ningún término tiene el error {e['id']}")
+    for x in glos['terminos']:
+        donde = f"glosario: {x.get('id')}"
+        if set(x) - {'id', 'en', 'ko', 'es', 'que', 'difiere', 'error', 'efectos', 'ctp', 'nota', 'falta', 'fuente'} \
+                or not {'id', 'en', 'ko', 'es', 'que', 'efectos', 'fuente'} <= set(x):
+            mal.append(f'{donde}: lleva id, en, ko, es, que, efectos y fuente, y puede llevar difiere, error, ctp, nota y falta')
+            continue
+        mal += [f'{donde}: falta el nombre {k}' for k in ('en', 'ko', 'es') if not (isinstance(x[k], str) and x[k])]
+        texto(x['que'], donde + ', que')
+        for k in ('difiere', 'nota'):
+            if k in x:
+                texto(x[k], f'{donde}, {k}')
+        if 'error' in x and x['error'] not in ids_error:
+            mal.append(f"{donde}: error que no existe: {x['error']}")
+        if 'error' in x and 'difiere' not in x:
+            mal.append(f'{donde}: tiene un error que se repite y no dice qué difiere en él')
+        mal += [f'{donde}: efecto que el catálogo no tiene: {e}' for e in x['efectos'] if e not in ids_efecto]
+        for c in x.get('ctp', []):
+            if set(c) != {'id', 'reforjado'} or c['id'] not in ctps or not isinstance(c['reforjado'], bool):
+                mal.append(f'{donde}: C.T.P. mal nombrado: {c}')
+        if x.get('ctp') and 'tv-ctps' not in x['fuente']:
+            mal.append(f'{donde}: nombra C.T.P.s sin citar tv-ctps')
+        falta = x.get('falta')
+        if falta is not None and falta not in CAPTURA:
+            mal.append(f'{donde}: falta tiene que ser en o ko')
+        for idioma, f in CAPTURA.items():
+            if (falta == idioma) == (f in x['fuente']):
+                mal.append(f'{donde}: ' + (f'sin la captura en {idioma}, no puede citar {f}' if falta == idioma
+                                           else f'tiene que citar {f}'))
+        if falta and 'difiere' in x:
+            mal.append(f'{donde}: con un solo idioma no hay con qué comparar')
+        mal += [f'{donde}: fuente sin definir en contenido/guia.json: {k}' for k in x['fuente'] if k not in fuentes]
+    return mal
+
+
 def usos(sp, su):
     """Retratos que usan cada etiqueta, cada patrón de cada etiqueta y cada stat."""
     AB = [x['en'] for x in sp['tablas']['ab']]
@@ -178,7 +242,7 @@ def fuente_md(f):
     return f"[{f['nombre']}]({f['url']})" if 'url' in f else f['nombre']
 
 
-def documento(cat, U, fuentes, version, falta):
+def documento(cat, U, fuentes, version, falta, glos, ctps):
     hoy = datetime.date.today().isoformat()
 
     def cita(L):
@@ -263,20 +327,55 @@ def documento(cat, U, fuentes, version, falta):
                 for n, stat, extra in sorted(de_stat[e['id']], key=lambda x: (-x[0], x[1].lower())):
                     s.append(f'  - {md(stat)} ({retratos(n)})' + (' — ' + '; '.join(extra) if extra else ''))
             s.append('')
+    s += glosario_md(glos, cat, ctps)
     citadas = sorted({k for L in [g[x] for g in cat['grupos'] for x in ('pve', 'pvp')] +
-                      [e[x] for e in cat['efectos'] for x in ('pve', 'pvp') if x in e] for k in L.get('fuente', [])})
+                      [e[x] for e in cat['efectos'] for x in ('pve', 'pvp') if x in e] + glos['terminos']
+                      for k in L.get('fuente', [])})
     s.append('## Fuentes\n')
     s += [f"- {fuente_md(fuentes[k])}" for k in citadas]
     s.append('')
     return '\n'.join(s)
 
 
+def glosario_md(glos, cat, ctps):
+    """El glosario del juego en docs/CATALOGO.md: los errores que se repiten y cada término."""
+    nombre = {e['id']: e['es'] for e in cat['efectos']}
+    s = ['## Glosario del juego\n',
+         f"El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 사전 en coreano), desde "
+         f"`scripts/contenido/glosario.json`: {len(glos['terminos'])} términos, en el orden del juego. El "
+         "coreano es el original: donde el inglés no dice lo mismo, se aclara.\n",
+         '### Errores que se repiten\n']
+    for e in glos['errores']:
+        ts = ', '.join(x['es'] for x in glos['terminos'] if x.get('error') == e['id'])
+        s.append(f"- **{e['titulo']['es']}** ({ts}). {e['texto']['es']}")
+    s += ['', '### Términos\n']
+    for x in glos['terminos']:
+        s.append(f"- **{x['es']}**" + (f" ({x['en']})" if x['en'] != x['es'] else '') + f" · {x['ko']}: {x['que']['es']}")
+        if 'difiere' in x:
+            s.append(f"  - **El inglés y el coreano:** {x['difiere']['es']}")
+        if x.get('ctp'):
+            s.append('  - **Lo da:** ' + ', '.join(f"{ctps[c['id']]} {'reforjado' if c['reforjado'] else 'sin reforjar'}"
+                                                   for c in x['ctp']) + '.')
+        if 'nota' in x:
+            s.append(f"  - **Nota:** {x['nota']['es']}")
+        if x['efectos']:
+            s.append('  - **En el catálogo:** ' + ', '.join(nombre[e] for e in x['efectos']) + '.')
+        if 'falta' in x:
+            s.append(f"  - Sin la captura en {'inglés' if x['falta'] == 'en' else 'coreano'}.")
+    s.append('')
+    return s
+
+
 def main():
-    cat = cargar(RUTA)
+    cat, glos = cargar(RUTA), cargar(RUTA_GLOSARIO)
     fuentes = cargar(os.path.join(_DIR, 'contenido', 'guia.json'))['fuentes']
+    ctps = {c['id']: c['name'] for c in cargar('work/fuentes.json')['ctps']}
     mal = validar(cat, fuentes)
     if mal:
         raise SystemExit('scripts/contenido/catalogo.json tiene errores:\n  ' + '\n  '.join(mal))
+    mal = validar_glosario(glos, cat, fuentes, ctps)
+    if mal:
+        raise SystemExit('scripts/contenido/glosario.json tiene errores:\n  ' + '\n  '.join(mal))
     U = usos(cargar('work/skills_parsed.json'), cargar('work/supports.json'))
     falta, sobra = cobertura(cat, U)
     for k, v in falta.items():
@@ -287,7 +386,7 @@ def main():
             print(f'AVISO: catálogo de efectos: {k} que los datos ya no traen: {v}')
     version = ultima(cargar('work/updates.json'))[1]
     os.makedirs('docs', exist_ok=True)
-    open('docs/CATALOGO.md', 'w', encoding='utf-8', newline='\n').write(documento(cat, U, fuentes, version, falta))
+    open('docs/CATALOGO.md', 'w', encoding='utf-8', newline='\n').write(documento(cat, U, fuentes, version, falta, glos, ctps))
     usos_falta = {'etiquetas': {l: sorted(U['etiqueta'][l])[:3] for l in falta['etiquetas']},
                   'patrones': [[l, p, sorted(U['patron'][l][p])[:3]] for l, p in falta['patrones']],
                   'stats': {s: sorted(U['stat'][s])[:3] for s in falta['stats']}}
@@ -295,7 +394,7 @@ def main():
                'total': {'etiquetas': len(U['etiqueta']), 'stats': len(U['stat']), 'efectos': len(cat['efectos'])}},
               open('work/catalogo.json', 'w', encoding='utf-8'), ensure_ascii=False)
     print(f"catálogo de efectos: {len(cat['efectos'])} efectos | etiquetas {len(U['etiqueta'])} | stats {len(U['stat'])} | "
-          f"sin clasificar {sum(len(v) for v in falta.values())} | docs/CATALOGO.md")
+          f"sin clasificar {sum(len(v) for v in falta.values())} | glosario: {len(glos['terminos'])} términos | docs/CATALOGO.md")
 
 
 if __name__ == '__main__':

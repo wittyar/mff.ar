@@ -1414,11 +1414,131 @@ Mecánicas propias de un personaje.
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
 
+## Glosario del juego
+
+El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 사전 en coreano), desde `scripts/contenido/glosario.json`: 44 términos, en el orden del juego. El coreano es el original: donde el inglés no dice lo mismo, se aclara.
+
+### Errores que se repiten
+
+- **«Basic attacks» donde el coreano dice «reacción al golpe»** (Rotura de guardia, Invencible, Superarmadura, Escudo, Inmunidad al daño, Contraataque). 피격 모션 es la reacción al recibir un golpe: el personaje se frena y se le corta lo que estaba haciendo. El inglés lo traduce como «basic attacks» o «basic attack motions», que no tiene nada que ver con el stat de ataque básico. Con la traducción correcta todo cierra: la rotura de guardia corta la skill forzando esa reacción, la superarmadura es inmune a ella (y por eso a la rotura de guardia), y el contraataque reemplaza esa reacción, así que no se activa mientras es invencible.
+- **«Sin debuffs» donde el coreano dice «inmunes a los debuffs»** (Congelación del tiempo, Encanto, Seducción, Control mental). El coreano dice que estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima. En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.
+- **«Type» donde el coreano dice «elemento»** (Daño puro, Type Amplification). 속성 es el elemento (fuego, frío, rayo, veneno, mente). El inglés lo traduce a veces como «Type», que en el juego también es la clase (Combate, Detonación, Velocidad, Universal). El daño puro no pasa por las resistencias elementales (el inglés dice «Type Resistance»), Type Amplification sube el daño de las skills con elemento, y la etiqueta «TYPE PENETRATION» de las skills atraviesa una resistencia elemental.
+
+### Términos
+
+- **Rotura de guardia** (Guard Break) · 가드 브레이크: Corta la skill que está usando el rival y abre un contraataque. La superrotura de guardia atraviesa además la inmunidad a la rotura de guardia.
+  - **El inglés y el coreano:** El coreano dice cómo la corta: fuerza la reacción al golpe (피격 모션). El inglés solo dice que la cancela.
+  - **En el catálogo:** Rotura de guardia (cancela la skill del rival), Inmune a la rotura de guardia.
+- **Evasión garantizada** (Guaranteed Dodge Rate) · 무조건 회피율: La evasión depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la evasión.
+  - **El inglés y el coreano:** El inglés dice que esquiva «a una tasa fija»; el coreano, que le suma un valor fijo a la evasión.
+  - **En el catálogo:** Evasión garantizada.
+- **Crítico garantizado** (Guaranteed Critical Rate) · 무조건 치명타율: La probabilidad de crítico depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la probabilidad de crítico.
+  - **El inglés y el coreano:** El inglés dice que hace crítico «a una tasa fija»; el coreano, que le suma un valor fijo a la probabilidad de crítico.
+  - **En el catálogo:** Crítico garantizado.
+- **Daño puro** (Pure Damage) · 순수 피해량: El daño que recibe un personaje sale del ataque del rival, reducido por su defensa y sus resistencias elementales. El daño puro no pasa por la defensa ni por las resistencias.
+  - **El inglés y el coreano:** El inglés dice «Character Type Resistance»; el coreano, resistencias elementales (속성 저항).
+  - **En el catálogo:** Acumula daño.
+- **Pasiva de equipo** (Team Passive) · 팀 패시브: Una pasiva que les llega a todos los del equipo aunque su dueño no sea el líder: las que dicen «Applies to: All Team members». El análisis de la app ya las manda al equipo.
+- **Invencible** (Invincible) · 무적: Inmune a todo lo que lo puede afectar: la reacción a los golpes, la rotura de guardia, el daño y los debuffs.
+  - **El inglés y el coreano:** El inglés dice que es inmune a los «basic attacks»; el coreano, a la reacción al golpe (피격 모션).
+  - **En el catálogo:** Invencible.
+- **Superarmadura** (Super Armor) · 슈퍼 아머: Inmune a la reacción a los golpes y a la rotura de guardia: los ataques del rival no le cortan lo que está haciendo, pero recibe el daño.
+  - **El inglés y el coreano:** El inglés dice «basic attack motions»; el coreano, la reacción al golpe (피격 모션).
+  - **En el catálogo:** Superarmadura.
+- **Barrera** (Barrier) · 배리어: Frena el daño por un tiempo y una cantidad de golpes. No frena la rotura de guardia ni los debuffs.
+  - **El inglés y el coreano:** El inglés dice solo «por un tiempo» y que no frena la rotura de guardia; el coreano agrega la cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y que tampoco frena los debuffs.
+  - **En el catálogo:** Barrera.
+- **Escudo** (Shield) · 쉴드: Frena una cantidad fija de daño por un tiempo. No frena la reacción a los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía.
+  - **El inglés y el coreano:** El inglés no dice que la cantidad de daño es fija («stops damage for a set amount of time») y llama «basic attack motions» a la reacción al golpe (피격 모션).
+  - **En el catálogo:** Escudo.
+- **Inmunidad al daño** (Damage Immunity) · 피해 면역: Frena el daño y los debuffs por un tiempo, pero no la reacción a los golpes ni la rotura de guardia. Puede ser contra todo daño, solo el físico o solo el de energía, con sus debuffs.
+  - **El inglés y el coreano:** El inglés dice «basic attack motions»; el coreano, la reacción al golpe (피격 모션).
+  - **En el catálogo:** Inmune a todo daño (probabilidad), Inmune al daño físico (probabilidad), Inmune al daño de energía (probabilidad).
+- **Miedo** (Fear) · 공포: El rival huye de quien se lo aplicó y no puede atacar ni usar skills.
+  - **En el catálogo:** Miedo.
+- **Trampa** (Snare) · 속박: Ata al rival a un lugar: no puede moverse, atacar ni usar skills.
+  - **En el catálogo:** Atrapar.
+- **Congelación del tiempo** (Time Freezing) · 타임 프리징: Encierra al rival en el tiempo: no se mueve ni ataca. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
+  - **El inglés y el coreano:** El inglés dice «epic monsters that have no debuffs»; el coreano, jefes grandes a los que no se les aplican debuffs.
+  - **En el catálogo:** Detención del tiempo.
+- **Encanto** (Charm) · 매혹: El rival no se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
+  - **El inglés y el coreano:** El inglés dice «epic monsters that have no debuffs»; el coreano, jefes grandes a los que no se les aplican debuffs.
+  - **En el catálogo:** Encanto, Daño mental del encanto.
+- **No se deja apuntar** (Ignore Targeting) · 타겟팅 무시: Queda fuera de la mira del rival: las skills que apuntan a un objetivo lo ignoran y no recibe daño aunque lo ataquen. Usado justo cuando el rival ataca, esquiva el ataque entero y deja seguir con el propio.
+- **Seducción** (Entice) · 유혹: El rival no se mueve ni usa skills y camina despacio hacia quien lo sedujo. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.
+  - **El inglés y el coreano:** El inglés dice «enemies that don't have debuffs»; el coreano, rivales a los que no se les aplican debuffs.
+  - **En el catálogo:** Seducir.
+- **Control mental** (Mind Control) · 정신 지배: El rival pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.
+  - **El inglés y el coreano:** El inglés dice «enemies that don't have debuffs»; el coreano, rivales a los que no se les aplican debuffs.
+  - **En el catálogo:** Control mental.
+- **Escudo recargable** (Recharge Shield) · 리차지 쉴드: Un escudo que se recarga solo. Si recibe otro escudo del mismo tipo, lo absorbe y crece; uno del otro tipo (físico o de energía) no lo agranda: cada uno funciona aparte.
+  - **En el catálogo:** Escudo.
+- **Fractura** (Fracture) · 골절: Le baja todos los ataques básicos al rival y se acumula. Cada curación del rival le saca una carga y lo cura menos. «Quitar todos los debuffs» no la saca.
+  - **En el catálogo:** Fractura.
+- **Incapacitación** (Incapacitation) · 무력화: Le saca los buffs al rival y le baja todas las defensas (se acumula). No se le aplica a quien tiene un efecto que quita todos los debuffs.
+  - **En el catálogo:** Le quita los buffs al rival, Baja las defensas del rival.
+- **Contraataque** (Counterattack) · 반격기: Al recibir un golpe, en vez de la reacción al golpe hace un contraataque. Como necesita esa reacción, no se activa mientras es invencible.
+  - **El inglés y el coreano:** El inglés dice que reemplaza los «basic attack motions» y explica mal por qué no se activa siendo invencible; el coreano: reemplaza la reacción al golpe (피격 모션), que el invencible no tiene.
+- **Elasticidad** (Elasticity) · 탄성: Acumula reducción del daño físico recibido. No la sacan la cancelación (Cancel) ni la incapacitación; el sangrado, sí.
+  - **En el catálogo:** Menos daño físico recibido.
+- **Concentración** (Concentration) · 집중: Un stat que mejora lo que rinden algunas skills y algunos efectos de los C.T.P.: los efectos de barra propia de los reforjados crecen con ella.
+- **Daño perforante adicional** (Additional Pierce Damage) · 추가 관통 피해: Daño extra que ignora del todo la defensa; sale del daño de la skill.
+  - **En el catálogo:** Daño perforante adicional.
+- **Penetration** · 간파: Cuando lo atacan, tiene una probabilidad de cortar el ataque del rival: sube si su Concentración es mayor que la del rival y baja si es menor. Barra propia que se carga al recibir golpes; después de usarse, no carga por 5 s.
+  - **El inglés y el coreano:** 간파 quiere decir «ver venir» (leer el ataque), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; el coreano, su ataque.
+  - **Lo da:** Regeneration reforjado.
+  - **Nota:** thanosvibs nombra también a Penetration en su texto sobre Transcendence reforjado, pero sus números de Transcendence reforjado son los de Beatdown.
+- **Beatdown** · 압도: Al usar una skill, sube el daño perforante adicional (sin el tope máximo) y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
+  - **Lo da:** Energy reforjado, Transcendence reforjado.
+- **Type Amplification** · 속성 증폭: Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
+  - **El inglés y el coreano:** El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; el coreano, 속성 증폭: amplificación de elemento. El C.T.P. Judgement reforjado dice en inglés que sube el daño de las skills «de tipo».
+  - **Lo da:** Judgement reforjado.
+- **Steel** · 강철: Da inmunidad a la rotura y a la superrotura de guardia y baja el daño recibido; la baja crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
+  - **Lo da:** Authority reforjado.
+- **Burla** (Mockery) · 조롱: Un debuff que obliga a los rivales a atacarlo a él. A los afectados les sube el ataque, pero con cierta probabilidad no les entra un buff determinado: si la burla anula la invencibilidad, por ejemplo, no pueden volverse invencibles mientras dure.
+  - **En el catálogo:** Provocar.
+- **Strike** · 강타: Al usar una skill, ignora la evasión del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
+  - **Lo da:** Destruction reforjado.
+- **Ambush** · 맹공: Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, e ignora una parte de la reducción de daño del rival; esa parte crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
+  - **Lo da:** Greed reforjado.
+  - **Nota:** thanosvibs dice que ignora la reducción de defensa del rival; el juego, la reducción de daño (el hallazgo de los C.T.P., en la auditoría).
+- **Fortaleza** (Fortitude) · 불굴: Por un tiempo la vida no baja de 1 y, al terminar, se cura. Se activa sola cuando la vida baja de cierto valor; mientras dura, da inmunidad a la rotura de guardia y no se puede quitar con efectos que quitan buffs.
+  - **En el catálogo:** No muere por un tiempo, Inmune a la rotura de guardia, Curación.
+- **Blade** · 칼날: Al usar una skill, atraviesa los efectos defensivos del rival y sube el daño; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); se activa sola y después no carga por 7 s.
+  - **Lo da:** Veteran reforjado.
+- **Defend** · 방호: Da inmunidad a la rotura y a la superrotura de guardia y una barrera que ignora la cancelación y la perforación y frena una cantidad de golpes; además cura según la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.
+  - **Lo da:** Patience reforjado.
+- **Escudo de supergolpe** (Super Hit Shield) · 슈퍼 히트 쉴드: Un escudo que se recarga cada vez que su ataque le pega al rival. Si se activan varios escudos a la vez, ignora los demás y queda solo este. No lo quitan los efectos que quitan buffs ni lo atraviesa la perforación.
+  - **En el catálogo:** Escudo.
+- **Enraged** · 격노: Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
+  - **Lo da:** Rage reforjado.
+  - Sin la captura en inglés.
+- **Vitality** · 활력: Da inmunidad a la rotura y a la superrotura de guardia y cura vida cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.
+  - **Lo da:** Refinement reforjado.
+  - Sin la captura en inglés.
+- **Wall** · 방벽: Una barrera propia que baja el daño recibido; cada golpe le resta reducción hasta un mínimo, que dura hasta que se termina. No se usa junto con la Barrera y no se suma a otras reducciones de daño: va aparte.
+  - **Lo da:** Conquest sin reforjar.
+  - **Nota:** En Conquest sin reforjar se activa con la vida por debajo del 50%.
+  - Sin la captura en inglés.
+- **Clash** · 격돌: Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, y sube el daño básico; la suba crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
+  - **Lo da:** Conquest reforjado.
+- **Pánico** (Panic) · 공황: Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales que no reciben debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
+  - **En el catálogo:** Pánico.
+  - Sin la captura en coreano.
+- **Pérdida** (Loss) · 상실: Absorbe las habilidades del rival por un rato: no se mueve ni usa skills, pierde sus buffs y recibe más daño. No se le aplica a quien tiene un efecto que quita todos los debuffs.
+  - **En el catálogo:** Pérdida, Daño de la pérdida.
+- **Agonía** (Death Throes) · 최후의 발악: Por un tiempo la vida no baja de 1 y, al terminar, muere en el acto. Se activa sola cuando la vida baja de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan buffs.
+  - **En el catálogo:** No muere por un tiempo.
+- **Marca** (Mark) · 표식: Le pone una marca al rival: las skills que le aplican efectos al marcado hacen más daño. Alcanza a World Bosses, a jefes grandes a los que no se les aplican debuffs y a quien quita todos los debuffs, y no la cambian los aumentos ni las bajas del efecto de los debuffs.
+- **Fury** · 맹렬: Al usar una skill, sube todo el daño y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
+  - **Lo da:** Competition reforjado.
+
 ## Fuentes
 
 - MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026)
 - MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026)
 - [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl)
+- [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps)
 - [THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1)
 - [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)
 - [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4)
