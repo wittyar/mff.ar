@@ -393,7 +393,8 @@ td.same{background:rgba(255,45,85,.055)}
   .fnav .muted{min-width:0;font-size:11px}
   .fnavb{width:32px;height:32px}
   .fcab-uni span{display:none}
-  .ftab{padding:8px 7px;font-size:12.5px}
+  .ftabs{gap:0}
+  .ftab{flex:1 1 auto;padding:8px 2px;font-size:12px}   /* las siete pestañas entran: se reparten el ancho que sobra */
   nav.topnav{overflow-x:auto;gap:2px}
   .tierlabel{width:96px;font-size:11px}
 }
