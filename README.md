@@ -84,6 +84,11 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - **Equipos**: los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
   Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
   restaurarlos. Al armar uno, avisa si un personaje ya está en otro equipo tuyo del mismo modo.
+- **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
+  con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
+  y qué C.T.P. da cada efecto de la barra de Concentración; y los 126 efectos del catálogo por
+  grupo, con sus lecturas de PvE y de PvP, a quién le sirven y con qué etiquetas aparecen en las
+  skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
 
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.

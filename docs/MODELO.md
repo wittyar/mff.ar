@@ -207,6 +207,9 @@ el muro (Wall) no se usa junto con la barrera ni se suma a la reducción de dañ
 de Rage) ignora el tope de daño crítico y Vitality (reforjado de Refinement) da inmunidad a la
 rotura y a la superrotura de guardia, y vida por segundo.
 
+Los 44 términos, con estas diferencias y los efectos del catálogo que les corresponden, están en
+`scripts/contenido/glosario.json`, y la app los muestra en la solapa **Glosario**.
+
 ### Dudas abiertas del catálogo
 
 - **«Bonus Damage».** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y
