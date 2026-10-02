@@ -297,7 +297,7 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 
 thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa con la tabla a mano (scripts/contenido/marcadores.csv) y, lo que no está ahí, con la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). En la ficha, el valor completado va subrayado y dice de dónde salió.
 
-De los 249: 78 de la wiki, 0 a mano y 171 sin resolver (la app los muestra "sin especificar").
+De los 249: 78 de la wiki, 3 a mano y 168 sin resolver (la app los muestra "sin especificar").
 
 Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el juego. `python3 scripts/marcadores.py` agrega las filas que falten.
 
@@ -322,7 +322,6 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Colossus — Hellfire Gala | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015883013 |
 | Colossus — Phoenix Five | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015834011 |
 | Colossus — Phoenix Five | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015834013 |
-| Cyclops — Marvel Animation's X-Men '97 | Leader of X-Men | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1012391012 |
 | Deathlok / Deathlok — Modern | Centipede Serum | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804011 |
 | Deathlok / Deathlok — Modern | Centipede Serum | `Decreases basic damage received from enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804012 |
 | Doctor Voodoo — Savage Avengers | Savage Avengers | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1020441011 |
@@ -368,8 +367,6 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Hela — Marvel Studios' What If...? | Marvel Studios' What If...? | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1010676012 |
 | Infinity Ultron — Marvel Studios' What If...? | Marvel Studios' What If...? | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001331012 |
 | Iron Man — Marvel Studios' Avengers: Endgame / Iron Man — Team Suit | Overdrive Beam | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1000372102 |
-| Jeff the Land Shark | Guardian of the Deep | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1029004012 |
-| Jeff the Land Shark | Guardian of the Deep | `Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.` | 1029004013 |
 | Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1019417011 |
 | Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.` | 1019417012 |
 | Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.` | 1019417013 |
