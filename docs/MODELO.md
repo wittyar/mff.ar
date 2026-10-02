@@ -142,8 +142,8 @@ entre las etiquetas de su skill. Lo que dejó el cruce está en `docs/AUDITORIA.
   dice cuál; Leads & Supports sí (casi siempre «Remove All Debuffs»).
 - **Signo.** Leads & Supports publica algunas reducciones de daño recibido con signo positivo; la
   skill dice siempre que reduce.
-- **Códigos.** Algunas descripciones traen un número donde va el nombre de un efecto o de un elemento
-  (`206`, que Leads & Supports nombra «Removes All Debuffs»).
+- **Códigos.** Algunas descripciones traen un número donde va el nombre de un efecto o de un elemento.
+  Los de tres cifras son ids de habilidades de la propia API (`206` es «Removes all Debuffs»).
 
 Quedan 5 efectos, en 4 retratos, que no aparecen en la skill del mismo nombre; se revisan cuando el
 cruce sea parte del build.
@@ -177,8 +177,9 @@ dice que la barrera frena el daño «por un tiempo» y las skills la cuentan en 
   «Additional Damage» al daño fijo extra; no dice si «Bonus Damage» es ese daño fijo.
 - **«Adaptation».** «Inmune al mayor daño recibido»: no está claro si es el golpe más fuerte o el
   tipo de daño que más recibe.
-- **Códigos sin nombre.** 401, 577 y 108 en «Natural Enemy», y los de otras etiquetas; ninguna
-  fuente los nombra.
+- **Códigos sin nombre.** En «Natural Enemy», 401 es Mockery y 108 Shock (ids de la API); 407 y 577
+  no son el id de ninguna habilidad de las skills (Leads & Supports nombra 407 «Debuff Removal
+  (Instinct)»). La app todavía muestra los números: podría mostrar el nombre de los que tienen id.
 - **Efectos para todo el equipo que se repiten.** Los C.T.P. Insight y Liberation dicen en el juego
   que su efecto para todo el equipo no se aplica dos veces si lo llevan dos. Falta saber si pasa lo
   mismo con los soportes de los personajes; la sinergia hoy cuenta cada uno por quien lo da.
