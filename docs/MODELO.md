@@ -251,9 +251,12 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
 - **Todos los efectos del equipo.** El panel «All Effects» suma los efectos iguales de distintas
   fuentes (todos los ataques básicos +58,36%) y muestra aparte los que son contra ciertos rivales
   (30% y 45% contra SUPER VILLAIN). Que el combate los sume igual es probable, no comprobado.
-- **Bonos de equipo (Team Bonus).** Llevar ciertos personajes juntos da stats («Afflicted Lovers»:
-  ataques +5,24% y vida +4,97%; tres de 6★: ataques, defensas y vida +3,12%). Ninguna fuente que usa
-  la app publica la lista.
+- **Bonos de equipo (Team Bonus).** Llevar ciertos personajes juntos da stats («Afflicted Lovers»,
+  Cyclops y Jean Grey: ataques +5,24% y vida +4,97%), y también llevar tres de 6★ (ataques, defensas
+  y vida +3,12%). La wiki los publica en la página de cada personaje (unas 250 de 290, con más de mil
+  bonos), redondeados a un decimal; le faltan los de los personajes más nuevos (Galactus, Annihilus,
+  Kahhori, entre otros) y los de estrellas. namu.wiki tiene solo seis de ejemplo. La app todavía no
+  los lee.
 - **Lo que suma la cuenta.** El nivel de agente, las cartas de cómic (5, en dos mazos que se asignan
   por contenido), las espadas (X of Swords) y el S.H.I.E.L.D. Archive (stats de instinto) valen
   para todos los personajes; los emblemas, solo en ciertos contenidos; las colecciones de equipo
