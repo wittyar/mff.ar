@@ -45,6 +45,10 @@ PERFILES, ANALISIS = b['perfiles'], b['analisis']
 _CAT = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'catalogo.json'), encoding='utf-8'))
 CATALOGO = {k: _CAT[k] for k in ('certeza', 'sirve', 'contra', 'grupos', 'efectos', 'skills')}
 FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
+# Bonos de equipo (scripts/bonos.py): fuentes.py los deja con los nombres de sus integrantes; la app
+# los busca por id de personaje.
+_CID = {c['name']: c['id'] for c in chars}
+BONOS = [{**b, 'm': [_CID[n] for n in b['m']]} for b in FUENTES['bonos']]
 VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato']
 # Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
 # que los retratos; si falta el archivo la app muestra el nombre sin ícono.
@@ -83,14 +87,15 @@ hoy = hoy.isoformat()
 # 2: el perfil de combate de cada retrato viene calculado (MFF_PERFIL) y la app ya no lo
 #    deduce de las skills: la app nueva no puede usar datos sin él.
 # 3: el análisis de cada variante (MFF_ANALISIS) y el catálogo de efectos (MFF_CATALOGO) para
-#    mostrarlo; los uniformes traen sus propios roles.
+#    mostrarlo; los uniformes traen sus propios roles; los bonos de equipo (MFF_BONOS).
 FORMATO = 3
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
 // soportes, rotaciones, Alliance Battle, guía, retratos e íconos), future-fight.fandom.com
-// (instintos y el contraste de docs/AUDITORIA.md) y la guía de armado de Cynicalex Mega
-// Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex Mega Guides.
+// (instintos, bonos de equipo y el contraste de docs/AUDITORIA.md) y la guía de armado de
+// Cynicalex Mega Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex
+// Mega Guides.
 // Uso personal.
 """
 # Las listas llegan con las filas rotuladas de la fuente; el rango S-D solo se usa
@@ -116,6 +121,10 @@ parts = [header,
  'window.MFF_ANALISIS = ' + json.dumps(ANALISIS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Catálogo de efectos (scripts/contenido/catalogo.json, docs/CATALOGO.md).\n',
  'window.MFF_CATALOGO = ' + json.dumps(CATALOGO, ensure_ascii=False) + ';\n',
+ '// Bonos de equipo (scripts/bonos.py): nombre (n), integrantes (m, ids de personaje), stats (v: más de\n'
+ '// una versión si las páginas de la wiki empatan; la recarga y la duración de control, en negativo) y\n'
+ '// fuentes (f).\n',
+ 'window.MFF_BONOS = ' + json.dumps(BONOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// C.T.P.s, artefactos, Alliance Battle, soportes, rotaciones, guía y modos\n'
  '// (scripts/fuentes.py y scripts/contenido/).\n',
  'window.MFF_CTPS = ' + json.dumps(FUENTES['ctps'], ensure_ascii=False) + ';\n',

@@ -7,13 +7,15 @@
   skills (/api/rotations/default) y la Beginner's Guide (/api/beginners/mff-content/1..5).
 - scripts/contenido/: lo curado a mano de la guía y la wiki (guia.json, modos.json),
   con la fuente de cada bloque.
+- Los bonos de equipo: la sección Team Bonus de la página de cada personaje en la wiki, y lo que se
+  vio en el juego (scripts/contenido/bonos.json), que manda (scripts/bonos.py).
 - La guía de armado de Cynicalex (planilla de Google), de su copia en uso en
   fuentes/guia-armado/ (la acepta o la rechaza scripts/guia_armado.py al bajarla).
 
 Lo llama build.py y deja work/fuentes.json.
 
 Traducción: los textos en inglés se traducen por texto exacto desde
-scripts/traducciones/ (ctps, abx, guia, soportes, rotaciones, armado). Las líneas de los
+scripts/traducciones/ (ctps, abx, guia, soportes, rotaciones, armado, bonos). Las líneas de los
 artefactos cambian solo en sus números, así que se traducen por patrón
 (traducciones/artefactos.json, con '#' en lugar de cada número). Lo que falta no se
 inventa: viaja en inglés, la app lo marca y el build lo lista en
@@ -24,6 +26,7 @@ import glob, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
 import guia_armado as GA
+from bonos import bonos as bonos_de_equipo
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -52,7 +55,7 @@ class Textos:
         return en
 
 
-TX = Textos('ctps.json', 'abx.json', 'guia.json', 'soportes.json', 'rotaciones.json', 'armado.json')
+TX = Textos('ctps.json', 'abx.json', 'guia.json', 'soportes.json', 'rotaciones.json', 'armado.json', 'bonos.json')
 
 # Números de una línea de artefacto: los marcadores [P1]..[Pn] (el valor según las
 # estrellas) y los números literales. El patrón es la línea con '#' en cada uno.
@@ -408,7 +411,19 @@ def guia_armado(chars):
             'sin_pj': r['sin_pj'], 'raros': r['raros']}
 
 
-def validar_contenido(guia, modos, listas, stats_ok):
+def bonos(chars, juego):
+    """Los bonos de equipo (scripts/bonos.py) y su auditoría, con los nombres de sus stats
+    traducidos. Los integrantes van por nombre de personaje: build.py los pasa a sus ids."""
+    paginas = [cargar(f) for f in sorted(glob.glob('work/wikitext/*.json'))]
+    B = bonos_de_equipo(paginas, [r['character'] for r in chars if r['uniformed'] == 'False'], juego)
+    for b in B['bonos']:
+        for version in b['v']:
+            for stat, _ in version:
+                TX(stat)
+    return B['bonos'], B['auditoria']
+
+
+def validar_contenido(guia, modos, bonos_juego, listas, stats_ok):
     """Las claves que usa lo curado a mano tienen que existir: una fuente mal escrita o un
     stat inexistente se mostraría vacío en la app sin que nadie se entere."""
     fuentes = set(guia['fuentes'])
@@ -427,7 +442,7 @@ def validar_contenido(guia, modos, listas, stats_ok):
         elif isinstance(o, list):
             for v in o:
                 recorrer(v)
-    recorrer(guia); recorrer(modos)
+    recorrer(guia); recorrer(modos); recorrer(bonos_juego)
     if malas:
         raise SystemExit(f'fuentes sin definir en contenido/guia.json: {sorted(malas)}')
     usados = set()
@@ -462,7 +477,8 @@ def main():
     guia = cargar(os.path.join(_DIR, 'contenido', 'guia.json'))
     modos = cargar(os.path.join(_DIR, 'contenido', 'modos.json'))
     listas = {json.load(open(f, encoding='utf-8'))['slug'] for f in glob.glob('work/tierlists/*.json')}
-    validar_contenido(guia, modos, listas, set(guia['stats']))
+    bonos_juego = cargar(os.path.join(_DIR, 'contenido', 'bonos.json'))
+    validar_contenido(guia, modos, bonos_juego, listas, set(guia['stats']))
     # La guía curada se escribió sobre una versión; si thanosvibs publica otra, se avisa
     # para revisarla (y la app lo muestra), en vez de mostrar recomendaciones viejas como vigentes.
     version_fuente = cargar('work/guia/changelog.json')[0]['update_version']
@@ -486,6 +502,7 @@ def main():
         'guia': guia, 'modos': modos['modos'], 'version_guia_fuente': version_fuente,
         'armado': guia_armado(chars),
     }
+    salida['bonos'], salida['bonos_auditoria'] = bonos(chars, bonos_juego)
     salida['txt'] = dict(sorted(TX.usados.items()))
     json.dump(salida, open('work/fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False)
     json.dump(sorted(TX.faltan), open('work/sin_traducir_fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -493,7 +510,8 @@ def main():
           f"ABX {len(salida['abx']['restricciones'])} restricciones, {len(salida['abx']['equipos'])} equipos | "
           f"soportes de {len(salida['soportes'])} retratos | rotaciones de {len(salida['rotaciones'])} retratos | "
           f"guía: {len(salida['guia_pj'])} personajes mencionados | guía de armado {salida['armado']['version']}: "
-          f"{len(salida['armado']['pj'])} personajes | textos traducidos {len(salida['txt'])}, "
+          f"{len(salida['armado']['pj'])} personajes | bonos de equipo {len(salida['bonos'])} | "
+          f"textos traducidos {len(salida['txt'])}, "
           f"sin traducir {len(TX.faltan)}")
 
 

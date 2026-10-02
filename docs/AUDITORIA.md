@@ -18,6 +18,7 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Raza (infobox de la wiki) | 535 | 13 | — |
 | Tipo de ataque (infobox de la wiki) | 531 | 21 | — |
 | Instinto (campo vs categoría de la wiki) | 77 | 4 | — |
+| Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
 | Artefactos a 6★ (thanosvibs vs wiki) | 208 (+31 donde la wiki lista otro nivel de estrellas) | 18 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
 Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvibs, 2270 (39%) se pudieron comparar; 1222 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 305 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
@@ -477,3 +478,190 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 Cada etiqueta de efecto de las skills y cada stat de Leads & Supports apunta a efectos del catálogo (scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs agregue y el catálogo no tenga se lista acá hasta que se clasifique a mano.
 
 Ninguno: todo lo que traen los datos está clasificado.
+
+## 10. Bonos de equipo: la wiki contra sí misma
+
+thanosvibs no publica los bonos de equipo. La app los toma de la sección Team Bonus de la página de cada personaje en la wiki (265 páginas la tienen) y de lo que se vio en el juego (scripts/contenido/bonos.json), que manda sobre la wiki. Un bono aparece en la página de cada integrante: valen el nombre y los stats que dice la mayoría de sus páginas, y si empatan la app muestra todas las versiones empatadas. La wiki redondea los valores a un decimal (scripts/bonos.py).
+
+1680 bonos: 938 de dos integrantes y 742 de tres.
+
+Personajes sin la sección en su página (25): Absorbing Man, Annihilus, Athena, Black Knight, Black Swan, Cassandra Nova, Falcon (Joaquin Torres), Galactus, Havok, Hope Summers, Ikon, Kahhori, Leader, Madelyne Pryor, Man-Thing, Marvel Boy, Morph, Okoye, Omega Red, Silver Surfer (Shalla-Bal), Sleeper, Sunspot, Sylvie, The Hood, Valeria Richards. Sus bonos están solo si la página de otro integrante los lista.
+
+### Versiones empatadas (49)
+
+Ninguna versión tiene más páginas: la app las muestra todas.
+
+| Integrantes | Versiones (páginas que dicen cada una) |
+|---|---|
+| Ancient One, Baron Mordo | Energy Attack +5.3%, Skill Cooldown −4.9% (Ancient One) — Attack Speed +4.9%, Movement Speed +4.9% (Baron Mordo) |
+| Angel, Apocalypse | HP +5.4%, Critical Damage +4.8% (Angel) — All Basic Attacks +5.4%, Critical Damage +4.8% (Apocalypse) |
+| Angel, X-23 | Physical Attack +5.1%, Critical Damage +4.8% (Angel) — Critical Damage +5%, Energy Defense +5% (X-23) |
+| Angela, Blade | All Basic Attacks +5.4%, Attack Speed +5.1%, Critical Rate +4.3% (Angela) — All Basic Attacks +5.4%, Attack Speed +5.1%, Critical Damage +4.3% (Blade) |
+| Arachknight, Moon Knight | Dodge +5%, Critical Rate +4.9% (Arachknight) — Critical Rate +5.1%, Critical Damage +4.8% (Moon Knight) |
+| Arachknight, Spider-Man | Critical Rate +5.1%, Critical Damage +4.8% (Arachknight) — Dodge +5%, Critical Rate +4.9% (Spider-Man) |
+| Baron Mordo, Kaecilius | HP +5.2%, Critical Rate +5% (Baron Mordo) — HP +5.2%, Critical Damage +4.8% (Kaecilius) |
+| Beast, Wolverine | All Basic Attacks +5.1%, All Basic Defenses +5.3% (Beast) — All Basic Attacks +5.3%, All Basic Defenses +5.3% (Wolverine) |
+| Black Bolt, Black Panther | All Basic Attacks +5%, HP +5.5% (Black Bolt) — All Basic Attacks +4.8%, HP +5.5% (Black Panther) |
+| Black Bolt, Songbird | Movement Speed +5.5%, Recovery Rate +4.8% (Black Bolt) — Movement Speed +4.9%, Recovery Rate +4.8% (Songbird) |
+| Black Cat, Gwenpool | All Basic Attacks +4.8%, Attack Speed +4.6% (Black Cat) — Movement Speed +4.9%, Attack Speed +4.8% (Gwenpool) |
+| Black Cat, Silk | HP +4.7%, Dodge +4.6% (Black Cat) — All Basic Attacks +5.2%, Ignore Defense +4.8% (Silk) |
+| Black Cat, Spider-Man | All Basic Attacks +4.8%, Critical Damage +4.7% (Black Cat) — All Basic Attacks +5.2%, Dodge +4.9% (Spider-Man) |
+| Black Dwarf, Shang-Chi | Physical Defense +5.4%, Skill Cooldown −4.8% (Black Dwarf) — Attack Speed +4.9%, Physical Attack +5.1% (Shang-Chi) |
+| Black Widow, Captain America | Movement Speed +4.9%, Crowd Control Time −4.8% (Black Widow) — Movement Speed +5.2%, Crowd Control Time −5.1% (Captain America) |
+| Black Widow, Winter Soldier | Critical Rate +5%, HP +4.9% (Black Widow) — Critical Rate +4.9%, HP +5% (Winter Soldier) |
+| Bullseye, Crossbones | Attack Speed +4.9%, Dodge +4.7% (Bullseye) — Attack Speed +4.9%, Dodge +4.8% (Crossbones) |
+| Captain America, Crossbones | All Basic Defenses +5.2%, Critical Damage +4.9% (Captain America) — All Basic Defenses +5.3%, Critical Damage +4.9% (Crossbones) |
+| Captain America, X-23 | Critical Rate +5%, Dodge +4.8% (Captain America) — All Basic Defenses +5.4%, Physical Attack +5.1% (X-23) |
+| Corvus Glaive, Hyperion | Movement Speed +4.9%, Attack Speed +4.8% (Corvus Glaive) — All Basic Defenses +5%, HP +5% (Hyperion) |
+| Crossbones, Falcon | Attack Speed +4.9%, Skill Cooldown −4.8% (Crossbones) — All Basic Attacks +4.8%, Critical Damage +4.7% (Falcon) |
+| Crossbones, Sin | Physical Defense +5.2%, Physical Attack +5.1% (Crossbones) — Physical Defense +5.1%, Physical Attack +5.2% (Sin) |
+| Crossbones, Ulik | Attack Speed +5%, Movement Speed +4.8% (Crossbones) — Attack Speed +5%, Movement Speed +4.9% (Ulik) |
+| Daredevil, Spider-Gwen | All Basic Attacks +5.2%, Critical Rate +4.9% (Daredevil) — All Basic Attacks +4.9%, Critical Rate +4.9% (Spider-Gwen) |
+| Deathlok, Rocket Raccoon | All Basic Attacks +4.8%, Critical Damage +4.5% (Deathlok) — All Basic Attacks +4.8%, Critical Rate +4.5% (Rocket Raccoon) |
+| Doctor Strange, Spider-Man | Physical Defense +5.4%, Movement Speed +4.8% (Doctor Strange) — Physical Defense +4.9%, Crowd Control Time −4.8% (Spider-Man) |
+| Doctor Strange, Wiccan | Energy Attack +5.2%, Movement Speed +4.8% (Doctor Strange) — Energy Attack +4.9%, Movement Speed +5.1% (Wiccan) |
+| Doctor Strange, X-23 | Critical Rate +4.8%, Recovery Rate +4.9% (Doctor Strange) — Movement Speed +5%, Attack Speed +4.7% (X-23) |
+| Enchantress, Hela | Attack Speed +4.9%, Movement Speed +4.9% (Enchantress) — Ignore Defense +4.9%, Critical Damage +4.9% (Hela) |
+| Enchantress, Hulk (Amadeus Cho) | Attack Speed +4.9%, Movement Speed +4.9% (Enchantress) — All Basic Attacks +5.2%, Crowd Control Time −4.8% (Hulk (Amadeus Cho)) |
+| Enchantress, Loki | Energy Attack +5.3%, Skill Cooldown −4.9% (Enchantress) — Dodge +4.8%, Energy Defense +5.3% (Loki) |
+| Enchantress, Odin | Energy Attack +5.3%, Skill Cooldown −4.9% (Enchantress) — Energy Attack +5.1%, Critical Rate +5% (Odin) |
+| Enchantress, Thor | Attack Speed +4.9%, Movement Speed +4.9% (Enchantress) — Movement Speed +4.9%, Dodge +4.8% (Thor) |
+| Fantomex, Psylocke | Movement Speed +5%, Critical Damage +4.9% (Fantomex) — Critical Rate +5.1%, Critical Damage +4.8% (Psylocke) |
+| Gorr, Thor | Critical Damage +5%, HP +5% (Gorr) — Critical Damage +5%, Critical Rate +4.9% (Thor) |
+| Hellstorm, Sin | Critical Rate +4.9%, Critical Damage +4.8% (Hellstorm) — Critical Rate +4.9%, Skill Cooldown −4.8% (Sin) |
+| Kingpin, Rhino | All Basic Defenses +5.4%, Crowd Control Time −5.2% (Kingpin) — All Basic Defenses +5.3%, Crowd Control Time −4.8% (Rhino) |
+| Loki, Thor | All Basic Attacks +4.4%, Movement Speed +4.2% (Loki) — Attack Speed +4.4%, Movement Speed +4.2% (Thor) |
+| Loki, Ulik | Crowd Control Time −4.9%, Critical Rate +4.8% (Loki) — Attack Speed +4.9%, Movement Speed +4.8% (Ulik) |
+| Shang-Chi, Spider-Man | Physical Attack +5.1%, Crowd Control Time −4.9% (Shang-Chi) — Physical Attack +4.9%, Crowd Control Time −5.1% (Spider-Man) |
+| She-Hulk, Titania | Physical Attack +5.1%, Ignore Defense +4.8% (She-Hulk) — Physical Attack +5.3%, Ignore Defense +4.8% (Titania) |
+| Spider-Man, X-23 | Attack Speed +4.9%, Crowd Control Time −4.7% (Spider-Man) — Critical Damage +4.9%, HP +5.2% (X-23) |
+| Squirrel Girl, X-23 | Dodge +5%, Skill Cooldown −4.8% (Squirrel Girl) — Energy Defense +5.4%, Skill Cooldown −5% (X-23) |
+| Storm, X-23 | Critical Damage +5%, Energy Defense +5.1% (Storm) — HP +5.3%, Crowd Control Time −4.8% (X-23) |
+| Thor, Ulik | Physical Defense +5.1%, Critical Damage +5% (Thor) — Physical Attack +5.1%, Critical Damage +5% (Ulik) |
+| Wasp, X-23 | HP +5.4%, Skill Cooldown −4.8% (Wasp) — Recovery Rate +5.1%, Physical Defense +5.1% (X-23) |
+| Wolverine, X-23 | All Basic Attacks +5.2%, HP +5% (Wolverine) — Skill Cooldown −4.9%, Dodge +4.8% (X-23) |
+| Captain America, Punisher, Spider-Gwen | All Basic Defenses +5.5%, HP +5.4%, Skill Cooldown −4.9% (Captain America) — All Basic Attacks +5.2%, HP +5.4%, Skill Cooldown −4.9% (Punisher) — All Basic Attacks +5.5%, HP +5.4%, Skill Cooldown −4.9% (Spider-Gwen) |
+| Hawkeye, Iron Fist, Wong | All Basic Attacks +4.8%, Attack Speed +5.1%, Movement Speed +4.5% (Hawkeye) — Attack Speed +4.9%, Dodge +4.8%, Critical Rate +4.7% (Iron Fist) — Attack Speed +4.9%, Dodge +4.8%, Critical Damage +4.7% (Wong) |
+
+### Versiones en minoría (43)
+
+Vale la primera, la de más páginas.
+
+| Integrantes | Versiones (páginas que dicen cada una) |
+|---|---|
+| Agent Venom, Black Widow, Hawkeye | Physical Attack +5.3%, Energy Defense +5%, Dodge +4.7% (Agent Venom, Black Widow) — All Basic Attacks +5.4%, Critical Rate +5%, Critical Damage +5% (Hawkeye) |
+| Agent Venom, Groot, Rocket Raccoon | All Basic Attacks +5.1%, Dodge +5%, Movement Speed +4.7% (Agent Venom, Groot) — All Basic Attacks +5.1%, Dodge +4.3%, Movement Speed +4.7% (Rocket Raccoon) |
+| Angel, Black Widow, Ghost Rider | All Basic Attacks +4.7%, Dodge +4.8%, Critical Damage +5.4% (Black Widow, Ghost Rider) — All Basic Attacks +5.4%, Dodge +4.8%, Critical Damage +4.7% (Angel) |
+| Ant-Man, Giant-Man, Shang-Chi | Energy Defense +5.2%, Crowd Control Time −4.8%, HP +5.1% (Ant-Man, Shang-Chi) — Energy Attack +5.2%, Crowd Control Time −4.8%, HP +5.1% (Giant-Man) |
+| Baron Mordo, Doctor Strange, Spider-Man | All Basic Attacks +5.2%, Critical Rate +5.9%, Movement Speed +4.8% (Baron Mordo, Doctor Strange) — All Basic Attacks +5.2%, Critical Rate +4.9%, Movement Speed +4.8% (Spider-Man) |
+| Black Bolt, Captain Marvel, Venom | Skill Cooldown −4.8%, HP +4.5%, Critical Damage +5.1% (Black Bolt, Captain Marvel) — All Basic Attacks +5.4%, All Basic Defenses +4.4%, Movement Speed +5% (Venom) |
+| Black Bolt, Iron Man, Karnak | Dodge +5%, HP +5.1%, All Basic Attacks +5% (Black Bolt, Karnak) — All Basic Defenses +5%, HP +5.1%, All Basic Attacks +5% (Iron Man) |
+| Black Cat, Black Panther, Silk | All Basic Attacks +5.4%, Attack Speed +5%, Critical Rate +5% (Black Panther, Silk) — All Basic Attacks +5.2%, Attack Speed +5.1%, Critical Rate +4.9% (Black Cat) |
+| Black Cat, Elektra, Winter Soldier | Attack Speed +4.4%, Movement Speed +5.1%, Critical Rate +4.4% (Black Cat, Elektra) — All Basic Defenses +4.4%, Movement Speed +5.1%, Critical Rate +4.4% (Winter Soldier) |
+| Black Panther, Captain America, Hawkeye | HP +5%, All Basic Defenses +5.4%, Movement Speed +5% (Black Panther, Captain America) — All Basic Attacks +5.4%, All Basic Defenses +4.9%, Movement Speed +4.7% (Hawkeye) |
+| Black Panther, Falcon, Misty Knight | Physical Attack +5.1%, Dodge +5%, Ignore Defense +4.8% (Black Panther, Misty Knight) — Physical Defense +5.2%, Energy Defense +5.1%, Attack Speed +4.7% (Falcon) |
+| Black Widow, Falcon, Misty Knight | Critical Rate +5%, Attack Speed +4.8%, Skill Cooldown −4.7% (Black Widow, Misty Knight) — All Basic Attacks +5.3%, HP +5.3%, Critical Rate +4.9% (Falcon) |
+| Black Widow, Hawkeye, Mockingbird | Critical Damage +4.5%, Movement Speed +4.4%, Skill Cooldown −4.8% (Black Widow, Mockingbird) — All Basic Attacks +4.8%, Attack Speed +5.1%, Movement Speed +4.5% (Hawkeye) |
+| Blade, Doctor Strange, Ghost Rider | Skill Cooldown −5.1%, Recovery Rate +4.2%, All Basic Defenses +4.6% (Blade, Doctor Strange) — All Basic Attacks +5.2%, All Basic Defenses +5.3%, HP +4.9% (Ghost Rider) |
+| Bullseye, Captain America, Iron Man | All Basic Attacks +5.4%, Critical Rate +5%, Crowd Control Time −4.9% (Captain America, Iron Man) — All Basic Attacks +5.5%, Critical Rate +5%, Crowd Control Time −4.9% (Bullseye) |
+| Bullseye, Hawkeye, Punisher | Attack Speed +4.9%, Critical Rate +5%, Critical Damage +4.5% (Bullseye, Punisher) — All Basic Attacks +4.8%, Attack Speed +5.1%, Movement Speed +4.5% (Hawkeye) |
+| Captain America, Daisy Johnson, Daredevil | All Basic Defenses +5.1%, HP +5.1%, Ignore Defense +4.6% (Daisy Johnson, Daredevil) — Defense +5.1%, HP +5.1%, Ignore Defense +4.6% (Captain America) |
+| Captain America, Deadpool, Phil Coulson | All Basic Attacks +5.4%, Crowd Control Time −4.8%, HP +5.1% (Captain America, Phil Coulson) — All Basic Attacks +5.3%, Critical Rate +4.8%, Ignore Defense +5.1% (Deadpool) |
+| Captain America, Deadpool, Wolverine | Physical Attack +5.3%, HP +5%, Recovery Rate +4.9% (Captain America, Wolverine) — Critical Rate +4.7%, Critical Damage +4.7%, Ignore Defense +4.8% (Deadpool) |
+| Captain America, Falcon, Wiccan | Skill Cooldown −4.9%, Crowd Control Time −4.8%, All Basic Defenses +5% (Captain America, Wiccan) — All Basic Attacks +5.4%, Critical Rate +5%, Critical Damage +4.9% (Falcon) |
+| Carnage, Deadpool, Enchantress | Dodge +4.9%, Critical Rate +4.9%, HP +5.1% (Carnage, Enchantress) — All Basic Attacks +5.2%, Dodge +4.7%, Critical Damage +4.8% (Deadpool) |
+| Clea, Doctor Strange, Dormammu | Physical Defense +5.2%, HP +5.1%, Movement Speed +4.7% (Clea, Doctor Strange) — Physical Defense +5.2%, HP +5.2%, Movement Speed +4.7% (Dormammu) |
+| Corvus Glaive, Hulk, Proxima Midnight | All Basic Attacks +5.5%, All Basic Defenses +5.5%, Skill Cooldown −5.1% (Corvus Glaive, Hulk) — All Basic Attacks +5.5%, All Basic Defenses +5.5%, Crowd Control Time −5.1% (Proxima Midnight) |
+| Crossbones, Red Skull, Sin | Skill Cooldown −4.9%, Dodge +4.8%, Movement Speed +4.7% (Red Skull, Sin) — Skill Cooldown −4.9%, Dodge +4.9%, Movement Speed +4.7% (Crossbones) |
+| Daredevil, Deadpool, Spider-Man | Physical Attack +5.4%, All Basic Defenses +5.1%, Crowd Control Time −4.8% (Daredevil, Spider-Man) — Energy Defense +5.2%, Crowd Control Time −4.8%, HP +5.1% (Deadpool) |
+| Daredevil, Iron Fist, Shang-Chi | Attack Speed +4.9%, Movement Speed +4.7%, Crowd Control Time −4.8% (Daredevil, Shang-Chi) — Attack Speed +5.2%, Movement Speed +4.7%, Crowd Control Time −4.8% (Iron Fist) |
+| Daredevil, Punisher, Spider-Man | All Basic Defenses +4.8%, HP +5.4%, Ignore Defense +4.3% (Punisher, Spider-Man) — All Basic Defenses +4.6%, HP +5.4%, Ignore Defense +4.3% (Daredevil) |
+| Deadpool, Fantomex, Wolverine | Physical Attack +5.2%, Attack Speed +4.9%, Recovery Rate +4.8% (Fantomex, Wolverine) — All Basic Attacks +5.2%, Attack Speed +4.7%, Critical Rate +5% (Deadpool) |
+| Deadpool, Iron Fist, Luke Cage | All Basic Attacks +5.2%, Critical Damage +4.9%, Recovery Rate +4.8% (Iron Fist, Luke Cage) — Energy Defense +5.2%, Crowd Control Time −4.7%, HP +5.1% (Deadpool) |
+| Deadpool, Spider-Man, Wong | Physical Attack +5.4%, Dodge +4.9%, Attack Speed +4.7% (Spider-Man, Wong) — Attack Speed +4.7%, Movement Speed +4.6%, Dodge +4.9% (Deadpool) |
+| Doctor Octopus, Iron Man, Ultron | Movement Speed +4.4%, HP +4.7%, Attack Speed +4.8% (Iron Man, Ultron) — Movement Speed +4.4%, Max HP Defense +4.7%, Attack Speed +4.8% (Doctor Octopus) |
+| Doctor Octopus, Kraven The Hunter, Sandman | Physical Attack +5.1%, Crowd Control Time −5%, Movement Speed +4.7% (Kraven The Hunter, Sandman) — Physical Attack +5.2%, Crowd Control Time −4.9%, Movement Speed +5% (Doctor Octopus) |
+| Doctor Octopus, Silk, Spider-Man | All Basic Defenses +5.2%, Critical Damage +4.8%, Ignore Defense +4.9% (Silk, Spider-Man) — All Basic Defenses +5.2%, HP +5.1%, Dodge +5.3% (Doctor Octopus) |
+| Falcon, Hawkeye, Mockingbird | Attack Speed +5.1%, Movement Speed +4.9%, Critical Damage +4.8% (Falcon, Mockingbird) — All Basic Attacks +5.4%, Critical Rate +5%, Critical Damage +5% (Hawkeye) |
+| Falcon, Vision, War Machine | All Basic Attacks +5.5%, Attack Speed +4.4%, Dodge +4.7% (Falcon, War Machine) — All Basic Attacks +5.2%, Attack Speed +4.4%, Dodge +4.7% (Vision) |
+| Giant-Man, Hawkeye, Quicksilver | Physical Attack +5.1%, Physical Defense +5.4%, Dodge +4.7% (Hawkeye, Quicksilver) — Attack +5.1%, Physical Defense +5.4%, Dodge +4.7% (Giant-Man) |
+| Hawkeye, Hawkeye (Kate Bishop), Mockingbird | Physical Defense +5.2%, Energy Defense +5.2%, Movement Speed +4.7% (Hawkeye (Kate Bishop), Mockingbird) — All Basic Attacks +5.4%, All Basic Defenses +4.9%, Movement Speed +4.7% (Hawkeye) |
+| Hawkeye, Hellstorm, Mockingbird | Critical Rate +5.1%, Dodge +4.9%, Attack Speed +4.7% (Hellstorm, Mockingbird) — All Basic Attacks +4.8%, Attack Speed +5.1%, Movement Speed +4.5% (Hawkeye) |
+| Magneto, Nova (Sam Alexander), Spider-Man | HP +5%, Movement Speed +5%, All Basic Attacks +5.7% (Magneto, Spider-Man) — HP +5.1%, Movement Speed +5%, All Basic Attacks +5.1% (Nova (Sam Alexander)) |
+| Misty Knight, Moon Knight, Punisher | Physical Attack +5.3%, Max Dodge +4.8%, Crowd Control Time −4.8% (Moon Knight, Punisher) — Physical Attack +5.3%, Dodge +4.8%, Crowd Control Time −4.8% (Misty Knight) |
+| Odin, Thor, Thor (Jane Foster) | Energy Attack +5.2%, All Basic Defenses +5.2%, Critical Rate +4.7% (Odin, Thor (Jane Foster)) — Energy Attack +5.3%, All Basic Defenses +5.2%, Critical Rate +4.7% (Thor) |
+| Punisher, Rocket Raccoon, Star-Lord | Attack Speed +4.9%, Critical Damage +4.9%, Ignore Defense +5.1% (Punisher, Star-Lord) — All Basic Attacks +4.9%, Attack Speed +4.9%, HP +5.1% (Rocket Raccoon) |
+| Silk, Spider-Gwen, Spider-Man (Miles Morales) | Critical Rate +5%, Dodge +5.1%, Ignore Defense +5% (Spider-Gwen, Spider-Man (Miles Morales)) — All Basic Defenses +5.4%, Skill Cooldown −4.9%, Ignore Defense +5% (Silk) |
+
+### Nombres empatados (29)
+
+La app los muestra juntos, separados por « / ».
+
+- Ancient One, Doctor Strange: Sorcercer's Successor / Sorcerer's Successor
+- Arachknight, Moon Knight: Knights On Guard / Spider Knights
+- Arachknight, Spider-Man: Knights On Guard / Spider Knights
+- Black Bolt, Black Panther: Kings of Illuminati / Kings of the Illuminati
+- Black Dwarf, Thanos: You Disappointed Me / You Dissapointed Me
+- Black Widow, Whiplash: Straight Out Of Russia / Straight Out of Russia
+- Captain America, Captain America (Sharon Rogers): Generation Justice / Generational Justice
+- Captain America, Thor: Hammer & Shield / Hammer and Shield
+- Captain America, Wasp: Born To Lead / Born to Lead
+- Captain America (Sharon Rogers), Vision: Synthezoid Liberty / Synthezoid of Liberty
+- Crystal, Quicksilver: Temporary Happiness / Tepmorary Happiness
+- Cyclops, Daredevil: Shades  of Red / Shades of Red
+- Daredevil, Spider-Man: Misfortune of Fate / Symbiote Shock
+- Deathlok, Winter Soldier: Cybernetically Enchanced / Cybernetically Enhanced
+- Doctor Strange, Iron Fist: Mediation Time / Meditation Time
+- Enchantress, Hulk (Amadeus Cho): Mind Controlled Hulk / Mind-Controlled Hulk
+- Hyperion, Thor: Brother in Arms / Brothers in Arms
+- Magneto, Rogue: Suprising Relationship / Surprising Relationship
+- Moon Girl, Wolverine: Dino Ball Special / Dinosaur Ball Special
+- Nebula, Ronan: Galactic Judgement / Galactic Judgment
+- Punisher, Rhino: Bad Rhino / Bad Rhino!
+- Punisher, Rocket Raccoon: I Love the Smell of Gun Powder... / I love the Smell of Gun Powder...
+- Red She-Hulk, She-Hulk: Woman of Power / Women of Power
+- Shang-Chi, Wong: Chinese Martial Artists / Chinese Martial Arts
+- Slapstick, Spider-Man: Deadpool Pal / Deadpool Pol
+- Spider-Man (Miles Morales), Venom: No More / No More!
+- Vision, War Machine: Need some help, Stark? / Stark Contrast
+- Captain Marvel, Spider-Man, Venom: Journalistic Integirty / Journalistic Integrity / Journalistic Intergrity
+- Giant-Man, Hulk (Amadeus Cho), Spider-Man: The Odessey / The Odyessey / The Odyssey
+
+Sin nombre en ninguna de sus páginas: Thor (Jane Foster), Titania.
+
+### Stats que la app no conoce
+
+Van como los escribe la wiki: la sinergia los cuenta para todos y dice que no están clasificados. Si son un stat conocido con otro nombre, se agregan a STATS en scripts/bonos.py.
+
+- `Attack`: Giant-Man
+- `Attack Defense`: Captain Marvel, Dazzler, She-Hulk
+- `Critical Defense`: Black Panther, Killmonger, Shuri
+- `Defense`: Captain America
+- `Energy Damage`: Iceman, Supergiant
+- `Max Dodge`: Moon Knight, Punisher
+- `Max HP Defense`: Doctor Octopus
+- `Physical Damage`: Human Torch, Nick Fury, Spider-Man, White Fox
+
+### Bonos que la página de un integrante no lista (32)
+
+- Bishop: con Sabretooth + Silver Samurai
+- Black Cat: con Winter Soldier
+- Black Panther: con Mister Fantastic; con Black Bolt + Doctor Doom; con Crescent + White Fox; con Doctor Doom + Storm; con Mister Fantastic + Star-Lord; con Storm + Victorious
+- Captain America (Sharon Rogers): con Luna Snow + White Fox; con War Machine + Winter Soldier
+- Ghost Rider (Robbie Reyes): con Daisy Johnson
+- Kang the Conqueror: con Apocalypse; con Cable; con Doctor Doom; con Doctor Strange; con Gladiator; con Iron Man; con Ant-Man + Wasp; con Captain America + Thor; con Iron Man + Mister Fantastic; con Thanos + Ultron
+- Sabretooth: con Bishop + Silver Samurai
+- Scorpion: con Electro + Vulture
+- Sentry: con Daken + Green Goblin
+- Viper: con Emma Frost + Rachel Summers; con Kitty Pryde + Sabretooth
+- Vulture: con Doctor Octopus
+- War Machine: con Captain America (Sharon Rogers) + Falcon
+- White Fox: con Captain America (Sharon Rogers) + Luna Snow
+- Winter Soldier: con Black Panther; con Captain America (Sharon Rogers) + War Machine
+- Wolverine: con Jubilee + X-23
+
+### Lo que no se pudo leer (1)
+
+Esa página no cuenta para ese bono.
+
+- Vulture, Creatures of Air and Sea: stat ilegible: ''Dodge ↑ +4.%''

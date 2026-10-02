@@ -9,9 +9,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - [THANO$VIB$](https://thanosvibs.money) — personajes, uniformes, **skills**, costos de mejora,
   tier lists públicas, C.T.P., artefactos, efectos de líder y de soporte, rotaciones, Alliance
   Battle (restricciones y equipos), la Beginner's Guide, retratos e íconos.
-- [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — el instinto (thanosvibs no lo
-  publica), los requisitos de Tier-3/Trascendencia/Tier-4, las reglas de ISO, urus y gear, y el
-  contraste de `docs/AUDITORIA.md`.
+- [Future Fight Wiki (Fandom)](https://future-fight.fandom.com) — el instinto y los bonos de equipo
+  (thanosvibs no los publica), los requisitos de Tier-3/Trascendencia/Tier-4, las reglas de ISO,
+  urus y gear, y el contraste de `docs/AUDITORIA.md`.
 - [Cynicalex Mega Guides](https://docs.google.com/spreadsheets/d/1H0Hcl9oVZV9gA266xkJAqPv5bD1qwqhC5NeVbLj_-FE)
   (planilla de Google) — la **guía de armado** por personaje (pestaña CHAMP BUILDING) y la
   leyenda de los emojis de su tier list (pestaña TIER LIST).
@@ -344,7 +344,7 @@ Cómo funciona la traducción:
   números en orden. Una traducción cubre todas las variantes numéricas. Nombres de skill,
   etiquetas, elementos, objetivos y activaciones tienen su propia tabla.
 - Resto de las fuentes (`scripts/fuentes.py`): por texto exacto (`ctps`, `abx`, `guia`,
-  `soportes`, `rotaciones`, `armado`), y las líneas de artefacto por patrón (`artefactos.json`,
+  `soportes`, `rotaciones`, `armado`, `bonos`), y las líneas de artefacto por patrón (`artefactos.json`,
   con `#` por número). Las rotaciones que son solo notación no se traducen.
 - Un patrón con otra cantidad de `#` que el original corta el build. Lo que no tiene traducción
   viaja en inglés, la app lo marca y el build lo lista en `work/sin_traducir_*.json`. **Nunca se
@@ -353,7 +353,7 @@ Cómo funciona la traducción:
   como `MFF_VOCAB_EN`, generado invirtiendo los mismos mapas de `scripts/dominio.py`.
 
 Cobertura actual, sin nada pendiente: 299 patrones de descripción, 228 etiquetas, 85
-activaciones, 53 objetivos, 13 elementos, 5.025 nombres de skill y 1.336 textos de las demás
+activaciones, 53 objetivos, 13 elementos, 5.025 nombres de skill y 1.347 textos de las demás
 fuentes (entre ellos 681 descripciones, 70 nombres de rotación y las 41 notas de la guía de
 armado).
 
@@ -388,8 +388,9 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   `fuentes.py`, `catalogo.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
   `traducir.py` las tablas de las skills, `version_juego.py` la versión del snapshot,
   `guia_armado.py` el lector de la guía de armado (y si se acepta), `marcadores.py` lo que
-  completa los marcadores de facción, tipo o raza, y `modelo.py` lo que se deduce de cada variante
-  (el perfil de combate).
+  completa los marcadores de facción, tipo o raza, `modelo.py` lo que se deduce de cada variante
+  (el perfil de combate) y `bonos.py` los bonos de equipo (de la wiki y de lo que se vio en el
+  juego).
 - `fuentes/guia-armado/` — la copia en uso de la guía de armado y su estado.
 - `scripts/traducciones/` — las tablas de traducción, editables a mano.
 - `scripts/contenido/` — lo curado a mano, con fuentes.

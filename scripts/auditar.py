@@ -13,7 +13,8 @@ Deja:
 - docs/AUDITORIA.md: el informe completo.
 
 Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la sección 9 lista lo que el
-catálogo de efectos no clasifica, de work/catalogo.json).
+catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierra en los bonos de
+equipo de la wiki, de work/fuentes.json).
 """
 import collections, datetime, difflib, glob, json, os, re, sys
 
@@ -408,7 +409,7 @@ def fmt(xs):
     return ', '.join(f'{x:g}' for x in xs) if isinstance(xs, list) else f'{xs:g}' if isinstance(xs, float) else str(xs)
 
 
-def informe(A, version, hallazgos, fuentes, catalogo):
+def informe(A, version, hallazgos, fuentes, catalogo, bonos):
     R, L = A.res, A.listas
     hoy = datetime.date.today().isoformat()
     s = []
@@ -428,6 +429,7 @@ def informe(A, version, hallazgos, fuentes, catalogo):
     for campo, nom in (('type', 'Clase'), ('side', 'Bando'), ('gender', 'Género'), ('allies', 'Raza'), ('atk', 'Tipo de ataque')):
         s.append(f"| {nom} (infobox de la wiki) | {R[campo + '_ok']} | {R[campo + '_dif']} | — |")
     s.append(f"| Instinto (campo vs categoría de la wiki) | {R['instinto_ok']} | {R['instinto_dif']} | — |")
+    s.append(bonos_resumen(bonos))
     s.append(f"| Artefactos a 6★ (thanosvibs vs wiki) | {R['artefactos_ok']} (+{R['artefactos_otro_nivel']} donde la wiki lista otro nivel de estrellas) | {R['artefactos_dif']} | {R['artefactos_sin_wiki']} sin fila en la wiki; {R['artefactos_incompletos']} con niveles incompletos en thanosvibs |")
     s.append('')
     s.append(f"Cobertura de la wiki: de {R['skills']} skills (activas, Definitiva y Striker) de thanosvibs, "
@@ -577,7 +579,90 @@ def informe(A, version, hallazgos, fuentes, catalogo):
         s.append('En el catálogo pero ya no en los datos (thanosvibs los cambió o los sacó): '
                  + '; '.join(f'`{x}`' if isinstance(x, str) else f'`{x[0]}` con `{x[1]}`'
                              for k in ('etiquetas', 'patrones', 'stats') for x in sobra[k]) + '.\n')
+    s += bonos_seccion(bonos, fuentes)
     return '\n'.join(s)
+
+
+def _version(v):
+    """Los stats de una versión de un bono: «All Basic Attacks +5.2%, Skill Cooldown −4.9%»."""
+    return ', '.join(f"{st} {'+' if x > 0 else '−'}{abs(x):g}%" for st, x in v)
+
+
+def bonos_resumen(bonos):
+    A = bonos['auditoria']
+    wiki = sum(1 for b in bonos['bonos'] if b['f'] == ['wiki-bonos'])
+    distintos = len(A['mayorias']) + len(A['empates'])
+    return (f"| Bonos de equipo (las páginas de la wiki entre sí) | {wiki - distintos} | {len(A['mayorias'])} por mayoría, "
+            f"{len(A['empates'])} empatados | {len(A['sin_seccion'])} páginas sin la sección |")
+
+
+def bonos_seccion(bonos, fuentes):
+    """Sección 10: lo que no cierra en los bonos de equipo."""
+    B, A = bonos['bonos'], bonos['auditoria']
+    s = ['## 10. Bonos de equipo: la wiki contra sí misma\n']
+    tam = collections.Counter(len(b['m']) for b in B)
+    juego = [b for b in B if b['f'] != ['wiki-bonos']]
+    s.append('thanosvibs no publica los bonos de equipo. La app los toma de la sección Team Bonus de la página de '
+             f"cada personaje en la wiki ({A['paginas']} páginas la tienen) y de lo que se vio en el juego "
+             '(scripts/contenido/bonos.json), que manda sobre la wiki. Un bono aparece en la página de cada '
+             'integrante: valen el nombre y los stats que dice la mayoría de sus páginas, y si empatan la app muestra '
+             'todas las versiones empatadas. La wiki redondea los valores a un decimal (scripts/bonos.py).\n')
+    s.append(f"{len(B)} bonos: {tam[2]} de dos integrantes y {tam[3]} de tres; {len(juego)} del juego "
+             f"({', '.join(fuente_md(fuentes[k]) for k in sorted({k for b in juego for k in b['f']}))}).\n"
+             if juego else f"{len(B)} bonos: {tam[2]} de dos integrantes y {tam[3]} de tres.\n")
+    s.append(f"Personajes sin la sección en su página ({len(A['sin_seccion'])}): {', '.join(A['sin_seccion'])}. Sus bonos "
+             'están solo si la página de otro integrante los lista.\n')
+    if A['juego']:
+        s.append(f"### Del juego ({len(A['juego'])})\n")
+        s.append('| Bono | Integrantes | La wiki decía |')
+        s.append('|---|---|---|')
+        for j in A['juego']:
+            wiki = ' / '.join(_version(v) for v in j['wiki']) or 'no lo tiene'
+            s.append(f"| {j['nombre']} | {', '.join(j['integrantes'])} | {wiki} |")
+        s.append('')
+    for clave, titulo, nota in (
+            ('empates', 'Versiones empatadas', 'Ninguna versión tiene más páginas: la app las muestra todas.'),
+            ('mayorias', 'Versiones en minoría', 'Vale la primera, la de más páginas.')):
+        if A[clave]:
+            s.append(f'### {titulo} ({len(A[clave])})\n')
+            s.append(nota + '\n')
+            s.append('| Integrantes | Versiones (páginas que dicen cada una) |')
+            s.append('|---|---|')
+            for x in A[clave]:
+                s.append(f"| {', '.join(x['integrantes'])} | "
+                         + ' — '.join(f"{_version(v)} ({', '.join(ps)})" for v, ps in x['versiones']) + ' |')
+            s.append('')
+    if A['nombres_empatados']:
+        s.append(f"### Nombres empatados ({len(A['nombres_empatados'])})\n")
+        s.append('La app los muestra juntos, separados por « / ».\n')
+        for x in A['nombres_empatados']:
+            s.append(f"- {', '.join(x['integrantes'])}: {' / '.join(x['nombres'])}")
+        s.append('')
+    sin_nombre = [b for b in B if not b['n']]
+    if sin_nombre:
+        s.append('Sin nombre en ninguna de sus páginas: ' + '; '.join(', '.join(b['m']) for b in sin_nombre) + '.\n')
+    if A['desconocidos']:
+        s.append('### Stats que la app no conoce\n')
+        s.append('Van como los escribe la wiki: la sinergia los cuenta para todos y dice que no están clasificados. '
+                 'Si son un stat conocido con otro nombre, se agregan a STATS en scripts/bonos.py.\n')
+        for st, ps in A['desconocidos'].items():
+            s.append(f"- `{st}`: {', '.join(ps)}")
+        s.append('')
+    if A['falta_en_pagina']:
+        s.append(f"### Bonos que la página de un integrante no lista ({len(A['falta_en_pagina'])})\n")
+        por_pagina = collections.defaultdict(list)
+        for x in A['falta_en_pagina']:
+            por_pagina[x['pagina']].append(' + '.join(i for i in x['integrantes'] if i != x['pagina']))
+        for p, otros in sorted(por_pagina.items()):
+            s.append(f"- {p}: con {'; con '.join(otros)}")
+        s.append('')
+    if A['ilegibles']:
+        s.append(f"### Lo que no se pudo leer ({len(A['ilegibles'])})\n")
+        s.append('Esa página no cuenta para ese bono.\n')
+        for x in A['ilegibles']:
+            s.append(f"- {x['pagina']}" + (f", {x['bono']}" if x['bono'] else '') + f": {x['motivo']}")
+        s.append('')
+    return s
 
 
 def main():
@@ -591,7 +676,9 @@ def main():
         raise SystemExit(f'contenido/hallazgos.json cita fuentes sin definir en contenido/guia.json: {malas}')
     os.makedirs('docs', exist_ok=True)
     catalogo = cargar('work/catalogo.json')
-    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes, catalogo))
+    f = cargar('work/fuentes.json')
+    bonos = {'bonos': f['bonos'], 'auditoria': f['bonos_auditoria']}
+    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes, catalogo, bonos))
     por = {p: v for p, v in A.por_retrato.items() if v['ok'] or v['nd'] or v['dif']}
     json.dump({'resumen': dict(A.res), 'por_retrato': por}, open('work/verificacion.json', 'w', encoding='utf-8'),
               ensure_ascii=False)
