@@ -578,8 +578,8 @@ const T = {
   eq_no_gain:        { es:'No mejoran con él:',  en:'Not improved by it:' },
   eq_no_link:        { es:'Sin vínculo con nadie del equipo:', en:'No link with anyone in the team:' },
   eq_new:            { es:'Combinaciones de 3 con él', en:'Combinations of 3 with it' },
-  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo con él (le dan un soporte o el liderazgo, reciben uno suyo o forman con él un bono de equipo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Un efecto cuenta solo si le sirve a quien lo recibe: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, los bonos de equipo en los que está o que le sirven, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el que más le suma.',
-                       en:'Every pair of teammates with a link with it (they give it a support or the leadership, receive one of its own, or form a team bonus with it), one per trio of characters, with each one\'s best uniform for the chosen order. An effect only counts if it is useful to whoever receives it: attack or elemental damage boosts, only for those whose skills hit with that. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, the team bonuses it is part of or that are useful to it, class advantage with it, and the team\'s roles and classes. The leader is the one that adds the most for it.' },
+  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo con él (le dan un soporte o el liderazgo, reciben uno suyo o forman con él un bono de equipo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Un efecto cuenta solo si le sirve a quien lo recibe: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills; las resistencias, solo a quien pega según su resistencia, y todas las velocidades, a nadie. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, los bonos de equipo en los que está o que le sirven, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el que más le suma.',
+                       en:'Every pair of teammates with a link with it (they give it a support or the leadership, receive one of its own, or form a team bonus with it), one per trio of characters, with each one\'s best uniform for the chosen order. An effect only counts if it is useful to whoever receives it: attack or elemental damage boosts, only for those whose skills hit with that; resists, only for those whose damage grows with their resist, and all speeds, for nobody. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, the team bonuses it is part of or that are useful to it, class advantage with it, and the team\'s roles and classes. The leader is the one that adds the most for it.' },
   eq_calc:           { es:'Calculando las combinaciones…', en:'Working out the combinations…' },
   eq_sort:           { es:'Ordenar por',         en:'Sort by' },
   eq_sort_foco:      { es:'Puntos para él',      en:'Points for it' },
@@ -630,8 +630,8 @@ const T = {
   cmp_pts:           { es:'pts',                 en:'pts' },
   cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
                        en:'No strong synergy signals in this selection.' },
-  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills (el liderazgo, con el mejor líder posible). Cada bono de equipo con todos sus integrantes en el equipo suma 1 (de la wiki, o del juego si se cargó). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase (la guía de thanosvibs y la wiki). No es un cálculo del juego.',
-                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it: attack or elemental damage boosts only for those whose skills hit with that (leadership, with the best possible leader). Each team bonus with all its members in the team adds 1 (from the wiki, or from the game when entered). Two readings of our own are added: roles derived from skills and class advantage (per the thanosvibs guide and the wiki). Not a game calculation.' },
+  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills; las resistencias, solo a quien pega según su resistencia; todas las velocidades, a nadie (el liderazgo, con el mejor líder posible). Cada bono de equipo con todos sus integrantes en el equipo suma 1 (de la wiki, o del juego si se cargó). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase (la guía de thanosvibs y la wiki). No es un cálculo del juego.',
+                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it: attack or elemental damage boosts only for those whose skills hit with that; resists only for those whose damage grows with their resist; all speeds for nobody (leadership, with the best possible leader). Each team bonus with all its members in the team adds 1 (from the wiki, or from the game when entered). Two readings of our own are added: roles derived from skills and class advantage (per the thanosvibs guide and the wiki). Not a game calculation.' },
   sy_unclassified:   { es:'efecto sin clasificar: cuenta para todos', en:'unclassified effect: counts for everyone' },
   sy_bonus:          { es:'Bono de equipo',      en:'Team bonus' },
   sy_bonus_noname:   { es:'sin nombre en la wiki', en:'unnamed on the wiki' },
@@ -1265,36 +1265,43 @@ function aplicaA (x, b) {
 // físico sin elemento. Todos los personajes hacen daño con sus activas, así que el resto (daño
 // básico, crítico, ignorar evasión, vida, defensas, inmunidades...) le sirve a cualquiera;
 // también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que las skills
-// no marcan de una forma que se pueda leer sin suponer. Un efecto que no está en ninguna de las
-// dos listas (thanosvibs sumó uno nuevo, o la wiki escribe un stat de bono que la app no
+// no marcan de una forma que se pueda leer sin suponer. Según Ezequiel, todas las velocidades no le
+// sirven a nadie y las resistencias solo a quien tiene una mejora de daño según su resistencia
+// (res del perfil: su artefacto o su Striker), en ese elemento. Un efecto que no está en ninguna
+// de las dos listas (thanosvibs sumó uno nuevo, o la wiki escribe un stat de bono que la app no
 // conoce) cuenta para todos y la sinergia lo dice.
+// Cada regla: [qué mira del perfil (perfilDano), qué valor pide]; con null, cualquiera. 'nadie': a
+// ninguno.
 const PIDE = {
   'Physical Attack': ['src', 'Physical Attack'], 'Energy Attack': ['src', 'Energy Attack'],
   'Fire Damage': ['elem', 'Fire'], 'Fire Damage by % Fire Resist': ['elem', 'Fire'], 'Cold Damage': ['elem', 'Cold'],
   'Lightning Damage': ['elem', 'Lightning'], 'Poison Damage': ['elem', 'Poison'], 'Mind Damage': ['elem', 'Mind'],
   'All Element Damage': ['elem', null], 'Physical Reflect Damage Received': ['tipo', 'Physical'],
+  'All Resistances': ['res', null], 'Fire Resist': ['res', 'Fire'], 'Cold Resist': ['res', 'Cold'],
+  'Lightning Resist': ['res', 'Lightning'], 'Mind Resist': ['res', 'Mind'],
+  'All Speeds': ['nadie', null],
 };
 const PARA_TODOS = new Set(['1s Pierce Duration Increase', '1s Snare Duration Increase', 'Additional Pierce Damage',
   'All Basic Attacks', 'All Basic Attacks (Stackable)', 'All Basic Defenses', 'All Debuffs Effect', 'All Reflect Damage Received',
-  'All Resistances', 'All Speeds', 'Barrier', 'Basic Damage Dealt to Boss Types', 'Basic Damage Dealt to Enemies except Mutant Characters',
+  'Barrier', 'Basic Damage Dealt to Boss Types', 'Basic Damage Dealt to Enemies except Mutant Characters',
   'Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect', 'Basic Damage Dealt to Enemies with "Removes All Debuffs" Effect',
   'Basic Damage Dealt to Enemies with 25% HP or Higher', 'Basic Damage Dealt to Females', 'Basic Damage Dealt to Heroes',
   'Basic Damage Dealt to Males', 'Basic Damage Dealt to Universals', 'Basic Damage Dealt to Villains', 'Basic Damage Received',
   'Basic Damage Received from Heroes', 'Basic Damage Received from Universals', 'Basic Damage Received from Villains', 'Bonus Damage',
   'Burn Immunity', 'Chain Hit Damage', 'Chain Hit Damage Received', 'Critical Damage', 'Critical Rate', 'Debuff Duration',
-  'Debuff Immunity', 'Dodge', 'Energy Defense', 'Fear Immunity', 'Fire Immunity Chance', 'Fire Resist', 'Guaranteed Critical Rate',
+  'Debuff Immunity', 'Dodge', 'Energy Defense', 'Fear Immunity', 'Fire Immunity Chance', 'Guaranteed Critical Rate',
   'Guard Break Immunity', 'HP', 'Heal', 'Ignore Defense', 'Ignore Dodge', 'Ignore Non-Boss Damage Decrease',
   'Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction', 'Immortality + Death', 'Immortality + Heal',
-  'Incapacitation Immunity', 'Lightning Immunity Chance', 'Max HP Shield', 'Mind Immunity Chance', 'Mind Resist',
+  'Incapacitation Immunity', 'Lightning Immunity Chance', 'Max HP Shield', 'Mind Immunity Chance',
   'Physical Immunity Chance', 'Recovery Rate', 'Remove All Debuffs', 'Revive with % HP', 'Skill Cooldown', 'Skill Damage',
   'Stun Immunity', 'Summon', 'Super Armor, All Basic Defenses',
   // los que solo traen los bonos de equipo (scripts/bonos.py)
-  'Attack Speed', 'Cold Resist', 'Crowd Control Time', 'Lightning Resist', 'Movement Speed', 'Physical Defense']);
+  'Attack Speed', 'Crowd Control Time', 'Movement Speed', 'Physical Defense']);
 /** Perfil de combate de un retrato, calculado en el build (scripts/modelo.py): de qué ataque
- *  sale su daño (esc), de qué tipo es (tip) y qué elementos lleva (ele). Un personaje agregado
- *  a mano no tiene skills ni perfil: no pega con nada conocido y ningún efecto que pida algo
- *  le sirve. */
-const SIN_PERFIL = { esc: [], tip: [], ele: [] };
+ *  sale su daño (esc), de qué tipo es (tip), qué elementos lleva (ele) y qué resistencias le
+ *  suben el daño (res). Un personaje agregado a mano no tiene skills ni perfil: no pega con nada
+ *  conocido y ningún efecto que pida algo le sirve. */
+const SIN_PERFIL = { esc: [], tip: [], ele: [], res: [] };
 function perfilDe (v) { return PERFIL[v.p] || SIN_PERFIL; }
 /** El perfil en conjuntos, para preguntarle millones de veces en la consulta de combinaciones. */
 const _PERFIL = new Map();
@@ -1302,7 +1309,7 @@ function perfilDano (v) {
   let pf = _PERFIL.get(v.p);
   if (pf) return pf;
   const m = perfilDe(v);
-  pf = { src: new Set(m.esc.map(e => e[0])), tipo: new Set(m.tip), elem: new Set(m.ele) };
+  pf = { src: new Set(m.esc.map(e => e[0])), tipo: new Set(m.tip), elem: new Set(m.ele), res: new Set(m.res) };
   if (v.p) _PERFIL.set(v.p, pf);
   return pf;
 }
@@ -1310,8 +1317,9 @@ function perfilDano (v) {
 function sirve (f, b) {
   const q = PIDE[f.s];
   if (!q) return true;
-  const pf = perfilDano(b);
-  return q[0] === 'elem' ? (q[1] ? pf.elem.has(q[1]) : pf.elem.size > 0) : pf[q[0]].has(q[1]);
+  if (q[0] === 'nadie') return false;
+  const de = perfilDano(b)[q[0]];
+  return q[1] ? de.has(q[1]) : de.size > 0;
 }
 /** ¿Le sirve a b algo de este soporte o liderazgo? (Que le llegue lo dice aplicaA.) La mayoría
  *  no pide nada: se anota cuáles piden, porque la consulta de combinaciones pregunta esto
