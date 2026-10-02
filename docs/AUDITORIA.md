@@ -483,9 +483,17 @@ Ninguno: todo lo que traen los datos está clasificado.
 
 thanosvibs no publica los bonos de equipo. La app los toma de la sección Team Bonus de la página de cada personaje en la wiki (265 páginas la tienen) y de lo que se vio en el juego (scripts/contenido/bonos.json), que manda sobre la wiki. Un bono aparece en la página de cada integrante: valen el nombre y los stats que dice la mayoría de sus páginas, y si empatan la app muestra todas las versiones empatadas. La wiki redondea los valores a un decimal (scripts/bonos.py).
 
-1680 bonos: 938 de dos integrantes y 742 de tres.
+1683 bonos: 938 de dos integrantes y 745 de tres; 3 del juego (MARVEL Future Fight — Team Bonus (dentro del juego, octubre de 2026)).
 
 Personajes sin la sección en su página (25): Absorbing Man, Annihilus, Athena, Black Knight, Black Swan, Cassandra Nova, Falcon (Joaquin Torres), Galactus, Havok, Hope Summers, Ikon, Kahhori, Leader, Madelyne Pryor, Man-Thing, Marvel Boy, Morph, Okoye, Omega Red, Silver Surfer (Shalla-Bal), Sleeper, Sunspot, Sylvie, The Hood, Valeria Richards. Sus bonos están solo si la página de otro integrante los lista.
+
+### Del juego (3)
+
+| Bono | Integrantes | La wiki decía |
+|---|---|---|
+| Galactus Abducted | Annihilus, Galactus, Thanos | no lo tiene |
+| Battle for the Cosmic Control Rod #2 | Annihilus, Human Torch, The Thing | no lo tiene |
+| Invasion of the Devourer #2 | Galactus, Human Torch, The Thing | no lo tiene |
 
 ### Versiones empatadas (49)
 

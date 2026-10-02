@@ -1,1 +1,20 @@
-[]
+[
+ {
+  "nombre": "Galactus Abducted",
+  "integrantes": ["Galactus", "Thanos", "Annihilus"],
+  "stats": [["All Basic Attacks Increase", 5.35], ["Critical Rate", 4.78], ["Attack Speed", 4.78]],
+  "fuente": ["juego-bonos"]
+ },
+ {
+  "nombre": "Invasion of the Devourer #2",
+  "integrantes": ["Galactus", "Human Torch", "The Thing"],
+  "stats": [["All Basic Attacks Increase", 5.41], ["Critical Damage", 4.78], ["Crowd Control Time", 4.83]],
+  "fuente": ["juego-bonos"]
+ },
+ {
+  "nombre": "Battle for the Cosmic Control Rod #2",
+  "integrantes": ["Annihilus", "Human Torch", "The Thing"],
+  "stats": [["All Basic Attacks Increase", 5.24], ["Max HP", 5.19], ["Max HP", 5.13]],
+  "fuente": ["juego-bonos"]
+ }
+]
