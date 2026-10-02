@@ -1,6 +1,6 @@
 {
- "version": "1.0.13",
+ "version": "1.0.14",
  "formato_datos": 5,
  "python": "3.14.7",
- "notas": "Nueva sección Glosario, en la barra de arriba: los 44 términos del glosario de skills del juego en inglés, coreano y español, con lo que el inglés traduce distinto del coreano (por ejemplo, «basic attacks» donde el coreano dice «reacción al golpe»), y todos los efectos del catálogo con sus lecturas de PvE y de PvP, a quién le sirven y cómo aparecen en las skills. Se busca en los tres idiomas. El glosario en coreano corrigió lecturas que se ven en la pestaña Análisis: la invencibilidad, los controles que también alcanzan a los jefes inmunes a los debuffs y el crítico y la evasión garantizados. Los datos cambian de formato: al actualizarse, la app baja los nuevos sola."
+ "notas": "Equipos por contexto: en la pestaña Equipos de la ficha, los órdenes PvP y PvE arman las combinaciones con las reglas de Ezequiel. Tiene que haber un DPS según las tier lists de thanosvibs y, en PvP, anti-mermas para los tres; el puntaje suma el liderazgo que vale en ese contexto, los DPS, la sinergia y los strikers, y cada combinación dice de dónde sale cada punto. La ficha muestra los strikers de cada personaje y de quiénes es striker (de la wiki). Un liderazgo o soporte de todas las velocidades ya no le sirve a nadie, y uno de resistencias solo a quien pega según su resistencia. Nueva sección Glosario, en la barra de arriba: los términos del glosario de skills del juego en inglés, coreano y español, con lo que el inglés traduce distinto del coreano, y los efectos del catálogo. Los datos cambian de formato: al actualizarse, la app baja los nuevos sola."
 }
