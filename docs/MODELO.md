@@ -111,7 +111,7 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 thanosvibs publica el mismo efecto de dos lados: la API de skills como una etiqueta tipada (228
 distintas, como `ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (72, como
 `All Basic Attacks`). El catálogo (`scripts/contenido/catalogo.json`, contenido curado) hace que
-las dos apunten a los mismos efectos (124, en 16 grupos) y responde una sola vez, por efecto, lo
+las dos apunten a los mismos efectos (126, en 16 grupos) y responde una sola vez, por efecto, lo
 que después la ficha va a decir de cada variante:
 
 | Pregunta | Dónde está la respuesta |
