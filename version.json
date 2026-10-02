@@ -2,5 +2,5 @@
  "version": "1.0.12",
  "formato_datos": 3,
  "python": "3.14.7",
- "notas": "La ficha tiene una pestaña nueva, Análisis: lo que hace cada variante con sus skills según el catálogo de efectos (a quién le llega cada efecto, de qué skill sale y cuándo, si le sirve, y cómo se lee en PvE y en PvP, con su certeza y su fuente). Los roles se calculan por variante y dicen qué le aporta al equipo: cada uniforme tiene los suyos. En la ficha, «← Nombre» vuelve al personaje del que viniste, igual que Alt+← y el botón de volver del mouse. Los datos cambian de formato: al actualizarse, la app baja los nuevos sola."
+ "notas": "La ficha tiene una pestaña nueva, Análisis: lo que hace cada variante con sus skills según el catálogo de efectos (a quién le llega cada efecto, de qué skill sale y cuándo, si le sirve, y cómo se lee en PvE y en PvP, con su certeza y su fuente). Los roles se calculan por variante y dicen qué le aporta al equipo: cada uniforme tiene los suyos. Los bonos de equipo entran en la sinergia: cada bono con todos sus integrantes en el equipo suma 1, y la pestaña Equipos muestra los de cada personaje. Salen de la wiki y, los que la wiki no tiene, del juego. En la ficha, «← Nombre» vuelve al personaje del que viniste, igual que Alt+← y el botón de volver del mouse. Los datos cambian de formato: al actualizarse, la app baja los nuevos sola."
 }

@@ -253,10 +253,11 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
   (30% y 45% contra SUPER VILLAIN). Que el combate los sume igual es probable, no comprobado.
 - **Bonos de equipo (Team Bonus).** Llevar ciertos personajes juntos da stats («Afflicted Lovers»,
   Cyclops y Jean Grey: ataques +5,24% y vida +4,97%), y también llevar tres de 6★ (ataques, defensas
-  y vida +3,12%). La wiki los publica en la página de cada personaje (unas 250 de 290, con más de mil
-  bonos), redondeados a un decimal; le faltan los de los personajes más nuevos (Galactus, Annihilus,
-  Kahhori, entre otros) y los de estrellas. namu.wiki tiene solo seis de ejemplo. La app todavía no
-  los lee.
+  y vida +3,12%). El panel del equipo los suma con el liderazgo. La wiki publica los de personajes
+  en la página de cada integrante (265 de 290 páginas, unos 1.680 bonos de dos y de tres),
+  redondeados a un decimal. Le faltan los de los personajes más nuevos (Galactus, Annihilus,
+  Kahhori, entre otros) y los de estrellas. namu.wiki tiene solo seis de ejemplo. Ver *Bonos de
+  equipo* más abajo.
 - **Lo que suma la cuenta.** El nivel de agente, las cartas de cómic (5, en dos mazos que se asignan
   por contenido), las espadas (X of Swords) y el S.H.I.E.L.D. Archive (stats de instinto) valen
   para todos los personajes; los emblemas, solo en ciertos contenidos; las colecciones de equipo
@@ -266,6 +267,31 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
   elegir uno para PvE y otro para PvP.
 - **Elite Gear.** Los Tier-4 con Nv. 80 y gear +30 pueden desbloquearlo: otra progresión, con
   puntos para elegir stats, que la app todavía no tiene.
+
+## Bonos de equipo
+
+`scripts/bonos.py` lee la sección Team Bonus de la página de cada personaje en la wiki y la junta
+con lo que se vio en el juego (`scripts/contenido/bonos.json`), que manda. Un bono es un conjunto de
+integrantes, porque los nombres tienen erratas entre páginas. Vale lo que dice la mayoría de sus
+páginas; si empatan (medio centenar), la app muestra todas las versiones empatadas. Los stats se
+escriben como los efectos de soporte de thanosvibs («All Attack» de la wiki es «All Basic Attacks»,
+como lo llama el juego), así que la sinergia les aplica la misma regla de «le sirve». La recarga y
+la duración de control siempre bajan, aunque la página ponga la flecha al revés. Lo que no cierra va
+a `docs/AUDITORIA.md` (sección 10).
+
+En la sinergia (Ezequiel pidió sumarlos, 2 de octubre de 2026), cada bono con todos sus integrantes
+en el equipo suma 1 si le sirve a alguien. Con foco en un integrante, suma si él está en el bono o si
+le sirve a él. Los integrantes de un bono quedan vinculados entre sí, porque están juntos por el
+bono. A los demás del equipo les llega igual, así que no los vincula. Todos los bonos de los datos
+traen algún stat que le sirve a cualquiera, así que en la práctica cada bono activo suma. La ficha
+los muestra en la pestaña *Equipos*.
+
+Dudas:
+- **«X 2 Bonuses».** La wiki anota, debajo de un bono de tres, qué parejas del trío tienen su
+  propio bono de dos. Sugiere que se activan todos a la vez (probable); la app suma cada uno.
+- **Stats con nombres sueltos.** Seis bonos traen stats que no usa ningún otro bono ni Leads &
+  Supports («Physical Damage», «Critical Defense» y otros). Van como los escribe la wiki y cuentan
+  para todos. Falta verlos en el juego.
 
 ## Fuentes
 

@@ -57,13 +57,15 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     otro, lo dice.
   - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
-    antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo de soporte*
-    con alguien del equipo: le da un soporte o el liderazgo, o recibe uno suyo, y le sirve: un
-    efecto que sube un ataque o un daño elemental solo cuenta para quien pega con eso según sus
-    skills, así que un liderazgo de daño de fuego no vincula a uno que pega físico); y **todas las
-    combinaciones de 3 con él**, una consulta sobre los datos: cada pareja de compañeros con
-    vínculo con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para
-    él* (la sinergia contando solo lo que lo involucra), por PvP (Arena de Equipos), por PvE
+    antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo* con alguien
+    del equipo: le da un soporte o el liderazgo, o recibe uno suyo, y le sirve (un efecto que sube
+    un ataque o un daño elemental solo cuenta para quien pega con eso según sus skills, así que un
+    liderazgo de daño de fuego no vincula a uno que pega físico), o forman juntos un bono de
+    equipo); sus **bonos de equipo**, plegados: con quiénes, qué suben y de dónde sale cada uno
+    (valen con cualquier uniforme); y **todas las combinaciones de 3 con él**, una consulta sobre
+    los datos: cada pareja de compañeros con vínculo con él, una por trío de personajes, de a 20 por
+    página. Se ordenan por *puntos para él* (la sinergia contando solo lo que lo involucra), por
+    PvP (Arena de Equipos), por PvE
     (Batalla de Alianza y World Boss Legend) o por cualquier tier list, también las tuyas; se
     filtran con «Con» y «Sin»; cada una dice su líder y su **cobertura** (lo que recibe él en
     ese equipo, por categoría del índice), se marca con ★ como favorita, se arma
@@ -419,17 +421,22 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   cada variante (ver *Modelo del juego*).
 - 15 de 290 personajes sin instinto: sus páginas de la wiki no lo declaran.
 - Los personajes que agregues a mano no llevan skills: las skills vienen tipadas de la API.
-- La sinergia se apoya en los efectos de líder y de soporte de thanosvibs; roles y ventaja de
-  clase son lecturas propias (la ventaja: Combate > Velocidad > Detonación > Combate, y Universal le
-  gana a las tres con ventaja menor, que en la sinergia suma igual y se dice). No es un cálculo del
-  juego. Cada efecto cuenta solo para quien le
-  sirve: los que suben el ataque físico o el de energía, para quien pega con ese ataque; los de
-  un elemento (fuego, frío, rayo, veneno, mente, o todos), para quien hace daño de ese elemento;
-  la reducción del reflejo físico, para quien hace daño físico; todo según el daño de sus skills
-  activas. Los demás (daño básico, crítico, ignorar evasión, defensas, vida, inmunidades) cuentan
-  para todos, también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que
-  las skills no marcan de forma legible. Un efecto nuevo que la app no conoce cuenta para todos y
-  la sinergia lo dice. Cada efecto vale lo mismo, sin importar cuánto sube.
+- La sinergia se apoya en los efectos de líder y de soporte de thanosvibs y en los bonos de
+  equipo (de la wiki, o del juego si se cargaron): cada bono con todos sus integrantes en el equipo
+  suma 1. Roles y ventaja de clase son lecturas propias (la ventaja: Combate > Velocidad >
+  Detonación > Combate, y Universal le gana a las tres con ventaja menor, que en la sinergia suma
+  igual y se dice). No es un cálculo del juego. Cada efecto cuenta solo para quien le sirve: los
+  que suben el ataque físico o el de energía, para quien pega con ese ataque; los de un elemento
+  (fuego, frío, rayo, veneno, mente, o todos), para quien hace daño de ese elemento; la reducción
+  del reflejo físico, para quien hace daño físico; todo según el daño de sus skills activas. Los
+  demás (daño básico, crítico, ignorar evasión, defensas, vida, inmunidades) cuentan para todos,
+  también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que las skills no
+  marcan de forma legible. Un efecto nuevo que la app no conoce cuenta para todos y la sinergia lo
+  dice. Cada efecto vale lo mismo, sin importar cuánto sube.
+- Los bonos de equipo de la wiki están redondeados a un decimal y sus páginas no siempre
+  coinciden: vale lo que dice la mayoría y, si empatan, la app muestra las dos versiones
+  (`docs/AUDITORIA.md`, sección 10). Faltan los de los personajes que la wiki todavía no tiene,
+  salvo los que se cargaron del juego (`scripts/contenido/bonos.json`), y el de llevar tres de 6★.
 - La cobertura de las combinaciones cuenta el liderazgo del líder también para el líder mismo:
   no hay una fuente a mano que diga si el juego se lo aplica (se ve en el juego, con el
   personaje de líder y sus stats en el equipo).

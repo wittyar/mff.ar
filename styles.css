@@ -250,6 +250,10 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .estrella{font-size:16px;line-height:1;min-width:32px;justify-content:center}
 .estrella.on{color:var(--gold);border-color:var(--gold)}
 .eqfuera{cursor:pointer}
+/* Bonos de equipo del personaje: con quiénes y qué suben. */
+.card.bono{display:flex;flex-direction:column;gap:8px}
+.bonostats{font-size:12.5px;color:var(--text-2)}
+.bonoaviso{font-size:12px;color:var(--gold)}
 /* Combinaciones de 3: una fila por equipo, para recorrer listas largas. */
 .combo{margin-bottom:8px;padding:10px 14px}
 .combofila{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
