@@ -617,6 +617,10 @@ const T = {
                        en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier list.' },
   cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso; 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en las tier lists.',
                        en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it; 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier lists.' },
+  cx_sin_funcion_pvp: { es:'{x} no figura en la tier list de PvP ({l}): no tiene función en PvP y este orden no arma combinaciones.',
+                       en:'{x} is not on the PvP tier list ({l}): it has no role in PvP, so this order builds no combinations.' },
+  cx_sin_funcion_pve: { es:'{x} no figura en las tier lists de PvE ({l}), o solo como «Not for wbl»: no tiene función en PvE y este orden no arma combinaciones.',
+                       en:'{x} is not on the PvE tier lists ({l}), or only as «Not for wbl»: it has no role in PvE, so this order builds no combinations.' },
   cx_anti:           { es:'Anti-mermas',         en:'Debuff removal' },
   cx_de_lid:         { es:'{x} (liderazgo)',     en:'{x} (leadership)' },
   cx_de_sop:         { es:'{x} (soporte)',       en:'{x} (support)' },
@@ -2554,6 +2558,10 @@ function rolEn (v, ctx) {
   _ROL.set(k, r);
   return r;
 }
+/** ¿Tiene función en el contexto? Según Ezequiel, quien no figura en las tier lists del contexto, o
+ *  solo en una fila que lo deja fuera («Not for wbl»), no la tiene (Thor base, en PvP y en PvE), y
+ *  el orden de ese contexto no le arma combinaciones. */
+function tieneFuncion (v, ctx) { const r = rolEn(v, ctx); return r.dps > 0 || r.soporte > 0 || r.lider || r.striker; }
 /** Liderazgos y soportes de un retrato, y cuáles dan anti-mermas, para el puntaje de contexto. */
 const _SLOTS = new Map();
 function slotsDe (v) {
@@ -2777,9 +2785,30 @@ function detalleContexto (e, vs, ctx) {
   return `<ul class="cxpts">${lineas.map(([k, pts, txt]) =>
     `<li><b>${h(k)}${pts != null ? ` +${pts}` : ''}</b>${txt ? ': ' + h(txt) : ''}</li>`).join('')}</ul>`;
 }
+function opcionHtml (val, txt, sel) { return `<option value="${h(val)}" ${val === sel ? 'selected' : ''}>${h(txt)}</option>`; }
+function nombresListas (ids) { return ids.map(id => listName(listById(id))).join(' + '); }
+/** El orden de las combinaciones: puntos para él, los contextos PvP y PvE, o una tier list. */
+function ordenCombinacionesHtml () {
+  return `<label>${h(t('eq_sort'))}
+        <select data-a="eqOrden">
+          ${opcionHtml('foco', t('eq_sort_foco'), ui.eqOrden)}
+          ${opcionHtml('pvp', t('cx_orden').replace('{c}', 'PvP').replace('{l}', nombresListas(LISTAS_PVP)), ui.eqOrden)}
+          ${opcionHtml('pve', t('cx_orden').replace('{c}', 'PvE').replace('{l}', nombresListas(LISTAS_PVE)), ui.eqOrden)}
+          ${listasAgrupadas().map(gr => ({ k: gr.k, ls: gr.ls.filter(l => tipoLista(l) === 'personajes') })).filter(gr => gr.ls.length)
+            .map(gr => `<optgroup label="${h(t(gr.k))}">${gr.ls.map(l => opcionHtml('lista:' + l.id, listName(l), ui.eqOrden)).join('')}</optgroup>`).join('')}
+        </select></label>`;
+}
 function combinacionesHtml (v) {
   const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))}</p>
     <p class="muted" style="margin-bottom:10px">${h(t('cb_note'))}</p>`;
+  const ctx = contextoOrden();
+  // Sin función en el contexto, no hay lista: solo el aviso y el orden, para cambiarlo. Tampoco se
+  // calcula la consulta.
+  if (ctx && !tieneFuncion(v, ctx)) {
+    return `<div class="section" id="combos">${cab}<div class="row eqfiltros">${ordenCombinacionesHtml()}</div>
+      <p class="muted cxnota">${h(t('cx_sin_funcion_' + ctx).replace('{x}', fullLabel(v))
+        .replace('{l}', nombresListas(ctx === 'pvp' ? LISTAS_PVP : LISTAS_PVE)))}</p></div>`;
+  }
   if (!CONSULTA || CONSULTA.clave !== v.key) {
     // La consulta tarda (más de un segundo con quien tiene un liderazgo para todos): primero
     // se pinta la pestaña con el aviso y recién después se calcula.
@@ -2789,12 +2818,10 @@ function combinacionesHtml (v) {
     }
     return `<div class="section" id="combos">${cab}<p class="muted">${h(t('eq_calc'))}</p></div>`;
   }
-  const q = CONSULTA, { filas, ocultos } = vistaConsulta(q), ls = listasOrden(), ctx = contextoOrden();
+  const q = CONSULTA, { filas, ocultos } = vistaConsulta(q), ls = listasOrden();
   const paginas = Math.max(1, Math.ceil(filas.length / POR_PAGINA));
   ui.eqPagina = Math.min(ui.eqPagina, paginas - 1);
   const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
-  const opcion = (val, txt, sel) => `<option value="${h(val)}" ${val === sel ? 'selected' : ''}>${h(txt)}</option>`;
-  const nombres = (ids) => ids.map(id => listName(listById(id))).join(' + ');
   const fila = (i) => {
     const vs = [v, q.pool[q.A[i]], q.pool[q.B[i]]], keys = vs.map(x => x.key);
     const sc = synergy(vs, { foco: v });
@@ -2826,20 +2853,13 @@ function combinacionesHtml (v) {
   const cuantos = (n, k) => t(n === 1 ? k + '_1' : k).replace('{n}', numero(n));
   return `<div class="section" id="combos">${cab}
     <div class="row eqfiltros">
-      <label>${h(t('eq_sort'))}
-        <select data-a="eqOrden">
-          ${opcion('foco', t('eq_sort_foco'), ui.eqOrden)}
-          ${opcion('pvp', t('cx_orden').replace('{c}', 'PvP').replace('{l}', nombres(LISTAS_PVP)), ui.eqOrden)}
-          ${opcion('pve', t('cx_orden').replace('{c}', 'PvE').replace('{l}', nombres(LISTAS_PVE)), ui.eqOrden)}
-          ${listasAgrupadas().map(gr => ({ k: gr.k, ls: gr.ls.filter(l => tipoLista(l) === 'personajes') })).filter(gr => gr.ls.length)
-            .map(gr => `<optgroup label="${h(t(gr.k))}">${gr.ls.map(l => opcion('lista:' + l.id, listName(l), ui.eqOrden)).join('')}</optgroup>`).join('')}
-        </select></label>
+      ${ordenCombinacionesHtml()}
       <label>${h(t('eq_con'))}
-        <select data-a="eqCon">${opcion('', t('eq_con_any'), ui.eqCon)}${personajes.map(c => opcion(c.id, c.name, ui.eqCon)).join('')}</select></label>
+        <select data-a="eqCon">${opcionHtml('', t('eq_con_any'), ui.eqCon)}${personajes.map(c => opcionHtml(c.id, c.name, ui.eqCon)).join('')}</select></label>
       <label>${h(t('eq_excluir'))}
-        <select data-a="eqExcluir">${opcion('', t('eq_excluir_ph'), '')}${personajes.filter(c => !ui.eqExcluir.includes(c.id)).map(c => opcion(c.id, c.name, '')).join('')}</select></label>
+        <select data-a="eqExcluir">${opcionHtml('', t('eq_excluir_ph'), '')}${personajes.filter(c => !ui.eqExcluir.includes(c.id)).map(c => opcionHtml(c.id, c.name, '')).join('')}</select></label>
     </div>
-    ${ctx ? `<p class="muted cxnota">${h(t('cx_nota_' + ctx).replace('{l}', nombres(ctx === 'pvp' ? LISTAS_PVP : LISTAS_PVE)))}</p>` : ''}
+    ${ctx ? `<p class="muted cxnota">${h(t('cx_nota_' + ctx).replace('{l}', nombresListas(ctx === 'pvp' ? LISTAS_PVP : LISTAS_PVE)))}</p>` : ''}
     ${ui.eqExcluir.length ? `<div class="row" style="gap:6px;margin-bottom:10px">${ui.eqExcluir.map(cid =>
       `<button class="tag dim eqfuera" data-a="eqIncluir" data-cid="${h(cid)}" title="${h(t('eq_incluir'))}">${h(CHAR_BY_ID[cid].name)} ✕</button>`).join('')}</div>` : ''}
     <div class="row" style="justify-content:space-between;margin-bottom:10px">

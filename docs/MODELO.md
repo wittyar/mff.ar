@@ -381,6 +381,10 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   Arena de Equipos para PvP; Batalla de Alianza y World Boss Legend para PvE
   (`scripts/contenido/roles_listas.json`, con el rótulo de cada fila; el build para si una cambia).
   Así quedan los ejemplos: Agent 13 no está en ninguna, Black Cat es soporte y Apocalypse es DPS.
+- Sin función en el contexto, no hay lista: si el personaje no figura en las tier lists del
+  contexto, o solo como «Not for wbl», el orden de ese contexto no arma combinaciones y la pestaña
+  lo dice (Ezequiel, 2 de octubre de 2026: Thor base no tiene función en PvP ni en PvE). Con los
+  datos actuales tienen función 60 de las 888 variantes en PvP y 119 en PvE.
 - Un trío entra si alguno es DPS de ese contexto y, en PvP, si con algún líder los tres tienen
   anti-mermas (Remove All Debuffs o Debuff Immunity). Cada compañero tiene vínculo con él o es DPS
   de ese contexto.
@@ -390,10 +394,9 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   equipo activo y por cada striker del trío. El líder es el que más suma de los que cumplen; a
   igual puntaje, ordena la tier list. Cada combinación muestra de dónde sale cada punto. Los pesos
   se revisaron con casos y quedaron así (ver *Casos de referencia*).
-- Con los datos actuales, la lista de PvP de Thor pasa de 7.762 combinaciones a 1.257, la de
-  Valeria Richards de 4.243 a 1.118 y la de Kingpin de 36.696 a 2.124. La de Galactus no baja (unas
-  37.500): su liderazgo da anti-mermas a cualquiera, así que con él de líder cualquier trío con un
-  DPS cumple.
+- Con los datos actuales, la lista de PvP de Knull — Ancient History tiene 1.993 equipos. Las de
+  Galactus y de Jean Grey — Summer Flare Phoenix tienen unos 37.000: sus liderazgos dan
+  anti-mermas a cualquiera, así que con ellos de líder cualquier trío con un DPS cumple.
 
 ### Casos de referencia
 

@@ -68,9 +68,11 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para él* (la
     sinergia contando solo lo que lo involucra), por cualquier tier list, también las tuyas, o por
     **contexto**: PvP o PvE, con las reglas de Ezequiel (ver *Equipos por contexto* en
-    `docs/MODELO.md`). En un contexto entran solo los tríos con algún DPS de sus tier lists (Arena;
-    Alianza y WBL) y, en PvP, con anti-mermas para los tres; un DPS entra aunque no tenga vínculo con
-    él, y el puntaje de equipo (liderazgo, DPS, sinergia y strikers) dice de dónde sale cada punto. Se
+    `docs/MODELO.md`). Si él no figura en las tier lists del contexto (Arena; Alianza y WBL), o solo
+    como «Not for wbl», no tiene función ahí y ese orden no arma combinaciones. En un contexto entran
+    solo los tríos con algún DPS de sus tier lists y, en PvP, con anti-mermas para los tres; un DPS
+    entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS, sinergia y
+    strikers) dice de dónde sale cada punto. Se
     filtran con «Con» y «Sin»; cada una dice su líder y su **cobertura** (lo que recibe él en
     ese equipo, por categoría del índice), se marca con ★ como favorita, se arma
     para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
