@@ -37,8 +37,32 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
 - Entregada sin publicar: la 1.0.15 (en PvP cuentan las defensas del liderazgo; sin lista de
   contexto para quien no tiene función en ese contexto). Los datos siguen en el formato 5: el push no
   le cambia nada a la 1.0.14 instalada, y la etiqueta `v1.0.15` publica la release.
+- Entregado después de la 1.0.15, sin versión: en los órdenes PvP y PvE, un líder por trío, el mismo
+  en las listas de los tres, con el liderazgo condicional a la mitad; y el build que les da a los
+  uniformes que Leads & Supports no lista el liderazgo de su base si la Leader Skill es idéntica.
+  `version.json` no cambió: falta decidir si entra en la 1.0.15, que todavía no tiene etiqueta (y
+  entonces se actualizan sus notas), o si es la 1.0.16. Si la 1.0.15 sale sin esto, su etiqueta va en
+  `c9812f5`. Los liderazgos completados llegan a los datos con el próximo workflow «Actualizar datos
+  MFF» (a mano o el lunes); el formato no cambia.
 
 ## Pendiente
+
+- El caso Silver Surfer — Void Knight + Knull — Ancient History + Gorr: con las defensas de la
+  1.0.15 y el condicional a la mitad empatan 6 a 6, y lidera Gorr por la tier list, no por peso (ver
+  «Casos de referencia» en `docs/MODELO.md`). Falta decidir si así está bien.
+- Volumen de las listas (medido el 2 de octubre sobre la 1.0.14, antes de las listas solo con
+  función; hay que volver a medirlo). Exigir en PvP un liderazgo que valga saca el 59% de las
+  tarjetas (Galactus, de 37.514 a 1.699; Silver Surfer — Void Knight sigue en 37.452). Una lista por
+  personaje en vez de una por uniforme deja 290 listas en vez de 888 y saca el 54%, con cada lista
+  casi igual. Las dos juntas sacan el 80%. Falta decidir.
+- Fuera de los órdenes PvP y PvE, el líder sigue siendo el de la sinergia, el que más le suma al
+  personaje de la ficha: «puntos para él», las tier lists sin contexto, Favoritos y Mis equipos. Mis
+  equipos guarda dos veces el mismo trío si se guarda desde dos listas. Falta decidir.
+- El filtro de PvP acepta anti-mermas condicionales (al recibir un debuff). Falta decidir.
+- Liderazgos completados por Leader Skill idéntica a la de la base (sección 12 de AUDITORIA.md):
+  según la prueba, knull1, shangchi2, moongirl1, ghost2 y sentinel2. Falta decidir si se extiende a
+  una hermana (sumaría captainamerica15, greengoblin5 y wintersoldier6), si el build tiene que parar
+  cuando solo difiere `sig` y si la ficha dice que el liderazgo es heredado.
 
 - Liderazgo en PvP: Molecule Man es «la excepción rara» (Ezequiel) y hoy no suma nada fuera de los
   anti-mermas, ni tiene lista de PvP; el daño contra una facción no cuenta. Falta decidir cómo
