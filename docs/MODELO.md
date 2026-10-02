@@ -175,18 +175,26 @@ seducir, control mental, pánico).
 El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ezequiel, 2 de octubre de
 2026) dice lo mismo que el inglés casi siempre. Donde no, el inglés traduce mal:
 
-- **피격 모션**, la reacción al recibir un golpe, sale en inglés como «basic attacks» o «basic
-  attack motions» en invencible, superarmadura, escudo e inmunidad al daño. La invencibilidad no
-  tiene que ver con el stat de ataque básico: los golpes no lo interrumpen ni lo mueven. El catálogo
-  corrigió la lectura de invencible (y el inglés de la del escudo); las otras ya hablaban del
-  movimiento de los golpes.
+- **피격 모션**, la reacción al recibir un golpe, sale en inglés como «basic attacks» o «basic attack
+  motions» en invencible, superarmadura, escudo, inmunidad al daño y contraataque. La invencibilidad
+  no tiene que ver con el stat de ataque básico: los golpes no lo interrumpen ni lo mueven; por eso
+  el contraataque, que reemplaza esa reacción, no se activa mientras es invencible. La rotura de
+  guardia, según el coreano, corta la skill forzando esa reacción. El catálogo corrigió la lectura
+  de invencible (y el inglés de la del escudo); las otras ya hablaban del movimiento de los golpes.
 - **Barrera:** dura un tiempo y una cantidad de golpes, y no frena la rotura de guardia ni los
   debuffs. El inglés dice solo el tiempo, y las skills cuentan los golpes («# time(s)»): las dos
   cosas son ciertas.
 - **Escudo:** frena una cantidad fija de daño.
-- **Type Amplification** es 속성 증폭, amplificación de elemento: el reforjado de Judgement que en
-  inglés se llama así es un problema de traducción (el hallazgo de los C.T.P., en
-  `docs/AUDITORIA.md`).
+- **Jefes inmunes.** En detención del tiempo, encanto, seducción y control mental, el inglés dice
+  que sirven contra rivales «sin debuffs»; el coreano, contra los jefes y rivales a los que no se
+  les aplican debuffs: los inmunes. El catálogo corrigió las cuatro lecturas.
+- **Crítico y evasión garantizados** le suman un valor fijo a la probabilidad; el inglés dice «a una
+  tasa fija».
+- **«Type» es elemento.** El inglés traduce 속성 (elemento) como «Type»: el daño puro no pasa por la
+  defensa ni por las resistencias elementales (el inglés dice «Type Resistance»), y la etiqueta
+  «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. **Type Amplification** es 속성
+  증폭, amplificación de elemento: el reforjado de Judgement que en inglés se llama así es un problema
+  de traducción (el hallazgo de los C.T.P., en `docs/AUDITORIA.md`).
 - **Penetration** es 간파, «ver a través»: no es la Perforación. Es el efecto del reforjado de
   Regeneration que corta el ataque del rival con una rotura de guardia, como dice la guía de
   thanosvibs.

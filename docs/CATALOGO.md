@@ -197,8 +197,9 @@ Sube el daño que hace, aparte del ataque.
 
 `critico_garantizado` · Guaranteed critical rate · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Críticos sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Críticos sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Suma un valor fijo a la probabilidad de crítico, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Suma un valor fijo a la probabilidad de crítico, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice que hace crítico «a una tasa fija» (at a set rate); el coreano, que le suma un valor fijo a la probabilidad de crítico.
 - **Skills:**
   - `GUARANTEED CRITICAL RATE ↑` (209 retratos)
   - `Precision` (15 retratos)
@@ -568,8 +569,9 @@ Inmoviliza o domina al rival.
 
 `control_mental` · Mind control · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice «enemies that don't have debuffs» (rivales sin debuffs encima); el coreano, rivales a los que no se les aplican debuffs: los inmunes.
 - **Skills:**
   - `Mind Control` (65 retratos)
 
@@ -577,8 +579,9 @@ Inmoviliza o domina al rival.
 
 `detener_tiempo` · Time freezing · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No puede moverse ni atacar por un rato. Atrapa a monstruos épicos sin debuffs, pero no a quien tiene skills que quitan todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** No puede moverse ni atacar por un rato. Atrapa a monstruos épicos sin debuffs, pero no a quien tiene skills que quitan todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** No puede moverse ni atacar por un rato. Atrapa también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** No puede moverse ni atacar por un rato. Atrapa también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice que atrapa a «epic monsters that have no debuffs» (monstruos sin debuffs encima); el coreano, a los jefes grandes a los que no se les aplican debuffs: los inmunes.
 - **Skills:**
   - `TIME FREEZING` (26 retratos)
 
@@ -609,8 +612,9 @@ Inmoviliza o domina al rival.
 
 `seducir` · Entice · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice «enemies that don't have debuffs» (rivales sin debuffs encima); el coreano, rivales a los que no se les aplican debuffs: los inmunes.
 - **Skills:**
   - `Entice` (9 retratos)
 
@@ -627,9 +631,9 @@ Inmoviliza o domina al rival.
 
 `encantar` · Charm · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. Atrapa a monstruos épicos sin debuffs, pero no a quien tiene skills que quitan todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **Nota:** El glosario del juego define el encanto como un control; thanosvibs publica solo su daño mental continuo («Charm: Deals #% Mind Damage…»). Que sean el mismo efecto es probable: tienen el mismo nombre.
+- **PvE:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario del juego define el encanto como un control; thanosvibs publica solo su daño mental continuo («Charm: Deals #% Mind Damage…»). Que sean el mismo efecto es probable: tienen el mismo nombre. Sobre los jefes, el inglés dice «epic monsters that have no debuffs» (monstruos sin debuffs encima); el coreano, jefes grandes a los que no se les aplican debuffs: los inmunes.
 - **Skills:**
   - `CHARM` (24 retratos)
 
@@ -1134,8 +1138,9 @@ Recibe menos daño o lo evita.
 
 `evasion_garantizada` · Guaranteed dodge · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Esquiva sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
-- **PvP:** Esquiva sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** Suma un valor fijo a la evasión, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Suma un valor fijo a la evasión, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice que esquiva «a una tasa fija» (at a set rate); el coreano, que le suma un valor fijo a la evasión.
 - **Skills:**
   - `GUARANTEED DODGE RATE ↑` (273 retratos)
 
