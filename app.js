@@ -613,8 +613,8 @@ const T = {
   cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
   cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
-  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, PG, ignorar evasión) y cada uno al que le llega y le sirve; 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en la tier list.',
-                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier list.' },
+  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve; 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en la tier list.',
+                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier list.' },
   cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso; 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en las tier lists.',
                        en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it; 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier lists.' },
   cx_anti:           { es:'Anti-mermas',         en:'Debuff removal' },
@@ -2502,8 +2502,11 @@ function puedeVincular (de, a) {
 // - En PvP los tres tienen que tener anti-mermas (Remove All Debuffs o Debuff Immunity), del
 //   liderazgo del líder o del soporte de alguno; si viene de un soporte, el lugar de líder queda
 //   para otro liderazgo. En PvE no hace falta.
-// - Los liderazgos que más valen: en PvP, todos los ataques, la vida (PG) e ignorar evasión; en PvE,
-//   los de daño (ataque, daño elemental y daño a jefes), cada uno a quien pega con eso.
+// - Los liderazgos que más valen: en PvP, todos los ataques, todas las defensas, la vida (PG) e
+//   ignorar evasión; en PvE, los de daño (ataque, daño elemental y daño a jefes), cada uno a quien
+//   pega con eso. Las defensas, desde que Ezequiel eligió a Thanos — Annihilation de líder por todo
+//   lo que suma (anti-mermas, ataques y defensas) por sobre Black Cat — Queen in Black (ataques e
+//   ignorar evasión): con los tres stats de antes, Black Cat sumaba el doble.
 // - La sinergia (soportes y bonos de equipo) y los strikers son relevantes pero no definitorios:
 //   pesan la mitad.
 // Puntaje de contexto: 2 por cada stat que vale del liderazgo del líder y cada integrante al que le
@@ -2512,7 +2515,7 @@ function puedeVincular (de, a) {
 // striker del trío (uno es striker de otro). El líder es el que más suma de los que cumplen.
 const ANTI_MERMAS = new Set(['Remove All Debuffs', 'Debuff Immunity']);
 const LIDERAZGO_VALE = {
-  pvp: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'HP', 'Ignore Dodge']),
+  pvp: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'All Basic Defenses', 'HP', 'Ignore Dodge']),
   pve: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'Physical Attack', 'Energy Attack', 'Fire Damage',
                 'Fire Damage by % Fire Resist', 'Cold Damage', 'Lightning Damage', 'Poison Damage', 'Mind Damage',
                 'All Element Damage', 'Basic Damage Dealt to Boss Types']),

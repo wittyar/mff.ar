@@ -363,10 +363,13 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
 - **PvP:** los tres tienen que tener anti-mermas (quitar todos los debuffs), del liderazgo del
   líder o del soporte de alguno; un equipo de PvP sin anti-mermas es un mal equipo. Si viene de un
   soporte, el lugar de líder queda para otro liderazgo. En PvE no hace falta.
-- **Liderazgos:** los más útiles en general son todos los ataques, PG (vida) e ignorar esquiva. En
-  PvE pesan los de daño: ataque, daño elemental y daño a jefes, cada uno a quien pega con eso. Un
-  liderazgo de todas las velocidades es inútil, y uno de resistencias solo le sirve a quien tiene
-  una mejora de daño según su resistencia (ver *Daño según la resistencia*).
+- **Liderazgos:** los más útiles en general son todos los ataques, PG (vida) e ignorar esquiva; en
+  PvP, también todas las defensas: Thanos — Annihilation es el mejor líder por todo lo que suma
+  (anti-mermas, ataques y defensas), y gana a Black Cat — Queen in Black, que da ataques e ignorar
+  esquiva (Ezequiel, 2 de octubre de 2026; ver *Casos de referencia*). En PvE pesan los de daño:
+  ataque, daño elemental y daño a jefes, cada uno a quien pega con eso. Un liderazgo de todas las
+  velocidades es inútil, y uno de resistencias solo le sirve a quien tiene una mejora de daño según
+  su resistencia (ver *Daño según la resistencia*).
 - **DPS:** no todos pegan bien, y sin quien pegue un equipo no es relevante. Agent 13 no le aporta
   nada a ningún equipo (relleno); Black Cat sirve de soporte o de líder, no de DPS; hay quien es
   las tres cosas, como Apocalypse.
@@ -385,12 +388,39 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   (cada stat una vez, aunque el liderazgo lo traiga en varias líneas); 2 por cada nivel de fila de
   cada DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve, por cada bono de
   equipo activo y por cada striker del trío. El líder es el que más suma de los que cumplen; a
-  igual puntaje, ordena la tier list. Los pesos son una primera versión, para ajustar mirando casos:
-  cada combinación muestra de dónde sale cada punto.
+  igual puntaje, ordena la tier list. Cada combinación muestra de dónde sale cada punto. Los pesos
+  se revisaron con casos y quedaron así (ver *Casos de referencia*).
 - Con los datos actuales, la lista de PvP de Thor pasa de 7.762 combinaciones a 1.257, la de
   Valeria Richards de 4.243 a 1.118 y la de Kingpin de 36.696 a 2.124. La de Galactus no baja (unas
   37.500): su liderazgo da anti-mermas a cualquiera, así que con él de líder cualquier trío con un
   DPS cumple.
+
+### Casos de referencia
+
+Los pesos se revisaron con cuatro pares reales que Ezequiel comparó (2 de octubre de 2026). Quedaron
+como estaban; lo que cambió es que en PvP cuentan las defensas del liderazgo.
+
+| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → ahora |
+|---|---|---|---|
+| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 |
+| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual |
+| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 |
+| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual |
+
+- **Galactus.** «Thanos es el mejor líder por el agregado de las mermas y mejoras de daños y
+  defensa, y los 3 son DPS»; Black Cat + Wasp «es una opción depositando todo el peso en que
+  Galactus haga el trabajo». El liderazgo de Thanos trae Remove All Debuffs, todos los ataques +50%
+  y todas las defensas +40%; con los stats de antes solo contaban los ataques (6), y a Black Cat
+  (ataques +65%, ignorar evasión +35%) le contaban los dos (12).
+- **Thor.** No tiene función en PvP ni en PvE (Ezequiel): los pares valen por los otros dos. En PvP
+  eligió el primero «en caso de que haya que sumarlo»: empatan y desempata la tier list, que pone
+  primero al segundo. Para que gane el primero, los strikers tendrían que valer 2, y entonces
+  deciden listas enteras (con Apocalypse — Heralds of Apocalypse, Deadpool + Stryfe queda arriba de
+  Jean Grey + Wolverine solo por cuatro strikers), contra la regla de que no son definitorios.
+- **Jean Grey.** Knull y Gorr no pueden liderar: solo Jean Grey, con su liderazgo, les da
+  anti-mermas a los tres, y ese liderazgo no trae nada que valga en PvP. El liderazgo de Black Cat
+  no trae anti-mermas, así que solo sirve si un soporte se los da a los tres (Ezequiel): acá, el de
+  Invisible Woman; con Galactus, el de Wasp.
 
 Lo que todavía no está:
 - El artefacto de Robbie Reyes (fuego según la resistencia, para los aliados Llama) depende de que
