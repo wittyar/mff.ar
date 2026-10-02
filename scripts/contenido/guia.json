@@ -126,6 +126,9 @@
   },
   "juego-ctp": {
    "nombre": "MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026)"
+  },
+  "juego-guia": {
+   "nombre": "MARVEL Future Fight — guía dentro del juego (contenidos y crecimiento, octubre de 2026)"
   }
  },
  "stats": {
@@ -242,8 +245,8 @@
    },
    {
     "id": "n80",
-    "es": "Nv. 80, gear +30 y skills en Nv. 12.",
-    "en": "Upgrade to Lv.80, Character Gear +30, Skill Lv.12."
+    "es": "Nv. 80, gear +30 y skills en Nv. 10.",
+    "en": "Upgrade to Lv.80, Character Gear +30, Skill Lv.10."
    },
    {
     "id": "t4",
@@ -273,7 +276,8 @@
    "fuente": [
     "wiki-t3",
     "wiki-tp",
-    "wiki-t4"
+    "wiki-t4",
+    "juego-guia"
    ],
    "items": [
     {
@@ -297,13 +301,14 @@
      "es": "Tier-4: personaje Tier-3 o con Potencial Trascendido, Nv. 80, gear +30 y todas las skills en Nv. 10. Desbloquea la Striker Skill. Los materiales salen de Giant Boss Raid: Dormammu y World Boss Legend.",
      "en": "Tier-4: a Tier-3 or Potential Transcended character at Lv.80 with all gear at +30 and all skills at Lv.10. Unlocks the Striker Skill. Materials come from Giant Boss Raid: Dormammu and World Boss Legend.",
      "fuente": [
-      "wiki-t4"
+      "wiki-t4",
+      "juego-guia"
      ]
     }
    ],
    "discrepancia": {
-    "es": "La guía (12.1.5) pone \"skills en Nv. 12\" en el paso previo al Tier-4 y la wiki pide Nv. 10 como requisito. No encontré una fuente que diga cuál es el requisito vigente: puede que la guía recomiende más de lo mínimo.",
-    "en": "The guide (12.1.5) lists \"Skill Lv.12\" in the step before Tier-4 while the wiki requires Lv.10. I found no source stating which requirement is current: the guide may be recommending more than the minimum."
+    "es": "La guía de thanosvibs (12.1.5) pone «Skill Lv.12» en el paso anterior. Las skills llegan hasta el Nv. 10: la guía del juego dice que su nivel máximo sube con el del personaje hasta el 10 y pide todas en Nv. 10 para el Tier-4, y Ezequiel lo confirma. El paso dice Nv. 10.",
+    "en": "The thanosvibs guide (12.1.5) says \"Skill Lv.12\" in the previous step. Skills go up to Lv.10: the in-game guide says their max level rises with the character's up to 10 and requires all of them at Lv.10 for Tier-4, and Ezequiel confirms it. The step says Lv.10."
    }
   }
  },

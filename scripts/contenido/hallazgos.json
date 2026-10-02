@@ -22,10 +22,10 @@
  },
  {
   "id": "tier4-nivel-skills",
-  "titulo": "Nivel de skills para Tier-4: guía 12 y wiki 10",
-  "es": "La guía pone \"skills en Nv. 12\" en el paso previo al Tier-4; la wiki pide Nv. 10 como requisito. No hay una fuente que diga cuál es el requisito vigente: puede que la guía recomiende más del mínimo. La hoja de ruta muestra los dos.",
-  "en": "The guide lists \"Skill Lv.12\" in the step before Tier-4; the wiki requires Lv.10. No source states which requirement is current: the guide may recommend more than the minimum. The roadmap shows both.",
-  "fuente": ["tv-guia-1", "wiki-t4"]
+  "titulo": "Nivel de skills para Tier-4: la guía de thanosvibs dice 12; el juego, 10",
+  "es": "La guía de thanosvibs pone \"skills en Nv. 12\" en el paso previo al Tier-4. Las skills llegan hasta el Nv. 10: la guía del juego dice que su nivel máximo sube con el del personaje hasta el 10 y pide todas en Nv. 10 para el Tier-4, como la wiki, y Ezequiel lo confirma. La hoja de ruta dice Nv. 10.",
+  "en": "The thanosvibs guide says \"Skill Lv.12\" in the step before Tier-4. Skills go up to Lv.10: the in-game guide says their max level rises with the character's up to 10 and requires all of them at Lv.10 for Tier-4, like the wiki, and Ezequiel confirms it. The roadmap says Lv.10.",
+  "fuente": ["tv-guia-1", "wiki-t4", "juego-guia"]
  },
  {
   "id": "tabla-artefacto-thanosvibs",
