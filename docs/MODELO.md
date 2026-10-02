@@ -81,6 +81,15 @@ Striker no):
 - **Elementos**: fuego, frío, rayo, veneno, mente. Son un modificador del daño, no un tipo aparte:
   un buff de un elemento solo sirve si sus skills lo tienen, y los buffs del mismo elemento se
   suman entre sí (guía, parte 3).
+- **Daño según la resistencia**: los elementos cuya resistencia le sube el daño. Según Ezequiel,
+  un liderazgo o un soporte de resistencias solo le sirve a quien tiene esa mejora. Sale del
+  artefacto exclusivo, cuando es para él («Increases Cold Damage by [P1]% of Cold Resist»: Luna
+  Snow, Thor, Iceman, Iron Hammer, Ghost Panther, Professor X, Enchantress, Lincoln Campbell,
+  Hellstorm y Misty Knight), y de la Element Conversion de la Striker de Ghost Rider y de Hades,
+  que la fuente publica con el elemento sin resolver («Increases 1 damage by 10% of 1
+  Resistance»): vale el elemento de su daño, fuego en los dos. El artefacto de Robbie Reyes da
+  esa mejora a los aliados con la habilidad Llama: depende de que él esté en el equipo, así que no
+  entra en el perfil de nadie. 38 de los 888 retratos la tienen.
 
 Se calcula una vez, en el build, y viaja en `data.js` (`MFF_PERFIL`, por retrato). Antes la app lo
 deducía en el navegador con dos funciones distintas; el resultado es el mismo en los 888 retratos.

@@ -1,6 +1,6 @@
 {
  "version": "1.0.13",
- "formato_datos": 4,
+ "formato_datos": 5,
  "python": "3.14.7",
  "notas": "Nueva sección Glosario, en la barra de arriba: los 44 términos del glosario de skills del juego en inglés, coreano y español, con lo que el inglés traduce distinto del coreano (por ejemplo, «basic attacks» donde el coreano dice «reacción al golpe»), y todos los efectos del catálogo con sus lecturas de PvE y de PvP, a quién le sirven y cómo aparecen en las skills. Se busca en los tres idiomas. El glosario en coreano corrigió lecturas que se ven en la pestaña Análisis: la invencibilidad, los controles que también alcanzan a los jefes inmunes a los debuffs y el crítico y la evasión garantizados. Los datos cambian de formato: al actualizarse, la app baja los nuevos sola."
 }

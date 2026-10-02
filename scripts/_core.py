@@ -27,6 +27,13 @@ def tier_of(row):
 # suyos). Un retrato sin skills en la API (se avisa abajo) solo tiene Daño.
 CAT = catalogo.cargar(catalogo.RUTA)
 perfiles = {p: modelo.perfil(sks, SK['tablas']['desc']) for p, sks in SK['skills'].items()}
+# Daño según la resistencia (res): de su Striker y del artefacto exclusivo del personaje, que
+# thanosvibs publica por su retrato base.
+_base_de = {r['portrait']: r['base_portrait'] for r in d}
+_artefacto = {a['portrait']: a['text'] for a in json.load(open('work/artifacts.json'))}
+for p, sks in SK['skills'].items():
+    perfiles[p]['res'] = modelo.segun_resistencia(sks, SK['tablas']['ab'], perfiles[p]['ele'],
+                                                  _artefacto.get(_base_de.get(p)))
 analisis = {p: modelo.analisis(sks, SK['tablas'], CAT, perfiles[p]) for p, sks in SK['skills'].items()}
 def roles_de(p):
     return modelo.roles(analisis[p], SK['skills'][p], CAT) if p in analisis else modelo.roles({'fx': []}, [], CAT)

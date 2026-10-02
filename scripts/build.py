@@ -92,7 +92,9 @@ hoy = hoy.isoformat()
 # 3: el análisis de cada variante (MFF_ANALISIS) y el catálogo de efectos (MFF_CATALOGO) para
 #    mostrarlo; los uniformes traen sus propios roles; los bonos de equipo (MFF_BONOS).
 # 4: el glosario de skills del juego (MFF_GLOSARIO) para la solapa Glosario.
-FORMATO = 4
+# 5: el perfil de combate trae res (los elementos cuya resistencia le sube el daño), con el que
+#    la app decide a quién le sirve un liderazgo o un soporte de resistencias.
+FORMATO = 5
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

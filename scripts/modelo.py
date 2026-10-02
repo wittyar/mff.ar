@@ -13,6 +13,8 @@ Etapa 1, perfil de combate: con qué pega cada retrato, según el daño de sus s
   en las etapas que solo reciben uno).
 - ele: los elementos de su daño (fuego, frío, rayo, veneno, mente). Un buff de un elemento
   solo le sirve a quien hace daño de ese elemento (guía, parte 3).
+- res: los elementos cuya resistencia le sube el daño, de su artefacto o de su Striker
+  (segun_resistencia). Un liderazgo o un soporte de resistencias solo le sirve a quien la tiene.
 
 Etapa 2, lo que hace cada variante con sus skills (analisis): cada efecto de cada skill,
 clasificado con el catálogo (scripts/contenido/catalogo.json), con a quién le llega (a él, al
@@ -22,7 +24,7 @@ qué le aporta al equipo.
 
 Lo usa _core.py para data.js (MFF_PERFIL y MFF_ANALISIS, por retrato, y los roles de cada
 personaje y uniforme)."""
-import json, math
+import json, math, re
 
 
 def perfil(skills, desc):
@@ -48,6 +50,36 @@ def perfil(skills, desc):
     total = sum(escala.values())
     return {'esc': [[src, math.floor(n * 100 / total + 0.5)] for src, n in sorted(escala.items(), key=lambda x: -x[1])],
             'tip': sorted(tipos), 'ele': sorted(elementos)}
+
+
+# Daño según la resistencia: el artefacto exclusivo lo escribe «Increases Cold Damage by [P1]% of
+# Cold Resist» (thanosvibs, /api/artifacts).
+_SEGUN_RESISTENCIA = re.compile(r'Increases (Fire|Cold|Lightning|Poison|Mind) Damage by \[P\d+\]% of \1 Resist')
+
+
+def segun_resistencia(skills, ab, ele, artefacto):
+    """Elementos cuya resistencia le sube el daño (res del perfil). Según Ezequiel, los liderazgos y
+    soportes de resistencias solo le sirven a quien tiene esa mejora. Sale de dos lugares:
+    - su artefacto exclusivo (artefacto: sus líneas de texto, o None), lo que dice que es para él
+      («Applies to: Self»). El de Robbie Reyes es para los aliados con la habilidad Llama: depende de
+      que él esté en el equipo, así que no entra en el perfil de nadie;
+    - la Element Conversion de su Striker (Ghost Rider, Hades): la fuente trae el elemento como un
+      código sin resolver («Increases 1 damage by 10% of 1 Resistance»), así que vale el de su daño
+      (ele). ab es la tabla de etiquetas de efecto."""
+    res = set()
+    para_el = False
+    for linea in artefacto or []:
+        linea = re.sub(r'^(&emsp;)+', '', linea)       # la sangría de la fuente
+        if linea.startswith('Applies to:'):
+            para_el = linea == 'Applies to: Self'
+            continue
+        m = _SEGUN_RESISTENCIA.search(linea)
+        if m and para_el:
+            res.add(m.group(1))
+    if any(ab[f['a']]['en'] == 'ELEMENT CONVERSION' for sk in skills if sk['sl'] == 'Striker Skill'
+           for st in sk.get('st') or [] for f in st.get('fx') or []):
+        res.update(ele)
+    return sorted(res)
 
 
 # ---- Etapa 2: lo que hace cada variante con sus skills ----------------------------------
