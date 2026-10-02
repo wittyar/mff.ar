@@ -29,6 +29,7 @@ const ANALISIS       = window.MFF_ANALISIS;       // lo que hace cada retrato co
 const CATALOGO       = window.MFF_CATALOGO;       // catálogo de efectos (scripts/contenido/catalogo.json)
 const BONOS          = window.MFF_BONOS;          // bonos de equipo (scripts/bonos.py)
 const STRIKERS       = window.MFF_STRIKERS;       // strikers de cada personaje (scripts/strikers.py)
+const ROLES_LISTAS   = window.MFF_ROLES_LISTAS;   // rol que da cada fila de las listas de PvP y PvE (scripts/contenido/roles_listas.json)
 const GLOSARIO       = window.MFF_GLOSARIO;       // glosario de skills del juego, inglés y coreano (scripts/contenido/glosario.json)
 const TB             = window.MFF_TABLAS || {};   // patrones y etiquetas, en los dos idiomas
 const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
@@ -118,6 +119,7 @@ let CHARS = [], CHAR_BY_ID = {}, LISTS = [];
 let CONSULTA = null;                   // última consulta de combinaciones de 3 (pestaña Equipos); se vacía en rebuild()
 function rebuild () {
   CONSULTA = null;
+  _ROL.clear();
   CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
   CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
   LISTS = TIERLISTS_SEED.concat(U.lists);
@@ -607,6 +609,23 @@ const T = {
   eq_fav_rm:         { es:'Quitar de favoritos', en:'Remove from favorites' },
   eq_pts_for:        { es:'pts para él',         en:'pts for it' },
   eq_pts_team:       { es:'{n} del equipo',      en:'{n} for the team' },
+  cx_orden:          { es:'{c} · puntaje de equipo · {l}', en:'{c} · team score · {l}' },
+  cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
+  cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
+  cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
+  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, PG, ignorar evasión) y cada uno al que le llega y le sirve; 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en la tier list.',
+                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier list.' },
+  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso; 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en las tier lists.',
+                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it; 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier lists.' },
+  cx_anti:           { es:'Anti-mermas',         en:'Debuff removal' },
+  cx_de_lid:         { es:'{x} (liderazgo)',     en:'{x} (leadership)' },
+  cx_de_sop:         { es:'{x} (soporte)',       en:'{x} (support)' },
+  cx_lider:          { es:'Liderazgo de {x}',    en:'{x}\'s leadership' },
+  cx_lider_nada:     { es:'Ningún liderazgo de los que valen en este contexto', en:'No leadership that counts in this context' },
+  cx_dps:            { es:'DPS',                 en:'DPS' },
+  cx_sinergia:       { es:'Soportes y bonos de equipo', en:'Supports and team bonuses' },
+  cx_strikers:       { es:'Strikers',            en:'Strikers' },
+  cx_striker_de:     { es:'{b} de {a}',          en:'{b} for {a}' },
   d_race:            { es:'Raza',                en:'Race' },
   d_gender:          { es:'Género',              en:'Gender' },
   d_origin:          { es:'Origen',              en:'Origin' },
@@ -2468,39 +2487,163 @@ function retratosEquipo (vs, resaltada) {
 // equipo, en ningún equipo se vinculan. La consulta queda en memoria (la última) hasta el
 // próximo cambio de datos (rebuild()); el orden, los filtros y las páginas trabajan sobre ella.
 const POR_PAGINA = 20;
-// Orden PvP y PvE: las tier lists de thanosvibs de esos modos (Arena de Equipos; Batalla de
-// Alianza y World Boss Legend).
-const LISTAS_PVP = ['tv-arena'], LISTAS_PVE = ['tv-alianza', 'tv-wbl'];
+// Contextos PvP y PvE: las tier lists de thanosvibs de esos modos (Arena de Equipos; Batalla de
+// Alianza y World Boss Legend), las de scripts/contenido/roles_listas.json. Las arma iniciarDatos().
+let LISTAS_PVP, LISTAS_PVE;
 function puedeVincular (de, a) {
   const s = SOPORTES[de.p];
   if (s && TIPOS_SOPORTE.some(([k]) => s[k] && aplicaA(s[k], a) && leSirve(s[k], a))) return true;
   const bonos = BONOS_DE[de.cid];
   return !!bonos && bonos.some(b => b.m.includes(a.cid));
 }
+// CONTEXTO PvP / PvE (reglas de Ezequiel, 2 de octubre de 2026). Un equipo vale según dónde se usa:
+// - Quién es DPS, soporte o líder sale de las filas de las tier lists del contexto (rolEn). Un trío
+//   sin ningún DPS de ese contexto no sirve.
+// - En PvP los tres tienen que tener anti-mermas (Remove All Debuffs o Debuff Immunity), del
+//   liderazgo del líder o del soporte de alguno; si viene de un soporte, el lugar de líder queda
+//   para otro liderazgo. En PvE no hace falta.
+// - Los liderazgos que más valen: en PvP, todos los ataques, la vida (PG) e ignorar evasión; en PvE,
+//   los de daño (ataque, daño elemental y daño a jefes), cada uno a quien pega con eso.
+// - La sinergia (soportes y bonos de equipo) y los strikers son relevantes pero no definitorios:
+//   pesan la mitad.
+// Puntaje de contexto: 2 por cada stat que vale del liderazgo del líder y cada integrante al que le
+// llega y le sirve, 2 por cada nivel de fila de cada DPS (3 la más alta), 1 por cada soporte que le
+// llega a otro y le sirve, 1 por cada bono de equipo activo que le sirve a alguien y 1 por cada
+// striker del trío (uno es striker de otro). El líder es el que más suma de los que cumplen.
+const ANTI_MERMAS = new Set(['Remove All Debuffs', 'Debuff Immunity']);
+const LIDERAZGO_VALE = {
+  pvp: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'HP', 'Ignore Dodge']),
+  pve: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'Physical Attack', 'Energy Attack', 'Fire Damage',
+                'Fire Damage by % Fire Resist', 'Cold Damage', 'Lightning Damage', 'Poison Damage', 'Mind Damage',
+                'All Element Damage', 'Basic Damage Dealt to Boss Types']),
+};
+for (const c of Object.values(LIDERAZGO_VALE)) for (const st of c) {
+  if (!PIDE[st] && !PARA_TODOS.has(st)) throw new Error('liderazgo que vale con un stat que no dice a quién le sirve: ' + st);
+}
+const PESO = { lider: 2, dps: 2, sinergia: 1, striker: 1 };
+/** Índice de cada stat que vale, por contexto, y a quiénes les llega cada uno (bits de integrante),
+ *  reusado en los cientos de miles de tríos de la consulta. */
+const VALE_IDX = Object.fromEntries(Object.entries(LIDERAZGO_VALE).map(([c, st]) => [c, new Map([...st].map((x, i) => [x, i]))]));
+const _LLEGA = Object.fromEntries(Object.entries(LIDERAZGO_VALE).map(([c, st]) => [c, new Uint8Array(st.size)]));
+/** Los strikers de cada personaje, como conjunto, para preguntar rápido. Lo arma iniciarDatos(). */
+let STRIKER_SET;
+/** Rol de una variante en un contexto, según las filas de las listas de ese contexto en las que está
+ *  (las de thanosvibs, con tus cambios): { dps, soporte (nivel de la mejor fila, 0 si no lo es),
+ *  lider, striker, fuera, filas: [[lista, fila]] }. Se guarda hasta el próximo rebuild(). */
+const _ROL = new Map();
+function rolEn (v, ctx) {
+  const k = ctx + '|' + v.key;
+  let r = _ROL.get(k);
+  if (r) return r;
+  r = { dps: 0, soporte: 0, lider: false, striker: false, fuera: false, filas: [] };
+  for (const [lid, roles] of Object.entries(ROLES_LISTAS[ctx])) {
+    const l = listById(lid);
+    if (!l) throw new Error('falta la tier list ' + lid);
+    for (const fid of filasDe(lid, v.key)) {
+      const rf = roles[fid];
+      if (!rf) throw new Error(`fila ${fid} de ${lid} sin rol en roles_listas.json`);
+      const [rol, nivel] = rf;
+      if (rol === 'dps' || rol === 'soporte') r[rol] = Math.max(r[rol], nivel);
+      else r[rol] = true;
+      r.filas.push([l, fid]);
+    }
+  }
+  _ROL.set(k, r);
+  return r;
+}
+/** Liderazgos y soportes de un retrato, y cuáles dan anti-mermas, para el puntaje de contexto. */
+const _SLOTS = new Map();
+function slotsDe (v) {
+  let s = _SLOTS.get(v.p);
+  if (s) return s;
+  const so = SOPORTES[v.p] || {};
+  s = { lid: [], sop: [], antiLid: [], antiSop: [] };
+  for (const [k] of TIPOS_SOPORTE) {
+    const x = so[k];
+    if (!x) continue;
+    const lid = LIDERAZGOS.includes(k), anti = x.fx.some(f => ANTI_MERMAS.has(f.s));
+    (lid ? s.lid : s.sop).push(x);
+    if (anti) (lid ? s.antiLid : s.antiSop).push(x);
+  }
+  if (v.p) _SLOTS.set(v.p, s);
+  return s;
+}
+/** Un trío en un contexto. null si no entra: sin ningún DPS de ese contexto o, en PvP, sin un líder
+ *  con el que los tres tengan anti-mermas. Si entra: { score, lider, partes: { lider, dps, sinergia,
+ *  striker } }; con detalle, también de dónde sale cada punto (detalleContexto lo escribe). */
+function enContexto (vs, ctx, detalle) {
+  const roles = vs.map(x => rolEn(x, ctx));
+  if (!roles.some(r => r.dps)) return null;
+  const sl = vs.map(slotsDe);
+  const cubreSop = vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m))));
+  const vale = VALE_IDX[ctx], llega = _LLEGA[ctx];
+  let li = -1, ptsLider = 0;
+  for (let i = 0; i < vs.length; i++) {
+    if (ctx === 'pvp' && !vs.every((m, j) => cubreSop[j] || sl[i].antiLid.some(x => aplicaA(x, m)))) continue;
+    // Cada stat que vale cuenta una vez por integrante, aunque el liderazgo lo traiga en varias
+    // líneas (Arachknight 2099: todos los ataques +45%, +55% o +65% según sus Infinity Warps).
+    llega.fill(0);
+    for (const x of sl[i].lid) for (const f of x.fx) {
+      const k = vale.get(f.s);
+      if (k === undefined) continue;
+      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])) llega[k] |= 1 << j;
+    }
+    let pts = 0;
+    for (const bits of llega) pts += ((bits & 1) + (bits >> 1 & 1) + (bits >> 2 & 1)) * PESO.lider;
+    if (li < 0 || pts > ptsLider) { li = i; ptsLider = pts; }
+  }
+  if (li < 0) return null;
+  let dps = 0;
+  for (const r of roles) dps += r.dps * PESO.dps;
+  let sinergia = 0;
+  for (let a = 0; a < vs.length; a++) for (const x of sl[a].sop) {
+    if (vs.some((b, j) => j !== a && aplicaA(x, b) && leSirve(x, b))) sinergia += PESO.sinergia;
+  }
+  for (const a of vs) for (const b of BONOS_DE[a.cid] || []) {
+    if (b.m[0] === a.cid && estanTodos(b.m, vs) && vs.some(x => b.vs.some(bv => leSirve(bv, x)))) sinergia += PESO.sinergia;
+  }
+  let striker = 0;
+  for (const a of vs) { const ss = STRIKER_SET[a.cid]; if (ss) for (const b of vs) if (b !== a && ss.has(b.cid)) striker += PESO.striker; }
+  const out = { score: ptsLider + dps + sinergia + striker, lider: vs[li], partes: { lider: ptsLider, dps, sinergia, striker } };
+  if (detalle) Object.assign(out, { roles, sl, cubreSop });
+  return out;
+}
 function consultaCon (v) {
   if (CONSULTA && CONSULTA.clave === v.key) return CONSULTA;
   const pool = allVariants().filter(x => x.cid !== v.cid);
   const puede = pool.map(x => puedeVincular(x, v) || puedeVincular(v, x));
+  // En los contextos PvP y PvE, un DPS de ese contexto entra aunque no tenga vínculo con él.
+  const dps = pool.map(x => rolEn(x, 'pvp').dps > 0 || rolEn(x, 'pve').dps > 0);
   const max = pool.length * (pool.length - 1) / 2;
-  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max);
+  // F: qué compañeros tienen vínculo con él (1, el primero; 2, el segundo). P: los puntos para él,
+  // solo con los dos vinculados (el orden «puntos para él» y las tier lists solo usan esas filas).
+  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), F = new Uint8Array(max);
   // Un solo arreglo de equipo y unas solas opciones para los cientos de miles de llamadas
   // (synergy no se los guarda: lo que devuelve se usa acá mismo y se descarta).
   const vs = [v, null, null], op = { soloPuntaje: true, foco: v };
   let n = 0;
   for (let i = 0; i < pool.length; i++) {
-    if (!puede[i]) continue;
+    if (!puede[i] && !dps[i]) continue;
     vs[1] = pool[i];
     for (let j = i + 1; j < pool.length; j++) {
-      if (!puede[j] || pool[i].cid === pool[j].cid) continue;
+      if ((!puede[j] && !dps[j]) || pool[i].cid === pool[j].cid) continue;
       vs[2] = pool[j];
-      const sc = synergy(vs, op);
-      if (!vinculo(v, pool[i], sc.aplicados) || !vinculo(v, pool[j], sc.aplicados)) continue;
-      A[n] = i; B[n] = j; P[n] = sc.score; n++;
+      let f = 0, pts = 0;
+      if (puede[i] || puede[j]) {
+        const sc = synergy(vs, op);
+        if (puede[i] && vinculo(v, pool[i], sc.aplicados)) f |= 1;
+        if (puede[j] && vinculo(v, pool[j], sc.aplicados)) f |= 2;
+        pts = sc.score;
+      }
+      if (f !== 3 && !((f & 1 || dps[i]) && (f & 2 || dps[j]))) continue;
+      A[n] = i; B[n] = j; P[n] = pts; F[n] = f; n++;
     }
   }
-  CONSULTA = { clave: v.key, cid: v.cid, pool, A, B, P, n, vista: null };
+  CONSULTA = { clave: v.key, cid: v.cid, v, pool, A, B, P, F, n, vista: null };
   return CONSULTA;
 }
+/** Contexto del orden elegido: 'pvp', 'pve' o null (puntos para él, o una tier list). */
+function contextoOrden () { return ui.eqOrden === 'pvp' || ui.eqOrden === 'pve' ? ui.eqOrden : null; }
 /** Tier lists del orden elegido: las de PvP, las de PvE o una sola (cualquiera de personajes). */
 function listasOrden () {
   const o = ui.eqOrden;
@@ -2521,22 +2664,38 @@ function vistaConsulta (q) {
   const descartes = new Set(U.descartados.filter(d => d.includes(q.cid)).map(d => d.filter(c => c !== q.cid).join('|')));
   const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon, ui.eqVerDescartados, [...descartes].join(',')].join('|');
   if (q.vista && q.vista.clave === clave) return q.vista;
-  const ls = listasOrden();
+  const ls = listasOrden(), ctx = contextoOrden();
   const pos = q.pool.map(x => ls.reduce((suma, l) => suma + puesto(l, x.key), 0));
   const ref = q.pool.map(x => rankIndex(x.key));
-  // Orden por una sola clave numérica por fila (puestos, puntos al revés, referencia, fila):
-  // el orden nativo de un Float64Array es varias veces más rápido que comparar de a pares.
-  // Cada parte entra en su lugar: si no entrara, el orden saldría mal sin avisar.
-  const claves = new Float64Array(q.n);
+  const dpsCtx = ctx ? q.pool.map(x => rolEn(x, ctx).dps > 0) : null;
+  // Orden por una sola clave numérica por fila: el orden nativo de un Float64Array es varias veces
+  // más rápido que comparar de a pares. Cada parte entra en su lugar: si no entrara, el orden
+  // saldría mal sin avisar. Sin contexto: puestos, puntos para él al revés, referencia y fila, solo
+  // con los dos compañeros vinculados. En PvP y PvE: el puntaje de contexto al revés, los puestos,
+  // la referencia y la fila, con cada compañero vinculado o DPS de ese contexto, y si el trío entra.
+  const claves = new Float64Array(q.n), vs = [q.v, null, null];
+  let m = 0;
   for (let i = 0; i < q.n; i++) {
-    const ps = pos[q.A[i]] + pos[q.B[i]], pts = q.P[i], rf = ref[q.A[i]] + ref[q.B[i]];
+    const ps = pos[q.A[i]] + pos[q.B[i]], rf = ref[q.A[i]] + ref[q.B[i]];
+    let pts;
+    if (!ctx) {
+      if (q.F[i] !== 3) continue;
+      pts = q.P[i];
+    } else {
+      if (!((q.F[i] & 1 || dpsCtx[q.A[i]]) && (q.F[i] & 2 || dpsCtx[q.B[i]]))) continue;
+      vs[1] = q.pool[q.A[i]]; vs[2] = q.pool[q.B[i]];
+      const e = enContexto(vs, ctx);
+      if (!e) continue;
+      pts = e.score;
+    }
     if (ps >= 4096 || pts < 0 || pts >= 128 || rf >= 2048) throw new Error('orden de combinaciones fuera de rango: ' + [ps, pts, rf]);
-    claves[i] = ((ps * 128 + (127 - pts)) * 2048 + rf) * 1048576 + i;
+    claves[m++] = ctx ? (((127 - pts) * 4096 + ps) * 2048 + rf) * 1048576 + i
+                      : ((ps * 128 + (127 - pts)) * 2048 + rf) * 1048576 + i;
   }
-  claves.sort();
+  const ordenadas = claves.subarray(0, m).sort();
   const fuera = new Set(ui.eqExcluir), vistos = new Set(), filas = [];
   let ocultos = 0;
-  for (const k of claves) {
+  for (const k of ordenadas) {
     const i = k % 1048576;
     const a = q.pool[q.A[i]], b = q.pool[q.B[i]];
     if (fuera.has(a.cid) || fuera.has(b.cid) || (ui.eqCon && a.cid !== ui.eqCon && b.cid !== ui.eqCon)) continue;
@@ -2574,6 +2733,47 @@ function coberturaHtml (cob) {
     return `<span class="tag cob ${estado}" ${cs.some(c => !cob[c]) ? `title="${h(t('cb_art'))}"` : ''}>${estado === 'no' ? '✗' : '✓'} ${h(nombre)}</span>`;
   }).join('')}</div>`;
 }
+/** De dónde salen los puntos de contexto de un trío: los anti-mermas (en PvP), el liderazgo del
+ *  líder, los DPS con su fila, los soportes y bonos de equipo, y los strikers. */
+function detalleContexto (e, vs, ctx) {
+  const lineas = [], quienes = (ms) => ms.map(m => m.name).join(', ');
+  if (ctx === 'pvp') {
+    const fuentes = new Map();
+    vs.forEach((m, j) => {
+      const de = vs.find((a, k) => e.sl[k].antiSop.some(x => aplicaA(x, m)));
+      const txt = de ? t('cx_de_sop').replace('{x}', de.name) : t('cx_de_lid').replace('{x}', e.lider.name);
+      if (!fuentes.has(txt)) fuentes.set(txt, []);
+      fuentes.get(txt).push(m);
+    });
+    lineas.push([t('cx_anti'), null, [...fuentes].map(([f, ms]) => `${f} → ${quienes(ms)}`).join(' · ')]);
+  }
+  // Por stat que vale: sus líneas (un liderazgo puede traer varias del mismo stat) y a quiénes llega.
+  const vale = LIDERAZGO_VALE[ctx], porStat = new Map();
+  for (const x of slotsDe(e.lider).lid) for (const f of x.fx) {
+    if (!vale.has(f.s)) continue;
+    const st = porStat.get(f.s) || { txt: [], ms: new Set() };
+    porStat.set(f.s, st);
+    st.txt.push(efectoSoporteTxt(f));
+    vs.forEach(m => { if (aplicaA(x, m) && sirve(f, m)) st.ms.add(m); });
+  }
+  const liderazgo = [...porStat.values()].filter(st => st.ms.size).map(st => `${st.txt.join(' / ')} → ${quienes(vs.filter(m => st.ms.has(m)))}`);
+  lineas.push([t('cx_lider').replace('{x}', e.lider.name), e.partes.lider, liderazgo.join(' · ') || t('cx_lider_nada')]);
+  const dps = vs.map((m, j) => ({ m, r: e.roles[j] })).filter(x => x.r.dps).map(({ m, r }) =>
+    `${m.name} (${r.filas.filter(([l, fid]) => ROLES_LISTAS[ctx][l.id][fid][0] === 'dps')
+      .map(([l, fid]) => `${listName(l)}: ${rowsOf(l).find(x => x.id === fid).label}`).join(', ')})`);
+  lineas.push([t('cx_dps'), e.partes.dps, dps.join(' · ')]);
+  if (e.partes.sinergia) lineas.push([t('cx_sinergia'), e.partes.sinergia, '']);
+  if (e.partes.striker) {
+    const pares = [];
+    for (const a of vs) for (const [x, p, cuando] of STRIKERS[a.cid] || []) {
+      const b = vs.find(y => y !== a && y.cid === x);
+      if (b) pares.push(`${t('cx_striker_de').replace('{b}', b.name).replace('{a}', a.name)} (${t('sk_' + cuando).replace('{p}', p)})`);
+    }
+    lineas.push([t('cx_strikers'), e.partes.striker, pares.join(' · ')]);
+  }
+  return `<ul class="cxpts">${lineas.map(([k, pts, txt]) =>
+    `<li><b>${h(k)}${pts != null ? ` +${pts}` : ''}</b>${txt ? ': ' + h(txt) : ''}</li>`).join('')}</ul>`;
+}
 function combinacionesHtml (v) {
   const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))}</p>
     <p class="muted" style="margin-bottom:10px">${h(t('cb_note'))}</p>`;
@@ -2586,7 +2786,7 @@ function combinacionesHtml (v) {
     }
     return `<div class="section" id="combos">${cab}<p class="muted">${h(t('eq_calc'))}</p></div>`;
   }
-  const q = CONSULTA, { filas, ocultos } = vistaConsulta(q), ls = listasOrden();
+  const q = CONSULTA, { filas, ocultos } = vistaConsulta(q), ls = listasOrden(), ctx = contextoOrden();
   const paginas = Math.max(1, Math.ceil(filas.length / POR_PAGINA));
   ui.eqPagina = Math.min(ui.eqPagina, paginas - 1);
   const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
@@ -2595,17 +2795,22 @@ function combinacionesHtml (v) {
   const fila = (i) => {
     const vs = [v, q.pool[q.A[i]], q.pool[q.B[i]]], keys = vs.map(x => x.key);
     const sc = synergy(vs, { foco: v });
+    // En PvP y PvE, el líder y los puntos son los del contexto; los de siempre quedan abajo.
+    const e = ctx ? enContexto(vs, ctx, true) : null, lider = e ? e.lider : sc.lider;
     return `<div class="card combo">
       <div class="combofila">
         ${estrella(keys)}${retratosEquipo(vs, v.key)}
         <div class="combotx">
           <div>${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
-          <div class="combolider">${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('eq_no_leader'))}</div>
-          ${coberturaHtml(cobertura(v, vs, sc.lider))}
+          <div class="combolider">${h(lider ? t('eq_leader').replace('{x}', fullLabel(lider)) : t('eq_no_leader'))}</div>
+          ${e ? detalleContexto(e, vs, ctx) : ''}
+          ${coberturaHtml(cobertura(v, vs, lider))}
           ${ls.map(l => `<div class="muted">${h(listName(l))}: ${vs.map(x => h(puestoTexto(l, x.key))).join(' · ')}</div>`).join('')}
         </div>
-        <div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}
-          <div class="muted">${h(t('eq_pts_team').replace('{n}', synergy(vs).score))}</div></div>
+        ${e ? `<div class="eqpts"><b>${e.score}</b> ${h(t('cx_pts_' + ctx))}
+          <div class="muted">${h(t('cx_para_el').replace('{a}', sc.score).replace('{b}', synergy(vs).score))}</div></div>`
+            : `<div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}
+          <div class="muted">${h(t('eq_pts_team').replace('{n}', synergy(vs).score))}</div></div>`}
         ${botonArmar(vs, '', '')}
         ${ui.eqVerDescartados
           ? `<button class="btn sm" data-a="restaurar" data-c="${vs.map(x => x.cid).join(',')}">${h(t('eq_restaurar'))}</button>`
@@ -2621,8 +2826,8 @@ function combinacionesHtml (v) {
       <label>${h(t('eq_sort'))}
         <select data-a="eqOrden">
           ${opcion('foco', t('eq_sort_foco'), ui.eqOrden)}
-          ${opcion('pvp', 'PvP · ' + nombres(LISTAS_PVP), ui.eqOrden)}
-          ${opcion('pve', 'PvE · ' + nombres(LISTAS_PVE), ui.eqOrden)}
+          ${opcion('pvp', t('cx_orden').replace('{c}', 'PvP').replace('{l}', nombres(LISTAS_PVP)), ui.eqOrden)}
+          ${opcion('pve', t('cx_orden').replace('{c}', 'PvE').replace('{l}', nombres(LISTAS_PVE)), ui.eqOrden)}
           ${listasAgrupadas().map(gr => ({ k: gr.k, ls: gr.ls.filter(l => tipoLista(l) === 'personajes') })).filter(gr => gr.ls.length)
             .map(gr => `<optgroup label="${h(t(gr.k))}">${gr.ls.map(l => opcion('lista:' + l.id, listName(l), ui.eqOrden)).join('')}</optgroup>`).join('')}
         </select></label>
@@ -2631,6 +2836,7 @@ function combinacionesHtml (v) {
       <label>${h(t('eq_excluir'))}
         <select data-a="eqExcluir">${opcion('', t('eq_excluir_ph'), '')}${personajes.filter(c => !ui.eqExcluir.includes(c.id)).map(c => opcion(c.id, c.name, '')).join('')}</select></label>
     </div>
+    ${ctx ? `<p class="muted cxnota">${h(t('cx_nota_' + ctx).replace('{l}', nombres(ctx === 'pvp' ? LISTAS_PVP : LISTAS_PVE)))}</p>` : ''}
     ${ui.eqExcluir.length ? `<div class="row" style="gap:6px;margin-bottom:10px">${ui.eqExcluir.map(cid =>
       `<button class="tag dim eqfuera" data-a="eqIncluir" data-cid="${h(cid)}" title="${h(t('eq_incluir'))}">${h(CHAR_BY_ID[cid].name)} ✕</button>`).join('')}</div>` : ''}
     <div class="row" style="justify-content:space-between;margin-bottom:10px">
@@ -4374,6 +4580,9 @@ function iniciarDatos () {
     if (!m) return;
     for (const id of new Set((m.por_patron ? Object.values(m.por_patron) : [m]).flatMap(y => y.efectos))) GL_DE[id].etiquetas.push(i);
   });
+  LISTAS_PVP = Object.keys(ROLES_LISTAS.pvp);
+  LISTAS_PVE = Object.keys(ROLES_LISTAS.pve);
+  STRIKER_SET = Object.fromEntries(Object.entries(STRIKERS).map(([c, filas]) => [c, new Set(filas.map(f => f[0]))]));
   VENTAJA = SEED.VENTAJA_TIPO;
   LE_GANA_A = {};
   for (const [c, sobre] of Object.entries(VENTAJA)) for (const [d, f] of Object.entries(sobre)) if (f === 'normal') LE_GANA_A[d] = c;
