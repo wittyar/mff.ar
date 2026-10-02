@@ -22,11 +22,16 @@
     {
      "es": "El Potencial se realiza jugando World Boss y el 2.º Potencial jugando World Boss Legend.",
      "en": "Potential is realised by running World Boss, and 2nd Potential by running World Boss Legend."
+    },
+    {
+     "es": "El juego tiene 6 dificultades: Beginner, Normal, Ultimate (Tier-2 o más), Legend (Tier-3 o Potencial Trascendido), Legend+ (Tier-4) y Mythic (Tier-4, después de dominar Legend+). La guía de thanosvibs habla de Ultimate y Legend.",
+     "en": "The game has 6 difficulties: Beginner, Normal, Ultimate (Tier-2 or higher), Legend (Tier-3 or Transcended Potential), Legend+ (Tier-4) and Mythic (Tier-4, after mastering Legend+). The thanosvibs guide covers Ultimate and Legend."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "tv-guia-1"
+    "tv-guia-1",
+    "juego-guia"
    ],
    "equipo": {
     "tam": 3,
@@ -71,10 +76,15 @@
     {
      "es": "Legend (más adelante): el puntaje alto no importa tanto; alcanza con lo necesario para los materiales de Despertar extra.",
      "en": "Legend (late game): scoring high does not matter much; just do enough to get the bonus Awakening Materials."
+    },
+    {
+     "es": "Boss Battle se abre en orden: Normal, Extreme y Legend, que pide pasar Extreme con 1.000.000 de puntos o más; Relay Battle abre Infinite Challenge, y al pasar Extreme, Legend e Infinite Challenge se abre Challenge. Un personaje con el récord más alto en un modo no puede participar en los otros (el texto del juego se corta al final).",
+     "en": "Boss Battle opens in order: Normal, Extreme and Legend, which requires clearing Extreme with 1,000,000 points or more; Relay Battle opens Infinite Challenge, and clearing Extreme, Legend and Infinite Challenge opens Challenge. A character with the highest record in one mode cannot take part in the others (the game text is cut off at the end)."
     }
    ],
    "fuente": [
-    "tv-guia-4"
+    "tv-guia-4",
+    "juego-guia"
    ],
    "equipo": {
     "tam": 3,
@@ -131,10 +141,15 @@
     {
      "es": "Dormammu (más adelante): la única forma de conseguir Souls of the Faltine, necesarias para el Tier-4. Si no estás cerca del 10% de perforación, buscá quien te cargue.",
      "en": "Dormammu (late game): the only way to get Souls of the Faltine, required for Tier-4. Find someone to carry you if you are not around 10% Pierce yet."
+    },
+    {
+     "es": "Entran hasta 3 jugadores (se puede con 1 o 2): con más jugadores, el jefe es más difícil y da más recompensas. Los jefes cambian cada día, y en cada batalla un personaje bonus elegido al azar sube la chance de recompensa.",
+     "en": "Up to 3 players enter (1 or 2 also works): with more players the boss is harder and gives more rewards. Bosses change daily, and in each battle a randomly selected Bonus Character raises the chance of rewards."
     }
    ],
    "fuente": [
-    "tv-guia-4"
+    "tv-guia-4",
+    "juego-guia"
    ],
    "corrobora": {
     "es": "La wiki confirma que los materiales de Tier-4 salen de Giant Boss Raid: Dormammu y de World Boss Legend.",
@@ -167,11 +182,16 @@
     {
      "es": "También dan artefactos exclusivos como recompensa.",
      "en": "They also reward exclusive Artifacts."
+    },
+    {
+     "es": "Es cooperativo: un rift se abre con piedras de invocación (más tier, más recompensas) y se comparte con amigos o con la alianza; cada vez que alguien lo despeja sube su progreso.",
+     "en": "It is cooperative: a rift is opened with Summon Stones (higher tier, more rewards) and shared with friends or the alliance; each clear by anyone raises its progress."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "wiki-rift"
+    "wiki-rift",
+    "juego-guia"
    ],
    "equipo": {
     "tam": 3,
@@ -282,10 +302,15 @@
     {
      "es": "Fuente de Arena Tokens, que compran materiales de Tier-4. Jugá tus 10 partidas diarias; paga algunos cristales al final de la semana.",
      "en": "Source of Arena Tokens, used to purchase Tier-4 Materials. Play your 10 daily matches; a few extra Crystals at the end of each week."
+    },
+    {
+     "es": "Se arman hasta 5 equipos de 3 personajes con un tope de costo de héroe (Hero Cost) y se pelea contra los equipos de otros jugadores.",
+     "en": "You build up to 5 teams of 3 characters within a Hero Cost limit and fight other players' teams."
     }
    ],
    "fuente": [
-    "tv-guia-4"
+    "tv-guia-4",
+    "juego-guia"
    ],
    "equipo": {
     "tam": 3,
@@ -314,10 +339,15 @@
     {
      "es": "Tres turnos de una hora por día, tres días por semana. Conviene hacer 5 entradas por día aunque las pierdas todas: dan 85 Alliance Tokens, que compran materiales de Tier-4 en la tienda de la alianza.",
      "en": "Available in three 1-hour slots a day, three days a week. Worth doing 5 entries a day even if you lose them all: 85 Alliance Tokens just for participating, used for Tier-4 Materials in the Alliance Shop."
+    },
+    {
+     "es": "Pelean tres alianzas y las batallas son automáticas. Un personaje que atacó no se puede volver a usar hasta el reinicio, y los que conquistan una región quedan defendiéndola: no pueden atacar otras.",
+     "en": "Three alliances fight and battles are automatic. A character that attacked cannot be used again until the reset, and those that seize a region stay to defend it: they cannot attack other regions."
     }
    ],
    "fuente": [
-    "tv-guia-4"
+    "tv-guia-4",
+    "juego-guia"
    ],
    "equipo": {
     "tam": 3,
@@ -393,11 +423,16 @@
     {
      "es": "Se desbloquea pasando una vez World Boss Legend: Knull y teniendo 5 o más héroes Tier-3 o con Potencial Trascendido en Nv. 70. Cada temporada cambia las skills prohibidas.",
      "en": "Unlocked by clearing World Boss Legend Knull once and owning five or more Tier-3 or Potential Transcended heroes at Lv.70. Restricted skills change every season."
+    },
+    {
+     "es": "Las skills prohibidas (la de esa ranura no se puede usar), los peligros de la etapa y los tipos de personaje que no pueden entrar cambian cada semana. Los zombies suben ataque, defensa y vida con el nivel.",
+     "en": "Skill restrictions (the skill in that slot cannot be used), stage hazards and the character types that cannot be deployed change every week. Zombies gain ATK, DEF and HP as the level rises."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "wiki-zs"
+    "wiki-zs",
+    "juego-guia"
    ],
    "listas": [],
    "ctp": "pve",
@@ -442,11 +477,16 @@
     {
      "es": "Dimensional Clash es donde se farmean los tickets de Type Enhancement.",
      "en": "Dimensional Clash is where Type Enhancement Tickets are primarily farmed."
+    },
+    {
+     "es": "Ultimate pide personajes Tier-3 o con Potencial Trascendido, de Nv. 70 o más; Normal acepta cualquiera.",
+     "en": "Ultimate requires Tier-3 or Transcended Potential characters at Lv.70 or higher; Normal accepts any."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "tv-guia-3"
+    "tv-guia-3",
+    "juego-guia"
    ],
    "listas": [],
    "ctp": "pve",
