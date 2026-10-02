@@ -119,7 +119,7 @@ que después la ficha va a decir de cada variante:
 | Qué es | El efecto y su grupo (ataque, daño, elemento, control, reducción de daño...). |
 | Cuándo aplica | Lo propio del efecto, en su condición: solo contra ciertos rivales (una facción, los jefes, los que tienen más vida...), crece o baja (se acumula, según la vida...) o dura unos ataques. Lo demás es de cada skill o soporte: su activación y su duración. |
 | A quién le llega | Si lo recibe su lado o el rival, en la etiqueta. A qué aliados, el objetivo de la skill o la restricción del soporte. |
-| A quién le sirve | Una regla por efecto: a cualquiera del equipo, a quien escala con un ataque, a quien tiene un elemento, a quien hace daño físico, aplica debuffs, invoca, perfora, tiene definitiva de Tier-3 o Striker, o solo a él. Se compara con el perfil de combate de la etapa 1 y con sus skills. |
+| A quién le sirve | Una regla por efecto: a cualquiera del equipo, a quien escala con un ataque, a quien tiene un elemento, a quien hace daño físico, aplica debuffs, invoca, tiene definitiva de Tier-3 o Striker, o solo a él. Se compara con el perfil de combate de la etapa 1 y con sus skills. |
 | PvE y PvP | Una lectura por modo, del grupo o propia del efecto. |
 | Fuente y certeza | Cada lectura dice su certeza: comprobado (lo dice una fuente, que se cita), probable (se deduce del texto del efecto) o conjetura. |
 
@@ -148,10 +148,31 @@ entre las etiquetas de su skill. Lo que dejó el cruce está en `docs/AUDITORIA.
 Quedan 5 efectos, en 4 retratos, que no aparecen en la skill del mismo nombre; se revisan cuando el
 cruce sea parte del build.
 
+### Lo que corrigió el glosario del juego
+
+El juego trae un glosario de skills (Skill Name Glossary; capturas de Ezequiel, octubre de 2026).
+Corrigió el catálogo en cinco puntos:
+
+- **Fractura** no es un control: le baja todos los ataques básicos al rival (se acumula), cada
+  curación le saca una carga y lo cura menos, y «quitar todos los debuffs» no la saca. Pasó a
+  *Debilitar* y dejó de contar para el rol Control.
+- **Mockery** es un debuff sobre los rivales: los obliga a atacarlo a él, pero a ellos les sube el
+  ataque. El catálogo lo leía como un aumento de su propio ataque.
+- **Encanto** y **Pérdida** frenan al rival (no se mueve ni usa skills); thanosvibs publica solo su
+  daño continuo. Cada uno suma un control, con certeza probable: el nombre es el mismo, pero ninguna
+  fuente dice las dos cosas juntas.
+- **Daño perforante adicional** (Additional Pierce Damage) es daño extra que ignora la defensa,
+  sobre el daño de la skill. No depende de la Perforación (atravesar invencibilidad, escudos o
+  barreras), así que le sirve a cualquiera; el catálogo lo daba solo a quien perfora.
+- **Incapacitación**, además de quitar los buffs, baja todas las defensas (se acumula).
+
+También dio la lectura comprobada de lo que frena cada protección (invencible, superarmadura,
+barrera, escudo, inmunidad al daño) y de los controles (miedo, atrapar, detención del tiempo,
+seducir, control mental, pánico). Dentro del mismo juego hay diferencias de traducción: el glosario
+dice que la barrera frena el daño «por un tiempo» y las skills la cuentan en golpes («# time(s)»).
+
 ### Dudas abiertas del catálogo
 
-- **Fractura.** Ninguna fuente dice qué hace. Se sabe que se aplica al rival y que corta el ataque
-  especial de los jefes de Alliance Battle Legend; que sea un control es una suposición.
 - **«Bonus Damage».** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y
   «Additional Damage» al daño fijo extra; no dice si «Bonus Damage» es ese daño fijo.
 - **«Adaptation».** «Inmune al mayor daño recibido»: no está claro si es el golpe más fuerte o el
@@ -175,7 +196,7 @@ catálogo, anota:
 - **De qué skills sale y cuándo:** la skill y la activación de la etapa. Las apariciones de un mismo
   efecto se juntan si comparten destino, aliados y condición.
 - **Si le sirve**, cuando es para él: la regla «le sirve» del catálogo contra su perfil de combate y
-  sus skills (un buff de daño de perforación sin Perforación, o de Striker sin Striker, no le sirve).
+  sus skills (un buff de Striker sin Striker, o de un elemento que no usa, no le sirve).
 - **Lo que la fuente no dice.** «Give Power» («Acquires the following effect») es un envoltorio:
   lo que otorga viene después, en la misma etapa o en las que siguen. Si no le sigue nada, la fuente
   no dice qué otorga, y el análisis lo muestra así (74 casos en estos datos). Lo que el catálogo no
@@ -195,7 +216,7 @@ y cada uniforme tiene los suyos:
 |---|---|---|
 | Soporte | Le da algo a sus aliados fuera del liderazgo. | 239 de 888 (27%) |
 | Tanque | Provoca, o le baja al equipo el daño que recibe. | 230 (26%) |
-| Control | Le aplica al rival 3 o más controles distintos. | 500 (56%) |
+| Control | Le aplica al rival 3 o más controles distintos. | 469 (53%) |
 | Daño | Todos. | 888 |
 
 Antes salían de juntar los uniformes del personaje, con una lista de etiquetas por rol (curación,

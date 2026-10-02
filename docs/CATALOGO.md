@@ -16,7 +16,7 @@ thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo 
 - **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.
 - **Leads & Supports:** los stats que apuntan al efecto, con cuántos retratos lo dan.
 
-16 grupos, 124 efectos, 228 etiquetas de skills y 72 stats de Leads & Supports. Todo lo que traen los datos está clasificado.
+16 grupos, 126 efectos, 228 etiquetas de skills y 72 stats de Leads & Supports. Todo lo que traen los datos está clasificado.
 
 ## Golpe
 
@@ -86,7 +86,6 @@ Sube un ataque, el stat del que sale el daño.
   - `Attack per Recharge Shield (Consumption) Increase` (5 retratos) — varía: crece con el escudo que gasta
   - `Absorb` (4 retratos) — varía: el ataque crece con cada absorción
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
-  - `Mockery` (4 retratos)
   - `Increases all Basic Attacks per summoned character` (2 retratos) — varía: por cada invocación viva
   - `Condensed Power` (1 retrato) — varía: se acumula
   - `Demonization (Darkchylde)` (1 retrato)
@@ -198,8 +197,8 @@ Sube el daño que hace, aparte del ataque.
 
 `critico_garantizado` · Guaranteed critical rate · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Críticos sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
-- **PvP:** Críticos sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** Críticos sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Críticos sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `GUARANTEED CRITICAL RATE ↑` (209 retratos)
   - `Precision` (15 retratos)
@@ -292,11 +291,13 @@ Sube el daño que hace, aparte del ataque.
   - `BUFF EFFECT INCREASE` (33 retratos)
   - `BUFF EFFECT ↑` (20 retratos)
 
-### Daño de perforación
+### Daño perforante adicional
 
-`dano_perforacion` · Pierce damage · Se aplica a su lado · Le sirve: a quien tiene Perforación.
+`dano_perforacion` · Additional Pierce Damage · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Sube el daño adicional que hace al perforar.
+- **PvE:** Daño extra que ignora del todo la defensa; sale del daño de la skill. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Daño extra que ignora del todo la defensa; sale del daño de la skill. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **Nota:** No es la Perforación (atravesar invencibilidad, escudos o barreras): el glosario del juego no lo ata a ella, y las colecciones de equipo se lo dan a todos sus integrantes. Por eso le sirve a cualquiera.
 - **Skills:**
   - `ADDITIONAL PIERCE DAMAGE INCREASE` (36 retratos)
 - **Leads & Supports:**
@@ -469,9 +470,9 @@ Daño que sigue unos segundos después del golpe.
 - **Skills:**
   - `CHILL` (40 retratos)
 
-### Encanto
+### Daño mental del encanto
 
-`continuo_encanto` · Charm · Se aplica al rival · Le sirve: a cualquiera del equipo.
+`continuo_encanto` · Charm mind damage · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Nota:** Además cura a quien lo aplica con parte de ese daño; la recuperación no sube esa curación (guía, parte 3).
 - **Skills:**
@@ -485,9 +486,9 @@ Daño que sigue unos segundos después del golpe.
 - **Skills:**
   - `CURSE` (3 retratos)
 
-### Pérdida
+### Daño de la pérdida
 
-`continuo_perdida` · Loss · Se aplica al rival · Le sirve: a cualquiera del equipo.
+`continuo_perdida` · Loss damage · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
   - `Loss` (5 retratos)
@@ -534,19 +535,10 @@ Inmoviliza o domina al rival.
 
 `atrapar` · Snare · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Frena a los enemigos y corta el ataque especial de los jefes de Alliance Battle Legend. [Comprobado] ([THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
+- **PvE:** No puede moverse, atacar ni usar skills por un rato. Corta el ataque especial de los jefes de Alliance Battle Legend. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
+- **PvP:** No puede moverse, atacar ni usar skills por un rato. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `SNARE` (310 retratos)
-
-### Fractura
-
-`fracturar` · Fracture · Se aplica al rival · Le sirve: a cualquiera del equipo.
-
-- **PvE:** Corta el ataque especial de los jefes de Alliance Battle Legend. [Comprobado] ([THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
-- **PvP:** Si es un control, frena al rival. [Conjetura]
-- **Nota:** Ninguna fuente dice qué hace; se aplica al rival. Que sea un control es una suposición.
-- **Skills:**
-  - `Fracture` (218 retratos)
 
 ### Congelar
 
@@ -567,6 +559,8 @@ Inmoviliza o domina al rival.
 
 `miedo` · Fear · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Huye de quien se lo aplicó y no puede atacar ni usar skills. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Huye de quien se lo aplicó y no puede atacar ni usar skills. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `FEAR` (110 retratos)
 
@@ -574,6 +568,8 @@ Inmoviliza o domina al rival.
 
 `control_mental` · Mind control · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `Mind Control` (65 retratos)
 
@@ -581,6 +577,8 @@ Inmoviliza o domina al rival.
 
 `detener_tiempo` · Time freezing · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
+- **PvE:** No puede moverse ni atacar por un rato. Atrapa a monstruos épicos sin debuffs, pero no a quien tiene skills que quitan todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** No puede moverse ni atacar por un rato. Atrapa a monstruos épicos sin debuffs, pero no a quien tiene skills que quitan todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `TIME FREEZING` (26 retratos)
 
@@ -602,6 +600,8 @@ Inmoviliza o domina al rival.
 
 `panico` · Panic · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales que no reciben debuffs, pero no a quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales que no reciben debuffs, pero no a quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `Panic` (23 retratos)
 
@@ -609,17 +609,39 @@ Inmoviliza o domina al rival.
 
 `seducir` · Entice · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
+- **PvE:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales sin debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `Entice` (9 retratos)
 
 ### Provocar
 
-`provocar` · Provoke · Se aplica a su lado o al rival, según la etiqueta · Le sirve: a cualquiera del equipo.
+`provocar` · Provoke · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Nota:** Obliga a los rivales a atacarlo a él: protege al resto del equipo.
 - **Skills:**
-  - `Mockery` (4 retratos)
-  - `PROVOKE` (4 retratos) — al rival
+  - `Mockery` (4 retratos) — Nota: Obliga a los rivales a atacarlo a él y «quitar todos los debuffs» no lo saca. Según el glosario del juego, al rival le sube el ataque y puede que no se le apliquen algunos buffs: si anula un Invencible, no se le aplica mientras dure.
+  - `PROVOKE` (4 retratos)
+
+### Encanto
+
+`encantar` · Charm · Se aplica al rival · Le sirve: a cualquiera del equipo.
+
+- **PvE:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. Atrapa a monstruos épicos sin debuffs, pero no a quien tiene skills que quitan todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **Nota:** El glosario del juego define el encanto como un control; thanosvibs publica solo su daño mental continuo («Charm: Deals #% Mind Damage…»). Que sean el mismo efecto es probable: tienen el mismo nombre.
+- **Skills:**
+  - `CHARM` (24 retratos)
+
+### Pérdida
+
+`perdida` · Loss · Se aplica al rival · Le sirve: a cualquiera del equipo.
+
+- **PvE:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. No se le aplica a quien tiene skills que quitan todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **Nota:** El glosario del juego dice que la pérdida frena al rival; thanosvibs publica su daño continuo y que le quita los buffs («Loss: Deals #% Bonus damage every # sec, removes Active Buffs»). Que sean el mismo efecto es probable: tienen el mismo nombre.
+- **Skills:**
+  - `Loss` (5 retratos)
 
 ## Debilitar
 
@@ -628,12 +650,22 @@ Le baja algo al rival o le quita buffs.
 - **PvE:** Contra ese rival, el equipo pega más o recibe menos. [Probable]
 - **PvP:** Contra ese rival, el equipo pega más o recibe menos. [Probable]
 
+### Fractura
+
+`fracturar` · Fracture · Se aplica al rival · Le sirve: a cualquiera del equipo.
+
+- **PvE:** Le baja todos los ataques básicos al rival (se acumula). Cada curación del rival le saca una carga y lo cura menos; «quitar todos los debuffs» no la saca. Además corta el ataque especial de los jefes de Alliance Battle Legend. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
+- **PvP:** Le baja todos los ataques básicos al rival (se acumula). Cada curación del rival le saca una carga y lo cura menos; «quitar todos los debuffs» no la saca. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **Skills:**
+  - `Fracture` (218 retratos)
+
 ### Baja las defensas del rival
 
 `defensas_rival` · Lowers the foe's defenses · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
   - `Decreases all Basic Defenses (Can stack, ignores immunity)` (544 retratos)
+  - `Incapacitation` (303 retratos) — Nota: La skill dice que le quita los buffs; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien quita todos los debuffs.
   - `ALL BASIC DEFENSES DECREASE` (58 retratos)
   - `DECREASES ALL BASIC DEFENSES (CAN STACK)` (58 retratos)
   - `PHYSICAL DEFENSE ↓` (17 retratos)
@@ -726,7 +758,7 @@ Le baja algo al rival o le quita buffs.
 `quitar_buffs` · Strips the foe's buffs · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Incapacitation` (303 retratos)
+  - `Incapacitation` (303 retratos) — Nota: La skill dice que le quita los buffs; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien quita todos los debuffs.
   - `CANCEL` (103 retratos)
   - `REMOVE` (21 retratos) — Nota: La fuente publica qué quita como un código; la wiki (Spider-Man, «Hero's Responsibility») dice que le quita los buffs activos al rival.
   - `Loss` (5 retratos)
@@ -815,8 +847,8 @@ Sube las defensas.
 
 `superarmadura` · Super armor · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Los golpes no lo interrumpen. [Probable]
-- **PvP:** Los golpes no lo interrumpen. [Probable]
+- **PvE:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `SUPER ARMOR` (329 retratos)
 - **Leads & Supports:**
@@ -878,11 +910,13 @@ Vida, curación, escudos y revivir.
 
 `escudo` · Shield · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Frena el daño (las skills le dan un tope: un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvP:** Frena el daño (las skills le dan un tope: un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **Skills:**
-  - `Recharge Shield` (14 retratos)
+  - `Recharge Shield` (14 retratos) — Nota: Se recarga solo. Un escudo del mismo tipo se absorbe y lo hace más fuerte; uno de otro tipo se suma aparte (glosario del juego).
   - `SHIELD` (14 retratos)
   - `ENERGY SHIELD` (12 retratos)
-  - `SUPER HIT SHIELD` (12 retratos)
+  - `SUPER HIT SHIELD` (12 retratos) — Nota: Se recarga cada vez que su ataque le pega a un rival; no se puede quitar con «quitar buffs» y la perforación no lo afecta (glosario del juego).
   - `PHYSICAL SHIELD` (4 retratos)
 - **Leads & Supports:**
   - `Max HP Shield` (2 retratos)
@@ -891,7 +925,8 @@ Vida, curación, escudos y revivir.
 
 `barrera` · Barrier · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Bloquea una cantidad de golpes.
+- **PvE:** Mientras dura no recibe daño (las skills lo cuentan en golpes: «Barrier # time(s)»; el glosario dice «por un tiempo»), pero la rotura de guardia lo afecta igual. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvP:** Mientras dura no recibe daño (las skills lo cuentan en golpes: «Barrier # time(s)»; el glosario dice «por un tiempo»), pero la rotura de guardia lo afecta igual. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **Skills:**
   - `BARRIER` (251 retratos)
 - **Leads & Supports:**
@@ -914,7 +949,7 @@ Vida, curación, escudos y revivir.
 
 - **Skills:**
   - `FORTITUDE` (6 retratos)
-  - `Death Throes` (3 retratos)
+  - `Death Throes` (3 retratos) — Nota: Al terminar, muere. La rotura de guardia lo afecta igual y el efecto no se puede quitar (glosario del juego).
 - **Leads & Supports:**
   - `Immortality + Death` (1 retrato)
   - `Immortality + Heal` (1 retrato)
@@ -930,7 +965,8 @@ Recibe menos daño o lo evita.
 
 `invencible` · Invincible · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvP:** Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** No lo afectan los ataques básicos, la rotura de guardia, el daño ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** No lo afectan los ataques básicos, la rotura de guardia, el daño ni los debuffs. Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
   - `INVINCIBLE` (817 retratos)
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
@@ -939,6 +975,8 @@ Recibe menos daño o lo evita.
 
 `inmune_todo` · All damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `ALL DAMAGE IMMUNE` (555 retratos)
   - `Parry` (2 retratos)
@@ -978,7 +1016,7 @@ Recibe menos daño o lo evita.
 
 - **Skills:**
   - `PHYSICAL DAMAGE ↓` (20 retratos)
-  - `Elasticity` (5 retratos)
+  - `Elasticity` (5 retratos) — Nota: Se suma a la reducción de daño físico; no la sacan la cancelación ni la incapacitación, pero sí el sangrado (glosario del juego).
 
 ### Menos daño de energía recibido
 
@@ -991,6 +1029,8 @@ Recibe menos daño o lo evita.
 
 `inmune_fisico` · Physical damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `PHYSICAL IMMUNITY` (27 retratos)
 - **Leads & Supports:**
@@ -1000,6 +1040,8 @@ Recibe menos daño o lo evita.
 
 `inmune_energia` · Energy damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `Absorb` (4 retratos) — varía: el ataque crece con cada absorción
   - `ENERGY IMMUNITY` (3 retratos)
@@ -1090,8 +1132,8 @@ Recibe menos daño o lo evita.
 
 `evasion_garantizada` · Guaranteed dodge · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Esquiva sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
-- **PvP:** Esquiva sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
+- **PvE:** Esquiva sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Esquiva sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `GUARANTEED DODGE RATE ↑` (273 retratos)
 
@@ -1372,3 +1414,4 @@ Mecánicas propias de un personaje.
 - [THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1)
 - [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)
 - [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4)
+- [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters)

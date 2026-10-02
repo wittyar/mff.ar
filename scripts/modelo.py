@@ -105,8 +105,6 @@ def le_sirve(regla, perfil, efectos, skills):
         return any(d == RIVAL and g in ('control', 'debilitar', 'continuo') for _, d, g in efectos)
     if regla == 'invoca':
         return any(e == 'invocar' for e, _, _ in efectos)
-    if regla == 'perfora':
-        return any(e == 'perforar' for e, _, _ in efectos)
     # La definitiva de Tier-3 se carga con la barra (la fuente la publica sin recarga); la de
     # los Trascendidos tiene recarga de verdad.
     if regla == 'definitiva':
