@@ -1,6 +1,6 @@
 {
- "version": "1.0.15",
+ "version": "1.0.16",
  "formato_datos": 5,
  "python": "3.14.7",
- "notas": "Equipos por contexto: en PvP, las defensas del liderazgo cuentan en el puntaje, así que un líder que da anti-mermas, ataques y defensas, como Thanos — Annihilation, queda entre los mejores. Si un personaje no figura en las tier lists de PvP o de PvE, ese orden ya no le arma combinaciones: la pestaña Equipos lo avisa."
+ "notas": "Equipos por contexto: cada trío tiene un solo líder, el mismo en la lista de cualquiera de los tres; a igual puntaje, lo decide la tier list. Un liderazgo que se activa con una condición, como al recibir un debuff, cuenta la mitad, y la tarjeta lo dice: con Silver Surfer — Void Knight, Knull — Ancient History y Gorr — The God Butcher, ahora lidera Gorr."
 }
