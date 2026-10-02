@@ -19,6 +19,7 @@ import collections, datetime, difflib, glob, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima
+from catalogo import fuente_md
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 WIKI = 'https://future-fight.fandom.com/wiki/'
@@ -528,7 +529,7 @@ def informe(A, version, hallazgos, fuentes, catalogo):
     s.append('## 7. Hallazgos revisados a mano\n')
     s.append('Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallazgos.json).\n')
     for x in hallazgos:
-        citas = ', '.join(f"[{fuentes[k]['nombre']}]({fuentes[k]['url']})" for k in x['fuente'])
+        citas = ', '.join(fuente_md(fuentes[k]) for k in x['fuente'])
         s.append(f"- **{x['titulo']}** — {x['es']} ({citas})")
     s.append('')
 

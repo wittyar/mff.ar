@@ -415,10 +415,12 @@ Que el golpe entre o atraviese protecciones.
 - **Skills:**
   - `TYPE PENETRATION` (13 retratos)
 
-### Rompe la guardia
+### Rotura de guardia (cancela la skill del rival)
 
-`romper_guardia` · Guard break · Se aplica a su lado · Le sirve: a cualquiera del equipo.
+`romper_guardia` · Guard Break (cancels the foe's skill) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvE:** Cancela la skill que está usando el rival y abre un contraataque. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** Cancela la skill que está usando el rival y abre un contraataque. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `ACTIVATES GUARD BREAK` (6 retratos) — dura unos ataques
 
@@ -1169,10 +1171,12 @@ Le saca los debuffs o lo hace inmune a ellos.
   - `Fear Immunity` (1 retrato)
   - `Stun Immunity` (1 retrato)
 
-### Inmune a que le rompan la guardia
+### Inmune a la rotura de guardia
 
-`inmune_romper_guardia` · Guard break immunity · Se aplica a su lado · Le sirve: a cualquiera del equipo.
+`inmune_romper_guardia` · Guard Break immunity · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvE:** La rotura de guardia no le cancela la skill; la superrotura de guardia, sí. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvP:** La rotura de guardia no le cancela la skill; la superrotura de guardia, sí. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Skills:**
   - `GUARD BREAK IMMUNE` (38 retratos)
   - `FORTITUDE` (6 retratos)
@@ -1363,6 +1367,7 @@ Mecánicas propias de un personaje.
 
 ## Fuentes
 
+- MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026)
 - [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl)
 - [THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1)
 - [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)

@@ -172,11 +172,17 @@ def retratos(n):
     return f"{n} retrato{'' if n == 1 else 's'}"
 
 
+def fuente_md(f):
+    """Una fuente de contenido/guia.json en Markdown: con su enlace, o solo su nombre si no tiene
+    dirección (la guía dentro del juego)."""
+    return f"[{f['nombre']}]({f['url']})" if 'url' in f else f['nombre']
+
+
 def documento(cat, U, fuentes, version, falta):
     hoy = datetime.date.today().isoformat()
 
     def cita(L):
-        f = ', '.join(f"[{fuentes[k]['nombre']}]({fuentes[k]['url']})" for k in L.get('fuente', []))
+        f = ', '.join(fuente_md(fuentes[k]) for k in L.get('fuente', []))
         return f"{L['es']} [{L['certeza'].capitalize()}]" + (f' ({f})' if f else '')
 
     def cond(c):
@@ -260,7 +266,7 @@ def documento(cat, U, fuentes, version, falta):
     citadas = sorted({k for L in [g[x] for g in cat['grupos'] for x in ('pve', 'pvp')] +
                       [e[x] for e in cat['efectos'] for x in ('pve', 'pvp') if x in e] for k in L.get('fuente', [])})
     s.append('## Fuentes\n')
-    s += [f"- [{fuentes[k]['nombre']}]({fuentes[k]['url']})" for k in citadas]
+    s += [f"- {fuente_md(fuentes[k])}" for k in citadas]
     s.append('')
     return '\n'.join(s)
 

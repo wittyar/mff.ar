@@ -520,7 +520,7 @@ button.objlink{background:none;border:0;padding:0;font:inherit;color:var(--allie
 .bloque li{margin-bottom:4px}
 .bloque.aviso,.aviso{border-left:3px solid var(--gold);padding:6px 10px;background:var(--gold-soft);border-radius:4px;font-size:12.5px}
 .fuentes{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-a.fuente{font-size:11px;color:var(--text-3);border:1px solid var(--line);border-radius:99px;padding:2px 8px}
+.fuente{font-size:11px;color:var(--text-3);border:1px solid var(--line);border-radius:99px;padding:2px 8px}
 a.fuente:hover{color:var(--text);border-color:var(--line-2)}
 .reclista{border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;margin-bottom:8px;background:rgba(255,255,255,.015)}
 .reclh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
