@@ -25,6 +25,8 @@ const TIERLISTS_SEED = window.MFF_SEED_TIERLISTS || [];
 const ASSIGN_SEED    = window.MFF_SEED_TIER_ASSIGNMENTS || {};
 const SKILLS         = window.MFF_SKILLS || {};   // skills por retrato
 const PERFIL         = window.MFF_PERFIL;         // con qué pega cada retrato (scripts/modelo.py)
+const ANALISIS       = window.MFF_ANALISIS;       // lo que hace cada retrato con sus skills (scripts/modelo.py)
+const CATALOGO       = window.MFF_CATALOGO;       // catálogo de efectos (scripts/contenido/catalogo.json)
 const TB             = window.MFF_TABLAS || {};   // patrones y etiquetas, en los dos idiomas
 const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
 const CTPS           = window.MFF_CTPS || [];     // C.T.P.s (scripts/fuentes.py)
@@ -479,6 +481,46 @@ const T = {
   d_uniform:         { es:'Uniforme',            en:'Uniform' },
   ft_resumen:        { es:'Resumen',             en:'Overview' },
   ft_skills:         { es:'Skills',              en:'Skills' },
+  ft_analisis:       { es:'Análisis',            en:'Analysis' },
+  an_note:           { es:'Lo que hace con sus skills según el catálogo de efectos: a quién le llega cada efecto, desde qué skill y cuándo, si le sirve, y cómo se lee en PvE y en PvP. Cada lectura dice si lo afirma una fuente (comprobado), si sale del texto del efecto (probable) o si es una suposición (conjetura).',
+                       en:'What it does with its skills according to the effect catalog: whom each effect reaches, from which skill and when, whether it is useful to it, and how it reads in PvE and PvP. Each reading says whether a source states it (verified), it follows from the effect text (likely) or it is an assumption (conjecture).' },
+  an_resumen:        { es:'En resumen',          en:'In short' },
+  an_pega:           { es:'Cómo pega',           en:'How it hits' },
+  an_escala:         { es:'Escala con',          en:'Scales with' },
+  an_tipos:          { es:'Daño',                en:'Damage' },
+  an_elems:          { es:'Elementos',           en:'Elements' },
+  an_sin_elem:       { es:'sin elemento',        en:'no element' },
+  an_e:              { es:'Para él',             en:'For itself' },
+  an_q:              { es:'Para el equipo',      en:'For the team' },
+  an_r:              { es:'Contra el rival',     en:'Against the foe' },
+  an_i:              { es:'Para sus invocaciones', en:'For its summons' },
+  an_nada:           { es:'Nada.',               en:'Nothing.' },
+  an_pve_pvp:        { es:'PvE y PvP',           en:'PvE and PvP' },
+  an_lider:          { es:'como líder',          en:'as leader' },
+  an_varia:          { es:'varía:',              en:'varies:' },
+  an_dura:           { es:'dura',                en:'lasts' },
+  an_no_sirve:       { es:'No le sirve',         en:'Not useful to it' },
+  an_no_sirve_t:     { es:'Es para él, pero le sirve solo {x}.', en:'It is for itself, but it only helps {x}.' },
+  an_otorga:         { es:'Otorga un efecto que la fuente no dice', en:'Grants an effect the source does not name' },
+  an_otorga_t:       { es:'La skill dice «Acquires the following effect» y no trae ese efecto. Si es un liderazgo o un soporte, Leads & Supports suele decir cuál es (pestaña Resumen).',
+                       en:'The skill says "Acquires the following effect" and does not include it. If it is a leadership or a support, Leads & Supports usually says which (Overview tab).' },
+  an_sc:             { es:'Sin clasificar',      en:'Not classified' },
+  an_sc_t:           { es:'Efectos que el catálogo todavía no clasifica (thanosvibs sumó una etiqueta nueva): se ven como los publica la fuente.',
+                       en:'Effects the catalog does not classify yet (thanosvibs added a new label): shown as the source publishes them.' },
+  an_roles:          { es:'Roles (deducidos)',   en:'Roles (derived)' },
+  an_roles_t:        { es:'No existen en el juego: dicen qué le aporta al equipo. Soporte: le da algo a sus aliados fuera del liderazgo. Tanque: provoca o le baja al equipo el daño que recibe. Control: le aplica al rival 3 o más controles distintos. Daño: todos.',
+                       en:'They do not exist in the game: they say what it brings to the team. Support: gives something to its allies outside its leadership. Tank: provokes or lowers the damage the team takes. Control: applies 3 or more different controls to the foe. Damage: everyone.' },
+  an_sin_datos:      { es:'La fuente no publica sus skills: no hay nada que analizar.', en:'The source does not publish its skills: there is nothing to analyse.' },
+  cert_comprobado:   { es:'comprobado',          en:'verified' },
+  cert_probable:     { es:'probable',            en:'likely' },
+  cert_conjetura:    { es:'conjetura',           en:'conjecture' },
+  el_Physical:       { es:'físico',              en:'physical' },
+  el_Energy:         { es:'de energía',          en:'energy' },
+  el_Fire:           { es:'fuego',               en:'fire' },
+  el_Cold:           { es:'frío',                en:'cold' },
+  el_Lightning:      { es:'rayo',                en:'lightning' },
+  el_Poison:         { es:'veneno',              en:'poison' },
+  el_Mind:           { es:'mente',               en:'mind' },
   ft_armado:         { es:'Armado',              en:'Build' },
   ft_progreso:       { es:'Progreso',            en:'Progress' },
   ft_mas:            { es:'Más',                 en:'More' },
@@ -1961,15 +2003,16 @@ const STAT_ES = { recovery_rate:'Recuperación', fire_resist:'Res. fuego', cold_
 function statLabel (k) { return LANG === 'es' ? (STAT_ES[k] || k) : dom(k); }
 // La ficha va en pestañas, con una cabecera fija arriba (foto, nombre y uniforme): el
 // uniforme cambia casi todo lo de abajo, así que su selector tiene que estar siempre a la
-// vista. Cada pestaña responde una pregunta: qué es y para qué sirve, qué hace, cómo se
-// arma, cuánto avanzaste con él, y el resto.
-const FICHA_TABS = ['resumen', 'skills', 'armado', 'equipos', 'progreso', 'mas'];
+// vista. Cada pestaña responde una pregunta: qué es y para qué sirve, qué hace (las skills
+// tal como las publica la fuente, y su análisis según el modelo), cómo se arma, cuánto
+// avanzaste con él, y el resto.
+const FICHA_TABS = ['resumen', 'skills', 'analisis', 'armado', 'equipos', 'progreso', 'mas'];
 function renderDetail () {
   const ch = CHAR_BY_ID[ui.charId];
   if (!ch) { ui.view = 'roster'; return renderRoster(); }
   const v = variant(ch.id, ui.uniformId);
-  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, equipos: fichaEquipos,
-                   progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
+  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, analisis: fichaAnalisis, armado: fichaArmado,
+                   equipos: fichaEquipos, progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
   const ant = lugarAnterior();
   return `
   <div class="row" style="margin-bottom:14px">
@@ -2070,6 +2113,111 @@ function fichaSkills (ch, v) {
     </div>` : ''}
     ${panelRotaciones(ch, v)}
     ${v.skills.map(sk => skillCard(sk, v.p)).join('')}`;
+}
+// ---------------------------------------------------------------------------
+// ANÁLISIS (docs/MODELO.md, etapa 2): lo que hace la variante con sus skills según el
+// catálogo de efectos. Lo calcula el build (scripts/modelo.py, MFF_ANALISIS); acá se muestra:
+// a quién le llega cada efecto, desde qué skill y cuándo, con qué condición, si le sirve, y
+// cómo se lee en PvE y en PvP, con su certeza y su fuente.
+// ---------------------------------------------------------------------------
+const DESTINOS_AN = ['e', 'q', 'r', 'i'];
+/** El efecto de una fuente [skill, etapa, efecto] y cómo lo clasifica el catálogo. */
+function fuenteAn (v, [si, ti, fi]) {
+  const sk = v.skills[si], st = sk.st[ti], f = st.fx[fi], m = CATALOGO.skills[fila('ab', f.a).en];
+  return { sk, st, f, m: m.por_patron ? m.por_patron[fila('desc', f.p).en] : m };
+}
+/** Desde qué skills sale y cuándo (la activación de su etapa), sin repetir. */
+function fuentesAnHtml (v, fuentes) {
+  const vistas = new Set();
+  return fuentes.map(x => {
+    const { sk, st } = fuenteAn(v, x), ac = st.ac != null ? txt('act', st.ac, st.av) : '', clave = sk.sl + '|' + ac;
+    if (vistas.has(clave)) return '';
+    vistas.add(clave);
+    return `<span class="tag dim">${h(slotEs(sk.sl))}${ac ? ' · ' + h(ac) : ''}</span>`;
+  }).join('');
+}
+/** La condición del catálogo; las fuentes de una entrada comparten la misma. Contra una
+ *  facción, un tipo o una raza que la skill nombra con un marcador, va lo que se completó. */
+function condicionAn (v, fuentes) {
+  const c = fuenteAn(v, fuentes[0]).m.condicion;
+  if (!c) return '';
+  if (c.varia) return t('an_varia') + ' ' + bi(c.varia);
+  if (c.dura) return t('an_dura') + ' ' + bi(c.dura);
+  const contra = bi(CATALOGO.contra[c.contra]);
+  if (!c.marcador) return contra;
+  return contra + ': ' + [...new Set(fuentes.map(x => fuenteAn(v, x).f.g))].map(g => g ? dom(g) : t('tpl_unspec')).join(', ');
+}
+function lecturaAn (L, modo) {
+  return `<div class="anlect"><b>${h(modo)}</b>${h(bi(L))} <span class="cert ${L.certeza}">${h(t('cert_' + L.certeza))}</span>${fuentesHtml(L.fuente)}</div>`;
+}
+/** La primera letra en minúscula, para seguir una frase («A quien tiene Perforación»). */
+function minuscula (x) { return x ? x[0].toLowerCase() + x.slice(1) : x; }
+/** Las lecturas de PvE y de PvP; si dicen lo mismo, en una sola línea. */
+function lecturasAn (pve, pvp) {
+  if (pve && pvp && JSON.stringify(pve) === JSON.stringify(pvp)) return lecturaAn(pve, t('an_pve_pvp'));
+  return (pve ? lecturaAn(pve, 'PvE') : '') + (pvp ? lecturaAn(pvp, 'PvP') : '');
+}
+/** Una entrada: el efecto, a qué aliados si es al equipo, de qué skills sale, su condición,
+ *  si no le sirve, sus lecturas propias y su nota. El build manda «Give Power» solo cuando
+ *  la fuente no dice qué otorga. */
+function filaAn (v, an, i) {
+  const [ie, d, objetivo, fuentes] = an.fx[i], e = CATALOGO.efectos[ie];
+  const vacio = e.id === 'otorga', cond = condicionAn(v, fuentes), noSirve = (an.ns || []).includes(i);
+  return `<div class="anfila">
+    <div class="row"><span class="annom" ${vacio ? `title="${h(t('an_otorga_t'))}"` : ''}>${h(vacio ? t('an_otorga') : bi(e))}</span>
+      ${d === 'q' ? objetivoTag(objetivo, true) : ''}${fuentesAnHtml(v, fuentes)}
+      ${cond ? `<span class="muted">${h(cond)}</span>` : ''}
+      ${noSirve ? `<span class="tag solid nosirve" title="${h(t('an_no_sirve_t').replace('{x}', minuscula(bi(CATALOGO.sirve[e.sirve]))))}">${h(t('an_no_sirve'))}</span>` : ''}</div>
+    ${lecturasAn(e.pve, e.pvp)}
+    ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
+  </div>`;
+}
+/** Lo que va a un destino (él, el equipo, el rival, sus invocaciones), por grupo del catálogo,
+ *  cada grupo con su lectura de PvE y de PvP. */
+function seccionAn (v, an, d) {
+  const porGrupo = new Map();
+  an.fx.forEach((x, i) => {
+    if (x[1] !== d) return;
+    const g = CATALOGO.efectos[x[0]].grupo;
+    if (!porGrupo.has(g)) porGrupo.set(g, []);
+    porGrupo.get(g).push(i);
+  });
+  if (!porGrupo.size) return d === 'i' ? '' : `<div class="section"><h3>${h(t('an_' + d))}</h3><p class="muted">${h(t('an_nada'))}</p></div>`;
+  return `<div class="section"><h3>${h(t('an_' + d))}</h3>
+    ${CATALOGO.grupos.filter(g => porGrupo.has(g.id)).map(g => `<div class="angrupo">
+      <div class="angh"><b>${h(bi(g))}</b> <span class="muted">${h(bi(g.que))}</span></div>
+      ${lecturasAn(g.pve, g.pvp)}
+      ${porGrupo.get(g.id).map(i => filaAn(v, an, i)).join('')}
+    </div>`).join('')}
+  </div>`;
+}
+/** Una línea por destino con los grupos de lo que da. */
+function resumenAn (an) {
+  return DESTINOS_AN.map(d => {
+    const gs = CATALOGO.grupos.filter(g => an.fx.some(x => x[1] === d && CATALOGO.efectos[x[0]].grupo === g.id));
+    return gs.length ? `<div><b>${h(t('an_' + d))}:</b> ${gs.map(g => h(bi(g))).join(', ')}</div>` : '';
+  }).join('');
+}
+/** Con qué pega: de qué ataque sale su daño, de qué tipo y con qué elementos (etapa 1). */
+function pegaAn (v) {
+  const pf = perfilDe(v);
+  if (!pf.esc.length) return `<span class="muted">${h(t('us_atk_none'))}</span>`;
+  return `${h(t('an_escala'))} ${ataqueHtml(tipoAtaque(v))} · ${h(t('an_tipos'))} ${pf.tip.map(x => h(t('el_' + x))).join(' + ')} · ${
+    h(t('an_elems'))}: ${pf.ele.length ? pf.ele.map(x => h(t('el_' + x))).join(', ') : h(t('an_sin_elem'))}`;
+}
+function fichaAnalisis (ch, v) {
+  const an = ANALISIS[v.p];
+  if (!an) return `<div class="empty"><div class="big">?</div><div>${h(t('an_sin_datos'))}</div></div>`;
+  return `<p class="muted" style="margin-bottom:12px">${h(t('an_note'))}</p>
+    <div class="section anres"><h3>${h(t('an_resumen'))}</h3>
+      ${resumenAn(an)}
+      <div><b>${h(t('an_pega'))}:</b> ${pegaAn(v)}</div>
+      <div title="${h(t('an_roles_t'))}"><b>${h(t('an_roles'))}:</b> ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join(' ')}</div>
+    </div>
+    ${DESTINOS_AN.map(d => seccionAn(v, an, d)).join('')}
+    ${an.sc ? `<div class="section"><h3>${h(t('an_sc'))}</h3><p class="muted">${h(t('an_sc_t'))}</p>
+      ${an.sc.map(([si, ti, fi]) => { const sk = v.skills[si];
+        return `<div class="anfila"><span class="tag dim">${h(slotEs(sk.sl))}</span> ${h(fila('ab', sk.st[ti].fx[fi].a).en)}</div>`; }).join('')}</div>` : ''}`;
 }
 /** Cómo armarlo: lo que las fuentes le asignan al personaje; las reglas generales de su
  *  tipo de ataque (iguales para todos) van plegadas. */

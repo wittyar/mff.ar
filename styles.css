@@ -629,3 +629,19 @@ table.topes input{width:70px;padding:5px 7px}
 .lesirve{gap:6px;align-items:center}
 .indlinea{font-size:11px;line-height:1.35;color:var(--text-2);margin-top:2px}
 .indlinea .muted{font-size:inherit}
+
+/* Análisis de la ficha (etapa 2 del modelo) */
+.anres > div{margin:4px 0}
+.angrupo{margin:12px 0 16px}
+.angh{margin-bottom:4px}
+.anlect{font-size:12px;color:var(--text-2);margin:2px 0;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.anlect b{color:var(--text);font-weight:600;margin-right:2px}
+.anfila{padding:7px 0;border-top:1px solid var(--line)}
+.anfila .row{gap:6px}
+.annom{font-weight:600}
+.annota{font-size:12px;margin-top:3px}
+.cert{font-size:10px;text-transform:uppercase;letter-spacing:.04em;padding:1px 6px;border-radius:999px;border:1px solid currentColor}
+.cert.comprobado{color:var(--role-soporte)}
+.cert.probable{color:var(--gold)}
+.cert.conjetura{color:var(--text-3)}
+.tag.nosirve{background:var(--accent);cursor:help}

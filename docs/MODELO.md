@@ -33,7 +33,7 @@ marcado como probable o como duda.
 1. **Personajes y características**: qué es cada variante (identidad y perfil de combate).
 2. **Skills**: qué hace cada efecto (las 228 etiquetas tipadas de thanosvibs), a quién apunta y
    cómo se lee en PvE y en PvP. Los roles se rehacen acá. Hecha: el catálogo de efectos y el
-   análisis de cada variante.
+   análisis de cada variante, que la ficha muestra en la pestaña *Análisis*.
 3. **Pasivas, liderazgos y soportes**: su efecto sobre los stats y para quién sirven. Junta las
    skills con Leads & Supports de thanosvibs, que son el mismo efecto visto de dos lados (de ahí
    sale, por ejemplo, que el efecto de uniforme de General's Hand es contra Universales). En curso:
@@ -174,7 +174,9 @@ catálogo, anota:
   clasifica también se ve, como lo publica la fuente.
 
 El daño de los golpes no va en el análisis: es el perfil de combate de la etapa 1. Viaja en
-`data.js` (`MFF_ANALISIS`, por retrato, con el catálogo en `MFF_CATALOGO`; formato 3).
+`data.js` (`MFF_ANALISIS`, por retrato, con el catálogo en `MFF_CATALOGO`; formato 3) y la ficha lo
+muestra en la pestaña *Análisis*: un resumen y, por destino y por grupo de efecto, cada efecto con
+sus fuentes, su condición y sus lecturas de PvE y de PvP.
 
 ### Roles
 
@@ -195,12 +197,10 @@ el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
 
 ### Lo que sigue
 
-1. La ficha muestra el análisis de cada variante: qué es cada efecto, cuándo, a quién le llega,
-   si le sirve y cómo se lee en PvE y en PvP.
-2. Etapa 3: los liderazgos y soportes de Leads & Supports en el mismo análisis, con el efecto
+1. Etapa 3: los liderazgos y soportes de Leads & Supports en el mismo análisis, con el efecto
    que la skill no dice (los «Give Power» vacíos) y los marcadores (`$HEROSUBTYPE1`) completados
    con la facción, el tipo o la raza que Leads & Supports escribe.
-3. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
+2. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
    sinergia y el índice de equipos.
 
 ## Fuentes

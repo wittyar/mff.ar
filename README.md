@@ -36,6 +36,13 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   - *Skills*: cargas de ult y striker, buffs clave, las **rotaciones** de thanosvibs con la
     leyenda de la notación, las de la guía de armado (de proc, con su mejor C.T.P. y la skill de
     proc / frenesí, con su propia notación) y cada skill, con tabla de daño por etapa.
+  - *Análisis*: lo que hace con sus skills según el catálogo de efectos (ver *Modelo del juego*):
+    un resumen (qué da para él, para el equipo y contra el rival, con qué pega y sus roles) y,
+    por grupo de efecto, cada efecto con a quién le llega (él, el equipo y qué aliados, el rival
+    o sus invocaciones), de qué skill sale y cuándo, su condición (contra jefes, contra una
+    facción...), si no le sirve (un buff de algo que él no usa) y cómo se lee en PvE y en PvP,
+    con su certeza y su fuente. Marca lo que la fuente no dice: el «Give Power» que no trae qué
+    otorga y lo que el catálogo todavía no clasifica.
   - *Armado*: su C.T.P. según la Ideal CTP List, la guía de principiantes y la guía de armado
     (esta dice en qué lugar lo pone —mejor, segundo, meta y fuera del meta de PvE y de PvP— y
     si va reforjado); su artefacto con los valores por nivel de estrellas y si lo necesita
@@ -158,7 +165,7 @@ de la auditoría) y genera `docs/CATALOGO.md`, el catálogo entero para leerlo y
 
 Con el catálogo, `scripts/modelo.py` arma el **análisis** de cada variante: cada efecto de cada
 skill con su destino (él, el equipo y qué aliados, el rival o sus invocaciones), sus fuentes y su
-condición, y si le sirve a él. De ahí salen también
+condición, y si le sirve a él. La ficha lo muestra en la pestaña *Análisis*. De ahí salen también
 los **roles**, que no existen en el juego y dicen qué le aporta cada variante al equipo: Soporte,
 le da algo a sus aliados fuera del liderazgo; Tanque, provoca o le baja al equipo el daño que
 recibe; Control, le aplica al rival 3 o más controles distintos; Daño, todos. Cada uniforme tiene
