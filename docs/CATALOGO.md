@@ -1167,6 +1167,7 @@ Recibe menos daño o lo evita.
 
 - **PvE:** Poco importante. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Poco importante. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **Nota:** Como liderazgo o soporte, según Ezequiel, solo le sirven a quien tiene una mejora de daño según su resistencia (diez artefactos y la Striker de Ghost Rider y de Hades): la app las cuenta solo para ellos.
 - **Skills:**
   - `MIND RESIST ↑` (32 retratos)
   - `ALL RESISTANCE ↑` (26 retratos)
@@ -1256,6 +1257,7 @@ Velocidades, recarga de skills y cargas.
 
 - **PvE:** Incluye la velocidad de ataque, que importa; la de movimiento no. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Incluye la velocidad de ataque, que importa; la de movimiento no. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **Nota:** Como liderazgo o soporte, según Ezequiel, no sirve: la app no lo cuenta para nadie. Como efecto de las skills (frenesí) sigue contando.
 - **Skills:**
   - `FRENZY` (491 retratos)
   - `Increases all basic stats` (220 retratos)
