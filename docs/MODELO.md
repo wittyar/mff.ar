@@ -356,6 +356,49 @@ Dudas:
   más), que aparece con su Striker Skill y cuyo efecto crece con el tier (captura de Galactus con
   Silver Surfer). Es otro sistema: la app no lo tiene.
 
+## Equipos por contexto
+
+Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
+
+- **PvP:** los tres tienen que tener anti-mermas (quitar todos los debuffs), del liderazgo del
+  líder o del soporte de alguno; un equipo de PvP sin anti-mermas es un mal equipo. Si viene de un
+  soporte, el lugar de líder queda para otro liderazgo. En PvE no hace falta.
+- **Liderazgos:** los más útiles en general son todos los ataques, PG (vida) e ignorar esquiva. En
+  PvE pesan los de daño: ataque, daño elemental y daño a jefes, cada uno a quien pega con eso. Un
+  liderazgo de todas las velocidades es inútil, y uno de resistencias solo le sirve a quien tiene
+  una mejora de daño según su resistencia (ver *Daño según la resistencia*).
+- **DPS:** no todos pegan bien, y sin quien pegue un equipo no es relevante. Agent 13 no le aporta
+  nada a ningún equipo (relleno); Black Cat sirve de soporte o de líder, no de DPS; hay quien es
+  las tres cosas, como Apocalypse.
+- **Sinergia y strikers:** relevantes, no definitorios. El striker tiene que estar en el mismo equipo.
+
+Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órdenes PvP y PvE):
+
+- Quién es DPS, soporte o líder en cada contexto sale de las filas de las tier lists de thanosvibs:
+  Arena de Equipos para PvP; Batalla de Alianza y World Boss Legend para PvE
+  (`scripts/contenido/roles_listas.json`, con el rótulo de cada fila; el build para si una cambia).
+  Así quedan los ejemplos: Agent 13 no está en ninguna, Black Cat es soporte y Apocalypse es DPS.
+- Un trío entra si alguno es DPS de ese contexto y, en PvP, si con algún líder los tres tienen
+  anti-mermas (Remove All Debuffs o Debuff Immunity). Cada compañero tiene vínculo con él o es DPS
+  de ese contexto.
+- Puntaje: 2 por cada stat del liderazgo que vale y cada integrante al que le llega y le sirve
+  (cada stat una vez, aunque el liderazgo lo traiga en varias líneas); 2 por cada nivel de fila de
+  cada DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve, por cada bono de
+  equipo activo y por cada striker del trío. El líder es el que más suma de los que cumplen; a
+  igual puntaje, ordena la tier list. Los pesos son una primera versión, para ajustar mirando casos:
+  cada combinación muestra de dónde sale cada punto.
+- Con los datos actuales, la lista de PvP de Thor pasa de 7.762 combinaciones a 1.257, la de
+  Valeria Richards de 4.243 a 1.118 y la de Kingpin de 36.696 a 2.124. La de Galactus no baja (unas
+  37.500): su liderazgo da anti-mermas a cualquiera, así que con él de líder cualquier trío con un
+  DPS cumple.
+
+Lo que todavía no está:
+- El artefacto de Robbie Reyes (fuego según la resistencia, para los aliados Llama) depende de que
+  él esté en el equipo, y la regla de «le sirve» no ve el equipo.
+- Las filas de soporte y de líder (rigged leaders de Arena) no suman por sí mismas: un soporte vale
+  por lo que les da a los otros.
+- Los efectos de artefacto cuentan como si lo llevara.
+
 ## Fuentes
 
 - thanosvibs: API de personajes, de skills y de [Leads & Supports](https://thanosvibs.money/supports);
