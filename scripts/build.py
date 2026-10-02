@@ -52,6 +52,8 @@ FUENTES = json.load(open('work/fuentes.json', encoding='utf-8'))
 # los busca por id de personaje.
 _CID = {c['name']: c['id'] for c in chars}
 BONOS = [{**b, 'm': [_CID[n] for n in b['m']]} for b in FUENTES['bonos']]
+# Strikers (scripts/strikers.py), también por id: solo los personajes con la pestaña Striker en la wiki.
+STRIKERS = {_CID[n]: [[_CID[x], p, c] for x, p, c in filas] for n, filas in FUENTES['strikers'].items()}
 VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato']
 # Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
 # que los retratos; si falta el archivo la app muestra el nombre sin ícono.
@@ -93,7 +95,8 @@ hoy = hoy.isoformat()
 #    mostrarlo; los uniformes traen sus propios roles; los bonos de equipo (MFF_BONOS).
 # 4: el glosario de skills del juego (MFF_GLOSARIO) para la solapa Glosario.
 # 5: el perfil de combate trae res (los elementos cuya resistencia le sube el daño), con el que
-#    la app decide a quién le sirve un liderazgo o un soporte de resistencias.
+#    la app decide a quién le sirve un liderazgo o un soporte de resistencias; los strikers de cada
+#    personaje (MFF_STRIKERS).
 FORMATO = 5
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
@@ -135,6 +138,9 @@ parts = [header,
  '// una versión si las páginas de la wiki empatan; la recarga y la duración de control, en negativo) y\n'
  '// fuentes (f).\n',
  'window.MFF_BONOS = ' + json.dumps(BONOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
+ '// Strikers (scripts/strikers.py): por personaje, [striker, % de aparecer, "ataca" (cuando él ataca) o\n'
+ '// "atacado" (cuando lo atacan)], de la pestaña Striker de la wiki. Sin la pestaña, no está.\n',
+ 'window.MFF_STRIKERS = ' + json.dumps(STRIKERS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// C.T.P.s, artefactos, Alliance Battle, soportes, rotaciones, guía y modos\n'
  '// (scripts/fuentes.py y scripts/contenido/).\n',
  'window.MFF_CTPS = ' + json.dumps(FUENTES['ctps'], ensure_ascii=False) + ';\n',

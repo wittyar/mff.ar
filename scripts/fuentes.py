@@ -27,6 +27,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
 import guia_armado as GA
 from bonos import bonos as bonos_de_equipo
+from strikers import strikers as strikers_de
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -411,16 +412,23 @@ def guia_armado(chars):
             'sin_pj': r['sin_pj'], 'raros': r['raros']}
 
 
-def bonos(chars, juego):
+def bonos(paginas, chars, juego):
     """Los bonos de equipo (scripts/bonos.py) y su auditoría, con los nombres de sus stats
-    traducidos. Los integrantes van por nombre de personaje: build.py los pasa a sus ids."""
-    paginas = [cargar(f) for f in sorted(glob.glob('work/wikitext/*.json'))]
+    traducidos. Los integrantes van por nombre de personaje: build.py los pasa a sus ids.
+    paginas: las páginas de los personajes en la wiki (work/wikitext)."""
     B = bonos_de_equipo(paginas, [r['character'] for r in chars if r['uniformed'] == 'False'], juego)
     for b in B['bonos']:
         for version in b['v']:
             for stat, _ in version:
                 TX(stat)
     return B['bonos'], B['auditoria']
+
+
+def strikers(paginas, chars):
+    """Los strikers de cada personaje (scripts/strikers.py) y su auditoría. Van por nombre de
+    personaje: build.py los pasa a sus ids."""
+    S = strikers_de(paginas, [r['character'] for r in chars if r['uniformed'] == 'False'])
+    return S['strikers'], S['auditoria']
 
 
 def validar_contenido(guia, modos, bonos_juego, listas, stats_ok):
@@ -502,7 +510,9 @@ def main():
         'guia': guia, 'modos': modos['modos'], 'version_guia_fuente': version_fuente,
         'armado': guia_armado(chars),
     }
-    salida['bonos'], salida['bonos_auditoria'] = bonos(chars, bonos_juego)
+    paginas = [cargar(f) for f in sorted(glob.glob('work/wikitext/*.json'))]
+    salida['bonos'], salida['bonos_auditoria'] = bonos(paginas, chars, bonos_juego)
+    salida['strikers'], salida['strikers_auditoria'] = strikers(paginas, chars)
     salida['txt'] = dict(sorted(TX.usados.items()))
     json.dump(salida, open('work/fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False)
     json.dump(sorted(TX.faltan), open('work/sin_traducir_fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
@@ -511,6 +521,7 @@ def main():
           f"soportes de {len(salida['soportes'])} retratos | rotaciones de {len(salida['rotaciones'])} retratos | "
           f"guía: {len(salida['guia_pj'])} personajes mencionados | guía de armado {salida['armado']['version']}: "
           f"{len(salida['armado']['pj'])} personajes | bonos de equipo {len(salida['bonos'])} | "
+          f"strikers de {len(salida['strikers'])} personajes | "
           f"textos traducidos {len(salida['txt'])}, "
           f"sin traducir {len(TX.faltan)}")
 

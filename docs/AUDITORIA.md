@@ -19,6 +19,7 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Tipo de ataque (infobox de la wiki) | 531 | 21 | — |
 | Instinto (campo vs categoría de la wiki) | 77 | 4 | — |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
+| Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer | 119 páginas sin la pestaña |
 | Artefactos a 6★ (thanosvibs vs wiki) | 208 (+31 donde la wiki lista otro nivel de estrellas) | 18 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
 Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvibs, 2270 (39%) se pudieron comparar; 1222 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 305 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
@@ -673,3 +674,16 @@ Van como los escribe la wiki: la sinergia los cuenta para todos y dice que no es
 Esa página no cuenta para ese bono.
 
 - Vulture, Creatures of Air and Sea: stat ilegible: ''Dodge ↑ +4.%''
+
+## 11. Strikers: la pestaña Striker de la wiki
+
+thanosvibs no publica los strikers. La app los toma de la pestaña Striker de la página de cada personaje en la wiki (171 páginas la tienen, 7020 filas): quién puede aparecer a pegar junto a él y con qué probabilidad, cuando él ataca o cuando lo atacan (scripts/strikers.py).
+
+Personajes sin la pestaña en su página (119): Adam Warlock, Agent Venom, Angel, Annihilus, Ant-Man, Apocalypse, Arachknight, Athena, Beast, Bishop, Black Bolt, Black Knight, Black Swan, Black Widow, Captain America, Carnage, Cassandra Nova, Cassie Lang, Colossus, Cyclops, Destroyer, Doctor Doom, Doctor Octopus, Doctor Voodoo, Elektra, Emma Frost, Falcon (Joaquin Torres), Fantomex, Franklin Richards, Galactus, Gambit, Ghost Panther, Ghost Rider (Robbie Reyes), Giant-Man, Gorr, Green Goblin, Gwenpool, Hades (Pluto), Havok, Hercules, Hope Summers, Hulk, Iceman, Ikon, Iron Hammer, Ironheart, Jean Grey, Jeff the Land Shark, Jubilee, Juggernaut, Kahhori, Kang the Conqueror, Kid Omega, Kitty Pryde, Kraven The Hunter, Leader, Lizard, M'Baku, Madelyne Pryor, Magik, Magneto, Man-Thing, Mantis, Marvel Boy, Maximus, Moon Girl, Morgan le Fay, Morph, Ms. Marvel (Kamala Khan), Namor, Nightcrawler, Nova (Sam Alexander), Odin, Okoye, Omega Red, Polaris, Professor X, Psylocke, Punisher, Quicksilver, Rachel Summers, Rhino, Rogue, Sabretooth, Scarlet Spider, Scarlet Witch, Scorpion, Scream, Shadow Shell, She-Hulk, Shuri, Silver Samurai, Silver Surfer (Shalla-Bal), Skurge, Sleeper, Songbird, Spider-Man, Spider-Man (Miles Morales), Spot, Squirrel Girl, Storm, Sun Bird, Sunspot, Sylvie, The Hood, Thor (Jane Foster), Titania, Toxin, Valeria Richards, Valkyrie, Venom, Venus (Aphrodite), War Tiger, Wasp (Nadia Van Dyne), Weapon Hex, White Tiger, Wolverine, X-23, Zeus. En la app no tienen strikers propios; sí pueden ser strikers de otros.
+
+### Lo que no se pudo leer (2)
+
+Esa fila no cuenta.
+
+- Rocket Raccoon: no se lee la probabilidad o cuándo aparece (`| style="text-align:left"|[[Image:LincolnCampbellIcon.png|30px]] Lincoln Campbell ||  chance to appear when attacking.`)
+- Vision: no se lee la probabilidad o cuándo aparece (`| style="text-align:left"|[[Image:SpiderGwenIcon.png|30px]] Spider-Gwen || 19% chance to appear when attack.`)

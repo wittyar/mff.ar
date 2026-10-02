@@ -14,7 +14,7 @@ Deja:
 
 Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la sección 9 lista lo que el
 catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierra en los bonos de
-equipo de la wiki, de work/fuentes.json).
+equipo de la wiki, y la 11, en los strikers, de work/fuentes.json).
 """
 import collections, datetime, difflib, glob, json, os, re, sys
 
@@ -409,7 +409,7 @@ def fmt(xs):
     return ', '.join(f'{x:g}' for x in xs) if isinstance(xs, list) else f'{xs:g}' if isinstance(xs, float) else str(xs)
 
 
-def informe(A, version, hallazgos, fuentes, catalogo, bonos):
+def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers):
     R, L = A.res, A.listas
     hoy = datetime.date.today().isoformat()
     s = []
@@ -430,6 +430,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos):
         s.append(f"| {nom} (infobox de la wiki) | {R[campo + '_ok']} | {R[campo + '_dif']} | — |")
     s.append(f"| Instinto (campo vs categoría de la wiki) | {R['instinto_ok']} | {R['instinto_dif']} | — |")
     s.append(bonos_resumen(bonos))
+    s.append(strikers_resumen(strikers))
     s.append(f"| Artefactos a 6★ (thanosvibs vs wiki) | {R['artefactos_ok']} (+{R['artefactos_otro_nivel']} donde la wiki lista otro nivel de estrellas) | {R['artefactos_dif']} | {R['artefactos_sin_wiki']} sin fila en la wiki; {R['artefactos_incompletos']} con niveles incompletos en thanosvibs |")
     s.append('')
     s.append(f"Cobertura de la wiki: de {R['skills']} skills (activas, Definitiva y Striker) de thanosvibs, "
@@ -580,6 +581,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos):
                  + '; '.join(f'`{x}`' if isinstance(x, str) else f'`{x[0]}` con `{x[1]}`'
                              for k in ('etiquetas', 'patrones', 'stats') for x in sobra[k]) + '.\n')
     s += bonos_seccion(bonos, fuentes)
+    s += strikers_seccion(strikers)
     return '\n'.join(s)
 
 
@@ -594,6 +596,36 @@ def bonos_resumen(bonos):
     distintos = len(A['mayorias']) + len(A['empates'])
     return (f"| Bonos de equipo (las páginas de la wiki entre sí) | {wiki - distintos} | {len(A['mayorias'])} por mayoría, "
             f"{len(A['empates'])} empatados | {len(A['sin_seccion'])} páginas sin la sección |")
+
+
+def strikers_resumen(strikers):
+    A = strikers['auditoria']
+    return (f"| Strikers (pestaña Striker de la wiki) | {A['filas']} filas en {A['paginas']} páginas | "
+            f"{len(A['ilegibles'])} filas que no se pudieron leer | {len(A['sin_pestana'])} páginas sin la pestaña |")
+
+
+def strikers_seccion(strikers):
+    """Sección 11: lo que no cierra en los strikers."""
+    A = strikers['auditoria']
+    s = ['## 11. Strikers: la pestaña Striker de la wiki\n']
+    s.append('thanosvibs no publica los strikers. La app los toma de la pestaña Striker de la página de cada '
+             f"personaje en la wiki ({A['paginas']} páginas la tienen, {A['filas']} filas): quién puede aparecer a "
+             'pegar junto a él y con qué probabilidad, cuando él ataca o cuando lo atacan (scripts/strikers.py).\n')
+    s.append(f"Personajes sin la pestaña en su página ({len(A['sin_pestana'])}): {', '.join(A['sin_pestana'])}. "
+             'En la app no tienen strikers propios; sí pueden ser strikers de otros.\n')
+    if A['ilegibles']:
+        s.append(f"### Lo que no se pudo leer ({len(A['ilegibles'])})\n")
+        s.append('Esa fila no cuenta.\n')
+        for x in A['ilegibles']:
+            s.append(f"- {x['pagina']}: {x['motivo']} (`{x['fila']}`)")
+        s.append('')
+    if A['repetidos']:
+        s.append(f"### Repetidos en la misma página ({len(A['repetidos'])})\n")
+        s.append('Vale la primera fila.\n')
+        for x in A['repetidos']:
+            s.append(f"- {x['pagina']}: {x['striker']}")
+        s.append('')
+    return s
 
 
 def bonos_seccion(bonos, fuentes):
@@ -678,7 +710,8 @@ def main():
     catalogo = cargar('work/catalogo.json')
     f = cargar('work/fuentes.json')
     bonos = {'bonos': f['bonos'], 'auditoria': f['bonos_auditoria']}
-    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes, catalogo, bonos))
+    strikers = {'strikers': f['strikers'], 'auditoria': f['strikers_auditoria']}
+    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers))
     por = {p: v for p, v in A.por_retrato.items() if v['ok'] or v['nd'] or v['dif']}
     json.dump({'resumen': dict(A.res), 'por_retrato': por}, open('work/verificacion.json', 'w', encoding='utf-8'),
               ensure_ascii=False)

@@ -341,6 +341,21 @@ Dudas:
   Supports («Physical Damage», «Critical Defense» y otros). Van como los escribe la wiki y cuentan
   para todos. Falta verlos en el juego.
 
+## Strikers
+
+`scripts/strikers.py` lee la pestaña Striker de la página de cada personaje en la wiki: quién puede
+aparecer a pegar junto a él y con qué probabilidad, cuando él ataca o cuando lo atacan («12% chance
+to appear when attacking»). Según Ezequiel, el striker tiene que estar en el mismo equipo. La tienen
+171 de 290 páginas (unas 7.000 filas), y la de Kingpin coincide con la del juego (capturas de
+Ezequiel, octubre de 2026). Les falta a 119 personajes, casi todos recientes (Galactus, Annihilus,
+Apocalypse, entre otros): en la app no tienen strikers propios, aunque pueden ser strikers de otros.
+Lo que no se pudo leer va a `docs/AUDITORIA.md` (sección 11).
+
+Dudas:
+- **Set Striker.** El juego tiene además un striker que se elige para cada personaje (solo de 6★ o
+  más), que aparece con su Striker Skill y cuyo efecto crece con el tier (captura de Galactus con
+  Silver Surfer). Es otro sistema: la app no lo tiene.
+
 ## Fuentes
 
 - thanosvibs: API de personajes, de skills y de [Leads & Supports](https://thanosvibs.money/supports);
