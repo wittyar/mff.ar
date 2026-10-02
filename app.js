@@ -613,10 +613,10 @@ const T = {
   cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
   cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
-  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve; 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en la tier list.',
-                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier list.' },
-  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso; 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma. A igual puntaje, el mejor ubicado en las tier lists.',
-                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it; 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most. On a tie, the best placed on the tier lists.' },
+  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve; 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en la tier list y después un orden fijo.',
+                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier list, then a fixed order.' },
+  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso; 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
+                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it; 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
   cx_sin_funcion_pvp: { es:'{x} no figura en la tier list de PvP ({l}): no tiene función en PvP y este orden no arma combinaciones.',
                        en:'{x} is not on the PvP tier list ({l}): it has no role in PvP, so this order builds no combinations.' },
   cx_sin_funcion_pve: { es:'{x} no figura en las tier lists de PvE ({l}), o solo como «Not for wbl»: no tiene función en PvE y este orden no arma combinaciones.',
@@ -2516,7 +2516,9 @@ function puedeVincular (de, a) {
 // Puntaje de contexto: 2 por cada stat que vale del liderazgo del líder y cada integrante al que le
 // llega y le sirve, 2 por cada nivel de fila de cada DPS (3 la más alta), 1 por cada soporte que le
 // llega a otro y le sirve, 1 por cada bono de equipo activo que le sirve a alguien y 1 por cada
-// striker del trío (uno es striker de otro). El líder es el que más suma de los que cumplen.
+// striker del trío (uno es striker de otro). El líder es el que más suma de los que cumplen; a igual
+// puntaje, el mejor ubicado en las tier lists del contexto y después la clave. Es el mismo en las
+// listas de los tres (Ezequiel, 2 de octubre de 2026).
 const ANTI_MERMAS = new Set(['Remove All Debuffs', 'Debuff Immunity']);
 const LIDERAZGO_VALE = {
   pvp: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'All Basic Defenses', 'HP', 'Ignore Dodge']),
@@ -2536,16 +2538,18 @@ const _LLEGA = Object.fromEntries(Object.entries(LIDERAZGO_VALE).map(([c, st]) =
 let STRIKER_SET;
 /** Rol de una variante en un contexto, según las filas de las listas de ese contexto en las que está
  *  (las de thanosvibs, con tus cambios): { dps, soporte (nivel de la mejor fila, 0 si no lo es),
- *  lider, striker, fuera, filas: [[lista, fila]] }. Se guarda hasta el próximo rebuild(). */
+ *  lider, striker, fuera, filas: [[lista, fila]], puesto (la suma de su puesto() en esas listas:
+ *  desempata al líder) }. Se guarda hasta el próximo rebuild(). */
 const _ROL = new Map();
 function rolEn (v, ctx) {
   const k = ctx + '|' + v.key;
   let r = _ROL.get(k);
   if (r) return r;
-  r = { dps: 0, soporte: 0, lider: false, striker: false, fuera: false, filas: [] };
+  r = { dps: 0, soporte: 0, lider: false, striker: false, fuera: false, filas: [], puesto: 0 };
   for (const [lid, roles] of Object.entries(ROLES_LISTAS[ctx])) {
     const l = listById(lid);
     if (!l) throw new Error('falta la tier list ' + lid);
+    r.puesto += puesto(l, v.key);
     for (const fid of filasDe(lid, v.key)) {
       const rf = roles[fid];
       if (!rf) throw new Error(`fila ${fid} de ${lid} sin rol en roles_listas.json`);
@@ -2601,7 +2605,10 @@ function enContexto (vs, ctx, detalle) {
     }
     let pts = 0;
     for (const bits of llega) pts += ((bits & 1) + (bits >> 1 & 1) + (bits >> 2 & 1)) * PESO.lider;
-    if (li < 0 || pts > ptsLider) { li = i; ptsLider = pts; }
+    // El mismo líder sea cual sea el orden de vs: a igual puntaje, el mejor ubicado en las tier lists
+    // del contexto y después la clave.
+    if (li < 0 || pts > ptsLider || (pts === ptsLider && (roles[i].puesto < roles[li].puesto
+        || (roles[i].puesto === roles[li].puesto && vs[i].key < vs[li].key)))) { li = i; ptsLider = pts; }
   }
   if (li < 0) return null;
   let dps = 0;
