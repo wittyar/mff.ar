@@ -364,8 +364,6 @@ const T = {
                        en:'Each option unlocks by owning the uniform in its row; below it, the stat worth picking per the Beginner’s Guide.' },
   op_base:           { es:'El uniforme base no tiene opciones: elegí un uniforme arriba.', en:'The base uniform has no options: pick a uniform above.' },
   op_none:           { es:'thanosvibs no le lista opciones a este uniforme.', en:'thanosvibs lists no options for this uniform.' },
-  op_no_data:        { es:'Los datos cargados no traen las opciones de uniforme: son de antes de que la app las sumara. Actualizá los datos desde Ajustes.',
-                       en:'The loaded data has no uniform options: it predates the app adding them. Update the data from Settings.' },
   ru_title:          { es:'Hoja de ruta',        en:'Roadmap' },
   ru_note:           { es:'Los pasos de la guía para esta variante, según su tier máximo y si sube a Tier-3 o trasciende. Marcá hasta dónde llegaste con el personaje: queda guardado en tu capa.',
                        en:'The guide’s steps for this variant, by its max tier and whether it goes Tier-3 or Transcends. Mark how far you got with the character: it is saved in your layer.' },
@@ -2964,14 +2962,10 @@ function armadoArtefacto (ch) {
       <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
     <div class="fuentes">${fuentesHtml(['tv-art'])}</div>`;
 }
-// Las opciones llegan en los datos desde que la app las muestra: con datos anteriores no las
-// trae ningún uniforme, y no es que thanosvibs no las liste.
-const HAY_OPCIONES = CHARS_SEED.some(c => (c.uniforms || []).some(u => u.op));
 /** Opciones del uniforme abierto: qué uniforme habilita cada una (thanosvibs) y qué stat
  *  conviene elegir en cada rango (guía de principiantes). */
 function armadoOpciones (v) {
   if (!v.uid) return `<p class="muted">${h(t('op_base'))}</p>`;
-  if (!HAY_OPCIONES) return `<p class="muted">${h(t('op_no_data'))}</p>`;
   if (!v.op) return `<p class="muted">${h(t('op_none'))}</p>`;
   const G = GUIA.opciones_uniforme;
   return `<p class="muted" style="margin-bottom:6px">${h(t('op_note'))}</p>
