@@ -613,10 +613,10 @@ const T = {
   cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
   cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
-  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve; 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en la tier list y después un orden fijo.',
-                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps; 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier list, then a fixed order.' },
-  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso; 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
-                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it; 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
+  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en la tier list y después un orden fijo.',
+                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier list, then a fixed order.' },
+  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
+                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
   cx_sin_funcion_pvp: { es:'{x} no figura en la tier list de PvP ({l}): no tiene función en PvP y este orden no arma combinaciones.',
                        en:'{x} is not on the PvP tier list ({l}): it has no role in PvP, so this order builds no combinations.' },
   cx_sin_funcion_pve: { es:'{x} no figura en las tier lists de PvE ({l}), o solo como «Not for wbl»: no tiene función en PvE y este orden no arma combinaciones.',
@@ -626,6 +626,7 @@ const T = {
   cx_de_sop:         { es:'{x} (soporte)',       en:'{x} (support)' },
   cx_lider:          { es:'Liderazgo de {x}',    en:'{x}\'s leadership' },
   cx_lider_nada:     { es:'Ningún liderazgo de los que valen en este contexto', en:'No leadership that counts in this context' },
+  cx_lider_mitad:    { es:'{c}: la mitad',       en:'{c}: half' },
   cx_dps:            { es:'DPS',                 en:'DPS' },
   cx_sinergia:       { es:'Soportes y bonos de equipo', en:'Supports and team bonuses' },
   cx_strikers:       { es:'Strikers',            en:'Strikers' },
@@ -2514,11 +2515,12 @@ function puedeVincular (de, a) {
 // - La sinergia (soportes y bonos de equipo) y los strikers son relevantes pero no definitorios:
 //   pesan la mitad.
 // Puntaje de contexto: 2 por cada stat que vale del liderazgo del líder y cada integrante al que le
-// llega y le sirve, 2 por cada nivel de fila de cada DPS (3 la más alta), 1 por cada soporte que le
-// llega a otro y le sirve, 1 por cada bono de equipo activo que le sirve a alguien y 1 por cada
-// striker del trío (uno es striker de otro). El líder es el que más suma de los que cumplen; a igual
-// puntaje, el mejor ubicado en las tier lists del contexto y después la clave. Es el mismo en las
-// listas de los tres (Ezequiel, 2 de octubre de 2026).
+// llega y le sirve (1 si el liderazgo se activa con una condición: el slot trae ac), 2 por cada nivel
+// de fila de cada DPS (3 la más alta), 1 por cada soporte que le llega a otro y le sirve, 1 por cada
+// bono de equipo activo que le sirve a alguien y 1 por cada striker del trío (uno es striker de otro).
+// El líder es el que más suma de los que cumplen; a igual puntaje, el mejor ubicado en las tier lists
+// del contexto y después la clave. Es el mismo en las listas de los tres (Ezequiel, 2 de octubre de
+// 2026: «único + condicional a la mitad», sin mirar los porcentajes).
 const ANTI_MERMAS = new Set(['Remove All Debuffs', 'Debuff Immunity']);
 const LIDERAZGO_VALE = {
   pvp: new Set(['All Basic Attacks', 'All Basic Attacks (Stackable)', 'All Basic Defenses', 'HP', 'Ignore Dodge']),
@@ -2530,10 +2532,13 @@ for (const c of Object.values(LIDERAZGO_VALE)) for (const st of c) {
   if (!PIDE[st] && !PARA_TODOS.has(st)) throw new Error('liderazgo que vale con un stat que no dice a quién le sirve: ' + st);
 }
 const PESO = { lider: 2, dps: 2, sinergia: 1, striker: 1 };
-/** Índice de cada stat que vale, por contexto, y a quiénes les llega cada uno (bits de integrante),
- *  reusado en los cientos de miles de tríos de la consulta. */
+/** Índice de cada stat que vale, por contexto, y a quiénes les llega cada uno (bits de integrante:
+ *  0-2 por un liderazgo permanente, 3-5 por uno condicional), reusado en los cientos de miles de
+ *  tríos de la consulta. */
 const VALE_IDX = Object.fromEntries(Object.entries(LIDERAZGO_VALE).map(([c, st]) => [c, new Map([...st].map((x, i) => [x, i]))]));
 const _LLEGA = Object.fromEntries(Object.entries(LIDERAZGO_VALE).map(([c, st]) => [c, new Uint8Array(st.size)]));
+/** A cuántos integrantes marcan los bits 0-2. */
+const aCuantos = (bits) => (bits & 1) + (bits >> 1 & 1) + (bits >> 2 & 1);
 /** Los strikers de cada personaje, como conjunto, para preguntar rápido. Lo arma iniciarDatos(). */
 let STRIKER_SET;
 /** Rol de una variante en un contexto, según las filas de las listas de ese contexto en las que está
@@ -2596,15 +2601,20 @@ function enContexto (vs, ctx, detalle) {
   for (let i = 0; i < vs.length; i++) {
     if (ctx === 'pvp' && !vs.every((m, j) => cubreSop[j] || sl[i].antiLid.some(x => aplicaA(x, m)))) continue;
     // Cada stat que vale cuenta una vez por integrante, aunque el liderazgo lo traiga en varias
-    // líneas (Arachknight 2099: todos los ataques +45%, +55% o +65% según sus Infinity Warps).
+    // líneas (Arachknight 2099: todos los ataques +45%, +55% o +65% según sus Infinity Warps), con
+    // la de más peso: PESO.lider si le llega por un liderazgo permanente y la mitad si solo le llega
+    // por uno que se activa con una condición (Silver Surfer: al recibir un debuff).
     llega.fill(0);
-    for (const x of sl[i].lid) for (const f of x.fx) {
-      const k = vale.get(f.s);
-      if (k === undefined) continue;
-      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])) llega[k] |= 1 << j;
+    for (const x of sl[i].lid) {
+      const b = x.ac ? 3 : 0;
+      for (const f of x.fx) {
+        const k = vale.get(f.s);
+        if (k === undefined) continue;
+        for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])) llega[k] |= 1 << (b + j);
+      }
     }
     let pts = 0;
-    for (const bits of llega) pts += ((bits & 1) + (bits >> 1 & 1) + (bits >> 2 & 1)) * PESO.lider;
+    for (const bits of llega) pts += aCuantos(bits) * PESO.lider + aCuantos(bits >> 3 & ~bits) * PESO.lider / 2;
     // El mismo líder sea cual sea el orden de vs: a igual puntaje, el mejor ubicado en las tier lists
     // del contexto y después la clave.
     if (li < 0 || pts > ptsLider || (pts === ptsLider && (roles[i].puesto < roles[li].puesto
@@ -2765,16 +2775,23 @@ function detalleContexto (e, vs, ctx) {
     });
     lineas.push([t('cx_anti'), null, [...fuentes].map(([f, ms]) => `${f} → ${quienes(ms)}`).join(' · ')]);
   }
-  // Por stat que vale: sus líneas (un liderazgo puede traer varias del mismo stat) y a quiénes llega.
-  const vale = LIDERAZGO_VALE[ctx], porStat = new Map();
+  // Por stat que vale y activación: sus líneas (un liderazgo puede traer varias del mismo stat) y a
+  // quiénes llega. Las de un liderazgo condicional cuentan la mitad, y solo para quien no recibe el
+  // mismo stat de uno permanente (cada stat cuenta una vez por integrante, la de más peso).
+  const vale = LIDERAZGO_VALE[ctx], grupos = new Map(), lleno = new Set();
   for (const x of slotsDe(e.lider).lid) for (const f of x.fx) {
     if (!vale.has(f.s)) continue;
-    const st = porStat.get(f.s) || { txt: [], ms: new Set() };
-    porStat.set(f.s, st);
-    st.txt.push(efectoSoporteTxt(f));
-    vs.forEach(m => { if (aplicaA(x, m) && sirve(f, m)) st.ms.add(m); });
+    const k = f.s + '|' + (x.ac || '');
+    const g = grupos.get(k) || { s: f.s, ac: x.ac, txt: [], ms: new Set() };
+    grupos.set(k, g);
+    g.txt.push(efectoSoporteTxt(f));
+    vs.forEach(m => { if (aplicaA(x, m) && sirve(f, m)) { g.ms.add(m); if (!x.ac) lleno.add(f.s + '|' + m.key); } });
   }
-  const liderazgo = [...porStat.values()].filter(st => st.ms.size).map(st => `${st.txt.join(' / ')} → ${quienes(vs.filter(m => st.ms.has(m)))}`);
+  const liderazgo = [...grupos.values()].map(g => {
+    const ms = vs.filter(m => g.ms.has(m) && !(g.ac && lleno.has(g.s + '|' + m.key)));
+    const cond = g.ac ? ` (${t('cx_lider_mitad').replace('{c}', minuscula(trTxt(g.ac)))})` : '';
+    return ms.length ? `${g.txt.join(' / ')}${cond} → ${quienes(ms)}` : null;
+  }).filter(Boolean);
   lineas.push([t('cx_lider').replace('{x}', e.lider.name), e.partes.lider, liderazgo.join(' · ') || t('cx_lider_nada')]);
   const dps = vs.map((m, j) => ({ m, r: e.roles[j] })).filter(x => x.r.dps).map(({ m, r }) =>
     `${m.name} (${r.filas.filter(([l, fid]) => ROLES_LISTAS[ctx][l.id][fid][0] === 'dps')
