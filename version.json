@@ -1,6 +1,6 @@
 {
- "version": "1.0.11",
+ "version": "1.0.12",
  "formato_datos": 3,
  "python": "3.14.7",
- "notas": "Cada uniforme muestra su género: once lo cambian (Lady Loki, Lady Deadpool, entre otros) y la ficha mostraba el de la base. Universal le gana a las otras tres clases con una ventaja menor, como dice la guía de thanosvibs: la sinergia y la cobertura de cada equipo lo cuentan. Los datos cambian de formato (el perfil de combate de cada personaje viene calculado): al actualizarse, la app baja los datos nuevos sola."
+ "notas": "La ficha tiene una pestaña nueva, Análisis: lo que hace cada variante con sus skills según el catálogo de efectos (a quién le llega cada efecto, de qué skill sale y cuándo, si le sirve, y cómo se lee en PvE y en PvP, con su certeza y su fuente). Los roles se calculan por variante y dicen qué le aporta al equipo: cada uniforme tiene los suyos. En la ficha, «← Nombre» vuelve al personaje del que viniste, igual que Alt+← y el botón de volver del mouse. Los datos cambian de formato: al actualizarse, la app baja los nuevos sola."
 }
