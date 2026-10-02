@@ -241,6 +241,9 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .eqfoto.nuevo .shot{box-shadow:0 0 0 2px var(--accent)}
 .eqfoto > span:last-child{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* Strikers en la ficha: el retrato, el nombre y, debajo, la probabilidad de aparecer y cuándo. */
+.eqfoto .stknom{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2)}
+.eqfoto.stk > span:last-child{color:var(--gold);font-weight:600}
 .eqwhy li.mas::marker{content:'+ ';color:var(--role-soporte)}
 .eqwhy li.menos{color:var(--text-2)}
 .eqwhy li.menos::marker{content:'− ';color:var(--accent)}

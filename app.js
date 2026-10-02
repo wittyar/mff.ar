@@ -28,6 +28,7 @@ const PERFIL         = window.MFF_PERFIL;         // con qué pega cada retrato 
 const ANALISIS       = window.MFF_ANALISIS;       // lo que hace cada retrato con sus skills (scripts/modelo.py)
 const CATALOGO       = window.MFF_CATALOGO;       // catálogo de efectos (scripts/contenido/catalogo.json)
 const BONOS          = window.MFF_BONOS;          // bonos de equipo (scripts/bonos.py)
+const STRIKERS       = window.MFF_STRIKERS;       // strikers de cada personaje (scripts/strikers.py)
 const GLOSARIO       = window.MFF_GLOSARIO;       // glosario de skills del juego, inglés y coreano (scripts/contenido/glosario.json)
 const TB             = window.MFF_TABLAS || {};   // patrones y etiquetas, en los dos idiomas
 const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
@@ -644,6 +645,16 @@ const T = {
   bn_show:           { es:'Ver sus {n} bonos',   en:'Show its {n} bonuses' },
   bn_noname:         { es:'(sin nombre en la wiki)', en:'(unnamed on the wiki)' },
   bn_tie:            { es:'La wiki no coincide: sus páginas dicen otra cosa', en:'The wiki disagrees: its pages say different things' },
+  sk_title:          { es:'Strikers',            en:'Strikers' },
+  sk_note:           { es:'Pueden aparecer a pegar junto a él, con esa probabilidad, cuando él ataca o cuando lo atacan. Según Ezequiel, el striker tiene que estar en el mismo equipo. Son del personaje: valen con cualquier uniforme.',
+                       en:'They may show up to strike alongside it, with that chance, when it attacks or when it is attacked. Per Ezequiel, the striker has to be on the same team. They belong to the character: any uniform works.' },
+  sk_suyos:          { es:'Sus {n} strikers',    en:'Its {n} strikers' },
+  sk_de:             { es:'Es striker de {n}',   en:'Striker of {n}' },
+  sk_de_nota:        { es:'Aparece junto a ellos cuando ellos atacan o los atacan.', en:'It shows up alongside them when they attack or are attacked.' },
+  sk_sin_pestana:    { es:'La wiki no tiene sus strikers.', en:'The wiki does not list its strikers.' },
+  sk_de_nadie:       { es:'No es striker de nadie en la wiki.', en:'It is nobody\'s striker on the wiki.' },
+  sk_ataca:          { es:'{p}% al atacar',     en:'{p}% on attack' },
+  sk_atacado:        { es:'{p}% al ser atacado', en:'{p}% when attacked' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
   cmp_cost:          { es:'Costo',               en:'Cost' },
 
@@ -1463,6 +1474,9 @@ const ROLES_EQUIPO = ['Tanque', 'Control', 'Daño', 'Soporte'];
  *  si las páginas de la wiki empatan) tiene la forma de un efecto de soporte ({ fx: [{ s, v }] }),
  *  para que la sinergia les aplique sirve() y efectoSoporteTxt(). Lo arma iniciarDatos(). */
 let BONOS_DE;
+/** De quiénes es striker cada personaje: { cid: [[cid del personaje, %, 'ataca'|'atacado'], ...] }, al
+ *  revés de STRIKERS. Lo arma iniciarDatos(). */
+let STRIKERS_DE;
 /** Por efecto del catálogo (id): el efecto, los términos del glosario del juego que le corresponden y
  *  las etiquetas de skills que apuntan a él (índices en MFF_TABLAS.ab, solo las que traen los
  *  datos). Lo arma iniciarDatos(). */
@@ -2381,6 +2395,7 @@ function fichaEquipos (ch, v) {
     ${sinVinculo.length ? `<p class="muted">${h(t('eq_no_link'))} ${sinVinculo.map(o => h(o.tt.name)).join(' · ')}</p>` : ''}
   </div>` : ''}
   ${bonosHtml(ch)}
+  ${strikersHtml(ch)}
   ${combinacionesHtml(v)}`;
 }
 /** Los bonos de equipo del personaje (valen con cualquier uniforme), plegados: el nombre, con
@@ -2399,6 +2414,25 @@ function bonosHtml (ch) {
         <div class="fuentes">${fuentesHtml(b.f)}</div>
       </div>`).join('')}</div>
     </details>
+  </div>`;
+}
+/** Los strikers del personaje (de la pestaña Striker de la wiki; valen con cualquier uniforme) y de
+ *  quiénes es striker, plegados: cada uno con su retrato, su probabilidad de aparecer y cuándo, de
+ *  mayor a menor probabilidad. */
+function strikersHtml (ch) {
+  const suyos = STRIKERS[ch.id], de = STRIKERS_DE[ch.id] || [];
+  const fotos = (filas) => `<div class="row eqfotos">${filas.slice().sort((a, b) => b[1] - a[1]).map(([cid, p, cuando]) => {
+    const x = variant(cid, null);
+    return `<button class="eqfoto stk" data-a="open" data-cid="${x.cid}" data-uid="" title="${h(x.name)}"><span class="shot">${shot(x.id)}</span>
+      <span class="stknom">${h(x.name)}</span><span>${h(t('sk_' + cuando).replace('{p}', p))}</span></button>`;
+  }).join('')}</div>`;
+  return `<div class="section" id="strikers"><h3>${h(t('sk_title'))}</h3>
+    <p class="muted">${h(t('sk_note'))}</p>
+    ${suyos ? (suyos.length ? `<details class="reglas"><summary>${h(t('sk_suyos').replace('{n}', suyos.length))}</summary>${fotos(suyos)}</details>` : '')
+            : `<p class="muted">${h(t('sk_sin_pestana'))}</p>`}
+    ${de.length ? `<details class="reglas"><summary>${h(t('sk_de').replace('{n}', de.length))}</summary>
+      <p class="muted">${h(t('sk_de_nota'))}</p>${fotos(de)}</details>` : `<p class="muted">${h(t('sk_de_nadie'))}</p>`}
+    <div class="fuentes">${fuentesHtml(['wiki-strikers'])}</div>
   </div>`;
 }
 /** El mejor lugar para v en un equipo: reemplazando a cada integrante o, si hay lugar,
@@ -4331,6 +4365,8 @@ function iniciarDatos () {
     const bono = { n: b.n, m: b.m, f: b.f, vs: b.v.map(v => ({ fx: v.map(([s, x]) => ({ s, v: x })) })) };
     for (const c of b.m) (BONOS_DE[c] = BONOS_DE[c] || []).push(bono);
   }
+  STRIKERS_DE = {};
+  for (const [cid, filas] of Object.entries(STRIKERS)) for (const [x, p, cuando] of filas) (STRIKERS_DE[x] = STRIKERS_DE[x] || []).push([cid, p, cuando]);
   GL_DE = Object.fromEntries(CATALOGO.efectos.map(e => [e.id, { e, terminos: [], etiquetas: [] }]));
   for (const x of GLOSARIO.terminos) for (const id of x.efectos) GL_DE[id].terminos.push(x);
   TB.ab.forEach((r, i) => {
