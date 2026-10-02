@@ -53,7 +53,7 @@ y Detonación con Dark Obsidian Armor y con General's Hand. Todo lo que sigue es
 
 | Característica | Valores | Qué hace en el juego | Fuente |
 |---|---|---|---|
-| Clase | Combate, Detonación, Velocidad, Universal | Ventaja de tipo: más daño contra la clase a la que le gana y menos daño recibido de ella. Combate le gana a Velocidad, Velocidad a Detonación y Detonación a Combate. Universal le gana a las otras tres con una ventaja menor y no tiene debilidad. Restringe liderazgos y soportes. | thanosvibs (`type`); wiki (páginas de cada clase); guía de thanosvibs, parte 3 (Type Enhancement); la ventaja de Universal, confirmada por Ezequiel; el ciclo, también la guía del juego (Type Affinity) |
+| Clase | Combate, Detonación, Velocidad, Universal | Ventaja de tipo: más daño contra la clase a la que le gana y menos daño recibido de ella. Combate le gana a Velocidad, Velocidad a Detonación y Detonación a Combate. Universal le gana a las otras tres con una ventaja menor y no tiene debilidad. La fuerza depende de la mejora de tipo de cada personaje (ver *Lo que muestran las pantallas del juego*). Restringe liderazgos y soportes. | thanosvibs (`type`); wiki (páginas de cada clase); guía de thanosvibs, parte 3 (Type Enhancement); la ventaja de Universal, confirmada por Ezequiel; el ciclo, también la guía del juego (Type Affinity) |
 | Bando | Superhéroe, Supervillano, Neutral | Restringe liderazgos y soportes; hay efectos de daño contra héroes o villanos. Dentro de una etapa, los Super Villains (jefes) y los Villains son facciones distintas (ver *Dudas*). | thanosvibs (`side`); guía del juego (Side) |
 | Raza | Humano, Mutante, Inhumano, Alienígena, Criatura, Otro | Restringe liderazgos y soportes; hay efectos contra una raza («excepto mutantes»). | thanosvibs (`allies`) |
 | Género | Masculino, Femenino, Neutro | Hay efectos de daño contra un género. | thanosvibs (`gender`) |
@@ -233,6 +233,37 @@ el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
 2. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
    sinergia y el índice de equipos.
 
+## Lo que muestran las pantallas del juego
+
+Capturas de Ezequiel (octubre de 2026), de su cuenta.
+
+- **Mejora de tipo (Type Enhancement).** Cada personaje la sube por niveles. En el máximo (6), una
+  clase hace 60% más de daño normal a la clase a la que le gana y recibe 45% menos de ella (Thanos,
+  Adam Warlock y un Velocidad, uno de cada clase). Universal solo sube el daño, igual contra las
+  otras tres: 17,5% en el nivel 5 (Gorr), sin reducción del daño recibido. El juego muestra además
+  un valor entre paréntesis (+30%, +15%, +12,5%) que esa pantalla no explica.
+- **Strikers.** Solo personajes de 6★ o más; el buff del striker rinde más cuanto más alto es su
+  tier, y el striker suma un bonus de instinto (Destrucción +Nv. 2 en el ejemplo).
+- **Pasivas de equipo.** El panel del equipo lista las pasivas que les llegan a todos aunque su
+  dueño no sea el líder (el glosario las llama Team Passive: «Applies to: All Team members»), como
+  la de Cyclops con el uniforme de X-Men '97 o la de Jeff the Land Shark. Es lo que el análisis ya
+  manda al equipo.
+- **Todos los efectos del equipo.** El panel «All Effects» suma los efectos iguales de distintas
+  fuentes (todos los ataques básicos +58,36%) y muestra aparte los que son contra ciertos rivales
+  (30% y 45% contra SUPER VILLAIN). Que el combate los sume igual es probable, no comprobado.
+- **Bonos de equipo (Team Bonus).** Llevar ciertos personajes juntos da stats («Afflicted Lovers»:
+  ataques +5,24% y vida +4,97%; tres de 6★: ataques, defensas y vida +3,12%). Ninguna fuente que usa
+  la app publica la lista.
+- **Lo que suma la cuenta.** El nivel de agente, las cartas de cómic (5, en dos mazos que se asignan
+  por contenido), las espadas (X of Swords) y el S.H.I.E.L.D. Archive (stats de instinto) valen
+  para todos los personajes; los emblemas, solo en ciertos contenidos; las colecciones de equipo
+  (Team-Up), para los de un tema o una raza. Suben los stats de todos por igual o de un grupo: no
+  cambian la comparación entre variantes, salvo las colecciones de equipo.
+- **C.T.P. por contenido.** Cada personaje lleva un C.T.P. (desde el Nv. 30), y la pantalla deja
+  elegir uno para PvE y otro para PvP.
+- **Elite Gear.** Los Tier-4 con Nv. 80 y gear +30 pueden desbloquearlo: otra progresión, con
+  puntos para elegir stats, que la app todavía no tiene.
+
 ## Fuentes
 
 - thanosvibs: API de personajes, de skills y de [Leads & Supports](https://thanosvibs.money/supports);
@@ -243,5 +274,6 @@ el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
 - Future Fight Wiki: infobox de cada personaje; páginas
   [Combat](https://future-fight.fandom.com/wiki/Combat), [Blast](https://future-fight.fandom.com/wiki/Blast),
   [Speed](https://future-fight.fandom.com/wiki/Speed) y [Universal](https://future-fight.fandom.com/wiki/Universal).
-- El juego (capturas de Ezequiel, octubre de 2026): la guía (Type Affinity, Side, Instinct y el
-  glosario de skills: Guard Break) y la ficha de cada C.T.P.
+- El juego (capturas de Ezequiel, octubre de 2026): la guía (Type Affinity, Side, Instinct, los
+  glosarios de contenidos, de crecimiento y de skills), la ficha de cada C.T.P. y las pantallas de
+  personaje y de equipo.
