@@ -26,19 +26,26 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
   (`scripts/contenido/`) no cierra con los datos.
 - Pruebas: no están en el repo. Son scripts de Playwright contra la app servida por
   `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`. La
-  copia más reciente va en un zip junto al bundle de la 1.0.14 (`pruebas-mff-*.zip`).
+  copia más reciente va en un zip junto al último bundle (`pruebas-mff-*.zip`); su `LEEME.txt` dice
+  qué rutas adaptar. `images/` y `work/` no están en el repo: las imágenes se bajan con
+  `bajar_imagenes.py`, y sin `work/` no corren verif_guia_ficha, verif_marcadores ni verif_opciones.
 
 ## Estado (2 de octubre de 2026)
 
-- Publicada: la 1.0.12 (datos de formato 3).
-- Entregadas sin publicar: la 1.0.13 (solapa Glosario, formato 4) y la 1.0.14 (equipos por
-  contexto PvP y PvE, strikers, velocidades y resistencias en «le sirve»; formato 5). Se publica solo
-  la 1.0.14: sus notas ya anuncian el Glosario.
+- Publicada: la 1.0.14 (datos de formato 5). La 1.0.13 no se publicó; las notas de la 1.0.14
+  anuncian su Glosario.
+- Entregada sin publicar: la 1.0.15 (en PvP cuentan las defensas del liderazgo; sin lista de
+  contexto para quien no tiene función en ese contexto). Los datos siguen en el formato 5: el push no
+  le cambia nada a la 1.0.14 instalada, y la etiqueta `v1.0.15` publica la release.
 
 ## Pendiente
 
-- Ajustar los pesos del puntaje de contexto mirando casos (hoy: liderazgo 2 y DPS 2 por nivel;
-  sinergia y strikers, 1). Ver «Equipos por contexto» en `docs/MODELO.md`.
+- Liderazgo en PvP: Molecule Man es «la excepción rara» (Ezequiel) y hoy no suma nada fuera de los
+  anti-mermas, ni tiene lista de PvP; el daño contra una facción no cuenta. Falta decidir cómo
+  cuentan. Los pesos se revisaron con casos y quedaron igual (ver «Casos de referencia» en
+  `docs/MODELO.md`).
+- Compañeros sin función en el contexto: entran igual si tienen vínculo con él. Falta decidir si
+  quedan fuera, como el personaje de la ficha.
 - Bonos de equipo del juego por confirmar con capturas. Quedaron anotados así: W, D, R y SW; con
   duda, Sersi, Beta Ray Bill, Amadeus Cho, Doom y Kang; el segundo stat de Heralds #3; la lista de
   Annihilus.
