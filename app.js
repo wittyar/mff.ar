@@ -13,6 +13,10 @@
 
 // ============================================================================
 // DATOS DE data.js (solo lectura)
+// Al cargar app.js solo se toman las variables de data.js; nada las interpreta hasta que
+// arrancar() confirma que son del formato de esta versión (si no, pantallaDatos() baja las
+// publicadas). Lo que se deriva de ellas se arma en iniciarDatos(), después de esa
+// confirmación: con datos de otro formato, o sin data.js, un campo puede no estar.
 // ============================================================================
 const SEED           = window.MFF_SEED;
 const CHARS_SEED     = window.MFF_SEED_CHARACTERS || [];
@@ -1359,11 +1363,9 @@ function efectoSoporteTxt (f) {
 const LIDERAZGOS = ['leader', 'leader2'];
 const ROLES_EQUIPO = ['Tanque', 'Control', 'Daño', 'Soporte'];
 /** Ventaja de tipo (SEED.VENTAJA_TIPO): a qué clases le gana cada una, 'normal' o 'menor'
- *  (la de Universal sobre las otras tres). La amenaza de una clase es la que le gana con
- *  ventaja normal; Universal no tiene. */
-const VENTAJA = SEED.VENTAJA_TIPO;
-const LE_GANA_A = {};
-for (const [c, sobre] of Object.entries(VENTAJA)) for (const [d, f] of Object.entries(sobre)) if (f === 'normal') LE_GANA_A[d] = c;
+ *  (la de Universal sobre las otras tres). LE_GANA_A: la amenaza de cada clase, la que le gana
+ *  con ventaja normal; Universal no tiene. Las arma iniciarDatos(). */
+let VENTAJA, LE_GANA_A;
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
  *  soporte de thanosvibs que alcanzan a otro integrante y le sirven (sirve()): los de soporte
  *  valen en cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
@@ -3894,6 +3896,13 @@ function exportCsv () {
 function pantallaFatal (titulo, detalle) {
   $('#app').innerHTML = `<main><div class="fatal"><h1>${h(titulo)}</h1><p>${h(detalle)}</p></div></main>`;
 }
+/** Lo que se deriva de data.js. Lo llama arrancar() cuando ya confirmó que los datos son del
+ *  formato de esta versión. */
+function iniciarDatos () {
+  VENTAJA = SEED.VENTAJA_TIPO;
+  LE_GANA_A = {};
+  for (const [c, sobre] of Object.entries(VENTAJA)) for (const [d, f] of Object.entries(sobre)) if (f === 'normal') LE_GANA_A[d] = c;
+}
 async function arrancar () {
   // Sin su servidor (index.html suelto, o servido por otro programa) no hay dónde
   // guardar la capa: se dice eso en vez de arrancar a medias.
@@ -3906,6 +3915,7 @@ async function arrancar () {
   setInterval(latir, ESCRITORIO.latido_cada * 1000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) latir(); });
   if (!window.MFF_VERSION || window.MFF_VERSION.formato !== ESCRITORIO.formato_datos) return pantallaDatos();
+  iniciarDatos();
   rebuild();
   try {
     const v = sessionStorage.getItem('mff_volver');
