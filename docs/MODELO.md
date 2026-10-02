@@ -25,12 +25,15 @@ marcado como probable o como duda.
 - Sin números: el modelo dice qué da cada cosa, a quién le llega y si le sirve; no estima el daño.
 - La «mesa» es la tabla de datos del modelo. Se define al final, con lo aprendido en las etapas
   anteriores.
+- Roles (2 de octubre de 2026): no existen en el juego y dicen qué le aporta cada variante al
+  equipo (ver *Etapa 2*).
 
 ## Etapas
 
 1. **Personajes y características**: qué es cada variante (identidad y perfil de combate).
 2. **Skills**: qué hace cada efecto (las 228 etiquetas tipadas de thanosvibs), a quién apunta y
-   cómo se lee en PvE y en PvP. Los roles se rehacen acá. En curso: el catálogo de efectos.
+   cómo se lee en PvE y en PvP. Los roles se rehacen acá. Hecha: el catálogo de efectos y el
+   análisis de cada variante.
 3. **Pasivas, liderazgos y soportes**: su efecto sobre los stats y para quién sirven. Junta las
    skills con Leads & Supports de thanosvibs, que son el mismo efecto visto de dos lados (de ahí
    sale, por ejemplo, que el efecto de uniforme de General's Hand es contra Universales). En curso:
@@ -95,8 +98,8 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 
 - **Habilidad de World Boss.** Cada variante tiene una, siempre una de sus habilidades. Falta saber
   para qué se usa en el juego.
-- **Roles.** Salen de juntar las skills de todos los uniformes del personaje, no de cada variante.
-  Se rehacen en la etapa 2.
+- **Roles.** Salían de juntar las skills de todos los uniformes del personaje. Se rehicieron en la
+  etapa 2, por variante.
 
 ## Etapas 2 y 3: el catálogo de efectos
 
@@ -151,12 +154,52 @@ cruce sea parte del build.
 - **Códigos sin nombre.** 401, 577 y 108 en «Natural Enemy», y los de otras etiquetas; ninguna
   fuente los nombra.
 
+## Etapa 2: lo que hace cada variante con sus skills
+
+`scripts/modelo.py` (`analisis`) recorre cada efecto de cada skill de la variante y, con el
+catálogo, anota:
+
+- **Qué efecto es.** Las etiquetas que la fuente usa para dos cosas se resuelven por el texto.
+- **A quién le llega.** Lo que el catálogo dice que se aplica al rival va al rival. Lo demás va al
+  objetivo de la etapa: a él si no tiene (las de liderazgo siempre lo traen) o si es «Self»; al
+  equipo, con qué aliados, si es un grupo; a sus invocaciones. La etapa «All Allies for the first
+  effect, Self for the second effect» manda el primer efecto al equipo y el resto a él.
+- **De qué skills sale y cuándo:** la skill y la activación de la etapa. Las apariciones de un mismo
+  efecto se juntan si comparten destino, aliados y condición.
+- **Si le sirve**, cuando es para él: la regla «le sirve» del catálogo contra su perfil de combate y
+  sus skills (un buff de daño de perforación sin Perforación, o de Striker sin Striker, no le sirve).
+- **Lo que la fuente no dice.** «Give Power» («Acquires the following effect») es un envoltorio:
+  lo que otorga viene después, en la misma etapa o en las que siguen. Si no le sigue nada, la fuente
+  no dice qué otorga, y el análisis lo muestra así (74 casos en estos datos). Lo que el catálogo no
+  clasifica también se ve, como lo publica la fuente.
+
+El daño de los golpes no va en el análisis: es el perfil de combate de la etapa 1. Viaja en
+`data.js` (`MFF_ANALISIS`, por retrato, con el catálogo en `MFF_CATALOGO`; formato 3).
+
+### Roles
+
+No existen en el juego. Dicen qué le aporta la variante al equipo (Ezequiel, 2 de octubre de 2026),
+y cada uniforme tiene los suyos:
+
+| Rol | Regla | Variantes que lo tienen |
+|---|---|---|
+| Soporte | Le da algo a sus aliados fuera del liderazgo. | 239 de 888 (27%) |
+| Tanque | Provoca, o le baja al equipo el daño que recibe. | 230 (26%) |
+| Control | Le aplica al rival 3 o más controles distintos. | 500 (56%) |
+| Daño | Todos. | 888 |
+
+Antes salían de juntar los uniformes del personaje, con una lista de etiquetas por rol (curación,
+escudo o barrera para Soporte; superarmadura o defensas para Tanque; 2 controles para Control): por
+variante, eso daba Soporte al 88%, Tanque al 85% y Control al 82%, y no distinguía a nadie. Pesan en
+el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
+
 ### Lo que sigue
 
-1. La ficha muestra, por variante, lo que da cada skill, liderazgo y soporte según el catálogo: qué
-   es, cuándo, a quién le llega, a quién le sirve y cómo se lee en PvE y en PvP.
-2. Los marcadores (`$HEROSUBTYPE1`) se completan también con Leads & Supports, que publica el mismo
-   efecto con la facción, el tipo o la raza escritos.
+1. La ficha muestra el análisis de cada variante: qué es cada efecto, cuándo, a quién le llega,
+   si le sirve y cómo se lee en PvE y en PvP.
+2. Etapa 3: los liderazgos y soportes de Leads & Supports en el mismo análisis, con el efecto
+   que la skill no dice (los «Give Power» vacíos) y los marcadores (`$HEROSUBTYPE1`) completados
+   con la facción, el tipo o la raza que Leads & Supports escribe.
 3. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
    sinergia y el índice de equipos.
 

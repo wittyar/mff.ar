@@ -1,6 +1,6 @@
 # Catálogo de efectos
 
-Generado por `scripts/catalogo.py` el 2026-10-01, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
+Generado por `scripts/catalogo.py` el 2026-10-02, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
 
 thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo traen como una etiqueta (`ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (`All Basic Attacks`). Acá los dos apuntan al mismo efecto, y cada efecto dice qué es, a quién le sirve y cómo se lee en PvE y en PvP. Cuándo se activa y a quién le llega no es del efecto sino de cada skill o soporte (su activación, su objetivo, su restricción): eso lo muestra la ficha.
 

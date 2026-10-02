@@ -14,8 +14,15 @@ Etapa 1, perfil de combate: con qué pega cada retrato, según el daño de sus s
 - ele: los elementos de su daño (fuego, frío, rayo, veneno, mente). Un buff de un elemento
   solo le sirve a quien hace daño de ese elemento (guía, parte 3).
 
-Lo usa _core.py para data.js (MFF_PERFIL, por retrato)."""
-import math
+Etapa 2, lo que hace cada variante con sus skills (analisis): cada efecto de cada skill,
+clasificado con el catálogo (scripts/contenido/catalogo.json), con a quién le llega (a él, al
+equipo y a qué aliados, al rival o a sus invocaciones), desde qué skills, con qué condición y,
+si es para él, si le sirve. De ahí salen también sus roles (roles), que no existen en el juego:
+qué le aporta al equipo.
+
+Lo usa _core.py para data.js (MFF_PERFIL y MFF_ANALISIS, por retrato, y los roles de cada
+personaje y uniforme)."""
+import json, math
 
 
 def perfil(skills, desc):
@@ -41,3 +48,140 @@ def perfil(skills, desc):
     total = sum(escala.values())
     return {'esc': [[src, math.floor(n * 100 / total + 0.5)] for src, n in sorted(escala.items(), key=lambda x: -x[1])],
             'tip': sorted(tipos), 'ele': sorted(elementos)}
+
+
+# ---- Etapa 2: lo que hace cada variante con sus skills ----------------------------------
+# Destino de un efecto: a él, al equipo, al rival o a sus invocaciones.
+EL, EQUIPO, RIVAL, INVOCACION = 'e', 'q', 'r', 'i'
+_ORDEN_DESTINO = {EL: 0, EQUIPO: 1, RIVAL: 2, INVOCACION: 3}
+
+
+def _mapeo(cat, etiqueta, patron):
+    """Cómo clasifica el catálogo un efecto (etiqueta y patrón de su texto), o None si no lo
+    clasifica (scripts/catalogo.py lo avisa y la auditoría lo lista)."""
+    m = cat['skills'].get(etiqueta)
+    if m is None:
+        return None
+    return m['por_patron'].get(patron) if 'por_patron' in m else m
+
+
+def _destino(para, etapa, j, tgt):
+    """A quién le llega el efecto j de una etapa, y a qué aliados (el objetivo de la etapa,
+    índice en la tabla de objetivos) si es al equipo. Lo que se le aplica al rival va al rival
+    aunque la etapa tenga objetivo: es lo que otorga «Give Power» (sus golpes aplican
+    sangrado). Sin objetivo, lo propio es para él; las de liderazgo siempre lo traen."""
+    if para == 'rival':
+        return RIVAL, None
+    if 'tg' not in etapa:
+        return EL, None
+    texto = tgt[etapa['tg']]['en']
+    # Dos objetivos de la fuente traen la condición de activación pegada como "\\n".
+    if texto == 'Self' or texto.startswith('Self\\n'):
+        return EL, None
+    if texto == 'Summoned Character':
+        return INVOCACION, None
+    if texto.startswith('All Allies for the first effect'):
+        return (EQUIPO, _indice(tgt, 'All Allies')) if j == 0 else (EL, None)
+    return EQUIPO, etapa['tg']
+
+
+def _indice(tgt, texto):
+    return next(i for i, x in enumerate(tgt) if x['en'] == texto)
+
+
+def le_sirve(regla, perfil, efectos, skills):
+    """¿Le sirve a la variante un efecto con esta regla del catálogo (sirve)? efectos: los ids
+    de catálogo de todo lo que hace, con su destino; skills: sus skills."""
+    if regla in ('todos', 'propio'):
+        return True
+    tipo, _, valor = regla.partition(':')
+    if tipo == 'escala':
+        return valor in {src for src, _ in perfil['esc']}
+    if tipo == 'elemento':
+        return bool(perfil['ele']) if valor == '*' else valor in perfil['ele']
+    if tipo == 'tipo':
+        return valor in perfil['tip']
+    if regla == 'aplica_debuffs':
+        return any(d == RIVAL and g in ('control', 'debilitar', 'continuo') for _, d, g in efectos)
+    if regla == 'invoca':
+        return any(e == 'invocar' for e, _, _ in efectos)
+    if regla == 'perfora':
+        return any(e == 'perforar' for e, _, _ in efectos)
+    # La definitiva de Tier-3 se carga con la barra (la fuente la publica sin recarga); la de
+    # los Trascendidos tiene recarga de verdad.
+    if regla == 'definitiva':
+        return any(sk['sl'] == 'Active Ult' and not sk['cd'] for sk in skills)
+    if regla == 'striker':
+        return any(sk['sl'] == 'Striker Skill' for sk in skills)
+    raise SystemExit(f'regla de «le sirve» del catálogo que el modelo no sabe evaluar: {regla!r} (scripts/modelo.py)')
+
+
+def analisis(skills, tablas, cat, perfil):
+    """Lo que hace una variante con sus skills, efecto por efecto.
+
+    fx: [efecto, destino, objetivo, fuentes], en el orden del catálogo y por destino. efecto:
+      índice en cat['efectos']; destino: 'e' (él), 'q' (equipo), 'r' (rival), 'i' (sus
+      invocaciones); objetivo: si es al equipo, el índice del objetivo en la tabla de objetivos
+      (qué aliados), si no None; fuentes: [skill, etapa, efecto] de cada aparición, índices en
+      sus skills. Las fuentes de una entrada comparten la condición del catálogo (contra quién,
+      cómo varía o cuánto dura).
+    ns: índices de fx de lo que es para él pero no le sirve (un buff de fuego sin daño de fuego).
+    sc: fuentes de lo que el catálogo no clasifica (thanosvibs agregó una etiqueta).
+    El daño de los golpes no va: es el perfil de combate. «Give Power» es un envoltorio (lo que
+    otorga viene después, en la misma etapa o en las que siguen); va solo si no le sigue nada,
+    porque entonces la fuente no dice qué otorga."""
+    ab, desc, tgt = tablas['ab'], tablas['desc'], tablas['tgt']
+    idx = {e['id']: i for i, e in enumerate(cat['efectos'])}
+    grupo = {e['id']: e['grupo'] for e in cat['efectos']}
+    entradas, sin_clasificar = {}, []
+    for si, sk in enumerate(skills):
+        etapas = sk.get('st') or []
+        for ti, etapa in enumerate(etapas):
+            fx = etapa.get('fx') or []
+            for fi, f in enumerate(fx):
+                m = _mapeo(cat, ab[f['a']]['en'], desc[f['p']]['en'])
+                if m is None:
+                    sin_clasificar.append([si, ti, fi])
+                    continue
+                d, objetivo = _destino(m['para'], etapa, fi, tgt)
+                cond = json.dumps(m.get('condicion'), sort_keys=True)
+                for e in m['efectos']:
+                    if e == 'golpe':
+                        continue
+                    if e == 'otorga' and (fx[fi + 1:] or any(x.get('fx') for x in etapas[ti + 1:])):
+                        continue
+                    entradas.setdefault((e, d, objetivo, cond), []).append([si, ti, fi])
+    claves = sorted(entradas, key=lambda k: (_ORDEN_DESTINO[k[1]], idx[k[0]], k[2] if k[2] is not None else -1, k[3]))
+    fx = [[idx[e], d, objetivo, entradas[(e, d, objetivo, cond)]] for e, d, objetivo, cond in claves]
+    efectos = [(e, d, grupo[e]) for e, d, _, _ in claves]
+    ns = [i for i, (e, d, objetivo, cond) in enumerate(claves)
+          if d == EL and not le_sirve(cat['efectos'][idx[e]]['sirve'], perfil, efectos, skills)]
+    out = {'fx': fx}
+    if ns:
+        out['ns'] = ns
+    if sin_clasificar:
+        out['sc'] = sin_clasificar
+    return out
+
+
+# Roles: no existen en el juego. Dicen qué le aporta la variante al equipo (Ezequiel, 2 de
+# octubre de 2026): Soporte, le da algo a sus aliados fuera del liderazgo; Tanque, provoca o le
+# baja al equipo el daño que recibe; Control, le aplica al rival tres o más controles
+# distintos; Daño, todos.
+ROLES = ('Control', 'Soporte', 'Tanque', 'Daño')
+CONTROLES_PARA_ROL = 3
+
+
+def roles(an, skills, cat):
+    ids = [e['id'] for e in cat['efectos']]
+    grupo = {e['id']: e['grupo'] for e in cat['efectos']}
+    r = []
+    controles = {ids[e] for e, d, _, _ in an['fx'] if d == RIVAL and grupo[ids[e]] == 'control' and ids[e] != 'provocar'}
+    if len(controles) >= CONTROLES_PARA_ROL:
+        r.append('Control')
+    if any(d == EQUIPO and any(skills[si]['sl'] != 'Leader Skill' for si, _, _ in fuentes) for _, d, _, fuentes in an['fx']):
+        r.append('Soporte')
+    if any(ids[e] == 'provocar' or (d == EQUIPO and grupo[ids[e]] == 'reduccion') for e, d, _, _ in an['fx']):
+        r.append('Tanque')
+    r.append('Daño')
+    return r

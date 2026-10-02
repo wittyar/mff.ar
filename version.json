@@ -1,6 +1,6 @@
 {
  "version": "1.0.11",
- "formato_datos": 2,
+ "formato_datos": 3,
  "python": "3.14.7",
  "notas": "Cada uniforme muestra su género: once lo cambian (Lady Loki, Lady Deadpool, entre otros) y la ficha mostraba el de la base. Universal le gana a las otras tres clases con una ventaja menor, como dice la guía de thanosvibs: la sinergia y la cobertura de cada equipo lo cuentan. Los datos cambian de formato (el perfil de combate de cada personaje viene calculado): al actualizarse, la app baja los datos nuevos sola."
 }

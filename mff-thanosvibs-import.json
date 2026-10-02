@@ -6,9 +6,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -47,6 +44,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -1021,6 +1022,10 @@
       "Mando",
       "Fuerza Fénix"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -1117,6 +1122,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -1219,6 +1228,10 @@
       "Mando",
       "Zombi"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -1315,6 +1328,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -1409,9 +1426,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -1741,6 +1755,10 @@
      "wba": "Radiación Gamma",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -1838,6 +1856,10 @@
      "wba": "Radiación Gamma",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -2033,6 +2055,10 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -2130,6 +2156,10 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -2226,6 +2256,10 @@
      "wba": "Radiación Gamma",
      "trans": false,
      "new": true,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -2320,9 +2354,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -3036,6 +3067,10 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -3132,6 +3167,10 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -3228,6 +3267,10 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -3322,8 +3365,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -3555,6 +3596,11 @@
      "wba": "Llama",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -3651,6 +3697,11 @@
      "wba": "Llama",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -3750,6 +3801,11 @@
      "wba": "Llama",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -3844,9 +3900,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -4172,6 +4225,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -4269,6 +4326,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -4370,6 +4431,10 @@
       "Maestro de Armas",
       "Guardianes de la Galaxia"
      ],
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -4464,9 +4529,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -4791,9 +4853,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -5506,6 +5565,10 @@
      "wba": "Agente",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -5603,6 +5666,10 @@
      "wba": "Agente",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -5700,6 +5767,10 @@
      "wba": "Agente",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -5801,6 +5872,10 @@
       "Agente",
       "Simbionte"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -5895,8 +5970,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -6615,6 +6688,11 @@
      "wba": "Electrochoque",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -6711,6 +6789,11 @@
      "wba": "Electrochoque",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -6805,8 +6888,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -7034,6 +7115,11 @@
      "wba": "Agilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -7134,6 +7220,11 @@
      "new": false,
      "c": "Universal",
      "f": "Superhéroe",
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -7229,7 +7320,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -7946,6 +8036,10 @@
      "wba": "Sentido Arácnido",
      "trans": false,
      "new": false,
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -8241,6 +8335,10 @@
       "Liderazgo",
       "Simbionte"
      ],
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -8342,6 +8440,10 @@
       "Liderazgo",
       "Simbionte"
      ],
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -8436,7 +8538,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Daño"
    ],
@@ -8869,6 +8970,11 @@
       "Curación",
       "Guardianes de la Galaxia"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -8969,6 +9075,11 @@
       "Curación",
       "Guardianes de la Galaxia"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -9066,8 +9177,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -9299,6 +9408,10 @@
      "trans": true,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -9399,6 +9512,10 @@
       "Agilidad",
       "Maestro de Armas",
       "Guardianes de la Galaxia"
+     ],
+     "r": [
+      "Control",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -9501,6 +9618,10 @@
       "Maestro de Armas",
       "Guardianes de la Galaxia"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -9595,9 +9716,7 @@
    "c": "Universal",
    "f": "Supervillano",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -9922,6 +10041,10 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10018,6 +10141,10 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10112,8 +10239,6 @@
    "c": "Universal",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -10440,6 +10565,11 @@
      "wba": "Congelación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10536,6 +10666,11 @@
      "wba": "Congelación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10633,6 +10768,11 @@
      "wba": "Congelación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10730,6 +10870,11 @@
      "wba": "Congelación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10832,6 +10977,12 @@
       "Congelación",
       "Jóvenes Vengadores"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -10926,9 +11077,7 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -10966,6 +11115,9 @@
      "trans": true,
      "new": false,
      "c": "Velocidad",
+     "r": [
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -11066,6 +11218,10 @@
       "Maldad Pura",
       "Mando",
       "Cubo Cósmico"
+     ],
+     "r": [
+      "Control",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -11168,6 +11324,11 @@
       "Mando",
       "Cubo Cósmico"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -11264,9 +11425,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -11498,6 +11656,10 @@
      "wba": "Defensores",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -11594,6 +11756,10 @@
      "wba": "Defensores",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -11688,9 +11854,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -11934,6 +12097,10 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -12030,6 +12197,10 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -12124,8 +12295,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -12275,6 +12444,10 @@
       "Máquina",
       "Proyección de Energía"
      ],
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -12371,6 +12544,12 @@
      "wba": "Veneno",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -12472,6 +12651,11 @@
       "Movimiento Rápido",
       "Los Seis Siniestros"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -12569,6 +12753,11 @@
      "trans": false,
      "new": true,
      "f": "Superhéroe",
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -12664,8 +12853,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -12990,8 +13177,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -13224,8 +13409,6 @@
    "f": "Neutral",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -13366,6 +13549,11 @@
       "Proyección de Energía",
       "Máquina"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -13461,8 +13649,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -13500,6 +13686,11 @@
      "wba": "Curación",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -13596,6 +13787,11 @@
      "wba": "Curación",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -13692,6 +13888,11 @@
      "wba": "Curación",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -13787,7 +13988,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -14400,7 +14600,7 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -14627,9 +14827,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -14870,6 +15067,10 @@
       "Radiación Gamma",
       "Durabilidad"
      ],
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -14965,8 +15166,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -15685,9 +15884,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -16302,6 +16498,11 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -16398,6 +16599,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -16493,8 +16700,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -16728,6 +16933,11 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -17120,9 +17330,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -17356,6 +17563,10 @@
      "trans": false,
      "new": false,
      "c": "Universal",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -17454,6 +17665,10 @@
      "new": false,
      "c": "Universal",
      "gender": "Femenino",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -17548,8 +17763,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -17880,6 +18093,11 @@
       "Liderazgo",
       "Mando"
      ],
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -17982,6 +18200,12 @@
       "Liderazgo",
       "Zombi"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -18083,6 +18307,11 @@
       "Liderazgo",
       "Mando"
      ],
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -18177,9 +18406,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -18407,6 +18633,12 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -18609,6 +18841,10 @@
       "Maestro de Armas",
       "Liderazgo"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -18710,6 +18946,10 @@
       "Liderazgo",
       "Thunderbolts"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -18804,9 +19044,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -19238,6 +19475,10 @@
       "Poder Cósmico",
       "Llama"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -19334,6 +19575,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -19524,7 +19769,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -19654,7 +19898,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -19889,6 +20132,12 @@
      "wba": "Defensores",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -19983,9 +20232,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -20026,6 +20272,10 @@
      "wba": "Defensores",
      "trans": true,
      "new": false,
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -20314,6 +20564,10 @@
      "wba": "Defensores",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -20409,7 +20663,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -21032,9 +21285,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -21265,6 +21515,10 @@
      "wba": "Agilidad",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -21361,6 +21615,10 @@
      "wba": "Agilidad",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -21455,9 +21713,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -21686,6 +21941,10 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -21783,6 +22042,10 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -21880,8 +22143,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -22113,6 +22374,11 @@
      "wba": "Maestro de Armas",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -22207,9 +22473,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -22532,7 +22795,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -22569,6 +22831,11 @@
      "wba": "Mente",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -22667,6 +22934,12 @@
      "wba": "Mente",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -22762,8 +23035,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -22900,6 +23171,10 @@
      "trans": false,
      "new": false,
      "f": "Superhéroe",
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -22997,6 +23272,11 @@
      "trans": false,
      "new": false,
      "f": "Superhéroe",
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -23094,6 +23374,11 @@
      "trans": false,
      "new": false,
      "f": "Superhéroe",
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -23388,8 +23673,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -23721,8 +24004,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -23860,6 +24141,10 @@
       "Vengadores Oscuros",
       "Maestro de Armas"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -23957,6 +24242,10 @@
      "trans": true,
      "new": false,
      "c": "Velocidad",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -24051,9 +24340,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -24282,6 +24568,11 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -24378,6 +24669,11 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -24472,8 +24768,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -24702,6 +24996,11 @@
      "wba": "Mando",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -24799,8 +25098,7 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -24935,6 +25233,11 @@
      "trans": true,
      "new": false,
      "f": "Superhéroe",
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -25033,6 +25336,11 @@
      "trans": true,
      "new": false,
      "f": "Superhéroe",
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -25135,6 +25443,11 @@
       "Maestro de Armas",
       "Máquina"
      ],
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -25231,7 +25544,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -25556,9 +25868,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -26079,6 +26388,10 @@
      "wba": "Agilidad",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -26173,8 +26486,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -26402,9 +26713,7 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -26538,6 +26847,12 @@
      "wba": "Movimiento Rápido",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -26634,6 +26949,12 @@
      "wba": "Movimiento Rápido",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -26728,8 +27049,6 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -26860,9 +27179,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -26994,6 +27310,11 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -27090,6 +27411,11 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -27218,9 +27544,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -27552,6 +27875,10 @@
      "wba": "Radiación Gamma",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -27646,7 +27973,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -27877,9 +28203,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -28011,6 +28334,11 @@
      "wba": "Agilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -28105,7 +28433,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -28237,7 +28564,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -28270,7 +28596,6 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -28400,7 +28725,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -28535,6 +28859,12 @@
      "wba": "Mando",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -28632,7 +28962,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Daño"
    ],
@@ -28667,8 +28996,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -28894,8 +29221,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -28936,6 +29261,12 @@
      "wba": "Defensores",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -29031,8 +29362,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -29174,6 +29503,11 @@
       "Sentido Arácnido",
       "Simbionte",
       "Maldad Pura"
+     ],
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -29561,9 +29895,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -29703,6 +30034,11 @@
       "Agilidad",
       "Simbionte"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -29799,6 +30135,10 @@
      "wba": "Sentido Arácnido",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -29893,9 +30233,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -30028,6 +30365,10 @@
      "wba": "Sentido Arácnido",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -30124,9 +30465,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -30259,6 +30597,10 @@
      "wba": "Radiación Gamma",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -30356,6 +30698,11 @@
      "trans": true,
      "new": false,
      "c": "Velocidad",
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -30450,8 +30797,6 @@
    "c": "Universal",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -30586,6 +30931,11 @@
      "wba": "Movimiento Rápido",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -30682,8 +31032,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -31216,8 +31564,7 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -31254,6 +31601,11 @@
      "wba": "Electrochoque",
      "trans": false,
      "new": false,
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -31349,8 +31701,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -31676,8 +32026,6 @@
    "c": "Universal",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -31814,6 +32162,12 @@
      "trans": true,
      "new": false,
      "c": "Combate",
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -31910,8 +32264,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -32143,8 +32495,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -32863,8 +33213,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -32998,8 +33346,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -33037,6 +33383,12 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -33135,6 +33487,12 @@
      "trans": false,
      "new": false,
      "c": "Detonación",
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -33233,6 +33591,12 @@
      "trans": false,
      "new": false,
      "c": "Detonación",
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -33328,8 +33692,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -33555,9 +33917,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -33692,6 +34051,10 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -33885,6 +34248,10 @@
      "trans": true,
      "new": false,
      "c": "Velocidad",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -33979,9 +34346,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -34120,6 +34484,10 @@
       "Eternos",
       "Fuerza Fénix"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -34214,9 +34582,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -34253,6 +34618,11 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -34349,7 +34719,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -34772,6 +35141,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -34868,6 +35243,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -34964,9 +35345,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -35003,6 +35381,10 @@
      "trans": true,
      "new": false,
      "gender": "Masculino",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -35132,7 +35514,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -35166,8 +35547,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -35201,8 +35580,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -35341,6 +35718,12 @@
       "Maldad Pura",
       "Poder Cósmico"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -35437,8 +35820,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -35668,6 +36049,10 @@
      "wba": "Agilidad",
      "trans": false,
      "new": false,
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -35767,6 +36152,10 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -35861,9 +36250,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -36090,8 +36476,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -36128,7 +36512,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -36370,8 +36753,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -36511,6 +36892,12 @@
       "Magia",
       "Agilidad"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -36613,6 +37000,12 @@
       "Magia",
       "Zombi"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -36708,7 +37101,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -36878,6 +37270,12 @@
      "trans": false,
      "new": false,
      "gender": "Femenino",
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -36974,6 +37372,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -37071,9 +37475,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -37206,6 +37607,11 @@
      "wba": "Llama",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -37302,8 +37708,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -37341,6 +37745,11 @@
      "wba": "Llama",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -37436,7 +37845,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -37470,9 +37878,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -37506,8 +37911,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -37540,7 +37943,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -37575,8 +37977,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -37610,7 +38010,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -37745,6 +38144,10 @@
      "wba": "Mando",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -37842,6 +38245,10 @@
      "wba": "Mando",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -37937,9 +38344,6 @@
    "c": "Universal",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -37976,6 +38380,11 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -38072,6 +38481,12 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -38168,6 +38583,12 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -38262,9 +38683,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -38496,8 +38914,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -38534,6 +38950,11 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -38630,6 +39051,11 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -38725,7 +39151,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -38859,6 +39284,11 @@
      "wba": "Mando",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -38955,6 +39385,11 @@
      "wba": "Mando",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -39052,7 +39487,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -39185,8 +39619,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -39316,9 +39748,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -39351,7 +39780,7 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -39482,8 +39911,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -39622,6 +40049,9 @@
       "Mando",
       "Proyección de Energía",
       "Los 4 Fantásticos"
+     ],
+     "r": [
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -39816,7 +40246,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -39852,7 +40281,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -39889,6 +40317,10 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -39984,8 +40416,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -40022,6 +40452,11 @@
      "wba": "Llama",
      "trans": true,
      "new": false,
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -40116,8 +40551,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -40151,6 +40584,7 @@
    "f": "Superhéroe",
    "r": [
     "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -40280,8 +40714,8 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -40324,6 +40758,12 @@
       "Mente",
       "Curación",
       "Guardianes de la Galaxia"
+     ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -40419,9 +40859,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -40557,6 +40994,12 @@
      "wba": "Agente",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -40653,6 +41096,12 @@
      "wba": "Agente",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -40747,8 +41196,6 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -40782,9 +41229,7 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -41119,6 +41564,11 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -41216,6 +41666,11 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -41313,7 +41768,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -41351,6 +41805,10 @@
      "wba": "Fuerza Fénix",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -41450,6 +41908,10 @@
      "trans": false,
      "new": false,
      "c": "Universal",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -41550,6 +42012,10 @@
      "new": false,
      "c": "Universal",
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -41649,6 +42115,10 @@
      "trans": false,
      "new": false,
      "c": "Universal",
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -41747,9 +42217,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -42283,6 +42750,10 @@
      "wba": "Curación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -42477,7 +42948,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -42615,6 +43085,11 @@
      "wba": "Electrochoque",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -42712,6 +43187,11 @@
      "wba": "Electrochoque",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -42811,6 +43291,11 @@
      "wba": "Electrochoque",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -42906,7 +43391,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -43140,6 +43624,11 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -43237,6 +43726,11 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -43332,9 +43826,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -43565,6 +44056,10 @@
      "wba": "Curación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -43662,6 +44157,10 @@
      "wba": "Curación",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -43760,8 +44259,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -44188,9 +44685,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -44229,6 +44723,11 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -44326,8 +44825,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -44363,9 +44860,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -44405,6 +44899,11 @@
      "wba": "Agilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -44499,9 +44998,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -44539,6 +45035,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": true,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -44633,9 +45135,6 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -44770,6 +45269,11 @@
      "wba": "Mente",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -44867,7 +45371,7 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -45002,8 +45506,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -45231,9 +45733,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -45269,6 +45768,10 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -45363,9 +45866,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -45401,6 +45901,10 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -45495,8 +45999,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -45828,6 +46330,11 @@
      "wba": "Agilidad",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -45924,8 +46431,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -46650,8 +47155,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -46787,6 +47290,11 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -46885,6 +47393,11 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -46981,9 +47494,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -47121,6 +47631,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47219,6 +47733,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47320,6 +47838,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47418,6 +47940,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47515,7 +48041,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -47549,7 +48074,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -47589,6 +48113,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47685,6 +48215,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47781,6 +48317,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -47875,9 +48417,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -47916,6 +48455,10 @@
      "ab": [
       "Fuerza",
       "Liderazgo"
+     ],
+     "r": [
+      "Control",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -48011,9 +48554,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -48050,6 +48590,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -48144,8 +48690,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -48279,6 +48823,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -48380,6 +48930,12 @@
       "Movimiento Rápido",
       "Jóvenes Vengadores"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -48475,8 +49031,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -48510,9 +49064,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -48549,6 +49100,10 @@
      "wba": "Proyección de Energía",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -48643,9 +49198,6 @@
    "c": "Universal",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -48682,6 +49234,10 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -48776,8 +49332,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -49011,6 +49565,10 @@
      "wba": "Agilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -49106,9 +49664,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -49147,6 +49702,10 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -49244,6 +49803,10 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -49339,7 +49902,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -49378,6 +49940,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -49474,6 +50040,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -49570,6 +50140,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -49666,6 +50240,11 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -49764,6 +50343,11 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -49858,7 +50442,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -49993,6 +50576,12 @@
      "wba": "Sentidos Agudizados",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -50089,6 +50678,12 @@
      "wba": "Sentidos Agudizados",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -50183,8 +50778,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -50348,9 +50941,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -50490,6 +51080,10 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -50589,6 +51183,10 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -50684,7 +51282,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -50723,6 +51320,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -50826,6 +51429,12 @@
       "Liderazgo",
       "Fuerza Fénix"
      ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -50923,6 +51532,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -51018,9 +51633,7 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -51156,6 +51769,12 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -51253,6 +51872,12 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -51352,8 +51977,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -51390,6 +52013,9 @@
      "wba": "Durabilidad",
      "trans": false,
      "new": false,
+     "r": [
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -51784,8 +52410,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -51821,7 +52445,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -51962,6 +52585,10 @@
       "Máquina",
       "Thunderbolts"
      ],
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -52058,6 +52685,7 @@
    "r": [
     "Control",
     "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -52091,9 +52719,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -52231,6 +52856,10 @@
      "trans": false,
      "new": false,
      "gender": "Femenino",
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -52331,6 +52960,10 @@
      "trans": false,
      "new": false,
      "gender": "Femenino",
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -52631,6 +53264,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -52732,6 +53369,10 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -52928,9 +53569,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -53066,6 +53704,10 @@
      "wba": "Agilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -53162,8 +53804,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -53198,7 +53838,7 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -53527,8 +54167,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -53565,6 +54203,11 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -53763,7 +54406,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -53802,6 +54444,10 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -53932,9 +54578,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -54113,8 +54756,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -54347,7 +54988,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -54579,8 +55219,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -54807,9 +55445,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -54943,6 +55578,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -55039,6 +55678,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -55136,8 +55779,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -55174,6 +55815,11 @@
      "wba": "Magia",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -55270,7 +55916,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Daño"
    ],
@@ -55309,6 +55954,11 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -55405,6 +56055,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -55503,6 +56159,12 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -55597,9 +56259,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -55741,6 +56400,10 @@
       "Durabilidad",
       "Maldad Pura",
       "Los 4 Fantásticos"
+     ],
+     "r": [
+      "Control",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -55936,6 +56599,10 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56031,7 +56698,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -56168,6 +56834,11 @@
      "wba": "Proyección de Energía",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56264,6 +56935,11 @@
      "wba": "Proyección de Energía",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56360,6 +57036,11 @@
      "wba": "Proyección de Energía",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56454,9 +57135,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -56592,6 +57270,11 @@
      "wba": "Llama",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56688,6 +57371,11 @@
      "wba": "Llama",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56784,6 +57472,11 @@
      "wba": "Llama",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -56878,7 +57571,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -56920,6 +57612,12 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57016,6 +57714,12 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57112,6 +57816,12 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57208,6 +57918,12 @@
      "wba": "Durabilidad",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57303,8 +58019,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -57572,6 +58286,11 @@
      "wba": "Movimiento Rápido",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57802,6 +58521,11 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57898,6 +58622,11 @@
      "wba": "Liderazgo",
      "trans": false,
      "new": false,
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -57992,9 +58721,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -58127,8 +58853,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -58163,8 +58887,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -58201,8 +58923,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -58434,8 +59154,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -58569,6 +59287,11 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -58664,9 +59387,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -58703,6 +59423,10 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -58799,6 +59523,11 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -58894,8 +59623,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -59129,9 +59856,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -59169,6 +59893,10 @@
      "wba": "Proyección de Energía",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -59264,8 +59992,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -59302,6 +60028,12 @@
      "wba": "Proyección de Energía",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -59398,8 +60130,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -59434,9 +60164,6 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -59469,9 +60196,7 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -59605,7 +60330,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -59750,6 +60474,12 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -59846,8 +60576,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -60087,6 +60815,7 @@
    "r": [
     "Control",
     "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -60218,7 +60947,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -60255,6 +60983,9 @@
      "wba": "Maestro de Armas",
      "trans": false,
      "new": false,
+     "r": [
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -60351,7 +61082,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -60486,7 +61216,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -60619,7 +61348,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -60658,6 +61386,11 @@
      "wba": "Magia",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -60754,6 +61487,12 @@
      "wba": "Magia",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -60849,8 +61588,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Desconocido",
@@ -60982,8 +61719,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -61115,7 +61850,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -61150,8 +61884,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -61186,9 +61918,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -61223,9 +61952,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -61263,6 +61989,10 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -61358,8 +62088,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -61491,7 +62219,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -61626,7 +62353,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Daño"
    ],
@@ -61760,8 +62486,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -61892,7 +62616,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -62163,7 +62886,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -62394,9 +63116,7 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -62433,6 +63153,11 @@
      "wba": "Maestro de Armas",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -62529,7 +63254,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -62663,9 +63387,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -62805,6 +63526,10 @@
       "Agilidad",
       "Thunderbolts"
      ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -62900,8 +63625,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -62939,6 +63662,9 @@
      "trans": true,
      "new": false,
      "f": "Superhéroe",
+     "r": [
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -63234,9 +63960,6 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -63280,6 +64003,11 @@
       "Llama",
       "Liderazgo",
       "Aniquiladores"
+     ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -63376,9 +64104,7 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -63511,7 +64237,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -63545,9 +64270,7 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -63586,6 +64309,11 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -63681,8 +64409,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -63853,7 +64579,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -63992,9 +64717,7 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -64126,8 +64849,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -64501,8 +65222,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -64537,8 +65256,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -64576,6 +65293,12 @@
      "wba": "Sentido Arácnido",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -64670,8 +65393,6 @@
    "c": "Combate",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -64716,6 +65437,10 @@
       "Fuerza",
       "Liderazgo",
       "Simbionte"
+     ],
+     "r": [
+      "Control",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -64812,8 +65537,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -65047,9 +65770,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -65087,6 +65807,10 @@
      "wba": "Maldad Pura",
      "trans": true,
      "new": true,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -65181,9 +65905,6 @@
    "c": "Combate",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -65226,6 +65947,10 @@
       "Maestro de Armas",
       "Fuerza",
       "Olimpo"
+     ],
+     "r": [
+      "Control",
+      "Daño"
      ],
      "up": {
       "uniform_xp": [
@@ -65322,8 +66047,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -65456,7 +66179,7 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -65527,8 +66250,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -65664,8 +66385,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -65797,9 +66516,7 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -65837,6 +66554,11 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -65932,8 +66654,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -66068,8 +66788,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -66201,8 +66919,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -66239,6 +66955,12 @@
      "wba": "Fuerza",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -66333,9 +67055,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -66372,6 +67091,10 @@
      "wba": "Liderazgo",
      "trans": true,
      "new": false,
+     "r": [
+      "Control",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -66466,9 +67189,7 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -66505,6 +67226,11 @@
      "wba": "Maldad Pura",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -66599,7 +67325,6 @@
    "c": "Velocidad",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Daño"
    ],
@@ -66635,8 +67360,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -66769,7 +67492,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -66946,6 +67668,11 @@
      "ab": [
       "Agilidad"
      ],
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -67046,6 +67773,11 @@
      "ab": [
       "Agilidad"
      ],
+     "r": [
+      "Soporte",
+      "Tanque",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -67141,8 +67873,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -67281,8 +68011,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -67395,6 +68123,11 @@
      "trans": false,
      "new": false,
      "f": "Supervillano",
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        10000,
@@ -67492,7 +68225,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -67527,7 +68259,7 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -67562,8 +68294,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -67696,8 +68426,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -67733,8 +68461,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -67772,7 +68498,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Tanque",
     "Daño"
    ],
@@ -67809,7 +68534,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -67845,8 +68569,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -67880,7 +68602,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Orden",
@@ -67916,7 +68637,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -67951,8 +68671,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -68092,8 +68810,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68129,8 +68845,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68167,9 +68881,6 @@
    "c": "Velocidad",
    "f": "Supervillano",
    "r": [
-    "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -68205,7 +68916,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -68241,7 +68951,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -68276,8 +68985,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -68313,7 +69020,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
     "Daño"
    ],
    "ins": "Justicia",
@@ -68388,7 +69094,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -68424,6 +69129,7 @@
    "r": [
     "Control",
     "Soporte",
+    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -68458,8 +69164,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -68529,8 +69233,6 @@
    "c": "Detonación",
    "f": "Supervillano",
    "r": [
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Crueldad",
@@ -68566,7 +69268,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -68635,8 +69336,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68672,8 +69371,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -68709,8 +69406,6 @@
    "f": "Superhéroe",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68747,7 +69442,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68819,9 +69513,7 @@
    "c": "Universal",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68891,7 +69583,6 @@
    "c": "Detonación",
    "f": "Superhéroe",
    "r": [
-    "Control",
     "Soporte",
     "Tanque",
     "Daño"
@@ -68929,7 +69620,6 @@
    "r": [
     "Control",
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Orden",
@@ -68964,8 +69654,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",
@@ -69000,8 +69688,6 @@
    "f": "Supervillano",
    "r": [
     "Control",
-    "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Destrucción",

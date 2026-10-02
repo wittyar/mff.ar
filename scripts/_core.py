@@ -9,6 +9,7 @@ UNI = json.load(open('work/uniforms.json'))           # costos y materiales por 
 TL_FILES = sorted(glob.glob('work/tierlists/*.json'))
 from dominio import TYPE, ALLIES, GENDER, SIDE, ORIGIN, INSTINCT, ABIL
 import modelo
+import catalogo
 def slug(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode()
     return re.sub(r'[^a-z0-9]+','-', s.lower()).strip('-')
@@ -20,26 +21,15 @@ def tier_of(row):
     if row['tier-4'] == 'True': return 'T4'
     if row['skill6'] != 'False': return 'T3'
     return 'T2'
-# Los roles no existen en el juego: se derivan. Antes salían de etiquetas que un regex
-# adivinaba sobre el texto de la wiki; ahora salen de las etiquetas tipadas de la API,
-# que son un vocabulario cerrado de 228 valores.
-ETIQ_AB = [x['en'] for x in SK['tablas']['ab']]
-def _ids(*patrones):
-    rx = re.compile('|'.join(patrones), re.I)
-    return {i for i, e in enumerate(ETIQ_AB) if rx.search(e)}
-AB_CONTROL = _ids(r'\bstun\b', r'silence', r'snare', r'paraly', r'fracture', r'freeze', r'\bweb\b',
-                  r'incapacit', r'\bfear\b', r'mind control', r'entice', r'misdirection')
-AB_SOPORTE = _ids(r'hp recovery', r'removes all debuff', r'\bshield\b', r'barrier',
-                  r'recovery rate', r'ultimate skill gauge recovery')
-AB_TANQUE  = _ids(r'provoke', r'super armor', r'basic defenses increase', r'decreases all basic damage')
-def derive_roles(sets):
-    ab = {f['a'] for lista in sets for sk in lista for st in sk['st'] for f in st['fx']}
-    roles = []
-    if len(ab & AB_CONTROL) >= 2: roles.append('Control')
-    if ab & AB_SOPORTE: roles.append('Soporte')
-    if ab & AB_TANQUE: roles.append('Tanque')
-    roles.append('Daño')
-    return roles
+# El modelo de cada retrato (modelo.py, docs/MODELO.md): su perfil de combate (con qué pega),
+# lo que hace con sus skills según el catálogo de efectos y, de ahí, sus roles. Los roles no
+# existen en el juego: dicen qué le aporta al equipo cada variante (cada uniforme tiene los
+# suyos). Un retrato sin skills en la API (se avisa abajo) solo tiene Daño.
+CAT = catalogo.cargar(catalogo.RUTA)
+perfiles = {p: modelo.perfil(sks, SK['tablas']['desc']) for p, sks in SK['skills'].items()}
+analisis = {p: modelo.analisis(sks, SK['tablas'], CAT, perfiles[p]) for p, sks in SK['skills'].items()}
+def roles_de(p):
+    return modelo.roles(analisis[p], SK['skills'][p], CAT) if p in analisis else modelo.roles({'fx': []}, [], CAT)
 nuevas = sorted({a for r in d for a in r['ability']} - set(ABIL))
 if nuevas:
     raise SystemExit(f'habilidades sin traducir en ABIL: {nuevas} — agregalas a scripts/_core.py')
@@ -54,15 +44,13 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
     seen.add(cid)
     ins = INSTINCT.get(inst.get(base['character'], {}).get('instinct', ''), 'Desconocido')
 
-    def skills_de(portrait, quien):
+    def anotar_sin_skills(portrait, quien):
         # Cada retrato tiene su propio set en la API. Si falta, se avisa: no hay
         # fuente alternativa desde que la wiki dejo de aportar skills.
         if portrait not in SK['skills']:
             sin_skills.append(quien)
-            return []
-        return SK['skills'][portrait]
 
-    base_sk = skills_de(base['base_portrait'], base['character'])
+    anotar_sin_skills(base['base_portrait'], base['character'])
     uniforms = []
     for i, r in enumerate([r for r in rows if r['uniformed']=='True']):
         uid = f"{cid}-{r.get('uniform_id') or 'u'+str(i)}"
@@ -80,6 +68,7 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         if ALLIES[r['allies']] != ALLIES[base['allies']]: u['race'] = ALLIES[r['allies']]
         if GENDER[r['gender']] != GENDER[base['gender']]: u['gender'] = GENDER[r['gender']]
         if r['ability'] != base['ability']: u['ab'] = [ABIL[a] for a in r['ability']]
+        if roles_de(r['portrait']) != roles_de(base['base_portrait']): u['r'] = roles_de(r['portrait'])
         # Costos, materiales y XP de mejora, de /api/uniforms.
         up = UNI.get(r['portrait'])
         if up:
@@ -90,15 +79,14 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
             # Opciones de uniforme: los retratos de los uniformes que habilitan sus opciones
             # Advanced, Rare, Heroic, Legendary y Mythic, en ese orden.
             if up.get('options'): u['op'] = up['options']
-        skills_de(r['portrait'], f"{base['character']} / {r['uniform']}")
+        anotar_sin_skills(r['portrait'], f"{base['character']} / {r['uniform']}")
         uniforms.append(u)
         images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'
         uindex[(numid, r.get('uniform_id'))] = (cid, uid)
 
-    sets = [base_sk] + [SK['skills'].get(u['p'], []) for u in uniforms]
     characters.append({
         'id': cid, 'name': base['character'], 'c': TYPE[base['type']], 'f': SIDE[base['side']],
-        'r': derive_roles(sets), 'ins': ins, 'race': ALLIES[base['allies']],
+        'r': roles_de(base['base_portrait']), 'ins': ins, 'race': ALLIES[base['allies']],
         'gender': GENDER[base['gender']], 't': tier_of(base),
         'abilities': [ABIL[a] for a in base['ability']], 'origin': ORIGIN[base['original']],
         'tuc': base.get('tuc', []), 'stats': base.get('stats', {}),
@@ -180,7 +168,7 @@ VOCAB_EN.update({
  # los tiers se escriben igual en los dos idiomas, pero se listan para que el mapa
  # sea completo y la app no tenga que adivinar qué hacer con un valor ausente
  'T2':'T2', 'T3':'T3', 'T4':'T4',
- # roles derivados por derive_roles
+ # roles (modelo.roles)
  'Daño':'Damage', 'Soporte':'Support', 'Control':'Control', 'Tanque':'Tank',
  # slots que arma parse_skills
  'Liderazgo':'Leadership', 'Pasiva':'Passive', 'Definitiva':'Ultimate',
@@ -210,12 +198,9 @@ for t in tierlists:
 # publicada más recientemente a la más vieja.
 tierlists.sort(key=lambda t: t['published'], reverse=True)
 tierlists.sort(key=lambda t: t['order'])
-# Perfil de combate de cada retrato (modelo.py, docs/MODELO.md): con qué pega, según el
-# daño de sus skills activas. Por retrato, como las skills.
-perfiles = {p: modelo.perfil(sks, SK['tablas']['desc']) for p, sks in SK['skills'].items()}
 json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,
            'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs'],
-           'perfiles':perfiles},
+           'perfiles':perfiles,'analisis':analisis},
           open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images),
       '| listas:', len(tierlists), '| ubicaciones:', sum(len(f) for a in assign.values() for f in a.values()),

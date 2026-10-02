@@ -1130,7 +1130,7 @@ function variant (cid, uid) {
                    p, up: null, op: null, ch, skills };
   return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
            c: u.c || ch.c, f: u.f || ch.f, race: u.race || ch.race, gender: u.gender || ch.gender,
-           t: u.tier || ch.t, ins: ch.ins, r: ch.r,
+           t: u.tier || ch.t, ins: ch.ins, r: u.r || ch.r,
            ab: u.ab || ch.abilities || [],
            striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
            trans: u.trans, nuevo: u.new, cost: u.cost || '',

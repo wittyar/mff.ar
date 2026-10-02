@@ -138,7 +138,8 @@ abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
 una app y unos datos de versiones distintas ya no se entienden (a la app nueva le falta algo que los
 datos viejos no traen, o la anterior leería mal los nuevos). La app solo usa datos de su formato: con
 otros, los baja al arrancar o avisa que hay que actualizarla. Formato 2: el perfil de combate viene
-calculado en `data.js` (ver *Modelo del juego*).
+calculado en `data.js` (ver *Modelo del juego*). Formato 3: también el análisis de cada variante y el
+catálogo de efectos para mostrarlo, y cada uniforme trae sus roles.
 
 ## Modelo del juego
 `docs/MODELO.md` es el mapa del modelo que arma la app por variante (un personaje con un uniforme):
@@ -153,8 +154,15 @@ etiqueta de efecto de las skills de thanosvibs y cada stat de Leads & Supports, 
 efecto visto de dos lados, apuntan a efectos únicos, y cada efecto dice qué es, a quién le sirve y
 cómo se lee en PvE y en PvP, con su certeza y su fuente. `scripts/catalogo.py` lo valida en el build
 (un error del contenido corta; una etiqueta o un stat nuevo que no está se avisa y va a la sección 9
-de la auditoría) y genera `docs/CATALOGO.md`, el catálogo entero para leerlo y revisarlo. La ficha
-todavía no lo usa: es el paso siguiente.
+de la auditoría) y genera `docs/CATALOGO.md`, el catálogo entero para leerlo y revisarlo.
+
+Con el catálogo, `scripts/modelo.py` arma el **análisis** de cada variante: cada efecto de cada
+skill con su destino (él, el equipo y qué aliados, el rival o sus invocaciones), sus fuentes y su
+condición, y si le sirve a él. De ahí salen también
+los **roles**, que no existen en el juego y dicen qué le aporta cada variante al equipo: Soporte,
+le da algo a sus aliados fuera del liderazgo; Tanque, provoca o le baja al equipo el daño que
+recibe; Control, le aplica al rival 3 o más controles distintos; Daño, todos. Cada uniforme tiene
+los suyos.
 
 ## Índice para armar equipos
 Lo que da cada liderazgo y cada soporte de thanosvibs (Leads & Supports), en las categorías con
@@ -265,7 +273,8 @@ Lo que trae:
 - *Uniform Passive* y *Striker Skill*, que la wiki no publica.
 - Etapas: cada skill puede tener varias, cada una con su elemento, su objetivo y su condición de activación.
 - Efectos tipados: cada efecto trae `abilityId` + etiqueta de un vocabulario cerrado de 228 valores,
-  más duración y tick. Los roles y los filtros por efecto salen de ahí, no de un regex sobre texto libre.
+  más duración y tick. El análisis, los roles y los filtros por efecto salen de ahí, no de un regex
+  sobre texto libre.
 - **A quién le pega cada skill**: 53 grupos de objetivo (todos los aliados, aliados mutantes,
   aliados de tipo Velocidad...). Se muestra como insignia en el encabezado de la skill, se compara
   en la fila «Beneficia a» y se puede filtrar el roster por grupo. Los 33 que son un tipo de
@@ -394,8 +403,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   probado en un Windows real**: la ventana de Edge en modo app, el cuadro de error y el aviso de
   SmartScreen.
 - No hay cantidad de hits ni melee/ranged/área/empuje: la API de skills no lo publica.
-- Roles derivados por reglas documentadas (el juego no tiene roles), a partir de las etiquetas
-  tipadas de la API.
+- Roles derivados por reglas documentadas (el juego no tiene roles), a partir del análisis de
+  cada variante (ver *Modelo del juego*).
 - 15 de 290 personajes sin instinto: sus páginas de la wiki no lo declaran.
 - Los personajes que agregues a mano no llevan skills: las skills vienen tipadas de la API.
 - La sinergia se apoya en los efectos de líder y de soporte de thanosvibs; roles y ventaja de
