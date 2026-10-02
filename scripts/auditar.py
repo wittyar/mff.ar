@@ -14,7 +14,8 @@ Deja:
 
 Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la sección 9 lista lo que el
 catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierra en los bonos de
-equipo de la wiki, y la 11, en los strikers, de work/fuentes.json).
+equipo de la wiki; la 11, en los strikers, y la 12, los liderazgos que Leads & Supports no lista,
+de work/fuentes.json).
 """
 import collections, datetime, difflib, glob, json, os, re, sys
 
@@ -409,7 +410,7 @@ def fmt(xs):
     return ', '.join(f'{x:g}' for x in xs) if isinstance(xs, list) else f'{xs:g}' if isinstance(xs, float) else str(xs)
 
 
-def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers):
+def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgos):
     R, L = A.res, A.listas
     hoy = datetime.date.today().isoformat()
     s = []
@@ -444,6 +445,9 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers):
     s.append(f"Catálogo de efectos (docs/CATALOGO.md): {catalogo['total']['etiquetas']} etiquetas de skills y "
              f"{catalogo['total']['stats']} stats de Leads & Supports en los datos; "
              + ('todos clasificados.\n' if not n_falta else f'{n_falta} sin clasificar (sección 9).\n'))
+    s.append(f"Liderazgos: {len(liderazgos['completados'])} uniformes que Leads & Supports no lista tienen el de su "
+             f"base, porque su Leader Skill es idéntica; {len(liderazgos['sin_completar'])} retratos siguen sin "
+             'liderazgo aunque una hermana lo tiene (sección 12).\n')
 
     s.append('## 1. Skills: daño y recarga\n')
     s.append('Método: cada skill de thanosvibs se busca por nombre en la página de la wiki del personaje, '
@@ -582,6 +586,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers):
                              for k in ('etiquetas', 'patrones', 'stats') for x in sobra[k]) + '.\n')
     s += bonos_seccion(bonos, fuentes)
     s += strikers_seccion(strikers)
+    s += liderazgos_seccion(liderazgos, A.chars)
     return '\n'.join(s)
 
 
@@ -625,6 +630,50 @@ def strikers_seccion(strikers):
         for x in A['repetidos']:
             s.append(f"- {x['pagina']}: {x['striker']}")
         s.append('')
+    return s
+
+
+_MOTIVO_LIDERAZGO = {
+    'base': 'es la base, y la regla es para uniformes',
+    'base_sin_liderazgo': 'su base no tiene liderazgo en Leads & Supports',
+    'distinta': 'su Leader Skill no es idéntica a la de su base',
+    'incompleta': 'la API de skills no publica toda su Leader Skill',
+}
+
+
+def liderazgos_seccion(L, chars):
+    """Sección 12: los uniformes que Leads & Supports no lista y el liderazgo que les copió el build
+    (scripts/fuentes.py, completar_liderazgos), o por qué no."""
+    nombre = {r['portrait']: r['character'] + ('' if r['uniformed'] == 'False' else f" — {r['uniform']}")
+              for r in chars}
+
+    def pj(p):
+        return f'{nombre[p]} (`{p}`)'
+
+    s = ['## 12. Liderazgos que Leads & Supports no lista\n']
+    s.append('Leads & Supports de thanosvibs publica el liderazgo de cada retrato con los uniformes que comparten su '
+             'entrada, y a algunos uniformes no los lista. Si la Leader Skill de uno de ellos, en la API de skills, es '
+             'idéntica a la de su base, el build le copia el liderazgo de la base (Ezequiel, 2 de octubre de 2026): '
+             'solo el liderazgo (`leader` y `leader2`), no los soportes. Idéntica es igual en todo lo que la API publica '
+             'de ella, salvo sus ids: el nombre, la recarga y, en cada etapa, el objetivo, la activación, el elemento y '
+             'cada efecto, con su etiqueta, su texto (sin negritas ni espacios de más) con sus números, su duración y su '
+             'intervalo. Una Leader Skill con un valor que la API no publica (`$TIME`, `$HEROSUBTYPE1`) no se puede '
+             'comparar, así que no se completa. Si otra hermana con la misma Leader Skill tiene otro liderazgo, el build '
+             'para (scripts/fuentes.py, `completar_liderazgos`).\n')
+    s.append(f"### Completados ({len(L['completados'])})\n")
+    s += [f'- {pj(p)} ← {pj(b)}' for p, b in sorted(L['completados'], key=lambda x: nombre[x[0]])]
+    s.append('')
+    s.append(f"### Sin completar aunque una hermana tiene liderazgo ({len(L['sin_completar'])})\n")
+    s.append('En qué difiere su Leader Skill (la suya / la de la otra): si la base tiene liderazgo, de la de la base, '
+             'y se nombran las hermanas que la tienen igual; si no, de la de la hermana con liderazgo más parecida. '
+             'Las hermanas con la misma Leader Skill van juntas.\n')
+    for x in sorted(L['sin_completar'], key=lambda x: nombre[x['p']]):
+        contra = ' '.join(
+            f"Contra {', '.join(f'`{h}`' for h in hs)}: "
+            + ('; '.join(dif) if dif else 'idéntica' if x['publicada'] else 'el mismo texto, con valores que la API no publica')
+            + '.' for hs, dif in x['contra'])
+        s.append(f"- {pj(x['p'])}: {_MOTIVO_LIDERAZGO[x['motivo']]}. {contra}")
+    s.append('')
     return s
 
 
@@ -711,7 +760,8 @@ def main():
     f = cargar('work/fuentes.json')
     bonos = {'bonos': f['bonos'], 'auditoria': f['bonos_auditoria']}
     strikers = {'strikers': f['strikers'], 'auditoria': f['strikers_auditoria']}
-    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers))
+    open('docs/AUDITORIA.md', 'w', encoding='utf-8', newline='\n').write(
+        informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, f['liderazgos_auditoria']))
     por = {p: v for p, v in A.por_retrato.items() if v['ok'] or v['nd'] or v['dif']}
     json.dump({'resumen': dict(A.res), 'por_retrato': por}, open('work/verificacion.json', 'w', encoding='utf-8'),
               ensure_ascii=False)
