@@ -248,9 +248,22 @@ table.dt tbody tr:last-child td{border-bottom:none}
 /* Strikers en la ficha: el retrato, el nombre y, debajo, la probabilidad de aparecer y cuándo. */
 .eqfoto .stknom{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2)}
 .eqfoto.stk > span:last-child{color:var(--gold);font-weight:600}
-.eqwhy li.mas::marker{content:'+ ';color:var(--role-soporte)}
-.eqwhy li.menos{color:var(--text-2)}
-.eqwhy li.menos::marker{content:'− ';color:var(--accent)}
+/* «Por qué» de una tarjeta de equipo: lo que recibe (la suma, con el desglose plegado), lo demás y lo
+   que se pierde, en viñetas; las de adentro, un poco más chicas. */
+.pqcuerpo{display:flex;flex-direction:column;gap:10px;margin:4px 0 2px}
+.pqh{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);font-weight:700;margin-bottom:3px}
+.pqmenos .pqh{color:var(--accent-2)}
+ul.pqlista{margin:0;padding-left:18px;font-size:12.5px;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
+ul.pqlista ul{margin:2px 0 3px;padding-left:16px;font-size:12px;color:var(--text-2);list-style:circle}
+ul.pqlista b{color:var(--text);font-weight:600}
+.pqart{color:var(--gold);font-weight:700;cursor:help}
+.pqley{font-size:11.5px;margin-top:3px}
+details.pqdesg > summary{cursor:pointer;font-size:12px;color:var(--text-2)}
+.pqorig{margin-top:6px}
+.pqoh{font-size:12.5px;font-weight:600;margin-bottom:1px}
+.cxpts ul{margin:1px 0 2px;padding-left:18px;list-style:disc;display:flex;flex-direction:column;gap:1px}
+/* Lo que se abre desde un «Por qué»: la skill o el artefacto, en la ficha de quien lo da. */
+.resaltada{outline:2px solid var(--accent);outline-offset:3px}
 .eqfiltros{gap:12px;margin-bottom:10px;align-items:flex-end}
 .eqfiltros label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--text-2);flex:1 1 200px;min-width:0}
 .eqfiltros select{width:100%;min-width:0}

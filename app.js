@@ -575,6 +575,18 @@ const T = {
   eq_build:          { es:'Armar para mi cuenta', en:'Build for my account' },
   eq_build_with:     { es:'Armar un equipo con él', en:'Build a team with it' },
   eq_why:            { es:'Por qué',             en:'Why' },
+  pq_recibe:         { es:'Lo que recibe {x}',   en:'What {x} gets' },
+  pq_nada:           { es:'Ningún soporte ni liderazgo le llega y le sirve.', en:'No support or leadership reaches it and is useful to it.' },
+  pq_sin_art:        { es:'sin artefactos: {x}', en:'without artifacts: {x}' },
+  pq_desglose:       { es:'Desglose',            en:'Breakdown' },
+  pq_lider:          { es:'líder',               en:'leader' },
+  pq_art_de:         { es:'Artefacto de {x}',    en:'{x}\'s artifact' },
+  pq_ver:            { es:'En la ficha de {x}', en:'On {x}\'s sheet' },
+  pq_si_art:         { es:'si lleva su artefacto', en:'if it has its artifact' },
+  pq_sin_skill:      { es:'La ficha de este personaje no tiene esta skill.', en:'This character\'s sheet does not have this skill.' },
+  pq_ademas:         { es:'Además',              en:'Also' },
+  pq_pierde:         { es:'Se pierde',           en:'Lost' },
+  pq_todos:          { es:'a todos',             en:'everyone' },
   eq_could:          { es:'Cómo entraría en tus otros equipos', en:'How it would fit your other teams' },
   eq_could_note:     { es:'Con {v}: el mejor cambio en cada equipo según la sinergia de la app, siempre que quede con vínculo con alguien del equipo (le da un soporte o el liderazgo, recibe uno suyo o forman juntos un bono de equipo).',
                        en:'With {v}: the best change in each team according to the app\'s synergy, as long as it has a link with someone in the team (gives it a support or the leadership, receives one of its own, or they form a team bonus together).' },
@@ -1216,7 +1228,9 @@ let ui = {
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
   eqCobertura: [],                   // grupos de COBERTURA marcados: solo los tríos en que los recibe
   eqVerDescartados: false,           // la lista muestra solo los descartados, para restaurarlos
-  volverY: null                      // posición a la que se vuelve con «Atrás» (ver HISTORIAL)
+  volverY: null,                     // posición a la que se vuelve con «Atrás» (ver HISTORIAL)
+  volverAbiertos: [],                // plegados que se vuelven a abrir con «Atrás» (ver HISTORIAL)
+  entradaNueva: false                // el próximo render abre otra entrada del historial aunque no cambie el lugar
 };
 
 // ============================================================================
@@ -1453,14 +1467,27 @@ function cobertura (foco, vs, lider) {
   for (const a of vs) for (const [c, sinArtefacto] of Object.entries(aporte(foco, a, a === lider))) out[c] = out[c] || sinArtefacto;
   return out;
 }
-/** Lo que le da al foco un integrante del equipo: sus soportes (los del foco son para los demás)
- *  y, si es el líder, su liderazgo; como cobertura(). */
+/** Lo que le da al foco un integrante del equipo, por categoría (lo que le llega según recibe());
+ *  como cobertura(). */
 function aporte (foco, a, esLider) {
-  const out = {}, s = SOPORTES[a.p];
+  const out = {};
+  for (const { k, fx } of recibe(foco, a, esLider)) for (const f of fx) {
+    const c = CAT_DE[f.s];
+    if (c) out[c] = out[c] || k !== 'artifact';
+  }
+  return out;
+}
+/** Lo que le llega a `destino` de un integrante `a` del equipo y le sirve: los soportes de `a` (los
+ *  de cada uno son para los demás) y, si `a` es el líder, su liderazgo (también si `a` es `destino`:
+ *  el liderazgo es para todo el equipo). [{ de: a, k, x, fx: [los efectos que le sirven] }], en el
+ *  orden de TIPOS_SOPORTE. De acá salen la cobertura de la tarjeta y su «Por qué» (porqueHtml). */
+function recibe (destino, a, esLider) {
+  const out = [], s = SOPORTES[a.p];
   if (s) for (const [k] of TIPOS_SOPORTE) {
     const x = s[k];
-    if (!x || !(LIDERAZGOS.includes(k) ? esLider : a !== foco) || !aplicaA(x, foco)) continue;
-    for (const c of categoriasDe(x, foco)) out[c] = out[c] || k !== 'artifact';
+    if (!x || !(LIDERAZGOS.includes(k) ? esLider : a !== destino) || !aplicaA(x, destino)) continue;
+    const fx = x.fx.filter(f => sirve(f, destino));
+    if (fx.length) out.push({ de: a, k, x, fx });
   }
   return out;
 }
@@ -1544,23 +1571,13 @@ let VENTAJA, LE_GANA_A;
  *  Escrita con bucles y sin armar textos si no hacen falta: la consulta de combinaciones la
  *  llama cientos de miles de veces. */
 function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
-  if (vs.length < 2) return { score: 0, reasons: [], aplicados: [], lider: null };
+  if (vs.length < 2) return { score: 0, razones: [], aplicados: [], lider: null };
+  // razones: lo que suma, para explicarlo (sin soloPuntaje): cada soporte o liderazgo con los
+  // integrantes a los que les llega y les sirve, cada versión de un bono de equipo, los roles, las
+  // clases y cada ventaja de clase. Los textos salen de ahí (razonesTxt, porqueHtml).
   // aplicados: { de, a: [integrantes] }, lo que suma: quién le da algo a quién (en un bono de equipo,
   // cada integrante a los otros, que están juntos por el bono)
-  const reasons = [], aplicados = []; let score = 0;
-  const ES = LANG === 'es';
-  const quienes = (bs) => bs.map(fullLabel).join(', ');
-  // A cada integrante, solo los efectos que le sirven: los que reciben lo mismo van en una línea.
-  const lineas = (prefijo, x, bs) => {
-    const grupos = new Map();
-    for (const b of bs) {
-      const fx = x.fx.filter(f => sirve(f, b)), k = fx.map(f => x.fx.indexOf(f)).join(',');
-      if (!grupos.has(k)) grupos.set(k, { fx, bs: [] });
-      grupos.get(k).bs.push(b);
-    }
-    for (const g of grupos.values()) reasons.push(`${prefijo} → ${quienes(g.bs)}: ${g.fx.map(f =>
-      efectoSoporteTxt(f) + (PARA_TODOS.has(f.s) || PIDE[f.s] ? '' : ' (' + t('sy_unclassified') + ')')).join(' · ')}`);
-  };
+  const razones = [], aplicados = []; let score = 0;
   // Un soporte o un liderazgo suma si le llega a otro integrante y le sirve (sirve()). Con foco
   // (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le dan a él y
   // lo que da él. Lo que los demás se dan entre ellos no suma para él.
@@ -1569,11 +1586,11 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
   // Soportes: pasivas de 4★ y Tier-2, efecto de uniforme y artefacto (si lo lleva).
   for (const a of vs) {
     const s = SOPORTES[a.p]; if (!s) continue;
-    for (const [k, clave] of TIPOS_SOPORTE) {
+    for (const [k] of TIPOS_SOPORTE) {
       const x = s[k]; if (!x || LIDERAZGOS.includes(k) || !cuenta(a, x)) continue;
       const bs = alcanza(a, x); if (!bs.length) continue;
       score += x.sig ? 3 : 2; aplicados.push({ de: a, a: bs });
-      if (!soloPuntaje) lineas(`${fullLabel(a)} · ${t(clave)}${k === 'artifact' ? ' (' + (ES ? 'si lleva su artefacto' : 'if it has its artifact') + ')' : ''}`, x, bs);
+      if (!soloPuntaje) razones.push({ tipo: 'soporte', de: a, k, x, a: bs });
     }
   }
   // Liderazgo: el del integrante que más alcanza a los demás (con foco, el que más le sirve a
@@ -1585,14 +1602,14 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
     for (const k of LIDERAZGOS) {
       const x = s[k]; if (!x || !cuenta(a, x)) continue;
       const bs = alcanza(a, x); if (!bs.length) continue;
-      pts += x.sig ? 3 : 2; xs.push({ x, bs });
+      pts += x.sig ? 3 : 2; xs.push({ k, x, bs });
     }
     if (pts > ptsLider) { lider = a; ptsLider = pts; xsLider = xs; }
   }
   if (lider) {
     score += ptsLider;
     for (const o of xsLider) { aplicados.push({ de: lider, a: o.bs });
-      if (!soloPuntaje) lineas(`${ES ? 'Con' : 'With'} ${fullLabel(lider)} ${ES ? 'de líder' : 'as leader'}`, o.x, o.bs); }
+      if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k: o.k, x: o.x, a: o.bs }); }
   }
   // Bonos de equipo: con todos sus integrantes en el equipo, les suben stats a todos. Cada uno suma
   // 1 si le sirve a alguien; con foco, si lo involucra: él está en el bono o le sirve a él. Sus
@@ -1607,31 +1624,79 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
       const integrantes = vs.filter(x => b.m.includes(x.cid));
       score += 1;
       for (const x of integrantes) aplicados.push({ de: x, a: integrantes.filter(y => y !== x) });
-      if (!soloPuntaje) {
-        const nombre = `${t('sy_bonus')} ${b.n ? '«' + b.n + '»' : t('sy_bonus_noname')} (${integrantes.map(x => x.name).join(' + ')})`;
-        b.vs.forEach((v, i) => lineas(b.vs.length > 1 ? `${nombre} · ${t('sy_bonus_ver').replace('{i}', i + 1).replace('{n}', b.vs.length)}` : nombre,
-                                      v, reciben.filter(x => leSirve(v, x))));
-      }
+      // cada versión de sus stats (más de una si las páginas de la wiki no coinciden), a quienes les sirve
+      if (!soloPuntaje) b.vs.forEach((v, i) => razones.push({ tipo: 'bono', b, i, x: v, integrantes, a: reciben.filter(x => leSirve(v, x)) }));
     }
   }
   const covered = ROLES_EQUIPO.filter(r => vs.some(v => v.r.includes(r)));
-  if (covered.length >= 2) { score += 1;
-    if (!soloPuntaje) reasons.push((ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + covered.map(dom).join(' + ') + '.'); }
-  if (vs.every((v, i) => vs.findIndex(w => w.c === v.c) === i)) { score += 1;
-    if (!soloPuntaje) reasons.push(ES ? 'Clases distintas: no comparten la misma debilidad.'
-                                      : 'Different classes: they do not share the same weakness.'); }
+  if (covered.length >= 2) { score += 1; if (!soloPuntaje) razones.push({ tipo: 'roles', roles: covered }); }
+  if (vs.every((v, i) => vs.findIndex(w => w.c === v.c) === i)) { score += 1; if (!soloPuntaje) razones.push({ tipo: 'clases' }); }
   // a cubre la debilidad de b si a le gana a la clase que le gana a b (un Universal también,
   // con su ventaja menor: suma lo mismo y la razón lo dice).
   for (const a of vs) for (const b of vs) {
     const amenaza = LE_GANA_A[b.c], fuerza = amenaza && VENTAJA[a.c][amenaza];
     if (a !== b && fuerza && (!foco || a === foco || b === foco)) {
       score += 1;
-      if (!soloPuntaje) reasons.push((ES ? `${fullLabel(a)} (${dom(a.c)}) cubre la debilidad de ${fullLabel(b)} (${dom(b.c)}) contra ${dom(amenaza)}`
-                                         : `${fullLabel(a)} (${dom(a.c)}) covers ${fullLabel(b)}'s (${dom(b.c)}) weakness against ${dom(amenaza)}`)
-        + (fuerza === 'menor' ? (ES ? ' (ventaja menor).' : ' (minor advantage).') : '.'));
+      if (!soloPuntaje) razones.push({ tipo: 'ventaja', a, b, amenaza, fuerza });
     }
   }
-  return { score, reasons: soloPuntaje ? reasons : [...new Set(reasons)], aplicados, lider };
+  return { score, razones, aplicados, lider };
+}
+/** Nombre de un bono de equipo en las razones: «Bono de equipo «X» (A + B)», con la versión si la
+ *  wiki no coincide. */
+function nombreBono (r) {
+  const nombre = `${t('sy_bonus')} ${r.b.n ? '«' + r.b.n + '»' : t('sy_bonus_noname')} (${r.integrantes.map(x => x.name).join(' + ')})`;
+  return r.b.vs.length > 1 ? `${nombre} · ${t('sy_bonus_ver').replace('{i}', r.i + 1).replace('{n}', r.b.vs.length)}` : nombre;
+}
+/** Una razón de la sinergia que no es un efecto (roles, clases o ventaja de clase), en texto, con los
+ *  integrantes nombrados por `nombre`. */
+function razonTxt (r, nombre) {
+  const ES = LANG === 'es';
+  if (r.tipo === 'roles') return (ES ? 'Roles cubiertos (derivados de las skills): ' : 'Roles covered (derived from skills): ') + r.roles.map(dom).join(' + ') + '.';
+  if (r.tipo === 'clases') return ES ? 'Clases distintas: no comparten la misma debilidad.' : 'Different classes: they do not share the same weakness.';
+  if (r.tipo !== 'ventaja') throw new Error('razón de la sinergia desconocida: ' + r.tipo);
+  return (ES ? `${nombre(r.a)} (${dom(r.a.c)}) cubre la debilidad de ${nombre(r.b)} (${dom(r.b.c)}) contra ${dom(r.amenaza)}`
+             : `${nombre(r.a)} (${dom(r.a.c)}) covers ${nombre(r.b)}'s (${dom(r.b.c)}) weakness against ${dom(r.amenaza)}`)
+    + (r.fuerza === 'menor' ? (ES ? ' (ventaja menor).' : ' (minor advantage).') : '.');
+}
+/** Las razones de la sinergia en texto, una por línea (la comparativa). A cada integrante, solo los
+ *  efectos que le sirven: los que reciben lo mismo van en una línea. */
+function razonesTxt (razones) {
+  const ES = LANG === 'es', out = [];
+  const lineas = (prefijo, x, bs) => {
+    const grupos = new Map();
+    for (const b of bs) {
+      const fx = x.fx.filter(f => sirve(f, b)), k = fx.map(f => x.fx.indexOf(f)).join(',');
+      if (!grupos.has(k)) grupos.set(k, { fx, bs: [] });
+      grupos.get(k).bs.push(b);
+    }
+    for (const g of grupos.values()) out.push(`${prefijo} → ${g.bs.map(fullLabel).join(', ')}: ${g.fx.map(f =>
+      efectoSoporteTxt(f) + (sinClasificar(f.s) ? ' (' + t('sy_unclassified') + ')' : '')).join(' · ')}`);
+  };
+  for (const r of razones) {
+    if (r.tipo === 'soporte') lineas(`${fullLabel(r.de)} · ${t(CLAVE_SOPORTE[r.k])}${r.k === 'artifact' ? ' (' + t('pq_si_art') + ')' : ''}`, r.x, r.a);
+    else if (r.tipo === 'liderazgo') lineas(`${ES ? 'Con' : 'With'} ${fullLabel(r.de)} ${ES ? 'de líder' : 'as leader'}`, r.x, r.a);
+    else if (r.tipo === 'bono') lineas(nombreBono(r), r.x, r.a);
+    else out.push(razonTxt(r, fullLabel));
+  }
+  return [...new Set(out)];
+}
+/** ¿Un stat que no está en ninguna de las dos listas (PIDE, PARA_TODOS)? Cuenta para todos y se dice. */
+function sinClasificar (s) { return !(PARA_TODOS.has(s) || PIDE[s]); }
+/** Las razones de la sinergia en piezas, para comparar dos equipos (comoEntra): un efecto de un soporte,
+ *  de un liderazgo o de un bono de equipo que le llega a un integrante, o una razón entera (roles, clases,
+ *  ventaja de clase). { r, f, para, clave } (f y para, solo en las de un efecto). */
+function piezas (razones) {
+  const out = [];
+  for (const r of razones) {
+    if (r.tipo === 'roles' || r.tipo === 'clases' || r.tipo === 'ventaja') {
+      out.push({ r, clave: r.tipo + '|' + (r.tipo === 'roles' ? r.roles.join('+') : r.tipo === 'ventaja' ? r.a.key + '|' + r.b.key : '') });
+      continue;
+    }
+    const origen = r.tipo === 'bono' ? 'b|' + r.b.m.join('+') + '|' + r.i : 's|' + r.de.key + '|' + r.k;
+    for (const b of r.a) r.x.fx.forEach((f, n) => { if (sirve(f, b)) out.push({ r, f, para: b, clave: origen + '|' + n + '|' + b.key }); });
+  }
+  return out;
 }
 /** ¿x tiene un vínculo con v en el equipo? Le da algo (un soporte, o el liderazgo si es el
  *  líder que cuenta la sinergia), recibe algo de él o forman juntos un bono de equipo. Las clases
@@ -1843,7 +1908,7 @@ function skillCard (sk, portrait) {
   if (sk.ult != null) cargas.push(`<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>`);
   if (sk.stk != null) cargas.push(`<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>`);
 
-  return `<div class="skill">
+  return `<div class="skill" id="${anclaSkill(sk.sl)}">
     <div class="top">
       <span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>
       ${nombreSkill(sk)}
@@ -2378,7 +2443,7 @@ function fichaArmado (ch, v) {
       <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
     <div class="usogrid par">
       <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}${artArmado(ch)}</div>
+      <div class="bloque" id="artefacto"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}${artArmado(ch)}</div>
       <div class="bloque"><h4>${h(t('ga_iso_title'))}</h4>${isoArmado(ch, v)}</div>
       <div class="bloque"><h4>${h(t('md_uni_opts'))}</h4>${armadoOpciones(v)}</div>
     </div>
@@ -2401,10 +2466,191 @@ function botonArmar (vs, modo, nombre, etiqueta) {
   return `<button class="btn sm" data-a="teamDesde" data-m="${vs.map(x => x.key).join(',')}"
     data-modo="${modo || ''}" data-nombre="${h(nombre || '')}">${h(etiqueta || t('eq_build'))}</button>`;
 }
-/** Las razones de la sinergia, plegadas: las que suman y, si se compara, las que se pierden. */
-function porqueHtml (mas, menos) {
-  return (mas.length || menos.length) ? `<details class="usgrupo"><summary>${h(t('eq_why'))}</summary>
-    <ul class="sopfx eqwhy">${mas.map(r => `<li class="mas">${h(r)}</li>`).join('')}${menos.map(r => `<li class="menos">${h(r)}</li>`).join('')}</ul></details>` : '';
+// «POR QUÉ» DE UNA TARJETA DE EQUIPO (combinaciones de 3 y «Cómo entraría en tus otros equipos»)
+// Arriba, la suma de lo que le llega al personaje de la ficha (el foco) y le sirve: el liderazgo del
+// líder de la tarjeta, los soportes de sus compañeros y sus artefactos (recibe(), lo mismo que la
+// cobertura de la tarjeta), un renglón por stat y sin topes (Ezequiel, 3 de octubre de 2026); lo que se
+// activa con una condición, aparte y con la condición. Plegado, el desglose por origen, con un enlace a
+// cada skill en la ficha de quien la da. Después, lo demás: lo que da él, los bonos de equipo, los roles,
+// la ventaja de clase y sus strikers; y, si se compara con el equipo de antes, lo que se pierde. Con los
+// nombres cortos (el completo, en el title) y «a todos» si algo les llega a todos.
+/** Un número en el idioma de la app, con hasta dos decimales: 0,7 (es), 0.7 (en). */
+function numTxt (n) { return (Math.round(n * 100) / 100).toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US', { maximumFractionDigits: 2 }); }
+/** Un porcentaje con su signo: +65%, −40%. */
+function pctTxt (n) { const r = Math.round(n * 100) / 100; return (r > 0 ? '+' : r < 0 ? '−' : '') + numTxt(Math.abs(r)) + '%'; }
+/** El valor de un efecto: «+20% +0,4% del instinto total», «1 golpe», o vacío si no tiene número. */
+function valorTxt (v, i) {
+  const out = [];
+  if (typeof v === 'string') out.push(trTxt(v)); else if (v != null) out.push(pctTxt(v));
+  if (i != null) out.push(pctTxt(i) + ' ' + t('sp_inst'));
+  return out.join(' ');
+}
+/** Cuándo llega un efecto de un soporte o un liderazgo (vacío si llega siempre): la activación del slot,
+ *  lo que pide (Tier-2), la condición del efecto («con 2 personajes de Combate»), cuánto dura y, si
+ *  acumula, hasta dónde. */
+function condicionTxt (x, f) {
+  const p = [];
+  if (x.ac) p.push(minuscula(trTxt(x.ac)));
+  if (x.req) p.push(minuscula(t('sp_req')) + ' ' + trTxt(x.req));
+  if (f.c) p.push(trTxt(f.c));
+  const d = f.d != null ? f.d : x.d;
+  if (d != null) p.push(numTxt(d) + ' s');
+  if (f.tope != null) p.push(t('sp_cap') + ' ' + numTxt(f.tope) + '%');
+  return p.join(', ');
+}
+/** Un renglón de efecto: el stat (el texto de la app), el valor y, aparte, la condición. */
+function renglonHtml (s, val, cond, extra) {
+  return `${trHtml(s)}${val ? ` <b>${h(val)}</b>` : ''}${extra || ''}${cond ? ` <span class="muted">(${h(cond)})</span>` : ''}${
+    sinClasificar(s) ? ` <span class="muted">(${h(t('sy_unclassified'))})</span>` : ''}`;
+}
+function efectoPqHtml (x, f) { return renglonHtml(f.s, valorTxt(f.v, f.i), condicionTxt(x, f)); }
+/** Cómo se nombra a cada integrante: el personaje, sin uniforme, si en el equipo no hay otro con el
+ *  mismo nombre; si no, el nombre completo. */
+function nombreEn (vs) { return (x) => vs.some(y => y !== x && y.name === x.name) ? fullLabel(x) : x.name; }
+function nombreHtml (x, nombre) { return `<span title="${h(fullLabel(x))}">${h(nombre(x))}</span>`; }
+/** A quiénes les llega algo: «a todos» si les llega a todos los del equipo; si no, sus nombres. */
+function aQuienesHtml (ms, vs, nombre) { return ms.length === vs.length ? h(t('pq_todos')) : ms.map(x => nombreHtml(x, nombre)).join(', '); }
+/** Lo que le llega al foco, por origen: primero el líder, después los demás en el orden del equipo y, al
+ *  final, el artefacto de cada uno. [{ de, art, skills: [lo de recibe()] }] */
+function origenesDe (foco, vs, lider) {
+  const pjs = [], arts = [];
+  for (const a of lider ? [lider].concat(vs.filter(x => x !== lider)) : vs) {
+    const rs = recibe(foco, a, a === lider);
+    const sin = rs.filter(r => r.k !== 'artifact'), con = rs.filter(r => r.k === 'artifact');
+    if (sin.length) pjs.push({ de: a, art: false, skills: sin });
+    if (con.length) arts.push({ de: a, art: true, skills: con });
+  }
+  return pjs.concat(arts);
+}
+/** La suma de lo que le llega: un renglón por stat y condición (los que llegan siempre primero), sin
+ *  topes. De cada uno, lo que llega sin artefacto y lo que solo llega con uno: v y i (% del instinto),
+ *  [sin, con], null si de ese lado no llega nada con número; sin: si algo le llega sin artefacto. */
+function sumaDe (origenes) {
+  const m = new Map();
+  for (const o of origenes) for (const { x, fx } of o.skills) for (const f of fx) {
+    const cond = condicionTxt(x, f), txt = typeof f.v === 'string' ? f.v : null, clave = f.s + '|' + cond + '|' + (txt || '');
+    let l = m.get(clave);
+    if (!l) m.set(clave, l = { s: f.s, cond, txt, v: [null, null], i: [null, null], sin: false });
+    const j = o.art ? 1 : 0;
+    if (typeof f.v === 'number') l.v[j] = (l.v[j] || 0) + f.v;
+    if (f.i != null) l.i[j] = (l.i[j] || 0) + f.i;
+    if (!o.art) l.sin = true;
+  }
+  return [...m.values()].sort((a, b) => !!a.cond - !!b.cond);
+}
+/** ¿El renglón lleva «*» (algo de él solo llega con un artefacto)? Con número, si un artefacto le suma;
+ *  sin número, si solo llega por artefactos. */
+function conArtefacto (l) { return l.v[1] != null || l.i[1] != null || (!l.sin && l.v[0] == null && l.i[0] == null); }
+function sumaLineaHtml (l) {
+  const tot = (p) => p[0] == null && p[1] == null ? null : (p[0] || 0) + (p[1] || 0);
+  const art = conArtefacto(l), sin = art && (l.v[0] != null || l.i[0] != null) ? valorTxt(l.v[0], l.i[0]) : '';
+  return `<li>${renglonHtml(l.s, valorTxt(l.txt != null ? l.txt : tot(l.v), tot(l.i)), l.cond,
+    (art ? `&nbsp;<span class="pqart" title="${h(t('cb_art'))}">*</span>` : '') +
+    (sin ? ` <span class="muted">(${h(t('pq_sin_art').replace('{x}', sin))})</span>` : ''))}</li>`;
+}
+// Slot de Leads & Supports -> tipo de la skill que lo da en la ficha.
+const SKILL_DE_SLOT = { leader: 'Leader Skill', leader2: 'Leader Skill', passive: 'Passive', passive2: 'Passive',
+  t2: 'Tier-2 Passive', t22: 'Tier-2 Passive', uniform: 'Uniform Passive', uniform2: 'Uniform Passive' };
+/** La skill de la ficha de v que da su soporte o liderazgo k. Un liderazgo es la Leader Skill. Un
+ *  soporte, la skill con el nombre que le da Leads & Supports, que a veces es de otro tipo (la «Pasiva
+ *  4★ (secundaria)» de Jeff the Land Shark es su Activa 5, Jeff's Cuddle Buddy); si ninguna lo lleva
+ *  (no tiene nombre, o lo escribe distinto), la de su tipo. null si la ficha no la tiene. */
+function skillDeSoporte (v, k, x) {
+  const nombre = (sk) => { const f = fila('name', sk.n); return f ? f.en : null; };
+  const porNombre = !LIDERAZGOS.includes(k) && x.n ? v.skills.find(sk => nombre(sk) === x.n) : null;
+  return porNombre || v.skills.find(sk => sk.sl === SKILL_DE_SLOT[k]) || null;
+}
+/** Ancla de una skill en la pestaña Skills de la ficha: hay una por tipo. */
+function anclaSkill (sl) { return 'sk-' + slugId(sl); }
+/** Enlace a la skill (o al artefacto) que da un soporte o un liderazgo, en la ficha de quien lo da, con
+ *  su uniforme: la abre en la pestaña donde se ve, la lleva a la vista y la resalta. */
+function enlaceSkill ({ de, k, x }) {
+  const rotulo = t(CLAVE_SOPORTE[k]), sinSkill = `<span title="${h(t('pq_sin_skill'))}">${h(rotulo)}</span>`;
+  let tab, ancla, txt = rotulo, extra = '', titulo = t('pq_ver').replace('{x}', fullLabel(de));
+  if (k === 'artifact') {
+    const art = ARTES.find(y => y.p === de.ch.p);
+    if (!art) return sinSkill;
+    tab = 'armado'; ancla = 'artefacto'; txt = art.name; titulo += ': ' + art.name + ' · ' + art.pasiva;
+    extra = ` <span class="muted">(${h(t('sp_at6'))})</span>`;
+  } else {
+    const sk = skillDeSoporte(de, k, x);
+    if (!sk) return sinSkill;
+    const f = fila('name', sk.n);
+    tab = 'skills'; ancla = anclaSkill(sk.sl); titulo += ': ' + slotEs(sk.sl) + (f ? ' · ' + f.en : '');
+  }
+  return `<button class="objlink" data-a="irSkill" data-cid="${de.cid}" data-uid="${de.uid || ''}" data-tab="${tab}" data-ancla="${ancla}"
+    title="${h(titulo)}">${h(txt)}</button>${extra}`;
+}
+/** Lo que da el foco a los demás (sus soportes y, si es el líder de la tarjeta, su liderazgo, según
+ *  recibe()), como grupos de agrupar(): uno por slot, con a quiénes les llega cada efecto. */
+function daGrupos (foco, vs, lider) {
+  const gs = new Map();
+  for (const b of vs) if (b !== foco) for (const r of recibe(b, foco, foco === lider)) {
+    let g = gs.get(r.k);
+    if (!g) gs.set(r.k, g = { r: { tipo: LIDERAZGOS.includes(r.k) ? 'liderazgo' : 'soporte', de: foco, k: r.k, x: r.x }, fx: new Map() });
+    for (const f of r.fx) { if (!g.fx.has(f)) g.fx.set(f, []); g.fx.get(f).push(b); }
+  }
+  const orden = TIPOS_SOPORTE.map(([k]) => k);
+  return [...gs.values()].sort((a, b) => orden.indexOf(a.r.k) - orden.indexOf(b.r.k));
+}
+/** Piezas (piezas()) en grupos: las de un efecto, por origen (un soporte o liderazgo de alguien, o una
+ *  versión de un bono de equipo), con a quiénes les llega cada efecto; las demás razones, solas. */
+function agrupar (ps) {
+  const gs = new Map(), out = [];
+  for (const p of ps) {
+    if (!p.f) { out.push({ r: p.r }); continue; }
+    let g = gs.get(p.r);
+    if (!g) { gs.set(p.r, g = { r: p.r, fx: new Map() }); out.push(g); }
+    if (!g.fx.has(p.f)) g.fx.set(p.f, []);
+    g.fx.get(p.f).push(p.para);
+  }
+  return out;
+}
+/** Un grupo, como viñeta: de dónde sale y, debajo, cada efecto con a quiénes les llega (en la viñeta, si
+ *  les llega a los mismos). */
+function grupoHtml (g, vs, nombre) {
+  const { r } = g;
+  if (!g.fx) { const txt = razonTxt(r, nombre), largo = razonTxt(r, fullLabel);
+    return `<li${largo !== txt ? ` title="${h(largo)}"` : ''}>${h(txt)}</li>`; }
+  const cab = r.tipo === 'bono' ? h(nombreBono(r))
+    : `${nombreHtml(r.de, nombre)}: ${h(t(CLAVE_SOPORTE[r.k]))}${r.k === 'artifact' ? ` <span class="muted">(${h(t('pq_si_art'))})</span>` : ''}`;
+  const efs = [...g.fx].sort((a, b) => r.x.fx.indexOf(a[0]) - r.x.fx.indexOf(b[0]));
+  const quienes = (ms) => ms.map(x => x.key).join('|'), iguales = efs.every(([, ms]) => quienes(ms) === quienes(efs[0][1]));
+  const a = (ms) => ` → ${aQuienesHtml(ms, vs, nombre)}`;
+  return `<li>${cab}${iguales ? a(efs[0][1]) : ''}<ul>${efs.map(([f, ms]) => `<li>${efectoPqHtml(r.x, f)}${iguales ? '' : a(ms)}</li>`).join('')}</ul></li>`;
+}
+/** Los strikers del equipo en los que está el foco, como viñetas: «Jeff de Adam Warlock (5% al atacar)». */
+function strikersPqHtml (foco, vs, nombre) {
+  const out = [];
+  for (const a of vs) for (const [x, p, cuando] of STRIKERS[a.cid] || []) {
+    const b = vs.find(y => y !== a && y.cid === x);
+    if (b && (a === foco || b === foco)) out.push(`<li>${h(t('cx_striker_de')).replace('{b}', () => nombreHtml(b, nombre)).replace('{a}', () => nombreHtml(a, nombre))} (${
+      h(t('sk_' + cuando).replace('{p}', p))})</li>`);
+  }
+  return out;
+}
+/** El «Por qué» de una tarjeta de equipo, plegado (ver arriba). id: el de la tarjeta (con él se vuelve
+ *  a abrir con «Atrás»); lider: el de la tarjeta; demas: las piezas que van en «Además» junto a lo que
+ *  da él (en una combinación, las que no son de un soporte ni de un liderazgo: esos, de él y para él,
+ *  ya están); pierde: las que se pierden respecto del equipo `antes` («Cómo entraría»). */
+function porqueHtml (id, foco, vs, lider, demas, pierde, antes) {
+  const nombre = nombreEn(vs), os = origenesDe(foco, vs, lider), suma = sumaDe(os), st = strikersPqHtml(foco, vs, nombre);
+  const ademas = daGrupos(foco, vs, lider).concat(agrupar(demas)).map(g => grupoHtml(g, vs, nombre));
+  if (st.length) ademas.push(`<li>${h(t('cx_strikers'))}<ul>${st.join('')}</ul></li>`);
+  const menos = pierde.length ? agrupar(pierde).map(g => grupoHtml(g, antes, nombreEn(antes))) : [];
+  return `<details class="usgrupo pq" id="${h(id)}"><summary>${h(t('eq_why'))}</summary><div class="pqcuerpo">
+    <div class="pqsec"><div class="pqh">${h(t('pq_recibe').replace('{x}', nombre(foco)))}</div>
+      ${suma.length ? `<ul class="pqlista pqsuma">${suma.map(sumaLineaHtml).join('')}</ul>
+        ${suma.some(conArtefacto) ? `<p class="muted pqley">${h(t('cb_art'))}</p>` : ''}
+        <details class="pqdesg" id="${h(id)}-d"><summary>${h(t('pq_desglose'))}</summary>${os.map(o => `<div class="pqorig">
+          <div class="pqoh">${o.art ? h(t('pq_art_de')).replace('{x}', () => nombreHtml(o.de, nombre)) : nombreHtml(o.de, nombre)}${
+            !o.art && o.de === lider ? ` <span class="muted">(${h(t('pq_lider'))})</span>` : ''}</div>
+          <ul class="pqlista">${o.skills.map(r => `<li>${enlaceSkill(r)}<ul>${r.fx.map(f => `<li>${efectoPqHtml(r.x, f)}</li>`).join('')}</ul></li>`).join('')}</ul>
+        </div>`).join('')}</details>`
+      : `<p class="muted">${h(t('pq_nada'))}</p>`}</div>
+    ${ademas.length ? `<div class="pqsec"><div class="pqh">${h(t('pq_ademas'))}</div><ul class="pqlista">${ademas.join('')}</ul></div>` : ''}
+    ${menos.length ? `<div class="pqsec pqmenos"><div class="pqh">${h(t('pq_pierde'))}</div><ul class="pqlista">${menos.join('')}</ul></div>` : ''}
+  </div></details>`;
 }
 /** Equipos: cómo entra el personaje (con el uniforme elegido) en los equipos que armaste y
  *  todas las combinaciones de 3 con él. */
@@ -2430,7 +2676,7 @@ function fichaEquipos (ch, v) {
           <div class="muted">${h(t('eq_before').replace('{n}', o.antes.score))}</div></div>
       </div>
       ${retratosEquipo(o.vs, v.key)}
-      ${porqueHtml(o.gana, o.pierde)}
+      ${porqueHtml('pq-t-' + o.tt.id, v, o.vs, o.despues.lider, o.gana, o.pierde, o.antesVs)}
       ${ctpsEquipo(o.vs, o.ctp)}
       <div class="row">${botonArmar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
@@ -2480,7 +2726,9 @@ function strikersHtml (ch) {
 }
 /** El mejor lugar para v en un equipo: reemplazando a cada integrante o, si hay lugar,
  *  sumándolo. Solo valen los lugares donde queda con vínculo con alguien del
- *  equipo; si no hay ninguno, no encaja. Con lo que se gana y se pierde según las razones. */
+ *  equipo; si no hay ninguno, no encaja. Con lo que se gana y se pierde según las razones (en
+ *  piezas): de lo que se gana quedan afuera lo que le llega a v y lo que da él, que el «Por qué» de
+ *  la tarjeta dice aparte. */
 function comoEntra (v, tt) {
   const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
   const opciones = vs.map((x, i) => ({ sale: x, vs: vs.map((y, j) => j === i ? v : y) }));
@@ -2491,9 +2739,12 @@ function comoEntra (v, tt) {
   const antes = synergy(vs);
   const mejor = validas.sort((a, b) => b.despues.score - a.despues.score)[0];
   const modo = modosEquipo().find(m => m.id === tt.modeId);
-  return { tt, antes, vs: mejor.vs, sale: mejor.sale, despues: mejor.despues, delta: mejor.despues.score - antes.score,
-           modo: modo ? modo.name : '', ctp: modo ? modo.ctp : null, gana: mejor.despues.reasons.filter(r => !antes.reasons.includes(r)),
-           pierde: antes.reasons.filter(r => !mejor.despues.reasons.includes(r)) };
+  const pa = piezas(antes.razones), pd = piezas(mejor.despues.razones);
+  const habia = new Set(pa.map(p => p.clave)), hay = new Set(pd.map(p => p.clave));
+  return { tt, antes, antesVs: vs, vs: mejor.vs, sale: mejor.sale, despues: mejor.despues, delta: mejor.despues.score - antes.score,
+           modo: modo ? modo.name : '', ctp: modo ? modo.ctp : null,
+           gana: pd.filter(p => !habia.has(p.clave) && !(p.f && p.r.tipo !== 'bono' && (p.para === v || p.r.de === v))),
+           pierde: pa.filter(p => !hay.has(p.clave)) };
 }
 /** Retratos de un equipo; el de la clave `resaltada` (el personaje de la ficha) va marcado. */
 function retratosEquipo (vs, resaltada) {
@@ -2917,7 +3168,7 @@ function combinacionesHtml (v) {
           ? `<button class="btn sm" data-a="restaurar" data-c="${vs.map(x => x.cid).join(',')}">${h(t('eq_restaurar'))}</button>`
           : `<button class="btn sm" data-a="descartar" data-c="${vs.map(x => x.cid).join(',')}" title="${h(t('eq_descartar_title'))}">${h(t('eq_descartar'))}</button>`}
       </div>
-      ${porqueHtml(sc.reasons, [])}
+      ${porqueHtml('pq-c-' + keys.join('_'), v, vs, lider, piezas(sc.razones).filter(p => !p.f || p.r.tipo === 'bono'), [], null)}
       ${ctpsEquipo(vs, ctx)}
     </div>`;
   };
@@ -3058,7 +3309,7 @@ function renderCompare () {
   const cC = same(v => v.c), cF = same(v => v.f), cT = same(v => v.t), cI = same(v => v.ins);
   const slots = SLOT_ORDER.filter(sl => vs.some(v => v.skills.some(sk => sk.sl === sl)));
   const car = vs.map(v => cargas(v.skills));
-  const syn = synergy(vs);
+  const syn = synergy(vs), razones = razonesTxt(syn.razones);
   const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
 
@@ -3142,7 +3393,7 @@ function renderCompare () {
       <h3 style="margin:0">${h(t('cmp_synergy'))}</h3><span class="muted">${syn.score} ${h(t('cmp_pts'))}</span></div>
     <div style="height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;margin-bottom:10px">
       <div style="height:100%;width:${Math.min(100, syn.score * 12)}%;background:linear-gradient(90deg,var(--accent),var(--gold))"></div></div>
-    ${syn.reasons.length ? `<ul style="margin:0;padding-left:18px">${syn.reasons.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
+    ${razones.length ? `<ul style="margin:0;padding-left:18px">${razones.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
       : `<p class="muted">${h(t('cmp_no_synergy'))}</p>`}
     <p class="muted" style="margin-top:10px">${h(t('cmp_heuristic'))}</p>
   </div>`;
@@ -3394,6 +3645,7 @@ function nombreTabla (en) {
 const TIPOS_SOPORTE = [['leader', 'sp_leader'], ['leader2', 'sp_leader2'], ['passive', 'sp_passive'], ['passive2', 'sp_passive2'],
   ['t2', 'sp_t2'], ['t22', 'sp_t22'], ['uniform', 'sp_uniform'], ['uniform2', 'sp_uniform2'], ['artifact', 'sp_artifact']];
 const SLOTS_SOPORTE = TIPOS_SOPORTE.map(([k]) => k).filter(k => !LIDERAZGOS.includes(k));
+const CLAVE_SOPORTE = Object.fromEntries(TIPOS_SOPORTE);   // slot -> su nombre en la tabla de idioma
 function efectoSoporteHtml (x) {
   const val = [];
   if (x.v != null) val.push(typeof x.v === 'number' ? h((x.v > 0 ? '+' : '') + x.v + '%') : trHtml(x.v));
@@ -4331,8 +4583,10 @@ function render () {
 // HISTORIAL («Atrás»)
 // Cada lugar (una vista; en la ficha, un personaje) es una entrada del historial de la
 // ventana. Al irse de un lugar queda anotado cómo estaba (uniforme, pestaña, página de las
-// combinaciones o del roster, posición), y «Atrás» —el botón de la ficha, Alt+← o el botón
-// de volver del mouse— vuelve a ese lugar tal cual.
+// combinaciones o del roster, posición y los plegados con id que estaban abiertos, como el «Por
+// qué» de una tarjeta), y «Atrás» —el botón de la ficha, Alt+← o el botón de volver del mouse—
+// vuelve a ese lugar tal cual. Ir a una skill desde un «Por qué» abre otra entrada aunque sea la
+// ficha del mismo personaje (el líder puede ser él).
 // ============================================================================
 function lugar () { return ui.view === 'detail' ? 'detail:' + ui.charId : ui.view; }
 function fotoLugar () {
@@ -4342,12 +4596,13 @@ function fotoLugar () {
 /** Antes de pintar: si cambió el lugar, el anterior queda anotado con su posición y se abre
  *  una entrada nueva que recuerda de dónde se vino. */
 function anotarLugar () {
-  const previo = history.state;
-  if (!previo || !previo.lugar) { history.replaceState({ ...fotoLugar(), n: 0, y: 0, desde: null }, ''); return; }
-  if (previo.lugar === lugar()) return;
-  history.replaceState({ ...previo, y: scrollY }, '');
+  const previo = history.state, nueva = ui.entradaNueva;
+  ui.entradaNueva = false;
+  if (!previo || !previo.lugar) { history.replaceState({ ...fotoLugar(), n: 0, y: 0, abiertos: [], desde: null }, ''); return; }
+  if (previo.lugar === lugar() && !nueva) return;
+  history.replaceState({ ...previo, y: scrollY, abiertos: [...document.querySelectorAll('main details[open][id]')].map(d => d.id) }, '');
   ui.volverY = null;
-  history.pushState({ ...fotoLugar(), n: previo.n + 1, y: 0,
+  history.pushState({ ...fotoLugar(), n: previo.n + 1, y: 0, abiertos: [],
                       desde: { view: previo.view, charId: previo.charId, uniformId: previo.uniformId, fichaTab: previo.fichaTab } }, '');
 }
 /** Después de pintar: la entrada actual sigue lo que cambió en el lugar (pestaña, uniforme,
@@ -4373,16 +4628,28 @@ window.addEventListener('popstate', (e) => {
   if (!s || !s.lugar) return;
   Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, eqPagina: s.eqPagina,
                       eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
-                      aliados: null, tlPick: null, focusSearch: false, volverY: s.y });
+                      aliados: null, tlPick: null, focusSearch: false, volverY: s.y,
+                      volverAbiertos: s.abiertos || [] });   // una entrada anotada por una versión anterior no los trae
   render();
   volverAPosicion();
 });
-/** Vuelve a la posición anotada. Si la pestaña Equipos todavía calcula las combinaciones, la
- *  posición se aplica cuando termina (la lista cambia el alto de la página). */
+/** Vuelve a la posición anotada, con los plegados que estaban abiertos (cambian el alto de la página;
+ *  uno que ya no está, porque la lista cambió, no se abre). Si la pestaña Equipos todavía calcula las
+ *  combinaciones, se aplica cuando termina (la lista cambia el alto de la página). */
 function volverAPosicion () {
   if (ui.volverY == null || ui.eqCalculando) return;
+  for (const id of ui.volverAbiertos) { const d = document.getElementById(id); if (d) d.open = true; }
   window.scrollTo({ top: ui.volverY, behavior: 'instant' });   // sin la animación de html{scroll-behavior}
-  ui.volverY = null;
+  ui.volverY = null; ui.volverAbiertos = [];
+}
+/** Lleva a la vista un elemento de la ficha (una skill, el artefacto), debajo de la cabecera fija, y lo
+ *  resalta hasta que se vuelva a pintar. */
+function resaltar (id) {
+  const el = document.getElementById(id);
+  if (!el) throw new Error('la ficha no tiene el ancla ' + id);
+  const arriba = document.querySelector('nav.topnav').offsetHeight + document.querySelector('.fcab').offsetHeight + 14;
+  window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - arriba, behavior: 'instant' });
+  el.classList.add('resaltada');
 }
 
 // ============================================================================
@@ -4434,6 +4701,8 @@ document.addEventListener('click', (e) => {
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
       abrirFicha(d.cid, d.uid); break; }
     case 'fichaVecina': abrirFicha(d.cid, d.uid); break;
+    // Desde el «Por qué» de una tarjeta de equipo: la skill (o el artefacto) en la ficha de quien la da.
+    case 'irSkill': ui.entradaNueva = true; ui.fichaTab = d.tab; abrirFicha(d.cid, d.uid); resaltar(d.ancla); break;
     case 'uniform': ui.uniformId = d.uid; ui.eqPagina = 0; render(); break;
     case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
     case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
