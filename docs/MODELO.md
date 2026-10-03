@@ -458,6 +458,11 @@ el condicional a la mitad solo cambia el de Thor en PvP, que ahora gana por punt
   Empatan y lidera Gorr por la tier list de Arena (GOd contra Niche), con 26 puntos en las listas de
   los tres: gana por desempate, no por peso. Antes lideraba Silver Surfer: con la 1.0.14, en su lista
   y en la de Knull; con la 1.0.15, en las tres, con 32.
+- **Doctor Voodoo — Savage Avengers en la lista de PvP de Adam Warlock**, con Wasp — Quantumania de
+  líder. Su pasiva de uniforme es solo para Universales, pero entra por la Tier-2, «Voodoo Shield»:
+  ignora la evasión del objetivo 30% para todos los aliados (así lo publican la API de skills, «All
+  Allies for the first effect, Self for the second effect», y Leads & Supports). Ezequiel lo
+  confirmó (3 de octubre de 2026): el equipo está bien armado.
 
 Lo que todavía no está:
 - El artefacto de Robbie Reyes (fuego según la resistencia, para los aliados Llama) depende de que

@@ -73,8 +73,13 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     solo los tríos con algún DPS de sus tier lists y, en PvP, con anti-mermas para los tres; un DPS
     entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS, sinergia y
     strikers) dice de dónde sale cada punto. Se
-    filtran con «Con» y «Sin»; cada una dice su líder y su **cobertura** (lo que recibe él en
-    ese equipo, por categoría del índice), se marca con ★ como favorita, se arma
+    filtran con «Con» y «Sin», y con casillas por cobertura (ataque, ignorar evasión, todas las
+    defensas, vida y quita todos los debuffs: de cada pareja queda la mejor combinación de uniformes
+    que las cumple todas). Cada una dice su líder y su **cobertura** (lo que recibe él en
+    ese equipo, por categoría del índice); en *Por qué*, la suma de lo que le llega, por beneficio,
+    y el desglose por origen con el link a cada habilidad; y, plegados, los **C.T.P.** de cada
+    integrante según la guía de armado (los de PvP o de PvE en ese contexto; si no, el mejor y el
+    segundo). Se marca con ★ como favorita, se arma
     para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
     personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
