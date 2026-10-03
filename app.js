@@ -367,6 +367,10 @@ const T = {
   ga_ctp_pvp:        { es:'Meta PvP',            en:'PvP meta' },
   ga_ctp_pvp_alt:    { es:'Fuera del meta PvP',  en:'PvP off-meta' },
   ga_ctp_notes:      { es:'Notas de la guía sobre C.T.P.', en:"The guide's C.T.P. notes" },
+  ga_eq_title:       { es:'C.T.P. según la guía de armado de Cynicalex: {a} · {b}', en:"C.T.P. per Cynicalex's building guide: {a} · {b}" },
+  ga_eq_nodata:      { es:'sin dato en la guía', en:'no data in the guide' },
+  ga_eq_other:       { es:'Con un uniforme al lado del nombre, la guía es para ese (el mejor del personaje), no para el que lleva en este equipo.',
+                       en:"A uniform next to the name means the guide is for that one (the character's best), not the one used in this team." },
   ga_art:            { es:'¿Necesita artefacto? Según la guía de armado:', en:'Needs an artifact? Per the building guide:' },
   ga_iso_title:      { es:'ISO-8 y obelisco',    en:'ISO-8 and Obelisk' },
   ga_iso:            { es:'Set de ISO-8:',       en:'ISO-8 set:' },
@@ -2427,6 +2431,7 @@ function fichaEquipos (ch, v) {
       </div>
       ${retratosEquipo(o.vs, v.key)}
       ${porqueHtml(o.gana, o.pierde)}
+      ${ctpsEquipo(o.vs, o.ctp)}
       <div class="row">${botonArmar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
     ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
@@ -2487,7 +2492,7 @@ function comoEntra (v, tt) {
   const mejor = validas.sort((a, b) => b.despues.score - a.despues.score)[0];
   const modo = modosEquipo().find(m => m.id === tt.modeId);
   return { tt, antes, vs: mejor.vs, sale: mejor.sale, despues: mejor.despues, delta: mejor.despues.score - antes.score,
-           modo: modo ? modo.name : '', gana: mejor.despues.reasons.filter(r => !antes.reasons.includes(r)),
+           modo: modo ? modo.name : '', ctp: modo ? modo.ctp : null, gana: mejor.despues.reasons.filter(r => !antes.reasons.includes(r)),
            pierde: antes.reasons.filter(r => !mejor.despues.reasons.includes(r)) };
 }
 /** Retratos de un equipo; el de la clave `resaltada` (el personaje de la ficha) va marcado. */
@@ -2913,6 +2918,7 @@ function combinacionesHtml (v) {
           : `<button class="btn sm" data-a="descartar" data-c="${vs.map(x => x.cid).join(',')}" title="${h(t('eq_descartar_title'))}">${h(t('eq_descartar'))}</button>`}
       </div>
       ${porqueHtml(sc.reasons, [])}
+      ${ctpsEquipo(vs, ctx)}
     </div>`;
   };
   const numero = (n) => n.toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US');
@@ -3561,15 +3567,60 @@ function ctpsArmado (ch, v) {
   const grupos = [];
   (a.e.ctp || []).forEach(x => { const id = x.c ? x.c + (x.r ? '+' : '') : '?' + x.x;
     let g = grupos.find(y => y.id === id); if (!g) grupos.push(g = { id, x, ks: [] }); g.ks.push(x.k); });
-  const extra = (g) => `<span class="ctproles">${g.x.r ? `<span class="tag solid" style="background:var(--gold)">${h(t('md_reforged'))}</span>` : ''}${
+  const extra = (g) => `<span class="ctproles">${g.x.r ? reforjadoTag() : ''}${
     g.ks.map(k => `<span class="tag ghost">${h(t('ga_ctp_' + k))}</span>`).join('')}</span>`;
   return `${titulo(otraVar(a.vv, v))}
     ${grupos.length ? `<div class="ctps ga-ctp">${grupos.map(g => { const c = g.x.c && CTPS.find(y => y.id === g.x.c);
         return c ? ctpDetalle(c, extra(g)) : `<div class="row" style="gap:6px">${sinInterpretar(g.x.x)}${extra(g)}</div>`; }).join('')}</div>`
       : `<p class="muted">${h(t('ga_ctp_none'))}</p>`}
-    <details class="usgrupo"><summary>${h(t('ga_ctp_notes'))}</summary>
-      <ul class="sopfx">${GUIA_ARMADO.leyenda.ctp.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>
+    ${notasCtpArmado()}
     ${fuenteArmado()}`;
+}
+/** La etiqueta de un C.T.P. que la guía de armado pide reforjado. */
+function reforjadoTag () { return `<span class="tag solid" style="background:var(--gold)">${h(t('md_reforged'))}</span>`; }
+/** Las notas de la guía de armado sobre C.T.P. (su leyenda), plegadas. */
+function notasCtpArmado () {
+  return `<details class="usgrupo"><summary>${h(t('ga_ctp_notes'))}</summary>
+      <ul class="sopfx">${GUIA_ARMADO.leyenda.ctp.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>`;
+}
+/** Columnas de la guía de armado para los C.T.P. de un equipo, según el tipo de su modo (el ctp de
+ *  MODOS) o el orden de las combinaciones: en PvP, el meta y fuera del meta de PvP; en PvE, los de PvE;
+ *  sin tipo (sin modo, un modo propio, «puntos para él» o una tier list), el mejor y el segundo. */
+function columnasCtp (ctx) {
+  const cols = ctx === null ? ['mejor', 'segundo'] : { pvp: ['pvp', 'pvp_alt'], pve: ['pve', 'pve_alt'] }[ctx];
+  if (!cols) throw new Error('tipo de modo sin columnas de C.T.P. en la guía de armado: ' + ctx);
+  return cols;
+}
+/** Un C.T.P. de la guía de armado, corto: ícono, nombre y si va reforjado. Un valor que la app no
+ *  interpreta va tal cual, marcado. */
+function ctpCorto (x) {
+  if (!x.c) return sinInterpretar(x.x);
+  const c = CTPS.find(y => y.id === x.c);
+  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(c.name)}</span>${x.r ? reforjadoTag() : ''}</span>`;
+}
+/** Los C.T.P. que la guía de armado le da a cada integrante de un equipo en las dos columnas de su
+ *  tipo de modo (columnasCtp), plegados; el rótulo dice las columnas y la fuente. La fila de la guía
+ *  es la de su mejor uniforme: si el integrante lleva otro, se dice. Una columna que no está en su
+ *  fila no se completa con otra: dice «sin dato en la guía», como el personaje que no tiene fila. */
+function ctpsEquipo (vs, ctx) {
+  const cols = columnasCtp(ctx), celda = 'style="white-space:normal;vertical-align:top;padding:4px 10px 4px 0"';
+  const sinDato = (titulo) => `<span class="muted"${titulo ? ` title="${h(titulo)}"` : ''}>${h(t('ga_eq_nodata'))}</span>`;
+  let otra = false;
+  const filas = vs.map(x => {
+    const a = armadoDe(x.ch);
+    if (!a) return `<tr><th ${celda}>${h(x.name)}</th><td ${celda} colspan="2">${sinDato(t('ga_none'))}</td></tr>`;
+    const ov = otraVar(a.vv, x);
+    if (ov) otra = true;
+    return `<tr><th ${celda}${ov ? ` title="${h(fullLabel(a.vv))}"` : ''}>${h(x.name)} ${ov}</th>${cols.map(k => { const c = (a.e.ctp || []).find(y => y.k === k);
+      return `<td ${celda}>${c ? ctpCorto(c) : sinDato('')}</td>`; }).join('')}</tr>`;
+  });
+  return `<details class="usgrupo ga-eq"><summary>${h(t('ga_eq_title').replace('{a}', t('ga_ctp_' + cols[0])).replace('{b}', t('ga_ctp_' + cols[1])))}</summary>
+    <table class="abx" style="table-layout:fixed;width:100%;max-width:640px"><colgroup><col style="width:34%"><col><col></colgroup>
+      <thead><tr><th ${celda}></th>${cols.map(k => `<th ${celda}>${h(t('ga_ctp_' + k))}</th>`).join('')}</tr></thead>
+      <tbody>${filas.join('')}</tbody></table>
+    ${otra ? `<p class="muted">${h(t('ga_eq_other'))}</p>` : ''}
+    ${notasCtpArmado()}
+    ${fuenteArmado()}</details>`;
 }
 /** Si necesita artefacto, según la guía de armado (con su leyenda). */
 function artArmado (ch) {
@@ -3941,10 +3992,11 @@ function armadoHtml (tipo) {
 // EQUIPOS
 // ============================================================================
 /** Modos para armar equipos: los del juego con tamaño de equipo según su fuente, y los
- *  propios. {id, name, tam}. */
+ *  propios. {id, name, tam, juego, ctp}: ctp es el tipo del modo ('pvp', 'pve' o null), el de
+ *  MODOS en los del juego; los propios no tienen. */
 function modosEquipo () {
-  return MODOS.filter(m => m.equipo && m.equipo.tam).map(m => ({ id: m.id, name: m.nombre, tam: m.equipo.tam, juego: true }))
-    .concat(U.modes.map(m => ({ id: m.id, name: m.name, tam: m.teamSize, juego: false })));
+  return MODOS.filter(m => m.equipo && m.equipo.tam).map(m => ({ id: m.id, name: m.nombre, tam: m.equipo.tam, juego: true, ctp: m.ctp }))
+    .concat(U.modes.map(m => ({ id: m.id, name: m.name, tam: m.teamSize, juego: false, ctp: null })));
 }
 function tamModo (id) { const m = modosEquipo().find(x => x.id === id); return m ? m.tam : 3; }
 /** Un equipo guardado, con su sinergia. En el armador se puede borrar; en la ficha, no. */
@@ -3960,6 +4012,7 @@ function equipoCard (tt, borrable) {
     <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
     ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
     <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
+    ${ctpsEquipo(vs, modo ? modo.ctp : null)}
   </div>`;
 }
 /** Un favorito: equipo de 3 marcado con ★ en las combinaciones de un personaje (el primero). */
@@ -3973,6 +4026,7 @@ function favoritoCard (f) {
     </div>
     <div class="muted">${h(vs.map(fullLabel).join(' + '))}</div>
     <div><b>${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</b></div>
+    ${ctpsEquipo(vs, null)}
     <div class="row">${botonArmar(vs, '', '')}</div>
   </div>`;
 }
