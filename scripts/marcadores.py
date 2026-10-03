@@ -1,22 +1,33 @@
 #!/usr/bin/env python3
 """Lo que thanosvibs publica sin resolver en el texto de algunos efectos: a qué facción,
 tipo, raza o habilidad se refiere ("Increases basic damage dealt to $HEROSUBTYPE1 faction
-by 30%"). El valor no viene en ningún campo de la API, así que se completa, en este orden:
+by 30%"). El valor no viene en ningún campo de la API de skills, así que se completa, en
+este orden (Ezequiel, 3 de octubre de 2026):
 
 1. scripts/contenido/marcadores.csv, a mano: el id del efecto en la API y el valor (como
-   lo muestra la app, o en inglés como lo nombra el juego). Gana sobre la wiki.
-2. La wiki de Future Fight: la misma skill (por nombre, en la página del personaje; la
+   lo muestra la app, o en inglés como lo nombra el juego). Gana sobre las otras dos.
+2. Leads & Supports (/api/supports, por retrato como lo arma fuentes.soportes()): en los
+   slots de la misma skill (Leader Skill: leader y leader2; Passive: passive y passive2;
+   Tier-2 Passive: t2 y t22; Uniform Passive: uniform y uniform2), "Basic Damage Dealt to
+   X" o "Basic Damage Received from X" en el mismo sentido, con el mismo porcentaje (el
+   recibido, en valor absoluto: Leads & Supports publica algunas reducciones con signo
+   positivo) y un X de la clase que pide el texto (Villains es el bando Supervillano,
+   Universals el tipo Universal, Males el género Masculino...). Gana sobre la wiki.
+3. La wiki de Future Fight: la misma skill (por nombre, en la página del personaje; la
    pasiva de uniforme, en el "Bonus" de ese uniforme) con el mismo porcentaje, en el mismo
    sentido (daño infligido o recibido) y un valor de la clase que pide el texto (una
    facción para "faction", un tipo para "$HEROCLASS1 types", una habilidad para
-   "ability"...). Si la skill tiene varios efectos así (el mismo daño contra héroes y
-   contra villanos), la wiki tiene que nombrar la misma cantidad de valores distintos, y se
-   asignan en el orden en que aparecen; si no coincide, no se usa.
+   "ability"...).
+En Leads & Supports y en la wiki, si la skill tiene varios efectos así (el mismo daño contra
+héroes y contra villanos), la fuente tiene que dar la misma cantidad de valores distintos, y
+se asignan en el orden en que aparecen; si no coincide, esa fuente no los resuelve. Un efecto
+al que una fuente le da valores distintos en dos skills tampoco sale de ella.
 Lo que no se completa queda sin resolver: la app lo marca "sin especificar" y
-docs/AUDITORIA.md lo lista para cargarlo a mano.
+docs/AUDITORIA.md lo lista para cargarlo a mano, junto con los efectos en que dos fuentes no
+coinciden (vale la que va primero).
 
 Lo usa skills_api.py: cada efecto resuelto lleva el valor en español (g) y de dónde salió
-(gs: 'm' a mano, 'w' wiki).
+(gs: 'm' a mano, 'l' Leads & Supports, 'w' wiki).
 
 Corrido solo (python3 scripts/marcadores.py, con work/ bajado), agrega a la tabla a mano
 una fila con el valor vacío por cada marcador sin resolver que todavía no esté. No toca
@@ -25,6 +36,7 @@ import csv, glob, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from auditar import anclas, limpiar, norm, wslug
 from dominio import ABIL, ALLIES, GENDER, SIDE, TYPE
+from fuentes import soportes
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 TABLA = os.path.join(_DIR, 'contenido', 'marcadores.csv')
@@ -50,6 +62,15 @@ CLASES = {
     'personajes': (RAZAS + FACC + GEN, r'(?:-type)?\s+(?:characters?|types?|faction)'),
     'tipos2': (GEN + TIPOS + RAZAS, r'(?:-type)?\s+(?:types?|characters?)'),
 }
+# Leads & Supports: los slots de cada skill, el daño básico contra un grupo, con su sentido
+# ('i' infligido, 'r' recibido), y el grupo como lo nombra el juego (las claves de dominio.py).
+# Los otros destinos de esos stats ("Boss Types", "Enemies with 25% HP or Higher"...) no son
+# una facción, un tipo, una raza, un género ni una habilidad.
+SLOTS_SOPORTE = {'Leader Skill': ('leader', 'leader2'), 'Passive': ('passive', 'passive2'),
+                 'Tier-2 Passive': ('t2', 't22'), 'Uniform Passive': ('uniform', 'uniform2')}
+_DANO_SOPORTE = re.compile(r'Basic Damage (?:Dealt to (?P<i>.+)|Received from (?P<r>.+))')
+_GRUPO_SOPORTE = {'Heroes': 'Super Hero', 'Villains': 'Super Villain', 'Universals': 'Universal',
+                  'Males': 'Male', 'Females': 'Female'}
 # El "Bonus" de cada uniforme en la página: la cabecera con su nombre y el texto que sigue.
 _BONUS = re.compile(r'^!\s*(?:\[\[File:[^\]]*\]\])?\s*([^\n]+?)\s*\n\|-\s*\n\|\s*class="header2"\s*\|\s*Bonus\s*\n'
                     r'(.*?)(?=class="header2"|\n!|\Z)', re.S | re.M)
@@ -166,10 +187,56 @@ def efectos():
     return out
 
 
+def valores_soporte(entrada, e):
+    """Los valores distintos, en el orden en que aparecen, que la entrada de Leads & Supports de
+    un retrato le da al efecto e (de efectos()): en los slots de su skill, el daño básico en su
+    sentido, con su porcentaje, contra un grupo de su clase."""
+    vals = []
+    for tipo in SLOTS_SOPORTE[e['slot']]:
+        for f in (entrada.get(tipo) or {}).get('fx', []):
+            m = _DANO_SOPORTE.fullmatch(f['s'])
+            if not (m and m.group(e['sentido'])):
+                continue
+            pct = abs(f['v']) if e['sentido'] == 'r' else f['v']
+            nombre = _GRUPO_SOPORTE.get(m.group(e['sentido']))
+            es = next((es for _, en, es in CLASES[e['clase']][0] if en == nombre), None)
+            if es and pct == float(e['pct']) and es not in vals:
+                vals.append(es)
+    return vals
+
+
+def de_soportes(efs, sop):
+    """Lo que resuelve Leads & Supports: ({id: valor en español}, [ids a los que da valores
+    distintos en dos retratos, que no se usan]). sop: Leads & Supports por retrato, como lo arma
+    fuentes.soportes() y lo publica data.js (MFF_SOPORTES)."""
+    por_skill, val, conflictos = {}, {}, set()
+    for e in efs:
+        if e['slot'] in SLOTS_SOPORTE:
+            por_skill.setdefault((e['p'], e['slot']), []).append(e)
+    for (p, _), es in por_skill.items():
+        for clave in {(e['clase'], e['pct'], e['sentido']) for e in es}:
+            grupo = list({e['id']: e for e in es if (e['clase'], e['pct'], e['sentido']) == clave}.values())
+            vals = valores_soporte(sop.get(p, {}), grupo[0])
+            if len(vals) != len(grupo):
+                continue
+            for e, v in zip(grupo, vals):
+                if val.setdefault(e['id'], v) != v:
+                    conflictos.add(e['id'])
+    return {i: v for i, v in val.items() if i not in conflictos}, sorted(conflictos)
+
+
+def _distintos(a, b):
+    """Los ids a los que dos fuentes ({id: valor}) les dan valores distintos."""
+    return sorted(i for i in a if i in b and a[i] != b[i])
+
+
 def resolver():
-    """({id: (valor en español, 'm'|'w')}, efectos, avisos). avisos: conflictos (ids que la
-    wiki resuelve distinto en dos skills), huerfanos (ids de la tabla a mano que la API ya no
-    trae) y distintos (valores a mano que no coinciden con la wiki; gana el de la tabla)."""
+    """({id: (valor en español, 'm'|'l'|'w')}, efectos, avisos). avisos: conflictos y
+    conflictos_soportes (ids que la wiki o Leads & Supports resuelven distinto en dos skills o
+    retratos: de esa fuente no salen), huerfanos (ids de la tabla a mano que la API ya no trae)
+    y los ids en que dos fuentes no coinciden, donde gana la primera: mano_soportes (la tabla a
+    mano y Leads & Supports), mano_wiki (la tabla y la wiki) y soportes_wiki (Leads & Supports
+    y la wiki)."""
     chars = json.load(open('work/characters.json'))
     fila = {r['portrait']: r for r in chars}
     base = {r['base_portrait']: r['character'] for r in chars if r['uniformed'] == 'False'}
@@ -203,12 +270,20 @@ def resolver():
                 if wiki.get(ide, val) != val:
                     conflictos.add(ide)
                 wiki[ide] = val
+    wiki = {i: v for i, v in wiki.items() if i not in conflictos}
+    # Leads & Supports por retrato, de work/supports.json con la función de fuentes.py (que en el
+    # build corre después) y su mismo roster. completar_liderazgos() no cambia nada acá: solo copia
+    # liderazgos a uniformes cuya Leader Skill no trae marcadores.
+    retratos = {r['portrait'] for r in chars} | {r['base_portrait'] for r in chars}
+    ls, conflictos_ls = de_soportes(efs, soportes(retratos, {r['character'] for r in chars}))
     clase_de = {e['id']: e['clase'] for e in efs}
     manual, huerfanos = tabla_manual(clase_de)
-    out = {i: (v, 'w') for i, v in wiki.items() if i not in conflictos}
-    distintos = sorted(i for i in manual if i in out and out[i][0] != manual[i])
+    out = {i: (v, 'w') for i, v in wiki.items()}
+    out.update({i: (v, 'l') for i, v in ls.items()})
     out.update({i: (v, 'm') for i, v in manual.items()})
-    return out, efs, {'conflictos': sorted(conflictos), 'huerfanos': sorted(huerfanos), 'distintos': distintos}
+    return out, efs, {'conflictos': sorted(conflictos), 'conflictos_soportes': conflictos_ls,
+                      'huerfanos': sorted(huerfanos), 'mano_soportes': _distintos(manual, ls),
+                      'mano_wiki': _distintos(manual, wiki), 'soportes_wiki': _distintos(ls, wiki)}
 
 
 def personaje(p, fila):

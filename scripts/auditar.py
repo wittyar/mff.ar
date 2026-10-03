@@ -540,31 +540,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
         s.append(f"- **{x['titulo']}** — {x['es']} ({citas})")
     s.append('')
 
-    M = A.marcadores
-    s.append('## 8. Facción, tipo o raza que la fuente no publica\n')
-    s.append(f"thanosvibs publica {M['ids']} efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la "
-             'facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to '
-             '$HEROSUBTYPE1 faction by 30%`). El build los completa con la tabla a mano (scripts/contenido/marcadores.csv) y, lo que '
-             'no está ahí, con la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o '
-             'recibido). En la ficha, el valor completado va subrayado y dice de dónde salió.\n')
-    s.append(f"De los {M['ids']}: {M['wiki']} de la wiki, {M['manual']} a mano y {M['sin_resolver']} sin resolver "
-             '(la app los muestra "sin especificar").\n')
-    for clave, texto in (('conflictos', 'La wiki da valores distintos para el mismo efecto en dos skills (no se usa)'),
-                         ('huerfanos', 'Ids de la tabla a mano que la API ya no trae'),
-                         ('distintos', 'Valores a mano distintos de la wiki (gana la tabla)')):
-        if M[clave]:
-            s.append(f"- **{texto}:** {', '.join(str(i) for i in M[clave])}")
-    if any(M[k] for k in ('conflictos', 'huerfanos', 'distintos')):
-        s.append('')
-    if M['pendientes']:
-        s.append('Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la '
-                 'muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el '
-                 'juego. `python3 scripts/marcadores.py` agrega las filas que falten.\n')
-        s.append('| Personaje | Skill | Efecto | id |')
-        s.append('|---|---|---|---|')
-        for ide, pjs, sk, tx in M['pendientes']:
-            s.append(f"| {' / '.join(pjs)} | {sk} | `{tx}` | {ide} |")
-        s.append('')
+    s += marcadores_seccion(A.marcadores)
 
     sobra = catalogo['sobra']
     s.append('## 9. Efectos que el catálogo no clasifica\n')
@@ -588,6 +564,49 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     s += strikers_seccion(strikers)
     s += liderazgos_seccion(liderazgos, A.chars)
     return '\n'.join(s)
+
+
+_AVISOS_MARCADORES = (
+    ('conflictos', 'La wiki da valores distintos para el mismo efecto en dos skills (no se usa)'),
+    ('conflictos_soportes', 'Leads & Supports da valores distintos para el mismo efecto en dos retratos (no se usa)'),
+    ('huerfanos', 'Ids de la tabla a mano que la API ya no trae'),
+    ('mano_soportes', 'Valores a mano distintos de Leads & Supports (gana la tabla)'),
+    ('mano_wiki', 'Valores a mano distintos de la wiki (gana la tabla)'),
+    ('soportes_wiki', 'Valores de Leads & Supports distintos de la wiki (gana Leads & Supports)'),
+)
+
+
+def marcadores_seccion(M):
+    """Sección 8: de dónde salió el valor de cada marcador (scripts/marcadores.py, por skills_api.py) y
+    lo que queda por cargar a mano."""
+    s = ['## 8. Facción, tipo o raza que la fuente no publica\n']
+    s.append(f"thanosvibs publica {M['ids']} efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la "
+             'facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to '
+             '$HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la '
+             'tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader '
+             'Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: '
+             '`uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, '
+             'el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la '
+             'misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el '
+             'mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en '
+             'el orden en que aparecen. En la ficha, el valor completado va subrayado y dice de dónde salió.\n')
+    s.append(f"De los {M['ids']}: {M['manual']} a mano, {M['soportes']} de Leads & Supports, {M['wiki']} de la wiki y "
+             f"{M['sin_resolver']} sin resolver (la app los muestra \"sin especificar\").\n")
+    avisos = [(k, texto) for k, texto in _AVISOS_MARCADORES if M[k]]
+    for clave, texto in avisos:
+        s.append(f"- **{texto}:** {', '.join(str(i) for i in M[clave])}")
+    if avisos:
+        s.append('')
+    if M['pendientes']:
+        s.append('Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la '
+                 'muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el '
+                 'juego. `python3 scripts/marcadores.py` agrega las filas que falten.\n')
+        s.append('| Personaje | Skill | Efecto | id |')
+        s.append('|---|---|---|---|')
+        for ide, pjs, sk, tx in M['pendientes']:
+            s.append(f"| {' / '.join(pjs)} | {sk} | `{tx}` | {ide} |")
+        s.append('')
+    return s
 
 
 def _version(v):

@@ -872,12 +872,14 @@ const T = {
   tpl_title:         { es:'La fuente no especifica cuál: publica un marcador de plantilla sin resolver.',
                        en:'The source does not say which: it publishes an unresolved template marker.' },
   tpl_unspec:        { es:'sin especificar',      en:'unspecified' },
-  tpl_pending:       { es:'thanosvibs publica este efecto sin decir a quién se refiere y la wiki de Future Fight no lo dice. Se completa a mano en scripts/contenido/marcadores.csv (la lista está en docs/AUDITORIA.md).',
-                       en:'thanosvibs publishes this effect without saying whom it refers to, and the Future Fight wiki does not say either. It is filled in by hand in scripts/contenido/marcadores.csv (the list is in docs/AUDITORIA.md).' },
+  tpl_pending:       { es:'thanosvibs publica este efecto sin decir a quién se refiere, y ni Leads & Supports ni la wiki de Future Fight lo dicen. Se completa a mano en scripts/contenido/marcadores.csv (la lista está en docs/AUDITORIA.md).',
+                       en:'thanosvibs publishes this effect without saying whom it refers to, and neither Leads & Supports nor the Future Fight wiki says so. It is filled in by hand in scripts/contenido/marcadores.csv (the list is in docs/AUDITORIA.md).' },
   tpl_wiki:          { es:'Dato de la wiki de Future Fight: thanosvibs publica este efecto sin decir a quién se refiere.',
                        en:'From the Future Fight wiki: thanosvibs publishes this effect without saying whom it refers to.' },
   tpl_manual:        { es:'Dato cargado a mano (scripts/contenido/marcadores.csv): thanosvibs publica este efecto sin decir a quién se refiere.',
                        en:'Entered by hand (scripts/contenido/marcadores.csv): thanosvibs publishes this effect without saying whom it refers to.' },
+  tpl_ls:            { es:'Dato de Leads & Supports de thanosvibs: la skill publica este efecto sin decir a quién se refiere.',
+                       en:'From thanosvibs Leads & Supports: the skill publishes this effect without saying whom it refers to.' },
   // índice para armar equipos (CATEGORIAS)
   ct_title:          { es:'Lo que da, en las categorías para armar equipos', en:'What it gives, in the team-building categories' },
   ct_fis:            { es:'Ataque físico',        en:'Physical Attack' },
@@ -1636,15 +1638,19 @@ function vinculo (v, x, aplicados) {
 function fila (tabla, i) { return (i == null || !TB[tabla]) ? null : TB[tabla][i]; }
 // thanosvibs publica algunas descripciones con marcadores de plantilla sin resolver
 // ($HEROSUBTYPE1, $HEROCLASS1, $TIME). $TIME y $TICK tienen un campo real detrás y se
-// resuelven con él. La facción, el tipo o la raza no vienen en ningún campo: el build los
-// completa con la tabla a mano o con la wiki (f.g, y de dónde salió en f.gs) y se muestran
-// marcados con su origen. Lo que no se completó se marca "sin especificar" en vez de
-// inventarle un valor o dejar el marcador crudo a la vista.
+// resuelven con él. La facción, el tipo o la raza no vienen en ningún campo de la skill: el
+// build los completa con la tabla a mano, con Leads & Supports o con la wiki (f.g, y de dónde
+// salió en f.gs: 'm', 'l' o 'w') y se muestran marcados con su origen. Lo que no se completó
+// se marca "sin especificar" en vez de inventarle un valor o dejar el marcador crudo a la vista.
+const ORIGEN_MARCADOR = { m: 'tpl_manual', l: 'tpl_ls', w: 'tpl_wiki' };
 function marcadores (texto, f) {
   const chip = (clave, titulo) => `<i class="tpl" title="${h(t(titulo))}">${h(t(clave))}</i>`;
-  const grupo = () => (f && f.g)
-    ? `<span class="tpl-ok" title="${h(t(f.gs === 'm' ? 'tpl_manual' : 'tpl_wiki'))}">${h(dom(f.g))}</span>`
-    : chip('tpl_unspec', 'tpl_pending');
+  const grupo = () => {
+    if (!(f && f.g)) return chip('tpl_unspec', 'tpl_pending');
+    const titulo = ORIGEN_MARCADOR[f.gs];
+    if (!titulo) throw new Error('origen de marcador desconocido: ' + f.gs);
+    return `<span class="tpl-ok" title="${h(t(titulo))}">${h(dom(f.g))}</span>`;
+  };
   return texto
     .replace(/\$TIME/g, () => (f && f.d != null) ? f.d + ' s' : chip('tpl_unspec', 'tpl_title'))
     .replace(/\$TICK/g, () => (f && f.t != null) ? f.t + ' s' : chip('tpl_unspec', 'tpl_title'))

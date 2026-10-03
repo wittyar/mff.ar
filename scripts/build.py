@@ -120,7 +120,9 @@ hoy = hoy.isoformat()
 # 5: el perfil de combate trae res (los elementos cuya resistencia le sube el daño), con el que
 #    la app decide a quién le sirve un liderazgo o un soporte de resistencias; los strikers de cada
 #    personaje (MFF_STRIKERS); el rol que da cada fila de las listas de PvP y PvE (MFF_ROLES_LISTAS).
-FORMATO = 5
+# 6: los marcadores de las skills también se completan con Leads & Supports (gs 'l'); la app
+#    anterior los mostraría como datos de la wiki.
+FORMATO = 6
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

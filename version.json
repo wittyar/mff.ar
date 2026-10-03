@@ -1,6 +1,6 @@
 {
  "version": "1.0.16",
- "formato_datos": 5,
+ "formato_datos": 6,
  "python": "3.14.7",
  "notas": "Equipos por contexto: cada trío tiene un solo líder, el mismo en la lista de cualquiera de los tres; a igual puntaje, lo decide la tier list. Un liderazgo que se activa con una condición, como al recibir un debuff, cuenta la mitad, y la tarjeta lo dice: con Silver Surfer — Void Knight, Knull — Ancient History y Gorr — The God Butcher, ahora lidera Gorr."
 }
