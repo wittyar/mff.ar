@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-10-02, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-10-03, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs. Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
@@ -20,11 +20,13 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Instinto (campo vs categoría de la wiki) | 77 | 4 | — |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
 | Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer | 119 páginas sin la pestaña |
-| Artefactos a 6★ (thanosvibs vs wiki) | 208 (+31 donde la wiki lista otro nivel de estrellas) | 18 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
+| Artefactos a 6★ (thanosvibs vs wiki) | 209 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
 Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvibs, 2270 (39%) se pudieron comparar; 1222 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 305 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
 
 Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports en los datos; todos clasificados.
+
+Liderazgos: 5 uniformes que Leads & Supports no lista tienen el de su base, porque su Leader Skill es idéntica; 58 retratos siguen sin liderazgo aunque una hermana lo tiene (sección 12).
 
 ## 1. Skills: daño y recarga
 
@@ -262,7 +264,6 @@ Los números del texto a 6★ de thanosvibs contra la tabla de la página Artifa
 | Franklin Richards | Pocket Universe | 5, 180 |  |
 | Goliath | Giant-Man II |  | 0.1 |
 | Morgan le Fay | Dark Knowledge |  | 0.2, 10 |
-| Red Skull | Captain Hydra | 0.25, 15, 200 |  |
 | Rhino | Charging Horn | 1, 15, 40, 70 | 20 |
 | Satana | Painful Temptation | 0.25 | 0.3 |
 | Shuri | Blossoming Talent | 25 | 16 |
@@ -297,52 +298,36 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 
 ## 8. Facción, tipo o raza que la fuente no publica
 
-thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa con la tabla a mano (scripts/contenido/marcadores.csv) y, lo que no está ahí, con la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). En la ficha, el valor completado va subrayado y dice de dónde salió.
+thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: `uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en el orden en que aparecen. En la ficha, el valor completado va subrayado y dice de dónde salió.
 
-De los 249: 78 de la wiki, 3 a mano y 168 sin resolver (la app los muestra "sin especificar").
+De los 249: 3 a mano, 131 de Leads & Supports, 38 de la wiki y 77 sin resolver (la app los muestra "sin especificar").
+
+- **Valores de Leads & Supports distintos de la wiki (gana Leads & Supports):** 1022870012, 1022870013
 
 Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el juego. `python3 scripts/marcadores.py` agrega las filas que falten.
 
 | Personaje | Skill | Efecto | id |
 |---|---|---|---|
-| Abomination — Infected Bioweapon | Fists of the World Ravager | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1022830012 |
-| Abomination — Infected Bioweapon | Fists of the World Ravager | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1022830013 |
 | Agent Venom — Agent Anti-Venom | Agent Anti-Venom | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1012150011 |
-| Amadeus Cho — Heroic Age | Heroic Age | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1006857011 |
-| Angela — Asgard's Assassin | Asgard's Assassin | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1003928011 |
 | Angela — Secret Wars: 1602 Witch Hunter Angela | Secret Wars: 1602 Witch Hunter Angela | `Increases basic damage dealt to $HEROCLASS1 types by 20%.` | 1003950011 |
-| Athena | Righteous Wisdom | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1028604011 |
-| Beta Ray Bill — Beta Ray Bill | Beta Ray Bill | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1022247011 |
 | Captain America (Sam Wilson) — Marvel Studios' Captain America: Brave New World | New Captain America | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1203012012 |
 | Captain Marvel — Marvel Animation's Marvel Zombies | Marvel Animation's Marvel Zombies | `Increases basic damage by 55% when attacking characters without $HEROSUBTYPE1 Ability.` | 1202629012 |
 | Captain Marvel — Marvel Studios' Avengers: Endgame | Marvel Studios' Avengers: Endgame | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1002654012 |
 | Captain Marvel — Marvel Studios' Avengers: Endgame | Marvel Studios' Avengers: Endgame | `Decreases basic damage received from $HEROSUBTYPE1 faction by 10%.` | 1002654013 |
 | Captain Marvel — Marvel Studios' The Marvels | Marvel Studios' The Marvels | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1202608012 |
 | Captain Marvel — Marvel Studios' The Marvels | Marvel Studios' The Marvels | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1202608013 |
-| Colossus / Colossus — X-Force | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015814011 |
-| Colossus — Hellfire Gala | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015883011 |
-| Colossus — Hellfire Gala | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015883013 |
-| Colossus — Phoenix Five | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015834011 |
-| Colossus — Phoenix Five | Piotr’s Will | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1015834013 |
 | Deathlok / Deathlok — Modern | Centipede Serum | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804011 |
 | Deathlok / Deathlok — Modern | Centipede Serum | `Decreases basic damage received from enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804012 |
-| Doctor Voodoo — Savage Avengers | Savage Avengers | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1020441011 |
-| Doctor Voodoo — Savage Avengers | Savage Avengers | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1020441012 |
-| Dormammu — Damnation | Dread One | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1011631061 |
 | Drax — Annihilation | Annihilation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 60%.` | 1002239012 |
 | Drax — Annihilation | Annihilation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 60%.` | 1002239013 |
 | Ebony Maw — Dark Obsidian Armor | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007771012 |
 | Ebony Maw — Dark Obsidian Armor | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1007771013 |
 | Ebony Maw — General's Hand | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007760012 |
 | Ebony Maw — General's Hand | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1007760013 |
-| Ebony Maw — General's Hand | General's Hand | `Increases basic damage dealt to $HEROCLASS1 types by 40%.` | 1007761011 |
-| Ebony Maw — General's Hand | General's Hand | `Decreases basic damage received from $HEROCLASS1 types by 35%.` | 1007761012 |
 | Electro — Spider-Man: No Way Home | Electric Battlefield | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1019733011 |
 | Electro — Spider-Man: No Way Home | Electric Battlefield | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1019733012 |
 | Falcon / Falcon — All-New Captain America / Falcon — Marvel Studios' Captain America: Civil War / Falcon — Marvel Legacy / Captain America (Sam Wilson) — Marvel Studios' The Falcon and the Winter Soldier / Falcon — What If... Zombies?! / Captain America (Sam Wilson) — Marvel Studios' Captain America: Brave New World | Hero's Rise | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 70%.` | 1003080013 |
 | Falcon (Joaquin Torres) | Captain's Wingman | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1027770011 |
-| Falcon — What If... Zombies?! | Hero Meat.. Villain Meat.. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003091011 |
-| Falcon — What If... Zombies?! | Hero Meat.. Villain Meat.. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003091012 |
 | Gamora — Requiem / Gamora — Marvel Studios' Guardians of the Galaxy 3 | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001247012 |
 | Gamora — Requiem / Gamora — Marvel Studios' Guardians of the Galaxy 3 | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001247013 |
 | Gamora — Wastelanders | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001297012 |
@@ -353,89 +338,41 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Ghost Rider — King of Hell | Repentance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000471011 |
 | Ghost Rider — Rage Returned / Ghost Rider — Savage Avengers | Hell's Wrath | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000443011 |
 | Gorgon | War Cry | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1011203062 |
-| Green Goblin — Dark Avengers | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1001844011 |
-| Green Goblin — Dark Avengers | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1001844012 |
 | Green Goblin — Gold Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1201811011 |
 | Green Goblin — Gold Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1201811012 |
-| Green Goblin — Red Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001886011 |
-| Green Goblin — Red Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001886012 |
-| Green Goblin — Spider-Man: No Way Home | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001864011 |
-| Green Goblin — Spider-Man: No Way Home | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001864012 |
-| Hela — Asgard Invasion | Asgard Invasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1010639011 |
-| Hela — Asgard Invasion | Asgard Invasion | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1010639012 |
-| Hela — Marvel Studios' Thor: Ragnarok | Marvel Studios' Thor: Ragnarok | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1010650011 |
-| Hela — Marvel Studios' Thor: Ragnarok | Marvel Studios' Thor: Ragnarok | `Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.` | 1010650012 |
-| Hela — Marvel Studios' What If...? | Marvel Studios' What If...? | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1010676011 |
-| Hela — Marvel Studios' What If...? | Marvel Studios' What If...? | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1010676012 |
 | Infinity Ultron — Marvel Studios' What If...? | Marvel Studios' What If...? | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001331012 |
 | Iron Man — Marvel Studios' Avengers: Endgame / Iron Man — Team Suit | Overdrive Beam | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1000372102 |
-| Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1019417011 |
-| Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.` | 1019417012 |
-| Jubilee — Marvel Animation's X-Men '97 | The Light of the X-Men | `Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.` | 1019417013 |
-| Kraven The Hunter — Interdimensional Hunter | Interdimensional Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1013233011 |
-| Kraven The Hunter — Interdimensional Hunter | Interdimensional Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1013233012 |
-| Leader | Evil Leadership | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1027604011 |
-| Leader | Evil Leadership | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1027604012 |
-| Loki — Young Avengers | The Young Avengers' Clever One | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1201424011 |
 | Magneto — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 45%.` | 1012950011 |
 | Malekith / Malekith — All-New, All-Different | Malicious Manipulation | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002008011 |
 | Malekith / Malekith — All-New, All-Different | Malicious Manipulation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1002008012 |
 | Malekith — War of the Realms | Dark Blessing | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002036011 |
 | Maximus | Mad Scientist | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1011504012 |
-| Medusa — Ancient Curse | Ancient Curse | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1010942011 |
-| Medusa — Inhumans vs X-Men | Queenly Gaze | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1010940011 |
 | Mephisto | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024470012 |
 | Mephisto — Master of Hell | Hell Fire | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1224401102 |
 | Mephisto — Master of Hell | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024493012 |
 | Molten Man | Fire Eater | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 30%.` | 1019504012 |
-| Morph | Gender Equality | `Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.` | 1029170011 |
-| Morph | Gender Equality | `Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.` | 1029170012 |
-| Mystique | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1021870011 |
-| Mystique | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021870012 |
-| Mystique — Hellfire Gala | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021844011 |
-| Mystique — Hellfire Gala | Perfect Deception | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1021844012 |
-| Nick Fury — Marvel Studios' Captain Marvel / Nick Fury — Marvel Studios' The Marvels | Director of S.H.I.E.L.D. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1018571011 |
-| Nick Fury — Secret Avengers | Director of S.H.I.E.L.D. | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1018563011 |
-| Nova (Richard Rider) — Marvel Cosmic Invasion | Worldmind Knowledge | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1022550011 |
-| Phil Coulson — Winter Ops | Director's Orders | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1006114012 |
-| Phil Coulson — Winter Ops | Director's Orders | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1006114013 |
-| Proxima Midnight — Dark Obsidian Armor | Dark Obsidian Armor | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1006951012 |
 | Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243012 |
 | Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243013 |
 | Punisher — Fist of the Beast | Fist of the Beast | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003288011 |
 | Punisher — Marvel Television's Daredevil: Born Again | Marvel Television's Daredevil: Born Again | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1203209011 |
-| Red Hulk — Marvel Studios' Captain America: Brave New World | Marvel Studios' Captain America: Brave New World | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1002558012 |
 | Red Skull / Red Skull — Secret Wars: Red Skull | Hero Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1001506011 |
 | Red Skull / Red Skull — Secret Wars: Red Skull | Hero Hunter | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1001506012 |
 | Red Skull — Hydra Armor | Hero Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1001571011 |
 | Red Skull — Hydra Armor | Hero Hunter | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1001571012 |
 | Red Skull — The Crimson Fall | Age of Malice | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1001545011 |
 | Red Skull — The Crimson Fall | Age of Malice | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1001545012 |
-| Ronan — Annihilators | Annihilators | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1004861011 |
-| Ronan — Annihilators | Annihilators | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1004861012 |
 | Ronan — Marvel Studios' Captain Marvel | Marvel Studios' Captain Marvel | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1004851011 |
-| Scarlet Spider — Gift Deliverer | Good Guy, Bad Guy | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1023167012 |
-| Scarlet Spider — Gift Deliverer | Good Guy, Bad Guy | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1023167013 |
 | Sentinel — Stark Sentinels Mk II | Mutant Suppressor | `Increases basic damage dealt to $HEROSUBTYPE1 characters by 100%.` | 1017563012 |
 | Sentinel — Stark Sentinels Mk II | Mutant Suppressor | `Decreases basic damage received from $HEROSUBTYPE1 characters by 60%.` | 1017563013 |
-| Sersi — Marvel Studios' Eternals | Cosmic Focus | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1024324012 |
-| Sersi — Marvel Studios' Eternals | Cosmic Focus | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1024324013 |
-| Sleeper | Symbiote Heroes | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 1027522011 |
-| Sleeper | Symbiote Heroes | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1027522012 |
 | Spider-Man (Miles Morales) / Spider-Man (Miles Morales) — Into the Spider-Verse | Ultimate Spider-Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1006570011 |
 | Spider-Man (Miles Morales) — Absolute Carnage | Ultimate Spider-Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1006571011 |
 | Spider-Man (Miles Morales) — Ancient Curse | Ancient Curse | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1206529011 |
 | Spider-Man (Miles Morales) — Spider-Man: Across the Spider-Verse | Spider-Man: Across the Spider-Verse | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1206502011 |
 | Spider-Man 2099 — All-New, All-Different | All-New, All-Different | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 10%.` | 1013635011 |
-| Taskmaster — Marvel Studios' Black Widow | Marvel Studios' Black Widow | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1021650011 |
-| Taskmaster — Marvel Studios' Black Widow | Marvel Studios' Black Widow | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1021650012 |
-| Taskmaster — Marvel Studios' Thunderbolts* | Marvel Studios' Thunderbolts* | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021691011 |
-| Taskmaster — Marvel Studios' Thunderbolts* | Marvel Studios' Thunderbolts* | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1021691012 |
 | Thanos — Obsidian King | Mad Titan | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007590011 |
 | Thanos — Thanos Wins / Thanos — Annihilation | Hero Slayer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1207527011 |
 | Thanos — Wise Harvester | True Peace | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1207502011 |
 | Thanos — Wise Harvester | True Peace | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 20%.` | 1207502012 |
-| The Thing — Marvel Studios' The Fantastic Four: First Steps | Family Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.` | 201820901 |
 | Thor (Jane Foster) — Marvel Studios' Thor: Love and Thunder | Marvel Studios' Thor: Love and Thunder | `Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.` | 1007150012 |
 | Ulik | Troll's Roar | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1009803062 |
 | Ultron Mark 1 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001351011 |
@@ -445,34 +382,9 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Ultron Prime — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001350011 |
 | Ultron Prime — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001350012 |
 | Ultron — All-Father Ultron | All-Father Ultron | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001363012 |
-| Valkyrie | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1014470011 |
-| Valkyrie | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.` | 1014470012 |
-| Valkyrie — Asgardians of the Galaxy | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1014486011 |
-| Valkyrie — Asgardians of the Galaxy | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.` | 1014486012 |
-| Valkyrie — Fearless Defenders | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1014446011 |
-| Valkyrie — Fearless Defenders | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.` | 1014446012 |
-| Valkyrie — Marvel Studios' Thor: Love and Thunder | Shield Maiden of Asgard | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1014448011 |
-| Valkyrie — Marvel Studios' Thor: Love and Thunder | Shield Maiden of Asgard | `Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.` | 1014448012 |
-| Venus (Aphrodite) | Olympian Hymn | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1028770011 |
-| Venus (Aphrodite) | Olympian Hymn | `Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.` | 1028770012 |
 | Vulture — Spider-Man: Homecoming | Spider-Man: Homecoming | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1013550011 |
-| War Machine — Invincible Iron Man | Machine Army | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1002794011 |
-| War Machine — Invincible Iron Man | Machine Army | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.` | 1002794012 |
-| Wave — Classic | Wrath of the Waves | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1020071011 |
-| Weapon Hex — Infected Bioweapon | Infected Bioweapon | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1017248011 |
-| Weapon Hex — Infected Bioweapon | Infected Bioweapon | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1017248012 |
 | Whiplash | Mechanical Engineering | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 80%.` | 1012204011 |
-| White Fox / White Fox — Lifestyle Series 1 | Kumiho Stance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1017870011 |
-| White Fox — Agent F-One | Villain Specialist | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 65%.` | 1017854011 |
-| White Fox — Agent F-One | Villain Specialist | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1017854012 |
-| White Fox — Lifestyle Series 2 | Kumiho Stance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 65%.` | 1017871011 |
-| White Fox — Lifestyle Series 2 | Kumiho Stance | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1017871012 |
-| Wong — Marvel Studios' Doctor Strange 2 | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009222011 |
-| Wong — Marvel Studios' Doctor Strange 2 | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009222012 |
-| Wong — What If... Zombies?! | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009279011 |
-| Wong — What If... Zombies?! | Mystic Advancement | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.` | 1009279012 |
 | Yellowjacket — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1005250011 |
-| Yondu — Summer Vacation | Exploit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1004652011 |
 
 ## 9. Efectos que el catálogo no clasifica
 
@@ -687,3 +599,78 @@ Esa fila no cuenta.
 
 - Rocket Raccoon: no se lee la probabilidad o cuándo aparece (`| style="text-align:left"|[[Image:LincolnCampbellIcon.png|30px]] Lincoln Campbell ||  chance to appear when attacking.`)
 - Vision: no se lee la probabilidad o cuándo aparece (`| style="text-align:left"|[[Image:SpiderGwenIcon.png|30px]] Spider-Gwen || 19% chance to appear when attack.`)
+
+## 12. Liderazgos que Leads & Supports no lista
+
+Leads & Supports de thanosvibs publica el liderazgo de cada retrato con los uniformes que comparten su entrada, y a algunos uniformes no los lista. Si la Leader Skill de uno de ellos, en la API de skills, es idéntica a la de su base, el build le copia el liderazgo de la base (Ezequiel, 2 de octubre de 2026): solo el liderazgo (`leader` y `leader2`), no los soportes. Idéntica es igual en todo lo que la API publica de ella, salvo sus ids: el nombre, la recarga y, en cada etapa, el objetivo, la activación, el elemento y cada efecto, con su etiqueta, su texto (sin negritas ni espacios de más) con sus números, su duración y su intervalo. Una Leader Skill con un valor que la API no publica (`$TIME`, `$HEROSUBTYPE1`) no se puede comparar, así que no se completa. Si otra hermana con la misma Leader Skill tiene otro liderazgo, el build para (scripts/fuentes.py, `completar_liderazgos`).
+
+### Completados (5)
+
+- Ghost — Marvel Studios' Thunderbolts* (`ghost2`) ← Ghost (`ghost`)
+- Knull — Ancient History (`knull1`) ← Knull (`knull`)
+- Moon Girl — Monsters Unleashed! (MFF Variant) (`moongirl1`) ← Moon Girl (`moongirl`)
+- Sentinel — Stark Sentinels Mk II (`sentinel2`) ← Sentinel (`sentinel`)
+- Shang-Chi — Marvel Animation's Marvel Zombies (`shangchi2`) ← Shang-Chi (`shangchi`)
+
+### Sin completar aunque una hermana tiene liderazgo (58)
+
+En qué difiere su Leader Skill (la suya / la de la otra): si la base tiene liderazgo, de la de la base, y se nombran las hermanas que la tienen igual; si no, de la de la hermana con liderazgo más parecida. Las hermanas con la misma Leader Skill van juntas.
+
+- Arachknight (`arachknight`): es la base, y la regla es para uniformes. Contra `arachknight1`: nombre: Spider-Totem / Guardian of Dimensions; etapa 1, objetivo: All Allies / Infinity Warps Allies\nActivates when: Infinity Warps type Ally enters; etapa 1, efecto 1: «Dodge Rate increases by 6%.» (DODGE ↑) / «Increases all Basic Attacks by 45%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 2: «Decreases Debuff Duration by 24%.» (CROWD CONTROL TIME ↓) / «Increases all Basic Attacks by 55%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 3: — / «Increases all Basic Attacks by 65%» (ALL BASIC ATTACKS INCREASE).
+- Blade (`blade`): es la base, y la regla es para uniformes. Contra `blade3`: nombre: Daywalker / Master Hunter; recarga: 25 s / 0 s; etapa 1, objetivo: All Allies / Weapon Master Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 10 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Blade — 70's Classic (`blade1`): su base no tiene liderazgo en Leads & Supports. Contra `blade3`: nombre: Daywalker / Master Hunter; recarga: 25 s / 0 s; etapa 1, objetivo: All Allies / Weapon Master Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 10 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Blade — Avengers (`blade2`): su base no tiene liderazgo en Leads & Supports. Contra `blade3`: nombre: Daywalker / Master Hunter; recarga: 25 s / 0 s; etapa 1, objetivo: All Allies / Weapon Master Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 10 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Captain America (`captainamerica`): es la base, y la regla es para uniformes. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Avengers 3099 (`captainamerica10`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Avengers: Age of Ultron (`captainamerica1`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Enter the Phoenix (`captainamerica12`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Galactic Talon (`captainamerica15`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: idéntica.
+- Captain America — Hydra Supreme (`captainamerica11`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Marvel NOW! (`captainamerica5`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Marvel Studios' Avengers: Endgame (`captainamerica9`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Marvel Studios' Avengers: Infinity War (`captainamerica6`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Marvel Studios' Captain America: Civil War (`captainamerica4`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Marvel Studios' Captain America: The Winter Soldier (`captainamerica3`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Secret Wars: 2099 (`captainamerica2`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Captain America — Team Suit (`captainamerica8`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
+- Deadpool (`deadpool`): es la base, y la regla es para uniformes. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
+- Deadpool — 30th Anniversary Black Version (`deadpool4`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
+- Deadpool — 30th Anniversary White Version (`deadpool5`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
+- Deadpool — Holiday Party (`deadpool3`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
+- Deadpool — Lady Deadpool (`deadpool2`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
+- Deadpool — X-Force (`deadpool1`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
+- Dormammu (`dormammu`): es la base, y la regla es para uniformes. Contra `dormammu1`: etapa 1, objetivo: All Allies / Super Villain Allies; etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction).
+- Gamora (`gamora`): es la base, y la regla es para uniformes. Contra `gamora3`: nombre: Most Dangerous Woman / Assassination Technique; etapa 1, efecto 1: «Attack Speed increases by 13.5%.» (ATTACK SPEED ↑) / «55% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: — / «Increases All Speeds by 6%.» (ALL SPEED ↑).
+- Gamora — All-New, All-Different (`gamora1`): su base no tiene liderazgo en Leads & Supports. Contra `gamora3`: nombre: Most Dangerous Woman / Assassination Technique; etapa 1, efecto 1: «Attack Speed increases by 13.5%.» (ATTACK SPEED ↑) / «55% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: — / «Increases All Speeds by 6%.» (ALL SPEED ↑).
+- Gamora — Guardians of the Galaxy 2 (`gamora2`): su base no tiene liderazgo en Leads & Supports. Contra `gamora3`: nombre: Most Dangerous Woman / Assassination Technique; etapa 1, efecto 1: «Attack Speed increases by 13.5%.» (ATTACK SPEED ↑) / «55% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: — / «Increases All Speeds by 6%.» (ALL SPEED ↑).
+- Green Goblin (`greengoblin`): es la base, y la regla es para uniformes. Contra `greengoblin2`: etapa 1, objetivo: All Allies / Dark Avengers Allies; etapa 1, efecto 1: «Increases Poison Resist by 50%.» (POISON RESIST ↑) / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Green Goblin — Gold Goblin (`greengoblin5`): su base no tiene liderazgo en Leads & Supports. Contra `greengoblin3`, `greengoblin4`: idéntica.
+- Green Goblin — Ultimate (`greengoblin1`): su base no tiene liderazgo en Leads & Supports. Contra `greengoblin2`: etapa 1, objetivo: All Allies / Dark Avengers Allies; etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Heimdall (`heimdall`): es la base, y la regla es para uniformes. Contra `heimdall1`: etapa 1, efecto 1: «Increases all Basic Defenses by 36%.» (ALL BASIC DEFENSES INCREASE) / «Increases all Basic Defenses by 40%.» (ALL BASIC DEFENSES INCREASE); etapa 1, efecto 2: — / «Ignores target's Dodge Rate by 30%.» (IGNORE DODGE).
+- Hulk — Fear Itself (`hulk7`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑).
+- Hulk — Immortal Hulk (`hulk6`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑).
+- Hulk — Marvel Studios' Spider-Man: Brand New Day (`hulk9`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: nombre: Banner's Biotech / Hulk Roar; etapa 1, objetivo: All Allies for the first effect, Self for the second effect / All Allies; etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: «30% increase of HP.» (MAX HP ↑) / —.
+- Hulk — Titan (`hulk8`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: nombre: Titan's Vigor / Hulk Roar; etapa 1, objetivo: All Allies for the first effect, Self for the second effect / All Allies; etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: «30% increase of HP.» (MAX HP ↑) / —.
+- Human Torch — Classic (`humantorch2`): su Leader Skill no es idéntica a la de su base. Contra `humantorch`, `humantorch1`: etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases Flame Damage by 25%.» (FLAME DAMAGE ↑).
+- Human Torch — Marvel Studios' The Fantastic Four: First Steps (`humantorch4`): su Leader Skill no es idéntica a la de su base. Contra `humantorch`, `humantorch1`: etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases Flame Damage by 25%.» (FLAME DAMAGE ↑).
+- Human Torch — The Fall of the Fantastic Four (`humantorch3`): su Leader Skill no es idéntica a la de su base. Contra `humantorch`, `humantorch1`: etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases Flame Damage by 25%.» (FLAME DAMAGE ↑).
+- Invisible Woman (`invisiblewoman`): es la base, y la regla es para uniformes. Contra `invisiblewoman3`, `invisiblewoman4`: nombre: Strong Willpower / Motherly Guidance; etapa 1, efecto 1: «Increases Mind Resist by 50%.» (MIND RESIST ↑) / «45% increase of Energy Attack.» (ENERGY ATTACK ↑).
+- Invisible Woman — Future Foundation (`invisiblewoman1`): su base no tiene liderazgo en Leads & Supports. Contra `invisiblewoman3`, `invisiblewoman4`: nombre: Strong Willpower / Motherly Guidance; etapa 1, efecto 1: «Increases Mind Resist by 50%.» (MIND RESIST ↑) / «45% increase of Energy Attack.» (ENERGY ATTACK ↑).
+- Iron Fist (`ironfist`): es la base, y la regla es para uniformes. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Iron Fist — All-New, All-Different (`ironfist2`): su base no tiene liderazgo en Leads & Supports. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Iron Fist — Marvel Studios' Iron Fist (`ironfist3`): su base no tiene liderazgo en Leads & Supports. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Iron Fist — New Avengers (`ironfist1`): su base no tiene liderazgo en Leads & Supports. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
+- Luke Cage (`lukecage`): es la base, y la regla es para uniformes. Contra `lukecage3`: recarga: 50 s / 20 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% rate when hit / when debuffed; etapa 1, efecto 1: «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 11 s / «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 6 s; etapa 1, efecto 2: — / «Removes all Debuffs.» (Removes all Debuffs.), 12 s.
+- Luke Cage — All-New, All-Different (`lukecage1`): su base no tiene liderazgo en Leads & Supports. Contra `lukecage3`: recarga: 40 s / 20 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% rate when hit / when debuffed; etapa 1, efecto 1: «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 12 s / «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 6 s; etapa 1, efecto 2: — / «Removes all Debuffs.» (Removes all Debuffs.), 12 s.
+- Luke Cage — Marvel Studios' Luke Cage (`lukecage2`): su base no tiene liderazgo en Leads & Supports. Contra `lukecage3`: recarga: 40 s / 20 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% rate when hit / when debuffed; etapa 1, efecto 1: «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 12 s / «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 6 s; etapa 1, efecto 2: — / «Removes all Debuffs.» (Removes all Debuffs.), 12 s.
+- Magik (`magik`): es la base, y la regla es para uniformes. Contra `magik2`, `magik3`: nombre: Darkchylde / Limbo Leader; etapa 1, objetivo: All Allies / Mutant Allies; etapa 1, efecto 1: «Critical Rate increases by 13%.» (CRITICAL RATE ↑) / «Increases all Basic Attacks by 40%» (ALL BASIC ATTACKS INCREASE).
+- Magik — Phoenix Five (`magik1`): su base no tiene liderazgo en Leads & Supports. Contra `magik2`, `magik3`: nombre: Darkchylde / Limbo Leader; etapa 1, objetivo: All Allies / Mutant Allies; etapa 1, efecto 1: «Critical Rate increases by 13%.» (CRITICAL RATE ↑) / «Increases all Basic Attacks by 40%» (ALL BASIC ATTACKS INCREASE).
+- Mephisto — Master of Hell (`mephisto1`): su Leader Skill no es idéntica a la de su base. Contra `mephisto`: nombre: Lord of Hell / Soul Contract; recarga: 0 s / 20 s; etapa 1, activación: — / when debuffed; etapa 1, efecto 1: «Increases Flame Damage by 30%.» (FLAME DAMAGE ↑) / «Removes all Debuffs.» (Removes all Debuffs.), 11 s; etapa 1, efecto 2: «Acquires the following effect for $TIME sec.» (Give Power) / «Increases Flame Damage by 30%.» (FLAME DAMAGE ↑), 15 s.
+- Rachel Summers (`rachelsummers`): es la base, y la regla es para uniformes. Contra `rachelsummers1`: nombre: Mental Enhancement / Phoenix's Majesty; etapa 1, objetivo: All Allies / Phoenix Force Allies; etapa 1, efecto 2: — / «Acquires the following effect for $TIME sec.» (Give Power).
+- Rescue (`rescue`): es la base, y la regla es para uniformes. Contra `rescue1`, `rescue2`: etapa 1, activación: when HP is below 30% / when HP is below 99%; etapa 1, efecto 1: «Creates a Shield equal to 20% of Max HP» (SHIELD), 10 s / «Creates a Shield equal to 50% of Max HP» (SHIELD), 5 s.
+- Sentry — Marvel Studios' Thunderbolts* (`sentry2`): su Leader Skill no es idéntica a la de su base. Contra `sentry`: recarga: 0 s / 20 s; etapa 1, activación: — / when debuffed; etapa 1, efecto 1: «Increases all Basic Attacks by 30%» (ALL BASIC ATTACKS INCREASE) / «Removes all Debuffs.» (Removes all Debuffs.), 12 s; etapa 1, efecto 2: «Acquires the following effect for $TIME sec.» (Give Power) / «Increases all Basic Attacks by 30%.» (Increases all Basic Attacks), 12 s. Contra `sentry1`: el mismo texto, con valores que la API no publica.
+- Spider-Man (Miles Morales) (`milesmorales`): es la base, y la regla es para uniformes. Contra `milesmorales2`: etapa 1, objetivo: All Allies / Target ID: 72; etapa 1, efecto 2: — / «Increases all Basic Attacks by 70%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 3: — / «Decreases basic damage received by 20%.» (Decreases all basic damage).
+- Spider-Man (Miles Morales) — Into the Spider-Verse (`milesmorales1`): su base no tiene liderazgo en Leads & Supports. Contra `milesmorales2`: etapa 1, objetivo: All Allies / Target ID: 72; etapa 1, efecto 2: — / «Increases all Basic Attacks by 70%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 3: — / «Decreases basic damage received by 20%.» (Decreases all basic damage).
+- Sword Master (`swordmaster`): es la base, y la regla es para uniformes. Contra `swordmaster1`: etapa 1, efecto 1: «Increases all Basic Defenses by 35%.» (ALL BASIC DEFENSES INCREASE) / «Increases all Basic Defenses by 50%.» (ALL BASIC DEFENSES INCREASE); etapa 1, efecto 2: — / «30% increase of HP.» (MAX HP ↑).
+- Thane — Phoenix Force (`thane1`): su Leader Skill no es idéntica a la de su base. Contra `thane`: recarga: 20 s / 25 s.
+- Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): su Leader Skill no es idéntica a la de su base. Contra `wintersoldier`, `wintersoldier1`, `wintersoldier2`, `wintersoldier3`, `wintersoldier4`: etapa 1, efecto 1: «45% increase of Physical Attack.» (PHYSICAL ATTACK ↑) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑). Contra `wintersoldier5`: idéntica.

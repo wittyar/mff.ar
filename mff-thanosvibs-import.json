@@ -69749,7 +69749,7 @@
     "PvP"
    ],
    "rating": 5,
-   "ratings": 24,
+   "ratings": 25,
    "rows": [
     {
      "id": "tier-s",
@@ -69801,7 +69801,7 @@
     "PvE"
    ],
    "rating": 5,
-   "ratings": 3,
+   "ratings": 4,
    "rows": [
     {
      "id": "tier-s",
@@ -69964,48 +69964,26 @@
    ]
   },
   {
-   "id": "tv-proj-1789860708511-vz1ip",
+   "id": "tv-proj-1791044099626-63cwh",
    "order": 100,
    "group": "comunidad",
-   "name": "Character Tier List",
-   "nameEn": "Character Tier List",
-   "source": "Character Tier List",
-   "author": "JMoreno01",
+   "name": "12.2",
+   "nameEn": "12.2",
+   "source": "12.2",
+   "author": "ghxstfrevk",
    "gameVersion": "12.2.5",
-   "published": "2026-09-23",
-   "description": "Hope this helps y'all when deciding what characters to build",
-   "notes": "Added Sister Girmm to the PVE High Meta tier and Red Skull to the PVE Support tier\n\nMoved a few characters to the Support tiers",
+   "published": "2026-10-03",
+   "description": "How much worth it to build based on the cost",
+   "notes": "",
    "tags": [
-    "PvE",
-    "PvP",
     "General"
    ],
-   "rating": 3.2,
-   "ratings": 4,
+   "rating": 0,
+   "ratings": 0,
    "rows": [
     {
-     "id": "tier-1789860760769",
-     "label": "PVE High Meta"
-    },
-    {
-     "id": "tier-1789868602633",
-     "label": "PVP High Meta"
-    },
-    {
-     "id": "tier-1789860735785",
-     "label": "PVE Low Meta"
-    },
-    {
      "id": "tier-s",
-     "label": "PVP Low Meta"
-    },
-    {
-     "id": "tier-1789860776755",
-     "label": "PVE Support"
-    },
-    {
-     "id": "tier-1789871846243",
-     "label": "PVP Support"
+     "label": "S"
     },
     {
      "id": "tier-a",
@@ -70018,142 +69996,74 @@
     {
      "id": "tier-c",
      "label": "C"
-    },
-    {
-     "id": "tier-d",
-     "label": "D"
     }
    ]
   },
   {
-   "id": "tv-proj-1787289919119-spoe2",
+   "id": "tv-proj-1787293250870-lr8eb",
    "order": 100,
    "group": "comunidad",
-   "name": "Ideal CTP List",
-   "nameEn": "Ideal CTP List",
-   "source": "Ideal CTP List",
-   "author": "CrisisCardio",
-   "gameVersion": "12.2",
-   "published": "2026-09-15",
-   "description": "A list of the most Ideal CTP for each character (at least to my own current knowledge).\n\nPVE characters can sometimes use weaker CTP's if need be, but PVP almost always require their most ideal CTP to be effective.\n\nFor Insight and Liberation, try to equip them in a way where each pair of supports have one of each for maximum effectiveness (Example: Insight Dazzler and Lib Cyclops).",
-   "notes": "Annihilus added to Competition\nGalactus and Drax added to Conquest\nThanos changed to Conquest (Was Authority)\nMoon Knight changed to Rage (Was Comp)",
+   "name": "Premium T2 Selector",
+   "nameEn": "Premium T2 Selector",
+   "source": "Premium T2 Selector",
+   "author": "TheFlyingL",
+   "gameVersion": "12.2.5",
+   "published": "2026-10-01",
+   "description": "List of best options from the Premium T2 Selector",
+   "notes": "Updated to game version v12.2.5\nGhost Panther placement moved up to Best Option.\n- Note: This is my personal opinion and options are prioritized for characters that do not require a uniform to either function or provide leadership/supports and based on their farmability without having to spend to obtain them which helps F2P/New Players",
    "tags": [
-    "General",
-    "PvE",
-    "PvP"
+    "General"
    ],
-   "rating": 3.7,
-   "ratings": 9,
+   "rating": 4.9,
+   "ratings": 7,
    "rows": [
     {
-     "id": "tier-1787538524197",
-     "label": "Competition and conquest (only toon were 2nd slot is worth it)"
-    },
-    {
-     "id": "tier-a",
-     "label": "Competition"
+     "id": "tier-1788165259869",
+     "label": "NEW PLAYER FIRST PICK!"
     },
     {
      "id": "tier-s",
-     "label": "Rage"
-    },
-    {
-     "id": "tier-1787289935600",
-     "label": "Judgement"
-    },
-    {
-     "id": "tier-d",
-     "label": "Energy"
-    },
-    {
-     "id": "tier-1787289934119",
-     "label": "Destruction"
-    },
-    {
-     "id": "tier-b",
-     "label": "Conquest"
-    },
-    {
-     "id": "tier-c",
-     "label": "Greed"
-    },
-    {
-     "id": "tier-1787289935015",
-     "label": "Authority"
-    },
-    {
-     "id": "tier-1787290051499",
-     "label": "Refinement"
-    },
-    {
-     "id": "tier-1787290072838",
-     "label": "Regeneration"
-    },
-    {
-     "id": "tier-1787290059970",
-     "label": "Insight"
-    },
-    {
-     "id": "tier-1787290079605",
-     "label": "Liberation"
-    },
-    {
-     "id": "tier-1787290719441",
-     "label": "Not worth"
-    }
-   ]
-  },
-  {
-   "id": "tv-proj-1787634809961-ohych",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Personal Tier List (MVLSPY)",
-   "nameEn": "Personal Tier List (MVLSPY)",
-   "source": "Personal Tier List",
-   "author": "MVLSPY",
-   "gameVersion": "12.2",
-   "published": "2026-09-12",
-   "description": "How good I consider characters based on my experience using them and seeing people use them",
-   "notes": "Downgraded Maddy",
-   "tags": [
-    "General",
-    "PvE",
-    "PvP"
-   ],
-   "rating": 3.7,
-   "ratings": 11,
-   "rows": [
-    {
-     "id": "tier-s",
-     "label": "HYBRID META (PVE+PVP)"
+     "label": "BEST OPTIONS (f2p  / NEW PLAYER friendly - NO UNI REQ)"
     },
     {
      "id": "tier-a",
-     "label": "PVE META"
+     "label": "SUPPORTS / lead (NON FARMABLE)"
     },
     {
-     "id": "tier-b",
-     "label": "PVP META"
+     "id": "tier-1788164219953",
+     "label": "pve supports / lead (farmable)"
+    },
+    {
+     "id": "tier-1788164558278",
+     "label": "pve supports / lead (farmable - NEED UNI)"
+    },
+    {
+     "id": "tier-1789053524655",
+     "label": "PVp supports / lead (farmable)"
+    },
+    {
+     "id": "tier-1789053486844",
+     "label": "PVP supports / lead (farmable - NEED UNI)"
+    },
+    {
+     "id": "tier-1788164107747",
+     "label": "shifters (farmable)"
+    },
+    {
+     "id": "tier-1788164468928",
+     "label": "free (JUST USE A M-T2)"
+    },
+    {
+     "id": "tier-1789053414042",
+     "label": "NON-FARMABLE"
+    },
+    {
+     "id": "tier-1789053639220",
+     "label": "\"DECENT\" OPTIONS"
     },
     {
      "id": "tier-c",
-     "label": "PVE VIABLE"
-    },
-    {
-     "id": "tier-d",
-     "label": "PVP VIABLE"
-    },
-    {
-     "id": "tier-1787634920294",
-     "label": "SUPPORT"
-    },
-    {
-     "id": "tier-1787922323741",
-     "label": "MID"
-    },
-    {
-     "id": "tier-1787635842846",
-     "label": "BAD"
+     "label": "BAD PICKS in general (MOST REQUIRE UNIFORM)"
     }
    ]
   },
@@ -70165,18 +70075,18 @@
    "nameEn": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
    "source": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
    "author": "KnightSeeks",
-   "gameVersion": "12.2",
-   "published": "2026-09-11",
+   "gameVersion": "12.2.5",
+   "published": "2026-09-28",
    "description": "Special Thanks to Gummy Steve 2129!\n\nThis list is integrated tier list like the old THANO$VIB$ Tier list that includes not only general characters but also supports into a single tier list.\n\nI've also integrated the PVP and PVE supports into the list from the Gummy Steve's Support List.",
-   "notes": "Rearranged Tiers and added dividers for better accessibility.\n\nEdit: Odin uniform icon was not applied.",
+   "notes": "Added Sister Grimm and Red Skull uniforms to landing.",
    "tags": [
     "General",
     "PvE",
     "PvP",
     "Other"
    ],
-   "rating": 4.7,
-   "ratings": 12,
+   "rating": 4.6,
+   "ratings": 17,
    "rows": [
     {
      "id": "tier-s",
@@ -70257,6 +70167,200 @@
    ]
   },
   {
+   "id": "tv-proj-1787634809961-ohych",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Personal Tier List (MVLSPY)",
+   "nameEn": "Personal Tier List (MVLSPY)",
+   "source": "Personal Tier List",
+   "author": "MVLSPY",
+   "gameVersion": "12.2.5",
+   "published": "2026-09-25",
+   "description": "How good I consider characters based on my experience using them and seeing people use them",
+   "notes": "Moved around a few uniforms, added new seasonals",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP"
+   ],
+   "rating": 3.8,
+   "ratings": 13,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "HYBRID META (PVE+PVP)"
+    },
+    {
+     "id": "tier-a",
+     "label": "PVE META"
+    },
+    {
+     "id": "tier-b",
+     "label": "PVP META"
+    },
+    {
+     "id": "tier-c",
+     "label": "PVE VIABLE"
+    },
+    {
+     "id": "tier-d",
+     "label": "PVP VIABLE"
+    },
+    {
+     "id": "tier-1787634920294",
+     "label": "SUPPORT"
+    },
+    {
+     "id": "tier-1787922323741",
+     "label": "MID"
+    },
+    {
+     "id": "tier-1787635842846",
+     "label": "BAD"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1787289919119-spoe2",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Ideal CTP List",
+   "nameEn": "Ideal CTP List",
+   "source": "Ideal CTP List",
+   "author": "CrisisCardio",
+   "gameVersion": "12.2.5",
+   "published": "2026-09-24",
+   "description": "A list of the most Ideal CTP for each character (at least to my own current knowledge).\n\nPVE characters can sometimes use weaker CTP's if need be, but PVP almost always require their most ideal CTP to be effective.\n\nFor Insight and Liberation, try to equip them in a way where each pair of supports have one of each for maximum effectiveness (Example: Insight Dazzler and Lib Cyclops).",
+   "notes": "Red Skull added to Insight (can use Liberation as well)\nSister Grimm added to Rage",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP"
+   ],
+   "rating": 3.6,
+   "ratings": 10,
+   "rows": [
+    {
+     "id": "tier-1787538524197",
+     "label": "Competition and conquest (only toon were 2nd slot is worth it)"
+    },
+    {
+     "id": "tier-a",
+     "label": "Competition"
+    },
+    {
+     "id": "tier-s",
+     "label": "Rage"
+    },
+    {
+     "id": "tier-1787289935600",
+     "label": "Judgement"
+    },
+    {
+     "id": "tier-d",
+     "label": "Energy"
+    },
+    {
+     "id": "tier-1787289934119",
+     "label": "Destruction"
+    },
+    {
+     "id": "tier-b",
+     "label": "Conquest"
+    },
+    {
+     "id": "tier-c",
+     "label": "Greed"
+    },
+    {
+     "id": "tier-1787289935015",
+     "label": "Authority"
+    },
+    {
+     "id": "tier-1787290051499",
+     "label": "Refinement"
+    },
+    {
+     "id": "tier-1787290072838",
+     "label": "Regeneration"
+    },
+    {
+     "id": "tier-1787290059970",
+     "label": "Insight"
+    },
+    {
+     "id": "tier-1787290079605",
+     "label": "Liberation"
+    },
+    {
+     "id": "tier-1787290719441",
+     "label": "Not worth"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1789860708511-vz1ip",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Character Tier List",
+   "nameEn": "Character Tier List",
+   "source": "Character Tier List",
+   "author": "JMoreno01",
+   "gameVersion": "12.2.5",
+   "published": "2026-09-23",
+   "description": "Hope this helps y'all when deciding what characters to build",
+   "notes": "Added Sister Girmm to the PVE High Meta tier and Red Skull to the PVE Support tier\n\nMoved a few characters to the Support tiers",
+   "tags": [
+    "PvE",
+    "PvP",
+    "General"
+   ],
+   "rating": 3.2,
+   "ratings": 5,
+   "rows": [
+    {
+     "id": "tier-1789860760769",
+     "label": "PVE High Meta"
+    },
+    {
+     "id": "tier-1789868602633",
+     "label": "PVP High Meta"
+    },
+    {
+     "id": "tier-1789860735785",
+     "label": "PVE Low Meta"
+    },
+    {
+     "id": "tier-s",
+     "label": "PVP Low Meta"
+    },
+    {
+     "id": "tier-1789860776755",
+     "label": "PVE Support"
+    },
+    {
+     "id": "tier-1789871846243",
+     "label": "PVP Support"
+    },
+    {
+     "id": "tier-a",
+     "label": "A"
+    },
+    {
+     "id": "tier-b",
+     "label": "B"
+    },
+    {
+     "id": "tier-c",
+     "label": "C"
+    },
+    {
+     "id": "tier-d",
+     "label": "D"
+    }
+   ]
+  },
+  {
    "id": "tv-proj-1789070562693-y3vb7",
    "order": 100,
    "group": "comunidad",
@@ -70311,74 +70415,6 @@
    ]
   },
   {
-   "id": "tv-proj-1787293250870-lr8eb",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Premium T2 Selector",
-   "nameEn": "Premium T2 Selector",
-   "source": "Premium T2 Selector",
-   "author": "TheFlyingL",
-   "gameVersion": "12.2",
-   "published": "2026-09-10",
-   "description": "List of best options from the Premium T2 Selector",
-   "notes": "Updated to game version v.12.2\nAdded a Tier section for non-farmable characters.\n- Note: This is my personal opinion and options are prioritized for characters that do not require a uniform to either function or provide leadership/supports and based on their farmability without having to spend to obtain them which helps F2P/New Players",
-   "tags": [
-    "General"
-   ],
-   "rating": 4.8,
-   "ratings": 4,
-   "rows": [
-    {
-     "id": "tier-1788165259869",
-     "label": "NEW PLAYER FIRST PICK!"
-    },
-    {
-     "id": "tier-s",
-     "label": "BEST OPTIONS (f2p  / NEW PLAYER friendly - NO UNI REQ)"
-    },
-    {
-     "id": "tier-a",
-     "label": "SUPPORTS / lead (NON FARMABLE)"
-    },
-    {
-     "id": "tier-1788164219953",
-     "label": "pve supports / lead (farmable)"
-    },
-    {
-     "id": "tier-1788164558278",
-     "label": "pve supports / lead (farmable - NEED UNI)"
-    },
-    {
-     "id": "tier-1789053524655",
-     "label": "PVp supports / lead (farmable)"
-    },
-    {
-     "id": "tier-1789053486844",
-     "label": "PVP supports / lead (farmable - NEED UNI)"
-    },
-    {
-     "id": "tier-1788164107747",
-     "label": "shifters (farmable)"
-    },
-    {
-     "id": "tier-1788164468928",
-     "label": "free (JUST USE A M-T2)"
-    },
-    {
-     "id": "tier-1789053414042",
-     "label": "NON-FARMABLE"
-    },
-    {
-     "id": "tier-1789053639220",
-     "label": "\"DECENT\" OPTIONS"
-    },
-    {
-     "id": "tier-c",
-     "label": "BAD PICKS in general (MOST REQUIRE UNIFORM)"
-    }
-   ]
-  },
-  {
    "id": "tv-proj-1787850593408-b9cub",
    "order": 100,
    "group": "comunidad",
@@ -70394,8 +70430,8 @@
     "Other",
     "General"
    ],
-   "rating": 2.7,
-   "ratings": 7,
+   "rating": 3,
+   "ratings": 8,
    "rows": [
     {
      "id": "tier-s",
@@ -70559,8 +70595,8 @@
    "tags": [
     "General"
    ],
-   "rating": 3.2,
-   "ratings": 4,
+   "rating": 2.8,
+   "ratings": 5,
    "rows": [
     {
      "id": "tier-s",
@@ -73346,9 +73382,6 @@
    "sersi::sersi-10100243": [
     "tier-1787290719441"
    ],
-   "red-skull::red-skull-10200015": [
-    "tier-1787290719441"
-   ],
    "deathlok::deathlok-10100058": [
     "tier-1787290719441"
    ],
@@ -73389,9 +73422,6 @@
     "tier-1787290719441"
    ],
    "negasonic-teenage-warhead::base": [
-    "tier-1787290719441"
-   ],
-   "sister-grimm::sister-grimm-10200053": [
     "tier-1787290719441"
    ],
    "rocket-raccoon::rocket-raccoon-10600005": [
@@ -73733,6 +73763,9 @@
    "phil-coulson::phil-coulson-10200061": [
     "tier-1787290059970"
    ],
+   "red-skull::red-skull-10300015": [
+    "tier-1787290059970"
+   ],
    "mysterio::mysterio-10200134": [
     "tier-1787290059970"
    ],
@@ -73764,6 +73797,9 @@
     "tier-s"
    ],
    "magneto::magneto-10400129": [
+    "tier-s"
+   ],
+   "sister-grimm::sister-grimm-10300053": [
     "tier-s"
    ],
    "gambit::gambit-10200173": [
@@ -73808,6 +73844,9 @@
    "rescue::rescue-10200191": [
     "tier-1787290079605"
    ],
+   "ebony-maw::ebony-maw-10300077": [
+    "tier-1787290079605"
+   ],
    "ancient-one::ancient-one-10300094": [
     "tier-1787290079605"
    ],
@@ -73818,9 +73857,6 @@
     "tier-1787290079605"
    ],
    "mantis::mantis-10100120": [
-    "tier-1787290079605"
-   ],
-   "ebony-maw::ebony-maw-10300077": [
     "tier-1787290079605"
    ],
    "kahhori::base": [
@@ -73958,10 +73994,10 @@
    "gorr::gorr-10100253": [
     "tier-b"
    ],
-   "thanos::thanos-10700075": [
+   "galactus::base": [
     "tier-b"
    ],
-   "galactus::base": [
+   "thanos::thanos-10700075": [
     "tier-b"
    ],
    "silver-surfer::silver-surfer-10200199": [
@@ -73973,10 +74009,10 @@
    "sentinel::sentinel-10200175": [
     "tier-b"
    ],
-   "thor::thor-10900008": [
+   "loki::loki-10800014": [
     "tier-s"
    ],
-   "loki::loki-10800014": [
+   "thor::thor-10900008": [
     "tier-s"
    ],
    "black-bolt::black-bolt-10400038": [
@@ -74024,10 +74060,10 @@
    "angela::angela-10300039": [
     "tier-1787290059970"
    ],
-   "venus-aphrodite::base": [
+   "ghost-rider-robbie-reyes::ghost-rider-robbie-reyes-10100117": [
     "tier-1787290059970"
    ],
-   "ghost-rider-robbie-reyes::ghost-rider-robbie-reyes-10100117": [
+   "venus-aphrodite::base": [
     "tier-1787290059970"
    ],
    "hellstorm::hellstorm-10100096": [
@@ -74096,10 +74132,10 @@
    "daredevil::daredevil-10400016": [
     "tier-b"
    ],
-   "annihilus::base": [
+   "crystal::crystal-10300114": [
     "tier-a"
    ],
-   "crystal::crystal-10300114": [
+   "annihilus::base": [
     "tier-a"
    ],
    "red-guardian::red-guardian-10200220": [
@@ -74167,6 +74203,9 @@
    "quasar-avril-kincaid::base": [
     "tier-c"
    ],
+   "ghost-panther::base": [
+    "tier-s"
+   ],
    "sun-bird::base": [
     "tier-c"
    ],
@@ -74225,9 +74264,6 @@
     "tier-1788164219953"
    ],
    "red-she-hulk::base": [
-    "tier-1788164219953"
-   ],
-   "ghost-panther::base": [
     "tier-1788164219953"
    ],
    "m-baku::base": [
@@ -74698,20 +74734,23 @@
     "tier-a",
     "tier-1787634920294"
    ],
+   "doctor-strange::doctor-strange-10600028": [
+    "tier-a"
+   ],
    "annihilus::base": [
     "tier-a"
    ],
-   "doctor-strange::doctor-strange-10600028": [
+   "sister-grimm::sister-grimm-10300053": [
     "tier-a"
    ],
    "crystal::crystal-10300114": [
     "tier-a"
    ],
-   "invisible-woman::invisible-woman-10400180": [
-    "tier-a"
-   ],
    "jeff-the-land-shark::base": [
     "tier-d",
+    "tier-1787634920294"
+   ],
+   "red-skull::red-skull-10300015": [
     "tier-1787634920294"
    ],
    "cyclops::cyclops-10500123": [
@@ -74778,6 +74817,9 @@
    ],
    "rocket-raccoon::rocket-raccoon-10600005": [
     "tier-1787634920294"
+   ],
+   "invisible-woman::invisible-woman-10400180": [
+    "tier-c"
    ],
    "gambit::gambit-10200173": [
     "tier-c"
@@ -75206,9 +75248,6 @@
    "spectrum::spectrum-10100247": [
     "tier-1787635842846"
    ],
-   "red-skull::red-skull-10200015": [
-    "tier-1787635842846"
-   ],
    "daisy-johnson::daisy-johnson-10200056": [
     "tier-1787635842846"
    ],
@@ -75216,9 +75255,6 @@
     "tier-1787635842846"
    ],
    "moon-girl::moon-girl-10100110": [
-    "tier-1787635842846"
-   ],
-   "sister-grimm::sister-grimm-10200053": [
     "tier-1787635842846"
    ],
    "ulysses-klaue::base": [
@@ -79831,6 +79867,12 @@
    ],
    "singularity::base": [
     "tier-1788337320904"
+   ],
+   "sister-grimm::sister-grimm-10300053": [
+    "tier-1789112904075"
+   ],
+   "red-skull::red-skull-10300015": [
+    "tier-1789112904075"
    ]
   },
   "tv-proj-1789070562693-y3vb7": {
@@ -81587,6 +81629,26 @@
    ],
    "victorious::victorious-10100184": [
     "tier-1789871846243"
+   ]
+  },
+  "tv-proj-1791044099626-63cwh": {
+   "drax::drax-10300022": [
+    "tier-b"
+   ],
+   "red-skull::red-skull-10300015": [
+    "tier-s"
+   ],
+   "annihilus::base": [
+    "tier-a"
+   ],
+   "sister-grimm::sister-grimm-10300053": [
+    "tier-a"
+   ],
+   "thanos::thanos-10700075": [
+    "tier-s"
+   ],
+   "galactus::base": [
+    "tier-s"
    ]
   },
   "tv-soportes": {
