@@ -283,8 +283,10 @@ el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
 ### Lo que sigue
 
 1. Etapa 3: los liderazgos y soportes de Leads & Supports en el mismo análisis, con el efecto
-   que la skill no dice (los «Give Power» vacíos) y los marcadores (`$HEROSUBTYPE1`) completados
-   con la facción, el tipo o la raza que Leads & Supports escribe.
+   que la skill no dice (los «Give Power» vacíos). Los marcadores (`$HEROSUBTYPE1`) ya se completan
+   con la facción, el tipo o la raza que escribe Leads & Supports, después de la tabla a mano y
+   antes que la wiki (Ezequiel, 3 de octubre de 2026; `scripts/marcadores.py`): Angela — Asgard's
+   Assassin quedaba «sin especificar» y Leads & Supports dice Villains.
 2. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
    sinergia y el índice de equipos.
 

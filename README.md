@@ -317,19 +317,25 @@ retrato y tipo de skill (`thanos7::Active 1`), así que sobreviven a las sincron
 **Marcadores sin resolver**: algunas descripciones de la fuente traen plantillas como
 `$HEROSUBTYPE1` o `$TIME` sin reemplazar. Cuando hay un campo real detrás (`duration`, `tick`) la
 app lo usa. La facción, el tipo, la raza o la habilidad (`$HEROSUBTYPE1`, `$HEROCLASS1`: 249
-efectos) no vienen en ningún campo, y `scripts/marcadores.py` los completa en el build:
+efectos) no vienen en ningún campo de la skill, y `scripts/marcadores.py` los completa en el
+build, en este orden (Ezequiel, 3 de octubre de 2026):
 1. **A mano**, en `scripts/contenido/marcadores.csv`: el id del efecto y el valor, como lo muestra
    la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como lo nombra el
-   juego. Gana sobre la wiki. Un valor que no corresponde al efecto (una raza donde el texto
+   juego. Gana sobre las otras dos. Un valor que no corresponde al efecto (una raza donde el texto
    dice «faction») corta el build con los valores posibles.
-2. **De la wiki**: la misma skill (la pasiva de uniforme, en el «Bonus» de ese uniforme) con el
-   mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill tiene varios
-   efectos así, la wiki tiene que nombrar la misma cantidad de valores; si no, no se usa.
+2. **De Leads & Supports**: en los slots de la misma skill (liderazgo, pasiva, pasiva de Tier-2 o
+   de uniforme), el daño básico infligido a un grupo o recibido de él («Basic Damage Dealt to
+   Villains»), en el mismo sentido y con el mismo porcentaje. Gana sobre la wiki.
+3. **De la wiki**: la misma skill (la pasiva de uniforme, en el «Bonus» de ese uniforme) con el
+   mismo porcentaje, en el mismo sentido (daño infligido o recibido).
 
-En la ficha, el valor completado va subrayado y el tooltip dice de dónde salió; lo que no se
-completó sigue «sin especificar», con la explicación. Hoy: 78 de la wiki y 171 pendientes. La
-tabla trae una fila vacía por cada pendiente (personaje, skill y texto) y `docs/AUDITORIA.md`
-los lista en su sección 8; `python3 scripts/marcadores.py` agrega a la tabla los que falten.
+Si la skill tiene varios efectos así (el mismo daño contra héroes y contra villanos), la fuente
+tiene que nombrar la misma cantidad de valores distintos, que se asignan en orden; si no, esa
+fuente no los resuelve. En la ficha, el valor completado va subrayado y el tooltip dice de dónde
+salió; lo que no se completó sigue «sin especificar», con la explicación. Cuántos salen de cada
+fuente, cuáles quedan pendientes y en qué no coinciden las fuentes lo dice la sección 8 de
+`docs/AUDITORIA.md` en cada build; `python3 scripts/marcadores.py` agrega a la tabla una fila
+vacía por cada pendiente que falte.
 
 ### Formato en data.js
 Los ~41.000 efectos usan solo 299 descripciones distintas. Cada efecto guarda el índice de su
