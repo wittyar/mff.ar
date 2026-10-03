@@ -32,27 +32,35 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
 
 ## Estado (3 de octubre de 2026)
 
-- Publicadas: la 1.0.14, la 1.0.15 y la 1.0.16 (datos de formato 5). La 1.0.13 no se publicó; las
-  notas de la 1.0.14 anuncian su Glosario.
-- Entregada sin publicar: la 1.0.17 (los marcadores también se completan con Leads & Supports;
-  datos de formato 6). El data.js de main sigue en formato 5 hasta que corra el workflow
-  «Actualizar datos MFF», que ya arma con la regla nueva y con los liderazgos completados por
-  Leader Skill idéntica. El orden es este:
-  1. Push.
-  2. Workflow a mano.
-  3. Confirmar el commit «Datos actualizados» con `datos.json` en formato 6.
-  4. Etiqueta `v1.0.17` sobre ese commit, así el instalador lleva datos de formato 6. Si la
-     etiqueta sale antes que los datos, el parche deja a la app esperando la próxima publicación.
-  `MFF.bat` comparte la carpeta de datos con la app instalada: abrir la del repo con datos de
-  formato 6 deja a la 1.0.16 instalada en la pantalla de datos. Primero se actualiza la instalada.
+- Publicadas: de la 1.0.14 a la 1.0.17. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian
+  su Glosario.
+- La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app
+  actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03». En la
+  sección 8 de AUDITORIA.md, los marcadores quedaron así: 3 a mano, 131 de Leads & Supports, 38 de
+  la wiki y 77 sin resolver.
+- Entregada sin publicar: la 1.0.18. Trae casillas por cobertura en las combinaciones, los C.T.P.
+  de la guía de armado en cada tarjeta, y el «Por qué» y el detalle de PvP y PvE rehechos para que
+  se lean (suma de lo que le llega, desglose por origen con link a cada habilidad). Los datos no
+  cambian (formato 6): el push y la etiqueta pueden ir juntos.
 
 ## Pendiente
 
-- Doctor Voodoo — Savage Avengers entra a la lista de PvP de Adam Warlock por el Ignore Dodge +30%
-  a todos los aliados de su Tier-2 (así lo publican la API de skills y Leads & Supports). Ezequiel
-  dice que no les da nada a los demás: falta mirarlo en el juego y, si thanosvibs está mal, cargar
-  una corrección a mano. Las «permutaciones» de los mismos integrantes que vio en su lista no
-  aparecen en las listas de combinaciones; falta ver dónde estaban.
+- Propuesta, sin decidir: que publicar.yml no publique una versión si el `datos.json` de main no es
+  del formato de `version.json`. Evita lo que pasó con la 1.0.17.
+- Las «permutaciones» de los mismos integrantes que Ezequiel vio en la lista de Adam Warlock no
+  aparecen en las listas de combinaciones; si vuelven, falta una captura.
+- Equipos (1.0.18):
+  - En PvP y PvE, el «X para él» usa el líder de la sinergia y la tarjeta, el del contexto. En Adam
+    Warlock + Wasp + Doctor Voodoo, la tarjeta dice Wasp y la sinergia usa a Doctor Voodoo.
+  - Las casillas siguen marcadas al cambiar de orden, de uniforme o de personaje, como «Sin».
+    Falta decidir.
+  - Alliance Battle muestra los C.T.P. de PvE, pero la leyenda de la guía dice «ABX: Rage». Falta
+    decidir. Los equipos recomendados de Alliance Battle y los descartados no muestran C.T.P.
+  - El link de un soporte busca la skill por el nombre que le da Leads & Supports. La «Pasiva 4★
+    (secundaria)» de Jeff es su Activa 5, y en Polaris — Uncanny X-Men el nombre de la Tier-2 está
+    mal, así que el link cae en la Activa 1.
+  - La coma decimal y el «−» están solo en el bloque nuevo. Los bonos y la ficha siguen con «+5.2%»
+    y «-40%».
 - Marcadores:
   - El mismo par de valores en otro orden cuenta como diferencia entre fuentes. En Abomination
     base, Fists of the World Ravager, Leads & Supports dice Villains y después Heroes, y la wiki
