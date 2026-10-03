@@ -3059,19 +3059,22 @@ function coberturaHtml (cob) {
     return `<span class="tag cob ${estado}" ${cs.some(c => !cob[c]) ? `title="${h(t('cb_art'))}"` : ''}>${estado === 'no' ? '✗' : '✓'} ${h(nombre)}</span>`;
   }).join('')}</div>`;
 }
-/** De dónde salen los puntos de contexto de un trío: los anti-mermas (en PvP), el liderazgo del
- *  líder, los DPS con su fila, los soportes y bonos de equipo, y los strikers. */
+/** De dónde salen los puntos de contexto de un trío, un renglón por parte del puntaje con sus viñetas:
+ *  los anti-mermas (en PvP), el liderazgo del líder (cada efecto y a quiénes les llega), los DPS con su
+ *  fila, los soportes y bonos de equipo, y los strikers. Con los nombres cortos (el completo, en el
+ *  title) y «a todos» si algo les llega a los tres. */
 function detalleContexto (e, vs, ctx) {
-  const lineas = [], quienes = (ms) => ms.map(m => m.name).join(', ');
+  const nombre = nombreEn(vs), quien = (x) => nombreHtml(x, nombre), a = (ms) => aQuienesHtml(ms, vs, nombre);
+  const partes = [];      // [rótulo (HTML), puntos o null, [viñetas (HTML)]]
   if (ctx === 'pvp') {
     const fuentes = new Map();
-    vs.forEach((m, j) => {
-      const de = vs.find((a, k) => e.sl[k].antiSop.some(x => aplicaA(x, m)));
-      const txt = de ? t('cx_de_sop').replace('{x}', de.name) : t('cx_de_lid').replace('{x}', e.lider.name);
-      if (!fuentes.has(txt)) fuentes.set(txt, []);
-      fuentes.get(txt).push(m);
+    vs.forEach(m => {
+      const de = vs.find((x, k) => e.sl[k].antiSop.some(y => aplicaA(y, m)));
+      const k = (de ? 'cx_de_sop|' : 'cx_de_lid|') + (de || e.lider).key;
+      if (!fuentes.has(k)) fuentes.set(k, { de: de || e.lider, clave: de ? 'cx_de_sop' : 'cx_de_lid', ms: [] });
+      fuentes.get(k).ms.push(m);
     });
-    lineas.push([t('cx_anti'), null, [...fuentes].map(([f, ms]) => `${f} → ${quienes(ms)}`).join(' · ')]);
+    partes.push([h(t('cx_anti')), null, [...fuentes.values()].map(f => `${h(t(f.clave)).replace('{x}', () => quien(f.de))} → ${a(f.ms)}`)]);
   }
   // Por stat que vale y activación: sus líneas (un liderazgo puede traer varias del mismo stat) y a
   // quiénes llega. Las de un liderazgo condicional cuentan la mitad, y solo para quien no recibe el
@@ -3088,24 +3091,24 @@ function detalleContexto (e, vs, ctx) {
   const liderazgo = [...grupos.values()].map(g => {
     const ms = vs.filter(m => g.ms.has(m) && !(g.ac && lleno.has(g.s + '|' + m.key)));
     const cond = g.ac ? ` (${t('cx_lider_mitad').replace('{c}', minuscula(trTxt(g.ac)))})` : '';
-    return ms.length ? `${g.txt.join(' / ')}${cond} → ${quienes(ms)}` : null;
+    return ms.length ? `${h(g.txt.join(' / ') + cond)} → ${a(ms)}` : null;
   }).filter(Boolean);
-  lineas.push([t('cx_lider').replace('{x}', e.lider.name), e.partes.lider, liderazgo.join(' · ') || t('cx_lider_nada')]);
+  partes.push([h(t('cx_lider')).replace('{x}', () => quien(e.lider)), e.partes.lider, liderazgo.length ? liderazgo : [h(t('cx_lider_nada'))]]);
   const dps = vs.map((m, j) => ({ m, r: e.roles[j] })).filter(x => x.r.dps).map(({ m, r }) =>
-    `${m.name} (${r.filas.filter(([l, fid]) => ROLES_LISTAS[ctx][l.id][fid][0] === 'dps')
-      .map(([l, fid]) => `${listName(l)}: ${rowsOf(l).find(x => x.id === fid).label}`).join(', ')})`);
-  lineas.push([t('cx_dps'), e.partes.dps, dps.join(' · ')]);
-  if (e.partes.sinergia) lineas.push([t('cx_sinergia'), e.partes.sinergia, '']);
+    `${quien(m)} (${h(r.filas.filter(([l, fid]) => ROLES_LISTAS[ctx][l.id][fid][0] === 'dps')
+      .map(([l, fid]) => `${listName(l)}: ${rowsOf(l).find(x => x.id === fid).label}`).join(', '))})`);
+  partes.push([h(t('cx_dps')), e.partes.dps, dps]);
+  if (e.partes.sinergia) partes.push([h(t('cx_sinergia')), e.partes.sinergia, []]);
   if (e.partes.striker) {
     const pares = [];
-    for (const a of vs) for (const [x, p, cuando] of STRIKERS[a.cid] || []) {
-      const b = vs.find(y => y !== a && y.cid === x);
-      if (b) pares.push(`${t('cx_striker_de').replace('{b}', b.name).replace('{a}', a.name)} (${t('sk_' + cuando).replace('{p}', p)})`);
+    for (const x of vs) for (const [c, p, cuando] of STRIKERS[x.cid] || []) {
+      const b = vs.find(y => y !== x && y.cid === c);
+      if (b) pares.push(`${h(t('cx_striker_de')).replace('{b}', () => quien(b)).replace('{a}', () => quien(x))} (${h(t('sk_' + cuando).replace('{p}', p))})`);
     }
-    lineas.push([t('cx_strikers'), e.partes.striker, pares.join(' · ')]);
+    partes.push([h(t('cx_strikers')), e.partes.striker, pares]);
   }
-  return `<ul class="cxpts">${lineas.map(([k, pts, txt]) =>
-    `<li><b>${h(k)}${pts != null ? ` +${pts}` : ''}</b>${txt ? ': ' + h(txt) : ''}</li>`).join('')}</ul>`;
+  return `<ul class="cxpts">${partes.map(([k, pts, vi]) => `<li><b>${k}${pts != null ? ` +${pts}` : ''}</b>${
+    vi.length ? `<ul>${vi.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`).join('')}</ul>`;
 }
 function opcionHtml (val, txt, sel) { return `<option value="${h(val)}" ${val === sel ? 'selected' : ''}>${h(txt)}</option>`; }
 function nombresListas (ids) { return ids.map(id => listName(listById(id))).join(' + '); }
