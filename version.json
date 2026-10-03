@@ -1,6 +1,6 @@
 {
- "version": "1.0.16",
+ "version": "1.0.17",
  "formato_datos": 6,
  "python": "3.14.7",
- "notas": "Equipos por contexto: cada trío tiene un solo líder, el mismo en la lista de cualquiera de los tres; a igual puntaje, lo decide la tier list. Un liderazgo que se activa con una condición, como al recibir un debuff, cuenta la mitad, y la tarjeta lo dice: con Silver Surfer — Void Knight, Knull — Ancient History y Gorr — The God Butcher, ahora lidera Gorr."
+ "notas": "Fichas: los efectos que thanosvibs publica sin decir a qué facción o tipo se refieren ahora también se completan con Leads & Supports, y la ficha dice de dónde salió cada valor: por ejemplo, la pasiva del uniforme Asgard's Assassin de Angela da más daño contra Supervillanos. Knull — Ancient History y otros cuatro uniformes tienen el liderazgo de su base. La app baja los datos nuevos (formato 6) al actualizarse."
 }
