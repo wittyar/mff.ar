@@ -1,6 +1,6 @@
 {
- "version": "1.0.17",
+ "version": "1.0.18",
  "formato_datos": 6,
  "python": "3.14.7",
- "notas": "Fichas: los efectos que thanosvibs publica sin decir a qué facción o tipo se refieren ahora también se completan con Leads & Supports, y la ficha dice de dónde salió cada valor: por ejemplo, la pasiva del uniforme Asgard's Assassin de Angela da más daño contra Supervillanos. Knull — Ancient History y otros cuatro uniformes tienen el liderazgo de su base. La app baja los datos nuevos (formato 6) al actualizarse."
+ "notas": "Equipos: casillas para filtrar las combinaciones por lo que recibe el personaje (ataque, ignorar evasión, todas las defensas, vida y quita todos los debuffs), y los C.T.P. de la guía de armado de cada integrante según el modo. El «Por qué» se lee de otra forma: arriba, la suma de lo que le llega; al desplegar, de dónde sale cada cosa, con el link a la habilidad. El detalle de PvP y PvE va en renglones."
 }
