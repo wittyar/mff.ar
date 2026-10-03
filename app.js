@@ -591,6 +591,9 @@ const T = {
   eq_excluir:        { es:'Sin',                 en:'Without' },
   eq_excluir_ph:     { es:'excluir a…',          en:'exclude…' },
   eq_incluir:        { es:'Volver a incluirlo',  en:'Include it again' },
+  eq_cob:            { es:'Solo si recibe:',     en:'Only if it gets:' },
+  eq_cob_title:      { es:'Solo las combinaciones cuya tarjeta muestra ✓ en todo lo marcado (también con *: si el compañero lleva su artefacto). Cada pareja de compañeros va con su mejor combinación de uniformes que lo cumple.',
+                       en:'Only the combinations whose card shows ✓ in everything checked (also with *: if the teammate has its artifact). Each pair of teammates comes with its best uniform combination that meets it.' },
   eq_count:          { es:'{n} combinaciones',   en:'{n} combinations' },
   eq_count_1:        { es:'1 combinación',       en:'1 combination' },
   eq_none_q:         { es:'Ninguna combinación con estos filtros.', en:'No combination with these filters.' },
@@ -1207,6 +1210,7 @@ let ui = {
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
+  eqCobertura: [],                   // grupos de COBERTURA marcados: solo los tríos en que los recibe
   eqVerDescartados: false,           // la lista muestra solo los descartados, para restaurarlos
   volverY: null                      // posición a la que se vuelve con «Atrás» (ver HISTORIAL)
 };
@@ -1439,16 +1443,20 @@ function indiceDe (v, F, para, restr) {
 /** Lo que recibe el foco en el equipo: los soportes de los otros integrantes y el liderazgo
  *  del líder elegido (también si el líder es él: el liderazgo es para todo el equipo); lo
  *  que le llega y le sirve, por categoría. { categoría: true, o false si solo llega con un
- *  artefacto }. */
+ *  artefacto }. Es la suma de lo que le da cada integrante (aporte). */
 function cobertura (foco, vs, lider) {
   const out = {};
-  for (const a of vs) {
-    const s = SOPORTES[a.p]; if (!s) continue;
-    for (const [k] of TIPOS_SOPORTE) {
-      const x = s[k];
-      if (!x || !(LIDERAZGOS.includes(k) ? a === lider : a !== foco) || !aplicaA(x, foco)) continue;
-      for (const c of categoriasDe(x, foco)) out[c] = out[c] || k !== 'artifact';
-    }
+  for (const a of vs) for (const [c, sinArtefacto] of Object.entries(aporte(foco, a, a === lider))) out[c] = out[c] || sinArtefacto;
+  return out;
+}
+/** Lo que le da al foco un integrante del equipo: sus soportes (los del foco son para los demás)
+ *  y, si es el líder, su liderazgo; como cobertura(). */
+function aporte (foco, a, esLider) {
+  const out = {}, s = SOPORTES[a.p];
+  if (s) for (const [k] of TIPOS_SOPORTE) {
+    const x = s[k];
+    if (!x || !(LIDERAZGOS.includes(k) ? esLider : a !== foco) || !aplicaA(x, foco)) continue;
+    for (const c of categoriasDe(x, foco)) out[c] = out[c] || k !== 'artifact';
   }
   return out;
 }
@@ -2649,9 +2657,11 @@ function consultaCon (v) {
   // En los contextos PvP y PvE, un DPS de ese contexto entra aunque no tenga vínculo con él.
   const dps = pool.map(x => rolEn(x, 'pvp').dps > 0 || rolEn(x, 'pve').dps > 0);
   const max = pool.length * (pool.length - 1) / 2;
-  // F: qué compañeros tienen vínculo con él (1, el primero; 2, el segundo). P: los puntos para él,
-  // solo con los dos vinculados (el orden «puntos para él» y las tier lists solo usan esas filas).
-  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), F = new Uint8Array(max);
+  // F: qué compañeros tienen vínculo con él (1, el primero; 2, el segundo). P: los puntos para él y
+  // L: el líder de la sinergia, el de la tarjeta (0 él, 1 o 2 el compañero, 3 ninguno; lo usa el
+  // filtro de cobertura), solo con los dos vinculados (el orden «puntos para él» y las tier lists
+  // solo usan esas filas).
+  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), F = new Uint8Array(max), L = new Uint8Array(max);
   // Un solo arreglo de equipo y unas solas opciones para los cientos de miles de llamadas
   // (synergy no se los guarda: lo que devuelve se usa acá mismo y se descarta).
   const vs = [v, null, null], op = { soloPuntaje: true, foco: v };
@@ -2662,18 +2672,19 @@ function consultaCon (v) {
     for (let j = i + 1; j < pool.length; j++) {
       if ((!puede[j] && !dps[j]) || pool[i].cid === pool[j].cid) continue;
       vs[2] = pool[j];
-      let f = 0, pts = 0;
+      let f = 0, pts = 0, li = 3;
       if (puede[i] || puede[j]) {
         const sc = synergy(vs, op);
         if (puede[i] && vinculo(v, pool[i], sc.aplicados)) f |= 1;
         if (puede[j] && vinculo(v, pool[j], sc.aplicados)) f |= 2;
         pts = sc.score;
+        if (sc.lider) li = vs.indexOf(sc.lider);
       }
       if (f !== 3 && !((f & 1 || dps[i]) && (f & 2 || dps[j]))) continue;
-      A[n] = i; B[n] = j; P[n] = pts; F[n] = f; n++;
+      A[n] = i; B[n] = j; P[n] = pts; F[n] = f; L[n] = li; n++;
     }
   }
-  CONSULTA = { clave: v.key, cid: v.cid, v, pool, A, B, P, F, n, vista: null };
+  CONSULTA = { clave: v.key, cid: v.cid, v, pool, A, B, P, F, L, n, vista: null };
   return CONSULTA;
 }
 /** Contexto del orden elegido: 'pvp', 'pve' o null (puntos para él, o una tier list). */
@@ -2689,19 +2700,24 @@ function listasOrden () {
 function puesto (l, key) { const i = indicesFila(l, key); return i.length ? i[0] : rowsOf(l).length; }
 function puestoTexto (l, key) { const i = indicesFila(l, key); return i.length ? rowsOf(l)[i[0]].label : '—'; }
 /** Filas de la consulta en el orden elegido y con los filtros, una por trío de personajes: la
- *  primera en ese orden (el mejor uniforme de cada uno para ese orden). Con tier lists, gana
- *  el trío mejor ubicado (suma de puestos); a igual puesto, más puntos para él; después, el
- *  mejor ubicado en tu lista de referencia. Los tríos descartados no van (o van solos, si se
- *  piden): { filas, ocultos }. */
+ *  primera en ese orden (el mejor uniforme de cada uno para ese orden) que pasa los filtros; con
+ *  casillas de cobertura, la primera con ✓ en todas. Con tier lists, gana el trío mejor ubicado
+ *  (suma de puestos); a igual puesto, más puntos para él; después, el mejor ubicado en tu lista
+ *  de referencia. Los tríos descartados no van (o van solos, si se piden): { filas, ocultos }. */
 function vistaConsulta (q) {
   // Descartes en los que está él: los otros dos personajes de cada uno.
   const descartes = new Set(U.descartados.filter(d => d.includes(q.cid)).map(d => d.filter(c => c !== q.cid).join('|')));
-  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon, ui.eqVerDescartados, [...descartes].join(',')].join('|');
+  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon, ui.eqCobertura.join(','), ui.eqVerDescartados,
+                 [...descartes].join(',')].join('|');
   if (q.vista && q.vista.clave === clave) return q.vista;
   const ls = listasOrden(), ctx = contextoOrden();
   const pos = q.pool.map(x => ls.reduce((suma, l) => suma + puesto(l, x.key), 0));
   const ref = q.pool.map(x => rankIndex(x.key));
   const dpsCtx = ctx ? q.pool.map(x => rolEn(x, ctx).dps > 0) : null;
+  // Con casillas de cobertura, el líder de cada fila, el de su tarjeta: en PvP y PvE, el del
+  // contexto (sale de enContexto, acá abajo); si no, el de la sinergia (consultaCon).
+  const cubre = ui.eqCobertura.length ? filtroCobertura(q, ui.eqCobertura) : null;
+  const lider = cubre && (ctx ? new Uint8Array(q.n) : q.L);
   // Orden por una sola clave numérica por fila: el orden nativo de un Float64Array es varias veces
   // más rápido que comparar de a pares. Cada parte entra en su lugar: si no entrara, el orden
   // saldría mal sin avisar. Sin contexto: puestos, puntos para él al revés, referencia y fila, solo
@@ -2721,6 +2737,7 @@ function vistaConsulta (q) {
       const e = enContexto(vs, ctx);
       if (!e) continue;
       pts = e.score;
+      if (lider) lider[i] = vs.indexOf(e.lider);
     }
     if (ps >= 4096 || pts < 0 || pts >= 128 || rf >= 2048) throw new Error('orden de combinaciones fuera de rango: ' + [ps, pts, rf]);
     claves[m++] = ctx ? (((127 - pts) * 4096 + ps) * 2048 + rf) * 1048576 + i
@@ -2734,7 +2751,8 @@ function vistaConsulta (q) {
     const a = q.pool[q.A[i]], b = q.pool[q.B[i]];
     if (fuera.has(a.cid) || fuera.has(b.cid) || (ui.eqCon && a.cid !== ui.eqCon && b.cid !== ui.eqCon)) continue;
     const pareja = a.cid < b.cid ? a.cid + '|' + b.cid : b.cid + '|' + a.cid;
-    if (vistos.has(pareja)) continue;
+    // Con casillas de cobertura, cada pareja va con su primera combinación de uniformes que las cumple.
+    if (vistos.has(pareja) || (cubre && !cubre(i, lider[i]))) continue;
     vistos.add(pareja);
     const descartado = descartes.has(pareja);
     if (descartado) ocultos++;
@@ -2757,12 +2775,30 @@ function estrella (keys) {
 // junta todas las categorías de ataque que le sirven).
 const COBERTURA = [{ k: 'ataque', cats: CATEGORIAS.filter(c => c.ataque).map(c => c.k) },
   ...CATEGORIAS.filter(c => !c.ataque).map(c => ({ k: c.k, cats: [c.k] }))];
+/** Los grupos en que la tarjeta muestra ✓: le llega algo de sus categorías, también si solo con
+ *  un artefacto. En bits: el n, COBERTURA[n]. */
+function gruposCubiertos (cob) {
+  let bits = 0;
+  COBERTURA.forEach((g, n) => { if (g.cats.some(c => c in cob)) bits |= 1 << n; });
+  return bits;
+}
+/** Filtro de cobertura de vistaConsulta: (fila, líder) → ¿su tarjeta muestra ✓ en todos estos
+ *  grupos? Líder: 0 él, 1 o 2 el compañero A o B de la fila, 3 ninguno. Como la cobertura es la
+ *  suma de lo que le da cada integrante (aporte), se arma con lo de cada uno, calculado una vez
+ *  con su liderazgo y sin él. */
+function filtroCobertura (q, grupos) {
+  const quiere = COBERTURA.reduce((bits, g, n) => grupos.includes(g.k) ? bits | 1 << n : bits, 0);
+  const de = (a) => [gruposCubiertos(aporte(q.v, a, false)), gruposCubiertos(aporte(q.v, a, true))];
+  const foco = de(q.v), pool = q.pool.map(de);
+  return (i, li) => ((foco[li === 0 ? 1 : 0] | pool[q.A[i]][li === 1 ? 1 : 0] | pool[q.B[i]][li === 2 ? 1 : 0]) & quiere) === quiere;
+}
 function coberturaHtml (cob) {
   // ' *': solo le llega si el compañero lleva su artefacto.
   const nom = (c) => t('ct_' + c) + (c in cob && !cob[c] ? ' *' : '');
-  return `<div class="row cobertura">${COBERTURA.map(g => {
+  const cubiertos = gruposCubiertos(cob);
+  return `<div class="row cobertura">${COBERTURA.map((g, n) => {
     const cs = g.cats.filter(c => c in cob);
-    const estado = !cs.length ? 'no' : cs.some(c => cob[c]) ? 'si' : 'art';
+    const estado = !(cubiertos >> n & 1) ? 'no' : cs.some(c => cob[c]) ? 'si' : 'art';
     const nombre = g.k === 'ataque' ? t('cb_ataque') + (cs.length ? ': ' + cs.map(nom).join(', ') : '') : nom(g.k);
     return `<span class="tag cob ${estado}" ${cs.some(c => !cob[c]) ? `title="${h(t('cb_art'))}"` : ''}>${estado === 'no' ? '✗' : '✓'} ${h(nombre)}</span>`;
   }).join('')}</div>`;
@@ -2889,6 +2925,9 @@ function combinacionesHtml (v) {
       <label>${h(t('eq_excluir'))}
         <select data-a="eqExcluir">${opcionHtml('', t('eq_excluir_ph'), '')}${personajes.filter(c => !ui.eqExcluir.includes(c.id)).map(c => opcionHtml(c.id, c.name, '')).join('')}</select></label>
     </div>
+    <div class="row" style="gap:6px;margin-bottom:10px" title="${h(t('eq_cob_title'))}"><div class="muted">${h(t('eq_cob'))}</div>
+      ${COBERTURA.map(g => `<label class="chk"><input type="checkbox" data-a="eqCobertura" data-g="${g.k}"${ui.eqCobertura.includes(g.k) ? ' checked' : ''}>
+        ${h(g.k === 'ataque' ? t('cb_ataque') : t('ct_' + g.k))}</label>`).join('')}</div>
     ${ctx ? `<p class="muted cxnota">${h(t('cx_nota_' + ctx).replace('{l}', nombresListas(ctx === 'pvp' ? LISTAS_PVP : LISTAS_PVE)))}</p>` : ''}
     ${ui.eqExcluir.length ? `<div class="row" style="gap:6px;margin-bottom:10px">${ui.eqExcluir.map(cid =>
       `<button class="tag dim eqfuera" data-a="eqIncluir" data-cid="${h(cid)}" title="${h(t('eq_incluir'))}">${h(CHAR_BY_ID[cid].name)} ✕</button>`).join('')}</div>` : ''}
@@ -4523,6 +4562,8 @@ document.addEventListener('change', (e) => {
   if (a === 'eqOrden') { ui.eqOrden = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'eqExcluir') { if (el.value) ui.eqExcluir = ui.eqExcluir.concat(el.value); ui.eqPagina = 0; render(); return; }
+  if (a === 'eqCobertura') { ui.eqCobertura = COBERTURA.map(g => g.k).filter(k => k === d.g ? el.checked : ui.eqCobertura.includes(k));
+    ui.eqPagina = 0; render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
