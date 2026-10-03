@@ -30,18 +30,37 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
   qué rutas adaptar. `images/` y `work/` no están en el repo: las imágenes se bajan con
   `bajar_imagenes.py`, y sin `work/` no corren verif_guia_ficha, verif_marcadores ni verif_opciones.
 
-## Estado (2 de octubre de 2026)
+## Estado (3 de octubre de 2026)
 
-- Publicadas: la 1.0.14 y la 1.0.15 (datos de formato 5). La 1.0.13 no se publicó; las notas de la
-  1.0.14 anuncian su Glosario.
-- Entregada sin publicar: la 1.0.16 (en los órdenes PvP y PvE, un líder por trío, el mismo en las
-  listas de los tres, con el liderazgo condicional a la mitad). La primera etiqueta `v1.0.16` se
-  empujó sobre `a8fd93d`, con `version.json` todavía en 1.0.15, y no hay release: publicar.yml para
-  si la etiqueta no coincide con `version.json`. La etiqueta va sobre el commit de la versión.
-- Los liderazgos que el build completa por Leader Skill idéntica a la de la base llegan a los datos
-  con el próximo workflow «Actualizar datos MFF» (a mano o el lunes); el formato no cambia.
+- Publicadas: la 1.0.14, la 1.0.15 y la 1.0.16 (datos de formato 5). La 1.0.13 no se publicó; las
+  notas de la 1.0.14 anuncian su Glosario.
+- Entregada sin publicar: la 1.0.17 (los marcadores también se completan con Leads & Supports;
+  datos de formato 6). El data.js de main sigue en formato 5 hasta que corra el workflow
+  «Actualizar datos MFF», que ya arma con la regla nueva y con los liderazgos completados por
+  Leader Skill idéntica. El orden es este:
+  1. Push.
+  2. Workflow a mano.
+  3. Confirmar el commit «Datos actualizados» con `datos.json` en formato 6.
+  4. Etiqueta `v1.0.17` sobre ese commit, así el instalador lleva datos de formato 6. Si la
+     etiqueta sale antes que los datos, el parche deja a la app esperando la próxima publicación.
+  `MFF.bat` comparte la carpeta de datos con la app instalada: abrir la del repo con datos de
+  formato 6 deja a la 1.0.16 instalada en la pantalla de datos. Primero se actualiza la instalada.
 
 ## Pendiente
+
+- Doctor Voodoo — Savage Avengers entra a la lista de PvP de Adam Warlock por el Ignore Dodge +30%
+  a todos los aliados de su Tier-2 (así lo publican la API de skills y Leads & Supports). Ezequiel
+  dice que no les da nada a los demás: falta mirarlo en el juego y, si thanosvibs está mal, cargar
+  una corrección a mano. Las «permutaciones» de los mismos integrantes que vio en su lista no
+  aparecen en las listas de combinaciones; falta ver dónde estaban.
+- Marcadores:
+  - El mismo par de valores en otro orden cuenta como diferencia entre fuentes. En Abomination
+    base, Fists of the World Ravager, Leads & Supports dice Villains y después Heroes, y la wiki
+    al revés: queda listado y la ficha invierte las dos líneas.
+  - Falcon (Joaquin Torres): Leads & Supports pone su Tier-2 en `passive`, así que no se cruza.
+  - Las filas vacías de `marcadores.csv` que ahora resuelve Leads & Supports siguen en la tabla.
+  - Con el primer build, verif_marcadores (necesita `work/`) tiene que actualizar sus cuentas.
+  - Los avisos de `soportes()` salen dos veces en el log del build (fuentes.py y marcadores.py).
 
 - El caso Silver Surfer — Void Knight + Knull — Ancient History + Gorr: con las defensas de la
   1.0.15 y el condicional a la mitad empatan 6 a 6, y lidera Gorr por la tier list, no por peso (ver
