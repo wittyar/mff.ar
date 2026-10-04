@@ -105,13 +105,21 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 
 ### Dudas abiertas
 
-- **Habilidad de World Boss.** Cada variante tiene una, siempre una de sus habilidades. Falta saber
-  para qué se usa en el juego.
+- **Habilidad de World Boss.** Cada variante tiene una, siempre una de sus habilidades. Según
+  NamuWiki (4 de octubre de 2026), en World Boss se eligen, además del equipo de tres, cinco
+  strikers: cada uno le da al equipo el bono de su habilidad de World Boss (Liderazgo, 영웅심: +10%
+  de daño a los Supervillanos; Agente: ignora la evasión del objetivo con 20% de probabilidad;
+  Fuerza, 괴력: ataque físico +8%, entre otras) y todos aparecen a pegar con la skill cooperativa.
+  En Legend tienen que ser de Tier-2, 6★, maestría 6 y Nv. 60, y el que se usó en una victoria no
+  se repite ese día. Los de Liderazgo y Agente coinciden con thanosvibs; en Fuerza, NamuWiki pone
+  además a cinco que thanosvibs ubica en otra (hallazgo `world-boss-habilidad`). La app no usa
+  todavía la habilidad de World Boss.
 - **Villains en las etapas.** El juego llama «SUPER VILLAIN faction» al bando Supervillano (C.T.P.
   Insight; los artefactos de thanosvibs, igual) y Leads & Supports lo llama «Villains». La guía del
   juego dice que dentro de una etapa los Super Villains, que son jefes, y los Villains son facciones
-  distintas; la línea siguiente quedó cortada en la captura. Falta saber si un efecto contra el bando
-  Supervillano les pega a los Villains comunes de una etapa.
+  distintas; la línea siguiente quedó cortada en la captura. Los World Bosses cuentan como
+  Supervillanos (NamuWiki). Falta saber si un efecto contra el bando Supervillano les pega a los
+  Villains comunes de una etapa.
 - **Roles.** Salían de juntar las skills de todos los uniformes del personaje. Se rehicieron en la
   etapa 2, por variante.
 
@@ -211,9 +219,9 @@ El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ez
   «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. **Type Amplification** es 속성
   증폭, amplificación de elemento: el reforjado de Judgement que en inglés se llama así es un problema
   de traducción (el hallazgo de los C.T.P., en `docs/AUDITORIA.md`).
-- **Penetration** es 간파, «ver a través»: no es la Perforación. Es el efecto del reforjado de
-  Regeneration que corta el ataque del rival con una rotura de guardia, como dice la guía de
-  thanosvibs.
+- **Penetration** es 간파, «ver a través»: no es la Perforación. Corta el ataque del rival con una
+  rotura de guardia, como dice la guía de thanosvibs. Lo dan Regeneration y Transcendence
+  reforjados; Transcendence trae además Beatdown.
 
 Confirma lo que el catálogo ya decía del encanto (frena también los ataques que se activan solos),
 la elasticidad (la saca el sangrado; la cancelación y la incapacitación, no), la fractura y lo que
@@ -221,23 +229,57 @@ no se le aplica a quien quita todos los debuffs (la marca, en cambio, sí). Y di
 que el catálogo todavía no tiene: el contraataque no se activa mientras el personaje es invencible,
 el muro (Wall) no se usa junto con la barrera ni se suma a la reducción de daño, Enraged (reforjado
 de Rage) ignora el tope de daño crítico y Vitality (reforjado de Refinement) da inmunidad a la
-rotura y a la superrotura de guardia, y vida por segundo.
+rotura y a la superrotura de guardia, y vida por segundo. Las capturas en inglés de Enraged,
+Vitality y Wall llegaron el 4 de octubre y dicen lo mismo.
+
+NamuWiki (4 de octubre de 2026) agrega nombres que el glosario no tiene: Liderazgo es 영웅심
+(«heroísmo»), el instinto es 천성 («naturaleza») y Destrucción y Crueldad son 파멸 («ruina») y 냉혹
+(«despiadado»); Justicia (정의) y Orden (질서) son literales. La comunidad coreana llama 상태이상 면역
+(«inmunidad a estados alterados») a «quitar todos los debuffs» con duración, y 추가 피해량 al daño
+fijo extra («Additional # Damage»).
 
 Los 44 términos, con estas diferencias y los efectos del catálogo que les corresponden, están en
 `scripts/contenido/glosario.json`, y la app los muestra en la solapa **Glosario**.
 
+### Lo que aclaró NamuWiki
+
+Páginas generales de NamuWiki en coreano (World Boss, Legend, héroes, Timeline, Giant Boss Raid),
+leídas el 4 de octubre de 2026; las fichas de personaje no se pudieron leer.
+
+- **Quitar todos los debuffs con duración.** En los liderazgos y soportes, «Removes all Debuffs»
+  dura un tiempo desde que el personaje recibe un debuff (casi siempre 12 s), y mientras dura
+  protege: NamuWiki dice que el liderazgo de Malekith le da a todo el equipo 20 s de inmunidad a los
+  estados alterados, y la guía de thanosvibs llama «Debuff Immunity» a la Tier-2 de Wasp (20 s).
+  Para los de 12 s es lo probable. No es lo mismo que la inmunidad: según el glosario del juego, la
+  detención del tiempo, el encanto, la seducción, el control mental y el pánico alcanzan a los
+  inmunes, pero no a quien tiene un efecto que quita todos los debuffs.
+- **El «buffer» de Timeline.** Un equipo de Timeline suele llevar un líder con anti-mermas, un DPS
+  y un tercero con aumentos o bajas de daño entre facciones, como Colossus. Es un dato para la
+  decisión abierta de cómo cuenta en PvP el daño contra una facción. Molecule Man, que ignora esos
+  aumentos y bajas, lo neutralizaría (probable).
+- **World Boss Legend.** Los jefes ignoran incluso los controles que ignoran la inmunidad
+  («Paralysis (Ignores immunity)», «Web (ignores immunity)»); el daño perforante adicional de las
+  cartas sí les entra.
+
 ### Dudas abiertas del catálogo
 
 - **«Bonus Damage».** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y
-  «Additional Damage» al daño fijo extra; no dice si «Bonus Damage» es ese daño fijo.
+  «Additional Damage» al daño fijo extra, el único que sube con el nivel de la skill (NamuWiki dice
+  lo mismo del 추가 피해량); no dice si «Bonus Damage» es ese daño fijo. En inglés, «Bonus damage»
+  nombra también el daño continuo de la maldición y de la pérdida. Falta el texto en coreano de la
+  pasiva de Tier-2.
 - **«Adaptation».** «Inmune al mayor daño recibido»: no está claro si es el golpe más fuerte o el
-  tipo de daño que más recibe.
+  tipo de daño que más recibe. Ninguna fuente que se pudo leer lo dice.
 - **Códigos sin nombre.** En «Natural Enemy», 401 es Mockery y 108 Shock (ids de la API); 407 y 577
   no son el id de ninguna habilidad de las skills (Leads & Supports nombra 407 «Debuff Removal
-  (Instinct)»). La app todavía muestra los números: podría mostrar el nombre de los que tienen id.
+  (Instinct)»). 407 es probablemente el efecto de cinco artefactos (Aero, Punisher, Scarlet Spider,
+  Domino y Yelena Belova: ignorar los debuffs según el instinto); 577 sigue sin fuente. La app
+  todavía muestra los números: podría mostrar el nombre de los que tienen id.
 - **Efectos para todo el equipo que se repiten.** Los C.T.P. Insight y Liberation dicen en el juego
   que su efecto para todo el equipo no se aplica dos veces si lo llevan dos. Falta saber si pasa lo
-  mismo con los soportes de los personajes; la sinergia hoy cuenta cada uno por quien lo da.
+  mismo con los soportes de los personajes; la sinergia hoy cuenta cada uno por quien lo da. Una
+  respuesta de GameFAQs de 2016 dice que dos bonos de equipo iguales se acumulan: habla de bonos,
+  no de soportes, y es vieja (conjetura).
 
 ## Etapa 2: lo que hace cada variante con sus skills
 
@@ -298,7 +340,10 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
   clase hace 60% más de daño normal a la clase a la que le gana y recibe 45% menos de ella (Thanos,
   Adam Warlock y un Velocidad, uno de cada clase). Universal solo sube el daño, igual contra las
   otras tres: 17,5% en el nivel 5 (Gorr), sin reducción del daño recibido. El juego muestra además
-  un valor entre paréntesis (+30%, +15%, +12,5%) que esa pantalla no explica.
+  un valor entre paréntesis (+30%, +15%, +12,5%) que esa pantalla no explica. Según NamuWiki, la
+  ventaja base es 30% más de daño y 30% menos de daño recibido, y la de Universal, 5% más de daño
+  contra las otras tres: 60 = 30 + 30, 45 = 30 + 15 y 17,5 = 5 + 12,5, así que el paréntesis es lo
+  que suma la mejora sobre la base (probable). En PvE casi no pesa, según la misma página.
 - **Strikers.** Solo personajes de 6★ o más; el buff del striker rinde más cuanto más alto es su
   tier, y el striker suma un bonus de instinto (Destrucción +Nv. 2 en el ejemplo).
 - **Pasivas de equipo.** El panel del equipo lista las pasivas que les llegan a todos aunque su
@@ -313,8 +358,9 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
   y vida +3,12%). El panel del equipo los suma con el liderazgo. La wiki publica los de personajes
   en la página de cada integrante (265 de 290 páginas, unos 1.680 bonos de dos y de tres),
   redondeados a un decimal. Le faltan los de los personajes más nuevos (Galactus, Annihilus,
-  Kahhori, entre otros) y los de estrellas. namu.wiki tiene solo seis de ejemplo. Ver *Bonos de
-  equipo* más abajo.
+  Kahhori, entre otros) y los de estrellas. namu.wiki tiene solo seis de ejemplo. Las capturas del
+  2 de octubre muestran 20 bonos con dos decimales, 13 de ellos de Galactus, pero sus integrantes se
+  ven solo por retrato. Ver *Bonos de equipo* más abajo.
 - **Lo que suma la cuenta.** El nivel de agente, las cartas de cómic (5, en dos mazos que se asignan
   por contenido), las espadas (X of Swords) y el S.H.I.E.L.D. Archive (stats de instinto) valen
   para todos los personajes; los emblemas, solo en ciertos contenidos; las colecciones de equipo
@@ -355,15 +401,20 @@ Dudas:
 `scripts/strikers.py` lee la pestaña Striker de la página de cada personaje en la wiki: quién puede
 aparecer a pegar junto a él y con qué probabilidad, cuando él ataca o cuando lo atacan («12% chance
 to appear when attacking»). Según Ezequiel, el striker tiene que estar en el mismo equipo. La tienen
-171 de 290 páginas (unas 7.000 filas), y la de Kingpin coincide con la del juego (capturas de
-Ezequiel, octubre de 2026). Les falta a 119 personajes, casi todos recientes (Galactus, Annihilus,
-Apocalypse, entre otros): en la app no tienen strikers propios, aunque pueden ser strikers de otros.
+171 de 290 páginas (unas 7.000 filas). En el juego (capturas de Ezequiel, 2 de octubre de 2026),
+los 37 strikers de Kingpin que se ven coinciden con la wiki en nombre, probabilidad, condición y
+orden, con un uniforme que no es el base: que la lista no dependa del uniforme es probable. Les
+falta a 119 personajes, casi todos recientes (Galactus, Annihilus, Apocalypse, entre otros): en la
+app no tienen strikers propios, aunque pueden ser strikers de otros. Galactus tiene 16 en el juego.
 Lo que no se pudo leer va a `docs/AUDITORIA.md` (sección 11).
 
 Dudas:
 - **Set Striker.** El juego tiene además un striker que se elige para cada personaje (solo de 6★ o
-  más), que aparece con su Striker Skill y cuyo efecto crece con el tier (captura de Galactus con
-  Silver Surfer). Es otro sistema: la app no lo tiene.
+  más), que aparece con su Striker Skill y cuyo efecto crece con el tier (captura de Gorr con Silver
+  Surfer (Shalla-Bal)). Es otro sistema: la app no lo tiene.
+- **Strikers vistos en el juego.** Cargarlos (Galactus, y confirmar los de Kingpin) pide un archivo
+  de contenido, una fuente y código nuevos, con el juego por encima de la wiki fila por fila, y
+  probablemente un formato de datos nuevo. Falta decidir.
 
 ## Equipos por contexto
 
@@ -493,5 +544,12 @@ Lo que todavía no está:
   [Combat](https://future-fight.fandom.com/wiki/Combat), [Blast](https://future-fight.fandom.com/wiki/Blast),
   [Speed](https://future-fight.fandom.com/wiki/Speed) y [Universal](https://future-fight.fandom.com/wiki/Universal).
 - El juego (capturas de Ezequiel, octubre de 2026): la guía (Type Affinity, Side, Instinct, los
-  glosarios de contenidos, de crecimiento y de skills), la ficha de cada C.T.P. y las pantallas de
-  personaje y de equipo.
+  glosarios de contenidos, de crecimiento, de ítems y de skills), la ficha de cada C.T.P. y las
+  pantallas de personaje y de equipo.
+- NamuWiki, en coreano: [World Boss](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4),
+  [sus strikers](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4/%EC%8A%A4%ED%8A%B8%EB%9D%BC%EC%9D%B4%EC%BB%A4),
+  [Legend](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4/%EB%A0%88%EC%A0%84%EB%93%9C),
+  [héroes](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%98%81%EC%9B%85)
+  y [Timeline](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80)
+  (4 de octubre de 2026). No se pudieron leer las fichas de personaje de NamuWiki, Reddit, DC
+  Inside ni el foro de Netmarble.

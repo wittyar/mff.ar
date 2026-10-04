@@ -16,9 +16,12 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   (planilla de Google) — la **guía de armado** por personaje (pestaña CHAMP BUILDING) y la
   leyenda de los emojis de su tier list (pestaña TIER LIST).
 - MARVEL Future Fight, el juego (capturas de Ezequiel, octubre de 2026) — su glosario de skills,
-  en inglés y en coreano (qué hace cada efecto, en el catálogo), su guía de contenidos y de crecimiento, la ficha de cada
+  en inglés y en coreano (qué hace cada efecto, en el catálogo), su guía de contenidos, de crecimiento y de ítems, la ficha de cada
   C.T.P. (contrastada con thanosvibs en `docs/AUDITORIA.md`) y los bonos de equipo de los personajes
   que la wiki todavía no tiene.
+- [NamuWiki](https://namu.wiki) (en coreano), páginas generales del juego — para qué sirve la
+  habilidad de World Boss, World Boss Legend, la ventaja de tipo, el instinto y lo que se lleva en
+  Timeline (ver `docs/MODELO.md`).
 
 ## Qué hay en la app
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
@@ -39,7 +42,14 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     consigue y la nota.
   - *Skills*: cargas de ult y striker, buffs clave, las **rotaciones** de thanosvibs con la
     leyenda de la notación, las de la guía de armado (de proc, con su mejor C.T.P. y la skill de
-    proc / frenesí, con su propia notación) y cada skill, con tabla de daño por etapa.
+    proc / frenesí, con su propia notación) y cada skill, con tabla de daño por etapa. Al tocar una
+    skill (la cabecera, con un «?», o uno de sus renglones) se abre **Cómo funciona**: cada efecto
+    con su grupo, el término del glosario del juego, a quién le llega y le sirve y cómo se lee en
+    PvE y en PvP; cuándo, cuánto y a quién (activación, recarga, carga y objetivo, y por etapa
+    cada efecto con sus números y su duración, más lo que dice Leads & Supports); el texto del
+    juego en inglés y en español; la certeza y las fuentes de cada parte; y lo que el inglés
+    traduce distinto del coreano. En el celular es una hoja inferior; se cierra con Esc o
+    tocando afuera.
   - *Análisis*: lo que hace con sus skills según el catálogo de efectos (ver *Modelo del juego*):
     un resumen (qué da para él, para el equipo y contra el rival, con qué pega y sus roles) y,
     por grupo de efecto, cada efecto con a quién le llega (él, el equipo y qué aliados, el rival
@@ -228,15 +238,15 @@ daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.
 ## Datos del juego (pipeline)
 El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
 Actions → Run workflow) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
-regenera `data.js`, `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y el import, y los
-commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja ese
+regenera `data.js`, `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md`, `docs/COMPLETITUD.md`
+y el import, y los commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja ese
 resultado.
 
 A mano (Linux o macOS; en Windows ver Limitaciones):
 ```
 python scripts/fetch_all.py        # datos, tier lists e imágenes (images/ no se versiona)
 python scripts/parse_instinto.py
-python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md, docs/CATALOGO.md
+python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md, docs/CATALOGO.md, docs/COMPLETITUD.md
 ```
 `datos.json` lleva el sha256 y el tamaño de cada archivo que baja la app y la lista de imágenes con
 su origen (`scripts/imagenes.py`). `.gitattributes` evita que git cambie los finales de línea de
@@ -423,6 +433,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `docs/MODELO.md` — el modelo del juego: características de cada variante, reglas y dudas.
 - `docs/CATALOGO.md` — el catálogo de efectos entero (se regenera en cada build desde
   `scripts/contenido/catalogo.json`).
+- `docs/COMPLETITUD.md` — qué le falta a cada variante y de dónde podría salir (se regenera en
+  cada build con `scripts/completitud.py`).
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
   `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
   verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
