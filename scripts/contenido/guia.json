@@ -313,7 +313,8 @@
      "es": "Tier-3: primero Tier-2 y gear +20 en las cuatro piezas; realizar el Potencial en World Boss y subirlo (cada nivel sube el nivel máximo de 62 a 70 y el gear de +21 a +25); con Nv. 70 y gear +25 se habilita el Tier-3.",
      "en": "Tier-3: first Tier-2 and 20/20/20/20 gear; realise Potential in World Boss and raise it (each level raises the max level from 62 to 70 and gear from +21 to +25); Lv.70 and +25 gear enable Tier-3.",
      "fuente": [
-      "wiki-t3"
+      "wiki-t3",
+      "juego-guia"
      ]
     },
     {
@@ -326,8 +327,8 @@
     },
     {
      "id": "t4",
-     "es": "Tier-4: personaje Tier-3 o con Potencial Trascendido, Nv. 80, gear +30 y todas las skills en Nv. 10. Desbloquea la Striker Skill. Los materiales salen de Giant Boss Raid: Dormammu y World Boss Legend.",
-     "en": "Tier-4: a Tier-3 or Potential Transcended character at Lv.80 with all gear at +30 and all skills at Lv.10. Unlocks the Striker Skill. Materials come from Giant Boss Raid: Dormammu and World Boss Legend.",
+     "es": "Tier-4: personaje Tier-3 o con Potencial Trascendido, Nv. 80, gear +30 y todas las skills en Nv. 10. Desbloquea la Striker Skill. Los materiales son Book of the Vishanti, Life Seed, Carbonadium y Soul of the Faltine: salen de Giant Boss Raid: Dormammu y World Boss Legend y, según el glosario de ítems del juego, Life Seed, Carbonadium y Soul of the Faltine también de Timeline Battle, Otherworld Battle, Zombie Survival y otros modos.",
+     "en": "Tier-4: a Tier-3 or Potential Transcended character at Lv.80 with all gear at +30 and all skills at Lv.10. Unlocks the Striker Skill. Materials are Book of the Vishanti, Life Seed, Carbonadium and Soul of the Faltine: they come from Giant Boss Raid: Dormammu and World Boss Legend and, per the in-game item glossary, Life Seed, Carbonadium and Soul of the Faltine also from Timeline Battle, Otherworld Battle, Zombie Survival and other modes.",
      "fuente": [
       "wiki-t4",
       "juego-guia"
@@ -486,7 +487,8 @@
  "urus": {
   "fuente": [
    "tv-guia-3",
-   "wiki-uru"
+   "wiki-uru",
+   "juego-guia"
   ],
   "reglas": [
    {
@@ -523,18 +525,19 @@
    "en": "Fill the other slots up to the caps in this order (HP only once everything before is capped)."
   },
   "odin": {
-   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). Solo uno del mismo tipo por pieza.",
-   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). Only one of the same type per gear."
+   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). La guía de thanosvibs dice que va uno solo del mismo tipo por pieza; la del juego, que se puede equipar uno solo, sin decir si por pieza o por personaje.",
+   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). The thanosvibs guide says only one of the same type per gear; the in-game guide, that only one can be equipped, without saying whether per gear or per character."
   },
   "corrobora": {
-   "es": "La wiki confirma las 5 ranuras por pieza en +20 y el límite de 2 del mismo stat por pieza (8 de 20).",
-   "en": "The wiki confirms 5 slots per gear at +20 and the limit of 2 of the same stat per gear (8 of 20)."
+   "es": "La wiki confirma las 5 ranuras por pieza en +20 y el límite de 2 del mismo stat por pieza (8 de 20); la guía del juego, las 5 ranuras y el límite de 2.",
+   "en": "The wiki confirms 5 slots per gear at +20 and the limit of 2 of the same stat per gear (8 of 20); the in-game guide, the 5 slots and the limit of 2."
   }
  },
  "iso": {
   "fuente": [
    "tv-guia-3",
-   "wiki-iso"
+   "wiki-iso",
+   "juego-guia"
   ],
   "piedras": {
    "blanca": {
@@ -783,8 +786,8 @@
     "en": "Enhance (+1 to +5) by sacrificing other stones."
    },
    {
-    "es": "Combinar dos piedras del mismo color y rango da una de un rango más; queda el stat de la primera.",
-    "en": "Combining two stones of the same colour and rank gives one of the next rank; the first stone's stat persists."
+    "es": "Combinar dos piedras del mismo color y rango, con la primera en +5, da una de un rango más (hasta 6★); queda el stat de la primera.",
+    "en": "Combining two stones of the same colour and rank, the first one at +5, gives one of the next rank (up to 6-Star); the first stone's stat persists."
    },
    {
     "es": "Despertar: con una de 6★ en +5 se suman estrellas rojas sacrificando piedras de 6★ o más (1 para la primera, 2 para la segunda...): 21 para despertarla del todo.",
