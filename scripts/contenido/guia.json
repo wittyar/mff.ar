@@ -141,6 +141,10 @@
   },
   "juego-bonos": {
    "nombre": "MARVEL Future Fight — Team Bonus (dentro del juego, octubre de 2026)"
+  },
+  "namu-timeline": {
+   "nombre": "NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)",
+   "url": "https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80"
   }
  },
  "stats": {
