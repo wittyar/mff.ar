@@ -524,11 +524,15 @@
     {
      "id": "regeneration",
      "reforjado": true
+    },
+    {
+     "id": "transcendence",
+     "reforjado": true
     }
    ],
    "nota": {
-    "es": "thanosvibs nombra también a Penetration en su texto sobre Transcendence reforjado, pero sus números de Transcendence reforjado son los de Beatdown.",
-    "en": "thanosvibs also names Penetration in its text about reforged Transcendence, but its reforged Transcendence numbers are Beatdown's."
+    "es": "Transcendence reforjado da Penetration y Beatdown juntos.",
+    "en": "Reforged Transcendence grants Penetration and Beatdown together."
    },
    "fuente": [
     "juego-glosario",
