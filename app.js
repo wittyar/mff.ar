@@ -402,6 +402,7 @@ const T = {
   cap_none:          { es:'Sin tope:',           en:'No cap:' },
   vf_title:          { es:'Verificación entre fuentes', en:'Cross-source check' },
   vf_tag:            { es:'{n} diferencias entre fuentes', en:'{n} source differences' },
+  vf_tag_1:          { es:'1 diferencia entre fuentes', en:'1 source difference' },
   vf_resumen:        { es:'Skills de este uniforme contra la wiki — coinciden: {ok} · difieren: {d} · no están en la wiki: {nd}.',
                        en:'Skills of this uniform against the wiki — match: {ok} · differ: {d} · not on the wiki: {nd}.' },
   vf_sin_dif:        { es:'Nada distinto entre lo que se pudo contrastar.', en:'Nothing differs in what could be checked.' },
@@ -2396,7 +2397,7 @@ function fichaCabecera (ch, v) {
 }
 /** Resumen: qué es (datos del uniforme puesto) y para qué se usa según las fuentes. */
 function fichaResumen (ch, v) {
-  const rank = rankLabel(v.key), nDif = verifDe(ch, v).dif.length;
+  const rank = rankLabel(v.key), vf = verifDe(ch, v);
   const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
   const box = (k, val) => `<div class="stat"><div class="k">${h(k)}</div><div class="v">${val}</div></div>`;
   return `<div class="fid">
@@ -2405,7 +2406,7 @@ function fichaResumen (ch, v) {
       ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join('')}
       ${rank ? `<span class="muted">${h(listName(listById(U.prefs.refList)))}:</span>
         <span class="tag solid" style="background:${rank.color}" title="${h(rank.todas.join(' · '))}">${h(rankTexto(rank))}</span>` : ''}
-      ${nDif ? `<a href="#verif" class="tag ghost" style="color:var(--gold)" data-a="irVerif" title="${h(t('vf_title'))}">⚠ ${h(t('vf_tag').replace('{n}', nDif))}</a>` : ''}
+      ${vf.dif.length ? `<a href="#verif" class="tag ghost" style="color:var(--gold)" data-a="irVerif" title="${h(t('vf_title'))}">⚠ ${h(verifCuenta(vf))}</a>` : ''}
     </div>
     <div class="statgrid">
       ${box(t('d_race'), icon(v.race) + h(dom(v.race) || '—'))}
@@ -4437,9 +4438,14 @@ function verifLinea (d) {
   if (CAMPO_VERIF[d.t]) return h(t(CAMPO_VERIF[d.t]).replace('{a}', n(d.api)).replace('{w}', n(d.wiki)));
   throw new Error('diferencia de verificación desconocida: ' + d.t);
 }
+/** Cuántas diferencias entre fuentes tiene: todas las de verifDe(), las mismas en el Resumen y en Más. */
+function verifCuenta (vf) { const n = vf.dif.length; return t(n === 1 ? 'vf_tag_1' : 'vf_tag').replace('{n}', n); }
+/** Más › Verificación: cuántas diferencias hay (verifCuenta, como el Resumen), cuántas skills se pudieron
+ *  contrastar con la wiki (las que difieren en daño o recarga, una vez cada una) y cada diferencia. */
 function usoVerificacion (ch, v) {
-  const vf = verifDe(ch, v);
-  return `<p class="muted">${h(t('vf_resumen').replace('{ok}', vf.ok).replace('{d}', vf.dif.filter(d => d.t === 'dano' || d.t === 'cd').length).replace('{nd}', vf.nd))}</p>
+  const vf = verifDe(ch, v), skills = new Set(vf.dif.filter(d => d.t === 'dano' || d.t === 'cd').map(d => d.sl)).size;
+  return `${vf.dif.length ? `<p class="vfcuenta"><b>⚠ ${h(verifCuenta(vf))}</b></p>` : ''}
+    <p class="muted">${h(t('vf_resumen').replace('{ok}', vf.ok).replace('{d}', skills).replace('{nd}', vf.nd))}</p>
     ${vf.dif.length ? `<ul class="sopfx verif">${vf.dif.map(d => `<li>${verifLinea(d)}</li>`).join('')}</ul>`
                     : `<p>${h(t('vf_sin_dif'))}</p>`}
     <p class="muted">${h(t('vf_nota'))} <a href="docs/AUDITORIA.md" target="_blank" rel="noopener">docs/AUDITORIA.md</a></p>`;
