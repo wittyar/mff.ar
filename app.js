@@ -551,6 +551,40 @@ const T = {
   cert_comprobado:   { es:'comprobado',          en:'verified' },
   cert_probable:     { es:'probable',            en:'likely' },
   cert_conjetura:    { es:'conjetura',           en:'conjecture' },
+  // «Cómo funciona» de una skill (se abre al tocarla en la pestaña Skills)
+  tt_abrir:          { es:'Cómo funciona esta skill', en:'How this skill works' },
+  tt_cerrar:         { es:'Cerrar (Esc)',        en:'Close (Esc)' },
+  tt_como:           { es:'Cómo funciona',       en:'How it works' },
+  tt_cuando:         { es:'Cuándo, cuánto, a quién', en:'When, how much, to whom' },
+  tt_texto:          { es:'Texto del juego',     en:'Game text' },
+  tt_certeza:        { es:'Certeza y fuentes',   en:'Certainty and sources' },
+  tt_coreano:        { es:'Diferencias con el coreano', en:'Differences with the Korean' },
+  tt_vacia:          { es:'La fuente no publica efectos para esta skill.', en:'The source publishes no effects for this skill.' },
+  tt_grupo:          { es:'Grupo',               en:'Group' },
+  tt_recarga:        { es:'Recarga',             en:'Cooldown' },
+  tt_sin_recarga:    { es:'no tiene (la fuente pone 0 s)', en:'none (the source says 0 s)' },
+  tt_sin_dato:       { es:'la fuente no la publica', en:'the source does not publish it' },
+  tt_carga:          { es:'Carga que da',        en:'Charge it gives' },
+  tt_al_usar:        { es:'al usarla',           en:'when used' },
+  tt_sin_cond:       { es:'sin condición: la fuente no publica una activación', en:'no condition: the source publishes no activation' },
+  tt_etapa_sin_ac:   { es:'la etapa no publica una propia', en:'the stage publishes none of its own' },
+  tt_etapa_vacia:    { es:'La fuente no publica efectos en esta etapa.', en:'The source publishes no effects in this stage.' },
+  tt_ls:             { es:'Según Leads & Supports', en:'According to Leads & Supports' },
+  tt_en:             { es:'En inglés, como lo publica thanosvibs', en:'In English, as thanosvibs publishes it' },
+  tt_es:             { es:'En español, con la traducción de la app', en:'In Spanish, with the app\'s translation' },
+  tt_ko_no:          { es:'En coreano: los datos no traen el texto de las skills en coreano.', en:'In Korean: the data has no Korean text for skills.' },
+  tt_ko_terminos:    { es:'Sus términos del glosario del juego, en coreano:', en:'Its game glossary terms, in Korean:' },
+  tt_ko_sin:         { es:'Tampoco tiene términos del glosario del juego.', en:'It has no game glossary terms either.' },
+  tt_f_texto:        { es:'Texto, números, activación y objetivo: los publica thanosvibs (API de skills).', en:'Text, numbers, activation and target: published by thanosvibs (skills API).' },
+  tt_f_trad:         { es:'La traducción al español es la de la app, por patrón.', en:'The Spanish translation is the app\'s own, by pattern.' },
+  tt_f_sintrad:      { es:'{n} sin traducir: va el inglés.', en:'{n} untranslated: shown in English.' },
+  tt_f_analisis:     { es:'Qué efecto es cada uno y a quién le llega: el catálogo y el análisis de la app (docs/MODELO.md, etapa 2). Los datos no traen una certeza para eso.',
+                       en:'Which effect each one is and whom it reaches: the app\'s catalog and analysis (docs/MODELO.md, stage 2). The data carries no certainty for that.' },
+  tt_f_lecturas:     { es:'Lecturas de PvE y PvP', en:'PvE and PvP readings' },
+  tt_del_grupo:      { es:'(la del grupo {x})',   en:'(the {x} group\'s)' },
+  tt_f_glosario:     { es:'Glosario del juego',   en:'Game glossary' },
+  tt_dif_nada:       { es:'Sus términos del glosario del juego dicen lo mismo en inglés y en coreano.', en:'Its game glossary terms say the same in English and in Korean.' },
+  tt_dif_sin:        { es:'No tiene términos del glosario del juego: no hay con qué comparar.', en:'It has no game glossary terms: there is nothing to compare.' },
   el_Physical:       { es:'físico',              en:'physical' },
   el_Energy:         { es:'de energía',          en:'energy' },
   el_Fire:           { es:'fuego',               en:'fire' },
@@ -1013,13 +1047,15 @@ function t (k) {
   if (!e) throw new Error('cadena sin definir en la tabla de idioma: ' + k);
   return e[LANG];
 }
-/** Valor del dominio (clase, rol, slot, etiqueta) en el idioma activo. */
-function dom (v) {
-  if (LANG === 'es' || v == null) return v;
+/** Valor del dominio (clase, rol, slot, etiqueta) en un idioma. */
+function domIdioma (v, lang) {
+  if (lang === 'es' || v == null) return v;
   const en = VOCAB_EN[v];
   if (en === undefined) { console.warn('valor de dominio sin inglés en MFF_VOCAB_EN:', v); return v; }
   return en;
 }
+/** En el idioma activo. Un solo parámetro: se usa como .map(dom). */
+function dom (v) { return domIdioma(v, LANG); }
 let LANG = U.prefs.lang;
 
 // ---------------------------------------------------------------------------
@@ -1220,6 +1256,7 @@ let ui = {
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
   aliados: null,                     // objetivo de grupo cuya lista de personajes está abierta
+  tip: null,                         // «Cómo funciona» abierto: { key de la variante, si: skill, ti y fi: el efecto tocado o null }
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
@@ -1720,13 +1757,14 @@ function fila (tabla, i) { return (i == null || !TB[tabla]) ? null : TB[tabla][i
 // salió en f.gs: 'm', 'l' o 'w') y se muestran marcados con su origen. Lo que no se completó
 // se marca "sin especificar" en vez de inventarle un valor o dejar el marcador crudo a la vista.
 const ORIGEN_MARCADOR = { m: 'tpl_manual', l: 'tpl_ls', w: 'tpl_wiki' };
-function marcadores (texto, f) {
+/** lang: el idioma del texto (el «Texto del juego» muestra los dos); las marcas y sus títulos van en el de la app. */
+function marcadores (texto, f, lang) {
   const chip = (clave, titulo) => `<i class="tpl" title="${h(t(titulo))}">${h(t(clave))}</i>`;
   const grupo = () => {
     if (!(f && f.g)) return chip('tpl_unspec', 'tpl_pending');
     const titulo = ORIGEN_MARCADOR[f.gs];
     if (!titulo) throw new Error('origen de marcador desconocido: ' + f.gs);
-    return `<span class="tpl-ok" title="${h(t(titulo))}">${h(dom(f.g))}</span>`;
+    return `<span class="tpl-ok" title="${h(t(titulo))}">${h(domIdioma(f.g, lang || LANG))}</span>`;
   };
   return texto
     .replace(/\$TIME/g, () => (f && f.d != null) ? f.d + ' s' : chip('tpl_unspec', 'tpl_title'))
@@ -1738,18 +1776,18 @@ function rellenar (patron, nums) {
   let i = 0;
   return String(patron).replace(/#/g, () => (nums && nums[i] !== undefined ? nums[i++] : '#'));
 }
-/** {txt, sinTraducir} de una fila, en el idioma activo. */
-function texto (tabla, i, nums) {
+/** {txt, sinTraducir} de una fila, en el idioma activo o en el pedido (el «Texto del juego» muestra los dos). */
+function texto (tabla, i, nums, lang = LANG) {
   const f = fila(tabla, i);
   if (!f) return null;
-  if (LANG === 'en') return { txt: rellenar(f.en, nums), sinTraducir: false };
+  if (lang === 'en') return { txt: rellenar(f.en, nums), sinTraducir: false };
   if (f.es == null) return { txt: rellenar(f.en, nums), sinTraducir: true };
   return { txt: rellenar(f.es, nums), sinTraducir: false };
 }
 // Tres objetivos de la fuente traen un "\n" literal (dos caracteres) metiendo la
 // condicion de activacion adentro del objetivo. Se muestra como separador, no crudo.
 const BARRA_N = /\\n/g;
-function txt (tabla, i, nums) { const r = texto(tabla, i, nums); return r ? r.txt.replace(BARRA_N, ' · ') : ''; }
+function txt (tabla, i, nums, lang) { const r = texto(tabla, i, nums, lang); return r ? r.txt.replace(BARRA_N, ' · ') : ''; }
 /** Los números de daño de un efecto, si el patrón es una línea de daño. */
 function dano (f) {
   const d = fila('desc', f.p);
@@ -1831,36 +1869,47 @@ function slotClase (sl) {
        : sl === 'Striker Skill' ? 'stk' : '';
 }
 
-/** Un efecto que no es daño: etiqueta tipada + texto, uno por línea. */
-function efectoLinea (f) {
-  const r = texto('desc', f.p, f.v);
-  if (!r) return '';
-  const partes = r.txt.split(/<br\s*\/?>/i).map(x => x.trim()).filter(Boolean);
-  // Duración, tick y marcas van pegadas al final de la última línea, no en un renglón aparte.
+/** El texto de un efecto en renglones (la fuente los separa con <br>), en HTML y con los marcadores
+ *  resueltos, en el idioma activo o en el pedido. sinTraducir: falta la traducción y va el inglés. */
+function renglonesEfecto (f, lang) {
+  const r = texto('desc', f.p, f.v, lang);
+  return { renglones: r.txt.split(/<br\s*\/?>/i).map(x => x.trim()).filter(Boolean).map(x => marcadores(h(x), f, lang)), sinTraducir: r.sinTraducir };
+}
+/** Lo que la fuente dice de un efecto aparte del texto: cada cuánto, cuánto dura y si lo marca persistente
+ *  (persistent) o de equipo (team_buff). Con dura, la duración lo dice («dura 5 s»): fuera del renglón de la
+ *  skill, «5 s» solo no se entiende. */
+function metaEfecto (f, dura) {
   const meta = [];
   if (f.t != null) meta.push(t('every') + ' ' + f.t + ' s');
-  if (f.d != null) meta.push(f.d + ' s');
+  if (f.d != null) meta.push((dura ? t('an_dura') + ' ' : '') + f.d + ' s');
   if (f.m) meta.push(t('permanent_fx'));
   if (f.b) meta.push(t('team_fx'));
-  const etiqueta = txt('ab', f.a);
-  return `<div class="fxline">
+  return meta;
+}
+/** Un efecto que no es daño: etiqueta tipada + texto, uno por línea. Al tocarlo se abre el «Cómo funciona»
+ *  de la skill en ese efecto (si, ti, fi: skill, etapa y efecto). */
+function efectoLinea (f, si, ti, fi) {
+  const { renglones, sinTraducir } = renglonesEfecto(f), meta = metaEfecto(f), etiqueta = txt('ab', f.a);
+  // Duración, tick y marcas van pegadas al final de la última línea, no en un renglón aparte.
+  return `<div class="fxline" data-a="skTip" data-si="${si}" data-st="${ti}" data-fx="${fi}">
     <span class="fxtag" title="${h(etiqueta)}">${h(etiqueta)}</span>
-    <div class="fxitems ${r.sinTraducir ? 'sintrad' : ''}"
-         ${r.sinTraducir ? `title="${h(t('untranslated'))}"` : ''}>
-      ${partes.map((x, i) => `<div>${marcadores(h(x), f)}${
-        i === partes.length - 1 && meta.length ? ` <span class="dur">${h(meta.join(' · '))}</span>` : ''}</div>`).join('')}
+    <div class="fxitems ${sinTraducir ? 'sintrad' : ''}"
+         ${sinTraducir ? `title="${h(t('untranslated'))}"` : ''}>
+      ${renglones.map((x, i) => `<div>${x}${
+        i === renglones.length - 1 && meta.length ? ` <span class="dur">${h(meta.join(' · '))}</span>` : ''}</div>`).join('')}
     </div></div>`;
 }
 
-/** Una skill: tabla de daño por etapa arriba, y el resto de los efectos abajo. */
-function skillCard (sk, portrait) {
+/** Una skill (la si de la variante v): tabla de daño por etapa arriba, y el resto de los efectos abajo. La
+ *  cabecera abre su «Cómo funciona»; cada renglón, el mismo, en ese efecto. */
+function skillCard (sk, v, si) {
   const etapas = sk.st || [];
-  const marcas = portrait ? marcasDe(portrait, sk.sl) : {};
+  const marcas = marcasDe(v.p, sk.sl), abierta = !!ui.tip && ui.tip.si === si;
   const filasDano = [];
   etapas.forEach((st, i) => {
-    (st.fx || []).forEach(f => {
+    (st.fx || []).forEach((f, fi) => {
       const dn = dano(f);
-      if (dn) filasDano.push({ i, st, dn, f });
+      if (dn) filasDano.push({ i, st, dn, f, fi });
     });
   });
   // A quien le pega y que lo dispara son datos de cabecera, no una nota al pie: se
@@ -1882,7 +1931,7 @@ function skillCard (sk, portrait) {
       ${varias ? `<th>${h(t('st_stage'))}</th>` : ''}
       <th>${h(t('st_pct'))}</th><th>${h(t('st_flat'))}</th><th>${h(t('st_element'))}</th>
     </tr></thead><tbody>
-    ${filasDano.map(r => `<tr>
+    ${filasDano.map(r => `<tr data-a="skTip" data-si="${si}" data-st="${r.i}" data-fx="${r.fi}">
       ${varias ? `<td class="stnum">${r.i + 1}</td>` : ''}
       <td class="num"><b>${h(r.dn.pct)}%</b> <span class="muted">${h(srcEs(r.dn.src))}</span></td>
       <td class="num">${r.dn.flat != null ? '+' + h(r.dn.flat) : '<span class="muted">—</span>'}</td>
@@ -1892,14 +1941,14 @@ function skillCard (sk, portrait) {
     </tbody></table></div>` : '';
 
   const otros = etapas.map((st, i) => {
-    const fx = (st.fx || []).filter(f => !esDano(f));
+    const fx = (st.fx || []).map((f, fi) => esDano(f) ? '' : efectoLinea(f, si, i, fi)).filter(Boolean);
     const meta = [];
     if (st.ac != null && st.ac !== acComun) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
     if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${objetivoTexto(st.tg)}</span>`);
     if (!fx.length && !meta.length) return '';
     return `<div class="stageblock">
       ${varias || meta.length ? `<div class="stagehead">${varias ? `<span class="stnum">${i + 1}</span>` : ''}${meta.join('')}</div>` : ''}
-      ${fx.map(efectoLinea).join('')}</div>`;
+      ${fx.join('')}</div>`;
   }).join('');
 
   const cargas = [];
@@ -1908,18 +1957,23 @@ function skillCard (sk, portrait) {
   if (sk.ult != null) cargas.push(`<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>`);
   if (sk.stk != null) cargas.push(`<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>`);
 
+  // El tipo y el nombre son el botón del «Cómo funciona» (para el teclado); el resto de la cabecera
+  // también lo abre al tocarlo, salvo el objetivo de grupo, que muestra quiénes lo cumplen.
   return `<div class="skill" id="${anclaSkill(sk.sl)}">
-    <div class="top">
-      <span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>
-      ${nombreSkill(sk)}
+    <div class="top" data-a="skTip" data-si="${si}">
+      <button class="sktit" id="skt-${si}" data-a="skTip" data-si="${si}" aria-haspopup="dialog" aria-expanded="${abierta}"${
+        abierta ? ' aria-controls="skpop"' : ''} title="${h(t('tt_abrir'))}">
+        <span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>
+        ${nombreSkill(sk)}
+      </button>
       ${cabecera.join('')}
       ${cargas.join('')}
     </div>
     <div class="body">${tabla}${otros}
-      ${portrait && ui.marcando ? `<div class="marcador">
+      ${ui.marcando ? `<div class="marcador">
         <span class="muted">${h(t('at_mark'))}</span>
         ${ATRIBUTOS.map(a => `<label class="chk"><input type="checkbox" data-a="marca"
-            data-p="${h(portrait)}" data-sl="${h(sk.sl)}" data-k="${a.k}"
+            data-p="${h(v.p)}" data-sl="${h(sk.sl)}" data-k="${a.k}"
             ${marcas[a.k] ? 'checked' : ''}> ${h(a[LANG])}</label>`).join('')}
       </div>` : ''}
     </div>
@@ -2327,7 +2381,7 @@ function fichaSkills (ch, v) {
          <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x))}</span>`).join('')}</span></div>`).join('')}
     </div>` : ''}
     ${panelRotaciones(ch, v)}
-    ${v.skills.map(sk => skillCard(sk, v.p)).join('')}`;
+    ${v.skills.map((sk, si) => skillCard(sk, v, si)).join('')}`;
 }
 // ---------------------------------------------------------------------------
 // ANÁLISIS (docs/MODELO.md, etapa 2): lo que hace la variante con sus skills según el
@@ -2362,11 +2416,24 @@ function condicionAn (v, fuentes) {
   if (!c.marcador) return contra;
   return contra + ': ' + [...new Set(fuentes.map(x => fuenteAn(v, x).f.g))].map(g => g ? dom(g) : t('tpl_unspec')).join(', ');
 }
+/** La certeza de una lectura (CATALOGO.certeza): comprobado, probable o conjetura. */
+function certHtml (c) { return `<span class="cert ${c}">${h(t('cert_' + c))}</span>`; }
 function lecturaAn (L, modo) {
-  return `<div class="anlect"><b>${h(modo)}</b>${h(bi(L))} <span class="cert ${L.certeza}">${h(t('cert_' + L.certeza))}</span>${fuentesHtml(L.fuente)}</div>`;
+  return `<div class="anlect"><b>${h(modo)}</b>${h(bi(L))} ${certHtml(L.certeza)}${fuentesHtml(L.fuente)}</div>`;
 }
 /** La primera letra en minúscula, para seguir una frase («A quien tiene Perforación»). */
 function minuscula (x) { return x ? x[0].toLowerCase() + x.slice(1) : x; }
+/** La primera letra en mayúscula, para que una frase arranque un renglón («Contra una facción: …»). */
+function mayuscula (x) { return x ? x[0].toUpperCase() + x.slice(1) : x; }
+/** El nombre de un efecto del análisis. Un «Give Power» que queda como entrada es uno que no dice qué otorga. */
+function nombreAnTxt (e) { return e.id === 'otorga' ? t('an_otorga') : bi(e); }
+function nombreAnHtml (e) {
+  return `<span class="annom" ${e.id === 'otorga' ? `title="${h(t('an_otorga_t'))}"` : ''}>${h(nombreAnTxt(e))}</span>`;
+}
+/** Un efecto para él que no le sirve, según la regla «le sirve» del catálogo. */
+function noSirveHtml (e) {
+  return `<span class="tag solid nosirve" title="${h(t('an_no_sirve_t').replace('{x}', minuscula(bi(CATALOGO.sirve[e.sirve]))))}">${h(t('an_no_sirve'))}</span>`;
+}
 /** Las lecturas de PvE y de PvP; si dicen lo mismo, en una sola línea. */
 function lecturasAn (pve, pvp) {
   if (pve && pvp && JSON.stringify(pve) === JSON.stringify(pvp)) return lecturaAn(pve, t('an_pve_pvp'));
@@ -2377,12 +2444,12 @@ function lecturasAn (pve, pvp) {
  *  la fuente no dice qué otorga. */
 function filaAn (v, an, i) {
   const [ie, d, objetivo, fuentes] = an.fx[i], e = CATALOGO.efectos[ie];
-  const vacio = e.id === 'otorga', cond = condicionAn(v, fuentes), noSirve = (an.ns || []).includes(i);
+  const cond = condicionAn(v, fuentes), noSirve = (an.ns || []).includes(i);
   return `<div class="anfila">
-    <div class="row"><span class="annom" ${vacio ? `title="${h(t('an_otorga_t'))}"` : ''}>${h(vacio ? t('an_otorga') : bi(e))}</span>
+    <div class="row">${nombreAnHtml(e)}
       ${d === 'q' ? objetivoTag(objetivo, true) : ''}${fuentesAnHtml(v, fuentes)}
       ${cond ? `<span class="muted">${h(cond)}</span>` : ''}
-      ${noSirve ? `<span class="tag solid nosirve" title="${h(t('an_no_sirve_t').replace('{x}', minuscula(bi(CATALOGO.sirve[e.sirve]))))}">${h(t('an_no_sirve'))}</span>` : ''}</div>
+      ${noSirve ? noSirveHtml(e) : ''}</div>
     ${lecturasAn(e.pve, e.pvp)}
     ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
   </div>`;
@@ -2433,6 +2500,264 @@ function fichaAnalisis (ch, v) {
     ${an.sc ? `<div class="section"><h3>${h(t('an_sc'))}</h3><p class="muted">${h(t('an_sc_t'))}</p>
       ${an.sc.map(([si, ti, fi]) => { const sk = v.skills[si];
         return `<div class="anfila"><span class="tag dim">${h(slotEs(sk.sl))}</span> ${h(fila('ab', sk.st[ti].fx[fi].a).en)}</div>`; }).join('')}</div>` : ''}`;
+}
+
+// ---------------------------------------------------------------------------
+// CÓMO FUNCIONA UNA SKILL
+// Al tocar una skill en la pestaña Skills (la cabecera o uno de sus renglones) se abre, anclado a lo
+// tocado, lo que la app sabe de ella; en el celular, como hoja inferior. No trae texto propio: sale del
+// análisis y del catálogo de efectos (qué es cada efecto, a quién le llega, a quién le sirve y cómo se
+// lee, con su certeza), del glosario del juego, de las skills de thanosvibs (activación, recarga,
+// objetivo, duración y texto) y de Leads & Supports. Cinco secciones: cómo funciona; cuándo, cuánto y a
+// quién; el texto del juego; certeza y fuentes; y lo que el inglés traduce distinto del coreano. Se abre
+// y se cierra sin volver a pintar la ficha (no se pliega nada de lo que estaba abierto), no abre otra
+// entrada del historial y se cierra con Esc, tocando afuera o con su botón.
+// ---------------------------------------------------------------------------
+const TIP_CELULAR = '(max-width: 600px)';      // hasta este ancho va como hoja inferior (el mismo de styles.css)
+/** El efecto [skill, etapa, efecto] de una variante. */
+function efectoDe (v, [si, ti, fi]) { return v.skills[si].st[ti].fx[fi]; }
+/** ¿La entrada sale del efecto fi de la etapa ti de su skill? */
+function tocaEfecto (x, ti, fi) { return x.fuentes.some(s => s[1] === ti && s[2] === fi); }
+/** Lo que hace la skill si de v, en el orden de la skill: las entradas del análisis que salen de ella (un
+ *  efecto del catálogo con su destino, sus aliados y su condición), el golpe (el análisis no lo trae: es el
+ *  perfil de combate; va contra el rival, como lo da el catálogo) y lo que el catálogo no clasifica, cada
+ *  una con sus fuentes en esta skill ([skill, etapa, efecto]). Un «Give Power» seguido de lo que otorga no
+ *  es una entrada: lo otorgado, sí. Un efecto que no cae en ninguna es un error. */
+function entradasSkill (v, si) {
+  const an = ANALISIS[v.p], sk = v.skills[si], out = [];
+  an.fx.forEach(([ie, d, objetivo, fuentes], i) => {
+    const fs = fuentes.filter(x => x[0] === si);
+    if (fs.length) out.push({ ie, d, objetivo, fuentes: fs, ns: (an.ns || []).includes(i) });
+  });
+  for (const x of an.sc || []) if (x[0] === si) out.push({ sc: true, fuentes: [x] });
+  const golpe = [];
+  sk.st.forEach((st, ti) => st.fx.forEach((f, fi) => { if (esDano(f)) golpe.push([si, ti, fi]); }));
+  if (golpe.length) out.push({ ie: CATALOGO.efectos.findIndex(e => e.id === 'golpe'), d: 'r', objetivo: null, fuentes: golpe, ns: false });
+  sk.st.forEach((st, ti) => st.fx.forEach((f, fi) => {
+    if (!out.some(x => tocaEfecto(x, ti, fi)) && !fuenteAn(v, [si, ti, fi]).m.efectos.includes('otorga'))
+      throw new Error(`efecto de ${v.p} sin entrada en el análisis: ${sk.sl}, etapa ${ti + 1}, efecto ${fi + 1}`);
+  }));
+  const pos = (x) => Math.min(...x.fuentes.map(([, ti, fi]) => ti * 1000 + fi));
+  return out.sort((a, b) => pos(a) - pos(b));
+}
+/** Los términos del glosario del juego que corresponden a los efectos de las entradas, en el orden del glosario. */
+function terminosSkill (es) {
+  const ids = new Set(es.filter(x => !x.sc).map(x => CATALOGO.efectos[x.ie].id));
+  return GLOSARIO.terminos.filter(y => y.efectos.some(id => ids.has(id)));
+}
+/** Los liderazgos y soportes de Leads & Supports que la ficha atribuye a esta skill (skillDeSoporte). */
+function soportesDeSkill (v, sk) {
+  const s = SOPORTES[v.p];
+  return s ? TIPOS_SOPORTE.filter(([k]) => k !== 'artifact' && s[k] && skillDeSoporte(v, k, s[k]) === sk) : [];
+}
+/** A quién le llega una entrada (el destino del análisis) y, si es al equipo, a qué aliados. */
+function destinoTipHtml (x) {
+  return `<span class="tag tipd ${x.d}">${h(t('an_' + x.d))}</span>${x.d === 'q' ? ` <span class="tag objetivo">→ ${h(txt('tgt', x.objetivo))}</span>` : ''}`;
+}
+/** Cómo funciona: una entrada por efecto, plegada, con su destino. Abiertas: las del efecto tocado o, si
+ *  son una o dos, todas. */
+function tipComoHtml (v, es, foco) {
+  if (!es.length) return `<p class="muted">${h(t('tt_vacia'))}</p>`;
+  const abiertas = foco.length ? foco : es.length <= 2 ? es : [];
+  return es.map(x => `<details class="tipef${foco.includes(x) ? ' foco' : ''}"${abiertas.includes(x) ? ' open' : ''}>
+    <summary>${x.sc ? `<span class="annom">${h(t('an_sc'))}:</span> ${h(fila('ab', efectoDe(v, x.fuentes[0]).a).en)}`
+      : `${nombreAnHtml(CATALOGO.efectos[x.ie])} ${destinoTipHtml(x)}${x.ns ? noSirveHtml(CATALOGO.efectos[x.ie]) : ''}`}</summary>
+    ${x.sc ? `<p class="muted">${h(t('an_sc_t'))}</p>` : efectoTipHtml(v, x)}</details>`).join('');
+}
+/** Las lecturas de un efecto, con su certeza: [{ modo, L, grupo }], una sola si PvE y PvP dicen lo mismo. En el
+ *  modo en que no trae lectura propia vale la de su grupo (grupo: su nombre; si no, null). */
+function lecturasEfecto (e) {
+  const g = CATALOGO.grupos.find(y => y.id === e.grupo);
+  const [pve, pvp] = ['pve', 'pvp'].map(m => ({ L: e[m] || g[m], grupo: e[m] ? null : bi(g) }));
+  return JSON.stringify(pve) === JSON.stringify(pvp) ? [{ modo: t('an_pve_pvp'), ...pve }] : [{ modo: 'PvE', ...pve }, { modo: 'PvP', ...pvp }];
+}
+function delGrupo (x) { return x.grupo ? ' ' + t('tt_del_grupo').replace('{x}', x.grupo) : ''; }
+/** Una entrada de «Cómo funciona», abierta: qué es (su grupo y, si lo tiene, el término del glosario del
+ *  juego), contra qué, a quién le sirve, las notas del catálogo (del efecto y de la etiqueta de la skill) y
+ *  sus lecturas de PvE y de PvP, con su certeza. */
+function efectoTipHtml (v, x) {
+  const e = CATALOGO.efectos[x.ie], g = CATALOGO.grupos.find(y => y.id === e.grupo), cond = condicionAn(v, x.fuentes);
+  const notas = [...new Set([e.nota, ...x.fuentes.map(s => CATALOGO.skills[fila('ab', efectoDe(v, s).a).en].nota)].filter(Boolean))];
+  return `<ul class="tiplista">
+      <li><b>${h(t('tt_grupo'))} ${h(bi(g))}:</b> ${h(bi(g.que))}</li>
+      ${GL_DE[e.id].terminos.map(y => `<li><b>${h(nombreGl(y))}</b> <span class="muted">(${h(otrosNombresGl(y).join(', '))})</span>: ${h(bi(y.que))}</li>`).join('')}
+      ${cond ? `<li>${h(mayuscula(cond))}</li>` : ''}
+      <li><b>${h(t('gl_le_sirve'))}</b> ${h(minuscula(bi(CATALOGO.sirve[e.sirve])))}</li>
+      ${notas.map(n => `<li class="muted">${h(bi(n))}</li>`).join('')}
+    </ul>
+    ${lecturasEfecto(e).map(l => lecturaAn(l.L, l.modo + delGrupo(l))).join('')}`;
+}
+/** Cuándo, cuánto y a quién: la activación, la recarga y la carga de la skill; por etapa, su activación y su
+ *  objetivo si cambian, y cada efecto con su texto (los números), lo que la fuente dice aparte (duración,
+ *  intervalo, persistente, de equipo) y a quién le llega según el análisis. Al final, plegado, lo que dice
+ *  Leads & Supports de la misma skill. */
+function tipCuandoHtml (v, sk, es, ti, fi) {
+  const acComun = comunEnEtapas(sk, 'ac'), tgComun = comunEnEtapas(sk, 'tg'), sinAc = sk.st.every(st => st.ac == null);
+  const activacion = acComun != null ? txt('act', acComun, sk.st.find(st => st.ac === acComun).av)
+    : sinAc ? t(/^Active/.test(sk.sl) ? 'tt_al_usar' : 'tt_sin_cond') : null;
+  const recarga = sk.cd ? numTxt(sk.cd) + ' s' : sk.cd === 0 ? t('tt_sin_recarga')
+    : sk.sl === 'Active Ult' ? t('sk_bar_ult') : sk.sl === 'Striker Skill' ? t('sk_bar_stk') : t('tt_sin_dato');
+  const carga = [sk.ult != null ? t('c_ult') + ' ' + numTxt(sk.ult) + '%' : '', sk.stk != null ? t('c_striker') + ' ' + numTxt(sk.stk) + '%' : '']
+    .filter(Boolean).join(', ');
+  const dato = (k, val) => `<li><b>${h(t(k))}:</b> ${h(val)}</li>`;
+  // El golpe no lleva a quién: siempre es contra el rival, como dice «Cómo funciona».
+  const linea = (f, i, j) => {
+    const { renglones, sinTraducir } = renglonesEfecto(f);
+    const ds = esDano(f) ? [] : [...new Set(es.filter(x => !x.sc && tocaEfecto(x, i, j)).map(x => x.d))];
+    return `<li class="tipfx${i === ti && j === fi ? ' foco' : ''}"><span${sinTraducir ? ` class="sintrad" title="${h(t('untranslated'))}"` : ''}>${renglones.join(' ')}</span>${
+      metaEfecto(f, true).map(m => ` <span class="dur">${h(m)}</span>`).join('')}${ds.map(d => ` <span class="tag tipd ${d}">${h(t('an_' + d))}</span>`).join('')}</li>`;
+  };
+  const etapas = sk.st.map((st, i) => {
+    const ls = [];
+    if (acComun == null && !sinAc) ls.push(dato('st_activation', st.ac != null ? txt('act', st.ac, st.av) : t('tt_etapa_sin_ac')));
+    if (tgComun == null && st.tg != null) ls.push(dato('st_target', txt('tgt', st.tg)));
+    st.fx.forEach((f, j) => ls.push(linea(f, i, j)));
+    if (!st.fx.length) ls.push(`<li class="muted">${h(t('tt_etapa_vacia'))}</li>`);
+    const lista = `<ul class="tiplista">${ls.join('')}</ul>`;
+    return sk.st.length > 1 ? `<div class="tipetapa"><div class="tipeh">${h(t('st_stage'))} ${i + 1}</div>${lista}</div>` : lista;
+  }).join('');
+  const ls = soportesDeSkill(v, sk);
+  return `<ul class="tiplista">
+      ${activacion != null ? dato('st_activation', activacion) : ''}
+      ${dato('tt_recarga', recarga)}
+      ${carga ? dato('tt_carga', carga) : ''}
+      ${tgComun != null ? dato('st_target', txt('tgt', tgComun)) : ''}
+    </ul>
+    ${sk.st.some(st => st.fx.length) ? etapas : `<p class="muted">${h(t('tt_vacia'))}</p>`}
+    ${ls.length ? `<details class="tipls"><summary>${h(t('tt_ls'))}</summary>
+      <div class="sops">${ls.map(([k, clave]) => soporteHtml(k, clave, SOPORTES[v.p][k])).join('')}</div></details>` : ''}`;
+}
+/** El texto del juego, plegado: tal como lo publica thanosvibs y con la traducción de la app (el nombre y,
+ *  por etapa, la activación, el objetivo y cada efecto). El coreano: los datos no lo traen para las skills,
+ *  solo para los términos del glosario. */
+function tipTextoHtml (sk, terminos) {
+  const marca = (sinTraducir, html) => sinTraducir ? `<span class="sintrad" title="${h(t('untranslated'))}">${html}</span>` : html;
+  const enIdioma = (lang) => {
+    const nom = texto('name', sk.n, null, lang);
+    if (!sk.st.some(st => st.fx.length)) return `<p class="tipnom">${marca(nom.sinTraducir, h(nom.txt))}</p><p class="muted">${h(t('tt_vacia'))}</p>`;
+    return `<p class="tipnom">${marca(nom.sinTraducir, h(nom.txt))}</p>` + sk.st.map((st, i) => {
+      const ls = [];
+      if (st.ac != null) { const r = texto('act', st.ac, st.av, lang); ls.push(`<li><b>${h(t('st_activation'))}:</b> ${marca(r.sinTraducir, h(r.txt))}</li>`); }
+      if (st.tg != null) { const r = texto('tgt', st.tg, null, lang); ls.push(`<li><b>${h(t('st_target'))}:</b> ${marca(r.sinTraducir, h(r.txt.replace(BARRA_N, ' · ')))}</li>`); }
+      for (const f of st.fx) { const r = renglonesEfecto(f, lang); ls.push(`<li>${marca(r.sinTraducir, r.renglones.join(' '))}</li>`); }
+      return (sk.st.length > 1 ? `<div class="tipeh">${h(t('st_stage'))} ${i + 1}</div>` : '') + (ls.length ? `<ul class="tiplista">${ls.join('')}</ul>` : '');
+    }).join('');
+  };
+  return `<details class="tiptx"><summary>${h(t('tt_en'))}</summary>${enIdioma('en')}</details>
+    <details class="tiptx"><summary>${h(t('tt_es'))}</summary>${enIdioma('es')}</details>
+    <p class="muted">${h(t('tt_ko_no'))}</p>
+    ${terminos.length ? `<p class="muted">${h(t('tt_ko_terminos'))}</p><ul class="tiplista">${terminos.map(y => `<li>${h(nombreGl(y))}: <span lang="ko">${h(y.ko)}</span>${
+      y.falta ? ` <span class="tag dim">${h(t('gl_falta_' + y.falta))}</span>` : ''}</li>`).join('')}</ul>` : `<p class="muted">${h(t('tt_ko_sin'))}</p>`}`;
+}
+/** Certeza y fuentes: el texto es de thanosvibs; la traducción, de la app; lo que completó un marcador, de su
+ *  origen; qué efecto es cada uno y a quién le llega, del catálogo y el análisis (los datos no traen una
+ *  certeza para eso); las lecturas, con la certeza del catálogo; y las fuentes del glosario y de Leads &
+ *  Supports. */
+function tipCertezaHtml (v, sk, es, terminos) {
+  const fxs = sk.st.flatMap(st => st.fx);
+  const sinTrad = [fila('name', sk.n), ...sk.st.flatMap(st => [fila('act', st.ac), fila('tgt', st.tg)]), ...fxs.map(f => fila('desc', f.p))]
+    .filter(r => r && r.es == null).length;
+  const marcas = [...new Map(fxs.filter(f => fila('desc', f.p).en.includes('$HERO')).map(f => [f.g + '|' + f.gs, f])).values()];
+  // Las lecturas, solo con su certeza (el texto y la fuente de cada una están en «Cómo funciona»); PvE y PvP
+  // van juntas si tienen la misma certeza y salen del mismo lado (propia o del grupo).
+  const lecturas = [...new Set(es.filter(x => !x.sc).map(x => CATALOGO.efectos[x.ie]))];
+  const certezas = (e) => { const ls = lecturasEfecto(e);
+    const juntas = ls.length === 2 && ls[0].L.certeza === ls[1].L.certeza && ls[0].grupo === ls[1].grupo ? [{ ...ls[0], modo: t('an_pve_pvp') }] : ls;
+    return juntas.map(l => `${h(l.modo)} ${certHtml(l.L.certeza)}${l.grupo ? `<span class="muted">${h(delGrupo(l))}</span>` : ''}`).join(', '); };
+  return `<ul class="tiplista">
+    <li>${h(t('tt_f_texto'))} ${certHtml('comprobado')} ${fuentesHtml(['tv-pj'])}</li>
+    <li>${h(t('tt_f_trad'))}${sinTrad ? ' ' + h(t('tt_f_sintrad').replace('{n}', sinTrad)) : ''}</li>
+    ${marcas.map(f => `<li><b>${h(f.g ? dom(f.g) : t('tpl_unspec'))}:</b> ${h(t(f.g ? ORIGEN_MARCADOR[f.gs] : 'tpl_pending'))}${
+      f.gs === 'l' ? ' ' + fuentesHtml(['tv-sup']) : ''}</li>`).join('')}
+    ${es.length ? `<li>${h(t('tt_f_analisis'))}</li>` : ''}
+    ${lecturas.length ? `<li>${h(t('tt_f_lecturas'))} ${fuentesHtml([...new Set(lecturas.flatMap(e => lecturasEfecto(e).flatMap(l => l.L.fuente || [])))])}
+      <ul>${lecturas.map(e => `<li>${h(nombreAnTxt(e))}: ${certezas(e)}</li>`).join('')}</ul></li>` : ''}
+    ${terminos.length ? `<li>${h(t('tt_f_glosario'))}: ${fuentesHtml([...new Set(terminos.flatMap(y => y.fuente))])}</li>` : ''}
+    ${soportesDeSkill(v, sk).length ? `<li>${h(t('tt_ls'))}: ${fuentesHtml(['tv-sup'])}</li>` : ''}
+  </ul>`;
+}
+/** Lo que el inglés traduce distinto del coreano en los términos del glosario de sus efectos, y los errores
+ *  del inglés que se repiten, plegados. */
+function tipCoreanoHtml (terminos) {
+  const difieren = terminos.filter(y => y.difiere);
+  if (!difieren.length) return `<p class="muted">${h(t(terminos.length ? 'tt_dif_nada' : 'tt_dif_sin'))}</p>`;
+  const errores = GLOSARIO.errores.filter(e => difieren.some(y => y.error === e.id));
+  return `<ul class="tiplista">${difieren.map(y => `<li><b>${h(nombreGl(y))}</b> <span class="muted" lang="ko">${h(y.ko)}</span>: ${h(bi(y.difiere))}</li>`).join('')}</ul>
+    ${errores.length ? `<div class="tipeh">${h(t('gl_errores'))}</div>${errores.map(e =>
+      `<details class="tiperr"><summary>${h(bi(e.titulo))}</summary><p>${h(bi(e.texto))}</p></details>`).join('')}` : ''}`;
+}
+/** ¿El «Cómo funciona» abierto sigue siendo de lo que se ve (la pestaña Skills de la misma variante)? */
+function tipVigente () {
+  const v = ui.view === 'detail' && ui.fichaTab === 'skills' ? variant(ui.charId, ui.uniformId) : null;
+  return !!v && v.key === ui.tip.key;
+}
+/** El «Cómo funciona» abierto (ui.tip), o nada. Va al final de #app, fuera de main, como las ventanas. */
+function tipHtml () {
+  if (!ui.tip) return '';
+  const v = variant(ui.charId, ui.uniformId), { si, ti, fi } = ui.tip, sk = v.skills[si];
+  if (!sk) throw new Error(`${fullLabel(v)} no tiene la skill ${si}`);
+  const es = entradasSkill(v, si), terminos = terminosSkill(es), foco = ti == null ? [] : es.filter(x => tocaEfecto(x, ti, fi));
+  const seccion = (k, cuerpo) => `<section class="tipsec" data-sec="${k}"><h4>${h(t('tt_' + k))}</h4>${cuerpo}</section>`;
+  return `<div class="skpop-fondo" id="skpop-fondo"></div>
+    <div class="skpop" id="skpop" role="dialog" aria-modal="true" aria-labelledby="skpop-t" tabindex="-1">
+      <div class="tiphead">
+        <div class="tiptit" id="skpop-t"><span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>${nombreSkill(sk)}</div>
+        <button class="btn icon" data-a="tipCerrar" title="${h(t('tt_cerrar'))}" aria-label="${h(t('tt_cerrar'))}">✕</button>
+      </div>
+      <div class="muted tipsub">${h(fullLabel(v))}</div>
+      ${seccion('como', tipComoHtml(v, es, foco))}
+      ${seccion('cuando', tipCuandoHtml(v, sk, es, ti, fi))}
+      ${seccion('texto', tipTextoHtml(sk, terminos))}
+      ${seccion('certeza', tipCertezaHtml(v, sk, es, terminos))}
+      ${seccion('coreano', tipCoreanoHtml(terminos))}
+    </div>`;
+}
+/** Abre el «Cómo funciona» de la skill si (en el efecto fi de la etapa ti, si se tocó un renglón), lo ubica,
+ *  le pasa el foco y, si se abrió en un efecto, lo lleva a la vista. */
+function abrirTip (si, ti, fi) {
+  ui.tip = { key: variant(ui.charId, ui.uniformId).key, si, ti, fi };
+  $('#app').insertAdjacentHTML('beforeend', tipHtml());
+  const b = document.getElementById('skt-' + si);
+  b.setAttribute('aria-expanded', 'true'); b.setAttribute('aria-controls', 'skpop');
+  posicionarTip();
+  const pop = document.getElementById('skpop'), foco = pop.querySelector('.tipef.foco');
+  pop.focus({ preventScroll: true });
+  if (foco) pop.scrollTop = foco.offsetTop - pop.querySelector('.tiphead').offsetHeight - 8;
+}
+/** Lo cierra; con devolverFoco, el foco vuelve a la skill, sin mover la página. */
+function cerrarTip (devolverFoco) {
+  const b = document.getElementById('skt-' + ui.tip.si);
+  ui.tip = null;
+  document.getElementById('skpop').remove(); document.getElementById('skpop-fondo').remove();
+  b.setAttribute('aria-expanded', 'false'); b.removeAttribute('aria-controls');
+  if (devolverFoco) b.focus({ preventScroll: true });
+}
+/** En la compu va debajo de lo tocado; si ahí no entra, encima; si tampoco, del lado con más lugar. Su alto
+ *  no pasa del lugar de ese lado: lo que se despliega adentro se recorre adentro. Encima, crece hacia arriba.
+ *  Va en coordenadas de la página: se mueve con ella y pasa por debajo de la cabecera fija. En el celular es
+ *  una hoja inferior y la ubica styles.css. */
+function posicionarTip () {
+  const pop = document.getElementById('skpop'), { si, ti, fi } = ui.tip;
+  Object.assign(pop.style, { top: '', bottom: '', left: '', maxHeight: '' });
+  if (matchMedia(TIP_CELULAR).matches) return;
+  const ancla = ti == null ? document.getElementById('skt-' + si).closest('.top')
+    : document.querySelector(`.skill [data-a="skTip"][data-si="${si}"][data-st="${ti}"][data-fx="${fi}"]`);
+  const r = ancla.getBoundingClientRect(), techo = document.querySelector('.fcab').getBoundingClientRect().bottom;
+  const debajo = innerHeight - r.bottom - 12, encima = r.top - techo - 12, abajo = pop.offsetHeight <= debajo || debajo >= encima;
+  pop.style.maxHeight = Math.min(parseFloat(getComputedStyle(pop).maxHeight), Math.max(240, abajo ? debajo : encima)) + 'px';
+  // Sin un contenedor ubicado, top y bottom se miden desde el bloque inicial (el alto de la ventana desde arriba de la página).
+  if (abajo) pop.style.top = r.bottom + 6 + scrollY + 'px';
+  else pop.style.bottom = document.documentElement.clientHeight - (r.top - 6 + scrollY) + 'px';
+  pop.style.left = Math.max(16, Math.min(r.left, document.documentElement.clientWidth - pop.offsetWidth - 16)) + scrollX + 'px';
+}
+/** Tab y Shift+Tab dan la vuelta adentro del «Cómo funciona»: el foco no se va a la página de atrás. */
+function atraparFoco (e) {
+  const pop = document.getElementById('skpop');
+  const fs = [...pop.querySelectorAll('button, a[href], summary')].filter(x => x.getClientRects().length);
+  const a = document.activeElement, primero = fs[0], ultimo = fs[fs.length - 1];
+  if (e.shiftKey ? (a === primero || a === pop || !pop.contains(a)) : (a === ultimo || !pop.contains(a))) {
+    e.preventDefault(); (e.shiftKey ? ultimo : primero).focus();
+  }
 }
 /** Cómo armarlo: lo que las fuentes le asignan al personaje; las reglas generales de su
  *  tipo de ataque (iguales para todos) van plegadas. */
@@ -3231,13 +3556,15 @@ function irA (id) {
 /** Para buscar: sin tildes ni mayúsculas. */
 function plano (s) { return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
 function nombreGl (x) { return LANG === 'es' ? x.es : x.en; }
+/** Los otros nombres de un término: el inglés (si la app está en español y es distinto) y el coreano. */
+function otrosNombresGl (x) { return [LANG === 'es' && x.en !== x.es ? x.en : '', x.ko].filter(Boolean); }
 function enlaceGl (destino, texto, titulo) {
   return `<a href="#${destino}" class="tag ghost" data-a="irGlos" data-v="${destino}"${titulo ? ` title="${h(titulo)}"` : ''}>${h(texto)}</a>`;
 }
 /** Un término del juego: sus nombres (el del idioma de la app primero), qué dice, lo que el inglés
  *  traduce distinto, qué C.T.P. lo da y a qué efectos del catálogo corresponde. */
 function terminoGl (x, errores) {
-  const otros = [LANG === 'es' && x.en !== x.es ? x.en : '', x.ko].filter(Boolean).join(' · ');
+  const otros = otrosNombresGl(x).join(' · ');
   return `<div class="glterm" id="gl-${x.id}">
     <div class="row"><b>${h(nombreGl(x))}</b><span class="muted">${h(otros)}</span>
       ${x.difiere ? `<span class="tag solid gldif">${h(t('gl_difiere_tag'))}</span>` : ''}
@@ -4561,6 +4888,8 @@ function renderNav () {
 }
 function render () {
   anotarLugar();
+  // El «Cómo funciona» de una skill es de la pestaña Skills en que se abrió: si se pinta otra cosa, queda cerrado.
+  if (ui.tip && !tipVigente()) ui.tip = null;
   let body;
   switch (ui.view) {
     case 'detail':   body = renderDetail(); break;
@@ -4576,10 +4905,11 @@ function render () {
   // Los avisos van fuera de <main>: la barra del roster se pega arriba de main con margen
   // negativo y los taparía.
   $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div><main>' + body + '</main>'
-    + (ui.aliados != null ? aliadosModal() : '');
+    + (ui.aliados != null ? aliadosModal() : '') + tipHtml();
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
   sincronizarLugar();
+  if (ui.tip) posicionarTip();
 }
 
 // ============================================================================
@@ -4631,7 +4961,7 @@ window.addEventListener('popstate', (e) => {
   if (!s || !s.lugar) return;
   Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, eqPagina: s.eqPagina,
                       eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
-                      aliados: null, tlPick: null, focusSearch: false, volverY: s.y,
+                      aliados: null, tip: null, tlPick: null, focusSearch: false, volverY: s.y,
                       volverAbiertos: s.abiertos || [] });   // una entrada anotada por una versión anterior no los trae
   render();
   volverAPosicion();
@@ -4659,6 +4989,11 @@ function resaltar (id) {
 // EVENTOS
 // ============================================================================
 document.addEventListener('click', (e) => {
+  // Con el «Cómo funciona» de una skill abierto, tocar afuera lo cierra y el toque sigue su curso (si fue otra
+  // skill, la abre); si fue lo mismo que lo abrió, solo lo cierra. Si el foco no quedó en otra cosa, vuelve a
+  // la skill.
+  const tipAntes = ui.tip && !e.target.closest('#skpop') ? ui.tip : null;
+  if (tipAntes) cerrarTip(document.activeElement === document.body);
   const el = e.target.closest('[data-a]'); if (!el) return;
   const a = el.getAttribute('data-a'), d = el.dataset;
   const P = U.prefs;
@@ -4708,6 +5043,11 @@ document.addEventListener('click', (e) => {
     case 'irSkill': ui.entradaNueva = true; ui.fichaTab = d.tab; abrirFicha(d.cid, d.uid); resaltar(d.ancla); break;
     case 'uniform': ui.uniformId = d.uid; ui.eqPagina = 0; render(); break;
     case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
+    // Seleccionar texto de una skill no abre su «Cómo funciona».
+    case 'skTip': { const si = +d.si, ti = d.st == null ? null : +d.st, fi = d.fx == null ? null : +d.fx;
+      if (getSelection().toString() || (tipAntes && tipAntes.si === si && tipAntes.ti === ti && tipAntes.fi === fi)) break;
+      abrirTip(si, ti, fi); break; }
+    case 'tipCerrar': cerrarTip(true); break;
     case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
     case 'aliadosCerrar': ui.aliados = null; render(); break;
 
@@ -4941,16 +5281,21 @@ document.addEventListener('error', (e) => {
   verificarServidor();
 }, true);
 document.addEventListener('keydown', (e) => {
+  // Con el «Cómo funciona» abierto: Esc lo cierra (el foco vuelve a la skill) y Tab no sale de él.
+  if (ui.tip && e.key === 'Escape') { e.preventDefault(); cerrarTip(true); return; }
+  if (ui.tip && e.key === 'Tab') { atraparFoco(e); return; }
   if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
   if (e.key === 'Escape' && ui.aliados != null) { ui.aliados = null; render(); }
-  // En la ficha, ← y → pasan al anterior y al siguiente del listado (no mientras se escribe).
-  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && ui.view === 'detail' && ui.aliados == null
+  // En la ficha, ← y → pasan al anterior y al siguiente del listado (no mientras se escribe ni con algo abierto).
+  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && ui.view === 'detail' && ui.aliados == null && ui.tip == null
       && !e.target.closest('input, select, textarea') && !e.altKey && !e.ctrlKey && !e.metaKey) {
     const ch = CHAR_BY_ID[ui.charId], v = ch && variant(ch.id, ui.uniformId);
     const x = v && vecinosEnListado(v)[e.key === 'ArrowLeft' ? 'prev' : 'next'];
     if (x) { e.preventDefault(); abrirFicha(x.cid, x.uid); }
   }
 });
+// Al cambiar el tamaño de la ventana, el «Cómo funciona» se vuelve a ubicar (o pasa a hoja inferior y vuelve).
+window.addEventListener('resize', () => { if (ui.tip) posicionarTip(); });
 
 function download (name, text, type) {
   const a = document.createElement('a');
