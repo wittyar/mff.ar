@@ -358,7 +358,7 @@
   "MOVEMENT SPEED ↓": {"para": "rival", "efectos": ["velocidad_rival"]},
   "Natural Enemy": {"para": "propio", "efectos": ["dano_contra"], "condicion": {"contra": "con_efecto"}, "nota": {"es": "La fuente publica el efecto como un código; en Leads & Supports el mismo efecto aparece con nombre («Removes All Debuffs»).", "en": "The source publishes the effect as a code; in Leads & Supports the same effect appears by name (\"Removes All Debuffs\")."}},
   "Panic": {"para": "rival", "efectos": ["panico", "vulnerable_rival"]},
-  "Paralysis (Ignores immunity)": {"para": "rival", "efectos": ["paralizar"]},
+  "Paralysis (Ignores immunity)": {"para": "rival", "efectos": ["paralizar"], "nota": {"es": "La etiqueta dice que ignora la inmunidad. Según NamuWiki (World Boss Legend), los jefes de World Boss Legend ignoran incluso los controles que ignoran la inmunidad.", "en": "The label says it ignores immunity. Per NamuWiki (World Boss Legend), World Boss Legend bosses ignore even the crowd controls that ignore immunity."}},
   "PARALYZE": {"para": "rival", "efectos": ["paralizar"]},
   "Parry": {"para": "propio", "efectos": ["quita_debuffs", "inmune_todo"]},
   "PHYSICAL ATK DAMAGE": {"para": "rival", "efectos": ["golpe"]},
@@ -416,7 +416,7 @@
   "Vigor": {"para": "propio", "efectos": ["dano_contra"], "condicion": {"contra": "vida_baja"}},
   "VULNERABILITY": {"para": "rival", "efectos": ["ataques_rival", "defensas_rival", "velocidad_rival"]},
   "WEB": {"para": "rival", "efectos": ["telarana"]},
-  "Web (ignores immunity)": {"para": "rival", "efectos": ["telarana"]}
+  "Web (ignores immunity)": {"para": "rival", "efectos": ["telarana"], "nota": {"es": "La etiqueta dice que ignora la inmunidad. Según NamuWiki (World Boss Legend), los jefes de World Boss Legend ignoran incluso los controles que ignoran la inmunidad.", "en": "The label says it ignores immunity. Per NamuWiki (World Boss Legend), World Boss Legend bosses ignore even the crowd controls that ignore immunity."}}
  },
  "soporte": {
   "1s Pierce Duration Increase": {"efectos": ["duracion_efectos"]},

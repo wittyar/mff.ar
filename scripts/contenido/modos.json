@@ -35,21 +35,28 @@
    ],
    "equipo": {
     "tam": 3,
-    "es": "Líder / principal / soporte, más strikers de Tier-4 (la guía menciona usar a Ghost Rider y a Groot como strikers).",
-    "en": "Lead / main / support, plus Tier-4 strikers (the guide mentions Ghost Rider and Groot as strikers).",
+    "es": "Líder / principal / soporte, más cinco strikers de World Boss: cada uno le da al equipo el bono de su habilidad de World Boss y todos aparecen a pegar cuando se usa la skill cooperativa (la guía recomienda a Groot con el uniforme Guardians of the Galaxy 2, que deja cápsulas de curación). En Legend tienen que ser de Tier-2, 6★, maestría 6 y Nv. 60, y el que se usó en una victoria no se repite ese día. La guía menciona además a Ghost Rider como «Tier-4 Striker», el striker que se elige para cada personaje: es otro sistema.",
+    "en": "Lead / main / support, plus five World Boss strikers: each gives the team the bonus of its World Boss ability and all of them show up to attack when the co-op skill is used (the guide recommends Groot in the Guardians of the Galaxy 2 uniform, who leaves healing pods). In Legend they must be Tier-2, 6★, mastery 6 and Lv. 60, and one used in a clear cannot be used again that day. The guide also mentions Ghost Rider as a \"Tier-4 Striker\", the striker set for each character: that is a different system.",
     "fuente": [
      "tv-guia-4",
-     "tv-guia-1"
+     "tv-guia-1",
+     "namu-wb-striker",
+     "namu-wbl"
     ]
    },
    "avisos": [
     {
      "es": "Los artefactos genéricos con daño extra a \"Pure Evil\" no ayudan en WBL: Netmarble confirmó que los jefes de WBL no tienen habilidades asociadas.",
      "en": "Generic Artifacts with increased damage to \"Pure Evil\" do not help in WBL: Netmarble confirmed the WBL bosses have no abilities associated with them."
+    },
+    {
+     "es": "En Legend, los jefes ignoran incluso los controles que ignoran la inmunidad, así que se les gana con daño; el daño perforante adicional de las cartas sí les entra (NamuWiki).",
+     "en": "In Legend, bosses ignore even the crowd controls that ignore immunity, so they are beaten with damage; Additional Pierce Damage from cards still gets through (NamuWiki)."
     }
    ],
    "avisos_fuente": [
-    "tv-guia-3"
+    "tv-guia-3",
+    "namu-wbl"
    ],
    "listas": [
     "tv-wbl",
