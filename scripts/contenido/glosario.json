@@ -773,8 +773,8 @@
      "reforjado": true
     }
    ],
-   "falta": "en",
    "fuente": [
+    "juego-glosario",
     "juego-glosario-ko",
     "tv-ctps"
    ]
@@ -795,8 +795,8 @@
      "reforjado": true
     }
    ],
-   "falta": "en",
    "fuente": [
+    "juego-glosario",
     "juego-glosario-ko",
     "tv-ctps"
    ]
@@ -821,8 +821,8 @@
     "es": "En Conquest sin reforjar se activa con la vida por debajo del 50%.",
     "en": "On an unreforged Conquest it triggers with HP below 50%."
    },
-   "falta": "en",
    "fuente": [
+    "juego-glosario",
     "juego-glosario-ko",
     "tv-ctps"
    ]
