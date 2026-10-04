@@ -1,6 +1,6 @@
 # Catálogo de efectos
 
-Generado por `scripts/catalogo.py` el 2026-10-03, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
+Generado por `scripts/catalogo.py` el 2026-10-04, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
 
 thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo traen como una etiqueta (`ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (`All Basic Attacks`). Acá los dos apuntan al mismo efecto, y cada efecto dice qué es, a quién le sirve y cómo se lee en PvE y en PvP. Cuándo se activa y a quién le llega no es del efecto sino de cada skill o soporte (su activación, su objetivo, su restricción): eso lo muestra la ficha.
 
@@ -132,7 +132,7 @@ Sube el daño que hace, aparte del ataque.
 
 `dano_extra` · Bonus damage · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **Nota:** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y «Additional Damage» al daño fijo extra; no aclara si «Bonus Damage» es ese daño fijo.
+- **Nota:** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y «Additional Damage» al daño fijo extra, el único que sube con el nivel de la skill (NamuWiki dice lo mismo del 추가 피해량, «daño adicional»); no aclara si «Bonus Damage» es ese daño fijo. Falta ver si el texto en coreano de la pasiva de Tier-2 lo llama 추가 피해량. En inglés, «Bonus damage» nombra también el daño continuo de la maldición y de la pérdida.
 - **Skills:**
   - `SKILL AND BONUS DAMAGE ↑` (627 retratos)
 - **Leads & Supports:**
@@ -151,7 +151,7 @@ Sube el daño que hace, aparte del ataque.
 `dano_contra` · Damage against some foes · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **PvE:** Sube el daño solo contra esos rivales. [Probable]
-- **PvP:** Sube el daño solo contra esos rivales. [Probable]
+- **PvP:** Sube el daño solo contra esos rivales. Contra una facción, es lo que suele aportar el tercero del equipo en Timeline, el «buffer»: según NamuWiki, un personaje con aumentos o bajas de daño entre facciones en su pasiva o su uniforme, como Colossus. [Comprobado] ([NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Skills:**
   - `Increases basic damage based on character's faction` (139 retratos) — contra una facción (cada skill dice cuál)
   - `Vigor` (28 retratos) — contra rivales con la vida baja
@@ -257,6 +257,7 @@ Sube el daño que hace, aparte del ataque.
 
 `ignorar_faccion` · Ignores damage modifiers between factions · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
+- **PvP:** Anula los aumentos y las bajas de daño entre su facción y la del rival. En Timeline, eso es lo que suele aportar el «buffer» del equipo (Colossus, según NamuWiki), así que lo neutraliza. [Probable] ([NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Skills:**
   - `Ignores Damage Increase effect between factions` (1 retrato)
 - **Leads & Supports:**
@@ -521,7 +522,7 @@ Inmoviliza o domina al rival.
 
 - **PvE:** Frena a los enemigos y corta el ataque especial de los jefes de Alliance Battle Extreme. [Comprobado] ([THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
 - **Skills:**
-  - `Paralysis (Ignores immunity)` (474 retratos)
+  - `Paralysis (Ignores immunity)` (474 retratos) — Nota: La etiqueta dice que ignora la inmunidad. Según NamuWiki (World Boss Legend), los jefes de World Boss Legend ignoran incluso los controles que ignoran la inmunidad.
   - `PARALYZE` (85 retratos)
 
 ### Silencio
@@ -554,7 +555,7 @@ Inmoviliza o domina al rival.
 
 - **Skills:**
   - `WEB` (38 retratos)
-  - `Web (ignores immunity)` (14 retratos)
+  - `Web (ignores immunity)` (14 retratos) — Nota: La etiqueta dice que ignora la inmunidad. Según NamuWiki (World Boss Legend), los jefes de World Boss Legend ignoran incluso los controles que ignoran la inmunidad.
 
 ### Miedo
 
@@ -641,7 +642,7 @@ Inmoviliza o domina al rival.
 
 `perdida` · Loss · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. No se le aplica a quien tiene skills que quitan todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
+- **PvE:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. No se le aplica a quien tiene un efecto que quita todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **PvP:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026))
 - **Nota:** El glosario del juego dice que la pérdida frena al rival; thanosvibs publica su daño continuo y que le quita los buffs («Loss: Deals #% Bonus damage every # sec, removes Active Buffs»). Que sean el mismo efecto es probable: tienen el mismo nombre.
 - **Skills:**
@@ -1002,7 +1003,7 @@ Recibe menos daño o lo evita.
 `dano_recibido_de` · Less damage taken from some foes · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **PvE:** Solo contra esos rivales. [Probable]
-- **PvP:** Solo contra esos rivales. [Probable]
+- **PvP:** Solo contra esos rivales. Contra una facción, es lo que suele aportar el tercero del equipo en Timeline, el «buffer»: según NamuWiki, un personaje con aumentos o bajas de daño entre facciones en su pasiva o su uniforme, como Colossus. [Comprobado] ([NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Skills:**
   - `Decreases basic damage based on character's faction` (55 retratos) — contra una facción (cada skill dice cuál)
   - `Bravery` (23 retratos) — según la vida máxima del rival frente a la suya
@@ -1191,7 +1192,7 @@ Le saca los debuffs o lo hace inmune a ellos.
 
 `quita_debuffs` · Removes all debuffs · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1))
+- **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). Cuando dura un tiempo, protege mientras dura: NamuWiki dice que el liderazgo de Malekith le da a todo el equipo 20 s de inmunidad a los estados alterados, y la guía de thanosvibs llama «Debuff Immunity» a la pasiva de Tier-2 de Wasp, que la API publica como «Removes all Debuffs» por 20 s. En los liderazgos y soportes casi siempre dura 12 s desde que recibe un debuff: que esos protejan igual es lo probable, pero ninguna fuente lo dice. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), [NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Nota:** La API de skills a veces publica «Give Power» sin decir qué otorga; Leads & Supports trae que es esto (docs/AUDITORIA.md, sección 7).
 - **Skills:**
   - `Removes all Debuffs. ` (409 retratos)
@@ -1204,6 +1205,7 @@ Le saca los debuffs o lo hace inmune a ellos.
 `inmune_debuffs` · Debuff immunity · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **PvP:** Crucial en PvP: si el principal no la tiene, se lleva un líder o un soporte que la dé. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
+- **Nota:** La guía de thanosvibs llama «Debuff Immunity» también a «quitar todos los debuffs» con duración (la Tier-2 de Wasp). No son lo mismo: según el glosario del juego, la detención del tiempo, el encanto, la seducción, el control mental y el pánico alcanzan a los jefes y rivales a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
 - **Skills:**
   - `IMMUNE` (13 retratos)
 - **Leads & Supports:**
@@ -1422,7 +1424,7 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
 
 ### Errores que se repiten
 
-- **«Basic attacks» donde el coreano dice «reacción al golpe»** (Rotura de guardia, Invencible, Superarmadura, Escudo, Inmunidad al daño, Contraataque). 피격 모션 es la reacción al recibir un golpe: el personaje se frena y se le corta lo que estaba haciendo. El inglés lo traduce como «basic attacks» o «basic attack motions», que no tiene nada que ver con el stat de ataque básico. Con la traducción correcta todo cierra: la rotura de guardia corta la skill forzando esa reacción, la superarmadura es inmune a ella (y por eso a la rotura de guardia), y el contraataque reemplaza esa reacción, así que no se activa mientras es invencible.
+- **«Basic attacks» donde el coreano dice «reacción al golpe»** (Invencible, Superarmadura, Escudo, Inmunidad al daño, Contraataque). 피격 모션 es la reacción al recibir un golpe: el personaje se frena y se le corta lo que estaba haciendo. El inglés lo traduce como «basic attacks» o «basic attack motions», que no tiene nada que ver con el stat de ataque básico. Con la traducción correcta todo cierra: la rotura de guardia corta la skill forzando esa reacción, la superarmadura es inmune a ella (y por eso a la rotura de guardia), y el contraataque reemplaza esa reacción, así que no se activa mientras es invencible.
 - **«Sin debuffs» donde el coreano dice «inmunes a los debuffs»** (Congelación del tiempo, Encanto, Seducción, Control mental). El coreano dice que estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima. En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.
 - **«Type» donde el coreano dice «elemento»** (Daño puro, Type Amplification). 속성 es el elemento (fuego, frío, rayo, veneno, mente). El inglés lo traduce a veces como «Type», que en el juego también es la clase (Combate, Detonación, Velocidad, Universal). El daño puro no pasa por las resistencias elementales (el inglés dice «Type Resistance»), Type Amplification sube el daño de las skills con elemento, y la etiqueta «TYPE PENETRATION» de las skills atraviesa una resistencia elemental.
 
@@ -1488,8 +1490,8 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
   - **En el catálogo:** Daño perforante adicional.
 - **Penetration** · 간파: Cuando lo atacan, tiene una probabilidad de cortar el ataque del rival: sube si su Concentración es mayor que la del rival y baja si es menor. Barra propia que se carga al recibir golpes; después de usarse, no carga por 5 s.
   - **El inglés y el coreano:** 간파 quiere decir «ver venir» (leer el ataque), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; el coreano, su ataque.
-  - **Lo da:** Regeneration reforjado.
-  - **Nota:** thanosvibs nombra también a Penetration en su texto sobre Transcendence reforjado, pero sus números de Transcendence reforjado son los de Beatdown.
+  - **Lo da:** Regeneration reforjado, Transcendence reforjado.
+  - **Nota:** Transcendence reforjado da Penetration y Beatdown juntos.
 - **Beatdown** · 압도: Al usar una skill, sube el daño perforante adicional (sin el tope máximo) y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
   - **Lo da:** Energy reforjado, Transcendence reforjado.
 - **Type Amplification** · 속성 증폭: Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
@@ -1514,14 +1516,11 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
   - **En el catálogo:** Escudo.
 - **Enraged** · 격노: Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
   - **Lo da:** Rage reforjado.
-  - Sin la captura en inglés.
 - **Vitality** · 활력: Da inmunidad a la rotura y a la superrotura de guardia y cura vida cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.
   - **Lo da:** Refinement reforjado.
-  - Sin la captura en inglés.
 - **Wall** · 방벽: Una barrera propia que baja el daño recibido; cada golpe le resta reducción hasta un mínimo, que dura hasta que se termina. No se usa junto con la Barrera y no se suma a otras reducciones de daño: va aparte.
   - **Lo da:** Conquest sin reforjar.
   - **Nota:** En Conquest sin reforjar se activa con la vida por debajo del 50%.
-  - Sin la captura en inglés.
 - **Clash** · 격돌: Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, y sube el daño básico; la suba crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
   - **Lo da:** Conquest reforjado.
 - **Pánico** (Panic) · 공황: Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales que no reciben debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
@@ -1539,6 +1538,7 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
 
 - MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026)
 - MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026)
+- [NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80)
 - [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl)
 - [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps)
 - [THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1)
