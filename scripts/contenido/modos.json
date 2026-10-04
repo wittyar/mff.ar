@@ -259,7 +259,8 @@
     "es": "3 contra 3.",
     "en": "3 vs 3.",
     "fuente": [
-     "wiki-tl"
+     "wiki-tl",
+     "juego-guia"
     ]
    },
    "listas": [],
@@ -289,7 +290,8 @@
     "es": "Equipo de 5 personajes.",
     "en": "A team of 5 characters.",
     "fuente": [
-     "wiki-owb"
+     "wiki-owb",
+     "juego-guia"
     ]
    },
    "listas": [],
@@ -389,7 +391,8 @@
    ],
    "fuente": [
     "tv-guia-4",
-    "wiki-ms"
+    "wiki-ms",
+    "juego-guia"
    ],
    "listas": [],
    "ctp": null,
