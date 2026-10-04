@@ -48,7 +48,6 @@
     "es": "El coreano dice cómo la corta: fuerza la reacción al golpe (피격 모션). El inglés solo dice que la cancela.",
     "en": "The Korean says how it cuts it: it forces the hit reaction (피격 모션). The English only says it cancels it."
    },
-   "error": "golpe",
    "efectos": [
     "romper_guardia",
     "inmune_romper_guardia"
