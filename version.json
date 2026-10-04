@@ -1,6 +1,6 @@
 {
- "version": "1.0.18",
+ "version": "1.0.19",
  "formato_datos": 6,
  "python": "3.14.7",
- "notas": "Equipos: casillas para filtrar las combinaciones por lo que recibe el personaje (ataque, ignorar evasión, todas las defensas, vida y quita todos los debuffs), y los C.T.P. de la guía de armado de cada integrante según el modo. El «Por qué» se lee de otra forma: arriba, la suma de lo que le llega; al desplegar, de dónde sale cada cosa, con el link a la habilidad. El detalle de PvP y PvE va en renglones."
+ "notas": "Skills: al tocar una skill, o uno de sus renglones, se abre «Cómo funciona»: qué hace cada efecto; cuándo, cuánto y a quién; el texto del juego en inglés y en español; la certeza y las fuentes; y lo que el inglés traduce distinto del coreano. Con la próxima actualización de datos llegan el glosario y el catálogo revisados con capturas del juego y con NamuWiki."
 }
