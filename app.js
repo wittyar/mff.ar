@@ -302,9 +302,7 @@ const T = {
   sp_r_Allies:       { es:'raza',                en:'race' },
   sp_r_Side:         { es:'bando',               en:'side' },
   sp_r_Character:    { es:'personaje',           en:'character' },
-  sp_act:            { es:'Se activa',           en:'Activates' },
   sp_cd:             { es:'recarga',             en:'cooldown' },
-  sp_dur:            { es:'duración',            en:'duration' },
   sp_req:            { es:'Requiere',            en:'Requires' },
   sp_notable:        { es:'Notable',             en:'Notable' },
   sp_notable_t:      { es:'thanosvibs lo marca como notable', en:'thanosvibs marks it as notable' },
@@ -679,7 +677,7 @@ const T = {
   cx_de_sop:         { es:'{x} (soporte)',       en:'{x} (support)' },
   cx_lider:          { es:'Liderazgo de {x}',    en:'{x}\'s leadership' },
   cx_lider_nada:     { es:'Ningún liderazgo de los que valen en este contexto', en:'No leadership that counts in this context' },
-  cx_lider_mitad:    { es:'{c}: la mitad',       en:'{c}: half' },
+  cx_lider_mitad:    { es:'cuenta la mitad',     en:'counts half' },
   cx_dps:            { es:'DPS',                 en:'DPS' },
   cx_sinergia:       { es:'Soportes y bonos de equipo', en:'Supports and team bonuses' },
   cx_strikers:       { es:'Strikers',            en:'Strikers' },
@@ -1562,14 +1560,54 @@ function aliadosModal () {
     ${tiles.length ? `<div class="algrid">${tiles.join('')}</div>` : `<p class="muted">${h(t('al_none'))}</p>`}
   </div></div>`;
 }
-/** Un efecto de soporte en texto plano: "Ignorar evasión +25%". */
-function efectoSoporteTxt (f) {
-  const val = [];
-  if (f.v != null) val.push(typeof f.v === 'number' ? (f.v > 0 ? '+' : '') + f.v + '%' : trTxt(f.v));
-  if (f.i != null) val.push('+' + f.i + '% ' + t('sp_inst'));
-  if (f.c) val.push(trTxt(f.c));
-  return trTxt(f.s) + (val.length ? ' ' + val.join(' ') : '');
+// ---------------------------------------------------------------------------
+// UN EFECTO DE LIDERAZGO, SOPORTE O BONO DE EQUIPO
+// Una sola forma de escribirlo, la misma en todas las pantallas (Resumen, «Cómo funciona», comparativa,
+// bonos de equipo, detalle de PvP y PvE y «Por qué»): el stat, el valor con la parte del instinto y, entre
+// paréntesis, cuándo llega (la activación y su recarga, lo que pide, la condición del efecto, cuánto dura y
+// hasta dónde acumula). Los números van en el idioma de la app: +5,2% y −40% en español, +5.2% y −40% en
+// inglés.
+// ---------------------------------------------------------------------------
+/** Un número en el idioma de la app, con hasta dos decimales: 0,7 (es), 0.7 (en). */
+function numTxt (n) { return (Math.round(n * 100) / 100).toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US', { maximumFractionDigits: 2 }); }
+/** Un porcentaje con su signo: +65%, −40%. */
+function pctTxt (n) { const r = Math.round(n * 100) / 100; return (r > 0 ? '+' : r < 0 ? '−' : '') + numTxt(Math.abs(r)) + '%'; }
+/** El valor de un efecto: «+20% +0,4% del instinto total», «1 golpe», o vacío si no tiene número. */
+function valorTxt (v, i) {
+  const out = [];
+  if (typeof v === 'string') out.push(trTxt(v)); else if (v != null) out.push(pctTxt(v));
+  if (i != null) out.push(pctTxt(i) + ' ' + t('sp_inst'));
+  return out.join(' ');
 }
+/** Cuándo llega el efecto f de x (vacío si llega siempre): la activación del liderazgo o del soporte y su
+ *  recarga, lo que pide (Tier-2), la condición del efecto («con 2 personajes de Combate»), cuánto dura y, si
+ *  acumula, hasta dónde. */
+function condicionTxt (x, f) {
+  const p = [];
+  if (x.ac) p.push(minuscula(trTxt(x.ac)));
+  if (x.cd) p.push(t('sp_cd') + ' ' + numTxt(x.cd) + ' s');
+  if (x.req) p.push(minuscula(t('sp_req')) + ' ' + trTxt(x.req));
+  if (f.c) p.push(trTxt(f.c));
+  const d = f.d != null ? f.d : x.d;
+  if (d != null) p.push(t('an_dura') + ' ' + numTxt(d) + ' s');
+  if (f.tope != null) p.push(t('sp_cap') + ' ' + numTxt(f.tope) + '%');
+  return p.join(', ');
+}
+/** El efecto f de x (un liderazgo o un soporte de MFF_SOPORTES, o una versión de un bono de equipo), en
+ *  partes: { s: el stat de thanosvibs, val: valorTxt, cond: condicionTxt }. El texto y el HTML salen de acá. */
+function efectoSoporte (x, f) { return { s: f.s, val: valorTxt(f.v, f.i), cond: condicionTxt(x, f) }; }
+/** En texto: «Quita todos los debuffs (al recibir un debuff, recarga 20 s, dura 12 s)». */
+function efectoSoporteTxt (x, f) {
+  const e = efectoSoporte(x, f);
+  return trTxt(e.s) + (e.val ? ' ' + e.val : '') + (e.cond ? ` (${e.cond})` : '') + (sinClasificar(e.s) ? ` (${t('sy_unclassified')})` : '');
+}
+/** Un renglón de efecto en HTML, con el mismo texto que efectoSoporteTxt: el stat, el valor en negrita, lo
+ *  que va pegado al valor (extra: el «*» de la suma del «Por qué») y, atenuada, la condición. */
+function renglonHtml (s, val, cond, extra) {
+  return `${trHtml(s)}${val ? ` <b>${h(val)}</b>` : ''}${extra || ''}${cond ? ` <span class="muted">(${h(cond)})</span>` : ''}${
+    sinClasificar(s) ? ` <span class="muted">(${h(t('sy_unclassified'))})</span>` : ''}`;
+}
+function efectoSoporteHtml (x, f) { const e = efectoSoporte(x, f); return renglonHtml(e.s, e.val, e.cond); }
 const LIDERAZGOS = ['leader', 'leader2'];
 const ROLES_EQUIPO = ['Tanque', 'Control', 'Daño', 'Soporte'];
 /** Bonos de equipo de cada personaje (MFF_BONOS), por id. Cada versión de sus stats (más de una
@@ -1707,8 +1745,7 @@ function razonesTxt (razones) {
       if (!grupos.has(k)) grupos.set(k, { fx, bs: [] });
       grupos.get(k).bs.push(b);
     }
-    for (const g of grupos.values()) out.push(`${prefijo} → ${g.bs.map(fullLabel).join(', ')}: ${g.fx.map(f =>
-      efectoSoporteTxt(f) + (sinClasificar(f.s) ? ' (' + t('sy_unclassified') + ')' : '')).join(' · ')}`);
+    for (const g of grupos.values()) out.push(`${prefijo} → ${g.bs.map(fullLabel).join(', ')}: ${g.fx.map(f => efectoSoporteTxt(x, f)).join(' · ')}`);
   };
   for (const r of razones) {
     if (r.tipo === 'soporte') lineas(`${fullLabel(r.de)} · ${t(CLAVE_SOPORTE[r.k])}${r.k === 'artifact' ? ' (' + t('pq_si_art') + ')' : ''}`, r.x, r.a);
@@ -2798,37 +2835,8 @@ function botonArmar (vs, modo, nombre, etiqueta) {
 // activa con una condición, aparte y con la condición. Plegado, el desglose por origen, con un enlace a
 // cada skill en la ficha de quien la da. Después, lo demás: lo que da él, los bonos de equipo, los roles,
 // la ventaja de clase y sus strikers; y, si se compara con el equipo de antes, lo que se pierde. Con los
-// nombres cortos (el completo, en el title) y «a todos» si algo les llega a todos.
-/** Un número en el idioma de la app, con hasta dos decimales: 0,7 (es), 0.7 (en). */
-function numTxt (n) { return (Math.round(n * 100) / 100).toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US', { maximumFractionDigits: 2 }); }
-/** Un porcentaje con su signo: +65%, −40%. */
-function pctTxt (n) { const r = Math.round(n * 100) / 100; return (r > 0 ? '+' : r < 0 ? '−' : '') + numTxt(Math.abs(r)) + '%'; }
-/** El valor de un efecto: «+20% +0,4% del instinto total», «1 golpe», o vacío si no tiene número. */
-function valorTxt (v, i) {
-  const out = [];
-  if (typeof v === 'string') out.push(trTxt(v)); else if (v != null) out.push(pctTxt(v));
-  if (i != null) out.push(pctTxt(i) + ' ' + t('sp_inst'));
-  return out.join(' ');
-}
-/** Cuándo llega un efecto de un soporte o un liderazgo (vacío si llega siempre): la activación del slot,
- *  lo que pide (Tier-2), la condición del efecto («con 2 personajes de Combate»), cuánto dura y, si
- *  acumula, hasta dónde. */
-function condicionTxt (x, f) {
-  const p = [];
-  if (x.ac) p.push(minuscula(trTxt(x.ac)));
-  if (x.req) p.push(minuscula(t('sp_req')) + ' ' + trTxt(x.req));
-  if (f.c) p.push(trTxt(f.c));
-  const d = f.d != null ? f.d : x.d;
-  if (d != null) p.push(numTxt(d) + ' s');
-  if (f.tope != null) p.push(t('sp_cap') + ' ' + numTxt(f.tope) + '%');
-  return p.join(', ');
-}
-/** Un renglón de efecto: el stat (el texto de la app), el valor y, aparte, la condición. */
-function renglonHtml (s, val, cond, extra) {
-  return `${trHtml(s)}${val ? ` <b>${h(val)}</b>` : ''}${extra || ''}${cond ? ` <span class="muted">(${h(cond)})</span>` : ''}${
-    sinClasificar(s) ? ` <span class="muted">(${h(t('sy_unclassified'))})</span>` : ''}`;
-}
-function efectoPqHtml (x, f) { return renglonHtml(f.s, valorTxt(f.v, f.i), condicionTxt(x, f)); }
+// nombres cortos (el completo, en el title) y «a todos» si algo les llega a todos. Cada efecto, con
+// efectoSoporteHtml.
 /** Cómo se nombra a cada integrante: el personaje, sin uniforme, si en el equipo no hay otro con el
  *  mismo nombre; si no, el nombre completo. */
 function nombreEn (vs) { return (x) => vs.some(y => y !== x && y.name === x.name) ? fullLabel(x) : x.name; }
@@ -2942,7 +2950,7 @@ function grupoHtml (g, vs, nombre) {
   const efs = [...g.fx].sort((a, b) => r.x.fx.indexOf(a[0]) - r.x.fx.indexOf(b[0]));
   const quienes = (ms) => ms.map(x => x.key).join('|'), iguales = efs.every(([, ms]) => quienes(ms) === quienes(efs[0][1]));
   const a = (ms) => ` → ${aQuienesHtml(ms, vs, nombre)}`;
-  return `<li>${cab}${iguales ? a(efs[0][1]) : ''}<ul>${efs.map(([f, ms]) => `<li>${efectoPqHtml(r.x, f)}${iguales ? '' : a(ms)}</li>`).join('')}</ul></li>`;
+  return `<li>${cab}${iguales ? a(efs[0][1]) : ''}<ul>${efs.map(([f, ms]) => `<li>${efectoSoporteHtml(r.x, f)}${iguales ? '' : a(ms)}</li>`).join('')}</ul></li>`;
 }
 /** Los strikers del equipo en los que está el foco, como viñetas: «Jeff de Adam Warlock (5% al atacar)». */
 function strikersPqHtml (foco, vs, nombre) {
@@ -2970,7 +2978,7 @@ function porqueHtml (id, foco, vs, lider, demas, pierde, antes) {
         <details class="pqdesg" id="${h(id)}-d"><summary>${h(t('pq_desglose'))}</summary>${os.map(o => `<div class="pqorig">
           <div class="pqoh">${o.art ? h(t('pq_art_de')).replace('{x}', () => nombreHtml(o.de, nombre)) : nombreHtml(o.de, nombre)}${
             !o.art && o.de === lider ? ` <span class="muted">(${h(t('pq_lider'))})</span>` : ''}</div>
-          <ul class="pqlista">${o.skills.map(r => `<li>${enlaceSkill(r)}<ul>${r.fx.map(f => `<li>${efectoPqHtml(r.x, f)}</li>`).join('')}</ul></li>`).join('')}</ul>
+          <ul class="pqlista">${o.skills.map(r => `<li>${enlaceSkill(r)}<ul>${r.fx.map(f => `<li>${efectoSoporteHtml(r.x, f)}</li>`).join('')}</ul></li>`).join('')}</ul>
         </div>`).join('')}</details>`
       : `<p class="muted">${h(t('pq_nada'))}</p>`}</div>
     ${ademas.length ? `<div class="pqsec"><div class="pqh">${h(t('pq_ademas'))}</div><ul class="pqlista">${ademas.join('')}</ul></div>` : ''}
@@ -3024,7 +3032,7 @@ function bonosHtml (ch) {
         <b>${h(b.n || t('bn_noname'))}</b>
         ${retratosEquipo(b.m.filter(c => c !== ch.id).map(c => variant(c, null)), null)}
         ${b.vs.length > 1 ? `<div class="muted bonoaviso">${h(t('bn_tie'))}</div>` : ''}
-        ${b.vs.map(v => `<div class="bonostats">${h(v.fx.map(efectoSoporteTxt).join(' · '))}</div>`).join('')}
+        ${b.vs.map(v => `<div class="bonostats">${h(v.fx.map(f => efectoSoporteTxt(v, f)).join(' · '))}</div>`).join('')}
         <div class="fuentes">${fuentesHtml(b.f)}</div>
       </div>`).join('')}</div>
     </details>
@@ -3401,22 +3409,22 @@ function detalleContexto (e, vs, ctx) {
     });
     partes.push([h(t('cx_anti')), null, [...fuentes.values()].map(f => `${h(t(f.clave)).replace('{x}', () => quien(f.de))} → ${a(f.ms)}`)]);
   }
-  // Por stat que vale y activación: sus líneas (un liderazgo puede traer varias del mismo stat) y a
-  // quiénes llega. Las de un liderazgo condicional cuentan la mitad, y solo para quien no recibe el
-  // mismo stat de uno permanente (cada stat cuenta una vez por integrante, la de más peso).
+  // Por stat que vale y activación: sus líneas (un liderazgo puede traer varias del mismo stat; cada una
+  // con efectoSoporteTxt, que ya dice la activación) y a quiénes llega. Las de un liderazgo condicional
+  // cuentan la mitad, y solo para quien no recibe el mismo stat de uno permanente (cada stat cuenta una
+  // vez por integrante, la de más peso).
   const vale = LIDERAZGO_VALE[ctx], grupos = new Map(), lleno = new Set();
   for (const x of slotsDe(e.lider).lid) for (const f of x.fx) {
     if (!vale.has(f.s)) continue;
     const k = f.s + '|' + (x.ac || '');
     const g = grupos.get(k) || { s: f.s, ac: x.ac, txt: [], ms: new Set() };
     grupos.set(k, g);
-    g.txt.push(efectoSoporteTxt(f));
+    g.txt.push(efectoSoporteTxt(x, f));
     vs.forEach(m => { if (aplicaA(x, m) && sirve(f, m)) { g.ms.add(m); if (!x.ac) lleno.add(f.s + '|' + m.key); } });
   }
   const liderazgo = [...grupos.values()].map(g => {
     const ms = vs.filter(m => g.ms.has(m) && !(g.ac && lleno.has(g.s + '|' + m.key)));
-    const cond = g.ac ? ` (${t('cx_lider_mitad').replace('{c}', minuscula(trTxt(g.ac)))})` : '';
-    return ms.length ? `${h(g.txt.join(' / ') + cond)} → ${a(ms)}` : null;
+    return ms.length ? `${h(g.txt.join(' / ') + (g.ac ? ': ' + t('cx_lider_mitad') : ''))} → ${a(ms)}` : null;
   }).filter(Boolean);
   partes.push([h(t('cx_lider')).replace('{x}', () => quien(e.lider)), e.partes.lider, liderazgo.length ? liderazgo : [h(t('cx_lider_nada'))]]);
   const dps = vs.map((m, j) => ({ m, r: e.roles[j] })).filter(x => x.r.dps).map(({ m, r }) =>
@@ -3976,27 +3984,16 @@ const TIPOS_SOPORTE = [['leader', 'sp_leader'], ['leader2', 'sp_leader2'], ['pas
   ['t2', 'sp_t2'], ['t22', 'sp_t22'], ['uniform', 'sp_uniform'], ['uniform2', 'sp_uniform2'], ['artifact', 'sp_artifact']];
 const SLOTS_SOPORTE = TIPOS_SOPORTE.map(([k]) => k).filter(k => !LIDERAZGOS.includes(k));
 const CLAVE_SOPORTE = Object.fromEntries(TIPOS_SOPORTE);   // slot -> su nombre en la tabla de idioma
-function efectoSoporteHtml (x) {
-  const val = [];
-  if (x.v != null) val.push(typeof x.v === 'number' ? h((x.v > 0 ? '+' : '') + x.v + '%') : trHtml(x.v));
-  if (x.i != null) val.push(h('+' + x.i + '% ' + t('sp_inst')));
-  if (x.tope != null) val.push(h(t('sp_cap') + ' ' + x.tope + '%'));
-  if (x.c) val.push(trHtml(x.c));
-  if (x.d != null) val.push(h(x.d + ' s'));
-  return `<li>${trHtml(x.s)}${val.length ? ` <b>${val.join(' · ')}</b>` : ''}</li>`;
-}
 function restrHtml (x) {
   if (!x.r) return `<span class="muted">${h(t('sp_all'))}</span>`;
   const [cat, val] = x.r;
   const corr = x.rc ? ` <span class="corr" title="${h(t('sp_corrected') + ' ' + x.rc.join(': '))}">⚠</span>` : '';
   return `<span class="muted">${h(t('sp_applies'))}: ${h(t('sp_r_' + cat))}</span> ${icon(val)}<b>${h(cat === 'Character' ? val : dom(val))}</b>${corr}`;
 }
+/** Un liderazgo o un soporte (Resumen y «Cómo funciona»): de qué slot es, su nombre, a quiénes llega, sus
+ *  categorías y cada efecto con efectoSoporteHtml, que dice también su activación, su recarga, cuánto dura y
+ *  lo que pide. */
 function soporteHtml (tipo, clave, x) {
-  const extra = [];
-  if (x.ac) extra.push(h(t('sp_act')) + ': ' + trHtml(x.ac));
-  if (x.cd) extra.push(h(t('sp_cd') + ' ' + x.cd + ' s'));
-  if (x.d) extra.push(h(t('sp_dur') + ' ' + x.d + ' s'));
-  if (x.req) extra.push(h(t('sp_req')) + ' ' + trHtml(x.req));
   return `<div class="sop">
     <div class="soph"><span class="slotbadge ${tipo.startsWith('leader') ? 'lead' : 'pass'}">${h(t(clave))}</span>
       ${x.n ? nombreTabla(x.n) : ''}
@@ -4005,8 +4002,7 @@ function soporteHtml (tipo, clave, x) {
     <div class="sopr">${restrHtml(x)}</div>
     ${categoriasDe(x).length ? `<div class="row sopcats" title="${h(t('ct_title'))}">${categoriasDe(x).map(k =>
       `<span class="tag ghost">${h(t('ct_' + k))}</span>`).join('')}</div>` : ''}
-    <ul class="sopfx">${x.fx.map(efectoSoporteHtml).join('')}</ul>
-    ${extra.length ? `<div class="muted">${extra.join(' · ')}</div>` : ''}
+    <ul class="sopfx">${x.fx.map(f => `<li>${efectoSoporteHtml(x, f)}</li>`).join('')}</ul>
   </div>`;
 }
 /** Qué le sirve de un liderazgo o un soporte: las categorías de ataque según con qué pega
