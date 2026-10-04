@@ -2,7 +2,8 @@
 
 Comparador personal de MARVEL Future Fight de Ezequiel, como app de escritorio (README.md). El
 modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada dato, está en
-`docs/MODELO.md`; lo que no cierra entre fuentes, en `docs/AUDITORIA.md`.
+`docs/MODELO.md`; lo que no cierra entre fuentes, en `docs/AUDITORIA.md`; lo que le falta a cada
+variante, en `docs/COMPLETITUD.md`.
 
 ## Cómo trabajamos
 
@@ -22,15 +23,19 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
   con la historia de cada uno). Los datos publicados salen de main: con un formato nuevo, el push y
   la etiqueta `vX.Y.Z` van juntos. El workflow arma la release con la etiqueta.
 - Build: `python3 scripts/build.py`, sobre lo bajado en `work/` (sin red). Regenera `data.js`,
-  `datos.json`, `docs/AUDITORIA.md` y `docs/CATALOGO.md`; para con un mensaje si el contenido curado
-  (`scripts/contenido/`) no cierra con los datos.
+  `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y `docs/COMPLETITUD.md`; para con un mensaje
+  si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a
+  los datos recién cuando corre el build: sin `work/`, se valida con `catalogo.validar`,
+  `catalogo.validar_glosario` y `fuentes.validar_contenido`.
 - Pruebas: no están en el repo. Son scripts de Playwright contra la app servida por
   `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`. La
   copia más reciente va en un zip junto al último bundle (`pruebas-mff-*.zip`); su `LEEME.txt` dice
   qué rutas adaptar. `images/` y `work/` no están en el repo: las imágenes se bajan con
   `bajar_imagenes.py`, y sin `work/` no corren verif_guia_ficha, verif_marcadores ni verif_opciones.
+  Las que leen el contenido curado del repo (verif_glosario) fallan contra un data.js viejo:
+  `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo.
 
-## Estado (3 de octubre de 2026)
+## Estado (4 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.17. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian
   su Glosario.
@@ -38,13 +43,38 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
   actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03». En la
   sección 8 de AUDITORIA.md, los marcadores quedaron así: 3 a mano, 131 de Leads & Supports, 38 de
   la wiki y 77 sin resolver.
-- Entregada sin publicar: la 1.0.18. Trae casillas por cobertura en las combinaciones, los C.T.P.
-  de la guía de armado en cada tarjeta, y el «Por qué» y el detalle de PvP y PvE rehechos para que
-  se lean (suma de lo que le llega, desglose por origen con link a cada habilidad). Los datos no
-  cambian (formato 6): el push y la etiqueta pueden ir juntos.
+- Entregadas sin publicar, las dos con datos de formato 6 (el push y la etiqueta pueden ir juntos):
+  - La 1.0.18: casillas por cobertura en las combinaciones, los C.T.P. de la guía de armado en cada
+    tarjeta, y el «Por qué» y el detalle de PvP y PvE rehechos para que se lean (suma de lo que le
+    llega, desglose por origen con link a cada habilidad).
+  - La 1.0.19: el «Cómo funciona» de cada skill (cinco secciones, al tocarla en la pestaña Skills),
+    `docs/COMPLETITUD.md` y el contenido curado revisado con NamuWiki y con las 380 capturas del
+    juego del 2 de octubre. Ese contenido llega a los datos cuando corre el workflow: conviene
+    correrlo a mano después del push.
 
 ## Pendiente
 
+- Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
+  - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e
+    Incapacitation, pero en las 380 que llegaron a esta conversación la lista coreana nunca los abre.
+    Si salen de otra tanda, está bien; si no, hay que sacarles esa cita y a Mind Control su
+    diferencia y el error «inmunes». Pánico en coreano sigue sin captura.
+  - Strikers del juego: Galactus tiene 16 y la app ninguno; los 37 visibles de Kingpin coinciden
+    con la wiki. Cargarlos pide un archivo de contenido, una fuente y código nuevos (el juego por
+    encima de la wiki, fila por fila) y probablemente formato 7. Falta decidir.
+  - Wall: el glosario dice «Lo da: Conquest sin reforjar», pero va en la opción fija, que el C.T.P.
+    conserva al reforjarlo. Arreglarlo pide cambiar `reforjado` o cómo lo escriben catalogo.py y
+    app.js.
+  - Bonos de equipo: las capturas no resuelven el pendiente de más abajo, porque los integrantes
+    solo se ven por retrato. Para eso, capturar «TEAM BONUS PER CHARACTER» de cada candidato (la
+    barra muestra el nombre) y la lista de Galactus hasta el final (Heralds #3).
+  - Urus: el juego habla de urus amplificados y thanosvibs de ranuras amplificadas. Verlo en el
+    juego.
+  - Sin cargar, de la guía del juego: los Boost Points de Giant Boss Raid, quién juega Alliance
+    Battle y su requisito del día, las temporadas de 8 semanas de Otherworld; el juego escribe
+    «Judgment» y thanosvibs «Judgement».
+- Completitud: falta decidir si los que la guía de armado marca «dont waste gold» cuentan como
+  faltantes y si el informe (unos 220 KB) se achica.
 - Propuesta, sin decidir: que publicar.yml no publique una versión si el `datos.json` de main no es
   del formato de `version.json`. Evita lo que pasó con la 1.0.17.
 - Las «permutaciones» de los mismos integrantes que Ezequiel vio en la lista de Adam Warlock no
@@ -89,8 +119,9 @@ modelo del juego, con las reglas y decisiones de Ezequiel y de dónde sale cada 
 
 - Liderazgo en PvP: Molecule Man es «la excepción rara» (Ezequiel) y hoy no suma nada fuera de los
   anti-mermas, ni tiene lista de PvP; el daño contra una facción no cuenta. Falta decidir cómo
-  cuentan. Los pesos se revisaron con casos y quedaron igual (ver «Casos de referencia» en
-  `docs/MODELO.md`).
+  cuentan. Según NamuWiki, el tercero de un equipo de Timeline suele ser un «buffer» de daño entre
+  facciones (Colossus), y Molecule Man ignora justamente eso. Los pesos se revisaron con casos y
+  quedaron igual (ver «Casos de referencia» en `docs/MODELO.md`).
 - Compañeros sin función en el contexto: entran igual si tienen vínculo con él. Falta decidir si
   quedan fuera, como el personaje de la ficha.
 - Bonos de equipo del juego por confirmar con capturas. Quedaron anotados así: W, D, R y SW; con
