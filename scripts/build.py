@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Reconstruye data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md y
-docs/CATALOGO.md desde work/. Correr tras fetch_all.py y parse_instinto.py.
+"""Reconstruye data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md,
+docs/CATALOGO.md y docs/COMPLETITUD.md desde work/. Correr tras fetch_all.py y parse_instinto.py.
 
 Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
 catalogo.py (valida el catálogo de efectos contra los datos; docs/CATALOGO.md),
 auditar.py (work/verificacion.json y docs/AUDITORIA.md) y _core.py (personajes y tier
-lists, work/build2.json); acá se junta todo en data.js.
+lists, work/build2.json); acá se junta todo en data.js. Al final, completitud.py lee el
+data.js y el datos.json recién escritos y dice qué le falta a cada variante
+(docs/COMPLETITUD.md).
 
 datos.json es lo que la app instalada consulta en GitHub para saber si hay datos nuevos:
 versión, formato, sha256 y tamaño de cada archivo que baja, y la lista de imágenes con
@@ -223,3 +225,5 @@ with open('datos.json', 'w', encoding='utf-8', newline='\n') as f:
     f.write('\n')
 print(f"data.js {os.path.getsize('data.js')//1024} KB | import {os.path.getsize('mff-thanosvibs-import.json')//1024} KB"
       f" | juego {gv} | listas {len(tl)} | sets de skills {len(SKILLS)}")
+# Qué le falta a cada variante, sobre el data.js y el datos.json recién escritos (docs/COMPLETITUD.md).
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'completitud.py')], check=True)
