@@ -702,6 +702,9 @@ const T = {
   cmp_remove:        { es:'Quitar',              en:'Remove' },
   cmp_unplaced:      { es:'sin ubicar',          en:'unplaced' },
   cmp_missing_slot:  { es:'— no tiene —',        en:'— none —' },
+  cmp_mas:           { es:'{n} efectos más',     en:'{n} more effects' },
+  cmp_mas_1:         { es:'1 efecto más',        en:'1 more effect' },
+  cmp_lleno:         { es:'Ya hay {n} para comparar: quitá una para sumar {x}.', en:'There are already {n} to compare: remove one to add {x}.' },
   cmp_synergy:       { es:'Sinergia estimada',   en:'Estimated synergy' },
   cmp_pts:           { es:'pts',                 en:'pts' },
   cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
@@ -807,6 +810,8 @@ const T = {
   tm_name_ph:        { es:'Nombre del equipo',   en:'Team name' },
   tm_nomode:         { es:'Sin modo (3)',        en:'No mode (3)' },
   tm_members:        { es:'Miembros',            en:'Members' },
+  tm_lleno:          { es:'El equipo ya tiene {n} de {n}: quitá uno para sumar a {x}.', en:'The team already has {n} of {n}: remove one to add {x}.' },
+  tm_sobran:         { es:'Este modo es de {n} y hay {m}: quitá {k} para guardarlo.', en:'This mode takes {n} and there are {m}: remove {k} to save it.' },
   tm_sorted_by:      { es:'ordenados por',       en:'sorted by' },
   tm_search:         { es:'Buscar…',             en:'Search…' },
   tm_reason_ph:      { es:'Por qué funciona (opcional)', en:'Why it works (optional)' },
@@ -966,6 +971,8 @@ const T = {
                        en:'Under each one, what it gets: its teammates\' supports and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points.' },
   cb_ataque:         { es:'Ataque',               en:'Attack' },
   cb_art:            { es:'* Solo si el compañero que lo da lleva su artefacto.', en:'* Only if the teammate who gives it has its artifact.' },
+  pt_art:            { es:'* Cuenta el soporte del artefacto de un integrante, como si lo llevara: vale solo si lo lleva.',
+                       en:'* It counts a member\'s artifact support as if it were equipped: it only applies if it is.' },
   c_targets:         { es:'Beneficia a',          en:'Buffs' },
   c_attrs:           { es:'Atributos marcados',   en:'Marked attributes' },
   f_attrs:           { es:'Atributo marcado por vos', en:'Attribute you marked' },
@@ -1246,10 +1253,11 @@ function latir () {
 // ============================================================================
 let ui = {
   view: 'roster', search: '', page: 0,
-  pickMode: false, picks: [],
+  pickMode: false, picks: [], avisoPick: null,  // avisoPick: por qué no se sumó la última que se tocó
   charId: null, uniformId: 'base',
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
   teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
+  avisoEquipo: null,                 // por qué el armador no sumó al último que se tocó
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
@@ -1646,13 +1654,14 @@ let VENTAJA, LE_GANA_A;
  *  Escrita con bucles y sin armar textos si no hacen falta: la consulta de combinaciones la
  *  llama cientos de miles de veces. */
 function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
-  if (vs.length < 2) return { score: 0, razones: [], aplicados: [], lider: null };
+  if (vs.length < 2) return { score: 0, razones: [], aplicados: [], lider: null, art: false };
   // razones: lo que suma, para explicarlo (sin soloPuntaje): cada soporte o liderazgo con los
   // integrantes a los que les llega y les sirve, cada versión de un bono de equipo, los roles, las
   // clases y cada ventaja de clase. Los textos salen de ahí (razonesTxt, porqueHtml).
   // aplicados: { de, a: [integrantes] }, lo que suma: quién le da algo a quién (en un bono de equipo,
   // cada integrante a los otros, que están juntos por el bono)
-  const razones = [], aplicados = []; let score = 0;
+  // art: algún soporte de artefacto sumó (cuenta como si lo llevara; los puntos lo marcan con «*»).
+  const razones = [], aplicados = []; let score = 0, art = false;
   // Un soporte o un liderazgo suma si le llega a otro integrante y le sirve (sirve()). Con foco
   // (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le dan a él y
   // lo que da él. Lo que los demás se dan entre ellos no suma para él.
@@ -1665,6 +1674,7 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
       const x = s[k]; if (!x || LIDERAZGOS.includes(k) || !cuenta(a, x)) continue;
       const bs = alcanza(a, x); if (!bs.length) continue;
       score += x.sig ? 3 : 2; aplicados.push({ de: a, a: bs });
+      if (k === 'artifact') art = true;
       if (!soloPuntaje) razones.push({ tipo: 'soporte', de: a, k, x, a: bs });
     }
   }
@@ -1715,14 +1725,16 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
       if (!soloPuntaje) razones.push({ tipo: 'ventaja', a, b, amenaza, fuerza });
     }
   }
-  return { score, razones, aplicados, lider };
+  return { score, razones, aplicados, lider, art };
 }
 /** Nombre de un bono de equipo en las razones: «Bono de equipo «X» (A + B)», con la versión si la
- *  wiki no coincide. */
-function nombreBono (r) {
+ *  wiki no coincide (sin version, el bono entero: el detalle de PvP y PvE lo cuenta una vez). */
+function nombreBono (r, version = true) {
   const nombre = `${t('sy_bonus')} ${r.b.n ? '«' + r.b.n + '»' : t('sy_bonus_noname')} (${r.integrantes.map(x => x.name).join(' + ')})`;
-  return r.b.vs.length > 1 ? `${nombre} · ${t('sy_bonus_ver').replace('{i}', r.i + 1).replace('{n}', r.b.vs.length)}` : nombre;
+  return version && r.b.vs.length > 1 ? `${nombre} · ${t('sy_bonus_ver').replace('{i}', r.i + 1).replace('{n}', r.b.vs.length)}` : nombre;
 }
+/** El «*» de unos puntos que cuentan el soporte de un artefacto como si lo llevara (como el de las casillas). */
+function artPts (art) { return art ? `<span class="pqart" title="${h(t('pt_art'))}">*</span>` : ''; }
 /** Una razón de la sinergia que no es un efecto (roles, clases o ventaja de clase), en texto, con los
  *  integrantes nombrados por `nombre`. */
 function razonTxt (r, nombre) {
@@ -2022,13 +2034,20 @@ function srcEs (v) {
 }
 function elemEs (v) { return LANG === 'en' ? v : (txt('elem', (TB.elem || []).findIndex(x => x.en === v)) || v); }
 
-/** Máximo 4 columnas en la comparación: al agregar la quinta se descarta la más vieja. */
+/** Columnas de la comparación. */
+const MAX_COMPARAR = 4;
+/** Elige o deja de elegir una variante para comparar. Con MAX_COMPARAR elegidas no suma otra: lo dice
+ *  (ui.avisoPick, en la barra de abajo del roster) en vez de descartar una. */
 function togglePick (cid, uid) {
   const key = cid + '::' + (uid || 'base');
   const i = ui.picks.findIndex(x => x.key === key);
+  ui.avisoPick = null;
   if (i > -1) { ui.picks.splice(i, 1); return; }
+  if (ui.picks.length >= MAX_COMPARAR) {
+    ui.avisoPick = t('cmp_lleno').replace('{n}', MAX_COMPARAR).replace('{x}', fullLabel(variant(cid, uid)));
+    return;
+  }
   ui.picks.push({ cid, uid: uid || null, key });
-  if (ui.picks.length > 4) ui.picks.shift();
 }
 function readFile (file, cb) { const r = new FileReader(); r.onload = () => cb(r.result); r.readAsDataURL(file); }
 
@@ -2054,13 +2073,15 @@ function rankIndex (key) {
   const idx = indicesFila(list, key);
   return idx.length ? idx[0] : 999;
 }
-function rankLabel (key) {
-  const list = listById(U.prefs.refList); if (!list) return null;
+/** Las filas de una entrada en una lista: la mejor (su rótulo y su color) y los rótulos de todas; null si
+ *  no está ubicada. */
+function filaEn (list, key) {
   const idx = indicesFila(list, key); if (!idx.length) return null;
   const rows = rowsOf(list);
-  return { label: rows[idx[0]].label, color: rowColor(idx[0], rows.length),
-           todas: idx.map(i => rows[i].label) };
+  return { label: rows[idx[0]].label, color: rowColor(idx[0], rows.length), todas: idx.map(i => rows[i].label) };
 }
+/** Sus filas en la lista de referencia (filaEn), o null. */
+function rankLabel (key) { const list = listById(U.prefs.refList); return list ? filaEn(list, key) : null; }
 /** Rótulo de la mejor fila, con "+N" si la entrada está en más filas. */
 function rankTexto (rank) { return rank.label + (rank.todas.length > 1 ? ' +' + (rank.todas.length - 1) : ''); }
 
@@ -2171,7 +2192,7 @@ function toolbar (total, shown) {
       </div>
       <select data-a="sort" title="${h(t('sort'))}">${Object.entries(SORTS).map(([k, o]) => `<option value="${k}" ${k === U.prefs.sort ? 'selected' : ''}>${h(t(o.k))}</option>`).join('')}</select>
       <button class="btn icon" data-a="dir" title="${h(t('invert'))}">${U.prefs.dir === 1 ? '↑' : '↓'}</button>
-      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `${h(t('comparing'))} (${ui.picks.length}/4)` : h(t('compare'))}</button>
+      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `${h(t('comparing'))} (${ui.picks.length}/${MAX_COMPARAR})` : h(t('compare'))}</button>
       <span class="count"><b>${shown}</b> ${h(t('of'))} ${total}</span>
     </div>
     ${U.prefs.filtersOpen ? `<div class="filterpanel">
@@ -2281,7 +2302,8 @@ function renderRoster () {
   return toolbar(total, rows.length) + body + pager(pages, ui.page, 'page') +
     (ui.pickMode && ui.picks.length >= 2
       ? `<div style="position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:16px;
-           background:linear-gradient(to top,var(--bg) 62%,transparent);z-index:50">
+           background:linear-gradient(to top,var(--bg) 62%,transparent);z-index:50;gap:12px;align-items:center;flex-wrap:wrap">
+           ${ui.avisoPick ? `<span class="avisoeq avisopick">⚠ ${h(ui.avisoPick)}</span>` : ''}
            <button class="btn primary" data-a="goCompare">${h(t('compare'))} ${ui.picks.length} →</button></div>` : '');
 }
 /** Paginador del roster y del armador de equipos: extremos, vecinos de la actual y "…"
@@ -3005,8 +3027,8 @@ function fichaEquipos (ch, v) {
       <div class="row" style="justify-content:space-between">
         <div><b>${h(o.tt.name)}</b>${o.modo ? ` <span class="tag dim">${h(o.modo)}</span>` : ''}
           <div class="muted">${h(o.sale ? t('eq_instead').replace('{x}', fullLabel(o.sale)) : t('eq_room'))}</div></div>
-        <div class="eqpts"><b>${o.despues.score}</b> ${h(t('tm_synergy_pts'))} <span class="eqdelta">+${o.delta}</span>
-          <div class="muted">${h(t('eq_before').replace('{n}', o.antes.score))}</div></div>
+        <div class="eqpts"><b>${o.despues.score}</b>${artPts(o.despues.art)} ${h(t('tm_synergy_pts'))} <span class="eqdelta">+${o.delta}</span>
+          <div class="muted">${h(t('eq_before')).replace('{n}', () => o.antes.score + artPts(o.antes.art))}</div></div>
       </div>
       ${retratosEquipo(o.vs, v.key)}
       ${porqueHtml('pq-t-' + o.tt.id, v, o.vs, o.despues.lider, o.gana, o.pierde, o.antesVs)}
@@ -3174,18 +3196,19 @@ function rolEn (v, ctx) {
  *  solo en una fila que lo deja fuera («Not for wbl»), no la tiene (Thor base, en PvP y en PvE), y
  *  el orden de ese contexto no le arma combinaciones. */
 function tieneFuncion (v, ctx) { const r = rolEn(v, ctx); return r.dps > 0 || r.soporte > 0 || r.lider || r.striker; }
-/** Liderazgos y soportes de un retrato, y cuáles dan anti-mermas, para el puntaje de contexto. */
+/** Liderazgos y soportes de un retrato (con el slot de cada soporte), y cuáles dan anti-mermas, para el
+ *  puntaje de contexto. */
 const _SLOTS = new Map();
 function slotsDe (v) {
   let s = _SLOTS.get(v.p);
   if (s) return s;
   const so = SOPORTES[v.p] || {};
-  s = { lid: [], sop: [], antiLid: [], antiSop: [] };
+  s = { lid: [], sop: [], sopK: [], antiLid: [], antiSop: [] };   // sopK: el slot de cada soporte de sop
   for (const [k] of TIPOS_SOPORTE) {
     const x = so[k];
     if (!x) continue;
     const lid = LIDERAZGOS.includes(k), anti = x.fx.some(f => ANTI_MERMAS.has(f.s));
-    (lid ? s.lid : s.sop).push(x);
+    if (lid) s.lid.push(x); else { s.sop.push(x); s.sopK.push(k); }
     if (anti) (lid ? s.antiLid : s.antiSop).push(x);
   }
   if (v.p) _SLOTS.set(v.p, s);
@@ -3193,7 +3216,8 @@ function slotsDe (v) {
 }
 /** Un trío en un contexto. null si no entra: sin ningún DPS de ese contexto o, en PvP, sin un líder
  *  con el que los tres tengan anti-mermas. Si entra: { score, lider, partes: { lider, dps, sinergia,
- *  striker } }; con detalle, también de dónde sale cada punto (detalleContexto lo escribe). */
+ *  striker }, art: si sumó el soporte de un artefacto }; con detalle, también de dónde sale cada punto
+ *  (detalleContexto lo escribe). */
 function enContexto (vs, ctx, detalle) {
   const roles = vs.map(x => rolEn(x, ctx));
   if (!roles.some(r => r.dps)) return null;
@@ -3226,17 +3250,26 @@ function enContexto (vs, ctx, detalle) {
   if (li < 0) return null;
   let dps = 0;
   for (const r of roles) dps += r.dps * PESO.dps;
-  let sinergia = 0;
-  for (let a = 0; a < vs.length; a++) for (const x of sl[a].sop) {
-    if (vs.some((b, j) => j !== a && aplicaA(x, b) && leSirve(x, b))) sinergia += PESO.sinergia;
+  // Con detalle, también qué soportes (de quién, cuál y a quiénes les llega) y qué bonos sumaron.
+  let sinergia = 0, art = false;
+  const sops = detalle ? [] : null, bonos = detalle ? [] : null;
+  for (let a = 0; a < vs.length; a++) for (let n = 0; n < sl[a].sop.length; n++) {
+    const x = sl[a].sop[n];
+    if (!vs.some((b, j) => j !== a && aplicaA(x, b) && leSirve(x, b))) continue;
+    sinergia += PESO.sinergia;
+    if (sl[a].sopK[n] === 'artifact') art = true;
+    if (detalle) sops.push({ de: vs[a], k: sl[a].sopK[n], x, a: vs.filter((b, j) => j !== a && aplicaA(x, b) && leSirve(x, b)) });
   }
   for (const a of vs) for (const b of BONOS_DE[a.cid] || []) {
-    if (b.m[0] === a.cid && estanTodos(b.m, vs) && vs.some(x => b.vs.some(bv => leSirve(bv, x)))) sinergia += PESO.sinergia;
+    if (b.m[0] === a.cid && estanTodos(b.m, vs) && vs.some(x => b.vs.some(bv => leSirve(bv, x)))) {
+      sinergia += PESO.sinergia;
+      if (detalle) bonos.push({ b, integrantes: vs.filter(x => b.m.includes(x.cid)), a: vs.filter(x => b.vs.some(bv => leSirve(bv, x))) });
+    }
   }
   let striker = 0;
   for (const a of vs) { const ss = STRIKER_SET[a.cid]; if (ss) for (const b of vs) if (b !== a && ss.has(b.cid)) striker += PESO.striker; }
-  const out = { score: ptsLider + dps + sinergia + striker, lider: vs[li], partes: { lider: ptsLider, dps, sinergia, striker } };
-  if (detalle) Object.assign(out, { roles, sl, cubreSop });
+  const out = { score: ptsLider + dps + sinergia + striker, lider: vs[li], partes: { lider: ptsLider, dps, sinergia, striker }, art };
+  if (detalle) Object.assign(out, { roles, sl, cubreSop, sops, bonos });
   return out;
 }
 function consultaCon (v) {
@@ -3287,7 +3320,8 @@ function listasOrden () {
 /** Puesto de una variante en una lista: su mejor fila (0 es la de arriba); sin ubicar, una
  *  fila más abajo que la última. */
 function puesto (l, key) { const i = indicesFila(l, key); return i.length ? i[0] : rowsOf(l).length; }
-function puestoTexto (l, key) { const i = indicesFila(l, key); return i.length ? rowsOf(l)[i[0]].label : '—'; }
+/** Su lugar en una lista, como en el roster: la mejor fila con «+N» si está en más (todas, en el title), o «—». */
+function puestoHtml (l, key) { const f = filaEn(l, key); return f ? `<span title="${h(f.todas.join(' · '))}">${h(rankTexto(f))}</span>` : '—'; }
 /** Filas de la consulta en el orden elegido y con los filtros, una por trío de personajes: la
  *  primera en ese orden (el mejor uniforme de cada uno para ese orden) que pasa los filtros; con
  *  casillas de cobertura, la primera con ✓ en todas. Con tier lists, gana el trío mejor ubicado
@@ -3394,11 +3428,12 @@ function coberturaHtml (cob) {
 }
 /** De dónde salen los puntos de contexto de un trío, un renglón por parte del puntaje con sus viñetas:
  *  los anti-mermas (en PvP), el liderazgo del líder (cada efecto y a quiénes les llega), los DPS con su
- *  fila, los soportes y bonos de equipo, y los strikers. Con los nombres cortos (el completo, en el
- *  title) y «a todos» si algo les llega a los tres. */
+ *  fila, los soportes y bonos de equipo (plegados: de quién es cada soporte, con el enlace a su skill, y a
+ *  quiénes les llega; cada bono) y los strikers. Con los nombres cortos (el completo, en el title) y «a
+ *  todos» si algo les llega a los tres. */
 function detalleContexto (e, vs, ctx) {
   const nombre = nombreEn(vs), quien = (x) => nombreHtml(x, nombre), a = (ms) => aQuienesHtml(ms, vs, nombre);
-  const partes = [];      // [rótulo (HTML), puntos o null, [viñetas (HTML)]]
+  const partes = [];      // [rótulo (HTML), puntos o null, [viñetas (HTML)], plegadas, con el «*» de un artefacto]
   if (ctx === 'pvp') {
     const fuentes = new Map();
     vs.forEach(m => {
@@ -3431,7 +3466,9 @@ function detalleContexto (e, vs, ctx) {
     `${quien(m)} (${h(r.filas.filter(([l, fid]) => ROLES_LISTAS[ctx][l.id][fid][0] === 'dps')
       .map(([l, fid]) => `${listName(l)}: ${rowsOf(l).find(x => x.id === fid).label}`).join(', '))})`);
   partes.push([h(t('cx_dps')), e.partes.dps, dps]);
-  if (e.partes.sinergia) partes.push([h(t('cx_sinergia')), e.partes.sinergia, []]);
+  if (e.partes.sinergia) partes.push([h(t('cx_sinergia')), e.partes.sinergia, e.sops.map(x => `${quien(x.de)}: ${enlaceSkill(x)}${
+      x.k === 'artifact' ? artPts(true) : ''} → ${a(x.a)}`)
+    .concat(e.bonos.map(x => `${h(nombreBono({ b: x.b, integrantes: x.integrantes, i: 0 }, false))} → ${a(x.a)}`)), true, e.art]);
   if (e.partes.striker) {
     const pares = [];
     for (const x of vs) for (const [c, p, cuando] of STRIKERS[x.cid] || []) {
@@ -3440,8 +3477,10 @@ function detalleContexto (e, vs, ctx) {
     }
     partes.push([h(t('cx_strikers')), e.partes.striker, pares]);
   }
-  return `<ul class="cxpts">${partes.map(([k, pts, vi]) => `<li><b>${k}${pts != null ? ` +${pts}` : ''}</b>${
-    vi.length ? `<ul>${vi.map(x => `<li>${x}</li>`).join('')}</ul>` : ''}</li>`).join('')}</ul>`;
+  return `<ul class="cxpts">${partes.map(([k, pts, vi, plegadas, art]) => {
+    const cab = `<b>${k}${pts != null ? ` +${pts}` : ''}</b>${artPts(art)}`, lista = vi.length ? `<ul>${vi.map(x => `<li>${x}</li>`).join('')}</ul>` : '';
+    return `<li>${plegadas ? `<details class="cxdesp"><summary>${cab}</summary>${lista}</details>` : cab + lista}</li>`;
+  }).join('')}</ul>`;
 }
 function opcionHtml (val, txt, sel) { return `<option value="${h(val)}" ${val === sel ? 'selected' : ''}>${h(txt)}</option>`; }
 function nombresListas (ids) { return ids.map(id => listName(listById(id))).join(' + '); }
@@ -3482,7 +3521,7 @@ function combinacionesHtml (v) {
   const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
   const fila = (i) => {
     const vs = [v, q.pool[q.A[i]], q.pool[q.B[i]]], keys = vs.map(x => x.key);
-    const sc = synergy(vs, { foco: v });
+    const sc = synergy(vs, { foco: v }), equipo = synergy(vs, { soloPuntaje: true });
     // En PvP y PvE, el líder y los puntos son los del contexto; los de siempre quedan abajo.
     const e = ctx ? enContexto(vs, ctx, true) : null, lider = e ? e.lider : sc.lider;
     return `<div class="card combo">
@@ -3493,12 +3532,12 @@ function combinacionesHtml (v) {
           <div class="combolider">${h(lider ? t('eq_leader').replace('{x}', fullLabel(lider)) : t('eq_no_leader'))}</div>
           ${e ? detalleContexto(e, vs, ctx) : ''}
           ${coberturaHtml(cobertura(v, vs, lider))}
-          ${ls.map(l => `<div class="muted">${h(listName(l))}: ${vs.map(x => h(puestoTexto(l, x.key))).join(' · ')}</div>`).join('')}
+          ${ls.map(l => `<div class="muted">${h(listName(l))}: ${vs.map(x => puestoHtml(l, x.key)).join(' · ')}</div>`).join('')}
         </div>
-        ${e ? `<div class="eqpts"><b>${e.score}</b> ${h(t('cx_pts_' + ctx))}
-          <div class="muted">${h(t('cx_para_el').replace('{a}', sc.score).replace('{b}', synergy(vs).score))}</div></div>`
-            : `<div class="eqpts"><b>${sc.score}</b> ${h(t('eq_pts_for'))}
-          <div class="muted">${h(t('eq_pts_team').replace('{n}', synergy(vs).score))}</div></div>`}
+        ${e ? `<div class="eqpts"><b>${e.score}</b>${artPts(e.art)} ${h(t('cx_pts_' + ctx))}
+          <div class="muted">${h(t('cx_para_el')).replace('{a}', () => sc.score + artPts(sc.art)).replace('{b}', () => equipo.score + artPts(equipo.art))}</div></div>`
+            : `<div class="eqpts"><b>${sc.score}</b>${artPts(sc.art)} ${h(t('eq_pts_for'))}
+          <div class="muted">${h(t('eq_pts_team')).replace('{n}', () => equipo.score + artPts(equipo.art))}</div></div>`}
         ${botonArmar(vs, '', '')}
         ${ui.eqVerDescartados
           ? `<button class="btn sm" data-a="restaurar" data-c="${vs.map(x => x.cid).join(',')}">${h(t('eq_restaurar'))}</button>`
@@ -3640,6 +3679,7 @@ function renderGlosario () {
 // ============================================================================
 // COMPARACIÓN
 // ============================================================================
+const CMP_FX = 6;                      // efectos de cada skill a la vista; el resto, plegado
 function renderCompare () {
   const vs = ui.picks.map(p => variant(p.cid, p.uid)).filter(Boolean);
   if (vs.length < 2) { ui.view = 'roster'; return renderRoster(); }
@@ -3649,6 +3689,9 @@ function renderCompare () {
   const car = vs.map(v => cargas(v.skills));
   const syn = synergy(vs), razones = razonesTxt(syn.razones);
   const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
+  // Los efectos de una skill: los primeros CMP_FX a la vista y el resto plegado, con cuántos son.
+  const fxCmp = (f) => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
+    marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
 
   return `
@@ -3720,15 +3763,15 @@ function renderCompare () {
           </div>
           ${dmg.length ? `<div class="muted" style="margin-bottom:5px">${dmg.map(d =>
              `<b>${h(d.pct)}%</b>${d.flat != null ? ' +' + h(d.flat) : ''}`).join(' · ')}</div>` : ''}
-          ${otros.slice(0, 6).map(f => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
-             marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`).join('')}
-          ${otros.length > 6 ? `<div class="muted">+${otros.length - 6}</div>` : ''}</td>`;
+          ${otros.slice(0, CMP_FX).map(fxCmp).join('')}
+          ${otros.length > CMP_FX ? `<details class="cmpmas"><summary>${h(t(otros.length - CMP_FX === 1 ? 'cmp_mas_1' : 'cmp_mas')
+            .replace('{n}', otros.length - CMP_FX))}</summary>${otros.slice(CMP_FX).map(fxCmp).join('')}</details>` : ''}</td>`;
       }).join('')}</tr>`).join('')}
     </tbody>
   </table></div>
   <div class="card" style="margin-top:18px">
     <div class="row" style="justify-content:space-between;margin-bottom:8px">
-      <h3 style="margin:0">${h(t('cmp_synergy'))}</h3><span class="muted">${syn.score} ${h(t('cmp_pts'))}</span></div>
+      <h3 style="margin:0">${h(t('cmp_synergy'))}</h3><span class="muted">${syn.score}${artPts(syn.art)} ${h(t('cmp_pts'))}</span></div>
     <div style="height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;margin-bottom:10px">
       <div style="height:100%;width:${Math.min(100, syn.score * 12)}%;background:linear-gradient(90deg,var(--accent),var(--gold))"></div></div>
     ${razones.length ? `<ul style="margin:0;padding-left:18px">${razones.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
@@ -4589,7 +4632,7 @@ function equipoCard (tt, borrable) {
       ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
     <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
     ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
-    <div class="muted" style="margin-top:6px">${sc.score} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
+    <div class="muted" style="margin-top:6px">${sc.score}${artPts(sc.art)} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
     ${ctpsEquipo(vs, modo ? modo.ctp : null)}
   </div>`;
 }
@@ -4600,7 +4643,7 @@ function favoritoCard (f) {
   return `<div class="card eqsug">
     <div class="row" style="justify-content:space-between;align-items:flex-start">
       <div class="row" style="gap:10px;align-items:flex-start">${estrella(f.members)}${retratosEquipo(vs, vs[0].key)}</div>
-      <div class="eqpts"><b>${sc.score}</b> ${h(t('tm_synergy_pts'))}</div>
+      <div class="eqpts"><b>${sc.score}</b>${artPts(sc.art)} ${h(t('tm_synergy_pts'))}</div>
     </div>
     <div class="muted">${h(vs.map(fullLabel).join(' + '))}</div>
     <div><b>${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</b></div>
@@ -4637,6 +4680,8 @@ function renderTeams () {
       </select>
     </div>
     <div class="muted" style="margin-bottom:6px">${h(t('tm_members'))} ${eq.members.length} / ${max} — ${h(t('tm_sorted_by'))} ${h(listName(listById(U.prefs.refList)) || t('s_name'))}</div>
+    ${eq.members.length > max ? `<div class="avisoeq">⚠ ${h(t('tm_sobran').replace('{n}', max).replace('{m}', eq.members.length).replace('{k}', eq.members.length - max))}</div>` : ''}
+    ${ui.avisoEquipo ? `<div class="avisoeq">⚠ ${h(ui.avisoEquipo)}</div>` : ''}
     ${repetidos.map(cid => `<div class="avisoeq">⚠ ${h(t('tm_dup').replace('{x}', CHAR_BY_ID[cid].name).replace('{e}', enModo.get(cid)))}</div>`).join('')}
     <input placeholder="${h(t('tm_search'))}" value="${h(ui.teamSearch)}" data-a="teamSearch" style="width:100%;margin-bottom:10px">
     <div class="row" style="gap:6px">
@@ -4651,7 +4696,7 @@ function renderTeams () {
     <textarea placeholder="${h(t('tm_reason_ph'))}" style="width:100%;margin-top:10px;min-height:54px" data-a="teamReason">${h(eq.reason)}</textarea>
     <div class="row" style="justify-content:flex-end;margin-top:10px">
       <button class="btn" data-a="teamClose">${h(t('tm_cancel'))}</button>
-      <button class="btn primary" data-a="teamSave" ${eq.members.length < 2 ? 'disabled' : ''}>${h(t('tm_save'))}</button>
+      <button class="btn primary" data-a="teamSave" ${eq.members.length < 2 || eq.members.length > max ? 'disabled' : ''}>${h(t('tm_save'))}</button>
     </div>
   </div>` : ''}
   ${U.descartados.length ? `<div class="section"><details class="usgrupo"><summary>${h(t('tm_desc').replace('{n}', U.descartados.length))}</summary>
@@ -5019,17 +5064,17 @@ document.addEventListener('click', (e) => {
     case 'kind': P.kind = d.v; ui.page = 0; commit(); break;
     case 'dir': P.dir = -P.dir; commit(); break;
     case 'page': ui.page = parseInt(d.p, 10); render(); window.scrollTo({top:0,behavior:'smooth'}); break;
-    case 'pickMode': ui.pickMode = !ui.pickMode; ui.picks = []; ui.view = 'roster'; render(); break;
+    case 'pickMode': ui.pickMode = !ui.pickMode; ui.picks = []; ui.avisoPick = null; ui.view = 'roster'; render(); break;
     case 'pick': case 'pickThis': {
       e.stopPropagation();
       togglePick(d.cid, d.uid || null);
       if (a === 'pickThis') { ui.pickMode = true; ui.view = 'roster'; }
       render(); break; }
     case 'unpick': { const key = d.cid + '::' + (d.uid || 'base');
-      ui.picks = ui.picks.filter(p => p.key !== key);
+      ui.picks = ui.picks.filter(p => p.key !== key); ui.avisoPick = null;
       if (ui.picks.length < 2) ui.view = 'roster';
       render(); break; }
-    case 'goCompare': ui.view = 'compare'; render(); window.scrollTo(0, 0); break;
+    case 'goCompare': ui.view = 'compare'; ui.avisoPick = null; render(); window.scrollTo(0, 0); break;
     case 'open': {
       ui.tlPick = null; ui.aliados = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
@@ -5113,8 +5158,9 @@ document.addEventListener('click', (e) => {
     case 'tlCerrar': ui.tlPick = null; render(); break;
 
     case 'goTeams': ui.view = 'teams'; render(); break;
-    case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0; render(); break;
-    case 'teamClose': ui.teamOpen = false; render(); break;
+    case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0;
+      ui.avisoEquipo = null; render(); break;
+    case 'teamClose': ui.teamOpen = false; ui.avisoEquipo = null; render(); break;
     case 'eqIncluir': ui.eqExcluir = ui.eqExcluir.filter(c => c !== d.cid); ui.eqPagina = 0; render(); break;
     // Descartar y restaurar no cambian los datos del juego: sin rebuild(), la consulta queda.
     case 'descartar': if (!estaDescartado(d.c.split(','))) U.descartados.unshift(trioDe(d.c.split(','))); saveUser(); render(); break;
@@ -5127,15 +5173,19 @@ document.addEventListener('click', (e) => {
       const i = U.favoritos.findIndex(f => claveFavorito(f.members) === c);
       if (i > -1) U.favoritos.splice(i, 1); else U.favoritos.unshift({ id: 'fav-' + Date.now(), members: keys });
       saveUser(); render(); break; }
-    case 'teamDesde': ui.view = 'teams'; ui.teamOpen = true; ui.teamSearch = ''; ui.teamPage = 0;
+    case 'teamDesde': ui.view = 'teams'; ui.teamOpen = true; ui.teamSearch = ''; ui.teamPage = 0; ui.avisoEquipo = null;
       ui.team = { name: d.nombre, members: d.m.split(','), reason: '', modeId: d.modo };
       render(); window.scrollTo(0, 0); break;
+    // Con el equipo lleno no se suma otro: se avisa (antes se descartaba el primero sin decirlo).
     case 'teamToggle': { const eq = ui.team, max = tamModo(eq.modeId);
       const i = eq.members.indexOf(d.key);
-      if (i > -1) eq.members.splice(i, 1); else { eq.members.push(d.key); if (eq.members.length > max) eq.members.shift(); }
+      ui.avisoEquipo = null;
+      if (i > -1) eq.members.splice(i, 1);
+      else if (eq.members.length >= max) ui.avisoEquipo = t('tm_lleno').replace(/\{n\}/g, max).replace('{x}', fullLabel(variant(...d.key.split('::'))));
+      else eq.members.push(d.key);
       render(); break; }
     case 'teamPage': ui.teamPage = parseInt(d.p, 10); render(); break;
-    case 'teamSave': { const eq = ui.team; if (eq.members.length < 2) break;
+    case 'teamSave': { const eq = ui.team; if (eq.members.length < 2 || eq.members.length > tamModo(eq.modeId)) break;
       const vs = eq.members.map(k => variant(...k.split('::'))).filter(Boolean);
       U.teams.unshift({ id: 'eq-' + Date.now(), name: eq.name || vs.map(fullLabel).join(' + '),
                         members: eq.members.slice(), reason: eq.reason, modeId: eq.modeId || '' });
@@ -5231,7 +5281,8 @@ document.addEventListener('change', (e) => {
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
   if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }
   if (a === 'restr') { U.prefs.restr = el.value; ui.page = 0; commit(); return; }
-  if (a === 'teamMode') { ui.team.modeId = el.value; ui.team.members = ui.team.members.slice(-tamModo(el.value)); render(); return; }
+  // Un modo más chico que el equipo no le saca a nadie: el armador dice cuántos sobran y no guarda hasta que se quiten.
+  if (a === 'teamMode') { ui.team.modeId = el.value; ui.avisoEquipo = null; render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'marca') { marcar(d.p, d.sl, d.k, el.checked); return; }
   if (a === 'tlFila') { const actuales = filasDe(ui.tierList, ui.tlPick);

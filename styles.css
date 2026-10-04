@@ -262,6 +262,8 @@ details.pqdesg > summary{cursor:pointer;font-size:12px;color:var(--text-2)}
 .pqorig{margin-top:6px}
 .pqoh{font-size:12.5px;font-weight:600;margin-bottom:1px}
 .cxpts ul{margin:1px 0 2px;padding-left:18px;list-style:disc;display:flex;flex-direction:column;gap:1px}
+/* La parte del puntaje que se despliega (soportes y bonos de equipo): de quién es cada uno. */
+details.cxdesp > summary{cursor:pointer}
 /* Lo que se abre desde un «Por qué»: la skill o el artefacto, en la ficha de quien lo da. */
 .resaltada{outline:2px solid var(--accent);outline-offset:3px}
 .eqfiltros{gap:12px;margin-bottom:10px;align-items:flex-end}
@@ -293,6 +295,7 @@ details.pqdesg > summary{cursor:pointer;font-size:12px;color:var(--text-2)}
 .combo details{margin-top:6px}
 /* Armador: personaje que ya está en otro equipo del mismo modo. */
 .avisoeq{color:var(--gold);font-size:13px;margin-bottom:6px}
+.avisoeq.avisopick{margin:0}
 .enuso{opacity:.45}
 /* Armado: las reglas generales de la guía, plegadas. */
 details.reglas{margin-top:12px}
@@ -529,6 +532,8 @@ details.tiptx[open] > summary,details.tipls[open] > summary{margin-bottom:6px}
 .chargebar b{font-variant-numeric:tabular-nums;color:var(--text)}
 
 .cmpfx{font-size:11.5px;margin-bottom:3px;display:flex;gap:6px;align-items:flex-start}
+/* Los efectos de una skill que no entran a la vista en la comparativa, plegados con cuántos son. */
+details.cmpmas > summary{cursor:pointer;font-size:11.5px;color:var(--text-2);margin-bottom:3px}
 table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 
 /* ---------- buffs clave (equivalente a "Important buffs" de thanosvibs) ---------- */
