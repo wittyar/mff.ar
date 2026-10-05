@@ -112,9 +112,15 @@ def _destino(para, etapa, j, tgt):
         return EL, None
     if texto == 'Summoned Character':
         return INVOCACION, None
-    if texto.startswith('All Allies for the first effect'):
+    if _por_efecto(etapa, tgt):
         return (EQUIPO, _indice(tgt, 'All Allies')) if j == 0 else (EL, None)
     return EQUIPO, etapa['tg']
+
+
+def _por_efecto(etapa, tgt):
+    """¿La etapa tiene un objetivo para cada efecto («All Allies for the first effect, Self for the second
+    effect»)?"""
+    return 'tg' in etapa and tgt[etapa['tg']]['en'].startswith('All Allies for the first effect')
 
 
 def _indice(tgt, texto):
@@ -165,7 +171,8 @@ def analisis(skills, tablas, cat, perfil):
     sc: fuentes de lo que el catálogo no clasifica (thanosvibs agregó una etiqueta).
     El daño de los golpes no va: es el perfil de combate. «Give Power» es un envoltorio (lo que
     otorga viene después, en la misma etapa o en las que siguen); va solo si no le sigue nada,
-    porque entonces la fuente no dice qué otorga."""
+    porque entonces la fuente no dice qué otorga. En una etapa con un objetivo para cada efecto,
+    lo que le sigue en ella va a otro objetivo: no es lo que otorga."""
     ab, desc, tgt = tablas['ab'], tablas['desc'], tablas['tgt']
     idx = {e['id']: i for i, e in enumerate(cat['efectos'])}
     grupo = {e['id']: e['grupo'] for e in cat['efectos']}
@@ -184,7 +191,8 @@ def analisis(skills, tablas, cat, perfil):
                 for e in m['efectos']:
                     if e == 'golpe':
                         continue
-                    if e == 'otorga' and (fx[fi + 1:] or any(x.get('fx') for x in etapas[ti + 1:])):
+                    if e == 'otorga' and ((fx[fi + 1:] and not _por_efecto(etapa, tgt))
+                                          or any(x.get('fx') for x in etapas[ti + 1:])):
                         continue
                     entradas.setdefault((e, d, objetivo, cond), []).append([si, ti, fi])
     claves = sorted(entradas, key=lambda k: (_ORDEN_DESTINO[k[1]], idx[k[0]], k[2] if k[2] is not None else -1, k[3]))
