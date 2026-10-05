@@ -27,10 +27,11 @@ variante, en `docs/COMPLETITUD.md`.
 - Build: `python3 scripts/build.py`, sobre lo bajado en `work/` (sin red). Regenera `data.js`,
   `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y `docs/COMPLETITUD.md`; para con un mensaje
   si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a
-  los datos recién cuando corre el build: sin `work/`, se valida con `catalogo.validar`,
-  `catalogo.validar_glosario`, `catalogo.validar_valor` (la tabla de valor de los equipos) y
-  `fuentes.validar_contenido`; `scripts/contenido/liderazgos_api.json` lo valida `liderazgos.validar`
-  contra las tablas de la API (sin `work/`, con el `MFF_TABLAS` de data.js: `liderazgos_api/prueba.py`).
+  los datos recién cuando corre el build: sin `work/`, se valida con `catalogo.validar` (con
+  `contenido/guia.json`, por los topes), `catalogo.validar_glosario`, `catalogo.validar_valor` (la
+  tabla de valor de los equipos) y `fuentes.validar_contenido`;
+  `scripts/contenido/liderazgos_api.json` lo valida `liderazgos.validar` contra las tablas de la API
+  (sin `work/`, con el `MFF_TABLAS` de data.js: `liderazgos_api/prueba.py`).
 - Pruebas: no están en el repo. Son scripts de Playwright contra la app servida por
   `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`. La
   copia más reciente va en un zip junto al último bundle (`pruebas-mff-*.zip`); su `LEEME.txt` dice
@@ -38,8 +39,9 @@ variante, en `docs/COMPLETITUD.md`.
   `bajar_imagenes.py`, y sin `work/` no corren verif_guia_ficha, verif_marcadores ni verif_opciones.
   Las que leen el contenido curado del repo (verif_glosario) fallan contra un data.js viejo:
   `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo, y `armar_datos_build.py`, con
-  lo que el próximo build cambia en data.js (hoy, el formato 7: el catálogo con la regla de cada stat,
-  la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado con `scripts/modelo.py`).
+  lo que el próximo build cambia en data.js (hoy, el formato 8: el catálogo con la regla de cada stat,
+  si se acumula y su tope, la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado
+  con `scripts/modelo.py`).
   `armar_datos_build.py` recalcula también los roles. `armar_datos_lideres.py` les suma los liderazgos
   que el build deriva de la Leader Skill (`scripts/liderazgos.py`, con las correspondencias a mano de
   `scripts/contenido/liderazgos_api.json`, sus traducciones en `MFF_TXT` y la sección 12 de
@@ -53,9 +55,10 @@ variante, en `docs/COMPLETITUD.md`.
   filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.
   recomendado, el líder del trío, los strikers que desempatan, «le sirve», lo propio y los
   anti-mermas, y la fuente de cada liderazgo; con las del 5 de octubre, el filtro «Solo el último
-  uniforme» y el efecto sin valor contado una vez) y lista como pendiente la de los recomendados de
-  Modos. `verif_ultimo_uniforme.py` y `verif_solapado.py` prueban esas dos cosas en pantalla y contra
-  modelos aparte, y `medir_solapado.py` mide, contra otro app.js, cuánto cambian las listas.
+  uniforme», la habilidad que cuenta una vez y si cada stat se acumula y su tope) y lista como
+  pendiente la de los recomendados de Modos. `verif_ultimo_uniforme.py`, `verif_solapado.py` y
+  `verif_acumula.py` prueban esas cosas en pantalla y contra modelos aparte, y `medir_solapado.py`
+  mide, contra otro app.js, cuánto cambian las listas.
 
 ## Estado (5 de octubre de 2026)
 
@@ -97,15 +100,20 @@ Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
 - Liderazgos: los 34 slots sin stat (escudo de energía y físico, inmunidad al frío, robo de vida, inmunidad a todo
   daño, resistencia al veneno, inmunidad al sangrado y a la fractura; el sangrado y la parálisis son para el rival):
   ¿se agregan stats al catálogo? «When enemies are below 30% HP,» (Warwolf) va con la coma de la API.
-- Efectos repetidos en el equipo: los sin valor ya se aplican una vez (Ezequiel, 5 de octubre). Los que tienen valor
-  se siguen sumando: ¿se suman o vale el mayor, como en los C.T.P.? Es una línea (`seAcumula` en `app.js`). ¿Y un
-  aviso de Insight o Liberation repetidos en un equipo?
-- De los efectos sin valor (carril filtro2), lo que decidió Claude y falta confirmar: entre dos soportes de los que no
-  lideran, va primero el de clave menor (un orden fijo, para que el trío dé lo mismo desde la lista de cualquiera: el
-  juego no dice cuál; cambia el puntaje si solo uno de los dos trae además otra cosa que se aplica: con el orden al
-  revés, en 20.000 tríos con algo sin valor cambian 3 sinergias y 2 puntajes de PvP y de PvE); la regla vale también
-  para el liderazgo en la sinergia sin contexto (un liderazgo que solo le da a los demás lo que ya tienen propio no
-  suma ni vincula); y en PvP y PvE el vínculo por un soporte se cuenta con el líder del contexto.
+- Efectos repetidos en el equipo (Ezequiel, 5 de octubre: las estadísticas se suman y las habilidades cuentan una
+  vez): lo dice `acumula` en cada stat de `soporte` del catálogo. Los dudosos, con [Conjetura] en su nota: se suman
+  Guaranteed Critical Rate, Heal, Ignore Non-Boss Damage Decrease, «Super Armor, All Basic Defenses» (el número es
+  el de las defensas), Max Dodge y Attack Defense (no se sabe qué suben); cuentan una vez Immortality + Heal e
+  Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction. ¿Y un aviso de Insight o Liberation
+  repetidos en un equipo?
+- De las habilidades que cuentan una vez (carril filtro2), lo que decidió Claude y falta confirmar: entre dos
+  soportes de los que no lideran, va primero el de clave menor (un orden fijo, para que el trío dé lo mismo desde la
+  lista de cualquiera: el juego no dice cuál; cambia el puntaje si solo uno de los dos trae además otra cosa que se
+  aplica: con el orden al revés, en 20.000 tríos con algo sin valor cambian 3 sinergias y 2 puntajes de PvP y de
+  PvE, medido con la primera parte); la regla vale también para el liderazgo en la sinergia sin contexto (un
+  liderazgo que solo le da a los demás lo que ya tienen propio no suma ni vincula); y en PvP y PvE el vínculo por un
+  soporte se cuenta con el líder del contexto. Los topes se muestran con lo que suman liderazgos, soportes y
+  artefactos, sin lo que el personaje ya tiene ni los bonos de equipo, y no cambian los puntos.
 - Último uniforme: Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi no traen versión en thanosvibs, y
   son los de número más alto de su personaje (en los 1.033 pares con distinta versión, el número sube con la versión
   salvo en uno, Yelena Belova). ¿Cuál es el último de cada uno? Hoy entran los dos de cada personaje, con aviso.
@@ -163,9 +171,11 @@ Sin decidir, de antes:
 - Las «permutaciones» de los mismos integrantes que Ezequiel vio en la lista de Adam Warlock no aparecen en las
   listas; si vuelven, falta una captura.
 - Rendimiento: con quien da algo a todos (Galactus), la consulta de combinaciones tarda cerca de 1,5 s y el orden
-  PvP otro tanto. Con *Efectos iguales* (5 de octubre), la consulta tarda en promedio 1,57 s (1,49 s antes) y las
-  listas de PvP y PvE más pesadas con un soporte sin valor, hasta 3 o 4 s (Silver Surfer (Shalla-Bal) en PvP, de
-  1,8 a 3,0 s; Invisible Woman — The Fall of the Fantastic Four en PvE, de 2,1 a 3,8 s): el vínculo por un
-  soporte se recalcula con el líder del contexto (`vinculosSoporte`, unas 200.000 veces en esas listas). No
-  recalcularlo cuando el liderazgo o los DPS ya alcanzan da lo mismo y ahorra entre el 15 y el 55% de esas llamadas.
+  PvP otro tanto. Con *Efectos iguales* (5 de octubre), las listas de PvP y PvE más pesadas con una habilidad
+  tardan más. Con el arreglo de la segunda parte del carril filtro2 (elegir la fuente sin ordenar el equipo y no
+  recontar el vínculo cuando no hace falta), consulta + orden: Silver Surfer (Shalla-Bal) en PvP, 1,7 + 2,3 s
+  (antes de la regla, 1,3 + 1,6; con la primera parte, 2,0 + 3,0); Invisible Woman — The Fall of the Fantastic
+  Four en PvE, 2,4 + 3,3 s (1,7 + 1,8; 2,5 + 3,7). Lo que queda es la regla misma: qué fuente se le aplica a cada
+  uno y el vínculo por un soporte con el líder del contexto (`vinculosSoporte`, una sinergia entera, hasta 195.000
+  veces en esas listas). Bajarlo más pediría contar ese vínculo sin la sinergia entera: otra ruta [Probable].
 - Si las pruebas pasan al repo.
