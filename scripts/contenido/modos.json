@@ -91,20 +91,31 @@
      "en": "Legend (late game): scoring high does not matter much; just do enough to get the bonus Awakening Materials."
     },
     {
-     "es": "Boss Battle se abre en orden: Normal, Extreme y Legend, que pide pasar Extreme con 1.000.000 de puntos o más; Relay Battle abre Infinite Challenge, y al pasar Extreme, Legend e Infinite Challenge se abre Challenge. Un personaje con el récord más alto en un modo no puede participar en los otros (el texto del juego se corta al final).",
-     "en": "Boss Battle opens in order: Normal, Extreme and Legend, which requires clearing Extreme with 1,000,000 points or more; Relay Battle opens Infinite Challenge, and clearing Extreme, Legend and Infinite Challenge opens Challenge. A character with the highest record in one mode cannot take part in the others (the game text is cut off at the end)."
+     "es": "Boss Battle se abre en orden: Normal, Extreme y Legend, que pide pasar Extreme con 1.000.000 de puntos o más; Relay Battle abre Infinite Challenge, y al pasar Extreme, Legend e Infinite Challenge se abre Challenge. Un personaje que hizo el récord más alto en un modo no puede participar en los otros.",
+     "en": "Boss Battle opens in order: Normal, Extreme and Legend, which requires clearing Extreme with 1,000,000 points or more; Relay Battle opens Infinite Challenge, and clearing Extreme, Legend and Infinite Challenge opens Challenge. A character that set the highest record in one mode cannot take part in the others."
+    },
+    {
+     "es": "Solo pueden jugar los que están en una alianza.",
+     "en": "Only players in an alliance can take part."
+    },
+    {
+     "es": "Además de lo que da el puntaje de cada modo, paga cada semana según el puesto de la alianza, que suma los puntos de todos sus miembros, y el que hizo el mejor puntaje en la alianza que sale primera se lleva la recompensa MVP (guía en coreano: la captura en inglés se corta antes).",
+     "en": "Besides the rewards for each mode's score, it pays weekly by the alliance's rank, which adds up the points of all its members, and the top scorer of the alliance that comes first gets the MVP reward (Korean guide: the English screenshot is cut off before this)."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "juego-guia"
+    "juego-guia",
+    "juego-guia-ko"
    ],
    "equipo": {
     "tam": 3,
-    "es": "3 personajes que cumplan la restricción del día.",
-    "en": "3 characters that meet the day's requirement.",
+    "es": "3 personajes que cumplan la condición del día: cambia con el modo y el día de la semana, y puede ser de clase, bando, raza o género.",
+    "en": "3 characters that meet the day's requirement: it changes with the mode and the day of the week, and can be a type, faction, race or gender.",
     "fuente": [
-     "wiki-ab"
+     "wiki-ab",
+     "juego-guia",
+     "juego-guia-ko"
     ]
    },
    "abx": true,
