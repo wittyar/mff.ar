@@ -22,6 +22,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - [NamuWiki](https://namu.wiki) (en coreano), páginas generales del juego — para qué sirve la
   habilidad de World Boss, World Boss Legend, la ventaja de tipo, el instinto y lo que se lleva en
   Timeline (ver `docs/MODELO.md`).
+- El [foro oficial](https://forum.netmarble.com/futurefight_en) de MARVEL Future Fight (Netmarble)
+  — notas de actualización y guías: Adaptation, el «Bonus Damage», los urus, los efectos de C.T.P.
+  repetidos, la resistencia de los jefes de World Boss a los strikers y el instinto.
 
 ## Qué hay en la app
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,

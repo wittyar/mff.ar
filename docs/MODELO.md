@@ -120,6 +120,11 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
   distintas; la línea siguiente quedó cortada en la captura. Los World Bosses cuentan como
   Supervillanos (NamuWiki). Falta saber si un efecto contra el bando Supervillano les pega a los
   Villains comunes de una etapa.
+- **Instinto de los 15 sin dato.** La regla de NamuWiki (humano o no, héroe o villano) da el instinto
+  del infobox en 268 de 274 personajes; en las seis excepciones, como Quicksilver y Scarlet Witch, el
+  instinto no siguió a un cambio de raza (notas oficiales del 4 de noviembre de 2025), así que no
+  alcanza para completar los 15 (hallazgo `instinto-regla-namuwiki`). El juego tiene un filtro por
+  instinto (notas del 15 de octubre de 2024): con él se pueden ver.
 - **Roles.** Salían de juntar las skills de todos los uniformes del personaje. Se rehicieron en la
   etapa 2, por variante.
 
@@ -387,21 +392,31 @@ leídas el 4 de octubre de 2026; las fichas de personaje no se pudieron leer.
 
 - **«Bonus Damage».** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y
   «Additional Damage» al daño fijo extra, el único que sube con el nivel de la skill (NamuWiki dice
-  lo mismo del 추가 피해량); no dice si «Bonus Damage» es ese daño fijo. En inglés, «Bonus damage»
-  nombra también el daño continuo de la maldición y de la pérdida. Falta el texto en coreano de la
-  pasiva de Tier-2.
-- **«Adaptation».** «Inmune al mayor daño recibido»: no está claro si es el golpe más fuerte o el
-  tipo de daño que más recibe. Ninguna fuente que se pudo leer lo dice.
+  lo mismo del 추가 피해량). Una guía de mecánicas de un jugador en el foro oficial (2018) dice que
+  «Bonus Damage» es ese daño fijo, y el juego en coreano usa la misma palabra para los dos: la pasiva
+  de Tier-2 de Mephisto — Master of Hell sube el 추가 피해량, y sus skills escriben el daño fijo «추가
+  화염 피해 672» (capturas del 4 de octubre de 2026). Es lo probable (hallazgo
+  `bonus-damage-adicional`), pero ninguna fuente oficial lo dice en inglés. En inglés, «Bonus damage»
+  nombra también el daño continuo de la maldición y de la pérdida.
 - **Códigos sin nombre.** En «Natural Enemy», 401 es Mockery y 108 Shock (ids de la API); 407 y 577
   no son el id de ninguna habilidad de las skills (Leads & Supports nombra 407 «Debuff Removal
   (Instinct)»). 407 es probablemente el efecto de cinco artefactos (Aero, Punisher, Scarlet Spider,
   Domino y Yelena Belova: ignorar los debuffs según el instinto); 577 sigue sin fuente. La app
   todavía muestra los números: podría mostrar el nombre de los que tienen id.
 - **Efectos para todo el equipo que se repiten.** Los C.T.P. Insight y Liberation dicen en el juego
-  que su efecto para todo el equipo no se aplica dos veces si lo llevan dos. Falta saber si pasa lo
-  mismo con los soportes de los personajes; la sinergia hoy cuenta cada uno por quien lo da. Una
-  respuesta de GameFAQs de 2016 dice que dos bonos de equipo iguales se acumulan: habla de bonos,
-  no de soportes, y es vieja (conjetura).
+  que su efecto para todo el equipo no se aplica dos veces si lo llevan dos (y son los únicos que lo
+  dicen). Lo oficial es de los C.T.P. y de las colecciones: de efectos de C.T.P. iguales activos a la
+  vez vale el mayor (notas del 7 de abril de 2026), dos Insight con distinto reforjado aplican los
+  dos (4 de octubre de 2023), y de un personaje que está en varios temas de colección vale la opción
+  de colección más alta (enero de 2026). De los soportes no hay nada oficial: una guía de un jugador
+  de 2018 dice, sin pruebas, que dos compañeros con el mismo buff de equipo usan cada uno el suyo
+  (conjetura), y una respuesta de GameFAQs de 2016, que dos bonos de equipo iguales se acumulan
+  (conjetura). La sinergia cuenta cada soporte por quien lo da (hallazgo `efectos-repetidos`).
+
+Resuelto con el foro oficial (4 de octubre de 2026): **«Adaptation»** («inmune al mayor daño
+recibido», la pasiva de Sentinel) es inmunidad al elemento del mayor daño recibido. Las notas
+oficiales del 15 de septiembre de 2020 cambiaron el texto («greatest element damage» pasó a «greatest
+damage») y aclararon que el efecto seguía igual (hallazgo `adaptation-elemento`).
 
 ## Etapa 2: lo que hace cada variante con sus skills
 
@@ -537,6 +552,11 @@ falta a 119 personajes, casi todos recientes (Galactus, Annihilus, Apocalypse, e
 app no tienen strikers propios, aunque pueden ser strikers de otros. Galactus tiene 16 en el juego.
 Lo que no se pudo leer va a `docs/AUDITORIA.md` (sección 11).
 
+En World Boss, los jefes resisten lo que aplican los strikers: si un jefe recibe más de dos veces el
+mismo efecto de un striker, le dura menos; lo acumulable se acumula una vez; no afecta las skills de
+los personajes que se manejan, y el mismo efecto no vuelve a entrar por 5 s (notas oficiales del 21 de
+abril de 2020; el modo World Boss lo avisa).
+
 En los equipos (Ezequiel, 4 de octubre de 2026: «suman, MUY poco... sería un sistema de desempate»),
 los strikers no dan puntos en ningún lado, ni en la sinergia ni en PvP y PvE: a igual puntaje,
 desempatan. Las combinaciones van por puntaje y, a igual puntaje, por cuántos strikers tiene el trío
@@ -546,7 +566,9 @@ desempatan. Las combinaciones van por puntaje y, a igual puntaje, por cuántos s
 Dudas:
 - **Set Striker.** El juego tiene además un striker que se elige para cada personaje (solo de 6★ o
   más), que aparece con su Striker Skill y cuyo efecto crece con el tier (captura de Gorr con Silver
-  Surfer (Shalla-Bal)). Es otro sistema: la app no lo tiene.
+  Surfer (Shalla-Bal)). Según las notas oficiales del 1 de junio de 2022, el nivel de la skill es el de
+  mejora del personaje equipado, con 2 niveles más si su instinto es el del Tier-4 (el «Destrucción
+  +Nv. 2» de la captura). Es otro sistema: la app no lo tiene.
 - **Strikers vistos en el juego.** Cargarlos (Galactus, y confirmar los de Kingpin) pide un archivo
   de contenido, una fuente y código nuevos, con el juego por encima de la wiki fila por fila, y
   probablemente un formato de datos nuevo. Falta decidir.
@@ -766,5 +788,9 @@ Lo que todavía no está:
   [Legend](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4/%EB%A0%88%EC%A0%84%EB%93%9C),
   [héroes](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%98%81%EC%9B%85)
   y [Timeline](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80)
-  (4 de octubre de 2026). No se pudieron leer las fichas de personaje de NamuWiki, Reddit, DC
-  Inside ni el foro de Netmarble.
+  (4 de octubre de 2026). No se pudieron leer las fichas de personaje de NamuWiki, Reddit ni DC
+  Inside.
+- El [foro oficial](https://forum.netmarble.com/futurefight_en) de MARVEL Future Fight (Netmarble, en
+  inglés): notas de actualización y guías oficiales, y una guía de un jugador, leídas el 4 de octubre
+  de 2026 (cada una, con su enlace, en las fuentes `foro-…` de `scripts/contenido/guia.json`). Las
+  imágenes de los posts no se pudieron leer.
