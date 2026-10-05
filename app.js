@@ -290,6 +290,8 @@ const T = {
   us_sup:            { es:'Lo que le da al equipo', en:'What it gives the team' },
   us_sup_none:       { es:'thanosvibs no le lista efectos de líder ni de soporte a este retrato.',
                        en:'thanosvibs lists no lead or support effects for this portrait.' },
+  us_otorga:         { es:'Su Leader Skill da un poder que ninguna fuente publica («Give Power»: la API no dice qué otorga ni por cuánto tiempo).',
+                       en:'Its Leader Skill grants a power no source publishes ("Give Power": the API does not say what it grants or for how long).' },
   sp_leader:         { es:'Liderazgo',           en:'Leadership' },
   sp_leader2:        { es:'Liderazgo (secundario)', en:'Leadership (Secondary)' },
   sp_passive:        { es:'Pasiva 4★',           en:'4★ Passive' },
@@ -4267,13 +4269,23 @@ function leSirveHtml (v) {
       <button class="btn sm" data-a="paraVer" data-tipo="sop">${h(t('ls_supports'))}</button></span>
   </div>`;
 }
-/** Lo que el retrato le da al equipo según thanosvibs (Leads & Supports). */
+/** ¿Su Leader Skill da un poder que ninguna fuente publica? Es la entrada «otorga» del análisis (un «Give Power»
+ *  que no dice qué otorga, scripts/modelo.py) que sale de la Leader Skill. Lo que Leads & Supports publica en esas
+ *  variantes no se toma como lo que otorga: solo se avisa (5 de octubre de 2026). */
+function otorgaSinPublicar (v) {
+  const an = ANALISIS[v.p];
+  return !!an && an.fx.some(([ie, , , fuentes]) => CATALOGO.efectos[ie].id === 'otorga'
+    && fuentes.some(([si]) => v.skills[si].sl === 'Leader Skill'));
+}
+/** Lo que el retrato le da al equipo según thanosvibs (Leads & Supports), y el aviso de un «Give Power» de su Leader
+ *  Skill que ninguna fuente publica. */
 function usoSoportes (v) {
   const s = SOPORTES[v.p];
   const tipos = s ? TIPOS_SOPORTE.filter(([k]) => s[k]) : [];
-  if (!tipos.length) return `<p class="muted">${h(t('us_sup_none'))}</p>`;
+  const otorga = otorgaSinPublicar(v) ? `<p class="usotorga" style="color:var(--gold)">⚠ ${h(t('us_otorga'))}</p>` : '';
+  if (!tipos.length) return `${otorga}<p class="muted">${h(t('us_sup_none'))}</p>`;
   return `${s.np ? `<p><span class="tag solid" style="background:var(--role-soporte)">${h(t('sp_np'))}</span></p>` : ''}
-    <div class="sops">${tipos.map(([k, clave]) => soporteHtml(k, clave, s[k])).join('')}</div>
+    ${otorga}<div class="sops">${tipos.map(([k, clave]) => soporteHtml(k, clave, s[k])).join('')}</div>
     <div class="fuentes">${fuentesHtml(fuentesSop(tipos.map(([k]) => s[k])))}</div>
     ${equiposGuiaHtml()}`;
 }
