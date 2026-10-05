@@ -384,16 +384,16 @@ const T = {
   ga_ctp_pvp:        { es:'Meta PvP',            en:'PvP meta' },
   ga_ctp_pvp_alt:    { es:'Fuera del meta PvP',  en:'PvP off-meta' },
   ga_ctp_notes:      { es:'Notas de la guía sobre C.T.P.', en:"The guide's C.T.P. notes" },
-  ctp_eq_title:      { es:'C.T.P. recomendados: {a} · {b}', en:'Recommended C.T.P.: {a} · {b}' },
-  ctp_rec_title:     { es:'Recomendado, en cada contexto (lo mismo que dicen sus tarjetas de equipo): la guía de armado y, si no le da ninguno, la Ideal CTP List.',
-                       en:'Recommended, in each context (what its team cards say): the building guide and, if it gives none, the Ideal CTP List.' },
+  ctp_eq_title:      { es:'C.T.P. recomendados: {a} · {b} · Ideal CTP List', en:'Recommended C.T.P.: {a} · {b} · Ideal CTP List' },
+  ctp_rec_title:     { es:'Recomendado, en cada contexto (lo mismo que dicen sus tarjetas de equipo): lo que dice la guía de armado de Cynicalex y lo que dice la Ideal CTP List (de la comunidad, en thanosvibs), cada uno con su fuente. Pueden no coincidir.',
+                       en:'Recommended, in each context (what its team cards say): what Cynicalex\'s building guide says and what the Ideal CTP List (community, on thanosvibs) says, each with its source. They may disagree.' },
+  ctp_ideal_col:     { es:'Ideal CTP List',      en:'Ideal CTP List' },
+  ctp_sin_ideal:     { es:'La Ideal CTP List no lo tiene (ni a otro uniforme del personaje).', en:'The Ideal CTP List does not have it (nor another uniform of the character).' },
+  ctp_sin_armado:    { es:'La guía de armado no le da uno en este contexto.', en:'The building guide gives none in this context.' },
   ctp_ctx_sin:       { es:'Sin contexto',        en:'No context' },
   ctp_ctx_pvp:       { es:'PvP',                 en:'PvP' },
   ctp_ctx_pve:       { es:'PvE',                 en:'PvE' },
-  ctp_fuente_armado: { es:'Guía de armado',      en:'Building guide' },
-  ctp_fuente_ideal:  { es:'Ideal CTP List',      en:'Ideal CTP List' },
   ctp_sin_col:       { es:'La guía de armado no le da uno en esta columna.', en:'The building guide gives none in this column.' },
-  ctp_sin_dato:      { es:'Sin dato: ni la guía de armado ni la Ideal CTP List le dan uno.', en:'No data: neither the building guide nor the Ideal CTP List gives one.' },
   ctp_not_worth:     { es:'Ninguno: no vale la pena («Not worth»)', en:'None: not worth it («Not worth»)' },
   ga_eq_other:       { es:'Con un uniforme al lado del nombre, la recomendación es para ese (el que tiene la fuente), no para el que lleva en este equipo.',
                        en:'A uniform next to the name means the recommendation is for that one (the one the source has), not the one used in this team.' },
@@ -5118,27 +5118,32 @@ function ctpCorto (x) {
   return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(c.name)}</span>${x.r ? reforjadoTag() : ''}</span>`;
 }
 // C.T.P. RECOMENDADO (Ezequiel, 4 de octubre de 2026): una sola respuesta, la misma en la ficha y en todas las
-// tarjetas de equipo (combinaciones, «cómo entraría», tus equipos y favoritos), siempre con su fuente.
-/** El C.T.P. recomendado para v en un contexto (null, 'pvp' o 'pve'): las dos columnas del contexto en la guía
- *  de armado (columnasCtp; la fila es la de su mejor uniforme) y, si la guía no le da ninguna de las dos, las
- *  filas de la Ideal CTP List en las que está (esta variante o, si no está, otra del personaje), donde «Not
- *  worth» se dice. { fuente: 'armado', vv, cols: [[columna, entrada de la guía o null], ...] },
- *  { fuente: 'ideal', vv, filas: [rótulos] } o { fuente: null }; vv: la variante de la que sale. */
+// tarjetas de equipo (combinaciones, «cómo entraría», tus equipos y favoritos), siempre con su fuente. Desde el 5 de
+// octubre, con las dos fuentes que tiene la app, una al lado de la otra (Ezequiel: «sumar la única lista de recomendación
+// de C.T.P. que tenemos ya en la aplicación... sino estamos dando información a medias»): la guía de armado de Cynicalex y
+// la Ideal CTP List; si no coinciden, se ven las dos.
+/** El C.T.P. recomendado para v en un contexto (null, 'pvp' o 'pve'), según cada fuente:
+ *  - armado: las dos columnas del contexto en la guía de armado (columnasCtp; la fila es la de su mejor uniforme), si le
+ *    da alguna: { vv, cols: [[columna, entrada de la guía o null], ...] }; si no, null.
+ *  - ideal: las filas de la Ideal CTP List en las que está (esta variante o, si no está, otra del personaje; «Not worth»
+ *    se dice): { vv, filas: [rótulos] }; si no está, null. No depende del contexto.
+ *  vv: la variante de la que sale. */
 function ctpRecomendado (v, ctx) {
+  const out = { armado: null, ideal: null };
   const a = GUIA_ARMADO ? armadoDe(v.ch) : null;
   if (a) {
     const cols = columnasCtp(ctx).map(k => [k, (a.e.ctp || []).find(y => y.k === k) || null]);
-    if (cols.some(([, c]) => c)) return { fuente: 'armado', vv: a.vv, cols };
+    if (cols.some(([, c]) => c)) out.armado = { vv: a.vv, cols };
   }
   const l = listById(GUIA.ctp_ranking.lista_ideal.id);
   if (l) {
     const rows = rowsOf(l);
     for (const vv of [v].concat(variantesDe(v.ch).filter(x => x.key !== v.key))) {
       const fs = indicesFila(l, vv.key);
-      if (fs.length) return { fuente: 'ideal', vv, filas: fs.map(i => rows[i].label) };
+      if (fs.length) { out.ideal = { vv, filas: fs.map(i => rows[i].label) }; break; }
     }
   }
-  return { fuente: null };
+  return out;
 }
 /** Una fila de la Ideal CTP List: el C.T.P. que nombra, «Not worth» dicho, u otro rótulo tal cual, marcado. */
 function ctpFilaIdeal (rotulo) {
@@ -5146,49 +5151,53 @@ function ctpFilaIdeal (rotulo) {
   if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(c.name)}</span></span>`;
   return id === 'notworth' ? `<span>${h(t('ctp_not_worth'))}</span>` : sinInterpretar(rotulo);
 }
-/** La fuente de una recomendación, como etiqueta. */
-function ctpFuenteTag (r) { return r.fuente ? `<span class="tag dim ctpfuente">${h(t('ctp_fuente_' + r.fuente))}</span>` : ''; }
-/** Lo que recomienda, en celdas: las dos columnas de la guía (una que la guía no da, «—»), o las filas de la
- *  Ideal CTP List en una celda de dos columnas, o que no hay dato. La fuente va con el nombre (ctpsEquipo). */
-function ctpCeldasHtml (r, celda) {
-  if (r.fuente === 'armado') return r.cols.map(([, c]) => `<td ${celda}>${c ? ctpCorto(c) : `<span class="muted" title="${h(t('ctp_sin_col'))}">—</span>`}</td>`).join('');
-  if (r.fuente === 'ideal') return `<td ${celda} colspan="2">${r.filas.map(ctpFilaIdeal).join('')}</td>`;
-  return `<td ${celda} colspan="2"><span class="muted">${h(t('ctp_sin_dato'))}</span></td>`;
+/** La fuente de una recomendación, como enlace: la guía de armado (con su versión) o la Ideal CTP List. */
+function ctpFuenteLink (fuente) {
+  return fuente === 'armado' ? `<span class="ctpfuente">${fuentesHtml(['cyn-armado'])} <span class="tag dim">${h(GUIA_ARMADO.version)}</span></span>`
+    : `<span class="ctpfuente">${fuentesHtml(GUIA.ctp_ranking.lista_ideal.fuente)} <span class="tag dim">${h(GUIA.ctp_ranking.lista_ideal.nombre)}</span></span>`;
 }
-/** Lo que recomienda, en una línea (la ficha): cada columna con su rótulo, o las filas de la Ideal CTP List, y la
- *  fuente. */
-function ctpLineaHtml (r) {
-  if (r.fuente === 'armado') return r.cols.map(([k, c]) => `<span class="row" style="gap:4px"><span class="muted">${h(t('ga_ctp_' + k))}:</span>${
-    c ? ctpCorto(c) : `<span class="muted" title="${h(t('ctp_sin_col'))}">—</span>`}</span>`).join('') + ctpFuenteTag(r);
-  if (r.fuente === 'ideal') return r.filas.map(ctpFilaIdeal).join('') + ctpFuenteTag(r);
-  return `<span class="muted">${h(t('ctp_sin_dato'))}</span>`;
+/** Lo que recomienda, en celdas: las dos columnas de la guía de armado (una que no da, «—») y la de la Ideal CTP List, cada
+ *  una con el uniforme del que sale si no es el que lleva (x). */
+function ctpCeldasHtml (r, celda, x) {
+  const ov = (q) => q ? otraVar(q.vv, x) : '';
+  const guia = r.armado
+    ? r.armado.cols.map(([, c], i) => `<td ${celda} data-f="armado">${c ? ctpCorto(c) : `<span class="muted" title="${h(t('ctp_sin_col'))}">—</span>`}${i ? '' : ov(r.armado)}</td>`).join('')
+    : `<td ${celda} colspan="2" data-f="armado"><span class="muted ctpsin" title="${h(t('ctp_sin_armado'))}">—</span></td>`;
+  const ideal = r.ideal ? `${r.ideal.filas.map(ctpFilaIdeal).join('')}${ov(r.ideal)}` : `<span class="muted ctpsin" title="${h(t('ctp_sin_ideal'))}">—</span>`;
+  return guia + `<td ${celda} data-f="ideal">${ideal}</td>`;
 }
-/** Las fuentes de unas recomendaciones, con sus chips: la guía de armado (con su versión y sus notas) y la
- *  Ideal CTP List, las que se usaron. */
-function ctpFuentesHtml (rs) {
-  const usa = new Set(rs.map(r => r.fuente));
-  return `${usa.has('armado') ? notasCtpArmado() + fuenteArmado() : ''}
-    ${usa.has('ideal') ? `<div class="fuentes">${fuentesHtml(GUIA.ctp_ranking.lista_ideal.fuente)}<span class="tag dim">${
-      h(GUIA.ctp_ranking.lista_ideal.nombre)}</span></div>` : ''}`;
+/** Lo que recomienda, en líneas (la ficha): la guía de armado, cada columna con su rótulo, y la Ideal CTP List, cada una
+ *  con su fuente y el uniforme del que sale si no es v. */
+function ctpLineaHtml (r, v) {
+  const guia = r.armado
+    ? `<span class="row ctp-armado" style="gap:6px">${r.armado.cols.map(([k, c]) => `<span class="row" style="gap:4px"><span class="muted">${h(t('ga_ctp_' + k))}:</span>${
+        c ? ctpCorto(c) : `<span class="muted" title="${h(t('ctp_sin_col'))}">—</span>`}</span>`).join('')}${otraVar(r.armado.vv, v)}${ctpFuenteLink('armado')}</span>`
+    : `<span class="row ctp-armado" style="gap:6px"><span class="muted ctpsin">${h(t('ctp_sin_armado'))}</span>${ctpFuenteLink('armado')}</span>`;
+  const ideal = r.ideal
+    ? `<span class="row ctp-ideal" style="gap:6px"><span class="muted">${h(t('ctp_ideal_col'))}:</span>${r.ideal.filas.map(ctpFilaIdeal).join('')}${otraVar(r.ideal.vv, v)}${ctpFuenteLink('ideal')}</span>`
+    : `<span class="row ctp-ideal" style="gap:6px"><span class="muted ctpsin">${h(t('ctp_sin_ideal'))}</span>${ctpFuenteLink('ideal')}</span>`;
+  return guia + ideal;
 }
-/** El C.T.P. recomendado (ctpRecomendado) a cada integrante de un equipo en un contexto: una fila por integrante, con su
- *  fuente, y las fuentes abajo. Si la recomendación es de otro uniforme que el que lleva, se dice. */
+/** Las fuentes de las recomendaciones, con sus chips: la guía de armado (con su versión y sus notas) y la Ideal CTP List. */
+function ctpFuentesHtml () {
+  return `${GUIA_ARMADO ? notasCtpArmado() + fuenteArmado() : ''}
+    <div class="fuentes">${fuentesHtml(GUIA.ctp_ranking.lista_ideal.fuente)}<span class="tag dim">${h(GUIA.ctp_ranking.lista_ideal.nombre)}</span></div>`;
+}
+/** El C.T.P. recomendado (ctpRecomendado) a cada integrante de un equipo en un contexto: una fila por integrante, con las
+ *  dos columnas de la guía de armado y la de la Ideal CTP List, y las fuentes abajo. Si la recomendación es de otro
+ *  uniforme que el que lleva, se dice. */
 function ctpsTablaHtml (vs, ctx) {
   const cols = columnasCtp(ctx), celda = 'style="white-space:normal;vertical-align:top;padding:4px 10px 4px 0"';
   const rs = vs.map(x => ctpRecomendado(x, ctx));
-  let otra = false;
-  const filas = vs.map((x, i) => {
-    const r = rs[i], ov = r.vv ? otraVar(r.vv, x) : '';
-    if (ov) otra = true;
-    return `<tr><th ${celda}${ov ? ` title="${h(fullLabel(r.vv))}"` : ''}>${h(x.name)} ${ov}${ctpFuenteTag(r)}</th>${ctpCeldasHtml(r, celda)}</tr>`;
-  });
-  return `<table class="abx" style="table-layout:fixed;width:100%;max-width:640px"><colgroup><col style="width:34%"><col><col></colgroup>
-      <thead><tr><th ${celda}></th>${cols.map(k => `<th ${celda}>${h(t('ga_ctp_' + k))}</th>`).join('')}</tr></thead>
+  const otra = rs.some((r, i) => (r.armado && r.armado.vv.key !== vs[i].key) || (r.ideal && r.ideal.vv.key !== vs[i].key));
+  const filas = vs.map((x, i) => `<tr><th ${celda}>${h(x.name)}</th>${ctpCeldasHtml(rs[i], celda, x)}</tr>`);
+  return `<table class="abx" style="table-layout:fixed;width:100%;max-width:760px"><colgroup><col style="width:28%"><col><col><col></colgroup>
+      <thead><tr><th ${celda}></th>${cols.map(k => `<th ${celda}>${h(t('ga_ctp_' + k))}</th>`).join('')}<th ${celda}>${h(t('ctp_ideal_col'))}</th></tr></thead>
       <tbody>${filas.join('')}</tbody></table>
     ${otra ? `<p class="muted">${h(t('ga_eq_other'))}</p>` : ''}
-    ${ctpFuentesHtml(rs)}`;
+    ${ctpFuentesHtml()}`;
 }
-/** El rótulo de los C.T.P. de un equipo: las columnas del contexto. */
+/** El rótulo de los C.T.P. de un equipo: las columnas del contexto y la Ideal CTP List. */
 function ctpsRotulo (ctx) { const cols = columnasCtp(ctx); return t('ctp_eq_title').replace('{a}', t('ga_ctp_' + cols[0])).replace('{b}', t('ga_ctp_' + cols[1])); }
 /** Los C.T.P. de un equipo, plegados (tus equipos y favoritos; en las combinaciones y «cómo entraría», van en la ventana
  *  del «Por qué»). */
@@ -5197,8 +5206,8 @@ function ctpsEquipo (vs, ctx) { return `<details class="usgrupo ga-eq"><summary>
 function ctpRecFichaHtml (v) {
   const rs = [null, 'pvp', 'pve'].map(ctx => [ctx, ctpRecomendado(v, ctx)]);
   return `<p class="muted">${h(t('ctp_rec_title'))}</p>
-    <ul class="ctprec">${rs.map(([ctx, r]) => `<li><b>${h(t('ctp_ctx_' + (ctx || 'sin')))}</b>${r.vv ? otraVar(r.vv, v) : ''}
-      <span class="row" style="gap:6px">${ctpLineaHtml(r)}</span></li>`).join('')}</ul>`;
+    <ul class="ctprec">${rs.map(([ctx, r]) => `<li><b>${h(t('ctp_ctx_' + (ctx || 'sin')))}</b>
+      <div class="ctprec-l">${ctpLineaHtml(r, v)}</div></li>`).join('')}</ul>`;
 }
 /** Si necesita artefacto, según la guía de armado (con su leyenda). */
 function artArmado (ch) {

@@ -71,9 +71,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     facción...), si no le sirve (un buff de algo que él no usa) y cómo se lee en PvE y en PvP,
     con su certeza y su fuente. Marca lo que la fuente no dice: el «Give Power» que no trae qué
     otorga y lo que el catálogo todavía no clasifica.
-  - *Armado*: su **C.T.P. recomendado** sin contexto, en PvP y en PvE, con su fuente (lo mismo
-    que dicen sus tarjetas de equipo: la guía de armado y, si no le da ninguno, la Ideal CTP
-    List), y de dónde sale: la Ideal CTP List, la guía de principiantes y la guía de armado
+  - *Armado*: su **C.T.P. recomendado** sin contexto, en PvP y en PvE (lo mismo que dicen sus
+    tarjetas de equipo): lo que dice la guía de armado y lo que dice la Ideal CTP List, las dos,
+    cada una con el enlace a su fuente (pueden no coincidir: con Gorr — The God Butcher, Authority
+    y Conquest), y de dónde sale: la Ideal CTP List, la guía de principiantes y la guía de armado
     (esta dice en qué lugar lo pone —mejor, segundo, meta y fuera del meta de PvE y de PvP— y
     si va reforjado); su artefacto con los valores por nivel de estrellas y si lo necesita
     según la guía de armado; el ISO-8 (cada categoría con sus sets) y el obelisco de la guía de
@@ -129,7 +130,7 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     tiene tope en la guía, el tope, con un aviso si lo que suman los buffs lo pasa) y lo que
     aporta; y abajo, los **C.T.P.** recomendados a cada integrante, con su
     fuente: los de la guía de armado (los de PvP o de PvE en ese contexto; si no, el mejor y el
-    segundo) y, si la guía no le da ninguno, los de la Ideal CTP List («Not worth» se dice). Se cierra
+    segundo) y, en otra columna, los de la Ideal CTP List («Not worth» se dice). Se cierra
     con Esc, con su botón o tocando afuera; si desde ella se va a una skill, «Atrás» vuelve con la
     ventana abierta. Lo mismo en «cómo entraría» (con lo que se gana y lo que se pierde); tus equipos
     (según su modo) y Favoritos (en el orden en que se marcó) muestran los C.T.P., plegados. En el
