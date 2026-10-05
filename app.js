@@ -486,6 +486,9 @@ const T = {
   gl_le_sirve:       { es:'Le sirve:',          en:'Helps:' },
   gl_le_sirve_skills: { es:'Le sirve, en las skills:', en:'Helps, in skills:' },
   gl_le_sirve_ls:    { es:'Le sirve, como liderazgo, soporte o bono de equipo:', en:'Helps, as a leadership, support or team bonus:' },
+  gl_acumula:        { es:'Si a alguien le llega de dos fuentes (liderazgo, soporte o bono de equipo):', en:'If it reaches someone from two sources (leadership, support or team bonus):' },
+  gl_se_suma:        { es:'se suma',             en:'it adds up' },
+  gl_una_vez:        { es:'cuenta una vez, la de mayor valor', en:'it counts once, the highest value' },
   gl_falta_en:       { es:'sin captura en inglés',  en:'no English capture' },
   gl_falta_ko:       { es:'sin captura en coreano', en:'no Korean capture' },
 
@@ -689,8 +692,8 @@ const T = {
   rep_no_suma:       { es:'no se suma: ya lo tiene {de}', en:'not added: it already has it {de}' },
   rep_quien:         { es:'{y} ya lo tiene {de}', en:'{y} already has it {de}' },
   rep_nada:          { es:'no suma',             en:'adds nothing' },
-  rep_regla:         { es:'Un efecto sin valor (anti-mermas, inmunidades) que a alguien le llega de dos fuentes se le aplica una sola vez: el propio; si no, el del liderazgo del líder; si no, el del primer soporte en el orden del equipo (el líder primero y los demás en un orden fijo). Las otras fuentes de ese efecto no le suman, y el «Por qué» las muestra atenuadas.',
-                       en:'An effect with no value (debuff removal, immunities) that reaches someone from two sources applies only once: its own; otherwise, the leader\'s leadership; otherwise, the first support in the team order (the leader first, then the rest in a fixed order). The other sources of that effect do not add for it, and the «Why» shows them dimmed.' },
+  rep_regla:         { es:'Si a alguien le llega lo mismo de dos fuentes, las estadísticas (ataques, defensas, vida, daño, crítico...) se suman, y las habilidades (anti-mermas, inmunidades, barrera, escudos, revivir, invocar...) cuentan una vez: la de mayor valor y, a igual valor, la propia; si no, la del liderazgo del líder; si no, la del primer soporte en el orden del equipo (el líder primero y los demás en un orden fijo). Las otras no le suman, y el «Por qué» las muestra atenuadas. Qué se suma y qué no lo dice el Glosario, en cada efecto.',
+                       en:'When someone gets the same thing from two sources, stats (attacks, defenses, HP, damage, critical...) add up, and abilities (debuff removal, immunities, barrier, shields, revive, summon...) count once: the highest value and, on equal value, its own; otherwise, the leader\'s leadership; otherwise, the first support in the team order (the leader first, then the rest in a fixed order). The others do not add for it, and the «Why» shows them dimmed. What adds up and what does not is in the Glossary, under each effect.' },
   eq_could:          { es:'Cómo entraría en tus otros equipos', en:'How it would fit your other teams' },
   eq_could_note:     { es:'Con {v}: el mejor cambio en cada equipo según la sinergia de la app, siempre que quede con vínculo con alguien del equipo (le da un soporte o el liderazgo, recibe uno suyo o forman juntos un bono de equipo).',
                        en:'With {v}: the best change in each team according to the app\'s synergy, as long as it has a link with someone in the team (gives it a support or the leadership, receives one of its own, or they form a team bonus together).' },
@@ -747,8 +750,8 @@ const T = {
   cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
   cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
-  cx_nota:           { es:'Equipos para {c}, con las reglas de Ezequiel. Entran si alguno es DPS en {l}{req}. Cada compañero tiene vínculo con él o es DPS. Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma, por cada integrante al que le llega y le sirve, su peso ({stats}), y el {cond}% de eso si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); cada nivel de fila de cada DPS (3, 2 o 1{mejor}), {dps}; cada soporte con el que a otro le llega algo que le sirve y no tiene ya, {sop}, y cada bono de equipo activo, {bono}. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
-                       en:'Teams for {c}, with Ezequiel\'s rules. They make it if someone is a DPS in {l}{req}. Each teammate has a link with it or is a DPS. Score, with the value table: each stat of the leader\'s leadership adds its weight for each member it reaches and helps ({stats}), and {cond}% of that if the leadership activates on a condition (when debuffed, for example); each row level of each DPS (3, 2 or 1{mejor}), {dps}; each support that gives another member something useful it does not already have, {sop}, and each active team bonus, {bono}. The trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
+  cx_nota:           { es:'Equipos para {c}, con las reglas de Ezequiel. Entran si alguno es DPS en {l}{req}. Cada compañero tiene vínculo con él o es DPS. Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma, por cada integrante al que le llega y le sirve, su peso ({stats}), y el {cond}% de eso si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); cada nivel de fila de cada DPS (3, 2 o 1{mejor}), {dps}; cada soporte con el que a otro se le aplica algo que le sirve, {sop}, y cada bono de equipo activo, {bono}. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
+                       en:'Teams for {c}, with Ezequiel\'s rules. They make it if someone is a DPS in {l}{req}. Each teammate has a link with it or is a DPS. Score, with the value table: each stat of the leader\'s leadership adds its weight for each member it reaches and helps ({stats}), and {cond}% of that if the leadership activates on a condition (when debuffed, for example); each row level of each DPS (3, 2 or 1{mejor}), {dps}; each support that gives another member something useful that applies to it, {sop}, and each active team bonus, {bono}. The trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
   cx_req_anti:       { es:' y si los tres tienen anti-mermas ({a}): del liderazgo del líder, del soporte de alguno (también el propio) o de sus propias skills, sin contar los que tienen probabilidad', en:' and all three have debuff removal ({a}): from the leader\'s leadership, someone\'s support (its own too) or their own skills, not counting those with a probability' },
   cx_req_no:         { es:'; los anti-mermas no hacen falta', en:'; debuff removal is not required' },
   cx_o:              { es:' o ',                  en:' or ' },
@@ -1061,8 +1064,8 @@ const T = {
   ls_also:           { es:'y, como a cualquiera:', en:'and, like anyone:' },
   ls_leaders:        { es:'Líderes que se lo dan', en:'Leaders that give it' },
   ls_supports:       { es:'Soportes que se lo dan', en:'Supports that give it' },
-  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y los suyos, sus anti-mermas propios (los de sus skills; uno con probabilidad no cuenta) y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos: en la sinergia, un soporte cuenta si a otro le llega algo que no tiene ya.',
-                       en:'Under each one, what it gets: its teammates\' supports and its own, its own debuff removal (from its skills; one with a probability does not count) and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points: in the synergy, a support counts if it gives another member something it does not already have.' },
+  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y los suyos, sus anti-mermas propios (los de sus skills; uno con probabilidad no cuenta) y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos: en la sinergia, un soporte cuenta si a otro se le aplica algo que le sirve.',
+                       en:'Under each one, what it gets: its teammates\' supports and its own, its own debuff removal (from its skills; one with a probability does not count) and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points: in the synergy, a support counts if it gives another member something useful that applies to it.' },
   cb_ataque:         { es:'Ataque',               en:'Attack' },
   cb_art:            { es:'* Solo si el compañero que lo da lleva su artefacto.', en:'* Only if the teammate who gives it has its artifact.' },
   pt_art:            { es:'* Cuenta el soporte del artefacto de un integrante, como si lo llevara: vale solo si lo lleva.',
@@ -1684,65 +1687,81 @@ function recibePropio (v) {
     return { de: v, k: 'propio', x, fx: x.fx };
   });
 }
-// EFECTOS IGUALES QUE NO SE SUMAN (Ezequiel, 5 de octubre de 2026: «El juego no permite el solapado de habilidades
-// iguales... el antimermas de apocalipsis y el de deadpool solo va a funcionar uno»). Un efecto sin valor (una línea sin
-// número: anti-mermas, inmunidades) que a un integrante le llega de dos o más fuentes se aplica una sola vez: el de la
-// primera en este orden, lo propio (sus anti-mermas de las skills y lo de sus soportes que le llega), el liderazgo del
-// líder y los soportes de los demás en el orden del equipo (el líder primero y los otros en un orden fijo, su clave: el
-// mismo desde la lista de cualquiera). Las demás fuentes de ese efecto no le suman nada a ese integrante: un soporte o un
-// liderazgo suma en la sinergia, y un soporte en PvP y PvE, solo si a algún otro integrante le llega algo que se le
-// aplica y le sirve, y las pantallas muestran atenuada la fuente que no se aplica, con la que sí. Los efectos con valor
-// se suman como hasta ahora: si se suman o vale el mayor lo decide Ezequiel, y cambia en seAcumula().
-/** ¿Se suma el efecto f (una línea de un liderazgo o un soporte) cuando a un integrante le llega de más de una fuente?
- *  Hoy, si tiene valor. */
-function seAcumula (f) { return f.v != null; }
-const _SIN_VALOR = new WeakMap();
+// EFECTOS IGUALES (Ezequiel, 5 de octubre de 2026: «El juego no permite el solapado de habilidades iguales... el antimermas
+// de apocalipsis y el de deadpool solo va a funcionar uno»; y después: «el daño contra facciones si se suma. EL ataque se
+// suma. La defensa se suma. la vida se suma... Las habilidades especificas, inmunidad a romper guardia, por ejemplo no se
+// solapan es decir cuenta una sola vez»). Si se suma lo dice el catálogo, en cada stat (MFF_CATALOGO.soporte, acumula): las
+// estadísticas se suman; las habilidades (anti-mermas, inmunidades, barrera, escudos, revivir, invocar...) cuentan una vez.
+// Una habilidad que a un integrante le llega de dos o más fuentes se le aplica una sola vez: la de mayor valor y, a igual
+// valor, la primera en este orden: lo propio (sus anti-mermas de las skills y lo de sus soportes que le llega), el liderazgo
+// del líder y los soportes de los demás en el orden del equipo (el líder primero y los otros en un orden fijo, su clave: el
+// mismo desde la lista de cualquiera). Las demás fuentes no le suman nada a ese integrante: un soporte o un liderazgo suma
+// en la sinergia, y un soporte en PvP y PvE, solo si a algún otro integrante le llega algo que se le aplica y le sirve, y
+// las pantallas muestran atenuada la fuente que no se aplica, con la que sí. iniciarDatos confirma lo que esto supone de
+// los datos (que las líneas de un mismo stat se puedan comparar, entre otras cosas).
+/** ¿Se suma el efecto f (una línea de un liderazgo, un soporte o un bono de equipo) cuando a un integrante le llega de más
+ *  de una fuente? Lo dice el catálogo; un stat que el catálogo no tiene se suma, y la tabla de lo que recibe lo marca sin
+ *  clasificar. */
+function seAcumula (f) { const c = CATALOGO.soporte[f.s]; return !c || c.acumula; }
+const _NO_ACUM = new WeakMap();
 /** ¿Trae x (un liderazgo o un soporte) algún efecto que no se acumula? Pocos: se anota, porque la consulta de
  *  combinaciones lo pregunta millones de veces. */
-function traeSinValor (x) {
-  let r = _SIN_VALOR.get(x);
-  if (r === undefined) { r = x.fx.some(f => !seAcumula(f)); _SIN_VALOR.set(x, r); }
+function traeNoAcumulable (x) {
+  let r = _NO_ACUM.get(x);
+  if (r === undefined) { r = x.fx.some(f => !seAcumula(f)); _NO_ACUM.set(x, r); }
   return r;
 }
-/** Lo propio de v que no se acumula, por stat: la primera fuente de cada uno, sus anti-mermas de las skills (antiPropio, los
- *  que cuentan: { k: 'propio', x: la entrada }) y después sus soportes que le llegan ({ k, x }). Sin la variante: se guarda
- *  por retrato, y variant() arma otra cada vez. */
-const _PROPIO_SV = new Map();
-function propioSinValor (v) {
-  let m = _PROPIO_SV.get(v.p);
-  if (m) return m;
-  m = new Map();
-  for (const ap of antiPropio(v).cuenta) if (!m.has(ap.s)) m.set(ap.s, { k: 'propio', x: ap });
+/** El valor de la línea x en el stat s, para elegir la mayor entre las que no se acumulan: su número (el mayor, si lo trae
+ *  dos veces) o null si no trae (iniciarDatos confirma que las de un mismo stat traen todas número o ninguna). */
+function valorEn (x, s) {
+  let v = null;
+  for (const f of x.fx) if (f.s === s && typeof f.v === 'number' && (v === null || f.v > v)) v = f.v;
+  return v;
+}
+/** Lo que trae v que no se acumula, por stat, cada uno en el orden en que se aplica: propio, lo de él (sus anti-mermas de
+ *  las skills, con su entrada de antiPropio de x, y después sus soportes que le llegan); lid, sus liderazgos; sop, sus
+ *  soportes. Cada uno, { k, x, val: valorEn }. No depende del equipo: se guarda por retrato (variant() arma otra variante
+ *  cada vez). */
+const _NO_ACUM_DE = new Map();
+function noAcumulablesDe (v) {
+  let r = _NO_ACUM_DE.get(v.p);
+  if (r) return r;
+  r = { propio: new Map(), lid: new Map(), sop: new Map() };
+  const pon = (m, s, e) => { const l = m.get(s); if (l) l.push(e); else m.set(s, [e]); };
+  for (const ap of antiPropio(v).cuenta) pon(r.propio, ap.s, { k: 'propio', x: ap, val: null });
   const so = SOPORTES[v.p];
-  if (so) for (const k of SLOTS_SOPORTE) {
+  if (so) for (const [k] of TIPOS_SOPORTE) {
     const x = so[k];
-    if (x && aplicaA(x, v)) for (const f of x.fx) if (!seAcumula(f) && !m.has(f.s)) m.set(f.s, { k, x });
+    if (!x || !traeNoAcumulable(x)) continue;
+    const lid = LIDERAZGOS.includes(k), propio = !lid && aplicaA(x, v);
+    for (const s of new Set(x.fx.filter(f => !seAcumula(f)).map(f => f.s))) {
+      const e = { k, x, val: valorEn(x, s) };
+      pon(lid ? r.lid : r.sop, s, e);
+      if (propio) pon(r.propio, s, e);
+    }
   }
-  if (v.p) _PROPIO_SV.set(v.p, m);
-  return m;
+  if (v.p) _NO_ACUM_DE.set(v.p, r);
+  return r;
 }
 /** El equipo en el orden en que se aplican sus soportes: el líder primero y los demás por su clave. */
 function ordenEquipo (vs, lider) {
   const otros = vs.filter(x => x !== lider).sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
   return lider ? [lider].concat(otros) : otros;
 }
-/** La fuente de la que le llega primero a m la línea sin valor del stat s (su lugar en ese orden: lo propio, el liderazgo
- *  del líder, los soportes de los demás en ordenEquipo); null si no le llega de nadie. */
-function primeraFuente (m, s, vs, lider) {
-  const p = propioSinValor(m).get(s);
-  if (p) return { de: m, k: p.k, x: p.x };
-  const da = (a, ks) => {
-    const so = SOPORTES[a.p];
-    if (so) for (const k of ks) { const x = so[k]; if (x && aplicaA(x, m) && x.fx.some(f => f.s === s && !seAcumula(f))) return { de: a, k, x }; }
-    return null;
-  };
-  let r = lider && da(lider, LIDERAZGOS);
-  if (r) return r;
-  for (const a of ordenEquipo(vs, lider)) if (a !== m && (r = da(a, SLOTS_SOPORTE))) return r;
-  return null;
+/** La fuente cuya línea del stat s, uno que no se acumula, se le aplica a m en el equipo vs con ese líder: de las que le
+ *  llegan, la de mayor valor y, a igual valor (o sin valor), la primera en el orden: lo propio, el liderazgo del líder y los
+ *  soportes de los demás en ordenEquipo. { de, k, x, val }, o null si no le llega de nadie. */
+function fuenteQueSeAplica (m, s, vs, lider) {
+  let p = null;
+  const toma = (de, e) => { if (!p || (e.val !== null && p.val !== null && e.val > p.val)) p = { de, k: e.k, x: e.x, val: e.val }; };
+  for (const e of noAcumulablesDe(m).propio.get(s) || []) toma(m, e);
+  if (lider) for (const e of noAcumulablesDe(lider).lid.get(s) || []) if (aplicaA(e.x, m)) toma(lider, e);
+  for (const a of ordenEquipo(vs, lider)) if (a !== m) for (const e of noAcumulablesDe(a).sop.get(s) || []) if (aplicaA(e.x, m)) toma(a, e);
+  return p;
 }
 /** La fuente de la que le llegan primero a m los anti-mermas (cualquiera de sus stats), en el mismo orden: la que lo
- *  cubre. null si no le llegan. */
+ *  cubre. Los anti-mermas no traen valor (iniciarDatos lo confirma), así que entre dos decide el orden, como en
+ *  fuenteQueSeAplica. null si no le llegan. */
 function primeraAnti (m, vs, lider) {
   const ap = antiPropio(m).cuenta[0];
   if (ap) return { de: m, k: 'propio', x: ap };
@@ -1765,7 +1784,7 @@ function aplicacion (m, de, k, x, fx, vs, lider) {
   const si = [], no = [];
   for (const f of fx) {
     if (seAcumula(f)) { si.push(f); continue; }
-    const p = primeraFuente(m, f.s, vs, lider);
+    const p = fuenteQueSeAplica(m, f.s, vs, lider);
     if (esLaFuente(p, de, k, x)) si.push(f); else no.push([f, p]);
   }
   return { si, no };
@@ -1773,8 +1792,8 @@ function aplicacion (m, de, k, x, fx, vs, lider) {
 /** ¿Le llega a b algo de x (el slot k de de) que se le aplica y le sirve? */
 function aplicaAlgo (b, de, k, x, vs, lider) {
   if (!aplicaA(x, b) || !leSirve(x, b)) return false;
-  if (!traeSinValor(x)) return true;
-  for (const f of x.fx) if (sirve(f, b) && (seAcumula(f) || esLaFuente(primeraFuente(b, f.s, vs, lider), de, k, x))) return true;
+  if (!traeNoAcumulable(x)) return true;
+  for (const f of x.fx) if (sirve(f, b) && (seAcumula(f) || esLaFuente(fuenteQueSeAplica(b, f.s, vs, lider), de, k, x))) return true;
   return false;
 }
 /** A quiénes del equipo (menos de) les llega x y les sirve: { si: a los que se les aplica algo, no: [[integrante, [[efecto,
@@ -1784,7 +1803,7 @@ function reparto (de, k, x, vs, lider, conNo) {
   let si = null, no = null;
   for (const b of vs) {
     if (b === de || !aplicaA(x, b) || !leSirve(x, b)) continue;
-    if (!traeSinValor(x)) { (si || (si = [])).push(b); continue; }
+    if (!traeNoAcumulable(x)) { (si || (si = [])).push(b); continue; }
     if (!conNo) { if (aplicaAlgo(b, de, k, x, vs, lider)) (si || (si = [])).push(b); continue; }
     const ap = aplicacion(b, de, k, x, x.fx.filter(f => sirve(f, b)), vs, lider);
     if (ap.si.length) (si || (si = [])).push(b);
@@ -1792,7 +1811,7 @@ function reparto (de, k, x, vs, lider, conNo) {
   }
   return si || no ? { si: si || [], no: no || [] } : null;
 }
-/** De quién ya tiene m un efecto (p, de primeraFuente): «propio (Pasiva T2)», «de su liderazgo», «del liderazgo de
+/** De quién ya tiene m un efecto (p, de fuenteQueSeAplica): «propio (Pasiva T2)», «de su liderazgo», «del liderazgo de
  *  Thanos» o «de Wasp (Pasiva 4★)». nombre: cómo se nombra a cada integrante; con html, el nombre va con su title y el
  *  resto escapado. */
 function yaDe (m, p, nombre, html) {
@@ -1931,8 +1950,8 @@ function estanTodos (cids, vs) {
  *  con ventaja normal; Universal no tiene. Las arma iniciarDatos(). */
 let VENTAJA, LE_GANA_A;
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
- *  soporte de thanosvibs que alcanzan a otro integrante, se le aplican (un efecto sin valor, una sola
- *  vez: ver «Efectos iguales que no se suman») y le sirven (sirve()): los de soporte
+ *  soporte de thanosvibs que alcanzan a otro integrante, se le aplican (una habilidad, una sola
+ *  vez: ver «Efectos iguales») y le sirven (sirve()): los de soporte
  *  valen en cualquier lugar del equipo; el liderazgo, el del líder del equipo (liderDe: el
  *  mismo sea cual sea el orden y desde la lista de quien se mire; lider, si se pasa, es el de
  *  un contexto). Cada bono de equipo con todos sus integrantes en el equipo
@@ -2083,8 +2102,9 @@ function vinculo (v, x, aplicados) {
  *  PvE, el del modo (Ezequiel, 4 de octubre de 2026, regla 2: un solo líder, el del modo, para todo lo de
  *  ese modo). */
 function vinculoLider (v, x, lider) { return (lider === v && llegaLiderazgo(v, x)) || (lider === x && llegaLiderazgo(x, v)); }
-/** ¿Le llega a b algo del liderazgo de a que se le aplica y le sirve? (Lo que no tiene valor solo se le aplica si no lo
- *  tiene propio: con a de líder, lo propio es lo único que va antes.) */
+/** ¿Le llega a b algo del liderazgo de a que se le aplica y le sirve? Se cuenta de a pares, con a de líder: lo que no se
+ *  acumula se le aplica si gana entre lo propio de b, el liderazgo y los soportes de a (fuenteQueSeAplica). El tercero no
+ *  cambiaría eso: ningún soporte trae más valor que un liderazgo del mismo stat (iniciarDatos lo confirma). */
 function llegaLiderazgo (a, b) {
   const s = SOPORTES[a.p], vs = [a, b];
   return !!s && LIDERAZGOS.some(k => s[k] && aplicaAlgo(b, a, k, s[k], vs, a));
@@ -2803,6 +2823,20 @@ function leSirveEfectoHtml (e, renglon) {
   return renglon(h(t('gl_le_sirve_skills')), regla(e.sirve)) + renglon(h(t('gl_le_sirve_ls')), `<ul class="sirvestat">${
     otros.map(st => `<li>${h(trTxt(st))}: ${regla(CATALOGO.soporte[st].sirve)}</li>`).join('')}</ul>`);
 }
+/** Si se suma, cuando a alguien le llega de dos fuentes (Efectos iguales), cada stat de liderazgo, soporte o bono de equipo
+ *  que apunta al efecto (MFF_CATALOGO.soporte, acumula): una sola respuesta si todos dicen lo mismo y ninguno trae nota; si
+ *  no, uno por uno, con su nota (la de los dudosos dice [Conjetura]). Nada si ningún stat apunta a él. Como
+ *  leSirveEfectoHtml. */
+function acumulaEfectoHtml (e, renglon) {
+  const sts = GL_DE[e.id].stats;
+  if (!sts.length) return '';
+  const dice = (st) => h(t(CATALOGO.soporte[st].acumula ? 'gl_se_suma' : 'gl_una_vez'));
+  const nota = (st) => CATALOGO.soporte[st].nota ? ` <span class="muted">— ${h(bi(CATALOGO.soporte[st].nota))}</span>` : '';
+  if (sts.every(st => CATALOGO.soporte[st].acumula === CATALOGO.soporte[sts[0]].acumula && !CATALOGO.soporte[st].nota)) {
+    return renglon(h(t('gl_acumula')), dice(sts[0]));
+  }
+  return renglon(h(t('gl_acumula')), `<ul class="sirvestat">${sts.map(st => `<li>${h(trTxt(st))}: ${dice(st)}${nota(st)}</li>`).join('')}</ul>`);
+}
 /** La primera letra en mayúscula, para que una frase arranque un renglón («Contra una facción: …»). */
 function mayuscula (x) { return x ? x[0].toUpperCase() + x.slice(1) : x; }
 /** El nombre de un efecto del análisis. Un «Give Power» que queda como entrada es uno que no dice qué otorga. */
@@ -2965,6 +2999,7 @@ function efectoTipHtml (v, x) {
       ${GL_DE[e.id].terminos.map(y => `<li><b>${h(nombreGl(y))}</b> <span class="muted">(${h(otrosNombresGl(y).join(', '))})</span>: ${h(bi(y.que))}</li>`).join('')}
       ${cond ? `<li>${h(mayuscula(cond))}</li>` : ''}
       ${leSirveEfectoHtml(e, (r, x) => `<li><b>${r}</b> ${x}</li>`)}
+      ${acumulaEfectoHtml(e, (r, x) => `<li><b>${r}</b> ${x}</li>`)}
       ${notas.map(n => `<li class="muted">${h(bi(n))}</li>`).join('')}
     </ul>
     ${lecturasEfecto(e).map(l => lecturaAn(l.L, l.modo + delGrupo(l))).join('')}`;
@@ -3177,8 +3212,8 @@ function botonArmar (vs, modo, nombre, etiqueta) {
 // (un <dialog> fuera de #app: pintar la página no la toca) tiene arriba el equipo (los retratos, con el líder primero
 // y su marca, los puntos de la tarjeta y quién lidera y por qué) y de dónde salen los puntos, parte por parte (en PvP
 // y PvE, el detalle del contexto; si no, la sinergia); después, una pestaña por integrante con lo que recibe (un
-// renglón por stat y condición, sin topes, con el total y de dónde sale cada parte: quién la da, el enlace a la skill
-// o al artefacto y lo que suma) y lo que aporta; abajo, lo demás (en PvP y PvE, lo de los puntos para él; en «cómo
+// renglón por stat y condición, con el total de lo que se le aplica y de dónde sale cada parte: quién la da, el enlace a
+// la skill o al artefacto y lo que suma) y lo que aporta; abajo, lo demás (en PvP y PvE, lo de los puntos para él; en «cómo
 // entraría», lo que se gana y lo que se pierde) y los C.T.P. recomendados en el contexto de la tarjeta. Son las
 // cuentas de siempre (recibe, enContexto, synergy, ctpRecomendado), las mismas de la tarjeta. Con los nombres cortos
 // (el completo, en el title) y «a todos» si algo les llega a todos. Cada efecto, con efectoSoporteHtml.
@@ -3201,11 +3236,12 @@ function origenesDe (foco, vs, lider) {
   }
   return pjs.concat(arts);
 }
-/** La suma de lo que le llega: un renglón por stat y condición (los que llegan siempre primero), sin
- *  topes. De cada uno, lo que llega sin artefacto y lo que solo llega con uno: v y i (% del instinto),
- *  [sin, con], null si de ese lado no llega nada con número; sin: si algo le llega sin artefacto; de: de dónde
- *  sale cada parte, en el orden de los orígenes ({ o: el origen, r: lo de recibe(), f: el efecto, ya: la fuente de
- *  la que ya lo tiene si no se le suma }); rep: si ninguna parte se le suma (todo lo tiene ya de otro renglón). */
+/** La suma de lo que le llega: un renglón por stat y condición (los que llegan siempre primero). De cada uno, lo que
+ *  se le aplica sin artefacto y lo que solo con uno: v y i (% del instinto), [sin, con], null si de ese lado no se le
+ *  aplica nada con número; sin: si algo de lo que se le aplica le llega sin artefacto; de: de dónde sale cada parte, en el
+ *  orden de los orígenes ({ o: el origen, r: lo de recibe(), f: el efecto, ya: la fuente que se le aplica en su lugar, si
+ *  esta no se le suma }); rep: si no se le suma ninguna parte. Una habilidad que le llega de dos fuentes va en las dos
+ *  partes, pero en el total solo la que se le aplica (Efectos iguales). */
 function sumaDe (origenes) {
   const m = new Map();
   for (const o of origenes) for (const r of o.skills) for (const f of r.fx) {
@@ -3213,17 +3249,19 @@ function sumaDe (origenes) {
     let l = m.get(clave);
     if (!l) m.set(clave, l = { s: f.s, cond, txt, v: [null, null], i: [null, null], sin: false, de: [], rep: true });
     const j = o.art ? 1 : 0, ya = r.no.get(f) || null;
-    if (typeof f.v === 'number') l.v[j] = (l.v[j] || 0) + f.v;
-    if (f.i != null) l.i[j] = (l.i[j] || 0) + f.i;
-    if (!o.art) l.sin = true;
-    if (!ya) l.rep = false;
+    if (!ya) {
+      if (typeof f.v === 'number') l.v[j] = (l.v[j] || 0) + f.v;
+      if (f.i != null) l.i[j] = (l.i[j] || 0) + f.i;
+      if (!o.art) l.sin = true;
+      l.rep = false;
+    }
     l.de.push({ o, r, f, ya });
   }
   return [...m.values()].sort((a, b) => !!a.cond - !!b.cond);
 }
-/** ¿El renglón lleva «*» (algo de él solo llega con un artefacto)? Con número, si un artefacto le suma;
- *  sin número, si solo llega por artefactos. */
-function conArtefacto (l) { return l.v[1] != null || l.i[1] != null || (!l.sin && l.v[0] == null && l.i[0] == null); }
+/** ¿El renglón lleva «*» (algo de lo que se le aplica solo llega con un artefacto)? Con número, si un artefacto le suma;
+ *  sin número, si solo se le aplica por artefactos. Si no se le aplica nada, no. */
+function conArtefacto (l) { return !l.rep && (l.v[1] != null || l.i[1] != null || (!l.sin && l.v[0] == null && l.i[0] == null)); }
 /** El «*» de lo que solo llega si el compañero lleva su artefacto. */
 function marcaArt () { return `<span class="pqart" title="${h(t('cb_art'))}">*</span>`; }
 /** Lo que recibe el integrante m, en una tabla «Efecto | Total | De dónde»: un renglón por stat y condición (sumaDe), con
@@ -3235,14 +3273,14 @@ function recibeTablaHtml (m, suma, nombre, hid) {
       ${suma.map(l => recibeFilaHtml(m, l, nombre)).join('')}
     </div>${suma.some(conArtefacto) ? `<p class="muted pqley">${h(t('cb_art'))}</p>` : ''}`;
 }
-/** Un renglón de la tabla: el efecto (con su condición, que es la de todas sus partes), el total sin topes (con «*» si
- *  algo de él solo llega con un artefacto y, si también llega algo sin artefacto, cuánto) y de dónde sale cada parte:
- *  quién la da (su retrato y su nombre), el enlace a su skill o a su artefacto y lo que suma. La parte que no se le suma
- *  (un efecto sin valor que ya tiene de otra fuente) va atenuada, con de dónde ya lo tiene; si no se le suma ninguna,
- *  el renglón entero. */
+/** Un renglón de la tabla: el efecto (con su condición, que es la de todas sus partes), el total de lo que se le aplica
+ *  (con «*» si algo de él solo llega con un artefacto y, si también llega algo sin artefacto, cuánto) y de dónde sale cada
+ *  parte: quién la da (su retrato y su nombre), el enlace a su skill o a su artefacto y lo que suma. La parte que no se le
+ *  suma (una habilidad que se le aplica de otra fuente: Efectos iguales) va atenuada, con de dónde la tiene; si no se le
+ *  suma ninguna, el renglón entero. */
 function recibeFilaHtml (m, l, nombre) {
   const tot = (p) => p[0] == null && p[1] == null ? null : (p[0] || 0) + (p[1] || 0);
-  const art = conArtefacto(l), val = valorTxt(l.txt != null ? l.txt : tot(l.v), tot(l.i));
+  const art = conArtefacto(l), val = l.rep ? '' : valorTxt(l.txt != null ? l.txt : tot(l.v), tot(l.i));
   const sin = art && (l.v[0] != null || l.i[0] != null) ? valorTxt(l.v[0], l.i[0]) : '';
   return `<div class="pqm-fila${l.rep ? ' rep' : ''}" role="row">
       <div class="pqm-ef" role="cell">${trHtml(l.s)}${sinClasificar(l.s) ? ` <span class="muted">(${h(t('sy_unclassified'))})</span>` : ''}${
@@ -3785,12 +3823,12 @@ function slotsDe (v) {
   let s = _SLOTS.get(v.p);
   if (s) return s;
   const so = SOPORTES[v.p] || {};
-  s = { lid: [], sop: [], sopK: [], antiLid: [], antiSop: [] };   // sopK: el slot de cada soporte de sop
+  s = { lid: [], lidK: [], sop: [], sopK: [], antiLid: [], antiSop: [] };   // lidK y sopK: el slot de cada uno de lid y sop
   for (const [k] of TIPOS_SOPORTE) {
     const x = so[k];
     if (!x) continue;
     const lid = LIDERAZGOS.includes(k), anti = x.fx.some(f => ANTI_MERMAS.has(f.s));
-    if (lid) s.lid.push(x); else { s.sop.push(x); s.sopK.push(k); }
+    if (lid) { s.lid.push(x); s.lidK.push(k); } else { s.sop.push(x); s.sopK.push(k); }
     if (anti) (lid ? s.antiLid : s.antiSop).push(x);
   }
   if (v.p) _SLOTS.set(v.p, s);
@@ -3849,13 +3887,14 @@ function puedeLiderar (vs, i, C, sl, cubreSop) {
 function ptsLiderazgo (vs, i, C, sl) {
   const vale = C.vale, llega = C.llega;
   llega.fill(0);
-  for (const x of sl[i].lid) {
-    const b = x.ac ? 3 : 0;
+  for (let n = 0; n < sl[i].lid.length; n++) {
+    const x = sl[i].lid[n], b = x.ac ? 3 : 0;
     for (const f of x.fx) {
       const k = vale.get(f.s);
       if (k === undefined) continue;
-      // Un stat sin valor (la tabla de hoy no pesa ninguno) no se le suma a quien lo tiene propio (seAcumula).
-      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j]) && (seAcumula(f) || !propioSinValor(vs[j]).has(f.s))) llega[k] |= 1 << (b + j);
+      // Uno que no se acumula (la tabla de hoy no pesa ninguno) suma si es el que se le aplica (fuenteQueSeAplica).
+      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])
+          && (seAcumula(f) || esLaFuente(fuenteQueSeAplica(vs[j], f.s, vs, vs[i]), vs[i], sl[i].lidK[n], x))) llega[k] |= 1 << (b + j);
     }
   }
   let pts = 0;
@@ -3945,8 +3984,8 @@ function consultaCon (v) {
   // él (ld) y si el suyo le llega a cada compañero (lv). vinculosFila lo suma con el líder de cada orden.
   const ld = Uint8Array.from(pool, x => llegaLiderazgo(x, v)), lv = Uint8Array.from(pool, x => llegaLiderazgo(v, x));
   // sv: quiénes tienen un soporte que trae algo que no se acumula (y él, svV). En un trío con alguno, el vínculo por un
-  // soporte depende del líder (de él depende qué se le aplica a cada uno: ver «Efectos iguales que no se suman»).
-  const sv = Uint8Array.from(pool, sopSinValor), svV = sopSinValor(v);
+  // soporte depende del líder (de él depende qué se le aplica a cada uno: ver «Efectos iguales»).
+  const sv = Uint8Array.from(pool, sopNoAcumulable), svV = sopNoAcumulable(v);
   const max = pool.length * (pool.length - 1) / 2;
   // G: qué compañeros tienen vínculo con él por un soporte o un bono de equipo (1, el primero; 2, el
   // segundo), con el líder de la sinergia. P: los puntos para él y L: el líder de la sinergia, el de la
@@ -3985,7 +4024,7 @@ function consultaCon (v) {
   return CONSULTA;
 }
 /** ¿Tiene v algún soporte que trae algo que no se acumula? */
-function sopSinValor (v) { const so = SOPORTES[v.p]; return !!so && SLOTS_SOPORTE.some(k => so[k] && traeSinValor(so[k])); }
+function sopNoAcumulable (v) { const so = SOPORTES[v.p]; return !!so && SLOTS_SOPORTE.some(k => so[k] && traeNoAcumulable(so[k])); }
 /** Con qué compañeros (1, vs[1]; 2, vs[2]) tiene vs[0] un vínculo por un soporte o un bono de equipo, con este líder (G de
  *  la consulta, contado con otro). */
 function vinculosSoporte (vs, lider) {
@@ -4216,18 +4255,18 @@ function detalleContexto (e, vs, ctx) {
   // con efectoSoporteTxt, que ya dice la activación), a quiénes llega y cuánto suma (su peso por cada uno). Las
   // de un liderazgo condicional cuentan la parte del condicional, y solo para quien no recibe el mismo stat de
   // uno permanente (cada stat cuenta una vez por integrante, la de más peso).
-  // Un stat sin valor no se le suma a quien lo tiene propio (como en ptsLiderazgo; la tabla de hoy no pesa ninguno).
-  const grupos = new Map(), lleno = new Set();
-  for (const x of slotsDe(e.lider).lid) for (const f of x.fx) {
+  // Uno que no se acumula suma si es el que se le aplica (como en ptsLiderazgo; la tabla de hoy no pesa ninguno).
+  const grupos = new Map(), lleno = new Set(), slL = slotsDe(e.lider);
+  slL.lid.forEach((x, n) => { for (const f of x.fx) {
     if (!C.vale.has(f.s)) continue;
     const k = f.s + '|' + (x.ac || '');
     const g = grupos.get(k) || { s: f.s, ac: x.ac, txt: [], ms: new Set(), no: new Map() };
     grupos.set(k, g);
     g.txt.push(efectoSoporteTxt(x, f) + srcTxt(x));
     vs.forEach(m => { if (!aplicaA(x, m) || !sirve(f, m)) return;
-      if (!seAcumula(f) && propioSinValor(m).has(f.s)) { g.no.set(m, [[f, { de: m, ...propioSinValor(m).get(f.s) }]]); return; }
+      if (!seAcumula(f)) { const p = fuenteQueSeAplica(m, f.s, vs, e.lider); if (!esLaFuente(p, e.lider, slL.lidK[n], x)) { g.no.set(m, [[f, p]]); return; } }
       g.ms.add(m); if (!x.ac) lleno.add(f.s + '|' + m.key); });
-  }
+  } });
   const liderazgo = [...grupos.values()].map(g => {
     const ms = vs.filter(m => g.ms.has(m) && !(g.ac && lleno.has(g.s + '|' + m.key)));
     const pts = ms.length * C.peso[C.vale.get(g.s)] * (g.ac ? C.condicional : 1);
@@ -4429,6 +4468,7 @@ function efectoGl (e) {
     ${lecturasAn(e.pve, e.pvp)}
     ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
     ${leSirveEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
+    ${acumulaEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${d.etiquetas.length ? `<div class="glet"><span class="muted">${h(t('gl_en_skills'))}</span>${
       d.etiquetas.map(i => `<span class="tag dim">${h(txt('ab', i))}</span>`).join('')}</div>` : ''}
   </div>`;
@@ -6287,6 +6327,26 @@ function iniciarDatos () {
   for (const st of VALOR.anti_mermas) for (const id of CATALOGO.soporte[st].efectos) {
     const ie = CATALOGO.efectos.findIndex(e => e.id === id);
     if (!STAT_ANTI.has(ie)) STAT_ANTI.set(ie, st);
+  }
+  // Lo que no se acumula (Efectos iguales): de las líneas de un stat que le llegan a alguien se aplica la de mayor valor,
+  // así que tienen que poder compararse (todas con número, o ninguna); los anti-mermas no traen valor (primeraAnti mira
+  // solo el orden); y ningún soporte trae más valor que un liderazgo del mismo stat (el vínculo por el liderazgo se
+  // cuenta de a pares, sin el tercero: llegaLiderazgo).
+  const noAcum = new Map();
+  for (const [p, so] of Object.entries(SOPORTES)) for (const [k] of TIPOS_SOPORTE) {
+    const x = so[k];
+    if (x) for (const f of x.fx) if (!seAcumula(f)) {
+      const c = noAcum.get(f.s) || { tipos: new Map(), lid: Infinity, sop: -Infinity };
+      noAcum.set(f.s, c);
+      c.tipos.set(typeof f.v === 'number' ? 'número' : f.v == null ? 'sin valor' : 'texto «' + f.v + '»', p + ' (' + k + ')');
+      if (typeof f.v === 'number') { if (LIDERAZGOS.includes(k)) c.lid = Math.min(c.lid, f.v); else c.sop = Math.max(c.sop, f.v); }
+    }
+  }
+  for (const [st, c] of noAcum) {
+    if (c.tipos.size > 1) throw new Error(`${st} no se acumula y sus líneas no se pueden comparar para elegir la de mayor valor: ${
+      [...c.tipos].map(([tipo, donde]) => tipo + ' en ' + donde).join(', ')}`);
+    if (ANTI_MERMAS.has(st) && !c.tipos.has('sin valor')) throw new Error(`anti-mermas con valor (${st}): primeraAnti elige solo por el orden`);
+    if (c.sop > c.lid) throw new Error(`un soporte trae ${st} con más valor que un liderazgo: el vínculo por el liderazgo (llegaLiderazgo) tendría que contarse con el tercero`);
   }
   CONTEXTO = {};
   for (const ctx of ['pvp', 'pve']) {
