@@ -52,11 +52,17 @@
     {
      "es": "En Legend, los jefes ignoran incluso los controles que ignoran la inmunidad, así que se les gana con daño; el daño perforante adicional de las cartas sí les entra (NamuWiki).",
      "en": "In Legend, bosses ignore even the crowd controls that ignore immunity, so they are beaten with damage; Additional Pierce Damage from cards still gets through (NamuWiki)."
+    },
+    {
+     "es": "Los jefes resisten lo que les aplican los strikers, no los tres que se manejan: un efecto que le entra al jefe no le vuelve a entrar por 5 s, y cada vez que lo recibe dura menos (nunca menos de 1 s). La cuenta es por efecto y la comparten todos los strikers; lo que se acumula, se acumula una sola vez y no mientras el jefe es inmune. Si la resistencia del agente supera la del jefe, la del jefe baja (foro oficial).",
+     "en": "Bosses resist what the strikers apply to them, not the three you control: an effect that lands on the boss cannot land again for 5 s, and each time it is received it lasts less (never under 1 s). The count is per effect and shared by all strikers; stackable effects stack only once and not while the boss is immune. If the agent's Resistance is higher than the boss's, the boss's goes down (official forum)."
     }
    ],
    "avisos_fuente": [
     "tv-guia-3",
-    "namu-wbl"
+    "namu-wbl",
+    "foro-1599295",
+    "foro-1728548"
    ],
    "listas": [
     "tv-wbl",
