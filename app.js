@@ -1751,8 +1751,9 @@ function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
   // razones: lo que suma, para explicarlo (sin soloPuntaje): cada soporte o liderazgo con los
   // integrantes a los que les llega y les sirve, cada versión de un bono de equipo, los roles, las
   // clases y cada ventaja de clase. Los textos salen de ahí (razonesTxt, porqueHtml).
-  // aplicados: { de, a: [integrantes] }, lo que suma: quién le da algo a quién (en un bono de equipo,
-  // cada integrante a los otros, que están juntos por el bono)
+  // aplicados: { de, a: [integrantes] }, los soportes y bonos de equipo que suman: quién le da algo a
+  // quién (en un bono de equipo, cada integrante a los otros, que están juntos por el bono). El
+  // liderazgo no va: vincula según quién lidera (vinculoLider), y el líder depende del contexto.
   // art: algún soporte de artefacto sumó (cuenta como si lo llevara; los puntos lo marcan con «*»).
   const razones = [], aplicados = []; let score = 0, art = false;
   // Un soporte o un liderazgo suma si le llega a otro integrante y le sirve (sirve()). Con foco
@@ -1778,7 +1779,7 @@ function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
   if (sl) for (const k of LIDERAZGOS) {
     const x = sl[k]; if (!x || !cuenta(lider, x)) continue;
     const bs = alcanza(lider, x); if (!bs.length) continue;
-    score += x.sig ? 3 : 2; aplicados.push({ de: lider, a: bs });
+    score += x.sig ? 3 : 2;
     if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k, x, a: bs });
   }
   // Bonos de equipo: con todos sus integrantes en el equipo, les suben stats a todos. Cada uno suma
@@ -1869,13 +1870,23 @@ function piezas (razones) {
   }
   return out;
 }
-/** ¿x tiene un vínculo con v en el equipo? Le da algo (un soporte, o el liderazgo si es el
- *  líder que cuenta la sinergia), recibe algo de él o forman juntos un bono de equipo. Las clases
- *  y los roles no cuentan: un equipo armado alrededor de v no lleva compañeros que no tengan nada
- *  que ver con él. */
+/** ¿x tiene un vínculo con v en el equipo por un soporte o un bono de equipo? Le da algo (un soporte),
+ *  recibe algo de él o forman juntos un bono. El liderazgo vincula según quién lidera (vinculoLider).
+ *  Las clases y los roles no cuentan: un equipo armado alrededor de v no lleva compañeros que no
+ *  tengan nada que ver con él. */
 function vinculo (v, x, aplicados) {
   for (const e of aplicados) if ((e.de === v && e.a.includes(x)) || (e.de === x && e.a.includes(v))) return true;
   return false;
+}
+/** ¿El liderazgo vincula a x con v? Si el líder del equipo es v y su liderazgo le llega a x, o es x y le
+ *  llega a v. El líder es el del contexto: sin contexto, el de la sinergia (liderSinContexto); en PvP y
+ *  PvE, el del modo (Ezequiel, 4 de octubre de 2026, regla 2: un solo líder, el del modo, para todo lo de
+ *  ese modo). */
+function vinculoLider (v, x, lider) { return (lider === v && llegaLiderazgo(v, x)) || (lider === x && llegaLiderazgo(x, v)); }
+/** ¿Algún liderazgo de a le llega a b y le sirve? */
+function llegaLiderazgo (a, b) {
+  const s = SOPORTES[a.p];
+  return !!s && LIDERAZGOS.some(k => s[k] && aplicaA(s[k], b) && leSirve(s[k], b));
 }
 
 // ---------------------------------------------------------------------------
@@ -3223,7 +3234,7 @@ function comoEntra (v, tt) {
   const opciones = vs.map((x, i) => ({ sale: x, vs: vs.map((y, j) => j === i ? v : y) }));
   if (vs.length < tamModo(tt.modeId)) opciones.push({ sale: null, vs: vs.concat(v) });
   const validas = opciones.map(o => Object.assign(o, { despues: synergy(o.vs) }))
-    .filter(o => o.vs.some(x => x !== v && vinculo(v, x, o.despues.aplicados)));
+    .filter(o => o.vs.some(x => x !== v && (vinculo(v, x, o.despues.aplicados) || vinculoLider(v, x, o.despues.lider))));
   if (!validas.length) return { tt, sinVinculo: true };
   const antes = synergy(vs);
   // El mejor lugar: el de más puntos; a igual puntaje, el de más strikers (desempatan).
@@ -3247,7 +3258,9 @@ function retratosEquipo (vs, resaltada, lider) {
 }
 // COMBINACIONES DE 3 CON ÉL: una consulta sobre los datos, no listas armadas de antemano.
 // Para el personaje (con el uniforme elegido) recorre todas las parejas de compañeros y se
-// queda con los equipos en que los dos tienen vínculo con él (vinculo()), con el puntaje para
+// queda con los equipos en que los dos tienen vínculo con él (vinculo() y, por el liderazgo,
+// vinculoLider() con el líder de cada orden: sin contexto, el de la sinergia; en PvP y PvE, el del
+// contexto), con el puntaje para
 // él (synergy con foco: lo que le dan, lo que da él, sus bonos de equipo, la ventaja de clase
 // con él, roles y clases). Antes eran tres equipos por tamaño de una búsqueda aproximada, y salían
 // siempre los mismos seis soportes sin forma de ver los demás.
@@ -3461,13 +3474,17 @@ function consultaCon (v) {
   const puede = pool.map(x => puedeVincular(x, v) || puedeVincular(v, x));
   // En los contextos PvP y PvE, un DPS de ese contexto entra aunque no tenga vínculo con él.
   const dps = pool.map(x => rolEn(x, 'pvp').dps > 0 || rolEn(x, 'pve').dps > 0);
+  // El liderazgo vincula según quién lidera (vinculoLider), de a pares: si el de cada compañero le llega a
+  // él (ld) y si el suyo le llega a cada compañero (lv). vinculosFila lo suma con el líder de cada orden.
+  const ld = Uint8Array.from(pool, x => llegaLiderazgo(x, v)), lv = Uint8Array.from(pool, x => llegaLiderazgo(v, x));
   const max = pool.length * (pool.length - 1) / 2;
-  // F: qué compañeros tienen vínculo con él (1, el primero; 2, el segundo). P: los puntos para él y
-  // L: el líder de la sinergia, el de la tarjeta (0 él, 1 o 2 el compañero, 3 ninguno; lo usa el
-  // filtro de cobertura), solo con los dos vinculados (el orden «puntos para él» y las tier lists
-  // solo usan esas filas).
+  // G: qué compañeros tienen vínculo con él por un soporte o un bono de equipo (1, el primero; 2, el
+  // segundo). P: los puntos para él y L: el líder de la sinergia, el de la tarjeta sin contexto (0 él, 1
+  // o 2 el compañero, 3 ninguno; lo usan el filtro de cobertura y los vínculos sin contexto). Van las
+  // filas que pueden entrar en algún orden: con los dos vinculados, con cualquiera de los tres de líder,
+  // o con un DPS de PvP o PvE en lugar del que no.
   // S: cuántos strikers del trío lo involucran (desempatan los puntos para él).
-  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), F = new Uint8Array(max), L = new Uint8Array(max),
+  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), G = new Uint8Array(max), L = new Uint8Array(max),
         S = new Uint8Array(max);
   // Un solo arreglo de equipo y unas solas opciones para los cientos de miles de llamadas
   // (synergy no se los guarda: lo que devuelve se usa acá mismo y se descarta).
@@ -3479,20 +3496,28 @@ function consultaCon (v) {
     for (let j = i + 1; j < pool.length; j++) {
       if ((!puede[j] && !dps[j]) || pool[i].cid === pool[j].cid) continue;
       vs[2] = pool[j];
-      let f = 0, pts = 0, li = 3;
+      let g = 0, pts = 0, li = 3;
       if (puede[i] || puede[j]) {
         const sc = synergy(vs, op);
-        if (puede[i] && vinculo(v, pool[i], sc.aplicados)) f |= 1;
-        if (puede[j] && vinculo(v, pool[j], sc.aplicados)) f |= 2;
+        if (puede[i] && vinculo(v, pool[i], sc.aplicados)) g |= 1;
+        if (puede[j] && vinculo(v, pool[j], sc.aplicados)) g |= 2;
         pts = sc.score;
         if (sc.lider) li = vs.indexOf(sc.lider);
       }
+      const f = g | (ld[i] || lv[i] ? 1 : 0) | (ld[j] || lv[j] ? 2 : 0);
       if (f !== 3 && !((f & 1 || dps[i]) && (f & 2 || dps[j]))) continue;
-      A[n] = i; B[n] = j; P[n] = pts; F[n] = f; L[n] = li; S[n] = cuantosStrikers(vs, v); n++;
+      A[n] = i; B[n] = j; P[n] = pts; G[n] = g; L[n] = li; S[n] = cuantosStrikers(vs, v); n++;
     }
   }
-  CONSULTA = { clave: v.key, cid: v.cid, v, pool, A, B, P, F, L, S, n, vista: null };
+  CONSULTA = { clave: v.key, cid: v.cid, v, pool, ld, lv, A, B, P, G, L, S, n, vista: null };
   return CONSULTA;
+}
+/** Con qué compañeros de la fila i de la consulta tiene vínculo él (1, el primero; 2, el segundo), con li de
+ *  líder (0 él, 1 o 2 el compañero, 3 ninguno): por un soporte o un bono de equipo (G) y por el liderazgo
+ *  del líder (vinculoLider). */
+function vinculosFila (q, i, li) {
+  const a = q.A[i], b = q.B[i];
+  return q.G[i] | (li === 0 ? (q.lv[a] ? 1 : 0) | (q.lv[b] ? 2 : 0) : li === 1 ? (q.ld[a] ? 1 : 0) : li === 2 ? (q.ld[b] ? 2 : 0) : 0);
 }
 /** Contexto del orden elegido: 'pvp', 'pve' o null (puntos para él, o una tier list). */
 function contextoOrden () { return ui.eqOrden === 'pvp' || ui.eqOrden === 'pve' ? ui.eqOrden : null; }
@@ -3532,22 +3557,25 @@ function vistaConsulta (q) {
   // orden saldría mal sin avisar. Sin contexto: puestos, puntos para él al revés, sus strikers al revés
   // (desempatan), referencia y fila, solo con los dos compañeros vinculados. En PvP y PvE: el puntaje
   // de contexto al revés (en centésimas: los pesos de la tabla de valor tienen decimales), los strikers
-  // del trío al revés, los puestos, la referencia y la fila, con cada compañero vinculado o DPS de ese
-  // contexto, y si el trío entra. La clave son dos mitades de 31 bits: lo que ordena primero y, abajo,
-  // la referencia y la fila.
+  // del trío al revés, los puestos, la referencia y la fila, si el trío entra, con cada compañero
+  // vinculado o DPS de ese contexto. El liderazgo vincula con el líder de cada orden: sin contexto, el de
+  // la sinergia; en PvP y PvE, el del contexto (vinculosFila). La clave son dos mitades de 31 bits: lo
+  // que ordena primero y, abajo, la referencia y la fila.
   const claves = new BigUint64Array(q.n), vs = [q.v, null, null];
+  const sirveEn = (f, i) => (f & 1 || dpsCtx[q.A[i]]) && (f & 2 || dpsCtx[q.B[i]]);
   let m = 0;
   for (let i = 0; i < q.n; i++) {
     const ps = pos[q.A[i]] + pos[q.B[i]], rf = ref[q.A[i]] + ref[q.B[i]];
     let pts, stk, tope;
     if (!ctx) {
-      if (q.F[i] !== 3) continue;
+      if (vinculosFila(q, i, q.L[i]) !== 3) continue;
       pts = q.P[i]; stk = q.S[i]; tope = 128;
     } else {
-      if (!((q.F[i] & 1 || dpsCtx[q.A[i]]) && (q.F[i] & 2 || dpsCtx[q.B[i]]))) continue;
+      // Antes de calcular el trío: ¿podría entrar con alguno de los tres de líder?
+      if (!sirveEn(q.G[i] | (q.ld[q.A[i]] || q.lv[q.A[i]] ? 1 : 0) | (q.ld[q.B[i]] || q.lv[q.B[i]] ? 2 : 0), i)) continue;
       vs[1] = q.pool[q.A[i]]; vs[2] = q.pool[q.B[i]];
       const e = enContexto(vs, ctx);
-      if (!e) continue;
+      if (!e || !sirveEn(vinculosFila(q, i, vs.indexOf(e.lider)), i)) continue;
       pts = Math.round(e.score * 100); stk = e.strikers; tope = 65536;
       if (lider) lider[i] = vs.indexOf(e.lider);
     }
