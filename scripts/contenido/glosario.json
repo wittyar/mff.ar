@@ -520,8 +520,8 @@
     "en": "When attacked, it has a chance to cut the foe's attack: higher if its Concentration is above the foe's, lower if below. Its own gauge charges when hit; after use, it does not charge for 5 s."
    },
    "difiere": {
-    "es": "간파 quiere decir ver venir el ataque (leerlo), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; según el coreano, su ataque.",
-    "en": "간파 means seeing through the attack (reading it), not piercing: it has nothing to do with Pierce or with the \"TYPE PENETRATION\" skill label. The English says it cancels the foe's skill; per the Korean, its attack."
+    "es": "간파 quiere decir ver venir el ataque (leerlo), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; según el coreano, su ataque, y además la probabilidad baja si su Concentración es menor que la del rival (낮을수록 감소합니다): el inglés solo dice que sube con más.",
+    "en": "간파 means seeing through the attack (reading it), not piercing: it has nothing to do with Pierce or with the \"TYPE PENETRATION\" skill label. The English says it cancels the foe's skill; per the Korean, its attack, and the chance also drops if its Concentration is below the foe's (낮을수록 감소합니다): the English only says it rises with more."
    },
    "efectos": [],
    "ctp": [
@@ -590,8 +590,8 @@
     "en": "On skill use, raises the attack of skills with an element and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "difiere": {
-    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; según el coreano, es 속성 증폭: amplificación de elemento. El C.T.P. Judgment reforjado dice en inglés «Increases additional type skill damage».",
-    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; per the Korean, it is 속성 증폭: element amplification. The reforged Judgment C.T.P. says in English \"Increases additional type skill damage\"."
+    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; según el coreano, es 속성 증폭: amplificación de elemento. El C.T.P. Judgment reforjado dice en inglés «Increases additional type skill damage». Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.",
+    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; per the Korean, it is 속성 증폭: element amplification. The reforged Judgment C.T.P. says in English \"Increases additional type skill damage\". Per the Korean, it also triggers on skill use (스킬 사용 시); the English does not say when."
    },
    "error": "tipo",
    "efectos": [],
@@ -655,6 +655,10 @@
     "es": "Al usar una skill, ignora la evasión del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, ignores the foe's dodge and raises damage to bosses; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
+   "difiere": {
+    "es": "Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.",
+    "en": "Per the Korean, it also triggers on skill use (스킬 사용 시); the English does not say when."
+   },
    "efectos": [],
    "ctp": [
     {
@@ -676,6 +680,10 @@
    "que": {
     "es": "Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, e ignora una parte de la reducción de daño del rival; esa parte crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.",
     "en": "Grants Guard Break, Super Guard Break and reflected damage immunity, and ignores part of the foe's damage reduction; that part grows with Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 6 s."
+   },
+   "difiere": {
+    "es": "Según el coreano, además, se activa sola (효과는 자동 발동되며); el inglés no lo dice, y en Clash sí.",
+    "en": "Per the Korean, it also triggers on its own (효과는 자동 발동되며); the English does not say so, though it does for Clash."
    },
    "efectos": [],
    "ctp": [
@@ -782,6 +790,10 @@
    "que": {
     "es": "Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
     "en": "On skill use, raises critical damage even past its cap and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); after use, it does not charge for 7 s."
+   },
+   "difiere": {
+    "es": "Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.",
+    "en": "Per the Korean, it also triggers on skill use (스킬 사용 시); the English does not say when."
    },
    "efectos": [],
    "ctp": [
@@ -912,6 +924,10 @@
     "es": "Por un tiempo la vida no baja de 1 y, al terminar, muere en el acto. Se activa sola cuando la vida baja de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan buffs.",
     "en": "For a while HP cannot drop below 1 and, when it ends, the character dies at once. It triggers on its own when HP drops below a set value; Guard Break affects it, but buff removal cannot remove it."
    },
+   "difiere": {
+    "es": "El inglés dice que no se puede quitar («cannot be removed»); según el coreano, no lo quitan los efectos que quitan buffs (버프 제거 효과에 제거되지 않습니다).",
+    "en": "The English says it \"cannot be removed\"; per the Korean, buff-removal effects do not remove it (버프 제거 효과에 제거되지 않습니다)."
+   },
    "efectos": [
     "inmortalidad"
    ],
@@ -943,6 +959,10 @@
    "que": {
     "es": "Al usar una skill, sube todo el daño y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
     "en": "On skill use, raises all damage and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); after use, it does not charge for 7 s."
+   },
+   "difiere": {
+    "es": "Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.",
+    "en": "Per the Korean, it also triggers on skill use (스킬 사용 시); the English does not say when."
    },
    "efectos": [],
    "ctp": [
