@@ -188,6 +188,13 @@ idéntica a la de la base (Ezequiel, 2 de octubre de 2026; `completar_liderazgos
 `scripts/fuentes.py`). Los completados y los que no cierran, con su diferencia, están en la sección
 12 de `docs/AUDITORIA.md`.
 
+Los liderazgos que Leads & Supports no publica los arma el build desde la Leader Skill de la API de
+skills (Ezequiel, 4 de octubre de 2026; otro carril). Llegan en `MFF_SOPORTES` como los demás, con
+`"src": "api"`, y la app dice su fuente donde muestra un liderazgo: «según la skill del juego» en el
+Resumen (y su cita suma las skills de thanosvibs), el «Cómo funciona», el detalle de PvP y PvE, el
+«Por qué», la comparativa y el índice del roster; los de Leads & Supports, como siempre. Una fuente
+desconocida corta el arranque.
+
 ### Lo que corrigió el glosario del juego
 
 El juego trae un glosario de skills (Skill Name Glossary; capturas de Ezequiel, octubre de 2026).

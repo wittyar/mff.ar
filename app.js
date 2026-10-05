@@ -314,6 +314,9 @@ const T = {
   sp_notable:        { es:'Notable',             en:'Notable' },
   sp_notable_t:      { es:'thanosvibs lo marca como notable', en:'thanosvibs marks it as notable' },
   sp_est:            { es:'a {n}★',              en:'at {n}★' },
+  sp_src_api:        { es:'según la skill del juego', en:'per the game skill' },
+  sp_src_api_t:      { es:'Leads & Supports no publica este liderazgo: sale de la Leader Skill de la API de skills de thanosvibs.',
+                       en:'Leads & Supports does not publish this leadership: it comes from the Leader Skill in the thanosvibs skills API.' },
   sp_np:             { es:'Buena elección para empezar (thanosvibs)', en:'New player pick (thanosvibs)' },
   us_guide:          { es:'En la guía de principiantes', en:"In the Beginner's Guide" },
   us_guide_none:     { es:'La guía no lo nombra en sus secciones de personajes.', en:'The guide does not name it in its character sections.' },
@@ -594,6 +597,8 @@ const T = {
   tt_etapa_sin_ac:   { es:'la etapa no publica una propia', en:'the stage publishes none of its own' },
   tt_etapa_vacia:    { es:'La fuente no publica efectos en esta etapa.', en:'The source publishes no effects in this stage.' },
   tt_ls:             { es:'Según Leads & Supports', en:'According to Leads & Supports' },
+  tt_ls_api:         { es:'Según la skill del juego', en:'According to the game skill' },
+  tt_ls_mixto:       { es:'Según Leads & Supports y la skill del juego', en:'According to Leads & Supports and the game skill' },
   tt_en:             { es:'En inglés, como lo publica thanosvibs', en:'In English, as thanosvibs publishes it' },
   tt_es:             { es:'En español, con la traducción de la app', en:'In Spanish, with the app\'s translation' },
   tt_ko_no:          { es:'En coreano: los datos no traen el texto de las skills en coreano.', en:'In Korean: the data has no Korean text for skills.' },
@@ -1387,6 +1392,17 @@ function allVariants () {
 }
 function fullLabel (v) { return v.uid ? v.name + ' — ' + v.sub : v.name; }
 
+// FUENTE DE UN LIDERAZGO. Los de MFF_SOPORTES son de Leads & Supports, salvo los que el build completa con la
+// Leader Skill de la API de skills cuando Leads & Supports no los publica (src: 'api'). Donde la app muestra un
+// liderazgo, dice cuáles no son de Leads & Supports: «según la skill del juego».
+/** ¿Sale de la Leader Skill de la API (src 'api') y no de Leads & Supports? */
+function esDeApi (x) { return x.src === 'api'; }
+/** « (según la skill del juego)» para un liderazgo que no es de Leads & Supports, o nada. */
+function srcTxt (x) { return esDeApi(x) ? ' (' + t('sp_src_api') + ')' : ''; }
+/** Lo mismo, como etiqueta, con la explicación en el title. */
+function srcHtml (x) { return esDeApi(x) ? ` <span class="tag dim srcapi" title="${h(t('sp_src_api_t'))}">${h(t('sp_src_api'))}</span>` : ''; }
+/** Las fuentes de unos liderazgos y soportes: Leads & Supports y, si alguno sale de la API, sus skills. */
+function fuentesSop (xs) { return xs.some(esDeApi) ? (xs.every(esDeApi) ? ['tv-pj'] : ['tv-sup', 'tv-pj']) : ['tv-sup']; }
 /** ¿Un efecto de líder o de soporte (MFF_SOPORTES) alcanza a la variante b? */
 function aplicaA (x, b) {
   if (!x.r) return true;
@@ -1828,7 +1844,7 @@ function razonesTxt (razones) {
   };
   for (const r of razones) {
     if (r.tipo === 'soporte') lineas(`${fullLabel(r.de)} · ${t(CLAVE_SOPORTE[r.k])}${r.k === 'artifact' ? ' (' + t('pq_si_art') + ')' : ''}`, r.x, r.a);
-    else if (r.tipo === 'liderazgo') lineas(`${ES ? 'Con' : 'With'} ${fullLabel(r.de)} ${ES ? 'de líder' : 'as leader'}`, r.x, r.a);
+    else if (r.tipo === 'liderazgo') lineas(`${ES ? 'Con' : 'With'} ${fullLabel(r.de)} ${ES ? 'de líder' : 'as leader'}${srcTxt(r.x)}`, r.x, r.a);
     else if (r.tipo === 'bono') lineas(nombreBono(r), r.x, r.a);
     else out.push(razonTxt(r, fullLabel));
   }
@@ -2240,8 +2256,9 @@ function filtrosIndice () {
 function indiceLinea (v) {
   const FI = filtroIndice(); if (!FI) return '';
   const x = indiceDe(v, FI.F, FI.para, FI.restr); if (!x) return '';
-  const parte = (k, cats) => cats.length ? `<div><span class="muted">${h(t(k))}:</span> ${cats.map(c => h(t('ct_' + c))).join(' · ')}</div>` : '';
-  return `<div class="indlinea">${parte('cd_lid', x.lid)}${parte('cd_sop', x.sop)}</div>`;
+  const parte = (k, cats, extra) => cats.length ? `<div><span class="muted">${h(t(k))}:</span> ${cats.map(c => h(t('ct_' + c))).join(' · ')}${extra || ''}</div>` : '';
+  const s = SOPORTES[v.p], api = LIDERAZGOS.some(k => s[k] && esDeApi(s[k]) && slotPasa(s[k], FI.F.lid, FI.para, FI.restr));
+  return `<div class="indlinea">${parte('cd_lid', x.lid, api ? srcHtml({ src: 'api' }) : '')}${parte('cd_sop', x.sop)}</div>`;
 }
 function toolbar (total, shown) {
   const P = U.prefs, F = P.filters, G = P.flags;
@@ -2694,6 +2711,8 @@ function terminosSkill (es) {
   const ids = new Set(es.filter(x => !x.sc).map(x => CATALOGO.efectos[x.ie].id));
   return GLOSARIO.terminos.filter(y => y.efectos.some(id => ids.has(id)));
 }
+/** El rótulo de los liderazgos y soportes de una skill según su fuente: Leads & Supports, la skill del juego o las dos. */
+function rotuloLs (xs) { return xs.every(esDeApi) ? 'tt_ls_api' : xs.some(esDeApi) ? 'tt_ls_mixto' : 'tt_ls'; }
 /** Los liderazgos y soportes de Leads & Supports que la ficha atribuye a esta skill (skillDeSoporte). */
 function soportesDeSkill (v, sk) {
   const s = SOPORTES[v.p];
@@ -2771,7 +2790,7 @@ function tipCuandoHtml (v, sk, es, ti, fi) {
       ${tgComun != null ? dato('st_target', txt('tgt', tgComun)) : ''}
     </ul>
     ${sk.st.some(st => st.fx.length) ? etapas : `<p class="muted">${h(t('tt_vacia'))}</p>`}
-    ${ls.length ? `<details class="tipls"><summary>${h(t('tt_ls'))}</summary>
+    ${ls.length ? `<details class="tipls"><summary>${h(t(rotuloLs(ls.map(([k]) => SOPORTES[v.p][k]))))}</summary>
       <div class="sops">${ls.map(([k, clave]) => soporteHtml(k, clave, SOPORTES[v.p][k])).join('')}</div></details>` : ''}`;
 }
 /** El texto del juego, plegado: tal como lo publica thanosvibs y con la traducción de la app (el nombre y,
@@ -2820,7 +2839,7 @@ function tipCertezaHtml (v, sk, es, terminos) {
     ${lecturas.length ? `<li>${h(t('tt_f_lecturas'))} ${fuentesHtml([...new Set(lecturas.flatMap(e => lecturasEfecto(e).flatMap(l => l.L.fuente || [])))])}
       <ul>${lecturas.map(e => `<li>${h(nombreAnTxt(e))}: ${certezas(e)}</li>`).join('')}</ul></li>` : ''}
     ${terminos.length ? `<li>${h(t('tt_f_glosario'))}: ${fuentesHtml([...new Set(terminos.flatMap(y => y.fuente))])}</li>` : ''}
-    ${soportesDeSkill(v, sk).length ? `<li>${h(t('tt_ls'))}: ${fuentesHtml(['tv-sup'])}</li>` : ''}
+    ${soportesDeSkill(v, sk).length ? (xs => `<li>${h(t(rotuloLs(xs)))}: ${fuentesHtml(fuentesSop(xs))}</li>`)(soportesDeSkill(v, sk).map(([k]) => SOPORTES[v.p][k])) : ''}
   </ul>`;
 }
 /** Lo que el inglés traduce distinto del coreano en los términos del glosario de sus efectos, y los errores
@@ -3022,7 +3041,7 @@ function enlaceSkill ({ de, k, x }) {
     tab = 'skills'; ancla = anclaSkill(sk.sl); titulo += ': ' + slotEs(sk.sl) + (f ? ' · ' + f.en : '');
   }
   return `<button class="objlink" data-a="irSkill" data-cid="${de.cid}" data-uid="${de.uid || ''}" data-tab="${tab}" data-ancla="${ancla}"
-    title="${h(titulo)}">${h(txt)}</button>${extra}`;
+    title="${h(titulo)}">${h(txt)}</button>${extra}${srcHtml(x)}`;
 }
 /** Lo que da el foco a los demás (sus soportes y, si es el líder de la tarjeta, su liderazgo, según
  *  recibe()), como grupos de agrupar(): uno por slot, con a quiénes les llega cada efecto. */
@@ -3056,7 +3075,7 @@ function grupoHtml (g, vs, nombre) {
   if (!g.fx) { const txt = razonTxt(r, nombre), largo = razonTxt(r, fullLabel);
     return `<li${largo !== txt ? ` title="${h(largo)}"` : ''}>${h(txt)}</li>`; }
   const cab = r.tipo === 'bono' ? h(nombreBono(r))
-    : `${nombreHtml(r.de, nombre)}: ${h(t(CLAVE_SOPORTE[r.k]))}${r.k === 'artifact' ? ` <span class="muted">(${h(t('pq_si_art'))})</span>` : ''}`;
+    : `${nombreHtml(r.de, nombre)}: ${h(t(CLAVE_SOPORTE[r.k]))}${r.k === 'artifact' ? ` <span class="muted">(${h(t('pq_si_art'))})</span>` : ''}${srcHtml(r.x)}`;
   const efs = [...g.fx].sort((a, b) => r.x.fx.indexOf(a[0]) - r.x.fx.indexOf(b[0]));
   const quienes = (ms) => ms.map(x => x.key).join('|'), iguales = efs.every(([, ms]) => quienes(ms) === quienes(efs[0][1]));
   const a = (ms) => ` → ${aQuienesHtml(ms, vs, nombre)}`;
@@ -3625,7 +3644,7 @@ function detalleContexto (e, vs, ctx) {
     const k = f.s + '|' + (x.ac || '');
     const g = grupos.get(k) || { s: f.s, ac: x.ac, txt: [], ms: new Set() };
     grupos.set(k, g);
-    g.txt.push(efectoSoporteTxt(x, f));
+    g.txt.push(efectoSoporteTxt(x, f) + srcTxt(x));
     vs.forEach(m => { if (aplicaA(x, m) && sirve(f, m)) { g.ms.add(m); if (!x.ac) lleno.add(f.s + '|' + m.key); } });
   }
   const liderazgo = [...grupos.values()].map(g => {
@@ -4226,7 +4245,7 @@ function soporteHtml (tipo, clave, x) {
     <div class="soph"><span class="slotbadge ${tipo.startsWith('leader') ? 'lead' : 'pass'}">${h(t(clave))}</span>
       ${x.n ? nombreTabla(x.n) : ''}
       ${x.sig ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('sp_notable_t'))}">${h(t('sp_notable'))}</span>` : ''}
-      ${x.est ? `<span class="tag dim">${h(t('sp_est').replace('{n}', x.est))}</span>` : ''}</div>
+      ${x.est ? `<span class="tag dim">${h(t('sp_est').replace('{n}', x.est))}</span>` : ''}${srcHtml(x)}</div>
     <div class="sopr">${restrHtml(x)}</div>
     ${categoriasDe(x).length ? `<div class="row sopcats" title="${h(t('ct_title'))}">${categoriasDe(x).map(k =>
       `<span class="tag ghost">${h(t('ct_' + k))}</span>`).join('')}</div>` : ''}
@@ -4255,7 +4274,7 @@ function usoSoportes (v) {
   if (!tipos.length) return `<p class="muted">${h(t('us_sup_none'))}</p>`;
   return `${s.np ? `<p><span class="tag solid" style="background:var(--role-soporte)">${h(t('sp_np'))}</span></p>` : ''}
     <div class="sops">${tipos.map(([k, clave]) => soporteHtml(k, clave, s[k])).join('')}</div>
-    <div class="fuentes">${fuentesHtml(['tv-sup'])}</div>
+    <div class="fuentes">${fuentesHtml(fuentesSop(tipos.map(([k]) => s[k])))}</div>
     ${equiposGuiaHtml()}`;
 }
 
@@ -5646,6 +5665,9 @@ function pantallaFatal (titulo, detalle) {
 function iniciarDatos () {
   PIDE = {};
   for (const [stat, x] of Object.entries(CATALOGO.soporte)) { const q = reglaStat(stat, x.sirve); if (q) PIDE[stat] = q; }
+  for (const [p, so] of Object.entries(SOPORTES)) for (const [k] of TIPOS_SOPORTE) {
+    if (so[k] && 'src' in so[k] && so[k].src !== 'api') throw new Error(`fuente de liderazgo o soporte desconocida en ${p} (${k}): ${so[k].src}`);
+  }
   ANTI_MERMAS = new Set(VALOR.anti_mermas);
   for (const st of VALOR.anti_mermas) {
     if (CAT_DE[st]) throw new Error('stat de anti-mermas que ya está en otra categoría: ' + st);

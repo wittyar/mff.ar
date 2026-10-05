@@ -39,7 +39,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     uniforme y artefacto, con a quién se aplican y sus categorías del índice; cada efecto con su
     valor y, entre paréntesis, su activación y su recarga, lo que pide, cuánto dura y hasta dónde
     acumula, escrito igual que en el «Cómo funciona», el «Por qué», la comparativa, los bonos y el
-    detalle de PvP y PvE; y, plegado, lo que dice la guía de cómo se arma un equipo), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
+    detalle de PvP y PvE; un liderazgo que Leads & Supports no publica y sale de la Leader Skill de
+    la API dice «según la skill del juego», ahí y en cada pantalla que lo muestra; y, plegado, lo que
+    dice la guía de cómo se arma un equipo), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
     controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
     su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
     consigue y la nota.

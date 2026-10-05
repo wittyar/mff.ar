@@ -39,7 +39,9 @@ variante, en `docs/COMPLETITUD.md`.
   la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado con `scripts/modelo.py`).
   `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
   pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
-  filtro, efectos de la comparativa, strikers) y lista como pendientes las de las reglas sin decidir.
+  filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.
+  recomendado, el líder del trío, los strikers que desempatan, «le sirve», lo propio y los
+  anti-mermas, y la fuente de cada liderazgo) y lista como pendiente la de los recomendados de Modos.
 
 ## Estado (4 de octubre de 2026)
 
@@ -69,9 +71,8 @@ variante, en `docs/COMPLETITUD.md`.
   Galaxia) y la sección 11 de `docs/AUDITORIA.md` con las dos probabilidades de striker de más de
   100% (Daken: Doctor Octopus, 219%; Molecule Man: Morgan le Fay, 120%), contadas en el resumen.
   Después, verif_consistencia tiene que pasar con los datos del repo.
-- Consistencia entre pantallas: quedan las preguntas de los liderazgos que Leads & Supports no publica
-  y de los recomendados de Modos contra la función en PvP y PvE (verif_consistencia las tiene
-  listadas como pendientes).
+- Consistencia entre pantallas: queda la pregunta de los recomendados de Modos contra la función en
+  PvP y PvE (verif_consistencia la tiene listada como pendiente).
 - Anti-mermas propios con probabilidad: no cuentan (Hulkling). Ezequiel nombró a Captain America entre
   los que tienen anti-mermas propio, pero en la API el suyo es de 50% o 60% al recibir un debuff, así
   que hoy no cuenta. Falta que lo confirme (lista en «Equipos por contexto» de `docs/MODELO.md`).
