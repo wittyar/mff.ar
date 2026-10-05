@@ -535,12 +535,15 @@
     }
    ],
    "nota": {
-    "es": "Transcendence reforjado da Penetration y Beatdown juntos.",
-    "en": "Reforged Transcendence grants Penetration and Beatdown together."
+    "es": "En Transcendence, la otra opción de reforjado es Beatdown; en Regeneration, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.",
+    "en": "On Transcendence, the other reforge option is Beatdown; on Regeneration, All Basic Attacks and Defenses +20% (+32% at Brilliant). A reforged C.T.P. likely carries only one of the two: the ones seen equipped carry one."
    },
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-ctp",
+    "juego-ctp-ko",
+    "juego-ficha-ko",
     "tv-ctps"
    ]
   },
@@ -564,9 +567,16 @@
      "opcion": "reforjado"
     }
    ],
+   "nota": {
+    "es": "En Transcendence, la otra opción de reforjado es Penetration; en Energy, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.",
+    "en": "On Transcendence, the other reforge option is Penetration; on Energy, All Basic Attacks and Defenses +20% (+32% at Brilliant). A reforged C.T.P. likely carries only one of the two: the ones seen equipped carry one."
+   },
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-ctp",
+    "juego-ctp-ko",
+    "juego-ficha-ko",
     "tv-ctps"
    ]
   },

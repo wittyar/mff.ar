@@ -298,8 +298,9 @@ El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ez
   증폭, amplificación de elemento: el reforjado de Judgement que en inglés se llama así es un problema
   de traducción (el hallazgo de los C.T.P., en `docs/AUDITORIA.md`).
 - **Penetration** es 간파, «ver a través»: no es la Perforación. Corta el ataque del rival con una
-  rotura de guardia, como dice la guía de thanosvibs. Lo dan Regeneration y Transcendence
-  reforjados; Transcendence trae además Beatdown.
+  rotura de guardia, como dice la guía de thanosvibs. Es una de las dos opciones de reforjado de
+  Regeneration y de Transcendence (la otra de Transcendence es Beatdown): un C.T.P. reforjado lleva,
+  probablemente, una sola (los que se ven equipados traen una).
 
 Confirma lo que el catálogo ya decía del encanto (frena también los ataques que se activan solos),
 la elasticidad (la saca el sangrado; la cancelación y la incapacitación, no), la fractura y lo que
