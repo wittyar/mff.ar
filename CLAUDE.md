@@ -157,6 +157,9 @@ variante, en `docs/COMPLETITUD.md`.
   - Sentry — Thunderbolts* y Mephisto — Master of Hell tienen un slot derivado y el del «Give Power» no: la
     app muestra un liderazgo sin el anti-mermas que probablemente tienen [Probable: en los 19 pares, el
     «Give Power» es quitar los debuffs al recibir uno].
+  - Las listas de PvP y PvE toman el vínculo de cada compañero de la consulta, que usa el líder sin
+    contexto: con los derivados, la de Malekith — All-New, All-Different baja de 4.826 a 3.631 (ejemplo en
+    «Equipos por contexto» de `docs/MODELO.md`). Falta decidir si el vínculo sale del líder del contexto.
 
 - Liderazgo en PvP: Molecule Man es «la excepción rara» (Ezequiel) y hoy no suma nada fuera de los
   anti-mermas, ni tiene lista de PvP; el daño contra una facción no cuenta. Falta decidir cómo

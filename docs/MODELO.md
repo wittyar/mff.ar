@@ -609,6 +609,21 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   compañero que se vinculaba con él solo por su liderazgo ya no se vincula si no es el líder del
   equipo. Con lo propio, la de Knull subió de 1.915 a 1.956, porque su pasiva de Tier-2 le da
   anti-mermas.
+- Con los liderazgos de la Leader Skill (medido sobre los datos de formato 7 con lo que va a derivar el
+  próximo build; *Liderazgos que Leads & Supports no publica*), las variantes con función siguen
+  siendo 60 en PvP y 119 en PvE, y todas tienen lista. Las listas de PvP suman 479.581 combinaciones
+  en vez de 460.726 (crecen 46 y se achican 7), y las de PvE 2.502.520 en vez de 2.066.097 (crecen 77
+  y se achican 10). La de PvP de Knull — Ancient History pasa de 1.956 a 2.178, la de Galactus de
+  36.488 a 36.499, la de Jean Grey — Summer Flare Phoenix de 36.219 a 36.235 y la de Thanos —
+  Annihilation de 8.787 a 8.907 [Comprobado]. Crecen porque un compañero con un liderazgo derivado
+  se vincula cuando lidera, y casi todos los derivados le sirven a cualquiera. Se achican porque el
+  vínculo de cada compañero sale de la consulta, que lo calcula con el líder sin contexto: en la lista
+  de PvP de Malekith — All-New, All-Different (de 4.826 a 3.631), el trío con Silver Surfer
+  (Shalla-Bal) y Vision — Ultimate Vision tenía a Vision de líder sin contexto; ahora Silver Surfer
+  (Shalla-Bal) tiene un liderazgo derivado (Debuff Duration −24%), empata en puntos con el de Vision y
+  lidera por la General, así que Vision ya no se vincula con Malekith y el trío sale de la lista,
+  aunque en PvP el líder sería Vision (15,5 puntos) [Comprobado]. Falta decidir si en PvP y PvE el
+  vínculo tiene que salir del líder del contexto.
 
 ### Casos de referencia
 
