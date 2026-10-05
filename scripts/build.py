@@ -139,7 +139,11 @@ hoy = hoy.isoformat()
 #    sale (opcion: fija o reforjado), donde la 6 decía si iba reforjado. Una línea de artefacto que el
 #    build corrige con el juego trae la de thanosvibs (tv) y su fuente (f), y la app la marca. Un
 #    liderazgo derivado cuyo «Give Power» resuelve el juego trae su fuente (otorga), que la app cita.
-FORMATO = 7
+# 8: cada stat de liderazgo, soporte y bono de equipo del catálogo (MFF_CATALOGO.soporte) dice si se acumula cuando a un
+#    integrante le llega de dos fuentes (acumula: las estadísticas se suman, las habilidades cuentan una vez) y, si la guía
+#    le pone uno, su tope (tope: claves de MFF_GUIA.topes). La app de formato 8 los necesita: con ellos decide qué se le
+#    aplica a cada uno y avisa cuando lo que suman los buffs pasa el tope.
+FORMATO = 8
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -171,7 +175,8 @@ parts = [header,
  '// no le sirve; sc: lo que el catálogo no clasifica.\n',
  'window.MFF_ANALISIS = ' + json.dumps(ANALISIS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Catálogo de efectos (scripts/contenido/catalogo.json, docs/CATALOGO.md): grupos, efectos, etiquetas de las\n'
- '// skills (skills) y stats de liderazgo, soporte y bono de equipo (soporte), cada uno con a quién le sirve.\n',
+ '// skills (skills) y stats de liderazgo, soporte y bono de equipo (soporte), cada uno con a quién le sirve, si se\n'
+ '// acumula y su tope.\n',
  'window.MFF_CATALOGO = ' + json.dumps(CATALOGO, ensure_ascii=False) + ';\n',
  '// Glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json): los errores\n'
  '// que se repiten en el inglés y cada término con lo que dice, lo que el inglés traduce distinto y los\n'

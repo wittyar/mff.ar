@@ -20,6 +20,12 @@ A quién le sirve: cada efecto tiene su regla (sirve), la de sus skills, que eva
 tiene la suya, que evalúa la app (sinergia, combinaciones, índice): casi siempre es la de su efecto;
 las velocidades, las resistencias y el efecto de los debuffs tienen otra (reglas de Ezequiel).
 
+Si se acumula: cada stat de liderazgo, soporte o bono de equipo dice qué pasa cuando a un integrante le llega de dos
+fuentes (acumula, Ezequiel, 5 de octubre de 2026): las estadísticas se suman (true); las habilidades (anti-mermas,
+inmunidades, barrera, escudos, revivir, invocar...) cuentan una vez, la de mayor valor (false). Y su tope, si la guía le
+pone uno (tope: las claves de los topes de contenido/guia.json que le corresponden). Todos dicen si se acumulan, y cada
+tope de la guía lo usa algún stat; si no, se corta el build.
+
 Y la tabla de valor de los equipos (scripts/contenido/valor_equipos.json): cada stat que pesa o que cuenta como
 anti-mermas tiene que estar en el catálogo (con su regla de «le sirve»), y cada modo de juego tiene que tener la
 fila de su tipo. Si no, se corta el build.
@@ -60,9 +66,12 @@ def cargar(ruta):
 
 
 # -- coherencia ------------------------------------------------------------------
-def validar(cat, fuentes):
-    """Lista de problemas del contenido curado (vacía si está bien)."""
+def validar(cat, guia):
+    """Lista de problemas del contenido curado (vacía si está bien). guia: contenido/guia.json (sus fuentes, que cita el
+    catálogo, y sus topes, que nombran los stats de soporte)."""
     mal = []
+    fuentes = guia['fuentes']
+    con_tope = {k for it in guia['topes']['items'] if it['tope'] is not None for k in it['stats']}
     ids_grupo = [g['id'] for g in cat['grupos']]
     ids_efecto = [e['id'] for e in cat['efectos']]
     for nombre, ids in (('grupo', ids_grupo), ('efecto', ids_efecto)):
@@ -100,11 +109,12 @@ def validar(cat, fuentes):
             texto(x[k], f'{donde} ({k})')
 
     def mapeo(x, donde, de_skill):
-        """Una etiqueta de skill lleva para (a qué lado va); un stat de Leads & Supports, sirve (a quién le sirve)."""
-        propia = 'para' if de_skill else 'sirve'
-        claves = {'efectos', 'condicion', 'nota', propia}
-        if set(x) - claves or 'efectos' not in x or propia not in x:
-            mal.append(f"{donde}: lleva {', '.join(sorted(claves))} ({propia} y efectos obligatorios)")
+        """Una etiqueta de skill lleva para (a qué lado va); un stat de Leads & Supports, sirve (a quién le sirve), acumula
+        (si se suma cuando le llega a alguien de dos fuentes) y, si la guía le pone uno, tope."""
+        propias = ('para',) if de_skill else ('sirve', 'acumula')
+        claves = {'efectos', 'condicion', 'nota', *propias} | (set() if de_skill else {'tope'})
+        if set(x) - claves or 'efectos' not in x or any(k not in x for k in propias):
+            mal.append(f"{donde}: lleva {', '.join(sorted(claves))} ({', '.join(propias)} y efectos obligatorios)")
             return
         if de_skill and x['para'] not in cat['para']:
             mal.append(f"{donde}: para desconocido {x['para']!r}")
@@ -114,6 +124,14 @@ def validar(cat, fuentes):
             elif not any(x['sirve'] == r or (r.endswith(':') and x['sirve'].startswith(r)) for r in REGLAS_SOPORTE):
                 mal.append(f"{donde}: la app no sabe evaluar en un liderazgo, soporte o bono la regla {x['sirve']!r} "
                            f"(sabe {', '.join(REGLAS_SOPORTE)})")
+            if not isinstance(x['acumula'], bool):
+                mal.append(f'{donde}: acumula es true (se suma) o false (cuenta una vez, la de mayor valor)')
+            if 'tope' in x:
+                t = x['tope']
+                if not (isinstance(t, list) and t and all(isinstance(k, str) for k in t) and len(set(t)) == len(t)):
+                    mal.append(f'{donde}: tope es una lista de claves de los topes de contenido/guia.json, sin repetir')
+                else:
+                    mal.extend(f'{donde}: {k!r} no es un stat con tope en contenido/guia.json' for k in t if k not in con_tope)
         if not x['efectos']:
             mal.append(f'{donde}: sin efectos')
         mal.extend(f'{donde}: efecto desconocido {e!r}' for e in x['efectos'] if e not in ids_efecto)
@@ -153,6 +171,8 @@ def validar(cat, fuentes):
             mapeo(x, d, True)
     for stat, x in cat['soporte'].items():
         mapeo(x, f'stat {stat!r}', False)
+    con_stat = {k for x in cat['soporte'].values() if isinstance(x.get('tope'), list) for k in x['tope']}
+    mal += [f'tope de contenido/guia.json que ningún stat de soporte nombra: {k}' for k in sorted(con_tope - con_stat)]
     usados = {e for x in cat['skills'].values() for y in (x['por_patron'].values() if 'por_patron' in x else [x])
               for e in y.get('efectos', [])} | {e for x in cat['soporte'].values() for e in x.get('efectos', [])}
     mal += [f'efecto {i} sin ninguna etiqueta ni stat que apunte a él' for i in ids_efecto if i not in usados]
@@ -344,8 +364,19 @@ def fuente_md(f):
     return f"[{f['nombre']}]({f['url']})" if 'url' in f else f['nombre']
 
 
-def documento(cat, U, fuentes, version, falta, glos, ctps):
+def documento(cat, U, guia, version, falta, glos, ctps):
     hoy = datetime.date.today().isoformat()
+    fuentes = guia['fuentes']
+    # Los topes de la guía, por clave de stat: (tope, base o None) y su nombre.
+    topes = {k: (it['tope'], it.get('base')) for it in guia['topes']['items'] if it['tope'] is not None for k in it['stats']}
+
+    def tope(x):
+        """El tope de un stat de soporte, como lo escribe el documento: «Prob. de crítico 75%», con su base si tiene."""
+        return ', '.join(f"{guia['stats'][k]['es']} {topes[k][0]}%" + (f' (desde {topes[k][1]}%)' if topes[k][1] else '')
+                         for k in x.get('tope', []))
+
+    def acumula(x):
+        return 'se acumula' if x['acumula'] else 'cuenta una vez (la de mayor valor)'
 
     def cita(L):
         f = ', '.join(fuente_md(fuentes[k]) for k in L.get('fuente', []))
@@ -378,9 +409,10 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
     for stat, x in cat['soporte'].items():
         extra = ([cond(x['condicion'])] if 'condicion' in x else []) + (['Nota: ' + x['nota']['es']] if 'nota' in x else [])
         for e in x['efectos']:
-            # La regla del stat, cuando no es la de su efecto (las velocidades, las resistencias...).
+            # La regla del stat, cuando no es la de su efecto (las velocidades, las resistencias...); si se acumula y su tope.
             sirve = ['le sirve: ' + minuscula(cat['sirve'][x['sirve']]['es'])] if x['sirve'] != regla_de[e] else []
-            de_stat[e].append((len(U['stat'].get(stat, ())), len(U['bono'].get(stat, ())), stat, sirve + extra))
+            suma = [acumula(x)] + (['tope: ' + tope(x)] if 'tope' in x else [])
+            de_stat[e].append((len(U['stat'].get(stat, ())), len(U['bono'].get(stat, ())), stat, sirve + suma + extra))
     LADO = {frozenset({'propio'}): 'a su lado', frozenset({'rival'}): 'al rival',
             frozenset({'propio', 'rival'}): 'a su lado o al rival, según la etiqueta'}
 
@@ -403,7 +435,7 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
     s += [f"  - [{k.capitalize()}] {v['es']}" for k, v in cat['certeza'].items()]
     s += ['- **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.',
           '- **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos '
-          'los dan.\n',
+          'los dan, si se acumulan y su tope (ver *Qué se acumula y los topes*, al final).\n',
           f"{len(cat['grupos'])} grupos, {len(cat['efectos'])} efectos, {len(cat['skills'])} etiquetas de skills y "
           f"{len(cat['soporte'])} stats de Leads & Supports y de bonos de equipo. "
           + ('Todo lo que traen los datos está clasificado.\n' if not n_falta else
@@ -434,6 +466,7 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
                 for n, nb, stat, extra in sorted(de_stat[e['id']], key=lambda x: (-x[0], -x[1], x[2].lower())):
                     s.append(f'  - {md(stat)} ({quienes_dan(n, nb)})' + (' — ' + '; '.join(extra) if extra else ''))
             s.append('')
+    s += acumula_md(cat, acumula, tope, guia)
     s += glosario_md(glos, cat, ctps)
     citadas = sorted({k for L in [g[x] for g in cat['grupos'] for x in ('pve', 'pvp')] +
                       [e[x] for e in cat['efectos'] for x in ('pve', 'pvp') if x in e] + glos['terminos']
@@ -442,6 +475,27 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
     s += [f"- {fuente_md(fuentes[k])}" for k in citadas]
     s.append('')
     return '\n'.join(s)
+
+
+def acumula_md(cat, acumula, tope, guia):
+    """La tabla de los stats de liderazgo, soporte y bono de equipo: si se acumulan y su tope (catalogo.json, acumula y
+    tope; docs/MODELO.md, Efectos iguales)."""
+    nota = lambda x: x['nota']['es'] if 'nota' in x else ''
+    s = ['## Qué se acumula y los topes\n',
+         'Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (Ezequiel, 5 de octubre de 2026): las '
+         'estadísticas se suman; las habilidades (los anti-mermas, las inmunidades, la barrera, los escudos, revivir, invocar, '
+         'la inmortalidad) cuentan una vez, la de mayor valor y, a igual valor, la primera en este orden: la propia, la del '
+         'liderazgo del líder y la de los soportes de los demás (docs/MODELO.md, *Efectos iguales*). El tope es el de la guía ('
+         + fuente_md(guia['fuentes'][guia['topes']['fuente'][0]]) + '): con lo que suman los buffs, la app avisa si pasa lo '
+         'que queda hasta el tope.\n',
+         f"{sum(1 for x in cat['soporte'].values() if x['acumula'])} stats se acumulan y "
+         f"{sum(1 for x in cat['soporte'].values() if not x['acumula'])} cuentan una vez; "
+         f"{sum(1 for x in cat['soporte'].values() if 'tope' in x)} tienen tope.\n",
+         '| Stat | Si llega de dos fuentes | Tope | Nota |', '|---|---|---|---|']
+    for stat, x in sorted(cat['soporte'].items(), key=lambda kv: (kv[1]['acumula'], kv[0].lower())):
+        s.append(f"| {md(stat)} | {acumula(x)} | {tope(x) or '—'} | {nota(x)} |")
+    s.append('')
+    return s
 
 
 def glosario_md(glos, cat, ctps):
@@ -476,10 +530,11 @@ def glosario_md(glos, cat, ctps):
 
 def main():
     cat, glos = cargar(RUTA), cargar(RUTA_GLOSARIO)
-    fuentes = cargar(os.path.join(_DIR, 'contenido', 'guia.json'))['fuentes']
+    guia = cargar(os.path.join(_DIR, 'contenido', 'guia.json'))
+    fuentes = guia['fuentes']
     fu = cargar('work/fuentes.json')
     ctps = {c['id']: c['name'] for c in fu['ctps']}
-    mal = validar(cat, fuentes)
+    mal = validar(cat, guia)
     if mal:
         raise SystemExit('scripts/contenido/catalogo.json tiene errores:\n  ' + '\n  '.join(mal))
     mal = validar_glosario(glos, cat, fuentes, ctps)
@@ -499,7 +554,7 @@ def main():
             print(f'AVISO: catálogo de efectos: {k} que los datos ya no traen: {v}')
     version = ultima(cargar('work/updates.json'))[1]
     os.makedirs('docs', exist_ok=True)
-    open('docs/CATALOGO.md', 'w', encoding='utf-8', newline='\n').write(documento(cat, U, fuentes, version, falta, glos, ctps))
+    open('docs/CATALOGO.md', 'w', encoding='utf-8', newline='\n').write(documento(cat, U, guia, version, falta, glos, ctps))
     usos_falta = {'etiquetas': {l: sorted(U['etiqueta'][l])[:3] for l in falta['etiquetas']},
                   'patrones': [[l, p, sorted(U['patron'][l][p])[:3]] for l, p in falta['patrones']],
                   'stats': {s: sorted(U['stat'].get(s) or [f'bono «{n}»' for n in U['bono'][s]])[:3] for s in falta['stats']}}
