@@ -858,15 +858,15 @@
    "ko": "공황",
    "es": "Pánico",
    "que": {
-    "es": "Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales que no reciben debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
+    "es": "Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
     "en": "Applies fear to the foe and makes it take more damage. It can be applied to World Bosses and foes that cannot be debuffed, but not to targets with an effect that removes all debuffs."
    },
    "efectos": [
     "panico"
    ],
-   "falta": "ko",
    "fuente": [
-    "juego-glosario"
+    "juego-glosario",
+    "juego-glosario-ko"
    ]
   },
   {
