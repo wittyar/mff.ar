@@ -152,7 +152,7 @@ frenar la actualización semanal. El catálogo entero, para leerlo, está en `do
 ### Lo que dejó el primer cruce
 
 Con el catálogo, cada soporte de Leads & Supports se puede comparar con la skill de la que sale
-(por su nombre): de 1.020 efectos de soporte (sin los de artefacto, que no tienen skill), 986 están
+(por su nombre): de 1.025 efectos de soporte (sin los de artefacto, que no tienen skill), 991 están
 entre las etiquetas de su skill. Lo que dejó el cruce está en `docs/AUDITORIA.md` (sección 7):
 
 - **«Give Power» sin contenido.** En 27 retratos (29 efectos) la skill dice que otorga un efecto y no
@@ -297,8 +297,8 @@ catálogo, anota:
   sus skills (un buff de Striker sin Striker, o de un elemento que no usa, no le sirve).
 - **Lo que la fuente no dice.** «Give Power» («Acquires the following effect») es un envoltorio:
   lo que otorga viene después, en la misma etapa o en las que siguen. Si no le sigue nada, la fuente
-  no dice qué otorga, y el análisis lo muestra así (74 casos en estos datos). Lo que el catálogo no
-  clasifica también se ve, como lo publica la fuente.
+  no dice qué otorga, y el análisis lo muestra así (76 casos, en 65 variantes, en estos datos). Lo
+  que el catálogo no clasifica también se ve, como lo publica la fuente.
 
 El daño de los golpes no va en el análisis: es el perfil de combate de la etapa 1. Viaja en
 `data.js` (`MFF_ANALISIS`, por retrato, con el catálogo en `MFF_CATALOGO`; formato 3) y la ficha lo

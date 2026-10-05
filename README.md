@@ -36,7 +36,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   - *Resumen*: los datos del uniforme puesto, lo que **le sirve** de un liderazgo o un soporte
     (con atajos al roster: «Líderes que se lo dan», «Soportes que se lo dan») y *para qué se
     usa*: su fila en cada tier list, lo que le da al equipo (liderazgo, pasivas, efecto de
-    uniforme y artefacto, con a quién se aplican y sus categorías del índice), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
+    uniforme y artefacto, con a quién se aplican y sus categorías del índice; cada efecto con su
+    valor y, entre paréntesis, su activación y su recarga, lo que pide, cuánto dura y hasta dónde
+    acumula, escrito igual que en el «Cómo funciona», el «Por qué», la comparativa, los bonos y el
+    detalle de PvP y PvE; y, plegado, lo que dice la guía de cómo se arma un equipo), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
     controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
     su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
     consigue y la nota.
@@ -46,7 +49,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     skill (la cabecera, con un «?», o uno de sus renglones) se abre **Cómo funciona**: cada efecto
     con su grupo, el término del glosario del juego, a quién le llega y le sirve y cómo se lee en
     PvE y en PvP; cuándo, cuánto y a quién (activación, recarga, carga y objetivo, y por etapa
-    cada efecto con sus números y su duración, más lo que dice Leads & Supports); el texto del
+    cada efecto con sus números y su duración, más lo que dice Leads & Supports; si Leads &
+    Supports le da a un efecto otra recarga que la de la skill, dice las dos, como la tarjeta de
+    la skill y la comparativa); el texto del
     juego en inglés y en español; la certeza y las fuentes de cada parte; y lo que el inglés
     traduce distinto del coreano. En el celular es una hoja inferior; se cierra con Esc o
     tocando afuera.
@@ -73,7 +78,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     liderazgo de daño de fuego no vincula a uno que pega físico), o forman juntos un bono de
     equipo); sus **bonos de equipo**, plegados: con quiénes, qué suben y de dónde sale cada uno
     (valen con cualquier uniforme); sus **strikers** y de quiénes es striker, plegados, con la
-    probabilidad de aparecer y cuándo (de la pestaña Striker de la wiki); y **todas las
+    probabilidad de aparecer y cuándo (de la pestaña Striker de la wiki; una de más de 100% es un
+    dato imposible de la wiki y va tal cual, marcada); y **todas las
     combinaciones de 3 con él**, una consulta sobre los datos: cada pareja de compañeros con vínculo
     con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para él* (la
     sinergia contando solo lo que lo involucra), por cualquier tier list, también las tuyas, o por
@@ -82,7 +88,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     como «Not for wbl», no tiene función ahí y ese orden no arma combinaciones. En un contexto entran
     solo los tríos con algún DPS de sus tier lists y, en PvP, con anti-mermas para los tres; un DPS
     entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS, sinergia y
-    strikers) dice de dónde sale cada punto. Se
+    strikers) dice de dónde sale cada punto (los soportes y bonos de equipo, plegados, con qué es
+    cada uno). Los puntos que cuentan el soporte de un artefacto como si lo llevara llevan «*»,
+    como las casillas, y el lugar de cada uno en la lista del orden, «+N» si está en más de una
+    fila. Se
     filtran con «Con» y «Sin», y con casillas por cobertura (ataque, ignorar evasión, todas las
     defensas, vida y quita todos los debuffs: de cada pareja queda la mejor combinación de uniformes
     que las cumple todas). Cada una dice su líder y su **cobertura** (lo que recibe él en
@@ -95,7 +104,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
     en tu capa.
   - *Más*: la verificación entre fuentes y el retrato propio.
-- **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada.
+- **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada; con 4 elegidas, la
+  quinta no se suma y la barra de abajo lo dice. Cada skill con todos sus efectos: pasados los
+  seis primeros, el resto plegado, con cuántos son.
 - **Tier lists**: todas las listas públicas de thanosvibs, con sus filas originales; listas
   propias de personajes, de C.T.P., de artefactos o de tus equipos, con filas a medida. Una entrada
   puede estar en varias filas de la misma lista.
@@ -104,7 +115,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   uniforme, obelisco) para PvE y PvP.
 - **Equipos**: los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
   Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
-  restaurarlos. Al armar uno, avisa si un personaje ya está en otro equipo tuyo del mismo modo.
+  restaurarlos. Al armar uno, avisa si un personaje ya está en otro equipo tuyo del mismo modo; con
+  el equipo lleno, el que se toca no entra y se dice, y un modo más chico que el equipo no le saca
+  a nadie: dice cuántos sobran y no lo guarda hasta que se quiten.
 - **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
   con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
   y qué C.T.P. da cada efecto de la barra de Concentración; y los 126 efectos del catálogo por
@@ -308,7 +321,9 @@ el de cada uniforme) tiene su propio set completo: 9.147 skills y ningún person
 Lo que trae:
 - Cooldown, y el porcentaje de carga de ult y de striker por skill (y sus totales combinados). La
   fuente pone recarga 1 a la Definitiva de Tier-3 y a la Striker, que se cargan con su barra: la
-  app las muestra así ("se carga con la barra") en vez de "CD 1s".
+  app las muestra así ("se carga con la barra") en vez de "CD 1s". En 30 skills, Leads & Supports
+  le da a un efecto una recarga distinta de la de la skill (casi siempre la skill tiene 0 y el
+  efecto que quita los debuffs, 20 s): la app dice las dos.
 - *Uniform Passive* y *Striker Skill*, que la wiki no publica.
 - Etapas: cada skill puede tener varias, cada una con su elemento, su objetivo y su condición de activación.
 - Efectos tipados: cada efecto trae `abilityId` + etiqueta de un vocabulario cerrado de 228 valores,
@@ -370,7 +385,8 @@ confirmado. El informe completo queda en `docs/AUDITORIA.md`; cada ficha muestra
 ## Idioma
 La app tiene un botón **ES / EN** en la barra superior. Cambia la interfaz completa y también
 el contenido: efectos y nombres de skill, textos de C.T.P., de la guía, de Alliance Battle, de
-soportes, de artefactos y de rotaciones.
+soportes, de artefactos y de rotaciones. Los números de los liderazgos, los soportes y los bonos de
+equipo van en el idioma: +5,2% y −40% en español, +5.2% y −40% en inglés.
 
 Cómo funciona la traducción:
 - Skills (`scripts/skills_api.py` con las tablas de `scripts/traducir.py`): cada descripción se

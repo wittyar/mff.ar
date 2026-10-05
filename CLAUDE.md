@@ -33,7 +33,11 @@ variante, en `docs/COMPLETITUD.md`.
   qué rutas adaptar. `images/` y `work/` no están en el repo: las imágenes se bajan con
   `bajar_imagenes.py`, y sin `work/` no corren verif_guia_ficha, verif_marcadores ni verif_opciones.
   Las que leen el contenido curado del repo (verif_glosario) fallan contra un data.js viejo:
-  `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo.
+  `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo, y `armar_datos_build.py`, con
+  lo que el próximo build cambia en data.js sin tocar el esquema (hoy, `SEED.SKILL_TAGS`).
+  `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
+  pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
+  filtro, efectos de la comparativa, strikers) y lista como pendientes las de las reglas sin decidir.
 
 ## Estado (4 de octubre de 2026)
 
@@ -53,6 +57,16 @@ variante, en `docs/COMPLETITUD.md`.
     correrlo a mano después del push.
 
 ## Pendiente
+
+- Con el próximo build (carril de consistencia, sin `work/` no se pudo correr): `SEED.SKILL_TAGS` con
+  las habilidades de todas las variantes (el filtro del roster suma Zombi y Guardianes de la
+  Galaxia) y la sección 11 de `docs/AUDITORIA.md` con las dos probabilidades de striker de más de
+  100% (Daken: Doctor Octopus, 219%; Molecule Man: Morgan le Fay, 120%), contadas en el resumen.
+  Después, verif_consistencia tiene que pasar con los datos del repo.
+- Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir (C.T.P.
+  recomendado, líder del trío, «le sirve», los liderazgos que Leads & Supports no publica, si el
+  soporte propio cuenta para su dueño y qué es anti-mermas, los strikers fuera de PvP y PvE, y los
+  recomendados de Modos contra la función en PvP y PvE). verif_consistencia las tiene listadas.
 
 - Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
   - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e
@@ -89,8 +103,6 @@ variante, en `docs/COMPLETITUD.md`.
   - El link de un soporte busca la skill por el nombre que le da Leads & Supports. La «Pasiva 4★
     (secundaria)» de Jeff es su Activa 5, y en Polaris — Uncanny X-Men el nombre de la Tier-2 está
     mal, así que el link cae en la Activa 1.
-  - La coma decimal y el «−» están solo en el bloque nuevo. Los bonos y la ficha siguen con «+5.2%»
-    y «-40%».
 - Marcadores:
   - El mismo par de valores en otro orden cuenta como diferencia entre fuentes. En Abomination
     base, Fists of the World Ravager, Leads & Supports dice Villains y después Heroes, y la wiki
