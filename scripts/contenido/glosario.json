@@ -332,8 +332,8 @@
    "ko": "타겟팅 무시",
    "es": "No se deja apuntar",
    "que": {
-    "es": "Queda fuera de la mira del rival: las skills que apuntan a un objetivo lo ignoran y no recibe daño aunque lo ataquen. Usado justo cuando el rival ataca, esquiva el ataque entero y deja seguir con el propio.",
-    "en": "Stays out of the foe's targeting: skills aimed at a target ignore it and it takes no damage even if attacked. Used right as the foe attacks, it avoids the whole attack and lets you keep attacking."
+    "es": "Queda fuera de la mira del rival: las skills que apuntan a un objetivo lo ignoran y no recibe daño aunque lo ataquen. Usado justo cuando el rival ataca, ignora el ataque entero y deja seguir con el propio.",
+    "en": "Stays out of the foe's targeting: skills aimed at a target ignore it and it takes no damage even if attacked. Used right as the foe attacks, it ignores the whole attack and lets you keep attacking."
    },
    "efectos": [],
    "fuente": [
