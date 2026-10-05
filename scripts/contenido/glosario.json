@@ -18,8 +18,8 @@
     "en": "\"That have no debuffs\": per the Korean, those immune to debuffs"
    },
    "texto": {
-    "es": "El coreano dice que estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima; en pánico y en la marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by debuffs»). En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.",
-    "en": "The Korean says these crowd controls also reach bosses and foes that debuffs do not apply to, that is, the immune ones. The English says \"that have no debuffs\" or \"that don't have debuffs\", which reads as foes with no debuffs on them; in Panic and Mark, the same Korean phrase comes out right in English (\"who cannot be debuffed\", \"not affected by debuffs\"). In all four, what keeps them out is an effect that removes all debuffs."
+    "es": "Según el coreano, estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima; en pánico y en la marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by debuffs»). En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.",
+    "en": "Per the Korean, these crowd controls also reach bosses and foes that debuffs do not apply to, that is, the immune ones. The English says \"that have no debuffs\" or \"that don't have debuffs\", which reads as foes with no debuffs on them; in Panic and Mark, the same Korean phrase comes out right in English (\"who cannot be debuffed\", \"not affected by debuffs\"). In all four, what keeps them out is an effect that removes all debuffs."
    }
   },
   {
@@ -45,8 +45,8 @@
     "en": "Cuts the skill the foe is using and opens a counterattack. Super Guard Break also goes through Guard Break immunity."
    },
    "difiere": {
-    "es": "El coreano dice cómo la corta: fuerza la reacción al golpe (피격 모션). El inglés solo dice que la cancela.",
-    "en": "The Korean says how it cuts it: it forces the hit reaction (피격 모션). The English only says it cancels it."
+    "es": "El inglés solo dice que la cancela; según el coreano, la corta forzando la reacción al golpe (피격 모션).",
+    "en": "The English only says it cancels it; per the Korean, it cuts it by forcing the hit reaction (피격 모션)."
    },
    "efectos": [
     "romper_guardia",
@@ -67,8 +67,8 @@
     "en": "Dodge depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to dodge."
    },
    "difiere": {
-    "es": "El inglés dice que esquiva «at a set rate»; el coreano, que le suma un valor fijo a la evasión.",
-    "en": "The English says it dodges \"at a set rate\"; the Korean, that it adds a fixed amount to dodge."
+    "es": "El inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la evasión.",
+    "en": "The English says it dodges \"at a set rate\"; per the Korean, it adds a fixed amount to dodge."
    },
    "efectos": [
     "evasion_garantizada"
@@ -88,8 +88,8 @@
     "en": "Critical rate depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to critical rate."
    },
    "difiere": {
-    "es": "El inglés dice que hace crítico «at a set rate»; el coreano, que le suma un valor fijo a la probabilidad de crítico.",
-    "en": "The English says it crits \"at a set rate\"; the Korean, that it adds a fixed amount to critical rate."
+    "es": "El inglés dice que hace crítico «at a set rate»; según el coreano, le suma un valor fijo a la probabilidad de crítico.",
+    "en": "The English says it crits \"at a set rate\"; per the Korean, it adds a fixed amount to critical rate."
    },
    "efectos": [
     "critico_garantizado"
@@ -109,8 +109,8 @@
     "en": "The damage a character takes comes from the foe's attack, reduced by its defense and its elemental resists. Pure damage goes through neither defense nor resists."
    },
    "difiere": {
-    "es": "El inglés dice «Character Type Resistance»; el coreano, resistencias elementales (속성 저항).",
-    "en": "The English says \"Character Type Resistance\"; the Korean, elemental resists (속성 저항)."
+    "es": "El inglés dice «Character Type Resistance»; según el coreano, son las resistencias elementales (속성 저항).",
+    "en": "The English says \"Character Type Resistance\"; per the Korean, they are elemental resists (속성 저항)."
    },
    "error": "tipo",
    "efectos": [
@@ -146,8 +146,8 @@
     "en": "Immune to everything that can affect it: hit reactions, Guard Break, damage and debuffs."
    },
    "difiere": {
-    "es": "El inglés dice que es inmune a los «basic attacks»; el coreano, a la reacción al golpe (피격 모션).",
-    "en": "The English says it is immune to \"basic attacks\"; the Korean, to the hit reaction (피격 모션)."
+    "es": "El inglés dice que es inmune a los «basic attacks»; según el coreano, a la reacción al golpe (피격 모션).",
+    "en": "The English says it is immune to \"basic attacks\"; per the Korean, to the hit reaction (피격 모션)."
    },
    "error": "golpe",
    "efectos": [
@@ -168,8 +168,8 @@
     "en": "Immune to hit reactions and Guard Break: the foe's attacks do not cut what it is doing, but it takes the damage."
    },
    "difiere": {
-    "es": "El inglés dice «basic attack motions»; el coreano, la reacción al golpe (피격 모션).",
-    "en": "The English says \"basic attack motions\"; the Korean, the hit reaction (피격 모션)."
+    "es": "El inglés dice «basic attack motions»; según el coreano, es la reacción al golpe (피격 모션).",
+    "en": "The English says \"basic attack motions\"; per the Korean, it is the hit reaction (피격 모션)."
    },
    "error": "golpe",
    "efectos": [
@@ -190,8 +190,8 @@
     "en": "Stops damage for a set time and a set number of hits. It stops neither Guard Break nor debuffs."
    },
    "difiere": {
-    "es": "El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; el coreano agrega la cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y que tampoco frena los debuffs.",
-    "en": "The English only says \"for a set amount of time\" and that it does not stop Guard Break; the Korean adds the number of hits (as skills count it: \"Barrier # time(s)\") and that it does not stop debuffs either."
+    "es": "El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; según el coreano, además, dura una cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y tampoco frena los debuffs.",
+    "en": "The English only says \"for a set amount of time\" and that it does not stop Guard Break; per the Korean, it also lasts a number of hits (as skills count it: \"Barrier # time(s)\") and does not stop debuffs either."
    },
    "efectos": [
     "barrera"
@@ -211,8 +211,8 @@
     "en": "Stops a set amount of damage for a while. It stops neither hit reactions, Guard Break nor debuffs. There are shields against all damage, only physical or only energy damage."
    },
    "difiere": {
-    "es": "El inglés no dice que la cantidad de daño es fija («stops damage for a set amount of time») y llama «basic attack motions» a la reacción al golpe (피격 모션).",
-    "en": "The English does not say the amount of damage is fixed (\"stops damage for a set amount of time\") and calls the hit reaction (피격 모션) \"basic attack motions\"."
+    "es": "Según el coreano, la cantidad de daño que frena es fija; el inglés no lo dice («stops damage for a set amount of time») y llama «basic attack motions» a la reacción al golpe (피격 모션).",
+    "en": "Per the Korean, the amount of damage it stops is fixed; the English does not say so (\"stops damage for a set amount of time\") and calls the hit reaction (피격 모션) \"basic attack motions\"."
    },
    "error": "golpe",
    "efectos": [
@@ -233,8 +233,8 @@
     "en": "Stops damage and debuffs for a while, but not hit reactions or Guard Break. It can be against all damage, only physical or only energy damage, with their debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «basic attack motions»; el coreano, la reacción al golpe (피격 모션).",
-    "en": "The English says \"basic attack motions\"; the Korean, the hit reaction (피격 모션)."
+    "es": "El inglés dice «basic attack motions»; según el coreano, es la reacción al golpe (피격 모션).",
+    "en": "The English says \"basic attack motions\"; per the Korean, it is the hit reaction (피격 모션)."
    },
    "error": "golpe",
    "efectos": [
@@ -291,8 +291,8 @@
     "en": "Locks the foe in time: it cannot move or attack. It also reaches large bosses that debuffs do not apply to, but not targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «epic monsters that have no debuffs»; el coreano, jefes grandes a los que no se les aplican debuffs.",
-    "en": "The English says \"epic monsters that have no debuffs\"; the Korean, large bosses that debuffs do not apply to."
+    "es": "El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican debuffs.",
+    "en": "The English says \"epic monsters that have no debuffs\"; per the Korean, large bosses that debuffs do not apply to."
    },
    "error": "inmunes",
    "efectos": [
@@ -313,8 +313,8 @@
     "en": "The foe cannot move or use skills, not even attacks that trigger on their own. It also reaches large bosses that debuffs do not apply to, but not targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «epic monsters that have no debuffs»; el coreano, jefes grandes a los que no se les aplican debuffs.",
-    "en": "The English says \"epic monsters that have no debuffs\"; the Korean, large bosses that debuffs do not apply to."
+    "es": "El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican debuffs.",
+    "en": "The English says \"epic monsters that have no debuffs\"; per the Korean, large bosses that debuffs do not apply to."
    },
    "error": "inmunes",
    "efectos": [
@@ -351,8 +351,8 @@
     "en": "The foe cannot move or use skills and slowly walks toward whoever enticed it. It works on World Bosses and foes that debuffs do not apply to, but not on targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «enemies that don't have debuffs»; el coreano, rivales a los que no se les aplican debuffs.",
-    "en": "The English says \"enemies that don't have debuffs\"; the Korean, foes that debuffs do not apply to."
+    "es": "El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican debuffs.",
+    "en": "The English says \"enemies that don't have debuffs\"; per the Korean, foes that debuffs do not apply to."
    },
    "error": "inmunes",
    "efectos": [
@@ -373,8 +373,8 @@
     "en": "The foe fights on your side and takes more damage. It works on World Bosses and foes that debuffs do not apply to, but not on targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «enemies that don't have debuffs»; el coreano, rivales a los que no se les aplican debuffs.",
-    "en": "The English says \"enemies that don't have debuffs\"; the Korean, foes that debuffs do not apply to."
+    "es": "El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican debuffs.",
+    "en": "The English says \"enemies that don't have debuffs\"; per the Korean, foes that debuffs do not apply to."
    },
    "error": "inmunes",
    "efectos": [
@@ -447,8 +447,8 @@
     "en": "When hit, it counterattacks instead of the hit reaction. Since it needs that reaction, it does not trigger while invincible."
    },
    "difiere": {
-    "es": "El inglés dice que reemplaza los «basic attack motions» y explica mal por qué no se activa siendo invencible; el coreano: reemplaza la reacción al golpe (피격 모션), que el invencible no tiene.",
-    "en": "The English says it replaces \"basic attack motions\" and garbles why it does not trigger while invincible; the Korean: it replaces the hit reaction (피격 모션), which an invincible character does not have."
+    "es": "El inglés dice que reemplaza los «basic attack motions» y explica mal por qué no se activa siendo invencible; según el coreano, reemplaza la reacción al golpe (피격 모션), que el invencible no tiene.",
+    "en": "The English says it replaces \"basic attack motions\" and garbles why it does not trigger while invincible; per the Korean, it replaces the hit reaction (피격 모션), which an invincible character does not have."
    },
    "error": "golpe",
    "efectos": [],
@@ -520,8 +520,8 @@
     "en": "When attacked, it has a chance to cut the foe's attack: higher if its Concentration is above the foe's, lower if below. Its own gauge charges when hit; after use, it does not charge for 5 s."
    },
    "difiere": {
-    "es": "간파 quiere decir ver venir el ataque (leerlo), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; el coreano, su ataque.",
-    "en": "간파 means seeing through the attack (reading it), not piercing: it has nothing to do with Pierce or with the \"TYPE PENETRATION\" skill label. The English says it cancels the foe's skill; the Korean, its attack."
+    "es": "간파 quiere decir ver venir el ataque (leerlo), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; según el coreano, su ataque.",
+    "en": "간파 means seeing through the attack (reading it), not piercing: it has nothing to do with Pierce or with the \"TYPE PENETRATION\" skill label. The English says it cancels the foe's skill; per the Korean, its attack."
    },
    "efectos": [],
    "ctp": [
@@ -590,8 +590,8 @@
     "en": "On skill use, raises the attack of skills with an element and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "difiere": {
-    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; el coreano, 속성 증폭: amplificación de elemento. El C.T.P. Judgment reforjado dice en inglés «Increases additional type skill damage».",
-    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; the Korean, 속성 증폭: element amplification. The reforged Judgment C.T.P. says in English \"Increases additional type skill damage\"."
+    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; según el coreano, es 속성 증폭: amplificación de elemento. El C.T.P. Judgment reforjado dice en inglés «Increases additional type skill damage».",
+    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; per the Korean, it is 속성 증폭: element amplification. The reforged Judgment C.T.P. says in English \"Increases additional type skill damage\"."
    },
    "error": "tipo",
    "efectos": [],
