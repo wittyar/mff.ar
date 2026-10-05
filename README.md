@@ -547,7 +547,7 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   todas las velocidades, para nadie; el resto, para todos. Un stat que el catálogo no tiene cuenta
   para todos y la sinergia lo dice. Cada efecto vale lo mismo, sin importar cuánto sube.
   Si a un integrante le llega lo mismo de dos fuentes, una estadística se suma y una habilidad cuenta
-  una vez, la de mayor valor; cuál es cuál lo dice el catálogo, con los dudosos marcados [Conjetura].
+  una vez, la de mayor valor; cuál es cuál lo dice el catálogo.
   El tope de la guía se muestra y se avisa si se pasa, pero no cambia los puntos.
 - Los bonos de equipo de la wiki están redondeados a un decimal y sus páginas no siempre
   coinciden: vale lo que dice la mayoría y, si empatan, la app muestra las dos versiones

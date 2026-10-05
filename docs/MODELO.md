@@ -698,17 +698,18 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
   integrante. Qué es cada stat lo dice el
   catálogo: `acumula` en cada stat de `soporte` de `scripts/contenido/catalogo.json` (datos de formato
   8; `catalogo.validar` exige que todos lo digan, y la tabla entera va en *Qué se acumula y los topes*
-  de `docs/CATALOGO.md` desde el próximo build). Los dudosos van con [Conjetura] en su nota, para que
-  Ezequiel los confirme:
+  de `docs/CATALOGO.md`). Los que eran dudosos los confirmó Ezequiel el 5 de octubre (su nota lo dice), y
+  Guaranteed Critical Rate pasó a contar una vez, con el tope de la prob. de crítico (datos de formato 9):
 
   | Si le llega de dos fuentes | Stats |
   |---|---|
-  | Cuenta una vez, la de mayor valor (18) | Remove All Debuffs y Debuff Immunity (los anti-mermas); Burn, Fear, Stun, Guard Break e Incapacitation Immunity; Physical, Fire, Lightning y Mind Immunity Chance; Barrier; Max HP Shield; Revive with % HP; Summon; Immortality + Death; Immortality + Heal [Conjetura: la inmortalidad es una habilidad, y la curación viene con ella]; Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction [Conjetura: no tiene número; ignora o no ignora] |
-  | Se suma (65) | Todos los demás: ataques, defensas, vida, daño contra facciones y recibido de ellas, daño de elemento, a jefes, crítico y daño crítico, evasión, ignorar evasión y defensa, recarga, recuperación, velocidades, resistencias, duraciones... Con [Conjetura]: Guaranteed Critical Rate (le suma un valor fijo a la probabilidad de crítico, como un stat), Heal (cada curación es aparte), Ignore Non-Boss Damage Decrease (un porcentaje, como ignorar la defensa), «Super Armor, All Basic Defenses» (la superarmadura cuenta una vez, pero el número es el de las defensas, y la defensa se suma), «Max Dodge» y «Attack Defense» (no se sabe qué suben) |
+  | Cuenta una vez, la de mayor valor (19) | Remove All Debuffs y Debuff Immunity (los anti-mermas); Burn, Fear, Stun, Guard Break e Incapacitation Immunity; Physical, Fire, Lightning y Mind Immunity Chance; Barrier; Max HP Shield; Revive with % HP; Summon; Immortality + Death; Immortality + Heal (la inmortalidad no se acumula; solo lo da el artefacto de Franklin Richards); Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction (el caso único de Molecule Man); Guaranteed Critical Rate (con el tope de la prob. de crítico, 75%) |
+  | Se suma (64) | Todos los demás: ataques, defensas, vida, daño contra facciones y recibido de ellas, daño de elemento, a jefes, crítico y daño crítico, evasión, ignorar evasión y defensa, recarga, recuperación, velocidades, resistencias, duraciones... Entre ellos: Heal (una curación de una vez, otra cosa que la tasa de recuperación, sin tope), Ignore Non-Boss Damage Decrease (también con los C.T.P., en PvE y en PvP), «Super Armor, All Basic Defenses» (la superarmadura no se acumula, pero el número es el de las defensas, que se suman sin límite), «Max Dodge» (con el tope de la evasión, 75%) y «Attack Defense» (sin límite) |
 
   En la práctica la que se repite es quitar todos los debuffs: de las líneas de liderazgo y de soporte
   que cuentan una vez, 86 de 128 son esa, y ningún artefacto trae una habilidad salvo Immortality +
-  Heal. Las habilidades con valor no le llegan a nadie de dos fuentes en un mismo trío: o las traen solo
+  Heal. Guaranteed Critical Rate, que cuenta una vez desde la 1.0.22, lo dan 10 soportes (Tier-2 de Taskmaster, Beast,
+  Phil Coulson y Warwolf), y ahí la de mayor valor sí puede decidir: no está medido. Las habilidades con valor no le llegan a nadie de dos fuentes en un mismo trío: o las traen solo
   liderazgos (Physical Immunity Chance, Max HP Shield), o uniformes de un solo personaje (Storm, Sun
   Bird, Invisible Woman), o una sola variante. Así que con los datos del 5 de octubre «la de mayor
   valor» todavía no decide nada, y frente a la primera parte de la regla (lo sin valor, una vez) no
