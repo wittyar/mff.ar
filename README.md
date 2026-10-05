@@ -98,9 +98,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     `docs/MODELO.md`). Si él no figura en las tier lists del contexto (Arena; Alianza y WBL), o solo
     como «Not for wbl», no tiene función ahí y ese orden no arma combinaciones. En un contexto entran
     solo los tríos con algún DPS de sus tier lists y, en PvP, con anti-mermas para los tres; un DPS
-    entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS y sinergia) dice
-    de dónde sale cada punto (cada línea del liderazgo con lo que suma; los soportes y bonos de
-    equipo, plegados, con qué es cada uno). Los pesos salen de la tabla de valor
+    entra aunque no tenga vínculo con él, y su «Por qué» dice de dónde sale cada punto del puntaje
+    de equipo (liderazgo, DPS y sinergia: cada línea del liderazgo con lo que suma; los soportes y
+    bonos de equipo, con qué es cada uno). Los pesos salen de la tabla de valor
     (`scripts/contenido/valor_equipos.json`, una fila por contexto; ver *Tabla de valor* en
     `docs/MODELO.md`), y la nota de cada orden los dice. Los strikers no suman en ningún orden: a igual puntaje, desempatan, y la tarjeta
     dice cuántos («desempate: 2 strikers»). Los puntos que cuentan el soporte de un artefacto como
@@ -112,12 +112,19 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     cualquiera de los tres: el que más suma con su liderazgo; a igual puntaje, el mejor ubicado en
     las tier lists del contexto o, sin contexto, en la General), que va primero entre los retratos,
     a la izquierda como en el juego, con un aro de color y la pastilla «Líder»; y su **cobertura** (lo que recibe él en
-    ese equipo, por categoría del índice); en *Por qué*, la suma de lo que le llega, por beneficio,
-    y el desglose por origen con el link a cada habilidad; y, plegados, los **C.T.P.**
-    recomendados a cada integrante, con su fuente: los de la guía de armado (los de PvP o de PvE en
-    ese contexto; si no, el mejor y el segundo) y, si la guía no le da ninguno, los de la Ideal CTP
-    List («Not worth» se dice). Lo mismo en tus equipos (según su modo), en «cómo entraría» y en
-    Favoritos (en el orden en que se marcó). Se marca con ★ como favorita, se arma
+    ese equipo, por categoría del índice). Su botón **Por qué y C.T.P.** abre una ventana: arriba, el
+    equipo (los retratos, con el líder primero y su marca, y los puntos), quién lidera y por qué (lo
+    que suma su liderazgo y el de cada uno de los demás, y qué desempata) y de dónde salen los puntos, parte por
+    parte (en PvP y PvE, el detalle del contexto; si no, la sinergia; los strikers, como desempate);
+    después, una pestaña por integrante con lo que recibe, en una tabla (cada efecto con su total, sin
+    topes, y de dónde sale cada parte: el retrato y el nombre de quien la da, con el link a su skill o
+    a su artefacto) y lo que aporta; y abajo, los **C.T.P.** recomendados a cada integrante, con su
+    fuente: los de la guía de armado (los de PvP o de PvE en ese contexto; si no, el mejor y el
+    segundo) y, si la guía no le da ninguno, los de la Ideal CTP List («Not worth» se dice). Se cierra
+    con Esc, con su botón o tocando afuera; si desde ella se va a una skill, «Atrás» vuelve con la
+    ventana abierta. Lo mismo en «cómo entraría» (con lo que se gana y lo que se pierde); tus equipos
+    (según su modo) y Favoritos (en el orden en que se marcó) muestran los C.T.P., plegados. En el
+    celular, la ventana va a pantalla completa. Se marca con ★ como favorita, se arma
     para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
     personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
