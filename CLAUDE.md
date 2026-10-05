@@ -84,12 +84,6 @@ dejaron el foro y las capturas en coreano):
   Ezequiel mire una antes de publicar («Equipos por contexto» de `docs/MODELO.md`).
 
 Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
-- La tabla de valor (`scripts/contenido/valor_equipos.json`) es la propuesta del 4 de octubre: ¿la confirma con los
-  «Casos de referencia» de `docs/MODELO.md`?
-- Captain America tiene anti-mermas propio con probabilidad (50% o 60% al recibir un debuff), y hoy no cuenta. ¿Está
-  bien?
-- Cinco stats de bonos de la wiki no tienen efecto en el catálogo (Attack Defense, Critical Defense, Energy Damage,
-  Max Dodge y Physical Damage; el próximo build los avisa en la sección 9): ¿cómo se clasifican?
 - Liderazgos: los 34 slots sin stat (escudo de energía y físico, inmunidad al frío, robo de vida, inmunidad a todo
   daño, resistencia al veneno, inmunidad al sangrado y a la fractura; el sangrado y la parálisis son para el rival):
   ¿se agregan stats al catálogo? «When enemies are below 30% HP,» (Warwolf) va con la coma de la API.

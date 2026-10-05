@@ -586,8 +586,10 @@ Dudas:
 - **«X 2 Bonuses».** La wiki anota, debajo de un bono de tres, qué parejas del trío tienen su
   propio bono de dos. Sugiere que se activan todos a la vez (probable); la app suma cada uno.
 - **Stats con nombres sueltos.** Seis bonos traen stats que no usa ningún otro bono ni Leads &
-  Supports («Physical Damage», «Critical Defense» y otros). Van como los escribe la wiki y cuentan
-  para todos. Falta verlos en el juego.
+  Supports. Van como los escribe la wiki, cada uno con su efecto en el catálogo, y les sirven
+  (Ezequiel, 5 de octubre de 2026): Physical Damage y Energy Damage, a quien hace ese daño, como los
+  ataques; Attack Defense, Critical Defense y Max Dodge, a cualquiera. Qué suben esos tres no se
+  sabe: falta verlos en el juego.
 
 ## Strikers
 
@@ -680,8 +682,8 @@ no tiene la fila de su tipo o si falta un dato de una fila.
 | Cada bono de equipo activo | 1 | 1 |
 | Strikers | Desempatan | Desempatan |
 
-Anti-mermas: Remove All Debuffs y Debuff Immunity. Los pesos son una propuesta (la tabla lo dice, y
-la nota de cada orden también) y se ajustan con los *Casos de referencia*.
+Anti-mermas: Remove All Debuffs y Debuff Immunity. Los pesos los confirmó Ezequiel el 5 de octubre de
+2026 («dale»); se revisan con los *Casos de referencia*.
 
 Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órdenes PvP y PvE):
 
@@ -710,7 +712,8 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   Captain America (la base y 13 uniformes; 50% al recibir un debuff, o 60% en Back to Basics, Enter the
   Phoenix, Hydra Supreme y What If... Zombies?!), Hulkling (25% al recibir un golpe), Dormammu y
   Dormammu — Damnation (25% al atacar), Karnak — All-New, All-Different (35% al recibir un debuff) y
-  Baron Mordo — Doctor Strange 2 (80% al recibir un golpe). Lo propio cuenta para su dueño también
+  Baron Mordo — Doctor Strange 2 (80% al recibir un golpe). Ezequiel, 5 de octubre de 2026, sobre el de
+  Captain America: «dejalo así». Lo propio cuenta para su dueño también
   en lo que le llega (la casilla y el «Por qué»), pero no en la sinergia: ahí un soporte suma solo
   si le llega a otro integrante.
 - Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma su peso por cada
