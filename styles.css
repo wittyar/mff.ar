@@ -313,6 +313,8 @@ ul.pqm-lista b{color:var(--text);font-weight:600}
 .pqm-th{border-top:0;padding:0 0 3px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);font-weight:700}
 .pqm-ef{min-width:0;overflow-wrap:anywhere}
 .pqm-cond{font-size:11.5px}
+.pqtope{font-size:11.5px;margin-top:3px;display:flex;flex-wrap:wrap;gap:4px 6px;align-items:baseline}
+.pqpasa{font-size:11.5px;margin-top:3px;color:var(--gold)}
 .pqm-tot{min-width:0}
 .pqm-de{display:flex;flex-wrap:wrap;gap:4px 6px;min-width:0}
 .pqm-de1{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:1px 7px 1px 2px;border:1px solid var(--line);

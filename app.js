@@ -489,6 +489,7 @@ const T = {
   gl_acumula:        { es:'Si a alguien le llega de dos fuentes (liderazgo, soporte o bono de equipo):', en:'If it reaches someone from two sources (leadership, support or team bonus):' },
   gl_se_suma:        { es:'se suma',             en:'it adds up' },
   gl_una_vez:        { es:'cuenta una vez, la de mayor valor', en:'it counts once, the highest value' },
+  gl_tope:           { es:'Tope, en un liderazgo, soporte o bono de equipo:', en:'Cap, in a leadership, support or team bonus:' },
   gl_falta_en:       { es:'sin captura en inglés',  en:'no English capture' },
   gl_falta_ko:       { es:'sin captura en coreano', en:'no Korean capture' },
 
@@ -674,6 +675,14 @@ const T = {
   pq_nada:           { es:'Ningún soporte ni liderazgo le llega y le sirve.', en:'No support or leadership reaches it and is useful to it.' },
   pq_col_efecto:     { es:'Efecto',              en:'Effect' },
   pq_col_total:      { es:'Total',               en:'Total' },
+  pq_tope:           { es:'Tope de la guía: {t}.', en:'Guide cap: {t}.' },
+  pq_tope_base:      { es:'{n}% (desde {b}%)',   en:'{n}% (from {b}%)' },
+  pq_tope_t:         { es:'El tope lo dice la guía. Acá se cuenta solo lo de esta tabla: lo que el personaje ya tiene (su equipo, sus C.T.P., los bonos de equipo) lo acerca más.',
+                       en:'The guide sets the cap. Only this table is counted here: what the character already has (gear, C.T.P.s, team bonuses) brings it closer.' },
+  pq_tope_pasa:      { es:'Pasa el tope: los buffs suman {x}% y hasta el tope quedan {r}%; lo de más no suma.',
+                       en:'Over the cap: the buffs add up to {x}% and only {r}% is left to the cap; the rest adds nothing.' },
+  pq_tope_pasa_cond: { es:'Con lo que le llega siempre, pasa el tope: los buffs suman {x}% y hasta el tope quedan {r}%; lo de más no suma.',
+                       en:'With what it always gets, it goes over the cap: the buffs add up to {x}% and only {r}% is left to the cap; the rest adds nothing.' },
   pq_col_de:         { es:'De dónde',            en:'From' },
   pq_sin_art:        { es:'sin artefactos: {x}', en:'without artifacts: {x}' },
   pq_aporta:         { es:'Lo que aporta {x}',   en:'What {x} gives' },
@@ -2837,6 +2846,16 @@ function acumulaEfectoHtml (e, renglon) {
   }
   return renglon(h(t('gl_acumula')), `<ul class="sirvestat">${sts.map(st => `<li>${h(trTxt(st))}: ${dice(st)}${nota(st)}</li>`).join('')}</ul>`);
 }
+/** El tope de los stats de liderazgo, soporte o bono de equipo que apuntan al efecto (topesDe), con la fuente de la guía:
+ *  uno solo si todos los stats del efecto tienen el mismo; si no, el de cada uno que tiene. Nada si ninguno tiene. Como
+ *  leSirveEfectoHtml. */
+function topeEfectoHtml (e, renglon) {
+  const todos = GL_DE[e.id].stats, sts = todos.filter(st => topesDe(st).length);
+  if (!sts.length) return '';
+  const txt = (st) => topesDe(st).map(x => topeTxt(x, topesDe(st).length > 1)).join(', '), fuente = ' ' + fuentesHtml(GUIA.topes.fuente);
+  if (sts.length === todos.length && sts.every(st => txt(st) === txt(sts[0]))) return renglon(h(t('gl_tope')), h(txt(sts[0])) + fuente);
+  return renglon(h(t('gl_tope')), `<ul class="sirvestat">${sts.map(st => `<li>${h(trTxt(st))}: ${h(txt(st))}</li>`).join('')}</ul>${fuente}`);
+}
 /** La primera letra en mayúscula, para que una frase arranque un renglón («Contra una facción: …»). */
 function mayuscula (x) { return x ? x[0].toUpperCase() + x.slice(1) : x; }
 /** El nombre de un efecto del análisis. Un «Give Power» que queda como entrada es uno que no dice qué otorga. */
@@ -3000,6 +3019,7 @@ function efectoTipHtml (v, x) {
       ${cond ? `<li>${h(mayuscula(cond))}</li>` : ''}
       ${leSirveEfectoHtml(e, (r, x) => `<li><b>${r}</b> ${x}</li>`)}
       ${acumulaEfectoHtml(e, (r, x) => `<li><b>${r}</b> ${x}</li>`)}
+      ${topeEfectoHtml(e, (r, x) => `<li><b>${r}</b> ${x}</li>`)}
       ${notas.map(n => `<li class="muted">${h(bi(n))}</li>`).join('')}
     </ul>
     ${lecturasEfecto(e).map(l => lecturaAn(l.L, l.modo + delGrupo(l))).join('')}`;
@@ -3207,16 +3227,17 @@ function botonArmar (vs, modo, nombre, etiqueta) {
     data-modo="${modo || ''}" data-nombre="${h(nombre || '')}">${h(etiqueta || t('eq_build'))}</button>`;
 }
 // «POR QUÉ» DE UNA TARJETA DE EQUIPO (combinaciones de 3 y «Cómo entraría en tus otros equipos»), EN UNA VENTANA
-// (Ezequiel, 4 de octubre de 2026: «Esto se tiene que poder ver más prolijo y legible... El desglose, podés ponerlo en
-// un modal, con los retratos para cada personaje»). La tarjeta tiene un botón donde antes se desplegaba; la ventana
-// (un <dialog> fuera de #app: pintar la página no la toca) tiene arriba el equipo (los retratos, con el líder primero
-// y su marca, los puntos de la tarjeta y quién lidera y por qué) y de dónde salen los puntos, parte por parte (en PvP
-// y PvE, el detalle del contexto; si no, la sinergia); después, una pestaña por integrante con lo que recibe (un
-// renglón por stat y condición, con el total de lo que se le aplica y de dónde sale cada parte: quién la da, el enlace a
-// la skill o al artefacto y lo que suma) y lo que aporta; abajo, lo demás (en PvP y PvE, lo de los puntos para él; en «cómo
-// entraría», lo que se gana y lo que se pierde) y los C.T.P. recomendados en el contexto de la tarjeta. Son las
-// cuentas de siempre (recibe, enContexto, synergy, ctpRecomendado), las mismas de la tarjeta. Con los nombres cortos
-// (el completo, en el title) y «a todos» si algo les llega a todos. Cada efecto, con efectoSoporteHtml.
+// (Ezequiel, 4 de octubre de 2026: «Esto se tiene que poder ver más prolijo y legible... El desglose, podés ponerlo
+// en un modal, con los retratos para cada personaje»). La tarjeta tiene un botón donde antes se desplegaba; la
+// ventana (un <dialog> fuera de #app: pintar la página no la toca) tiene arriba el equipo (los retratos, con el
+// líder primero y su marca, los puntos de la tarjeta y quién lidera y por qué) y de dónde salen los puntos, parte
+// por parte (en PvP y PvE, el detalle del contexto; si no, la sinergia); después, una pestaña por integrante con lo
+// que recibe (un renglón por stat y condición, con el total de lo que se le aplica, el tope de la guía si el stat
+// tiene, y de dónde sale cada parte: quién la da, el enlace a la skill o al artefacto y lo que suma) y lo que
+// aporta; abajo, lo demás (en PvP y PvE, lo de los puntos para él; en «cómo entraría», lo que se gana y lo que se
+// pierde) y los C.T.P. recomendados en el contexto de la tarjeta. Son las cuentas de siempre (recibe, enContexto,
+// synergy, ctpRecomendado), las mismas de la tarjeta. Con los nombres cortos (el completo, en el title) y «a todos»
+// si algo les llega a todos. Cada efecto, con efectoSoporteHtml.
 /** Cómo se nombra a cada integrante: el personaje, sin uniforme, si en el equipo no hay otro con el
  *  mismo nombre; si no, el nombre completo. */
 function nombreEn (vs) { return (x) => vs.some(y => y !== x && y.name === x.name) ? fullLabel(x) : x.name; }
@@ -3264,27 +3285,63 @@ function sumaDe (origenes) {
 function conArtefacto (l) { return !l.rep && (l.v[1] != null || l.i[1] != null || (!l.sin && l.v[0] == null && l.i[0] == null)); }
 /** El «*» de lo que solo llega si el compañero lleva su artefacto. */
 function marcaArt () { return `<span class="pqart" title="${h(t('cb_art'))}">*</span>`; }
+// TOPES (Ezequiel, 5 de octubre de 2026: «Hay algunas estadsiticas que llegana tope, indice critico, daño critico,
+// esquiva»). El tope de cada stat lo dice la guía (MFF_GUIA.topes, con su fuente), y qué stat de liderazgo, soporte o bono
+// de equipo lo tiene, el catálogo (MFF_CATALOGO.soporte, tope: claves de la guía); acá no hay ningún número. Lo muestran
+// la tabla de lo que recibe cada integrante (con el aviso si lo que suman los buffs pasa lo que queda hasta el tope: el
+// tope menos la base, si el stat arranca en una), el Glosario y «Cómo funciona».
+/** Los topes de un stat de liderazgo, soporte o bono: [{ k: la clave de la guía, tope, base (0 si no arranca en una) }],
+ *  vacío si no tiene. */
+function topesDe (s) {
+  const c = CATALOGO.soporte[s];
+  if (!c || !c.tope) return [];
+  return c.tope.map(k => {
+    const it = GUIA.topes.items.find(y => y.stats.includes(k) && y.tope != null);
+    if (!it) throw new Error(`el tope ${k} de ${s} no está en la guía (MFF_GUIA.topes)`);
+    return { k, tope: it.tope, base: it.base || 0 };
+  });
+}
+/** Un tope, para leerlo: «75%» o «130% (desde 100%)»; con el nombre del stat de la guía si conNombre. */
+function topeTxt (x, conNombre) {
+  return (conNombre ? statNom(x.k) + ' ' : '') + (x.base ? t('pq_tope_base').replace('{n}', numTxt(x.tope)).replace('{b}', numTxt(x.base)) : numTxt(x.tope) + '%');
+}
+/** El tope de un renglón de lo que recibe (sumaDe), si su stat tiene: el tope, con la fuente de la guía y, si lo que suman los
+ *  buffs que se le aplican pasa lo que queda hasta el tope, el aviso de que lo de más no suma. Un renglón con condición se
+ *  cuenta con lo que le llega siempre del mismo stat (siempre: el total de su renglón sin condición). Cuenta el valor
+ *  absoluto: la recarga se escribe en negativo. */
+function topeFilaHtml (l, siempre) {
+  const ts = topesDe(l.s);
+  if (!ts.length) return '';
+  const total = l.v[0] == null && l.v[1] == null ? null : (l.v[0] || 0) + (l.v[1] || 0);
+  const suma = total == null ? null : Math.abs(total + (l.cond ? siempre : 0)), queda = Math.min(...ts.map(x => x.tope - x.base));
+  return `<div class="muted pqtope" title="${h(t('pq_tope_t'))}">${h(t('pq_tope').replace('{t}', ts.map(x => topeTxt(x, ts.length > 1)).join(', ')))} ${
+    fuentesHtml(GUIA.topes.fuente)}</div>${suma != null && suma > queda ? `<div class="pqpasa">${h(t(l.cond && siempre ? 'pq_tope_pasa_cond' : 'pq_tope_pasa')
+      .replace('{x}', numTxt(suma)).replace('{r}', numTxt(queda)))}</div>` : ''}`;
+}
 /** Lo que recibe el integrante m, en una tabla «Efecto | Total | De dónde»: un renglón por stat y condición (sumaDe), con
  *  la leyenda del «*» si algún renglón la lleva. hid: el id del título que la nombra. */
 function recibeTablaHtml (m, suma, nombre, hid) {
+  // De cada stat, lo que le llega siempre (su renglón sin condición): con eso se cuenta el tope de un renglón con condición.
+  const siempre = new Map(suma.filter(l => !l.cond).map(l => [l.s, (l.v[0] || 0) + (l.v[1] || 0)]));
   return `<div class="pqm-tabla" role="table" aria-labelledby="${hid}">
       <div class="pqm-fila pqm-th" role="row"><span role="columnheader">${h(t('pq_col_efecto'))}</span><span role="columnheader">${
         h(t('pq_col_total'))}</span><span role="columnheader">${h(t('pq_col_de'))}</span></div>
-      ${suma.map(l => recibeFilaHtml(m, l, nombre)).join('')}
+      ${suma.map(l => recibeFilaHtml(m, l, nombre, siempre.get(l.s) || 0)).join('')}
     </div>${suma.some(conArtefacto) ? `<p class="muted pqley">${h(t('cb_art'))}</p>` : ''}`;
 }
 /** Un renglón de la tabla: el efecto (con su condición, que es la de todas sus partes), el total de lo que se le aplica
  *  (con «*» si algo de él solo llega con un artefacto y, si también llega algo sin artefacto, cuánto) y de dónde sale cada
  *  parte: quién la da (su retrato y su nombre), el enlace a su skill o a su artefacto y lo que suma. La parte que no se le
  *  suma (una habilidad que se le aplica de otra fuente: Efectos iguales) va atenuada, con de dónde la tiene; si no se le
- *  suma ninguna, el renglón entero. */
-function recibeFilaHtml (m, l, nombre) {
+ *  suma ninguna, el renglón entero. Si el stat tiene tope, debajo del efecto (topeFilaHtml; siempre: lo que le llega sin
+ *  condición del mismo stat). */
+function recibeFilaHtml (m, l, nombre, siempre) {
   const tot = (p) => p[0] == null && p[1] == null ? null : (p[0] || 0) + (p[1] || 0);
   const art = conArtefacto(l), val = l.rep ? '' : valorTxt(l.txt != null ? l.txt : tot(l.v), tot(l.i));
   const sin = art && (l.v[0] != null || l.i[0] != null) ? valorTxt(l.v[0], l.i[0]) : '';
   return `<div class="pqm-fila${l.rep ? ' rep' : ''}" role="row">
       <div class="pqm-ef" role="cell">${trHtml(l.s)}${sinClasificar(l.s) ? ` <span class="muted">(${h(t('sy_unclassified'))})</span>` : ''}${
-        l.cond ? ` <div class="muted pqm-cond">(${h(l.cond)})</div>` : ''}</div>
+        l.cond ? ` <div class="muted pqm-cond">(${h(l.cond)})</div>` : ''}${topeFilaHtml(l, siempre)}</div>
       <div class="pqm-tot" role="cell">${val ? `<b>${h(val)}</b>` : ''}${art ? marcaArt() : ''}${
         sin ? ` <div class="muted">(${h(t('pq_sin_art').replace('{x}', sin))})</div>` : ''}</div>
       <div class="pqm-de" role="cell">${l.de.map(({ o, r, f, ya }) => { const v = valorTxt(f.v, f.i);
@@ -4469,6 +4526,7 @@ function efectoGl (e) {
     ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
     ${leSirveEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${acumulaEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
+    ${topeEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${d.etiquetas.length ? `<div class="glet"><span class="muted">${h(t('gl_en_skills'))}</span>${
       d.etiquetas.map(i => `<span class="tag dim">${h(txt('ab', i))}</span>`).join('')}</div>` : ''}
   </div>`;
