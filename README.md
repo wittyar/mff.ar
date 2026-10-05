@@ -112,9 +112,7 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     uniforme más nuevo (sin uniformes, la base; con uniformes, la base no entra), el que salió en la
     versión del juego más alta según thanosvibs (9.1.5a antes que 9.1.5b) y, a igual versión, el de
     número de uniforme más alto en el juego (Deadpool & Wolverine antes que Nicepool); él va con el
-    uniforme elegido. Dos uniformes no traen versión (Red Skull — The Crimson Fall y Sister Grimm —
-    Princess Tsukimi): no se adivina, entran con el más nuevo con versión de su personaje y la nota
-    lo dice. La cuenta dice cuántas quedan y cuántas había (con los datos del 5 de octubre, en
+    uniforme elegido. La cuenta dice cuántas quedan y cuántas había (con los datos del 5 de octubre, en
     «Puntos para él» quedan un 27% menos; en PvP, un 6% menos, y en PvE, un 9%). La casilla, como
     «Sin» y las de cobertura, dura mientras la app está abierta, también al pasar a otro personaje.
     Cada una dice su **líder** (uno solo por trío, el mismo desde la lista de

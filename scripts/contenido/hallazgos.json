@@ -180,5 +180,12 @@
   "es": "La ficha del artefacto de Annihilus en el códice de artefactos del juego (아티팩트 도감: 네거티브 존의 지배자, Lord of the Negative Zone; captura 211 del 4 de octubre de 2026) termina con «재사용 대기시간 300초»: se recarga en 300 s. Antes dice lo mismo que thanosvibs (al morir, revive con 80% de la vida, más 0,5% del instinto total, hasta 100%). thanosvibs no publica la recarga, así que la app no la muestra. La página Artifact de la wiki trae un 300 que thanosvibs no tiene (sección 6): es probable que sea esta recarga.",
   "en": "The card of Annihilus's artifact in the in-game artifact codex (아티팩트 도감: 네거티브 존의 지배자, Lord of the Negative Zone; screenshot 211, October 4, 2026) ends with \"재사용 대기시간 300초\": a 300 s cooldown. Before that it says the same as thanosvibs (on death, revives with 80% of Max HP, plus 0.5% of total Instinct, up to 100%). thanosvibs does not publish the cooldown, so the app does not show it. The wiki's Artifact page has a 300 that thanosvibs does not (section 6): it is likely this cooldown.",
   "fuente": ["juego-artefactos-ko", "tv-art"]
+ },
+ {
+  "id": "uniformes-version-12-2-5",
+  "titulo": "Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi: la versión sale de /api/updates, y la fecha difiere en uno o dos días",
+  "es": "/api/uniforms de thanosvibs no trae la versión de estos dos uniformes (el 5 de octubre de 2026); /api/updates los pone en la 12.2.5 («2026 Welcome Autumn»), y en los otros 596 uniformes coincide con /api/uniforms. El build toma la versión de /api/updates para todos. Las notas oficiales dicen que los dos uniformes llegan con el parche del 21 de septiembre de 2026 (20:00 PDT; el 22 a las 3:00 UTC); thanosvibs le pone a la 12.2.5 el 23 de septiembre. Las notas no dan número de versión. La app no usa fechas: con «Solo el último uniforme», son el último uniforme de su personaje.",
+  "en": "thanosvibs's /api/uniforms does not give the version of these two uniforms (October 5, 2026); /api/updates puts them in 12.2.5 (\"2026 Welcome Autumn\"), and for the other 596 uniforms it matches /api/uniforms. The build takes the version from /api/updates for all of them. The official notes say both uniforms arrive with the September 21, 2026 patch (20:00 PDT; September 22, 3:00 UTC); thanosvibs dates 12.2.5 September 23. The notes give no version number. The app does not use dates: with \"Latest uniform only\", they are their character's latest uniform.",
+  "fuente": ["tv-updates", "tv-uni", "foro-1896518"]
  }
 ]

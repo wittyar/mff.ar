@@ -51,16 +51,20 @@ y Detonación con Dark Obsidian Armor y con General's Hand. Todo lo que sigue es
 
 El **último uniforme** de un personaje (el filtro «Solo el último uniforme» de las combinaciones de 3,
 Ezequiel, 5 de octubre de 2026) es el que salió en la versión del juego más alta según thanosvibs
-(`up.update`, número por número y la letra después: 9.1.5a antes que 9.1.5b) y, a igual versión, el
+(`up.update`, que el build saca de `/api/updates` para todos los uniformes desde los datos de formato 9;
+número por número y la letra después: 9.1.5a antes que 9.1.5b) y, a igual versión, el
 de número de uniforme más alto (el final del id: Deadpool & Wolverine, 10800164, sobre Nicepool,
 10700164, los dos de 10.2). Sin uniformes, es la base; con uniformes, la base no cuenta. Con los
 datos del 5 de octubre, 77 de los 290 personajes no tienen uniformes, la letra no decide nada y el
 número decide 17 empates de versión; en los 1.033 pares de uniformes de un mismo personaje con
 distinta versión, el número sube con la versión salvo en uno (Yelena Belova: 10200221 es de la 6.0 y
-10100221, de la 6.0.5) [Comprobado]. Dos uniformes no traen versión (ver *Dudas abiertas*). Con el
-filtro, las combinaciones de las 888 variantes bajan de 19.449.164 a 14.130.313 en «Puntos para él»
+10100221, de la 6.0.5) [Comprobado]. `/api/uniforms` no le trae la versión a Red Skull — The Crimson Fall
+ni a Sister Grimm — Princess Tsukimi; `/api/updates` los pone en la 12.2.5, como las notas oficiales del 21
+de septiembre de 2026, y en los otros 596 coincide con `/api/uniforms` (hallazgo `uniformes-version-12-2-5`).
+Con el filtro, las combinaciones de las 888 variantes bajan de 19.449.164 a 14.130.313 en «Puntos para él»
 (27%), de 468.009 a 439.103 en PvP (6%) y de 2.152.985 a 1.952.730 en PvE (9%), y ninguna lista queda
-vacía [Comprobado: `medir_solapado.py`, con *Efectos iguales*].
+vacía [Comprobado: `medir_solapado.py`, con *Efectos iguales*; medido cuando esos dos entraban junto con el
+más nuevo con versión de su personaje, 292 variantes en vez de 290].
 
 ### Identidad
 
@@ -140,11 +144,6 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
   instinto no siguió a un cambio de raza (notas oficiales del 4 de noviembre de 2025), así que no
   alcanza para completar los 15 (hallazgo `instinto-regla-namuwiki`). El juego tiene un filtro por
   instinto (notas del 15 de octubre de 2024): con él se pueden ver.
-- **El último uniforme de Red Skull y de Sister Grimm.** The Crimson Fall (Red Skull) y Princess
-  Tsukimi (Sister Grimm) no traen versión en thanosvibs. Son los de número más alto de su personaje,
-  así que probablemente son los más nuevos [Probable], pero la app no lo adivina: con «Solo el último
-  uniforme» entran ellos y el más nuevo con versión (Hydra Armor, de la 5.8; Runaways, de la 9.4), 292
-  variantes en vez de 290, y la nota del filtro lo dice.
 - **Roles.** Salían de juntar las skills de todos los uniformes del personaje. Se rehicieron en la
   etapa 2, por variante.
 

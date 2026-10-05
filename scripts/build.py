@@ -143,7 +143,10 @@ hoy = hoy.isoformat()
 #    integrante le llega de dos fuentes (acumula: las estadísticas se suman, las habilidades cuentan una vez) y, si la guía
 #    le pone uno, su tope (tope: claves de MFF_GUIA.topes). La app de formato 8 los necesita: con ellos decide qué se le
 #    aplica a cada uno y avisa cuando lo que suman los buffs pasa el tope.
-FORMATO = 8
+# 9: todos los uniformes traen la versión del juego en que salieron (up.update), de /api/updates de thanosvibs; /api/uniforms
+#    no se la trae a todos (Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi). La app de formato 9 la necesita
+#    para «Solo el último uniforme» y ya no tiene la regla de los uniformes sin versión.
+FORMATO = 9
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

@@ -3,6 +3,10 @@ d = json.load(open('work/characters.json'))
 inst = json.load(open('work/instintos.json'))
 SK = json.load(open('work/skills_parsed.json'))       # skills por retrato + tablas de texto
 UNI = json.load(open('work/uniforms.json'))           # costos y materiales por uniforme
+# La versión del juego en que salió cada uniforme, de /api/updates (added_in, por retrato). /api/uniforms la trae en update,
+# pero no a todos (el 5 de octubre de 2026 le faltaba a Red Skull — The Crimson Fall y a Sister Grimm — Princess Tsukimi,
+# de la 12.2.5): la versión sale de acá, y si /api/uniforms trae otra, el build para.
+VERSION_UNI = {u['portrait']: u['added_in'] for x in json.load(open('work/updates.json')) for u in x.get('uniforms') or []}
 # Cada lista de thanosvibs define sus propias filas rotuladas ("Meta", "T4 / s",
 # "strikers"...). No son rangos S-D: aplastarlas a S-D renombraba un striker top
 # como "D". Se importan con sus filas tal cual y el orden de la fuente.
@@ -43,6 +47,7 @@ if nuevas:
 byid = {}
 for x in d: byid.setdefault(x['id'], []).append(x)
 characters, images, uindex, seen = [], {}, {}, set()
+SIN_VERSION_UNI = []   # uniformes cuya versión no trae /api/uniforms y sale solo de /api/updates
 sin_skills = []
 for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
     base = next(r for r in rows if r['uniformed']=='False')
@@ -76,16 +81,22 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         if GENDER[r['gender']] != GENDER[base['gender']]: u['gender'] = GENDER[r['gender']]
         if r['ability'] != base['ability']: u['ab'] = [ABIL[a] for a in r['ability']]
         if roles_de(r['portrait']) != roles_de(base['base_portrait']): u['r'] = roles_de(r['portrait'])
-        # Costos, materiales y XP de mejora, de /api/uniforms.
-        up = UNI.get(r['portrait'])
-        if up:
-            u['up'] = {k: up[k] for k in ('uniform_xp','uniform_kits','gold','totals','update','flags')
-                       if up.get(k)}
-            for mk in ('material1','material2'):
-                if up.get(mk): u['up'][mk] = up[mk]
-            # Opciones de uniforme: los retratos de los uniformes que habilitan sus opciones
-            # Advanced, Rare, Heroic, Legendary y Mythic, en ese orden.
-            if up.get('options'): u['op'] = up['options']
+        # La versión del juego en que salió (up.update), de /api/updates; costos, materiales y XP de mejora, de /api/uniforms.
+        if r['portrait'] not in VERSION_UNI:
+            raise SystemExit(f"/api/updates no dice en qué versión salió el uniforme {r['portrait']} ({uid})")
+        ver = VERSION_UNI[r['portrait']]
+        up = UNI.get(r['portrait']) or {}
+        if up.get('update') and up['update'] != ver:
+            raise SystemExit(f"versión del uniforme {r['portrait']}: /api/uniforms dice {up['update']} y /api/updates, {ver}")
+        if not up.get('update'):
+            SIN_VERSION_UNI.append(f"{r['portrait']} ({ver})")
+        up = dict(up, update=ver)
+        u['up'] = {k: up[k] for k in ('uniform_xp','uniform_kits','gold','totals','update','flags') if up.get(k)}
+        for mk in ('material1','material2'):
+            if up.get(mk): u['up'][mk] = up[mk]
+        # Opciones de uniforme: los retratos de los uniformes que habilitan sus opciones
+        # Advanced, Rare, Heroic, Legendary y Mythic, en ese orden.
+        if up.get('options'): u['op'] = up['options']
         anotar_sin_skills(r['portrait'], f"{base['character']} / {r['uniform']}")
         uniforms.append(u)
         images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'
@@ -104,6 +115,8 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
     uindex[(numid, None)] = (cid, None)
 if sin_skills:
     print(f'AVISO: {len(sin_skills)} retratos sin skills en la API:', sin_skills[:5])
+if SIN_VERSION_UNI:
+    print(f'AVISO: {len(SIN_VERSION_UNI)} uniformes sin versión en /api/uniforms; va la de /api/updates:', ', '.join(SIN_VERSION_UNI))
 tierlists, assign = [], {}
 for fn in TL_FILES:
     tl = json.load(open(fn))
