@@ -106,9 +106,18 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     dice cuántos («desempate: 2 strikers»). Los puntos que cuentan el soporte de un artefacto como
     si lo llevara llevan «*», como las casillas, y el lugar de cada uno en la lista del orden, «+N»
     si está en más de una fila. Se
-    filtran con «Con» y «Sin», y con casillas por cobertura (ataque, ignorar evasión, todas las
+    filtran con «Con» y «Sin», con casillas por cobertura (ataque, ignorar evasión, todas las
     defensas, vida y anti-mermas: de cada pareja queda la mejor combinación de uniformes
-    que las cumple todas). Cada una dice su **líder** (uno solo por trío, el mismo desde la lista de
+    que las cumple todas) y con **«Solo el último uniforme»**: de cada compañero entra solo su
+    uniforme más nuevo (sin uniformes, la base; con uniformes, la base no entra), el que salió en la
+    versión del juego más alta según thanosvibs (9.1.5a antes que 9.1.5b) y, a igual versión, el de
+    número de uniforme más alto en el juego (Deadpool & Wolverine antes que Nicepool); él va con el
+    uniforme elegido. Dos uniformes no traen versión (Red Skull — The Crimson Fall y Sister Grimm —
+    Princess Tsukimi): no se adivina, entran con el más nuevo con versión de su personaje y la nota
+    lo dice. La cuenta dice cuántas quedan y cuántas había (con los datos del 5 de octubre, en
+    «Puntos para él» quedan un 27% menos; en PvP, un 6% menos, y en PvE, un 9%). La casilla, como
+    «Sin» y las de cobertura, dura mientras la app está abierta, también al pasar a otro personaje.
+    Cada una dice su **líder** (uno solo por trío, el mismo desde la lista de
     cualquiera de los tres: el que más suma con su liderazgo; a igual puntaje, el mejor ubicado en
     las tier lists del contexto o, sin contexto, en la General), que va primero entre los retratos,
     a la izquierda como en el juego, con un aro de color y la pastilla «Líder»; y su **cobertura** (lo que recibe él en
