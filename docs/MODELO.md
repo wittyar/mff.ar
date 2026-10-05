@@ -443,8 +443,15 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
   para todos los personajes; los emblemas, solo en ciertos contenidos; las colecciones de equipo
   (Team-Up), para los de un tema o una raza. Suben los stats de todos por igual o de un grupo: no
   cambian la comparación entre variantes, salvo las colecciones de equipo.
-- **C.T.P. por contenido.** Cada personaje lleva un C.T.P. (desde el Nv. 30), y la pantalla deja
-  elegir uno para PvE y otro para PvP.
+- **C.T.P. por contenido.** Cada personaje lleva un C.T.P. desde el Nv. 30. La guía del juego dice
+  «uno por personaje», pero la ficha tiene ranuras, y cada una dice en qué contenido vale su C.T.P.
+  (적용 콘텐츠, «Applied Content»): con una sola ranura, en PVE y en PVP (Gorr, 2 de octubre); con
+  dos, una para cada uno (Mephisto, 4 de octubre: Conquest Mighty en PVP y Competition Mighty en
+  PVE). Al lado hay un botón para editarlo: lo elige el jugador (probable). Qué modos son PVP y
+  cuáles PVE no se ve. Un C.T.P. reforjado (Mighty o Brilliant) conserva la opción fija y suma una
+  opción de reforjado: la ficha lista dos, y los tres reforjados que se ven equipados traen una sola
+  (probable: una de las dos). La ficha muestra el valor máximo de cada opción, y los equipados pueden
+  tener menos, también en la opción fija (hallazgos de los C.T.P., en `docs/AUDITORIA.md`).
 - **Elite Gear.** Los Tier-4 con Nv. 80 y gear +30 pueden desbloquearlo: otra progresión, con
   puntos para elegir stats, que la app todavía no tiene.
 
