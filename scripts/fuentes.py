@@ -561,6 +561,8 @@ def main():
     # 2026), con "src": "api". Van en una entrada nueva: la de Leads & Supports puede ser de varios retratos.
     a_mano = cargar(os.path.join(_DIR, 'contenido', 'liderazgos_api.json'))
     mal = validar_liderazgos(a_mano, skills['tablas'], cargar(os.path.join(_DIR, 'contenido', 'catalogo.json')))
+    mal = mal or [f'el «Give Power» de {o["p"]}: fuente sin definir en contenido/guia.json: {k}'
+                  for o in a_mano['otorga'] for k in o['fuente'] if k not in guia['fuentes']]
     if mal:
         raise SystemExit('scripts/contenido/liderazgos_api.json tiene errores:\n  ' + '\n  '.join(mal))
     liderazgos = derivar_liderazgos(sop, skills['skills'], skills['tablas'], nombres_pj(chars), a_mano)

@@ -157,7 +157,8 @@ TIPOS = collections.OrderedDict([
     ('otorga', ('skills', '«Give Power» sin lo que otorga', 'variante', 'thanosvibs (Leads & Supports), la wiki o foros',
                 '«Give Power» vacío',
                 '«Give Power» («Acquires the following effect…») sin el efecto que sigue: el análisis dice «Otorga un '
-                'efecto que la fuente no dice». Si Leads & Supports publica el mismo slot, se dice qué trae.')),
+                'efecto que la fuente no dice». Si Leads & Supports publica el mismo slot, se dice qué trae. El de una '
+                'Leader Skill que resuelve el juego (scripts/contenido/liderazgos_api.json) no falta.')),
     ('recarga', ('skills', 'Activa sin recarga', 'variante', 'la wiki o el juego', 'sin recarga',
                  'Las activas 1 a 5 se recargan por tiempo y la API publica 0 [Probable].')),
     ('liderazgo', ('lideres', 'Liderazgo sin completar', 'variante',
@@ -557,6 +558,8 @@ def chequear_skills(X, v, sks, out):
             continue
         for si, ti, fi in fuentes:
             sk = sks[si]
+            if sk['sl'] == 'Leader Skill' and any('otorga' in x for x in X.derivados.get(p, {}).values()):
+                continue        # lo dice el juego: el liderazgo derivado lo trae (scripts/contenido/liderazgos_api.json)
             dice = [f['s'] + (f" ({_num(f['d'])} s)" if f.get('d') is not None else '')
                     for k in X.ls_de_skill(p, sk) for f in X.SO[p][k].get('fx', [])]
             falta(out, 'otorga', f"{SLOT_ES[sk['sl']]} «{X.nombre_skill(sk)}»: otorga un efecto que la API no dice",

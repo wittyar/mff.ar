@@ -319,6 +319,8 @@ const T = {
   sp_src_api:        { es:'según la skill del juego', en:'per the game skill' },
   sp_src_api_t:      { es:'Leads & Supports no publica este liderazgo: sale de la Leader Skill de la API de skills de thanosvibs.',
                        en:'Leads & Supports does not publish this leadership: it comes from the Leader Skill in the thanosvibs skills API.' },
+  sp_src_otorga_t:   { es:'Leads & Supports no publica este liderazgo: sale de la Leader Skill de la API de skills de thanosvibs, que no dice qué otorga su «Give Power»; eso lo dice la ficha del juego.',
+                       en:'Leads & Supports does not publish this leadership: it comes from the Leader Skill in the thanosvibs skills API, which does not say what its "Give Power" grants; the in-game profile does.' },
   sp_np:             { es:'Buena elección para empezar (thanosvibs)', en:'New player pick (thanosvibs)' },
   us_guide:          { es:'En la guía de principiantes', en:"In the Beginner's Guide" },
   us_guide_none:     { es:'La guía no lo nombra en sus secciones de personajes.', en:'The guide does not name it in its character sections.' },
@@ -1401,15 +1403,22 @@ function fullLabel (v) { return v.uid ? v.name + ' — ' + v.sub : v.name; }
 
 // FUENTE DE UN LIDERAZGO. Los de MFF_SOPORTES son de Leads & Supports, salvo los que el build completa con la
 // Leader Skill de la API de skills cuando Leads & Supports no los publica (src: 'api'). Donde la app muestra un
-// liderazgo, dice cuáles no son de Leads & Supports: «según la skill del juego».
+// liderazgo, dice cuáles no son de Leads & Supports: «según la skill del juego». Si la API no dice qué otorga el
+// «Give Power» de la Leader Skill y lo dice el juego, el slot trae esa fuente (otorga: scripts/liderazgos.py).
 /** ¿Sale de la Leader Skill de la API (src 'api') y no de Leads & Supports? */
 function esDeApi (x) { return x.src === 'api'; }
 /** « (según la skill del juego)» para un liderazgo que no es de Leads & Supports, o nada. */
 function srcTxt (x) { return esDeApi(x) ? ' (' + t('sp_src_api') + ')' : ''; }
 /** Lo mismo, como etiqueta, con la explicación en el title. */
-function srcHtml (x) { return esDeApi(x) ? ` <span class="tag dim srcapi" title="${h(t('sp_src_api_t'))}">${h(t('sp_src_api'))}</span>` : ''; }
-/** Las fuentes de unos liderazgos y soportes: Leads & Supports y, si alguno sale de la API, sus skills. */
-function fuentesSop (xs) { return xs.some(esDeApi) ? (xs.every(esDeApi) ? ['tv-pj'] : ['tv-sup', 'tv-pj']) : ['tv-sup']; }
+function srcHtml (x) {
+  return esDeApi(x) ? ` <span class="tag dim srcapi" title="${h(t(x.otorga ? 'sp_src_otorga_t' : 'sp_src_api_t'))}">${h(t('sp_src_api'))}</span>` : '';
+}
+/** Las fuentes de unos liderazgos y soportes: Leads & Supports y, si alguno sale de la API, sus skills, más las de lo
+ *  que otorga un «Give Power» según el juego. */
+function fuentesSop (xs) {
+  const base = xs.some(esDeApi) ? (xs.every(esDeApi) ? ['tv-pj'] : ['tv-sup', 'tv-pj']) : ['tv-sup'];
+  return [...new Set([...base, ...xs.flatMap(x => x.otorga || [])])];
+}
 /** ¿Un efecto de líder o de soporte (MFF_SOPORTES) alcanza a la variante b? */
 function aplicaA (x, b) {
   if (!x.r) return true;
@@ -4304,10 +4313,12 @@ function leSirveHtml (v) {
   </div>`;
 }
 /** ¿Su Leader Skill da un poder que ninguna fuente publica? Es la entrada «otorga» del análisis (un «Give Power»
- *  que no dice qué otorga, scripts/modelo.py) que sale de la Leader Skill. Lo que Leads & Supports publica en esas
- *  variantes no se toma como lo que otorga: solo se avisa (5 de octubre de 2026). */
+ *  que no dice qué otorga, scripts/modelo.py) que sale de la Leader Skill, salvo que lo diga el juego: entonces el
+ *  liderazgo lo trae, con su fuente (otorga). Lo que Leads & Supports publica en esas variantes no se toma como lo que
+ *  otorga: solo se avisa (5 de octubre de 2026). */
 function otorgaSinPublicar (v) {
-  const an = ANALISIS[v.p];
+  const an = ANALISIS[v.p], so = SOPORTES[v.p] || {};
+  if (LIDERAZGOS.some(k => so[k] && so[k].otorga)) return false;
   return !!an && an.fx.some(([ie, , , fuentes]) => CATALOGO.efectos[ie].id === 'otorga'
     && fuentes.some(([si]) => v.skills[si].sl === 'Leader Skill'));
 }
@@ -5715,6 +5726,7 @@ function iniciarDatos () {
   for (const [stat, x] of Object.entries(CATALOGO.soporte)) { const q = reglaStat(stat, x.sirve); if (q) PIDE[stat] = q; }
   for (const [p, so] of Object.entries(SOPORTES)) for (const [k] of TIPOS_SOPORTE) {
     if (so[k] && 'src' in so[k] && so[k].src !== 'api') throw new Error(`fuente de liderazgo o soporte desconocida en ${p} (${k}): ${so[k].src}`);
+    if (so[k] && so[k].otorga && !(LIDERAZGOS.includes(k) && esDeApi(so[k]))) throw new Error(`«Give Power» resuelto fuera de un liderazgo de la API en ${p} (${k})`);
   }
   ANTI_MERMAS = new Set(VALOR.anti_mermas);
   for (const st of VALOR.anti_mermas) {

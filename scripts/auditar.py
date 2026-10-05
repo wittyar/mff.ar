@@ -563,7 +563,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
                              for k in ('etiquetas', 'patrones', 'stats') for x in sobra[k]) + '.\n')
     s += bonos_seccion(bonos, fuentes)
     s += strikers_seccion(strikers)
-    s += liderazgos_seccion(liderazgos, A.chars)
+    s += liderazgos_seccion(liderazgos, A.chars, fuentes)
     return '\n'.join(s)
 
 
@@ -668,10 +668,10 @@ _ESTADO_VERIFICACION = {
 }
 
 
-def liderazgos_seccion(L, chars):
+def liderazgos_seccion(L, chars, fuentes):
     """Sección 12: los liderazgos que Leads & Supports no publica y el build deriva de la Leader Skill de la API
     (scripts/liderazgos.py): lo aprendido, la verificación contra Leads & Supports, lo derivado y lo que no se pudo
-    derivar, con su motivo."""
+    derivar, con su motivo. fuentes: las de contenido/guia.json, para citar lo que dice el juego."""
     nombre = {r['portrait']: r['character'] + ('' if r['uniformed'] == 'False' else f" — {r['uniform']}")
               for r in chars}
 
@@ -752,6 +752,14 @@ def liderazgos_seccion(L, chars):
     s += [f'| «{desc}» ({ab}) | {stat} +n1 | {n} |' for ab, desc, stat, n in M['efectos']]
     s.append('')
     s.append('Activaciones: ' + '; '.join(f'«{a}» ({variantes(n)})' for a, n in M['activaciones']) + '.\n')
+    if M['otorga']:
+        s.append('«Give Power» que dice el juego: la API no publica qué otorga la Leader Skill, y la ficha del juego sí. El '
+                 'slot lleva la restricción del objetivo de la API y, de lo que dice el juego, los efectos, la activación y '
+                 'la recarga; la app cita su fuente.\n')
+        for p, skill, fs, juego in M['otorga']:
+            der = next((f"`{k}` {slot_txt(x)}" for k, x in L['derivados'].get(p, {}).items() if 'otorga' in x), 'no se derivó')
+            s.append(f"- {pj(p)}, {skill}: {der}. {', '.join(fuente_md(fuentes[k]) for k in fs)}: {juego}")
+        s.append('')
     if M['avisos']:
         s.append('Avisos: ' + '; '.join(M['avisos']) + '.\n')
     s.append('### Verificación contra Leads & Supports\n')

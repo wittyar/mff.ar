@@ -137,7 +137,8 @@ hoy = hoy.isoformat()
 #    el build deriva de la Leader Skill de la API ("src": "api", scripts/liderazgos.py), que la app de
 #    formato 7 muestra con su fuente. En MFF_GLOSARIO, cada C.T.P. que da un efecto dice de qué opción
 #    sale (opcion: fija o reforjado), donde la 6 decía si iba reforjado. Una línea de artefacto que el
-#    build corrige con el juego trae la de thanosvibs (tv) y su fuente (f), y la app la marca.
+#    build corrige con el juego trae la de thanosvibs (tv) y su fuente (f), y la app la marca. Un
+#    liderazgo derivado cuyo «Give Power» resuelve el juego trae su fuente (otorga), que la app cita.
 FORMATO = 7
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})

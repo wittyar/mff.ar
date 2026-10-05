@@ -16,7 +16,7 @@ MFF_SOPORTES con "src": "api", y lo demás a la sección 12 de docs/AUDITORIA.md
      la trae, y su texto se aprende.
    - «Give Power» («Acquires the following effect for $TIME sec.») y lo que sigue van en una parte aparte, al
      final: es lo que Leads & Supports publica como segundo liderazgo. La API no dice qué otorga ni por cuánto
-     tiempo, así que esa parte no se deriva nunca.
+     tiempo, así que esa parte no se deriva, salvo que A_MANO diga qué otorga según el juego (abajo).
    - La activación de la etapa y la recarga de la skill van en cada parte.
    La primera parte va a leader y la segunda a leader2.
 2. Correspondencia. Se aprende de las variantes que tienen las dos cosas: cada parte con el slot de Leads &
@@ -29,7 +29,10 @@ MFF_SOPORTES con "src": "api", y lo demás a la sección 12 de docs/AUDITORIA.md
    usa: es una contradicción y se lista.
    Lo que Leads & Supports no publica en ningún liderazgo va a mano en scripts/contenido/liderazgos_api.json
    (validar()): un efecto de la API da un stat del catálogo con el número de su texto, y una activación de la API va
-   con su texto. Lo que publica Leads & Supports manda: si dice otra cosa, el build para; si dice lo mismo, lo de
+   con su texto. Y lo que otorga el «Give Power» de una Leader Skill, si lo dice el juego (otorga: Ezequiel, 5 de
+   octubre de 2026): sus efectos (stats del catálogo), su activación (un texto de la API, que pasa como las demás) y
+   su recarga, con la fuente y lo que dice el juego; la restricción es la del objetivo de la API, y el slot lleva la
+   fuente (otorga). Lo que publica Leads & Supports manda: si dice otra cosa, el build para; si dice lo mismo, lo de
    a mano sobra (aviso).
 3. Derivación. Para cada variante sin liderazgo de Leads & Supports, cada parte de su Leader Skill da un slot si
    todo cierra: el objetivo con restricción conocida, la activación y cada efecto con su correspondencia y sus
@@ -281,8 +284,8 @@ def validar(manual, T, cat):
     su texto como los publica la API y un solo número (el valor), da un stat del catálogo (soporte) que el catálogo
     clasifica con los mismos efectos que a él; cada activación es un texto de la API; nada se repite. T: las tablas
     de la API (MFF_TABLAS); cat: el catálogo de efectos (contenido/catalogo.json)."""
-    if set(manual) != {'nota', 'efectos', 'activaciones'}:
-        return ['lleva nota, efectos y activaciones']
+    if set(manual) != {'nota', 'efectos', 'activaciones', 'otorga'}:
+        return ['lleva nota, efectos, activaciones y otorga']
     mal = [] if isinstance(manual['nota'], str) and manual['nota'] else ['la nota es un texto']
     etiquetas, textos, activaciones = ({f['en'] for f in T[k]} for k in ('ab', 'desc', 'act'))
     vistos = set()
@@ -310,16 +313,42 @@ def validar(manual, T, cat):
                        f"{cat['soporte'][e['stat']]['efectos']}")
     mal += [f'activación «{a}»: la API no tiene ese texto' for a in manual['activaciones'] if a not in activaciones]
     mal += [f'activación «{a}»: repetida' for a, n in collections.Counter(manual['activaciones']).items() if n > 1]
+    for o in manual['otorga']:
+        d = f"el «Give Power» de {o.get('p')}"
+        if not {'p', 'skill', 'fx', 'fuente', 'juego'} <= set(o) <= {'p', 'skill', 'ac', 'cd', 'fx', 'fuente', 'juego'}:
+            mal.append(f'{d}: lleva p, skill, fx, fuente y juego, y puede llevar ac y cd')
+            continue
+        if not all(isinstance(o[k], str) and o[k] for k in ('p', 'skill', 'juego')):
+            mal.append(f'{d}: p, skill y juego son textos')
+        if not (isinstance(o['fuente'], list) and o['fuente'] and all(isinstance(k, str) for k in o['fuente'])):
+            mal.append(f'{d}: fuente es una lista de fuentes (contenido/guia.json)')
+        if 'ac' in o and (o['ac'] not in activaciones or '#' in o['ac']):
+            mal.append(f"{d}: la activación «{o['ac']}» tiene que ser un texto de la API sin números")
+        if 'cd' in o and not (isinstance(o['cd'], (int, float)) and o['cd'] > 0):
+            mal.append(f'{d}: la recarga es un número de segundos')
+        if not (isinstance(o['fx'], list) and o['fx']):
+            mal.append(f'{d}: fx es la lista de lo que otorga')
+            continue
+        for g in o['fx']:
+            if not (isinstance(g, dict) and 's' in g and set(g) <= {'s', 'v', 'd'}
+                    and all(isinstance(g[k], (int, float)) for k in ('v', 'd') if k in g)):
+                mal.append(f'{d}: cada efecto lleva su stat (s) y puede llevar valor (v) y duración (d): {g}')
+            elif g['s'] not in cat['soporte']:
+                mal.append(f"{d}: «{g['s']}» no es un stat del catálogo (soporte)")
+    mal += [f'el «Give Power» de {p}: repetido' for p, n in collections.Counter(o.get('p') for o in manual['otorga']).items()
+            if n > 1]
     return mal
 
 
-def _a_mano(manual, C, P, T):
+def _a_mano(manual, C, P, T, skill_de):
     """Las correspondencias a mano (A_MANO, ya validadas) al lado de las aprendidas C: ({'efectos': {clave:
-    plantilla}, 'activaciones': {texto de la API}}, {'efectos': [[etiqueta, texto, stat, variantes]], 'activaciones':
-    [[texto, variantes]], 'avisos': [...]}), con las variantes que lo tienen en la Leader Skill. Un efecto da su stat
-    con el número de su texto (el único). Lo que publica Leads & Supports manda: si da otra cosa para un efecto de
-    acá, o se contradice, el build para; si da lo mismo, lo de acá sobra (aviso), como lo que ninguna Leader Skill
-    tiene."""
+    plantilla}, 'activaciones': {texto de la API}, 'otorga': {retrato: lo que otorga su «Give Power»}}, {'efectos':
+    [[etiqueta, texto, stat, variantes]], 'activaciones': [[texto, variantes]], 'otorga': [[retrato, skill, fuente,
+    juego]], 'avisos': [...]}), con las variantes que lo tienen en la Leader Skill. Un efecto da su stat con el número
+    de su texto (el único). Lo que publica Leads & Supports manda: si da otra cosa para un efecto de acá, o se
+    contradice, el build para; si da lo mismo, lo de acá sobra (aviso), como lo que ninguna Leader Skill tiene. Lo que
+    otorga un «Give Power» vale para el retrato cuya Leader Skill tiene ese nombre y una parte «Give Power»; si no, sobra
+    (aviso). skill_de: el nombre de la Leader Skill de cada retrato."""
     tabla, contra = C['efectos']
     efectos = {(e['ab'], e['desc'], None): ((e['stat'], (0, 1)),) for e in manual['efectos']}
     usan_fx, usan_ac = collections.defaultdict(set), collections.defaultdict(set)
@@ -347,31 +376,74 @@ def _a_mano(manual, C, P, T):
             avisos.append(f'la activación «{a}»: Leads & Supports publica todas las de ese texto, sobra')
     if mal:
         raise SystemExit(f'{A_MANO} no coincide con Leads & Supports:\n  ' + '\n  '.join(mal))
+    otorga = {}
+    for o in manual['otorga']:
+        d = f"el «Give Power» de {o['p']} ({o['skill']})"
+        ps = P[o['p']][0] if o['p'] in P else None
+        if o['p'] not in P:
+            avisos.append(f'{d}: no es un retrato de los datos, sobra')
+        elif skill_de.get(o['p']) != o['skill']:
+            avisos.append(f"{d}: su Leader Skill se llama «{skill_de.get(o['p'])}», sobra")
+        elif not any(x['otorga'] for x in ps or []):
+            avisos.append(f'{d}: su Leader Skill no tiene una parte «Give Power» que se pueda derivar, sobra')
+        else:
+            otorga[o['p']] = o
     informe = {'efectos': [[k[0], k[1], pl[0][0], len(usan_fx[k])] for k, pl in efectos.items()],
                'activaciones': [[a, len({p for p, _ in usan_ac[a]})] for a in manual['activaciones']],
+               'otorga': [[o['p'], o['skill'], o['fuente'], o['juego']] for o in otorga.values()],
                'avisos': avisos}
-    return {'efectos': efectos, 'activaciones': set(manual['activaciones'])}, informe
+    return {'efectos': efectos, 'activaciones': set(manual['activaciones']), 'otorga': otorga}, informe
 
 
-def _slot(x, nombre_skill, T, C, M):
+def _activacion(texto, patron, C, M):
+    """(La activación de un slot derivado, None) o (None, (motivo, detalle)): el texto de Leads & Supports que se
+    aprende para el de la API (texto, con sus números) o, si va a mano (patron, el texto de la API con '#'), el de la
+    API."""
+    tabla, contra = C['activaciones']
+    if texto in tabla:
+        return tabla[texto], None
+    if texto in contra:
+        return None, ('contradiccion', f'la activación «{texto}»')
+    if patron in M['activaciones']:
+        return texto, None
+    return None, ('activacion', texto)
+
+
+def _otorgado(x, nombre_skill, R, C, M):
+    """El slot de una parte «Give Power» cuyo contenido dice el juego (R, de A_MANO): la restricción, la del objetivo de
+    la API; los efectos, la activación y la recarga, los de R; y la fuente, en otorga. O (None, [(motivo, detalle)])."""
+    ac = None
+    if 'ac' in R:
+        ac, mal = _activacion(R['ac'], R['ac'], C, M)
+        if mal:
+            return None, [mal]
+    out = {'n': nombre_skill} if nombre_skill else {}
+    if x['r'] is not None:
+        out['r'] = x['r']
+    if ac is not None:
+        out['ac'] = ac
+    if R.get('cd'):
+        out['cd'] = R['cd']
+    out['fx'] = [dict(g) for g in R['fx']]
+    out['src'] = 'api'
+    out['otorga'] = list(R['fuente'])
+    return out, None
+
+
+def _slot(x, nombre_skill, T, C, M, R=None):
     """El slot de una parte, con las correspondencias aprendidas C y las de a mano M, o (None, [(motivo, detalle)]):
-    todo o nada."""
+    todo o nada. R: lo que otorga el «Give Power» de la parte, si lo dice el juego (A_MANO)."""
     if x['otorga']:
-        return None, [('otorga', '')]
+        return _otorgado(x, nombre_skill, R, C, M) if R is not None else (None, [('otorga', '')])
     tabla = {k: C[k][0] for k in C}
     contra = {k: C[k][1] for k in C}
     mal = []
     ac = None
     if x['ac'] is not None:
         # El texto de Leads & Supports; si va a mano, el de la API.
-        if x['ac'] in tabla['activaciones']:
-            ac = tabla['activaciones'][x['ac']]
-        elif x['ac'] in contra['activaciones']:
-            mal.append(('contradiccion', f"la activación «{x['ac']}»"))
-        elif T['act'][x['act']]['en'] in M['activaciones']:
-            ac = x['ac']
-        else:
-            mal.append(('activacion', x['ac']))
+        ac, m = _activacion(x['ac'], T['act'][x['act']]['en'], C, M)
+        if m:
+            mal.append(m)
     cond = None
     if x['al_entrar']:
         cond = tabla['condiciones'].get(x['al_entrar'])
@@ -447,20 +519,20 @@ def derivar(sop, skills, T, nombres, manual):
     Leader Skill no da aparte, o 'solo_api' al revés), 'correspondencia' y 'contradicciones' (lo aprendido, para el
     informe), 'a_mano' (lo de a mano que se usa y sus avisos) y 'textos' (la traducción de cada activación de lo
     derivado que va con el texto de la API, de T['act'], o None si no la tiene)}."""
-    P = {}
+    P, skill_de = {}, {}
     for p, nombre in nombres.items():
         sk = next((s for s in skills.get(p, []) if s['sl'] == 'Leader Skill'), None)
         P[p] = (None, ('sin_skill', '')) if sk is None else partes(sk, T, nombre)
+        skill_de[p] = T['name'][sk['n']]['en'] if sk is not None and sk['n'] is not None else None
     obs = _aprender(P, sop, T)
     C = {k: _tabla(v) for k, v in obs.items()}
-    M, a_mano = _a_mano(manual, C, P, T)
-    derivados, sin_derivar, verificacion, textos = {}, [], [], {}
+    M, a_mano = _a_mano(manual, C, P, T, skill_de)
+    derivados, sin_derivar, verificacion, textos, mal_ls = {}, [], [], {}, []
     for p in sorted(P):
         ps, problema = P[p]
         e = sop.get(p) or {}
         con_ls = any(k in e for k in LIDERAZGOS)
-        sk = next((s for s in skills.get(p, []) if s['sl'] == 'Leader Skill'), None)
-        nombre_skill = T['name'][sk['n']]['en'] if sk is not None and sk['n'] is not None else None
+        nombre_skill = skill_de[p]
         for i, k in enumerate(LIDERAZGOS):
             if ps is None:
                 if not con_ls and i == 0:
@@ -472,15 +544,27 @@ def derivar(sop, skills, T, nombres, manual):
                 if con_ls and k in e:
                     verificacion.append({'p': p, 'slot': k, 'estado': 'solo_ls'})
                 continue
-            der, mal = _slot(ps[i], nombre_skill, T, C, M)
+            R = M['otorga'].get(p) if ps[i]['otorga'] else None
+            der, mal = _slot(ps[i], nombre_skill, T, C, M, R)
+            if R is not None and con_ls:
+                # Leads & Supports publica el liderazgo de la variante: manda.
+                if k in e and der is not None and _comparar(der, e[k]):
+                    mal_ls.append(f"el «Give Power» de {p}: Leads & Supports publica {slot_txt(e[k])}, no {slot_txt(der)}")
+                else:
+                    a_mano['avisos'].append(f'el «Give Power» de {p}: Leads & Supports publica el liderazgo de la variante, '
+                                            'sobra')
             if not con_ls:
                 if der is None:
                     sin_derivar.append({'p': p, 'slot': k, 'motivos': [list(x) for x in mal]})
                 else:
                     derivados.setdefault(p, {})[k] = der
-                    if 'ac' in der and ps[i]['ac'] not in C['activaciones'][0]:     # a mano: el texto de la API
-                        es = T['act'][ps[i]['act']].get('es')
-                        textos[der['ac']] = _texto(es, ps[i]['av']) if es else None
+                    if 'ac' in der:
+                        texto = R['ac'] if R is not None else ps[i]['ac']
+                        if texto not in C['activaciones'][0]:     # a mano: el texto de la API, con su traducción
+                            fila = (next(f for f in T['act'] if f['en'] == R['ac']) if R is not None
+                                    else T['act'][ps[i]['act']])
+                            es = fila.get('es')
+                            textos[der['ac']] = _texto(es, None if R is not None else ps[i]['av']) if es else None
             elif k not in e:
                 verificacion.append({'p': p, 'slot': k, 'estado': 'solo_api'} if der is not None else
                                     {'p': p, 'slot': k, 'estado': 'solo_api', 'motivos': [list(x) for x in mal]})
@@ -490,6 +574,8 @@ def derivar(sop, skills, T, nombres, manual):
                 dif = _comparar(der, e[k])
                 verificacion.append({'p': p, 'slot': k, 'estado': 'distinto', 'dif': dif} if dif else
                                     {'p': p, 'slot': k, 'estado': 'igual'})
+    if mal_ls:
+        raise SystemExit(f'{A_MANO} no coincide con Leads & Supports:\n  ' + '\n  '.join(mal_ls))
     def variantes(k, c):
         return len({p for p, _, _ in obs[k][c]})
     correspondencia = {
