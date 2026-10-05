@@ -297,18 +297,25 @@
     {
      "es": "Fuente de espadas y de fichas de Otherworld. Jugá las partidas con recompensa diaria e, idealmente, algunas más hasta completar los desafíos diarios.",
      "en": "Source of Swords and Otherworld Tokens. Play your daily reward matches, and ideally extra until you complete the Daily Challenges."
+    },
+    {
+     "es": "Las temporadas duran 8 semanas; al reiniciarse, se pierden todos los buffs de campo de batalla que tengas.",
+     "en": "Seasons last 8 weeks; at the reset, all the battlefield buffs you have are lost."
     }
    ],
    "fuente": [
-    "tv-guia-4"
+    "tv-guia-4",
+    "juego-guia",
+    "juego-guia-ko"
    ],
    "equipo": {
     "tam": 5,
-    "es": "Equipo de 5 personajes.",
-    "en": "A team of 5 characters.",
+    "es": "Equipo de 5 personajes: a cada uno se le pueden equipar buffs, y se elige dónde aparece cada uno.",
+    "en": "A team of 5 characters: buffs can be equipped on each one, and you choose where each one is deployed.",
     "fuente": [
      "wiki-owb",
-     "juego-guia"
+     "juego-guia",
+     "juego-guia-ko"
     ]
    },
    "listas": [],
