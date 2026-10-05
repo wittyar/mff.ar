@@ -7,7 +7,8 @@
   publica, desde la Leader Skill de la API de skills: scripts/liderazgos.py), las rotaciones
   de skills (/api/rotations/default) y la Beginner's Guide (/api/beginners/mff-content/1..5).
 - scripts/contenido/: lo curado a mano de la guía y la wiki (guia.json, modos.json),
-  con la fuente de cada bloque.
+  con la fuente de cada bloque, y lo que Leads & Supports no publica para pasar la Leader Skill
+  de la API a un liderazgo (liderazgos_api.json).
 - Los bonos de equipo: la sección Team Bonus de la página de cada personaje en la wiki, y lo que se
   vio en el juego (scripts/contenido/bonos.json), que manda (scripts/bonos.py).
 - La guía de armado de Cynicalex (planilla de Google), de su copia en uso en
@@ -29,7 +30,7 @@ from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
 import guia_armado as GA
 from bonos import bonos as bonos_de_equipo
 from strikers import strikers as strikers_de
-from liderazgos import derivar as derivar_liderazgos
+from liderazgos import derivar as derivar_liderazgos, validar as validar_liderazgos
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -511,9 +512,21 @@ def main():
     sop = soportes(retratos, {r['character'] for r in chars})
     # Los liderazgos que Leads & Supports no publica, desde la Leader Skill de la API (Ezequiel, 4 de octubre de
     # 2026), con "src": "api". Van en una entrada nueva: la de Leads & Supports puede ser de varios retratos.
-    liderazgos = derivar_liderazgos(sop, skills['skills'], skills['tablas'], nombres_pj(chars))
+    a_mano = cargar(os.path.join(_DIR, 'contenido', 'liderazgos_api.json'))
+    mal = validar_liderazgos(a_mano, skills['tablas'], cargar(os.path.join(_DIR, 'contenido', 'catalogo.json')))
+    if mal:
+        raise SystemExit('scripts/contenido/liderazgos_api.json tiene errores:\n  ' + '\n  '.join(mal))
+    liderazgos = derivar_liderazgos(sop, skills['skills'], skills['tablas'], nombres_pj(chars), a_mano)
+    for a in liderazgos['a_mano']['avisos']:
+        print(f'AVISO: scripts/contenido/liderazgos_api.json: {a}')
     for p, slots in liderazgos['derivados'].items():
         sop[p] = {**sop.get(p, {}), **slots}
+    # Las activaciones que van con el texto de la API, con su traducción de la API (o sin traducir, y se lista).
+    for en, es in liderazgos['textos'].items():
+        if es is None:
+            TX.faltan.add(en)
+        else:
+            TX.usados[en] = es
     salida = {
         'ctps': ctps(guia),
         'artefactos': artefactos(base),

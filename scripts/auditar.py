@@ -22,7 +22,7 @@ import collections, datetime, difflib, glob, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima
 from catalogo import fuente_md
-from liderazgos import LIDERAZGOS, ROTULOS, motivo_txt, slot_txt
+from liderazgos import A_MANO, LIDERAZGOS, ROTULOS, motivo_txt, slot_txt
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 WIKI = 'https://future-fight.fandom.com/wiki/'
@@ -711,8 +711,10 @@ def liderazgos_seccion(L, chars):
              'explicado en docs/MODELO.md) y van en los datos con `"src": "api"`: la app dice «según la skill del juego». La '
              'Leader Skill se parte en los dos slots de liderazgo de Leads & Supports, y cada efecto, cada activación y la '
              'condición de cada efecto pasan a lo que publica Leads & Supports según las variantes que tienen las dos cosas '
-             '(la correspondencia aprendida, abajo). Todo o nada por slot: si algo no cierra, ese slot no se deriva y va abajo '
-             'con su motivo. Lo derivado no lleva «Notable», que es una marca de thanosvibs que la API no tiene.\n')
+             '(la correspondencia aprendida, abajo) o, lo que Leads & Supports no publica en ningún liderazgo, según '
+             f'{A_MANO} (la correspondencia a mano: un stat del catálogo para cada efecto, y la activación con el texto de '
+             'la API). Todo o nada por slot: si algo no cierra, ese slot no se deriva y va abajo con su motivo. Lo derivado no '
+             'lleva «Notable», que es una marca de thanosvibs que la API no tiene.\n')
     s.append(f"{len(con_ls)} variantes tienen liderazgo de Leads & Supports y {len(nombre) - len(con_ls)} no. El build "
              f"deriva el de {len(L['derivados'])} ({sum(len(x) for x in L['derivados'].values())} slots); "
              f"{len(L['sin_derivar'])} slots, de {len(nd_v)} variantes, no se pudieron derivar.\n")
@@ -741,6 +743,18 @@ def liderazgos_seccion(L, chars):
         for que, vals in contra:
             s.append(f"- {que}: " + ' / '.join(f"{v} ({', '.join(f'`{p}`' for p in ps)})" for v, ps in vals) + '.')
         s.append('')
+    M = L['a_mano']
+    s.append('### Correspondencia a mano\n')
+    s.append(f'De {A_MANO}: lo que Leads & Supports no publica en ningún liderazgo. Cada efecto, con su texto de la API, da '
+             'un stat del catálogo con el número del texto, y cada activación va con el texto de la API. Variantes: las que '
+             'lo tienen en la Leader Skill.\n')
+    s.append('| Efecto de la API | Stat | Variantes |')
+    s.append('|---|---|---|')
+    s += [f'| «{desc}» ({ab}) | {stat} +n1 | {n} |' for ab, desc, stat, n in M['efectos']]
+    s.append('')
+    s.append('Activaciones: ' + '; '.join(f'«{a}» ({variantes(n)})' for a, n in M['activaciones']) + '.\n')
+    if M['avisos']:
+        s.append('Avisos: ' + '; '.join(M['avisos']) + '.\n')
     s.append('### Verificación contra Leads & Supports\n')
     n = collections.Counter(x['estado'] for x in V)
     s.append('Cada slot de liderazgo de Leads & Supports contra el que la misma regla deriva de su Leader Skill, en stats, '
@@ -761,6 +775,13 @@ def liderazgos_seccion(L, chars):
     por = collections.Counter(m for x in L['sin_derivar'] for m, _ in x['motivos'])
     s.append('Por motivo (un slot puede tener más de uno): ' + '; '.join(f'{ROTULOS[m]}, {k}' for m, k in por.most_common())
              + '. Van juntas las variantes de un personaje con los mismos motivos.\n')
+    for m, que in (('efecto', 'Efectos sin stat (no están en el catálogo o falta cargarlos a mano)'),
+                   ('activacion', 'Activaciones sin correspondencia')):
+        n = collections.Counter(d for x in L['sin_derivar'] for mm, d in x['motivos'] if mm == m)
+        if n:
+            s.append(f'{que}, con los slots que dejan sin derivar: '
+                     + '; '.join(f'{d if m == "efecto" else f"«{d}»"}, {k}' for d, k in sorted(n.items(), key=lambda x: (-x[1], x[0])))
+                     + '.\n')
     s += [f'- {quienes(ps)}: {det}.' for det, ps in agrupar(L['sin_derivar'], motivos)]
     s.append('')
     s.append(f"### Derivados ({len(L['derivados'])} variantes)\n")

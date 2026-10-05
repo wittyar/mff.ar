@@ -3,9 +3,11 @@
 información que la app muestra y usa. docs/AUDITORIA.md marca lo que dos fuentes dicen distinto; esto,
 lo que no está.
 
-Lee solo lo que produce el build: data.js (los datos de la app) y datos.json (las imágenes que la app
-baja). Escribe docs/COMPLETITUD.md: qué es «completo» y por qué es esperable cada pieza, el resumen, una
-tabla por tipo de faltante y la lista por personaje. Con --json RUTA escribe además lo mismo en JSON,
+Lee lo que produce el build: data.js (los datos de la app) y datos.json (las imágenes que la app
+baja); del contenido curado, solo las correspondencias a mano de los liderazgos de la API
+(scripts/contenido/liderazgos_api.json), para derivarlos como el build. Escribe docs/COMPLETITUD.md:
+qué es «completo» y por qué es esperable cada pieza, el resumen, una tabla por tipo de faltante y la
+lista por personaje. Con --json RUTA escribe además lo mismo en JSON,
 para buscar en foros lo que falta.
 
 Cada faltante dice de dónde podría salir. Lo que no existe en el juego no es un faltante (un personaje sin
@@ -159,12 +161,13 @@ TIPOS = collections.OrderedDict([
     ('recarga', ('skills', 'Activa sin recarga', 'variante', 'la wiki o el juego', 'sin recarga',
                  'Las activas 1 a 5 se recargan por tiempo y la API publica 0 [Probable].')),
     ('liderazgo', ('lideres', 'Liderazgo sin completar', 'variante',
-                   'thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/)',
+                   'thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json)',
                    'liderazgo sin completar',
                    'Leads & Supports no publica el liderazgo de la variante y el build no pudo derivar ese slot de su '
-                   'Leader Skill (docs/AUDITORIA.md, sección 12, con el mismo motivo): un efecto o una activación sin '
-                   'correspondencia con Leads & Supports, un valor que la API no publica, un «Give Power» o una '
-                   'contradicción de Leads & Supports. La sinergia y los órdenes PvP y PvE no ven ese slot.')),
+                   'Leader Skill (docs/AUDITORIA.md, sección 12, con el mismo motivo): un efecto sin stat o una '
+                   'activación sin correspondencia (ni de Leads & Supports ni a mano), un valor que la API no publica, '
+                   'un «Give Power» o una contradicción de Leads & Supports. La sinergia y los órdenes PvP y PvE no ven '
+                   'ese slot.')),
     ('soporte', ('lideres', 'Soporte que Leads & Supports no publica', 'variante',
                  'thanosvibs (Leads & Supports) o a mano desde la skill', 'soporte sin Leads & Supports',
                  'Según el análisis, la pasiva le da algo al equipo, y Leads & Supports no publica ese soporte (ni en '
@@ -354,9 +357,12 @@ class Datos:
             self.personajes.append({'ch': ch, 'vs': vs})
         self.retratos = {v['p'] for x in self.personajes for v in x['vs']}
         # Los slots de liderazgo que el build no pudo derivar, con su motivo: la misma función que usa el build
-        # (scripts/liderazgos.py), sobre Leads & Supports tal como lo publica. Lo que deriva tiene que ser lo que trae
-        # data.js.
-        L = derivar(self.SO, self.SK, self.TB, {v['p']: x['ch']['name'] for x in self.personajes for v in x['vs']})
+        # (scripts/liderazgos.py), sobre Leads & Supports tal como lo publica y con las correspondencias a mano del
+        # contenido curado. Lo que deriva tiene que ser lo que trae data.js.
+        a_mano = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'contenido',
+                                             'liderazgos_api.json'), encoding='utf-8'))
+        L = derivar(self.SO, self.SK, self.TB, {v['p']: x['ch']['name'] for x in self.personajes for v in x['vs']},
+                    a_mano)
         if L['derivados'] != self.derivados:
             raise SystemExit('data.js no trae los liderazgos que scripts/liderazgos.py deriva de sus datos: correr '
                              'scripts/build.py')
