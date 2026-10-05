@@ -142,10 +142,12 @@ def ctps(guia):
 
 _SANGRIA = re.compile(r'^((?:&emsp;)*)(•\s*)?(.*)$')
 # Líneas de artefacto que el juego dice distinto, como los nombres de C.T.P. (_CTP_NOMBRE_JUEGO): (artefacto, línea de
-# thanosvibs): la línea del juego y su fuente. Planet Eater (Galactus): la ficha del artefacto en coreano dice «적용
-# 대상: 파워 코스믹 타입인 팀원만», solo los integrantes con Poder Cósmico (captura 213 del 4 de octubre de 2026); va
-# con las palabras con que thanosvibs restringe otros artefactos a una habilidad («Applies to: Allies with … Ability»).
-_ARTEFACTO_LINEA_JUEGO = {('Planet Eater', 'Applies to: Self'): ('Applies to: Allies with Power Cosmic Ability', 'juego-ficha-ko')}
+# thanosvibs): la línea del juego y su fuente. Planet Eater (Galactus): el códice de artefactos del juego en coreano (아티팩트
+# 도감) dice «적용 대상: 파워 코스믹 타입인 팀원만», solo los integrantes con Poder Cósmico (captura 213 del 4 de octubre de
+# 2026); va con las palabras con que thanosvibs restringe otros artefactos a una habilidad («Applies to: Allies with …
+# Ability»).
+_ARTEFACTO_LINEA_JUEGO = {('Planet Eater', 'Applies to: Self'): ('Applies to: Allies with Power Cosmic Ability',
+                                                                 'juego-artefactos-ko')}
 
 
 def linea_artefacto(artefacto, texto):

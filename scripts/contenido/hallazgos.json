@@ -177,8 +177,8 @@
  {
   "id": "artefacto-annihilus-recarga",
   "titulo": "Artefacto de Annihilus: el juego dice que se recarga en 300 s, y la app no lo tiene",
-  "es": "La ficha del artefacto de Annihilus en el juego (네거티브 존의 지배자, Lord of the Negative Zone; captura 211 del 4 de octubre de 2026) termina con «재사용 대기시간 300초»: se recarga en 300 s. Antes dice lo mismo que thanosvibs (al morir, revive con 80% de la vida, más 0,5% del instinto total, hasta 100%). thanosvibs no publica la recarga, así que la app no la muestra. La página Artifact de la wiki trae un 300 que thanosvibs no tiene (sección 6): es probable que sea esta recarga.",
-  "en": "The in-game card of Annihilus's artifact (네거티브 존의 지배자, Lord of the Negative Zone; screenshot 211, October 4, 2026) ends with \"재사용 대기시간 300초\": a 300 s cooldown. Before that it says the same as thanosvibs (on death, revives with 80% of Max HP, plus 0.5% of total Instinct, up to 100%). thanosvibs does not publish the cooldown, so the app does not show it. The wiki's Artifact page has a 300 that thanosvibs does not (section 6): it is likely this cooldown.",
-  "fuente": ["juego-ficha-ko", "tv-art"]
+  "es": "La ficha del artefacto de Annihilus en el códice de artefactos del juego (아티팩트 도감: 네거티브 존의 지배자, Lord of the Negative Zone; captura 211 del 4 de octubre de 2026) termina con «재사용 대기시간 300초»: se recarga en 300 s. Antes dice lo mismo que thanosvibs (al morir, revive con 80% de la vida, más 0,5% del instinto total, hasta 100%). thanosvibs no publica la recarga, así que la app no la muestra. La página Artifact de la wiki trae un 300 que thanosvibs no tiene (sección 6): es probable que sea esta recarga.",
+  "en": "The card of Annihilus's artifact in the in-game artifact codex (아티팩트 도감: 네거티브 존의 지배자, Lord of the Negative Zone; screenshot 211, October 4, 2026) ends with \"재사용 대기시간 300초\": a 300 s cooldown. Before that it says the same as thanosvibs (on death, revives with 80% of Max HP, plus 0.5% of total Instinct, up to 100%). thanosvibs does not publish the cooldown, so the app does not show it. The wiki's Artifact page has a 300 that thanosvibs does not (section 6): it is likely this cooldown.",
+  "fuente": ["juego-artefactos-ko", "tv-art"]
  }
 ]
