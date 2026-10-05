@@ -127,6 +127,7 @@ function rebuild () {
   CONSULTA = null;
   _ROL.clear();
   _PUESTO_SC.clear();
+  _ULTIMO.clear();
   CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
   CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
   LISTS = TIERLISTS_SEED.concat(U.lists);
@@ -704,6 +705,15 @@ const T = {
   eq_cob:            { es:'Solo si recibe:',     en:'Only if it gets:' },
   eq_cob_title:      { es:'Solo las combinaciones cuya tarjeta muestra ✓ en todo lo marcado (también con *: si el compañero lleva su artefacto). Cada pareja de compañeros va con su mejor combinación de uniformes que lo cumple.',
                        en:'Only the combinations whose card shows ✓ in everything checked (also with *: if the teammate has its artifact). Each pair of teammates comes with its best uniform combination that meets it.' },
+  eq_comp:           { es:'Compañeros:',         en:'Teammates:' },
+  eq_ultimo:         { es:'Solo el último uniforme', en:'Latest uniform only' },
+  eq_ultimo_t:       { es:'De cada compañero entra solo su uniforme más nuevo; él va con el uniforme elegido.',
+                       en:'Each teammate comes only with its newest uniform; it keeps the chosen uniform.' },
+  eq_ultimo_nota:    { es:'Solo el último uniforme: de cada compañero entra solo su uniforme más nuevo (si no tiene uniformes, la base; si tiene, la base no entra), y {x} va con el uniforme elegido. El más nuevo es el que salió en la versión del juego más alta, según thanosvibs (la letra va después del número: 9.1.5a antes que 9.1.5b), y, a igual versión, el de número de uniforme más alto en el juego.',
+                       en:'Latest uniform only: each teammate comes only with its newest uniform (with no uniforms, the base; with uniforms, the base is left out), and {x} keeps the chosen uniform. The newest is the one released in the highest game version, according to thanosvibs (the letter goes after the number: 9.1.5a before 9.1.5b), and, on the same version, the one with the highest uniform number in the game.' },
+  eq_ultimo_sin:     { es:'No se sabe cuál es el último uniforme de {x}: los datos no dicen en qué versión del juego salió {u}, así que entran {l}.',
+                       en:'The latest uniform of {x} is not known: the data does not say in which game version {u} came out, so {l} come in.' },
+  eq_ultimo_de:      { es:'{n} sin «Solo el último uniforme»', en:'{n} without «Latest uniform only»' },
   eq_count:          { es:'{n} combinaciones',   en:'{n} combinations' },
   eq_count_1:        { es:'1 combinación',       en:'1 combination' },
   eq_none_q:         { es:'Ninguna combinación con estos filtros.', en:'No combination with these filters.' },
@@ -1345,6 +1355,7 @@ let ui = {
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
   eqCobertura: [],                   // grupos de COBERTURA marcados: solo los tríos en que los recibe
+  eqUltimo: false,                   // «Solo el último uniforme»: de cada compañero, solo su uniforme más nuevo
   eqVerDescartados: false,           // la lista muestra solo los descartados, para restaurarlos
   volverY: null,                     // posición a la que se vuelve con «Atrás» (ver HISTORIAL)
   volverAbiertos: [],                // plegados que se vuelven a abrir con «Atrás» (ver HISTORIAL)
@@ -3823,16 +3834,74 @@ function listasOrden () {
 function puesto (l, key) { const i = indicesFila(l, key); return i.length ? i[0] : rowsOf(l).length; }
 /** Su lugar en una lista, como en el roster: la mejor fila con «+N» si está en más (todas, en el title), o «—». */
 function puestoHtml (l, key) { const f = filaEn(l, key); return f ? `<span title="${h(f.todas.join(' · '))}">${h(rankTexto(f))}</span>` : '—'; }
+// SOLO EL ÚLTIMO UNIFORME (Ezequiel, 5 de octubre de 2026: «vamos a agregar un filtro mas en el armado de equipos... SOLO
+// ultimo uniforme»). En las combinaciones de 3, de cada compañero entra solo su uniforme más nuevo: sin uniformes, la
+// base; con uniformes, la base no entra. El personaje de la ficha va con el uniforme elegido. El más nuevo es el que salió
+// en la versión del juego más alta (up.update de thanosvibs, comparada como versión: 10.2 < 12.0 < 12.0.5; la letra va
+// después del número, 9.1.5a antes que 9.1.5b) y, a igual versión, el de número de uniforme más alto en el juego (el del
+// id: deadpool-10800164, Deadpool & Wolverine, va antes que deadpool-10700164, Nicepool). Un uniforme sin versión (Red
+// Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi, con los datos de hoy) puede ser el más nuevo: no se adivina,
+// entran él y el más nuevo con versión, y la pantalla lo dice.
+/** La versión del juego en que salió un uniforme, para comparar: { n: [números], l: letra o '' }; null si no la trae. */
+function versionUniforme (u) {
+  const s = u.up && u.up.update;
+  if (s == null) return null;
+  const m = /^(\d+(?:\.\d+)*)([a-z]?)$/.exec(s);
+  if (!m) throw new Error(`versión de juego que la app no sabe leer en el uniforme ${u.id}: ${s}`);
+  return { n: m[1].split('.').map(Number), l: m[2] };
+}
+/** Orden de dos versiones (versionUniforme): los números, de a uno (12.0 = 12.0.0), y después la letra. */
+function cmpVersion (a, b) {
+  for (let i = 0; i < Math.max(a.n.length, b.n.length); i++) { const d = (a.n[i] || 0) - (b.n[i] || 0); if (d) return d; }
+  return a.l < b.l ? -1 : a.l > b.l ? 1 : 0;
+}
+/** El número de un uniforme en el juego: el del final de su id (deadpool-10800164). */
+function numeroUniforme (u) {
+  const m = /-(\d+)$/.exec(u.id);
+  if (!m) throw new Error('uniforme sin el número del juego en su id: ' + u.id);
+  return Number(m[1]);
+}
+/** Lo que entra de un personaje con «Solo el último uniforme»: { keys: las claves de sus variantes que entran, entran: esos
+ *  uniformes (vacío si no tiene: entra la base), sinVersion: los que no traen versión }. Más de uno solo si alguno no trae
+ *  versión: entran él y el más nuevo con versión. Se guarda hasta el próximo rebuild(). */
+const _ULTIMO = new Map();
+function ultimoUniforme (ch) {
+  let r = _ULTIMO.get(ch.id);
+  if (r) return r;
+  if (!ch.uniforms.length) r = { keys: new Set([ch.id + '::base']), entran: [], sinVersion: [] };
+  else {
+    const con = ch.uniforms.map(u => ({ u, ver: versionUniforme(u) })).filter(x => x.ver);
+    const sinVersion = ch.uniforms.filter(u => !versionUniforme(u));
+    const mejor = con.reduce((m, x) => !m || (cmpVersion(x.ver, m.ver) || numeroUniforme(x.u) - numeroUniforme(m.u)) > 0 ? x : m, null);
+    const entran = (mejor ? [mejor.u] : []).concat(sinVersion);
+    r = { keys: new Set(entran.map(u => ch.id + '::' + u.id)), entran, sinVersion };
+  }
+  _ULTIMO.set(ch.id, r);
+  return r;
+}
+/** ¿Entra esta variante con «Solo el último uniforme»? */
+function esUltimo (x) { return ultimoUniforme(x.ch).keys.has(x.key); }
+/** El aviso de los personajes de los que entra más de un uniforme porque no se sabe cuál es el último (alguno no trae
+ *  versión), salvo el de la ficha: uno por personaje, con los uniformes que entran. */
+function avisosUltimo (cid) {
+  const y = LANG === 'es' ? ' y ' : ' and ';
+  return CHARS.filter(ch => ch.id !== cid && ultimoUniforme(ch).entran.length > 1).map(ch => {
+    const r = ultimoUniforme(ch);
+    return t('eq_ultimo_sin').replace('{x}', ch.name).replace('{u}', r.sinVersion.map(u => u.name).join(y))
+      .replace('{l}', r.entran.map(u => u.name).join(y));
+  });
+}
 /** Filas de la consulta en el orden elegido y con los filtros, una por trío de personajes: la
  *  primera en ese orden (el mejor uniforme de cada uno para ese orden) que pasa los filtros; con
  *  casillas de cobertura, la primera con ✓ en todas. Con tier lists, gana el trío mejor ubicado
  *  (suma de puestos); a igual puesto, más puntos para él; a igual puntaje, más strikers (desempatan);
  *  después, el mejor ubicado en tu lista de referencia. Los tríos descartados no van (o van solos, si
- *  se piden): { filas, ocultos }. */
+ *  se piden). Con «Solo el último uniforme», cada compañero con su uniforme más nuevo (esUltimo), y cuántas
+ *  quedarían sin ese filtro: { filas, ocultos, sinUltimo (null sin el filtro) }. */
 function vistaConsulta (q) {
   // Descartes en los que está él: los otros dos personajes de cada uno.
   const descartes = new Set(U.descartados.filter(d => d.includes(q.cid)).map(d => d.filter(c => c !== q.cid).join('|')));
-  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon, ui.eqCobertura.join(','), ui.eqVerDescartados,
+  const clave = [ui.eqOrden, ui.eqExcluir.join(','), ui.eqCon, ui.eqCobertura.join(','), ui.eqUltimo, ui.eqVerDescartados,
                  [...descartes].join(',')].join('|');
   if (q.vista && q.vista.clave === clave) return q.vista;
   const ls = listasOrden(), ctx = contextoOrden();
@@ -3876,20 +3945,24 @@ function vistaConsulta (q) {
   }
   const ordenadas = claves.subarray(0, m).sort();
   const fuera = new Set(ui.eqExcluir), vistos = new Set(), filas = [];
-  let ocultos = 0;
+  // Con «Solo el último uniforme», también las parejas que quedarían sin él (para decir cuántas quedan).
+  const todas = ui.eqUltimo ? new Set() : null;
+  let ocultos = 0, sinUltimo = 0;
   for (const k of ordenadas) {
     const i = Number(k & 0xFFFFFn);
     const a = q.pool[q.A[i]], b = q.pool[q.B[i]];
     if (fuera.has(a.cid) || fuera.has(b.cid) || (ui.eqCon && a.cid !== ui.eqCon && b.cid !== ui.eqCon)) continue;
     const pareja = a.cid < b.cid ? a.cid + '|' + b.cid : b.cid + '|' + a.cid;
     // Con casillas de cobertura, cada pareja va con su primera combinación de uniformes que las cumple.
-    if (vistos.has(pareja) || (cubre && !cubre(i, lider[i]))) continue;
+    if (cubre && !cubre(i, lider[i])) continue;
+    if (todas && !todas.has(pareja)) { todas.add(pareja); if (descartes.has(pareja) === ui.eqVerDescartados) sinUltimo++; }
+    if (vistos.has(pareja) || (todas && !(esUltimo(a) && esUltimo(b)))) continue;
     vistos.add(pareja);
     const descartado = descartes.has(pareja);
     if (descartado) ocultos++;
     if (descartado === ui.eqVerDescartados) filas.push(i);
   }
-  q.vista = { clave, filas, ocultos };
+  q.vista = { clave, filas, ocultos, sinUltimo: todas ? sinUltimo : null };
   return q.vista;
 }
 /** Un descarte: los tres personajes, en orden (vale para cualquier uniforme de cada uno). */
@@ -4034,7 +4107,7 @@ function combinacionesHtml (v) {
     }
     return `<div class="section" id="combos">${cab}<p class="muted">${h(t('eq_calc'))}</p></div>`;
   }
-  const q = CONSULTA, { filas, ocultos } = vistaConsulta(q), ls = listasOrden();
+  const q = CONSULTA, { filas, ocultos, sinUltimo } = vistaConsulta(q), ls = listasOrden();
   const paginas = Math.max(1, Math.ceil(filas.length / POR_PAGINA));
   ui.eqPagina = Math.min(ui.eqPagina, paginas - 1);
   const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
@@ -4072,6 +4145,9 @@ function combinacionesHtml (v) {
       <label>${h(t('eq_excluir'))}
         <select data-a="eqExcluir">${opcionHtml('', t('eq_excluir_ph'), '')}${personajes.filter(c => !ui.eqExcluir.includes(c.id)).map(c => opcionHtml(c.id, c.name, '')).join('')}</select></label>
     </div>
+    <div class="row" style="gap:6px;margin-bottom:10px"><div class="muted">${h(t('eq_comp'))}</div>
+      <label class="chk" title="${h(t('eq_ultimo_t'))}"><input type="checkbox" data-a="eqUltimo"${ui.eqUltimo ? ' checked' : ''}> ${h(t('eq_ultimo'))}</label></div>
+    ${ui.eqUltimo ? `<p class="muted cxnota ultnota">${h([t('eq_ultimo_nota').replace('{x}', fullLabel(v))].concat(avisosUltimo(v.cid)).join(' '))}</p>` : ''}
     <div class="row" style="gap:6px;margin-bottom:10px" title="${h(t('eq_cob_title'))}"><div class="muted">${h(t('eq_cob'))}</div>
       ${COBERTURA.map(g => `<label class="chk"><input type="checkbox" data-a="eqCobertura" data-g="${g.k}"${ui.eqCobertura.includes(g.k) ? ' checked' : ''}>
         ${h(g.k === 'ataque' ? t('cb_ataque') : t('ct_' + g.k))}</label>`).join('')}</div>
@@ -4079,8 +4155,9 @@ function combinacionesHtml (v) {
     ${ui.eqExcluir.length ? `<div class="row" style="gap:6px;margin-bottom:10px">${ui.eqExcluir.map(cid =>
       `<button class="tag dim eqfuera" data-a="eqIncluir" data-cid="${h(cid)}" title="${h(t('eq_incluir'))}">${h(CHAR_BY_ID[cid].name)} ✕</button>`).join('')}</div>` : ''}
     <div class="row" style="justify-content:space-between;margin-bottom:10px">
-      <span class="muted">${h(ui.eqVerDescartados ? cuantos(ocultos, 'eq_count_desc')
-        : cuantos(filas.length, 'eq_count') + (ocultos ? ' · ' + cuantos(ocultos, 'eq_count_desc') : ''))}</span>
+      <span class="muted">${h((ui.eqVerDescartados ? cuantos(ocultos, 'eq_count_desc') : cuantos(filas.length, 'eq_count'))
+        + (sinUltimo != null ? ' (' + t('eq_ultimo_de').replace('{n}', numero(sinUltimo)) + ')' : '')
+        + (!ui.eqVerDescartados && ocultos ? ' · ' + cuantos(ocultos, 'eq_count_desc') : ''))}</span>
       ${ocultos || ui.eqVerDescartados ? `<button class="btn sm ${ui.eqVerDescartados ? 'primary' : ''}" data-a="eqVerDescartados">${h(ui.eqVerDescartados
         ? t('eq_ver_lista') : t('eq_ver_desc').replace('{n}', numero(ocultos)))}</button>` : ''}
     </div>
@@ -5902,6 +5979,7 @@ document.addEventListener('change', (e) => {
   if (a === 'eqExcluir') { if (el.value) ui.eqExcluir = ui.eqExcluir.concat(el.value); ui.eqPagina = 0; render(); return; }
   if (a === 'eqCobertura') { ui.eqCobertura = COBERTURA.map(g => g.k).filter(k => k === d.g ? el.checked : ui.eqCobertura.includes(k));
     ui.eqPagina = 0; render(); return; }
+  if (a === 'eqUltimo') { ui.eqUltimo = el.checked; ui.eqPagina = 0; render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
