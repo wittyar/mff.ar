@@ -143,7 +143,9 @@ variante, en `docs/COMPLETITUD.md`.
   completas. Si thanosvibs cambió algo, las cifras se mueven: lo que no puede pasar es un slot sin
   derivar ni listar. Después tienen que pasar con los datos del repo verif_consistencia (la fuente de
   cada liderazgo, ahora también sobre los datos) y la regresión (verif_combos ya espera «No mejoran con
-  él: Arena», porque Captain America e Iron Man tienen liderazgo derivado).
+  él: Arena», porque Captain America e Iron Man tienen liderazgo derivado). Hasta ese build,
+  `scripts/completitud.py` sobre el data.js del repo para con «data.js no trae los liderazgos que
+  scripts/liderazgos.py deriva de sus datos»: es lo esperado.
 - Falta decidir, sobre los liderazgos derivados (lista en «Liderazgos que Leads & Supports no publica» de
   `docs/MODELO.md` y en la sección 12 de `docs/AUDITORIA.md`):
   - «Notable»: lo derivado no lo lleva (es una marca de thanosvibs). Knull — Ancient History y Ghost —
