@@ -695,7 +695,10 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   datos actuales tienen función 60 de las 888 variantes en PvP y 119 en PvE.
 - Un trío entra si alguno es DPS de ese contexto y cumple el requisito de la tabla: en PvP, que con
   algún líder los tres tengan anti-mermas. Cada compañero tiene vínculo con él o es DPS de ese
-  contexto.
+  contexto. El vínculo por un soporte o un bono de equipo no depende del líder; el del liderazgo es con
+  el líder del contexto: lidera él y su liderazgo le llega al compañero, o lidera el compañero y le
+  llega a él (regla 2 de Ezequiel, 4 de octubre de 2026: un solo líder, el del modo, para todo lo de ese
+  modo; decidido el 5 de octubre). Sin contexto, con el de la sinergia.
 - Anti-mermas (Ezequiel, 4 de octubre de 2026): son los stats de la tabla de valor (Remove All
   Debuffs y Debuff Immunity), los mismos en el filtro de PvP, su detalle, la casilla de las
   combinaciones y el índice. A cada uno se los da el liderazgo del líder, un soporte de alguno o
@@ -737,21 +740,23 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   compañero que se vinculaba con él solo por su liderazgo ya no se vincula si no es el líder del
   equipo. Con lo propio, la de Knull subió de 1.915 a 1.956, porque su pasiva de Tier-2 le da
   anti-mermas.
-- Con los liderazgos de la Leader Skill (medido sobre los datos de formato 7 con lo que va a derivar el
-  próximo build; *Liderazgos que Leads & Supports no publica*), las variantes con función siguen
-  siendo 60 en PvP y 119 en PvE, y todas tienen lista. Las listas de PvP suman 479.581 combinaciones
-  en vez de 460.726 (crecen 46 y se achican 7), y las de PvE 2.502.520 en vez de 2.066.097 (crecen 77
-  y se achican 10). La de PvP de Knull — Ancient History pasa de 1.956 a 2.178, la de Galactus de
-  36.488 a 36.499, la de Jean Grey — Summer Flare Phoenix de 36.219 a 36.235 y la de Thanos —
-  Annihilation de 8.787 a 8.907 [Comprobado]. Crecen porque un compañero con un liderazgo derivado
-  se vincula cuando lidera, y casi todos los derivados le sirven a cualquiera. Se achican porque el
-  vínculo de cada compañero sale de la consulta, que lo calcula con el líder sin contexto: en la lista
-  de PvP de Malekith — All-New, All-Different (de 4.826 a 3.631), el trío con Silver Surfer
-  (Shalla-Bal) y Vision — Ultimate Vision tenía a Vision de líder sin contexto; ahora Silver Surfer
-  (Shalla-Bal) tiene un liderazgo derivado (Debuff Duration −24%), empata en puntos con el de Vision y
-  lidera por la General, así que Vision ya no se vincula con Malekith y el trío sale de la lista,
-  aunque en PvP el líder sería Vision (15,5 puntos) [Comprobado]. Falta decidir si en PvP y PvE el
-  vínculo tiene que salir del líder del contexto.
+- Con los liderazgos de la Leader Skill y el vínculo con el líder del contexto (medido sobre los datos
+  de formato 7 con lo que va a escribir el próximo build, también el «Give Power» de Mephisto — Master of
+  Hell), las variantes con función siguen siendo 60 en PvP y 119 en PvE, y todas tienen lista
+  [Comprobado: `medir_lideres.py` sobre los datos de prueba, y verif_contexto contra el modelo de las pruebas]:
+  - Las de PvP suman 485.558 combinaciones y las de PvE 2.159.946. Con el vínculo del líder sin
+    contexto eran 480.286 y 2.549.177: PvE baja porque su tabla pesa los stats de daño, y el líder del
+    contexto es más seguido otro que el de la sinergia.
+  - El anti-mermas de Mephisto — Master of Hell, que dice el juego, suma 7.160 en PvP (43 listas crecen
+    y 5 bajan) y 6.166 en PvE: la suya pasa de 1.730 a 8.219 en PvP y de 9.939 a 16.105 en PvE, porque
+    lidera a los Supervillanos y les da anti-mermas.
+  - La de PvP de Malekith — All-New, All-Different pasa de 3.643 a 5.143: entran los tríos en que lidera
+    él. Vuelve el trío con Silver Surfer (Shalla-Bal) y Vision — Ultimate Vision, con Vision de líder
+    (15,5 puntos).
+  - La de Galactus pasa de 36.499 a 40.701: con su anti-mermas lidera casi siempre.
+  - La de Knull — Ancient History baja de 2.263 a 1.835 en PvP y de 15.102 a 9.997 en PvE, y la de
+    Thanos — Annihilation de 8.937 a 8.691: sale el compañero que solo se vinculaba con su propio
+    liderazgo, de líder sin contexto, cuando en el contexto lidera otro.
 
 ### Casos de referencia
 
