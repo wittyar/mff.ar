@@ -375,13 +375,14 @@
      "en": "Available in three 1-hour slots a day, three days a week. Worth doing 5 entries a day even if you lose them all: 85 Alliance Tokens just for participating, used for Tier-4 Materials in the Alliance Shop."
     },
     {
-     "es": "Pelean tres alianzas y las batallas son automáticas. Un personaje que atacó no se puede volver a usar hasta el reinicio, y los que conquistan una región quedan defendiéndola: no pueden atacar otras.",
-     "en": "Three alliances fight and battles are automatic. A character that attacked cannot be used again until the reset, and those that seize a region stay to defend it: they cannot attack other regions."
+     "es": "Pelean tres alianzas y las batallas son automáticas. Un personaje que se usó no vuelve a usarse hasta el reinicio, y los que conquistan una región quedan defendiéndola. No se puede atacar a una defensa que ya está peleando con alguien de tu alianza (guía en coreano; la inglesa dice en cambio que los que defienden no pueden atacar otras regiones).",
+     "en": "Three alliances fight and battles are automatic. A character that was used cannot be used again until the reset, and those that seize a region stay to defend it. A defense that is already fighting someone from your alliance cannot be attacked (Korean guide; the English one says instead that defenders cannot attack other regions)."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "juego-guia"
+    "juego-guia",
+    "juego-guia-ko"
    ],
    "equipo": {
     "tam": 3,
