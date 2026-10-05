@@ -134,7 +134,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   el líder va primero, marcado.
 - **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
   con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
-  y qué C.T.P. da cada efecto de la barra de Concentración; y los 126 efectos del catálogo por
+  y qué C.T.P. da cada efecto de la barra de Concentración y de qué opción sale (la fija, que tienen
+  todos los grados, o una de reforjado); y los 126 efectos del catálogo por
   grupo, con sus lecturas de PvE y de PvP, a quién le sirven (en las skills y, si no es lo mismo,
   como liderazgo, soporte o bono de equipo) y con qué etiquetas aparecen en las skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
 

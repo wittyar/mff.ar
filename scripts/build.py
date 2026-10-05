@@ -135,7 +135,8 @@ hoy = hoy.isoformat()
 #    (MFF_CATALOGO.soporte), y la tabla de valor de los equipos (MFF_VALOR) trae los pesos de PvP y
 #    PvE: la app ya no tiene escrito ninguno de los dos. MFF_SOPORTES trae además los liderazgos que
 #    el build deriva de la Leader Skill de la API ("src": "api", scripts/liderazgos.py), que la app de
-#    formato 7 muestra con su fuente.
+#    formato 7 muestra con su fuente. En MFF_GLOSARIO, cada C.T.P. que da un efecto dice de qué opción
+#    sale (opcion: fija o reforjado), donde la 6 decía si iba reforjado.
 FORMATO = 7
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})

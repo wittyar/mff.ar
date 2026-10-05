@@ -88,9 +88,6 @@ variante, en `docs/COMPLETITUD.md`.
   - Strikers del juego: Galactus tiene 16 y la app ninguno; los 37 visibles de Kingpin coinciden
     con la wiki. Cargarlos pide un archivo de contenido, una fuente y código nuevos (el juego por
     encima de la wiki, fila por fila) y probablemente formato 7. Falta decidir.
-  - Wall: el glosario dice «Lo da: Conquest sin reforjar», pero va en la opción fija, que el C.T.P.
-    conserva al reforjarlo. Arreglarlo pide cambiar `reforjado` o cómo lo escriben catalogo.py y
-    app.js.
   - Bonos de equipo: las capturas no resuelven el pendiente de más abajo, porque los integrantes
     solo se ven por retrato. Para eso, capturar «TEAM BONUS PER CHARACTER» de cada candidato (la
     barra muestra el nombre) y la lista de Galactus hasta el final (Heralds #3).

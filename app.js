@@ -470,8 +470,12 @@ const T = {
   gl_difiere_tag:    { es:'el inglés difiere', en:'English differs' },
   gl_en_ko:          { es:'Inglés y coreano:',  en:'English and Korean:' },
   gl_lo_da:          { es:'Lo da:',             en:'Granted by:' },
-  gl_reforjado:      { es:'reforjado',          en:'reforged' },
-  gl_sin_reforjar:   { es:'sin reforjar',       en:'not reforged' },
+  gl_op_fija:        { es:'opción fija',        en:'locked option' },
+  gl_op_fija_t:      { es:'La opción fija del C.T.P. (고정 옵션): la tienen el de 6★ y los reforjados (Mighty y Brilliant).',
+                       en:"The C.T.P.'s locked option (고정 옵션): the 6★ one and the reforged ones (Mighty and Brilliant) have it." },
+  gl_op_reforjado:   { es:'opción de reforjado', en:'reforge option' },
+  gl_op_reforjado_t: { es:'Una opción de reforjado del C.T.P. (재련 옵션): solo la tienen los reforjados (Mighty y Brilliant).',
+                       en:"One of the C.T.P.'s reforge options (재련 옵션): only the reforged ones (Mighty and Brilliant) have it." },
   gl_en_catalogo:    { es:'En el catálogo:',    en:'In the catalog:' },
   gl_termino:        { es:'Término del glosario del juego', en:'In-game glossary term' },
   gl_en_skills:      { es:'En las skills:',     en:'In skills:' },
@@ -3843,7 +3847,8 @@ function enlaceGl (destino, texto, titulo) {
   return `<a href="#${destino}" class="tag ghost" data-a="irGlos" data-v="${destino}"${titulo ? ` title="${h(titulo)}"` : ''}>${h(texto)}</a>`;
 }
 /** Un término del juego: sus nombres (el del idioma de la app primero), qué dice, lo que el inglés
- *  traduce distinto, qué C.T.P. lo da y a qué efectos del catálogo corresponde. */
+ *  traduce distinto, qué C.T.P. lo da y de qué opción sale (la fija o una de reforjado), y a qué efectos del
+ *  catálogo corresponde. */
 function terminoGl (x, errores) {
   const otros = otrosNombresGl(x).join(' · ');
   return `<div class="glterm" id="gl-${x.id}">
@@ -3853,8 +3858,8 @@ function terminoGl (x, errores) {
     <p>${h(bi(x.que))}</p>
     ${x.difiere ? `<div class="gldifbox"><b>${h(t('gl_en_ko'))}</b> ${h(bi(x.difiere))}
       ${x.error ? `<div class="row">${enlaceGl('gle-' + x.error, bi(errores[x.error].titulo))}</div>` : ''}</div>` : ''}
-    ${x.ctp ? `<div class="muted">${h(t('gl_lo_da'))} ${x.ctp.map(c =>
-      h(CTPS.find(k => k.id === c.id).name + ' ' + t(c.reforjado ? 'gl_reforjado' : 'gl_sin_reforjar'))).join(', ')}</div>` : ''}
+    ${x.ctp ? `<div class="muted">${h(t('gl_lo_da'))} ${x.ctp.map(c => `${h(CTPS.find(k => k.id === c.id).name)} (<span title="${
+      h(t('gl_op_' + c.opcion + '_t'))}">${h(t('gl_op_' + c.opcion))}</span>)`).join(', ')}</div>` : ''}
     ${x.nota ? `<div class="muted">${h(bi(x.nota))}</div>` : ''}
     ${x.efectos.length ? `<div class="row"><span class="muted">${h(t('gl_en_catalogo'))}</span>${
       x.efectos.map(id => enlaceGl('ef-' + id, bi(GL_DE[id].e))).join('')}</div>` : ''}

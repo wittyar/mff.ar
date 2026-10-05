@@ -527,11 +527,11 @@
    "ctp": [
     {
      "id": "regeneration",
-     "reforjado": true
+     "opcion": "reforjado"
     },
     {
      "id": "transcendence",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "nota": {
@@ -557,11 +557,11 @@
    "ctp": [
     {
      "id": "energy",
-     "reforjado": true
+     "opcion": "reforjado"
     },
     {
      "id": "transcendence",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -588,7 +588,7 @@
    "ctp": [
     {
      "id": "judgement",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -610,7 +610,7 @@
    "ctp": [
     {
      "id": "authority",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -649,7 +649,7 @@
    "ctp": [
     {
      "id": "destruction",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -671,7 +671,7 @@
    "ctp": [
     {
      "id": "greed",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "nota": {
@@ -716,7 +716,7 @@
    "ctp": [
     {
      "id": "veteran",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -738,7 +738,7 @@
    "ctp": [
     {
      "id": "patience",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -777,7 +777,7 @@
    "ctp": [
     {
      "id": "rage",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -799,7 +799,7 @@
    "ctp": [
     {
      "id": "refinement",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -821,16 +821,18 @@
    "ctp": [
     {
      "id": "conquest",
-     "reforjado": false
+     "opcion": "fija"
     }
    ],
    "nota": {
-    "es": "En Conquest sin reforjar se activa con la vida por debajo del 50%.",
-    "en": "On an unreforged Conquest it triggers with HP below 50%."
+    "es": "En Conquest se activa con la vida al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»).",
+    "en": "On Conquest it triggers at 50% HP or less, per the Korean card (\"HP가 50% 이하일 때\"; in English, \"below 50%\")."
    },
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-ctp",
+    "juego-ctp-ko",
     "tv-ctps"
    ]
   },
@@ -847,7 +849,7 @@
    "ctp": [
     {
      "id": "conquest",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
@@ -936,7 +938,7 @@
    "ctp": [
     {
      "id": "competition",
-     "reforjado": true
+     "opcion": "reforjado"
     }
    ],
    "fuente": [
