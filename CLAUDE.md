@@ -63,10 +63,10 @@ variante, en `docs/COMPLETITUD.md`.
   Galaxia) y la sección 11 de `docs/AUDITORIA.md` con las dos probabilidades de striker de más de
   100% (Daken: Doctor Octopus, 219%; Molecule Man: Morgan le Fay, 120%), contadas en el resumen.
   Después, verif_consistencia tiene que pasar con los datos del repo.
-- Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir (C.T.P.
-  recomendado, líder del trío, «le sirve», los liderazgos que Leads & Supports no publica, si el
-  soporte propio cuenta para su dueño y qué es anti-mermas, los strikers fuera de PvP y PvE, y los
-  recomendados de Modos contra la función en PvP y PvE). verif_consistencia las tiene listadas.
+- Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir (líder del
+  trío, «le sirve», los liderazgos que Leads & Supports no publica, si el soporte propio cuenta para
+  su dueño y qué es anti-mermas, los strikers fuera de PvP y PvE, y los recomendados de Modos contra
+  la función en PvP y PvE). verif_consistencia las tiene listadas.
 
 - Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
   - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e

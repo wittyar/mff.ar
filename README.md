@@ -62,7 +62,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     facción...), si no le sirve (un buff de algo que él no usa) y cómo se lee en PvE y en PvP,
     con su certeza y su fuente. Marca lo que la fuente no dice: el «Give Power» que no trae qué
     otorga y lo que el catálogo todavía no clasifica.
-  - *Armado*: su C.T.P. según la Ideal CTP List, la guía de principiantes y la guía de armado
+  - *Armado*: su **C.T.P. recomendado** sin contexto, en PvP y en PvE, con su fuente (lo mismo
+    que dicen sus tarjetas de equipo: la guía de armado y, si no le da ninguno, la Ideal CTP
+    List), y de dónde sale: la Ideal CTP List, la guía de principiantes y la guía de armado
     (esta dice en qué lugar lo pone —mejor, segundo, meta y fuera del meta de PvE y de PvP— y
     si va reforjado); su artefacto con los valores por nivel de estrellas y si lo necesita
     según la guía de armado; el ISO-8 (cada categoría con sus sets) y el obelisco de la guía de
@@ -96,9 +98,11 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     defensas, vida y quita todos los debuffs: de cada pareja queda la mejor combinación de uniformes
     que las cumple todas). Cada una dice su líder y su **cobertura** (lo que recibe él en
     ese equipo, por categoría del índice); en *Por qué*, la suma de lo que le llega, por beneficio,
-    y el desglose por origen con el link a cada habilidad; y, plegados, los **C.T.P.** de cada
-    integrante según la guía de armado (los de PvP o de PvE en ese contexto; si no, el mejor y el
-    segundo). Se marca con ★ como favorita, se arma
+    y el desglose por origen con el link a cada habilidad; y, plegados, los **C.T.P.**
+    recomendados a cada integrante, con su fuente: los de la guía de armado (los de PvP o de PvE en
+    ese contexto; si no, el mejor y el segundo) y, si la guía no le da ninguno, los de la Ideal CTP
+    List («Not worth» se dice). Lo mismo en tus equipos (según su modo), en «cómo entraría» y en
+    Favoritos (en el orden en que se marcó). Se marca con ★ como favorita, se arma
     para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
     personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan

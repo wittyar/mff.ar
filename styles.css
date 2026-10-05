@@ -681,6 +681,12 @@ details.ctp summary .tag{margin-left:auto}
 /* guía de armado de Cynicalex */
 details.ctp summary .ctproles{margin-left:auto;display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;min-width:0}
 details.ctp summary .ctproles .tag{margin-left:0}
+/* C.T.P. recomendado en cada contexto (ficha), con su fuente */
+ul.ctprec{list-style:none;margin:6px 0 4px;padding:0;font-size:12.5px;display:flex;flex-direction:column;gap:6px}
+ul.ctprec li > b{display:inline-block;min-width:92px;color:var(--text-2)}
+ul.ctprec li > .row{display:inline-flex;flex-wrap:wrap;vertical-align:middle}
+.tag.ctpfuente{font-size:10px;white-space:normal;text-transform:none;letter-spacing:0;max-width:100%}
+.ga-eq th .tag.ctpfuente{display:table;margin-top:3px;font-weight:600}
 .isocat{margin-bottom:8px}
 .isocat > b{display:block;margin-bottom:3px}
 .isocat .isoset{margin:0 0 3px 10px;font-size:12.5px}
