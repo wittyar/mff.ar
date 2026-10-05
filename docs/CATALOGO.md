@@ -14,7 +14,7 @@ thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo 
   - [Probable] Se deduce del texto del efecto.
   - [Conjetura] Suposición sin fuente.
 - **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.
-- **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos los dan.
+- **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos los dan, si se acumulan y su tope (ver *Qué se acumula y los topes*, al final).
 
 16 grupos, 131 efectos, 228 etiquetas de skills y 83 stats de Leads & Supports y de bonos de equipo. Todo lo que traen los datos está clasificado.
 
@@ -49,7 +49,7 @@ Sube un ataque, el stat del que sale el daño.
   - `PHYSICAL ATTACK ↑` (114 retratos)
   - `Explosion`, con `Physical Attack increases by #% every # sec (up to #%)` (26 retratos) — varía: crece cada unos segundos
 - **Leads & Supports y bonos de equipo:**
-  - `Physical Attack` (57 retratos, 253 bonos de equipo)
+  - `Physical Attack` (57 retratos, 253 bonos de equipo) — se acumula
 
 ### Ataque de energía
 
@@ -60,7 +60,7 @@ Sube un ataque, el stat del que sale el daño.
   - `Explosion`, con `Energy Attack increases by #% every # sec (up to #%)` (26 retratos) — varía: crece cada unos segundos
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of Energy Attack each #% of pure damage accumulated` (2 retratos) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
-  - `Energy Attack` (81 retratos, 181 bonos de equipo)
+  - `Energy Attack` (81 retratos, 181 bonos de equipo) — se acumula
 
 ### Todos los ataques básicos
 
@@ -93,8 +93,8 @@ Sube un ataque, el stat del que sale el daño.
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
-  - `All Basic Attacks` (180 retratos, 556 bonos de equipo)
-  - `All Basic Attacks (Stackable)` (5 retratos) — varía: se acumula
+  - `All Basic Attacks` (180 retratos, 556 bonos de equipo) — se acumula
+  - `All Basic Attacks (Stackable)` (5 retratos) — se acumula; varía: se acumula
 
 ## Daño
 
@@ -126,7 +126,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `SKILL AND BONUS DAMAGE ↑` (627 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Skill Damage` (6 retratos)
+  - `Skill Damage` (6 retratos) — se acumula
 
 ### Daño extra (Bonus)
 
@@ -136,7 +136,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `SKILL AND BONUS DAMAGE ↑` (627 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Bonus Damage` (6 retratos)
+  - `Bonus Damage` (6 retratos) — se acumula
 
 ### Daño físico
 
@@ -144,7 +144,7 @@ Sube el daño que hace, aparte del ataque.
 
 - **Nota:** Solo lo escribe la wiki, en los bonos de equipo Best Friends y Cosmic Cube Connection; ni Leads & Supports ni el juego (en las capturas) usan ese stat. A quién le sirve: a quien hace daño físico, como los ataques (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Physical Damage` (2 bonos de equipo)
+  - `Physical Damage` (2 bonos de equipo) — se acumula
 
 ### Daño de energía
 
@@ -152,7 +152,7 @@ Sube el daño que hace, aparte del ataque.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo Mind Invader; ni Leads & Supports ni el juego (en las capturas) usan ese stat. A quién le sirve: a quien hace daño de energía, como los ataques (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Energy Damage` (1 bono de equipo)
+  - `Energy Damage` (1 bono de equipo) — se acumula
 
 ### Daño final
 
@@ -184,16 +184,16 @@ Sube el daño que hace, aparte del ataque.
   - `All Basic Damage Increased Except Specific Species` (1 retrato) — contra todos menos una raza (cada skill dice cuál)
   - `Luck` (1 retrato) — contra todos menos los jefes
 - **Leads & Supports y bonos de equipo:**
-  - `Basic Damage Dealt to Villains` (85 retratos) — contra una facción: Supervillano
-  - `Basic Damage Dealt to Boss Types` (44 retratos) — contra jefes
-  - `Basic Damage Dealt to Heroes` (41 retratos) — contra una facción: Superhéroe
-  - `Basic Damage Dealt to Males` (6 retratos) — contra un género: Masculino
-  - `Basic Damage Dealt to Enemies with 25% HP or Higher` (4 retratos) — contra rivales con la vida alta
-  - `Basic Damage Dealt to Universals` (3 retratos) — contra un tipo: Universal
-  - `Basic Damage Dealt to Enemies except Mutant Characters` (1 retrato) — contra todos menos una raza: Mutante
-  - `Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect` (1 retrato) — contra rivales con un efecto dado
-  - `Basic Damage Dealt to Enemies with "Removes All Debuffs" Effect` (1 retrato) — contra rivales con un efecto dado
-  - `Basic Damage Dealt to Females` (1 retrato) — contra un género: Femenino
+  - `Basic Damage Dealt to Villains` (85 retratos) — se acumula; contra una facción: Supervillano
+  - `Basic Damage Dealt to Boss Types` (44 retratos) — se acumula; contra jefes
+  - `Basic Damage Dealt to Heroes` (41 retratos) — se acumula; contra una facción: Superhéroe
+  - `Basic Damage Dealt to Males` (6 retratos) — se acumula; contra un género: Masculino
+  - `Basic Damage Dealt to Enemies with 25% HP or Higher` (4 retratos) — se acumula; contra rivales con la vida alta
+  - `Basic Damage Dealt to Universals` (3 retratos) — se acumula; contra un tipo: Universal
+  - `Basic Damage Dealt to Enemies except Mutant Characters` (1 retrato) — se acumula; contra todos menos una raza: Mutante
+  - `Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect` (1 retrato) — se acumula; contra rivales con un efecto dado
+  - `Basic Damage Dealt to Enemies with "Removes All Debuffs" Effect` (1 retrato) — se acumula; contra rivales con un efecto dado
+  - `Basic Damage Dealt to Females` (1 retrato) — se acumula; contra un género: Femenino
 
 ### Probabilidad de crítico
 
@@ -207,7 +207,7 @@ Sube el daño que hace, aparte del ataque.
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate each #% of pure damage accumulated` (7 retratos) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
-  - `Critical Rate` (7 retratos, 355 bonos de equipo)
+  - `Critical Rate` (7 retratos, 355 bonos de equipo) — se acumula; tope: Prob. de crítico 75%
 
 ### Crítico garantizado
 
@@ -220,7 +220,7 @@ Sube el daño que hace, aparte del ataque.
   - `GUARANTEED CRITICAL RATE ↑` (209 retratos)
   - `Precision` (15 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Guaranteed Critical Rate` (10 retratos)
+  - `Guaranteed Critical Rate` (10 retratos) — se acumula; Nota: Se acumula [Conjetura]: le suma un valor fijo a la probabilidad de crítico (el glosario en coreano), como un stat. Sin tope: la guía solo dice que no sufre la reducción por el nivel del rival.
 
 ### Daño crítico
 
@@ -235,7 +235,7 @@ Sube el daño que hace, aparte del ataque.
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
-  - `Critical Damage` (10 retratos, 347 bonos de equipo)
+  - `Critical Damage` (10 retratos, 347 bonos de equipo) — se acumula; tope: Daño crítico 200% (desde 100%)
 
 ### Ignorar defensa
 
@@ -246,7 +246,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `IGNORE DEFENSE` (139 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Defense` (1 retrato, 217 bonos de equipo)
+  - `Ignore Defense` (1 retrato, 217 bonos de equipo) — se acumula; tope: Perforación de defensa (Ignore Defense) 50%
 
 ### Daño de golpe en cadena
 
@@ -256,7 +256,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `CHAIN HIT DMG DEALT ↑` (239 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Chain Hit Damage` (5 retratos)
+  - `Chain Hit Damage` (5 retratos) — se acumula
 
 ### Ignora la reducción de daño del rival (no jefes)
 
@@ -267,7 +267,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `Excluding bosses, ignores enemy's damage decrease` (24 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Non-Boss Damage Decrease` (3 retratos)
+  - `Ignore Non-Boss Damage Decrease` (3 retratos) — se acumula; Nota: Se acumula [Conjetura]: es un porcentaje, como ignorar la defensa.
 
 ### Ignora los aumentos y reducciones entre facciones
 
@@ -277,7 +277,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `Ignores Damage Increase effect between factions` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` (1 retrato)
+  - `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez [Conjetura]: no tiene número; ignora o no ignora, como una habilidad.
 
 ### Acumula daño
 
@@ -300,7 +300,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `DEBUFF EFFECT ↑` (34 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `All Debuffs Effect` (12 retratos) — le sirve: a cualquiera del equipo
+  - `All Debuffs Effect` (12 retratos) — le sirve: a cualquiera del equipo; se acumula
 
 ### Efecto de los buffs
 
@@ -320,7 +320,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `ADDITIONAL PIERCE DAMAGE INCREASE` (36 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Additional Pierce Damage` (1 retrato)
+  - `Additional Pierce Damage` (1 retrato) — se acumula
 
 ## Elemento
 
@@ -336,8 +336,8 @@ Sube el daño de un elemento.
 - **Skills:**
   - `FLAME DAMAGE ↑` (43 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Fire Damage` (18 retratos)
-  - `Fire Damage by % Fire Resist` (2 retratos) — varía: según su resistencia al fuego
+  - `Fire Damage` (18 retratos) — se acumula
+  - `Fire Damage by % Fire Resist` (2 retratos) — se acumula; varía: según su resistencia al fuego
 
 ### Daño de frío
 
@@ -346,7 +346,7 @@ Sube el daño de un elemento.
 - **Skills:**
   - `COLD DAMAGE ↑` (14 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Cold Damage` (1 retrato)
+  - `Cold Damage` (1 retrato) — se acumula
 
 ### Daño de rayo
 
@@ -355,7 +355,7 @@ Sube el daño de un elemento.
 - **Skills:**
   - `LIGHTNING DAMAGE ↑` (43 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Lightning Damage` (11 retratos)
+  - `Lightning Damage` (11 retratos) — se acumula
 
 ### Daño de veneno
 
@@ -364,7 +364,7 @@ Sube el daño de un elemento.
 - **Skills:**
   - `POISON DAMAGE ↑` (8 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Poison Damage` (1 retrato)
+  - `Poison Damage` (1 retrato) — se acumula
 
 ### Daño mental
 
@@ -373,7 +373,7 @@ Sube el daño de un elemento.
 - **Skills:**
   - `MIND DAMAGE ↑` (31 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Mind Damage` (4 retratos)
+  - `Mind Damage` (4 retratos) — se acumula
 
 ### Daño de todos los elementos
 
@@ -383,7 +383,7 @@ Sube el daño de un elemento.
   - `ALL ELEMENT DAMAGE INCREASE` (14 retratos)
   - `ALL ELEMENT DAMAGE ↑` (13 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `All Element Damage` (9 retratos)
+  - `All Element Damage` (9 retratos) — se acumula
 
 ### Daño de su elemento
 
@@ -410,7 +410,7 @@ Que el golpe entre o atraviese protecciones.
 - **Skills:**
   - `IGNORE DODGE` (631 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Dodge` (92 retratos)
+  - `Ignore Dodge` (92 retratos) — se acumula
 
 ### Perforación
 
@@ -846,8 +846,8 @@ Sube las defensas.
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `Condensed Power` (1 retrato) — varía: se acumula
 - **Leads & Supports y bonos de equipo:**
-  - `All Basic Defenses` (49 retratos, 280 bonos de equipo)
-  - `Super Armor, All Basic Defenses` (9 retratos)
+  - `All Basic Defenses` (49 retratos, 280 bonos de equipo) — se acumula
+  - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: Se acumula [Conjetura]: la superarmadura cuenta una vez, pero el número es el de las defensas que vienen con ella, y la defensa se suma (Ezequiel, 5 de octubre de 2026).
 
 ### Defensa física
 
@@ -856,7 +856,7 @@ Sube las defensas.
 - **Skills:**
   - `PHYSICAL DEFENSE ↑` (37 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Physical Defense` (106 bonos de equipo)
+  - `Physical Defense` (106 bonos de equipo) — se acumula
 
 ### Defensa de energía
 
@@ -865,7 +865,7 @@ Sube las defensas.
 - **Skills:**
   - `ENERGY DEFENSE ↑` (14 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Energy Defense` (5 retratos, 66 bonos de equipo)
+  - `Energy Defense` (5 retratos, 66 bonos de equipo) — se acumula
 
 ### «Critical Defense» (como lo escribe la wiki)
 
@@ -873,7 +873,7 @@ Sube las defensas.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo Fight for Wakanda; ni Leads & Supports ni el juego (en las capturas) usan ese stat. No se sabe qué sube exactamente. A quién le sirve: a cualquiera (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Critical Defense` (1 bono de equipo)
+  - `Critical Defense` (1 bono de equipo) — se acumula
 
 ### Superarmadura
 
@@ -884,7 +884,7 @@ Sube las defensas.
 - **Skills:**
   - `SUPER ARMOR` (329 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Super Armor, All Basic Defenses` (9 retratos)
+  - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: Se acumula [Conjetura]: la superarmadura cuenta una vez, pero el número es el de las defensas que vienen con ella, y la defensa se suma (Ezequiel, 5 de octubre de 2026).
 
 ## Vida
 
@@ -903,7 +903,7 @@ Vida, curación, escudos y revivir.
   - `MAX HP ↑` (167 retratos)
   - `Demonization (Darkchylde)` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `HP` (62 retratos, 342 bonos de equipo)
+  - `HP` (62 retratos, 342 bonos de equipo) — se acumula
 
 ### Curación
 
@@ -916,8 +916,8 @@ Vida, curación, escudos y revivir.
   - `FORTITUDE` (6 retratos)
   - `Recovers HP per summoned character.` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Heal` (17 retratos)
-  - `Immortality + Heal` (1 retrato)
+  - `Heal` (17 retratos) — se acumula; Nota: Se acumula [Conjetura]: cada curación es aparte, no un estado que se repite.
+  - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez [Conjetura]: la inmortalidad es una habilidad, y la curación viene con ella.
 
 ### Recuperación
 
@@ -928,7 +928,7 @@ Vida, curación, escudos y revivir.
 - **Skills:**
   - `RECOVERY RATE ↑` (24 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Recovery Rate` (9 retratos, 106 bonos de equipo)
+  - `Recovery Rate` (9 retratos, 106 bonos de equipo) — se acumula; tope: Tasa de recuperación 250% (desde 100%)
 
 ### Robo de vida
 
@@ -951,7 +951,7 @@ Vida, curación, escudos y revivir.
   - `SUPER HIT SHIELD` (12 retratos) — Nota: Se recarga cada vez que su ataque le pega a un rival; no se puede quitar con «quitar buffs» y la perforación no lo afecta (glosario del juego).
   - `PHYSICAL SHIELD` (4 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Max HP Shield` (2 retratos)
+  - `Max HP Shield` (2 retratos) — cuenta una vez (la de mayor valor)
 
 ### Barrera
 
@@ -963,7 +963,7 @@ Vida, curación, escudos y revivir.
 - **Skills:**
   - `BARRIER` (251 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Barrier` (2 retratos)
+  - `Barrier` (2 retratos) — cuenta una vez (la de mayor valor)
 
 ### Revivir
 
@@ -974,7 +974,7 @@ Vida, curación, escudos y revivir.
   - `REVIVE` (38 retratos)
   - `Appearance` (3 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Revive with % HP` (2 retratos)
+  - `Revive with % HP` (2 retratos) — cuenta una vez (la de mayor valor)
 
 ### No muere por un tiempo
 
@@ -984,8 +984,8 @@ Vida, curación, escudos y revivir.
   - `FORTITUDE` (6 retratos)
   - `Death Throes` (3 retratos) — Nota: Al terminar, muere. La rotura de guardia lo afecta igual y el efecto no se puede quitar (glosario del juego).
 - **Leads & Supports y bonos de equipo:**
-  - `Immortality + Death` (1 retrato)
-  - `Immortality + Heal` (1 retrato)
+  - `Immortality + Death` (1 retrato) — cuenta una vez (la de mayor valor)
+  - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez [Conjetura]: la inmortalidad es una habilidad, y la curación viene con ella.
 
 ## Reducción de daño
 
@@ -1023,7 +1023,7 @@ Recibe menos daño o lo evita.
   - `Decreases all basic damage` (378 retratos)
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
 - **Leads & Supports y bonos de equipo:**
-  - `Basic Damage Received` (15 retratos)
+  - `Basic Damage Received` (15 retratos) — se acumula
 
 ### Menos daño recibido de ciertos rivales
 
@@ -1040,9 +1040,9 @@ Recibe menos daño o lo evita.
   - `DECREASES BASIC DAMAGE WHEN ATTACKED BY CHARACTERS WITH ABILITIES` (2 retratos) — contra quien tiene una habilidad (cada skill dice cuál)
   - `Luck` (1 retrato) — contra todos menos los jefes
 - **Leads & Supports y bonos de equipo:**
-  - `Basic Damage Received from Villains` (34 retratos) — contra una facción: Supervillano; Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
-  - `Basic Damage Received from Heroes` (7 retratos) — contra una facción: Superhéroe
-  - `Basic Damage Received from Universals` (3 retratos) — contra un tipo: Universal
+  - `Basic Damage Received from Villains` (34 retratos) — se acumula; contra una facción: Supervillano; Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
+  - `Basic Damage Received from Heroes` (7 retratos) — se acumula; contra una facción: Superhéroe
+  - `Basic Damage Received from Universals` (3 retratos) — se acumula; contra un tipo: Universal
 
 ### Menos daño físico recibido
 
@@ -1068,7 +1068,7 @@ Recibe menos daño o lo evita.
 - **Skills:**
   - `PHYSICAL IMMUNITY` (27 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Physical Immunity Chance` (1 retrato)
+  - `Physical Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
 
 ### Inmune al daño de energía (probabilidad)
 
@@ -1091,9 +1091,9 @@ Recibe menos daño o lo evita.
   - `LIGHTNING IMMUNITY` (5 retratos)
   - `POISON IMMUNITY` (4 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Lightning Immunity Chance` (2 retratos)
-  - `Fire Immunity Chance` (1 retrato)
-  - `Mind Immunity Chance` (1 retrato)
+  - `Lightning Immunity Chance` (2 retratos) — cuenta una vez (la de mayor valor)
+  - `Fire Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
+  - `Mind Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
 
 ### Ignora el daño que pase de un % de su vida
 
@@ -1119,7 +1119,7 @@ Recibe menos daño o lo evita.
 - **Skills:**
   - `CHAIN HIT DMG RECEIVED ↓` (23 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Chain Hit Damage Received` (10 retratos)
+  - `Chain Hit Damage Received` (10 retratos) — se acumula
 
 ### Menos daño de perforación recibido
 
@@ -1138,7 +1138,7 @@ Recibe menos daño o lo evita.
   - `Counter Reflect`, con `Decreases damage received from reflected effects by #%.Effect: Reflect All Attacks` (17 retratos) — Nota: El texto dice de qué reflejo protege; en un caso la fuente lo publica como código.
   - `Counter Reflect`, con `Decreases damage received from reflected effects by #%.Effect: #` (7 retratos) — Nota: El texto dice de qué reflejo protege; en un caso la fuente lo publica como código.
 - **Leads & Supports y bonos de equipo:**
-  - `All Reflect Damage Received` (5 retratos)
+  - `All Reflect Damage Received` (5 retratos) — se acumula
 
 ### Menos daño reflejado de un golpe físico
 
@@ -1147,7 +1147,7 @@ Recibe menos daño o lo evita.
 - **Skills:**
   - `Counter Reflect`, con `Decreases damage received from reflected effects by #%.Effect: Physical Reflect` (12 retratos) — Nota: El texto dice de qué reflejo protege; en un caso la fuente lo publica como código.
 - **Leads & Supports y bonos de equipo:**
-  - `Physical Reflect Damage Received` (9 retratos) — Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
+  - `Physical Reflect Damage Received` (9 retratos) — se acumula; Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
 
 ### Evasión
 
@@ -1160,7 +1160,7 @@ Recibe menos daño o lo evita.
   - `INVISIBILITY` (36 retratos)
   - `Camouflage` (8 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Dodge` (6 retratos, 294 bonos de equipo)
+  - `Dodge` (6 retratos, 294 bonos de equipo) — se acumula; tope: Evasión 75%
 
 ### «Max Dodge» (como lo escribe la wiki)
 
@@ -1168,7 +1168,7 @@ Recibe menos daño o lo evita.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo Puppet Show; ni Leads & Supports ni el juego (en las capturas) usan ese stat. No se sabe qué sube exactamente. A quién le sirve: a cualquiera (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Max Dodge` (1 bono de equipo)
+  - `Max Dodge` (1 bono de equipo) — se acumula; Nota: Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat.
 
 ### Evasión garantizada
 
@@ -1212,11 +1212,11 @@ Recibe menos daño o lo evita.
   - `COLD RESIST ↑` (3 retratos)
   - `POISON RESIST ↑` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `Mind Resist` (5 retratos, 1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia mental
-  - `All Resistances` (5 retratos) — le sirve: a quien tiene una mejora de daño según alguna resistencia (de su artefacto o de su Striker)
-  - `Fire Resist` (2 retratos, 7 bonos de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al fuego
-  - `Cold Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al frío
-  - `Lightning Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al rayo
+  - `Mind Resist` (5 retratos, 1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia mental; se acumula; tope: Resistencia elemental 200%
+  - `All Resistances` (5 retratos) — le sirve: a quien tiene una mejora de daño según alguna resistencia (de su artefacto o de su Striker); se acumula; tope: Resistencia elemental 200%
+  - `Fire Resist` (2 retratos, 7 bonos de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al fuego; se acumula; tope: Resistencia elemental 200%
+  - `Cold Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al frío; se acumula; tope: Resistencia elemental 200%
+  - `Lightning Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al rayo; se acumula; tope: Resistencia elemental 200%
 
 ## Contra debuffs
 
@@ -1235,7 +1235,7 @@ Le saca los debuffs o lo hace inmune a ellos.
   - `Removes all Debuffs. ` (409 retratos)
   - `Parry` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Remove All Debuffs` (81 retratos)
+  - `Remove All Debuffs` (81 retratos) — cuenta una vez (la de mayor valor)
 
 ### Inmunidad a debuffs
 
@@ -1246,7 +1246,7 @@ Le saca los debuffs o lo hace inmune a ellos.
 - **Skills:**
   - `IMMUNE` (13 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Debuff Immunity` (3 retratos)
+  - `Debuff Immunity` (3 retratos) — cuenta una vez (la de mayor valor)
 
 ### Inmune a un debuff
 
@@ -1255,10 +1255,10 @@ Le saca los debuffs o lo hace inmune a ellos.
 - **Skills:**
   - `RESIST` (94 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Burn Immunity` (4 retratos)
-  - `Incapacitation Immunity` (2 retratos)
-  - `Fear Immunity` (1 retrato)
-  - `Stun Immunity` (1 retrato)
+  - `Burn Immunity` (4 retratos) — cuenta una vez (la de mayor valor)
+  - `Incapacitation Immunity` (2 retratos) — cuenta una vez (la de mayor valor)
+  - `Fear Immunity` (1 retrato) — cuenta una vez (la de mayor valor)
+  - `Stun Immunity` (1 retrato) — cuenta una vez (la de mayor valor)
 
 ### Inmune a la rotura de guardia
 
@@ -1270,7 +1270,7 @@ Le saca los debuffs o lo hace inmune a ellos.
   - `GUARD BREAK IMMUNE` (38 retratos)
   - `FORTITUDE` (6 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Guard Break Immunity` (1 retrato)
+  - `Guard Break Immunity` (1 retrato) — cuenta una vez (la de mayor valor)
 
 ### Debuffs más cortos
 
@@ -1281,8 +1281,8 @@ Le saca los debuffs o lo hace inmune a ellos.
 - **Skills:**
   - `CROWD CONTROL TIME ↓` (75 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Debuff Duration` (10 retratos)
-  - `Crowd Control Time` (178 bonos de equipo)
+  - `Debuff Duration` (10 retratos) — se acumula
+  - `Crowd Control Time` (178 bonos de equipo) — se acumula
 
 ## Velocidad y recarga
 
@@ -1306,7 +1306,7 @@ Velocidades, recarga de skills y cargas.
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
   - `ALL SPEED ↑(Can Stack)` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `All Speeds` (25 retratos, 2 bonos de equipo) — le sirve: a nadie
+  - `All Speeds` (25 retratos, 2 bonos de equipo) — le sirve: a nadie; se acumula; tope: Vel. de ataque 130% (desde 100%), Vel. de movimiento 130% (desde 100%)
 
 ### Velocidad de ataque
 
@@ -1317,7 +1317,7 @@ Velocidades, recarga de skills y cargas.
 - **Skills:**
   - `ATTACK SPEED ↑` (12 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Attack Speed` (368 bonos de equipo)
+  - `Attack Speed` (368 bonos de equipo) — se acumula; tope: Vel. de ataque 130% (desde 100%)
 
 ### Velocidad de movimiento
 
@@ -1328,7 +1328,7 @@ Velocidades, recarga de skills y cargas.
 - **Skills:**
   - `MOVEMENT SPEED ↑` (4 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Movement Speed` (236 bonos de equipo)
+  - `Movement Speed` (236 bonos de equipo) — se acumula; tope: Vel. de movimiento 130% (desde 100%)
 
 ### Recarga de skills
 
@@ -1339,7 +1339,7 @@ Velocidades, recarga de skills y cargas.
 - **Skills:**
   - `COOLDOWN DURATION ↓` (61 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Skill Cooldown` (1 retrato, 242 bonos de equipo)
+  - `Skill Cooldown` (1 retrato, 242 bonos de equipo) — se acumula; tope: Recarga de skills (Skill Cooldown) 50%
 
 ### Reinicia o fija la recarga de una skill
 
@@ -1373,8 +1373,8 @@ Velocidades, recarga de skills y cargas.
 - **Skills:**
   - `DURATION INCREASE` (12 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `1s Pierce Duration Increase` (1 retrato)
-  - `1s Snare Duration Increase` (1 retrato)
+  - `1s Pierce Duration Increase` (1 retrato) — se acumula
+  - `1s Snare Duration Increase` (1 retrato) — se acumula
 
 ## Reflejo
 
@@ -1409,7 +1409,7 @@ Pone unidades a pelear.
   - `SUMMON` (84 retratos)
   - `Target Duplication` (5 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Summon` (1 retrato)
+  - `Summon` (1 retrato) — cuenta una vez (la de mayor valor)
 
 ### Mejora sus invocaciones
 
@@ -1457,7 +1457,7 @@ Mecánicas propias de un personaje.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo A-Force #2; ni Leads & Supports ni el juego (en las capturas) usan ese stat. No se sabe qué sube exactamente. A quién le sirve: a cualquiera (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Attack Defense` (1 bono de equipo)
+  - `Attack Defense` (1 bono de equipo) — se acumula; Nota: Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat.
 
 ### Tamaño
 
@@ -1467,6 +1467,98 @@ Mecánicas propias de un personaje.
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
+
+## Qué se acumula y los topes
+
+Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (Ezequiel, 5 de octubre de 2026): las estadísticas se suman; las habilidades (los anti-mermas, las inmunidades, la barrera, los escudos, revivir, invocar, la inmortalidad) cuentan una vez, la de mayor valor y, a igual valor, la primera en este orden: la propia, la del liderazgo del líder y la de los soportes de los demás (docs/MODELO.md, *Efectos iguales*). El tope es el de la guía ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)): con lo que suman los buffs, la app avisa si pasa lo que queda hasta el tope.
+
+65 stats se acumulan y 18 cuentan una vez; 14 tienen tope.
+
+| Stat | Si llega de dos fuentes | Tope | Nota |
+|---|---|---|---|
+| `Barrier` | cuenta una vez (la de mayor valor) | — |  |
+| `Burn Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Debuff Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Fear Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Fire Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Guard Break Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` | cuenta una vez (la de mayor valor) | — | Cuenta una vez [Conjetura]: no tiene número; ignora o no ignora, como una habilidad. |
+| `Immortality + Death` | cuenta una vez (la de mayor valor) | — |  |
+| `Immortality + Heal` | cuenta una vez (la de mayor valor) | — | Cuenta una vez [Conjetura]: la inmortalidad es una habilidad, y la curación viene con ella. |
+| `Incapacitation Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Lightning Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Max HP Shield` | cuenta una vez (la de mayor valor) | — |  |
+| `Mind Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Physical Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Remove All Debuffs` | cuenta una vez (la de mayor valor) | — |  |
+| `Revive with % HP` | cuenta una vez (la de mayor valor) | — |  |
+| `Stun Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Summon` | cuenta una vez (la de mayor valor) | — |  |
+| `1s Pierce Duration Increase` | se acumula | — |  |
+| `1s Snare Duration Increase` | se acumula | — |  |
+| `Additional Pierce Damage` | se acumula | — |  |
+| `All Basic Attacks` | se acumula | — |  |
+| `All Basic Attacks (Stackable)` | se acumula | — |  |
+| `All Basic Defenses` | se acumula | — |  |
+| `All Debuffs Effect` | se acumula | — |  |
+| `All Element Damage` | se acumula | — |  |
+| `All Reflect Damage Received` | se acumula | — |  |
+| `All Resistances` | se acumula | Resistencia elemental 200% |  |
+| `All Speeds` | se acumula | Vel. de ataque 130% (desde 100%), Vel. de movimiento 130% (desde 100%) |  |
+| `Attack Defense` | se acumula | — | Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat. |
+| `Attack Speed` | se acumula | Vel. de ataque 130% (desde 100%) |  |
+| `Basic Damage Dealt to Boss Types` | se acumula | — |  |
+| `Basic Damage Dealt to Enemies except Mutant Characters` | se acumula | — |  |
+| `Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect` | se acumula | — |  |
+| `Basic Damage Dealt to Enemies with "Removes All Debuffs" Effect` | se acumula | — |  |
+| `Basic Damage Dealt to Enemies with 25% HP or Higher` | se acumula | — |  |
+| `Basic Damage Dealt to Females` | se acumula | — |  |
+| `Basic Damage Dealt to Heroes` | se acumula | — |  |
+| `Basic Damage Dealt to Males` | se acumula | — |  |
+| `Basic Damage Dealt to Universals` | se acumula | — |  |
+| `Basic Damage Dealt to Villains` | se acumula | — |  |
+| `Basic Damage Received` | se acumula | — |  |
+| `Basic Damage Received from Heroes` | se acumula | — |  |
+| `Basic Damage Received from Universals` | se acumula | — |  |
+| `Basic Damage Received from Villains` | se acumula | — | Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce. |
+| `Bonus Damage` | se acumula | — |  |
+| `Chain Hit Damage` | se acumula | — |  |
+| `Chain Hit Damage Received` | se acumula | — |  |
+| `Cold Damage` | se acumula | — |  |
+| `Cold Resist` | se acumula | Resistencia elemental 200% |  |
+| `Critical Damage` | se acumula | Daño crítico 200% (desde 100%) |  |
+| `Critical Defense` | se acumula | — |  |
+| `Critical Rate` | se acumula | Prob. de crítico 75% |  |
+| `Crowd Control Time` | se acumula | — |  |
+| `Debuff Duration` | se acumula | — |  |
+| `Dodge` | se acumula | Evasión 75% |  |
+| `Energy Attack` | se acumula | — |  |
+| `Energy Damage` | se acumula | — |  |
+| `Energy Defense` | se acumula | — |  |
+| `Fire Damage` | se acumula | — |  |
+| `Fire Damage by % Fire Resist` | se acumula | — |  |
+| `Fire Resist` | se acumula | Resistencia elemental 200% |  |
+| `Guaranteed Critical Rate` | se acumula | — | Se acumula [Conjetura]: le suma un valor fijo a la probabilidad de crítico (el glosario en coreano), como un stat. Sin tope: la guía solo dice que no sufre la reducción por el nivel del rival. |
+| `Heal` | se acumula | — | Se acumula [Conjetura]: cada curación es aparte, no un estado que se repite. |
+| `HP` | se acumula | — |  |
+| `Ignore Defense` | se acumula | Perforación de defensa (Ignore Defense) 50% |  |
+| `Ignore Dodge` | se acumula | — |  |
+| `Ignore Non-Boss Damage Decrease` | se acumula | — | Se acumula [Conjetura]: es un porcentaje, como ignorar la defensa. |
+| `Lightning Damage` | se acumula | — |  |
+| `Lightning Resist` | se acumula | Resistencia elemental 200% |  |
+| `Max Dodge` | se acumula | — | Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat. |
+| `Mind Damage` | se acumula | — |  |
+| `Mind Resist` | se acumula | Resistencia elemental 200% |  |
+| `Movement Speed` | se acumula | Vel. de movimiento 130% (desde 100%) |  |
+| `Physical Attack` | se acumula | — |  |
+| `Physical Damage` | se acumula | — |  |
+| `Physical Defense` | se acumula | — |  |
+| `Physical Reflect Damage Received` | se acumula | — | Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce. |
+| `Poison Damage` | se acumula | — |  |
+| `Recovery Rate` | se acumula | Tasa de recuperación 250% (desde 100%) |  |
+| `Skill Cooldown` | se acumula | Recarga de skills (Skill Cooldown) 50% |  |
+| `Skill Damage` | se acumula | — |  |
+| `Super Armor, All Basic Defenses` | se acumula | — | Se acumula [Conjetura]: la superarmadura cuenta una vez, pero el número es el de las defensas que vienen con ella, y la defensa se suma (Ezequiel, 5 de octubre de 2026). |
 
 ## Glosario del juego
 

@@ -1,6 +1,6 @@
 # Completitud de los datos
 
-Generado por `scripts/completitud.py` sobre `data.js` (juego 12.2.5, datos del 2026-10-05, formato 7) y `datos.json`.
+Generado por `scripts/completitud.py` sobre `data.js` (juego 12.2.5, datos del 2026-10-05, formato 8) y `datos.json`.
 
 Qué le falta a cada variante (un personaje con un uniforme) para tener la información que la app muestra y usa, y de dónde podría salir. Lo que dos fuentes dicen distinto está en `docs/AUDITORIA.md`; esto es lo que no está. Lo que no existe en el juego no es un faltante (un personaje sin artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito va aparte.
 

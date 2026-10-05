@@ -69969,6 +69969,49 @@
    ]
   },
   {
+   "id": "tv-proj-1791221730309-pkqfh",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Grayven Devil Tier List",
+   "nameEn": "Grayven Devil Tier List",
+   "source": "Grayven Devil Tier List",
+   "author": "Grayven Devil",
+   "gameVersion": "12.2.5",
+   "published": "2026-10-05",
+   "description": "Personal Opinion",
+   "notes": "",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP",
+    "Other"
+   ],
+   "rating": 0,
+   "ratings": 0,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "THE TOP"
+    },
+    {
+     "id": "tier-a",
+     "label": "GOOD"
+    },
+    {
+     "id": "tier-1791224488369",
+     "label": "MID"
+    },
+    {
+     "id": "tier-d",
+     "label": "Support"
+    },
+    {
+     "id": "tier-1791222185961",
+     "label": "trash"
+    }
+   ]
+  },
+  {
    "id": "tv-proj-1791109561322-up2b5",
    "order": 100,
    "group": "comunidad",
@@ -82114,6 +82157,398 @@
    ],
    "exodus::base": [
     "tier-1791124520486"
+   ]
+  },
+  "tv-proj-1791221730309-pkqfh": {
+   "wolverine::wolverine-10700125": [
+    "tier-s"
+   ],
+   "venom::venom-10600042": [
+    "tier-s"
+   ],
+   "ares::ares-10100237": [
+    "tier-s"
+   ],
+   "apocalypse::apocalypse-10300141": [
+    "tier-a"
+   ],
+   "captain-america::captain-america-11400001": [
+    "tier-a"
+   ],
+   "carnage::carnage-10300072": [
+    "tier-a"
+   ],
+   "mister-fantastic::mister-fantastic-10400179": [
+    "tier-a"
+   ],
+   "crescent::crescent-10300176": [
+    "tier-a"
+   ],
+   "hulk::hulk-10900002": [
+    "tier-a"
+   ],
+   "winter-soldier::winter-soldier-10500031": [
+    "tier-a"
+   ],
+   "gladiator::gladiator-10100226": [
+    "tier-a"
+   ],
+   "valkyrie::valkyrie-10300144": [
+    "tier-d"
+   ],
+   "taskmaster::taskmaster-10200216": [
+    "tier-d"
+   ],
+   "agent-venom::agent-venom-10300121": [
+    "tier-d"
+   ],
+   "silver-samurai::base": [
+    "tier-d"
+   ],
+   "rhino::rhino-10100133": [
+    "tier-d"
+   ],
+   "america-chavez::america-chavez-10300147": [
+    "tier-d"
+   ],
+   "sandman::sandman-10100130": [
+    "tier-d"
+   ],
+   "beast::beast-10400127": [
+    "tier-d"
+   ],
+   "groot::groot-10600011": [
+    "tier-d"
+   ],
+   "hulkbuster-iron-man-mark-44::hulkbuster-iron-man-mark-44-10400045": [
+    "tier-d"
+   ],
+   "the-thing::the-thing-10400182": [
+    "tier-d"
+   ],
+   "black-panther::black-panther-10400037": [
+    "tier-1791222185961"
+   ],
+   "namor::namor-10200198": [
+    "tier-1791222185961"
+   ],
+   "red-guardian::red-guardian-10200220": [
+    "tier-1791222185961"
+   ],
+   "drax::drax-10300022": [
+    "tier-1791222185961"
+   ],
+   "hercules::base": [
+    "tier-1791222185961"
+   ],
+   "doctor-octopus::doctor-octopus-10400017": [
+    "tier-1791222185961"
+   ],
+   "kingpin::kingpin-10300043": [
+    "tier-1791222185961"
+   ],
+   "cyclops::cyclops-10500123": [
+    "tier-d"
+   ],
+   "dazzler::dazzler-10100229": [
+    "tier-d"
+   ],
+   "polaris::polaris-10100256": [
+    "tier-d"
+   ],
+   "jeff-the-land-shark::base": [
+    "tier-d"
+   ],
+   "red-skull::red-skull-10300015": [
+    "tier-d"
+   ],
+   "ironheart::ironheart-10200108": [
+    "tier-d"
+   ],
+   "ebony-maw::ebony-maw-10300077": [
+    "tier-d"
+   ],
+   "jubilee::jubilee-10100194": [
+    "tier-d"
+   ],
+   "ancient-one::ancient-one-10300094": [
+    "tier-d"
+   ],
+   "weapon-hex::weapon-hex-10100172": [
+    "tier-d"
+   ],
+   "war-machine::war-machine-10800027": [
+    "tier-d"
+   ],
+   "stryfe::stryfe-10200168": [
+    "tier-a"
+   ],
+   "magik::magik-10300157": [
+    "tier-a"
+   ],
+   "emma-frost::emma-frost-10400160": [
+    "tier-a"
+   ],
+   "invisible-woman::invisible-woman-10400180": [
+    "tier-a"
+   ],
+   "gambit::gambit-10200173": [
+    "tier-a"
+   ],
+   "crystal::crystal-10300114": [
+    "tier-a"
+   ],
+   "sister-grimm::sister-grimm-10300053": [
+    "tier-a"
+   ],
+   "professor-x::professor-x-10200217": [
+    "tier-1791222185961"
+   ],
+   "star-lord::star-lord-10600036": [
+    "tier-1791222185961"
+   ],
+   "blue-dragon::blue-dragon-10100210": [
+    "tier-1791222185961"
+   ],
+   "bishop::bishop-10100193": [
+    "tier-1791222185961"
+   ],
+   "cable::cable-10500142": [
+    "tier-1791222185961"
+   ],
+   "psylocke::psylocke-10300167": [
+    "tier-1791222185961"
+   ],
+   "madelyne-pryor::madelyne-pryor-10100267": [
+    "tier-s"
+   ],
+   "adam-warlock::adam-warlock-10200152": [
+    "tier-s"
+   ],
+   "storm::storm-10400126": [
+    "tier-s"
+   ],
+   "magneto::magneto-10400129": [
+    "tier-s"
+   ],
+   "doctor-strange::doctor-strange-10600028": [
+    "tier-s"
+   ],
+   "ant-man::ant-man-10600049": [
+    "tier-1791222185961"
+   ],
+   "spider-gwen::spider-gwen-10300066": [
+    "tier-1791222185961"
+   ],
+   "x-23::x-23-10300151": [
+    "tier-1791222185961"
+   ],
+   "yelena-belova::yelena-belova-10300221": [
+    "tier-1791222185961"
+   ],
+   "shadow-shell::shadow-shell-10100212": [
+    "tier-1791222185961"
+   ],
+   "elektra::elektra-10300040": [
+    "tier-1791222185961"
+   ],
+   "scorpion::scorpion-10100236": [
+    "tier-1791222185961"
+   ],
+   "hawkeye::hawkeye-10600023": [
+    "tier-1791222185961"
+   ],
+   "falcon::falcon-10600030": [
+    "tier-1791222185961"
+   ],
+   "deadpool::deadpool-10800164": [
+    "tier-a"
+   ],
+   "spider-man::spider-man-11200010": [
+    "tier-a"
+   ],
+   "black-widow::black-widow-11100007": [
+    "tier-a"
+   ],
+   "gamora::gamora-10500012": [
+    "tier-a"
+   ],
+   "winter-soldier::winter-soldier-10600031": [
+    "tier-a"
+   ],
+   "rogue::rogue-10400128": [
+    "tier-a"
+   ],
+   "moon-knight::moon-knight-10400079": [
+    "tier-a"
+   ],
+   "ms-marvel-kamala-khan::ms-marvel-kamala-khan-10500070": [
+    "tier-a"
+   ],
+   "nick-fury::nick-fury-10300185": [
+    "tier-d"
+   ],
+   "green-goblin::green-goblin-10500018": [
+    "tier-d"
+   ],
+   "white-fox::white-fox-10300178": [
+    "tier-d"
+   ],
+   "scarlet-spider::scarlet-spider-10200231": [
+    "tier-d"
+   ],
+   "mystique::mystique-10100218": [
+    "tier-d"
+   ],
+   "angel::angel-10300159": [
+    "tier-d"
+   ],
+   "wong::wong-10300092": [
+    "tier-d"
+   ],
+   "echo::echo-10200252": [
+    "tier-d"
+   ],
+   "jean-grey::jean-grey-10400124": [
+    "tier-s"
+   ],
+   "sentry::sentry-10200235": [
+    "tier-s"
+   ],
+   "kang-the-conqueror::kang-the-conqueror-10100259": [
+    "tier-s"
+   ],
+   "knull::knull-10100241": [
+    "tier-s"
+   ],
+   "gorr::gorr-10100253": [
+    "tier-s"
+   ],
+   "galactus::base": [
+    "tier-s"
+   ],
+   "ghost-rider::ghost-rider-10500004": [
+    "tier-s"
+   ],
+   "silver-surfer::silver-surfer-10200199": [
+    "tier-s"
+   ],
+   "mephisto::mephisto-10100244": [
+    "tier-s"
+   ],
+   "odin::odin-10300105": [
+    "tier-s"
+   ],
+   "scarlet-witch::scarlet-witch-10700140": [
+    "tier-s"
+   ],
+   "loki::loki-10800014": [
+    "tier-s"
+   ],
+   "thor::thor-10900008": [
+    "tier-s"
+   ],
+   "thanos::thanos-10700075": [
+    "tier-a"
+   ],
+   "silver-surfer-shalla-bal::base": [
+    "tier-a"
+   ],
+   "doctor-doom::doctor-doom-10200183": [
+    "tier-a"
+   ],
+   "destroyer::destroyer-10200021": [
+    "tier-a"
+   ],
+   "sentinel::sentinel-10200175": [
+    "tier-a"
+   ],
+   "hades-pluto::base": [
+    "tier-a"
+   ],
+   "zeus::base": [
+    "tier-a"
+   ],
+   "black-cat::black-cat-10400009": [
+    "tier-d"
+   ],
+   "doctor-voodoo::doctor-voodoo-10200204": [
+    "tier-d"
+   ],
+   "nova-richard-rider::nova-richard-rider-10100225": [
+    "tier-d"
+   ],
+   "phyla-vell::phyla-vell-10100223": [
+    "tier-d"
+   ],
+   "hela::hela-10300106": [
+    "tier-d"
+   ],
+   "beta-ray-bill::beta-ray-bill-10100222": [
+    "tier-d"
+   ],
+   "medusa::medusa-10300109": [
+    "tier-d"
+   ],
+   "hellstorm::hellstorm-10100096": [
+    "tier-1791222185961"
+   ],
+   "vision::vision-10400029": [
+    "tier-1791222185961"
+   ],
+   "black-bolt::black-bolt-10400038": [
+    "tier-1791222185961"
+   ],
+   "luna-snow::luna-snow-10500153": [
+    "tier-s"
+   ],
+   "spider-man-miles-morales::spider-man-miles-morales-10500065": [
+    "tier-s"
+   ],
+   "bullseye::bullseye-10300044": [
+    "tier-s"
+   ],
+   "shang-chi::shang-chi-10200089": [
+    "tier-1791224488369"
+   ],
+   "punisher::punisher-10700032": [
+    "tier-1791224488369"
+   ],
+   "juggernaut::juggernaut-10200189": [
+    "tier-1791224488369"
+   ],
+   "captain-america-sharon-rogers::captain-america-sharon-rogers-10600082": [
+    "tier-1791224488369"
+   ],
+   "iron-man::iron-man-11000003": [
+    "tier-1791224488369"
+   ],
+   "human-torch::human-torch-10400181": [
+    "tier-1791224488369"
+   ],
+   "annihilus::base": [
+    "tier-1791224488369"
+   ],
+   "kid-omega::kid-omega-10100203": [
+    "tier-1791224488369"
+   ],
+   "quicksilver::quicksilver-10400139": [
+    "tier-1791224488369"
+   ],
+   "daredevil::daredevil-10400016": [
+    "tier-1791224488369"
+   ],
+   "hawkeye-kate-bishop::hawkeye-kate-bishop-10200107": [
+    "tier-1791224488369"
+   ],
+   "gwenpool::gwenpool-10400088": [
+    "tier-1791224488369"
+   ],
+   "captain-marvel::captain-marvel-10700026": [
+    "tier-1791224488369"
+   ],
+   "ultron::ultron-10500013": [
+    "tier-1791224488369"
    ]
   },
   "tv-soportes": {
