@@ -220,7 +220,7 @@ Sube el daño que hace, aparte del ataque.
   - `GUARANTEED CRITICAL RATE ↑` (209 retratos)
   - `Precision` (15 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Guaranteed Critical Rate` (10 retratos) — se acumula; Nota: Se acumula [Conjetura]: le suma un valor fijo a la probabilidad de crítico (el glosario en coreano), como un stat. Sin tope: la guía solo dice que no sufre la reducción por el nivel del rival.
+  - `Guaranteed Critical Rate` (10 retratos) — cuenta una vez (la de mayor valor); tope: Prob. de crítico 75%; Nota: No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la prob. de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival.
 
 ### Daño crítico
 
@@ -267,7 +267,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `Excluding bosses, ignores enemy's damage decrease` (24 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Non-Boss Damage Decrease` (3 retratos) — se acumula; Nota: Se acumula [Conjetura]: es un porcentaje, como ignorar la defensa.
+  - `Ignore Non-Boss Damage Decrease` (3 retratos) — se acumula; Nota: Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026).
 
 ### Ignora los aumentos y reducciones entre facciones
 
@@ -277,7 +277,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `Ignores Damage Increase effect between factions` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez [Conjetura]: no tiene número; ignora o no ignora, como una habilidad.
+  - `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez: es el caso único de Molecule Man, y no se apila porque lo da un solo personaje (Ezequiel, 5 de octubre de 2026).
 
 ### Acumula daño
 
@@ -847,7 +847,7 @@ Sube las defensas.
   - `Condensed Power` (1 retrato) — varía: se acumula
 - **Leads & Supports y bonos de equipo:**
   - `All Basic Defenses` (49 retratos, 280 bonos de equipo) — se acumula
-  - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: Se acumula [Conjetura]: la superarmadura cuenta una vez, pero el número es el de las defensas que vienen con ella, y la defensa se suma (Ezequiel, 5 de octubre de 2026).
+  - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: La superarmadura es una habilidad y no se acumula; las defensas se suman, sin límite (Ezequiel, 5 de octubre de 2026). El número es el de las defensas, así que el stat se suma.
 
 ### Defensa física
 
@@ -884,7 +884,7 @@ Sube las defensas.
 - **Skills:**
   - `SUPER ARMOR` (329 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: Se acumula [Conjetura]: la superarmadura cuenta una vez, pero el número es el de las defensas que vienen con ella, y la defensa se suma (Ezequiel, 5 de octubre de 2026).
+  - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: La superarmadura es una habilidad y no se acumula; las defensas se suman, sin límite (Ezequiel, 5 de octubre de 2026). El número es el de las defensas, así que el stat se suma.
 
 ## Vida
 
@@ -916,8 +916,8 @@ Vida, curación, escudos y revivir.
   - `FORTITUDE` (6 retratos)
   - `Recovers HP per summoned character.` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Heal` (17 retratos) — se acumula; Nota: Se acumula [Conjetura]: cada curación es aparte, no un estado que se repite.
-  - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez [Conjetura]: la inmortalidad es una habilidad, y la curación viene con ella.
+  - `Heal` (17 retratos) — se acumula; Nota: Se suma: es una curación de una vez, otra cosa que la tasa de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026).
+  - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: La inmortalidad no se acumula (Ezequiel, 5 de octubre de 2026), y la curación viene con ella. Solo lo da el artefacto de Franklin Richards (Villains Are Bad).
 
 ### Recuperación
 
@@ -985,7 +985,7 @@ Vida, curación, escudos y revivir.
   - `Death Throes` (3 retratos) — Nota: Al terminar, muere. La rotura de guardia lo afecta igual y el efecto no se puede quitar (glosario del juego).
 - **Leads & Supports y bonos de equipo:**
   - `Immortality + Death` (1 retrato) — cuenta una vez (la de mayor valor)
-  - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: Cuenta una vez [Conjetura]: la inmortalidad es una habilidad, y la curación viene con ella.
+  - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: La inmortalidad no se acumula (Ezequiel, 5 de octubre de 2026), y la curación viene con ella. Solo lo da el artefacto de Franklin Richards (Villains Are Bad).
 
 ## Reducción de daño
 
@@ -1168,7 +1168,7 @@ Recibe menos daño o lo evita.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo Puppet Show; ni Leads & Supports ni el juego (en las capturas) usan ese stat. No se sabe qué sube exactamente. A quién le sirve: a cualquiera (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Max Dodge` (1 bono de equipo) — se acumula; Nota: Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat.
+  - `Max Dodge` (1 bono de equipo) — se acumula; tope: Evasión 75%; Nota: Se suma, con el tope de la evasión (Ezequiel, 5 de octubre de 2026). No se sabe qué sube exactamente (ver el efecto).
 
 ### Evasión garantizada
 
@@ -1457,7 +1457,7 @@ Mecánicas propias de un personaje.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo A-Force #2; ni Leads & Supports ni el juego (en las capturas) usan ese stat. No se sabe qué sube exactamente. A quién le sirve: a cualquiera (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Attack Defense` (1 bono de equipo) — se acumula; Nota: Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat.
+  - `Attack Defense` (1 bono de equipo) — se acumula; Nota: Se suma, sin límite (Ezequiel, 5 de octubre de 2026). No se sabe qué sube (ver el efecto).
 
 ### Tamaño
 
@@ -1472,7 +1472,7 @@ Mecánicas propias de un personaje.
 
 Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (Ezequiel, 5 de octubre de 2026): las estadísticas se suman; las habilidades (los anti-mermas, las inmunidades, la barrera, los escudos, revivir, invocar, la inmortalidad) cuentan una vez, la de mayor valor y, a igual valor, la primera en este orden: la propia, la del liderazgo del líder y la de los soportes de los demás (docs/MODELO.md, *Efectos iguales*). El tope es el de la guía ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)): con lo que suman los buffs, la app avisa si pasa lo que queda hasta el tope.
 
-65 stats se acumulan y 18 cuentan una vez; 14 tienen tope.
+64 stats se acumulan y 19 cuentan una vez; 16 tienen tope.
 
 | Stat | Si llega de dos fuentes | Tope | Nota |
 |---|---|---|---|
@@ -1481,10 +1481,11 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Debuff Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Fear Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Fire Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Guaranteed Critical Rate` | cuenta una vez (la de mayor valor) | Prob. de crítico 75% | No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la prob. de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival. |
 | `Guard Break Immunity` | cuenta una vez (la de mayor valor) | — |  |
-| `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` | cuenta una vez (la de mayor valor) | — | Cuenta una vez [Conjetura]: no tiene número; ignora o no ignora, como una habilidad. |
+| `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` | cuenta una vez (la de mayor valor) | — | Cuenta una vez: es el caso único de Molecule Man, y no se apila porque lo da un solo personaje (Ezequiel, 5 de octubre de 2026). |
 | `Immortality + Death` | cuenta una vez (la de mayor valor) | — |  |
-| `Immortality + Heal` | cuenta una vez (la de mayor valor) | — | Cuenta una vez [Conjetura]: la inmortalidad es una habilidad, y la curación viene con ella. |
+| `Immortality + Heal` | cuenta una vez (la de mayor valor) | — | La inmortalidad no se acumula (Ezequiel, 5 de octubre de 2026), y la curación viene con ella. Solo lo da el artefacto de Franklin Richards (Villains Are Bad). |
 | `Incapacitation Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Lightning Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
 | `Max HP Shield` | cuenta una vez (la de mayor valor) | — |  |
@@ -1505,7 +1506,7 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `All Reflect Damage Received` | se acumula | — |  |
 | `All Resistances` | se acumula | Resistencia elemental 200% |  |
 | `All Speeds` | se acumula | Vel. de ataque 130% (desde 100%), Vel. de movimiento 130% (desde 100%) |  |
-| `Attack Defense` | se acumula | — | Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat. |
+| `Attack Defense` | se acumula | — | Se suma, sin límite (Ezequiel, 5 de octubre de 2026). No se sabe qué sube (ver el efecto). |
 | `Attack Speed` | se acumula | Vel. de ataque 130% (desde 100%) |  |
 | `Basic Damage Dealt to Boss Types` | se acumula | — |  |
 | `Basic Damage Dealt to Enemies except Mutant Characters` | se acumula | — |  |
@@ -1538,15 +1539,14 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Fire Damage` | se acumula | — |  |
 | `Fire Damage by % Fire Resist` | se acumula | — |  |
 | `Fire Resist` | se acumula | Resistencia elemental 200% |  |
-| `Guaranteed Critical Rate` | se acumula | — | Se acumula [Conjetura]: le suma un valor fijo a la probabilidad de crítico (el glosario en coreano), como un stat. Sin tope: la guía solo dice que no sufre la reducción por el nivel del rival. |
-| `Heal` | se acumula | — | Se acumula [Conjetura]: cada curación es aparte, no un estado que se repite. |
+| `Heal` | se acumula | — | Se suma: es una curación de una vez, otra cosa que la tasa de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026). |
 | `HP` | se acumula | — |  |
 | `Ignore Defense` | se acumula | Perforación de defensa (Ignore Defense) 50% |  |
 | `Ignore Dodge` | se acumula | — |  |
-| `Ignore Non-Boss Damage Decrease` | se acumula | — | Se acumula [Conjetura]: es un porcentaje, como ignorar la defensa. |
+| `Ignore Non-Boss Damage Decrease` | se acumula | — | Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026). |
 | `Lightning Damage` | se acumula | — |  |
 | `Lightning Resist` | se acumula | Resistencia elemental 200% |  |
-| `Max Dodge` | se acumula | — | Se acumula [Conjetura]: no se sabe qué sube (ver el efecto), así que va como un stat. |
+| `Max Dodge` | se acumula | Evasión 75% | Se suma, con el tope de la evasión (Ezequiel, 5 de octubre de 2026). No se sabe qué sube exactamente (ver el efecto). |
 | `Mind Damage` | se acumula | — |  |
 | `Mind Resist` | se acumula | Resistencia elemental 200% |  |
 | `Movement Speed` | se acumula | Vel. de movimiento 130% (desde 100%) |  |
@@ -1558,7 +1558,7 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Recovery Rate` | se acumula | Tasa de recuperación 250% (desde 100%) |  |
 | `Skill Cooldown` | se acumula | Recarga de skills (Skill Cooldown) 50% |  |
 | `Skill Damage` | se acumula | — |  |
-| `Super Armor, All Basic Defenses` | se acumula | — | Se acumula [Conjetura]: la superarmadura cuenta una vez, pero el número es el de las defensas que vienen con ella, y la defensa se suma (Ezequiel, 5 de octubre de 2026). |
+| `Super Armor, All Basic Defenses` | se acumula | — | La superarmadura es una habilidad y no se acumula; las defensas se suman, sin límite (Ezequiel, 5 de octubre de 2026). El número es el de las defensas, así que el stat se suma. |
 
 ## Glosario del juego
 
