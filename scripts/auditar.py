@@ -14,14 +14,15 @@ Deja:
 
 Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la sección 9 lista lo que el
 catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierra en los bonos de
-equipo de la wiki; la 11, en los strikers, y la 12, los liderazgos que Leads & Supports no lista,
-de work/fuentes.json).
+equipo de la wiki; la 11, en los strikers, y la 12, los liderazgos que Leads & Supports no publica y
+el build deriva de la Leader Skill de la API, de work/fuentes.json).
 """
 import collections, datetime, difflib, glob, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima
 from catalogo import fuente_md
+from liderazgos import LIDERAZGOS, ROTULOS, motivo_txt, slot_txt
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 WIKI = 'https://future-fight.fandom.com/wiki/'
@@ -446,9 +447,8 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
              f"{catalogo['total']['stats']} stats de Leads & Supports y {catalogo['total']['stats_bonos']} de bonos de equipo "
              'en los datos; '
              + ('todos clasificados.\n' if not n_falta else f'{n_falta} sin clasificar (sección 9).\n'))
-    s.append(f"Liderazgos: {len(liderazgos['completados'])} uniformes que Leads & Supports no lista tienen el de su "
-             f"base, porque su Leader Skill es idéntica; {len(liderazgos['sin_completar'])} retratos siguen sin "
-             'liderazgo aunque una hermana lo tiene (sección 12).\n')
+    s.append(f"Liderazgos: el build deriva de la Leader Skill de la API el de {len(liderazgos['derivados'])} variantes "
+             f"que Leads & Supports no publica; {len(liderazgos['sin_derivar'])} slots no se pudieron derivar (sección 12).\n")
 
     s.append('## 1. Skills: daño y recarga\n')
     s.append('Método: cada skill de thanosvibs se busca por nombre en la página de la wiki del personaje, '
@@ -663,46 +663,114 @@ def strikers_seccion(strikers):
     return s
 
 
-_MOTIVO_LIDERAZGO = {
-    'base': 'es la base, y la regla es para uniformes',
-    'base_sin_liderazgo': 'su base no tiene liderazgo en Leads & Supports',
-    'distinta': 'su Leader Skill no es idéntica a la de su base',
-    'incompleta': 'la API de skills no publica toda su Leader Skill',
+_ESTADO_VERIFICACION = {
+    'igual': 'iguales', 'distinto': 'distintos', 'sin_derivar': 'que no se pueden derivar',
+    'solo_ls': 'que la Leader Skill no da aparte', 'solo_api': 'que Leads & Supports no publica',
 }
 
 
 def liderazgos_seccion(L, chars):
-    """Sección 12: los uniformes que Leads & Supports no lista y el liderazgo que les copió el build
-    (scripts/fuentes.py, completar_liderazgos), o por qué no."""
+    """Sección 12: los liderazgos que Leads & Supports no publica y el build deriva de la Leader Skill de la API
+    (scripts/liderazgos.py): lo aprendido, la verificación contra Leads & Supports, lo derivado y lo que no se pudo
+    derivar, con su motivo."""
     nombre = {r['portrait']: r['character'] + ('' if r['uniformed'] == 'False' else f" — {r['uniform']}")
               for r in chars}
 
     def pj(p):
         return f'{nombre[p]} (`{p}`)'
 
-    s = ['## 12. Liderazgos que Leads & Supports no lista\n']
-    s.append('Leads & Supports de thanosvibs publica el liderazgo de cada retrato con los uniformes que comparten su '
-             'entrada, y a algunos uniformes no los lista. Si la Leader Skill de uno de ellos, en la API de skills, es '
-             'idéntica a la de su base, el build le copia el liderazgo de la base (Ezequiel, 2 de octubre de 2026): '
-             'solo el liderazgo (`leader` y `leader2`), no los soportes. Idéntica es igual en todo lo que la API publica '
-             'de ella, salvo sus ids: el nombre, la recarga y, en cada etapa, el objetivo, la activación, el elemento y '
-             'cada efecto, con su etiqueta, su texto (sin negritas ni espacios de más) con sus números, su duración y su '
-             'intervalo. Una Leader Skill con un valor que la API no publica (`$TIME`, `$HEROSUBTYPE1`) no se puede '
-             'comparar, así que no se completa. Si otra hermana con la misma Leader Skill tiene otro liderazgo, el build '
-             'para (scripts/fuentes.py, `completar_liderazgos`).\n')
-    s.append(f"### Completados ({len(L['completados'])})\n")
-    s += [f'- {pj(p)} ← {pj(b)}' for p, b in sorted(L['completados'], key=lambda x: nombre[x[0]])]
+    def motivos(x):
+        return '; '.join(motivo_txt(m, d) for m, d in x['motivos'])
+
+    def personaje(p):
+        return nombre[p].split(' — ')[0]
+
+    def agrupar(xs, det):
+        """[(detalle, [(retrato, slot)])]: las de un personaje con el mismo slot y el mismo detalle, juntas."""
+        grupos = {}
+        for x in sorted(xs, key=lambda x: (nombre[x['p']], x['slot'])):
+            grupos.setdefault((personaje(x['p']), x['slot'], det(x)), []).append((x['p'], x['slot']))
+        return [(d, ps) for (_, _, d), ps in sorted(grupos.items(), key=lambda kv: (kv[0][0].casefold(), kv[0][1]))]
+
+    def quienes(ps):
+        """Un grupo de variantes de un personaje: con su nombre si es una sola, con los retratos si son varias."""
+        slot = f", `{ps[0][1]}`" if ps[0][1] else ''
+        if len(ps) == 1:
+            return pj(ps[0][0]) + slot
+        return f"{personaje(ps[0][0])} ({', '.join(f'`{p}`' for p, _ in ps)})" + slot
+
+    def variantes(n):
+        return f"{n} {'variante' if n == 1 else 'variantes'}"
+
+    V = L['verificacion']
+    con_ls = {x['p'] for x in V}        # cada slot de liderazgo de Leads & Supports tiene su verificación
+    nd_v = {x['p'] for x in L['sin_derivar']}
+    s = ['## 12. Liderazgos que Leads & Supports no publica\n']
+    s.append('Leads & Supports de thanosvibs no publica el liderazgo de todas las variantes. Los que no publica los deriva '
+             'el build de la Leader Skill de la API de skills (Ezequiel, 4 de octubre de 2026; scripts/liderazgos.py, '
+             'explicado en docs/MODELO.md) y van en los datos con `"src": "api"`: la app dice «según la skill del juego». La '
+             'Leader Skill se parte en los dos slots de liderazgo de Leads & Supports, y cada efecto, cada activación y la '
+             'condición de cada efecto pasan a lo que publica Leads & Supports según las variantes que tienen las dos cosas '
+             '(la correspondencia aprendida, abajo). Todo o nada por slot: si algo no cierra, ese slot no se deriva y va abajo '
+             'con su motivo. Lo derivado no lleva «Notable», que es una marca de thanosvibs que la API no tiene.\n')
+    s.append(f"{len(con_ls)} variantes tienen liderazgo de Leads & Supports y {len(nombre) - len(con_ls)} no. El build "
+             f"deriva el de {len(L['derivados'])} ({sum(len(x) for x in L['derivados'].values())} slots); "
+             f"{len(L['sin_derivar'])} slots, de {len(nd_v)} variantes, no se pudieron derivar.\n")
+    C = L['correspondencia']
+    s.append('### Correspondencia aprendida\n')
+    s.append(f"De las variantes con liderazgo de Leads & Supports, efecto por efecto: lo que da cada uno de los "
+             f"{len(C['efectos'])} efectos de la API (el número del texto, con su signo) y en cuántas variantes se ve.\n")
+    s.append('| Efecto de la API | Leads & Supports | Variantes |')
+    s.append('|---|---|---|')
+    for (ab, desc, g), stats, n in sorted(C['efectos'], key=lambda x: (-x[2], x[0][1])):
+        da = ', '.join(st + ('' if val is None else f" {'−' if val[1] < 0 else '+'}n{val[0] + 1}") for st, val in stats)
+        s.append(f"| «{desc}» ({ab}){f', con {g}' if g else ''} | {da} | {n} |")
     s.append('')
-    s.append(f"### Sin completar aunque una hermana tiene liderazgo ({len(L['sin_completar'])})\n")
-    s.append('En qué difiere su Leader Skill (la suya / la de la otra): si la base tiene liderazgo, de la de la base, '
-             'y se nombran las hermanas que la tienen igual; si no, de la de la hermana con liderazgo más parecida. '
-             'Las hermanas con la misma Leader Skill van juntas.\n')
-    for x in sorted(L['sin_completar'], key=lambda x: nombre[x['p']]):
-        contra = ' '.join(
-            f"Contra {', '.join(f'`{h}`' for h in hs)}: "
-            + ('; '.join(dif) if dif else 'idéntica' if x['publicada'] else 'el mismo texto, con valores que la API no publica')
-            + '.' for hs, dif in x['contra'])
-        s.append(f"- {pj(x['p'])}: {_MOTIVO_LIDERAZGO[x['motivo']]}. {contra}")
+    s.append('`n1`, `n2`...: el primer número del texto, el segundo... La duración es la del efecto, si la publica.\n')
+    s.append('Activaciones: ' + '; '.join(f'«{a}» → «{b}» ({variantes(n)})' for a, b, n in C['activaciones']) + '.\n')
+    if C['condiciones']:
+        s.append('Condición de cada efecto: ' + '; '.join(f"«{t}» → {', '.join(c or 'ninguna' for c in cs)} ({variantes(n)})"
+                                                         for t, cs, n in C['condiciones']) + '.\n')
+    X = L['contradicciones']
+    contra = ([(f"El efecto «{c[1]}» ({c[0]})", [(', '.join(st for st, _ in v), ps) for v, ps in vals]) for c, vals in X['efectos']]
+              + [(f'La activación «{c}»', [(v or 'ninguna', ps) for v, ps in vals]) for c, vals in X['activaciones']]
+              + [(f'La condición de «{c}»', [(', '.join(x or 'ninguna' for x in v), ps) for v, ps in vals])
+                 for c, vals in X['condiciones']])
+    if contra:
+        s.append('Contradicciones: Leads & Supports publica distinto lo mismo de la API, así que no se usan.\n')
+        for que, vals in contra:
+            s.append(f"- {que}: " + ' / '.join(f"{v} ({', '.join(f'`{p}`' for p in ps)})" for v, ps in vals) + '.')
+        s.append('')
+    s.append('### Verificación contra Leads & Supports\n')
+    n = collections.Counter(x['estado'] for x in V)
+    s.append('Cada slot de liderazgo de Leads & Supports contra el que la misma regla deriva de su Leader Skill, en stats, '
+             'valores, duración, condición, restricción, activación y recarga (no en el nombre ni en «Notable»): de '
+             f"{len(V)} slots, " + ', '.join(f'{n[e]} {t}' for e, t in _ESTADO_VERIFICACION.items() if n[e]) + '.\n')
+    for estado, titulo in (('distinto', 'Distintos (lo derivado / Leads & Supports)'), ('sin_derivar', 'No se pueden derivar'),
+                           ('solo_ls', 'Solo en Leads & Supports'), ('solo_api', 'Solo en la Leader Skill')):
+        xs = [x for x in V if x['estado'] == estado]
+        if not xs:
+            continue
+        s.append(f'{titulo}:\n')
+        s += [f"- {quienes(ps)}: {det}." if det else f'- {quienes(ps)}.' for det, ps in agrupar(
+            xs, lambda x: '; '.join(x['dif']) if 'dif' in x else motivos(x) if 'motivos' in x else '')]
+        s.append('')
+    s.append(f"### Sin derivar ({len(L['sin_derivar'])} slots en {len(nd_v)} variantes)\n")
+    s.append('Variantes sin liderazgo de Leads & Supports con un slot de su Leader Skill que no se pudo derivar, con todos '
+             'sus motivos. En docs/COMPLETITUD.md son el faltante «Liderazgo sin completar».\n')
+    por = collections.Counter(m for x in L['sin_derivar'] for m, _ in x['motivos'])
+    s.append('Por motivo (un slot puede tener más de uno): ' + '; '.join(f'{ROTULOS[m]}, {k}' for m, k in por.most_common())
+             + '. Van juntas las variantes de un personaje con los mismos motivos.\n')
+    s += [f'- {quienes(ps)}: {det}.' for det, ps in agrupar(L['sin_derivar'], motivos)]
+    s.append('')
+    s.append(f"### Derivados ({len(L['derivados'])} variantes)\n")
+    s.append('Van juntas las variantes de un personaje con el mismo liderazgo derivado.\n')
+    der = [{'p': p, 'slot': k, 'x': x[k]} for p, x in L['derivados'].items() for k in LIDERAZGOS if k in x]
+    por_p = collections.defaultdict(list)
+    for x in der:
+        por_p[x['p']].append(f"`{x['slot']}` {slot_txt(x['x'])}")
+    s += [f'- {quienes(ps)}: {det}.' for det, ps in agrupar([{'p': p, 'slot': '', 't': '; '.join(ts)} for p, ts in por_p.items()],
+                                                            lambda x: x['t'])]
     s.append('')
     return s
 

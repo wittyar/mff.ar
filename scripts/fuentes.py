@@ -3,9 +3,9 @@
 
 - thanosvibs: C.T.P.s (/api/ctps), artefactos (/api/artifacts), Alliance Battle
   (/api/abxl-data: restricciones por día y equipos recomendados), los "cancels" de la
-  API de skills, los efectos de líder y de soporte (/api/supports; a los uniformes que no
-  lista, el liderazgo de su base si su Leader Skill es idéntica), las rotaciones de
-  skills (/api/rotations/default) y la Beginner's Guide (/api/beginners/mff-content/1..5).
+  API de skills, los efectos de líder y de soporte (/api/supports; los liderazgos que no
+  publica, desde la Leader Skill de la API de skills: scripts/liderazgos.py), las rotaciones
+  de skills (/api/rotations/default) y la Beginner's Guide (/api/beginners/mff-content/1..5).
 - scripts/contenido/: lo curado a mano de la guía y la wiki (guia.json, modos.json),
   con la fuente de cada bloque.
 - Los bonos de equipo: la sección Team Bonus de la página de cada personaje en la wiki, y lo que se
@@ -29,6 +29,7 @@ from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
 import guia_armado as GA
 from bonos import bonos as bonos_de_equipo
 from strikers import strikers as strikers_de
+from liderazgos import derivar as derivar_liderazgos
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -267,109 +268,11 @@ def soportes(retratos, nombres):
     return out
 
 
-# Los slots de liderazgo de Leads & Supports: los que app.js trata como LIDERAZGOS.
-_LIDERAZGOS = ('leader', 'leader2')
-
-
-def _filas_leader_skill(skills, p):
-    """La Leader Skill de un retrato en la API de skills (work/skills_parsed.json), como filas
-    [qué, valor]: el nombre, la recarga y, por etapa, el objetivo, la activación (con sus números), el
-    elemento y cada efecto (etiqueta, texto con sus números y, si los trae, duración, intervalo,
-    persistente y buff de equipo). Los textos, normalizados como los guarda skills_api.py: sin
-    negritas ni espacios de más. No entran los ids de la API ni el valor que marcadores.py le da a
-    un marcador, que no salen de ella. None si el retrato no tiene Leader Skill."""
-    T = skills['tablas']
-    sk = next((x for x in skills['skills'].get(p, []) if x['sl'] == 'Leader Skill'), None)
-    if sk is None:
-        return None
-
-    def en(tabla, i):
-        return None if i is None else T[tabla][i]['en'].strip()
-
-    def con_numeros(patron, nums):
-        # Los patrones (descripciones y activaciones) tienen un '#' por número, en orden.
-        if patron is None:
-            return None
-        partes = patron.split('#')
-        return partes[0] + ''.join(f'{n}{resto}' for n, resto in zip(nums or [], partes[1:]))
-
-    filas = [['nombre', en('name', sk['n'])], ['recarga', None if sk['cd'] is None else f"{sk['cd']} s"]]
-    for i, st in enumerate(sk['st'], 1):
-        filas += [[f'etapa {i}, objetivo', en('tgt', st.get('tg'))],
-                  [f'etapa {i}, activación', con_numeros(en('act', st.get('ac')), st.get('av'))],
-                  [f'etapa {i}, elemento', en('elem', st.get('el'))]]
-        for j, f in enumerate(st['fx'], 1):
-            extra = [f"{f['d']} s" if 'd' in f else '', f"cada {f['t']} s" if 't' in f else '',
-                     'persistente' if f.get('m') else '', 'buff de equipo' if f.get('b') else '']
-            filas.append([f'etapa {i}, efecto {j}',
-                          f"«{con_numeros(en('desc', f['p']), f.get('v'))}» ({en('ab', f['a'])})"
-                          + ''.join(', ' + x for x in extra if x)])
-    return filas
-
-
-def _diferencia(fa, fb):
-    """Las filas en que difieren dos Leader Skills: ['qué: la de a / la de b']."""
-    a, b = dict(fa or []), dict(fb or [])
-    return [f"{k}: {a.get(k) or '—'} / {b.get(k) or '—'}" for k in list(a) + [k for k in b if k not in a]
-            if a.get(k) != b.get(k)]
-
-
-def completar_liderazgos(sop, chars, skills):
-    """El liderazgo de los uniformes que Leads & Supports no lista (Ezequiel, 2 de octubre de 2026):
-    un retrato que ninguna entrada cubre recibe los slots de liderazgo de la entrada de su base si su
-    Leader Skill, en la API de skills, es idéntica a la de la base. Idéntica: las mismas filas
-    (_filas_leader_skill) y ninguna con un valor que la API no publica ($TIME, $HEROSUBTYPE1), que no
-    se puede comparar. Solo el liderazgo: los soportes de la base no se copian. Si otra hermana
-    cubierta tiene la misma Leader Skill y otro liderazgo, la fuente no dice cuál vale y el build para.
-
-    Completa sop y devuelve lo que va a docs/AUDITORIA.md: los completados ([retrato, base]) y los
-    retratos sin entrada que siguen sin liderazgo aunque una hermana lo tiene, con el motivo y en qué
-    difiere su Leader Skill de la de la base o de la hermana con liderazgo más parecida."""
-    base_de = {r['portrait']: r['base_portrait'] for r in chars}
-    hermanas = {}
-    for p, b in base_de.items():
-        hermanas.setdefault(b, []).append(p)
-    filas = {p: _filas_leader_skill(skills, p) for p in base_de}
-    publicada = {p: f is not None and not any('$' in (v or '') for _, v in f) for p, f in filas.items()}
-    lid = {p: {k: e[k] for k in _LIDERAZGOS if k in e} for p, e in sop.items()}
-    nuevos, completados, sin = {}, [], []
-    for p, b in sorted(base_de.items()):
-        con_lid = [h for h in hermanas[b] if lid.get(h)]
-        if p in sop or not con_lid:
-            continue
-        if p == b:
-            motivo = 'base'
-        elif not lid.get(b):
-            motivo = 'base_sin_liderazgo'
-        elif filas[p] is not None and filas[p] != filas[b]:
-            motivo = 'distinta'
-        elif not publicada[p]:
-            motivo = 'incompleta'
-        else:
-            otras = [h for h in hermanas[b] if h in sop and filas[h] == filas[p] and lid[h] != lid[b]]
-            if otras:
-                dados = '; '.join(f'{h}: {lid[h] or "ninguno"}' for h in [b] + otras)
-                raise SystemExit(f'liderazgos: {p} no está en Leads & Supports y su Leader Skill es idéntica a la '
-                                 f'de su base {b} y a la de {", ".join(otras)}, pero Leads & Supports les da '
-                                 f'liderazgos distintos ({dados}). No se sabe cuál le corresponde: revisarlo en '
-                                 'thanosvibs.')
-            nuevos[p] = dict(lid[b])
-            completados.append([p, b])
-            continue
-        grupos = []     # las hermanas con liderazgo, juntas las de igual Leader Skill: [[retratos], diferencia]
-        for h in sorted(con_lid, key=lambda h: h != b):
-            g = next((g for g in grupos if filas[g[0][0]] == filas[h]), None)
-            if g:
-                g[0].append(h)
-            else:
-                grupos.append([[h], _diferencia(filas[p], filas[h])])
-        # Si la base tiene liderazgo, contra ella y las hermanas que la tienen igual; si no, contra la
-        # hermana con liderazgo más parecida (la de menos filas distintas).
-        contra = ([grupos[0]] + [g for g in grupos[1:] if not g[1]] if lid.get(b)
-                  else [min(grupos, key=lambda g: len(g[1]))])
-        sin.append({'p': p, 'motivo': motivo, 'publicada': publicada[p], 'contra': contra})
-    sop.update(nuevos)
-    return {'completados': completados, 'sin_completar': sin}
+def nombres_pj(chars):
+    """El personaje de cada retrato, como lo nombra el roster (el de su base): la restricción de un liderazgo que
+    la Leader Skill da a «Self» (scripts/liderazgos.py)."""
+    base = {r['portrait']: r['character'] for r in chars if r['uniformed'] == 'False'}
+    return {r['portrait']: base[r['base_portrait']] for r in chars}
 
 
 # Una descripción de rotación que es solo notación (números, c/dc/qc/h, negritas,
@@ -606,7 +509,11 @@ def main():
                 TX(x)
     skills = cargar('work/skills_parsed.json')
     sop = soportes(retratos, {r['character'] for r in chars})
-    liderazgos = completar_liderazgos(sop, chars, skills)
+    # Los liderazgos que Leads & Supports no publica, desde la Leader Skill de la API (Ezequiel, 4 de octubre de
+    # 2026), con "src": "api". Van en una entrada nueva: la de Leads & Supports puede ser de varios retratos.
+    liderazgos = derivar_liderazgos(sop, skills['skills'], skills['tablas'], nombres_pj(chars))
+    for p, slots in liderazgos['derivados'].items():
+        sop[p] = {**sop.get(p, {}), **slots}
     salida = {
         'ctps': ctps(guia),
         'artefactos': artefactos(base),
@@ -627,8 +534,9 @@ def main():
     json.dump(sorted(TX.faltan), open('work/sin_traducir_fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"fuentes: {len(salida['ctps'])} C.T.P.s | {len(salida['artefactos'])} artefactos | "
           f"ABX {len(salida['abx']['restricciones'])} restricciones, {len(salida['abx']['equipos'])} equipos | "
-          f"soportes de {len(salida['soportes'])} retratos ({len(liderazgos['completados'])} con el liderazgo "
-          f"de su base, por la Leader Skill) | rotaciones de {len(salida['rotaciones'])} retratos | "
+          f"soportes de {len(salida['soportes'])} retratos (liderazgo de la Leader Skill de la API: "
+          f"{len(liderazgos['derivados'])} retratos, {len(liderazgos['sin_derivar'])} slots sin derivar) | "
+          f"rotaciones de {len(salida['rotaciones'])} retratos | "
           f"guía: {len(salida['guia_pj'])} personajes mencionados | guía de armado {salida['armado']['version']}: "
           f"{len(salida['armado']['pj'])} personajes | bonos de equipo {len(salida['bonos'])} | "
           f"strikers de {len(salida['strikers'])} personajes | "

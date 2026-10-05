@@ -37,6 +37,9 @@ variante, en `docs/COMPLETITUD.md`.
   `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo, y `armar_datos_build.py`, con
   lo que el próximo build cambia en data.js (hoy, el formato 7: el catálogo con la regla de cada stat,
   la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado con `scripts/modelo.py`).
+  `armar_datos_lideres.py` les suma los liderazgos que el build deriva de la Leader Skill
+  (`scripts/liderazgos.py`, con `docs/AUDITORIA.md` y `docs/COMPLETITUD.md` rehechos), y
+  `liderazgos_api/prueba.py` prueba esa función sin `work/`.
   `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
   pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
   filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.
@@ -130,10 +133,30 @@ variante, en `docs/COMPLETITUD.md`.
   personaje en vez de una por uniforme deja 290 listas en vez de 888 y saca el 54%, con cada lista
   casi igual. Las dos juntas sacan el 80%. Falta decidir.
 - El filtro de PvP acepta anti-mermas condicionales (al recibir un debuff). Falta decidir.
-- Liderazgos completados por Leader Skill idéntica a la de la base (sección 12 de AUDITORIA.md):
-  según la prueba, knull1, shangchi2, moongirl1, ghost2 y sentinel2. Falta decidir si se extiende a
-  una hermana (sumaría captainamerica15, greengoblin5 y wintersoldier6), si el build tiene que parar
-  cuando solo difiere `sig` y si la ficha dice que el liderazgo es heredado.
+- Liderazgos de la Leader Skill (carril Q, 5 de octubre de 2026; regla de Ezequiel del 4 de octubre):
+  `scripts/liderazgos.py` reemplaza a la copia del liderazgo de la base. Sin `work/` el build no se pudo
+  correr; con los datos de formato 7 (`armar_datos_lideres.py`), el próximo build tiene que dar: 328
+  variantes con liderazgo derivado (345 slots, con `"src": "api"`), 151 slots sin derivar, 34 efectos, 2
+  activaciones y 1 condición aprendidos, una contradicción (la condición de Drax) y, en la verificación,
+  392 de 448 slots de Leads & Supports iguales, 3 distintos (Black Swan, The Hood y Mephisto) y 51 que no
+  se pueden derivar; en `docs/COMPLETITUD.md`, «Liderazgo sin completar» en 151 variantes y 144 de 888
+  completas. Si thanosvibs cambió algo, las cifras se mueven: lo que no puede pasar es un slot sin
+  derivar ni listar. Después tienen que pasar con los datos del repo verif_consistencia (la fuente de
+  cada liderazgo, ahora también sobre los datos) y la regresión (verif_combos ya espera «No mejoran con
+  él: Arena», porque Captain America e Iron Man tienen liderazgo derivado).
+- Falta decidir, sobre los liderazgos derivados (lista en «Liderazgos que Leads & Supports no publica» de
+  `docs/MODELO.md` y en la sección 12 de `docs/AUDITORIA.md`):
+  - «Notable»: lo derivado no lo lleva (es una marca de thanosvibs). Knull — Ancient History y Ghost —
+    Thunderbolts* lo tenían copiado de la base y lo pierden: su liderazgo suma 2 en la sinergia, no 3.
+  - 80 slots no se derivan por la activación (Leads & Supports solo publica liderazgos al recibir un
+    debuff o con la vida baja; las otras son «25% rate when hit», «when tagging»...) y 99 por un efecto
+    que Leads & Supports no publica en ningún liderazgo (defensa física, resistencias, escudos, velocidad
+    de ataque). Cargarlos pide una correspondencia a mano en `scripts/contenido/`, con su fuente.
+  - Drax: Leads & Supports pone la condición «when 1 Combat»... en dos de sus cuatro variantes, así que no
+    se usa, y Nebula (5 variantes, el mismo objetivo) queda sin liderazgo.
+  - Sentry — Thunderbolts* y Mephisto — Master of Hell tienen un slot derivado y el del «Give Power» no: la
+    app muestra un liderazgo sin el anti-mermas que probablemente tienen [Probable: en los 19 pares, el
+    «Give Power» es quitar los debuffs al recibir uno].
 
 - Liderazgo en PvP: Molecule Man es «la excepción rara» (Ezequiel) y hoy no suma nada fuera de los
   anti-mermas, ni tiene lista de PvP; el daño contra una facción no cuenta. Falta decidir cómo

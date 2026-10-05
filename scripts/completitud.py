@@ -10,16 +10,14 @@ para buscar en foros lo que falta.
 
 Cada faltante dice de dónde podría salir. Lo que no existe en el juego no es un faltante (un personaje sin
 artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito tampoco: va aparte,
-con la razón. Por ejemplo, los liderazgos que Leads & Supports elige no publicar, o lo que la guía de armado
-no le da a quien dice que no vale la pena armar.
+con la razón. Por ejemplo, lo que la guía de armado no le da a quien dice que no vale la pena armar.
 
 Lo llama build.py al final, con data.js y datos.json ya escritos. Con el mismo data.js da el mismo informe:
 la fecha es la de los datos, no la del día."""
 import argparse, collections, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from auditar import _MOTIVO_LIDERAZGO
-from fuentes import completar_liderazgos
+from liderazgos import ROTULOS, derivar, motivo_txt
 
 _RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SALIDA = os.path.join('docs', 'COMPLETITUD.md')
@@ -64,11 +62,11 @@ PIEZAS = [
      'Son las skills de toda variante en el juego [Comprobado]: los 598 uniformes de los datos traen su '
      'pasiva de uniforme. El análisis, los roles y la sinergia leen sus efectos.'),
     ('lideres', 'Liderazgo y soportes',
-     'Leads & Supports publica su liderazgo y los soportes que sus pasivas le dan al equipo, con el nombre '
-     'de la skill de la que salen; si no publica el liderazgo, la razón.',
-     'La sinergia y los órdenes PvP y PvE solo ven lo que publica Leads & Supports [Comprobado]. Esa fuente '
-     'elige qué liderazgos publica: si lista la variante sin liderazgo, o no publica ninguno del personaje, no '
-     'cuenta como faltante.'),
+     'Su liderazgo, el de Leads & Supports o, si no lo publica, el que el build deriva de su Leader Skill; los '
+     'soportes que sus pasivas le dan al equipo, en Leads & Supports, con el nombre de la skill de la que salen.',
+     'La sinergia y los órdenes PvP y PvE solo ven lo que publica Leads & Supports y los liderazgos que el build '
+     'deriva de la Leader Skill de la API [Comprobado] (Ezequiel, 4 de octubre de 2026; docs/AUDITORIA.md, '
+     'sección 12).'),
     ('artefacto', 'Artefacto',
      'Si existe, su texto con los valores de 3★ a 6★ y su ícono.',
      'La ficha lo muestra por estrellas [Comprobado]. Un personaje sin artefacto no es un faltante si '
@@ -161,11 +159,12 @@ TIPOS = collections.OrderedDict([
     ('recarga', ('skills', 'Activa sin recarga', 'variante', 'la wiki o el juego', 'sin recarga',
                  'Las activas 1 a 5 se recargan por tiempo y la API publica 0 [Probable].')),
     ('liderazgo', ('lideres', 'Liderazgo sin completar', 'variante',
-                   'thanosvibs (Leads & Supports) o a mano desde su Leader Skill', 'liderazgo sin completar',
-                   'Leads & Supports no lista la variante, publica el liderazgo de otra del personaje y el build no se '
-                   'lo pudo heredar (los de docs/AUDITORIA.md, sección 12, con el mismo motivo). Sin él, la app no la '
-                   'cuenta como líder. Se dice si su Leader Skill es idéntica a la de una variante que sí lo tiene: '
-                   'esas son las que se podrían completar sin buscar nada.')),
+                   'thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/)',
+                   'liderazgo sin completar',
+                   'Leads & Supports no publica el liderazgo de la variante y el build no pudo derivar ese slot de su '
+                   'Leader Skill (docs/AUDITORIA.md, sección 12, con el mismo motivo): un efecto o una activación sin '
+                   'correspondencia con Leads & Supports, un valor que la API no publica, un «Give Power» o una '
+                   'contradicción de Leads & Supports. La sinergia y los órdenes PvP y PvE no ven ese slot.')),
     ('soporte', ('lideres', 'Soporte que Leads & Supports no publica', 'variante',
                  'thanosvibs (Leads & Supports) o a mano desde la skill', 'soporte sin Leads & Supports',
                  'Según el análisis, la pasiva le da algo al equipo, y Leads & Supports no publica ese soporte (ni en '
@@ -305,7 +304,17 @@ class Datos:
     def __init__(self, D, imagenes_publicadas):
         self.D = D
         self.TB = D['MFF_TABLAS']
-        self.SK, self.AN, self.SO = D['MFF_SKILLS'], D['MFF_ANALISIS'], D['MFF_SOPORTES']
+        self.SK, self.AN = D['MFF_SKILLS'], D['MFF_ANALISIS']
+        # Leads & Supports tal como lo publica (SO) y los liderazgos que el build deriva de la Leader Skill de la API
+        # (los slots con "src": "api"), que se separan: los chequeos de abajo miran lo que publica Leads & Supports.
+        self.SO, self.derivados = {}, {}
+        for p, e in D['MFF_SOPORTES'].items():
+            ls = {k: x for k, x in e.items() if not (isinstance(x, dict) and x.get('src') == 'api')}
+            der = {k: x for k, x in e.items() if isinstance(x, dict) and x.get('src') == 'api'}
+            if ls:
+                self.SO[p] = ls
+            if der:
+                self.derivados[p] = der
         self.CAT = D['MFF_CATALOGO']
         self.IMG, self.pub = D['MFF_SEED_IMAGES'], imagenes_publicadas
         self.AS = D['MFF_SEED_TIER_ASSIGNMENTS']
@@ -336,8 +345,6 @@ class Datos:
         self.otorga = next(i for i, e in enumerate(self.CAT['efectos']) if e['id'] == 'otorga')
         self.con_lid = {p for p, e in self.SO.items() if any(k in e for k in LIDERAZGOS)}
         self.nombre_pj = {ch['id']: ch['name'] for ch in D['MFF_SEED_CHARACTERS']}
-        self.uni_de = {u['p']: u['name'] for ch in D['MFF_SEED_CHARACTERS'] for u in ch['uniforms']}
-        self.uni_de.update({ch['p']: 'la base' for ch in D['MFF_SEED_CHARACTERS']})
         # Las variantes: cada personaje (en el orden de data.js) con su base y sus uniformes.
         self.personajes = []
         for ch in D['MFF_SEED_CHARACTERS']:
@@ -346,11 +353,16 @@ class Datos:
                 v['todas'] = vs
             self.personajes.append({'ch': ch, 'vs': vs})
         self.retratos = {v['p'] for x in self.personajes for v in x['vs']}
-        # Los liderazgos que el build no pudo heredar, con su motivo: la misma regla que usa el build
-        # (scripts/fuentes.py, completar_liderazgos), sobre una copia de Leads & Supports tal como quedó en data.js.
-        filas = [{'portrait': v['p'], 'base_portrait': x['vs'][0]['p']} for x in self.personajes for v in x['vs']]
-        sop = {p: dict(e) for p, e in self.SO.items()}
-        self.sin_completar = {x['p']: x for x in completar_liderazgos(sop, filas, {'skills': self.SK, 'tablas': self.TB})['sin_completar']}
+        # Los slots de liderazgo que el build no pudo derivar, con su motivo: la misma función que usa el build
+        # (scripts/liderazgos.py), sobre Leads & Supports tal como lo publica. Lo que deriva tiene que ser lo que trae
+        # data.js.
+        L = derivar(self.SO, self.SK, self.TB, {v['p']: x['ch']['name'] for x in self.personajes for v in x['vs']})
+        if L['derivados'] != self.derivados:
+            raise SystemExit('data.js no trae los liderazgos que scripts/liderazgos.py deriva de sus datos: correr '
+                             'scripts/build.py')
+        self.sin_derivar = collections.defaultdict(list)
+        for x in L['sin_derivar']:
+            self.sin_derivar[x['p']].append(x)
 
     @staticmethod
     def _variante(ch, u):
@@ -468,7 +480,7 @@ def chequear_personaje(X, pj, out, aparte):
         falta(out, 'lista_general', 'no está en la tier list General')
 
 
-def chequear_variante(X, v, out, aparte):
+def chequear_variante(X, v, out):
     """Lo de cada variante."""
     p, u = v['p'], v['u']
     for k, nom in (('c', 'clase'), ('f', 'bando'), ('race', 'raza'), ('gender', 'género'), ('wba', 'habilidad de World Boss')):
@@ -478,7 +490,7 @@ def chequear_variante(X, v, out, aparte):
         falta(out, 'identidad', 'sin habilidades')
     sks = X.SK.get(p, [])
     chequear_skills(X, v, sks, out)
-    chequear_lideres(X, v, sks, out, aparte)
+    chequear_lideres(X, v, sks, out)
     # Retrato e íconos: lo que data.js referencia tiene que estar publicado en datos.json.
     ret = X.IMG.get('portrait-' + (v['uid'] or v['cid']))
     if ret is None or ret not in X.pub:
@@ -584,33 +596,15 @@ def chequear_skills(X, v, sks, out):
                           slot=sk['sl'], skill=nombre, etiqueta=TB['ab'][f['a']]['en'], codigos=cods, texto=texto)
 
 
-def chequear_lideres(X, v, sks, out, aparte):
+def chequear_lideres(X, v, sks, out):
     p = v['p']
     e = X.SO.get(p, {})
-    # Liderazgo: el de Leads & Supports; si no lo tiene, por qué. Falta cuando Leads & Supports no lista el retrato,
-    # otro del personaje tiene liderazgo y el build no se lo pudo heredar (docs/AUDITORIA.md, sección 12). Si
-    # Leads & Supports lista el retrato sin liderazgo, o no publica ninguno del personaje, eligió no publicarlo.
-    if p in X.sin_completar:
-        x = X.sin_completar[p]
-        iguales = [h for hs, dif in x['contra'] if not dif for h in hs] if x['publicada'] else []
-        con = [w for w in v['todas'] if w['p'] in X.con_lid]
-        que = f"Leads & Supports no lista este retrato ({_MOTIVO_LIDERAZGO[x['motivo']]}); "
-        if iguales:
-            que += ('su Leader Skill es idéntica a la de ' + _y(X.uni_de[h] for h in iguales)
-                    + (', que sí lo tiene' if len(iguales) == 1 else ', que sí lo tienen'))
-        else:
-            que += 'Leads & Supports publica el de ' + _y(w['uni'] or 'la base' for w in con)
-        falta(out, 'liderazgo', que, motivo=x['motivo'], identica_a=iguales, con_liderazgo=[w['p'] for w in con])
-    elif p not in X.con_lid:
-        con = [w['uni'] or 'la base' for w in v['todas'] if w['p'] in X.con_lid]
-        da = sorted({X.CAT['efectos'][ie]['es'] for ie, d, obj, fuentes in X.AN.get(p, {'fx': []})['fx']
-                     if d == 'q' and any(sks[si]['sl'] == 'Leader Skill' for si, _, _ in fuentes)})
-        aparte.append({'tipo': 'liderazgo_no_publicado',
-                       'que': (f"Leads & Supports publica este retrato solo con {_y(SLOT_LS[k][0].lower() + SLOT_LS[k][1:] for k in e)}, "
-                               f"y el liderazgo de {_y(con)}" if con else
-                               f"Leads & Supports no publica ningún liderazgo de {v['pj']}")
-                              + ('; su Leader Skill le da al equipo: ' + ', '.join(f'«{x}»' for x in da) if da else ''),
-                       'datos': {'da': da, 'otros_con_liderazgo': con}})
+    # Liderazgo: el de Leads & Supports o, si no lo publica, el que el build deriva de la Leader Skill de la API
+    # (scripts/liderazgos.py). Falta cada slot que no se pudo derivar, con sus motivos (docs/AUDITORIA.md, sección 12).
+    for x in X.sin_derivar.get(p, []):
+        falta(out, 'liderazgo', f"{SLOT_LS[x['slot']]}: no se pudo derivar de la Leader Skill: "
+              + '; '.join(motivo_txt(m, d) for m, d in x['motivos']),
+              slot_ls=x['slot'], motivos=[m for m, _ in x['motivos']])
     # Soportes: lo que sus pasivas le dan al equipo (según el análisis) tiene que estar en Leads & Supports, en el
     # slot de la skill o con su nombre en otro slot (eso último lo marca el chequeo de nombres).
     dan = collections.defaultdict(set)
@@ -648,16 +642,17 @@ def chequear_lideres(X, v, sks, out, aparte):
 # Resultado, resumen e informe
 # ---------------------------------------------------------------------------
 def armar(X):
-    """Por personaje (en orden alfabético): sus faltantes, lo que no cuenta y lo de cada variante."""
+    """Por personaje (en orden alfabético): sus faltantes, lo que no cuenta (todo del personaje) y lo de cada
+    variante."""
     res = []
     for pj in X.personajes:
         propios, aparte = [], []
         chequear_personaje(X, pj, propios, aparte)
         variantes = []
         for v in pj['vs']:
-            fs, ap = [], []
-            chequear_variante(X, v, fs, ap)
-            variantes.append({'v': v, 'faltantes': fs, 'aparte': ap})
+            fs = []
+            chequear_variante(X, v, fs)
+            variantes.append({'v': v, 'faltantes': fs})
         res.append({'ch': pj['ch'], 'faltantes': propios, 'aparte': aparte, 'variantes': variantes})
     res.sort(key=lambda r: (r['ch']['name'].casefold(), r['ch']['name']))
     return res
@@ -819,8 +814,7 @@ def conocidos(X, res, R):
                 for f in (x['faltantes'] if var else r['faltantes']) if f['tipo'] == t]
     marc = de_tipo('marcador')
     lid = de_tipo('liderazgo')
-    motivos = collections.Counter(f['datos']['motivo'] for _, _, f in lid)
-    ident = [x['v']['nombre'] for _, x, f in lid if f['datos']['identica_a']]
+    motivos = collections.Counter(m for _, _, f in lid for m in f['datos']['motivos'])
     stk = de_tipo('strikers', var=False)
     bon = de_tipo('bonos', var=False)
     solo_juego = [r['ch']['name'] for r, _, f in bon if f['que'].startswith('solo')]
@@ -831,11 +825,12 @@ def conocidos(X, res, R):
     s.append(f"- **Marcadores sin resolver:** {len(marc)} efectos en {R['por_tipo']['marcador']['variantes']} variantes. "
              'docs/AUDITORIA.md (sección 8) los cuenta por id de la API, que se repite en los uniformes que comparten '
              'la skill.')
-    s.append(f"- **Liderazgos sin completar:** {len(lid)} variantes que Leads & Supports no lista aunque otra del "
-             'personaje tiene liderazgo; '
-             + '; '.join(f'{n} porque {_MOTIVO_LIDERAZGO[m]}' for m, n in sorted(motivos.items(), key=lambda x: (-x[1], x[0])))
-             + '. Con la Leader Skill idéntica a la de una variante que sí lo tiene: ' + (_y(ident) if ident else 'ninguna')
-             + '. Las que Leads & Supports lista solo con soportes van en «Lo que no cuenta».')
+    s.append(f"- **Liderazgos:** Leads & Supports publica el de {len(X.con_lid)} variantes, y el build deriva el de "
+             f"{len(X.derivados)} más de su Leader Skill ({sum(len(x) for x in X.derivados.values())} slots, con "
+             '"src": "api"; docs/AUDITORIA.md, sección 12). '
+             + (f"{len(lid)} slots de {R['por_tipo']['liderazgo']['variantes']} variantes no se pudieron derivar ("
+                + '; '.join(f'{ROTULOS[m]}, {n}' for m, n in sorted(motivos.items(), key=lambda x: (-x[1], x[0])))
+                + '; un slot puede tener más de un motivo).' if lid else 'Ninguno quedó sin derivar.'))
     s.append(f"- **Strikers:** {sum(1 for _, _, f in stk if 'no tiene la pestaña' in f['que'])} personajes sin la pestaña "
              f"Striker en la wiki y {sum(1 for _, _, f in stk if 'ninguna fila' in f['que'])} con la pestaña sin filas que "
              'se puedan leer.')
@@ -853,30 +848,16 @@ def conocidos(X, res, R):
 
 def no_cuenta(res):
     """Lo que no es un faltante: no existe en el juego, o la fuente lo dice a propósito."""
-    def personajes(tipo, var):
-        return [r['ch']['name'] for r in res
-                if any(a['tipo'] == tipo for x in (r['variantes'] if var else [r]) for a in x['aparte'])]
-    no_pub = [r['ch']['name'] for r in res if any(a['tipo'] == 'liderazgo_no_publicado' and not a['datos']['otros_con_liderazgo']
-                                                  for x in r['variantes'] for a in x['aparte'])]
-    n_no_pub = sum(1 for r in res for x in r['variantes'] for a in x['aparte']
-                   if a['tipo'] == 'liderazgo_no_publicado' and not a['datos']['otros_con_liderazgo'])
-    solo_sop = [x['v']['nombre'] for r in res for x in r['variantes'] for a in x['aparte']
-                if a['tipo'] == 'liderazgo_no_publicado' and a['datos']['otros_con_liderazgo']]
+    def personajes(tipo):
+        return [r['ch']['name'] for r in res if any(a['tipo'] == tipo for a in r['aparte'])]
     vs = [x['v'] for r in res for x in r['variantes']]
     empates = {(a['datos']['bono'] or '', tuple(a['datos']['integrantes']))
                for r in res for a in r['aparte'] if a['tipo'] == 'bono_empatado'}
     s = ['### Lo que no cuenta como faltante\n']
-    s.append(f"- **Liderazgos que Leads & Supports no publica:** {n_no_pub} variantes de {len(no_pub)} personajes de los que "
-             'Leads & Supports no publica ningún liderazgo. La app tiene su Leader Skill (pestañas Skills y Análisis), pero '
-             'la sinergia y los órdenes PvP y PvE no la ven. La fuente elige qué liderazgos publica; el JSON dice qué le '
-             'da cada uno al equipo. Personajes: ' + ', '.join(no_pub) + '.')
-    s.append(f"- **Liderazgos que Leads & Supports no publica aunque lista la variante:** {len(solo_sop)} variantes que "
-             'Leads & Supports publica solo con soportes, mientras publica el liderazgo de otra del personaje: '
-             + _y(solo_sop) + '.')
-    s.append(f"- **Sin artefacto:** {len(personajes('sin_artefacto', False))} personajes, y ninguna fuente dice que tengan "
-             'uno: ' + ', '.join(personajes('sin_artefacto', False)) + '.')
+    s.append(f"- **Sin artefacto:** {len(personajes('sin_artefacto'))} personajes, y ninguna fuente dice que tengan "
+             'uno: ' + ', '.join(personajes('sin_artefacto')) + '.')
     s.append(f"- **Guía de armado sin C.T.P., ISO-8 u obelisco para quien no vale la pena armar:** "
-             f"{len(personajes('armado_no_vale', False))} personajes: la guía dice «{NO_INVERTIR}» como ISO-8 o la "
+             f"{len(personajes('armado_no_vale'))} personajes: la guía dice «{NO_INVERTIR}» como ISO-8 o la "
              f"Ideal CTP List los pone en «{NO_VALE}».")
     s.append(f"- **Bonos con versiones empatadas entre páginas de la wiki:** {len(empates)} (docs/AUDITORIA.md, sección 10). "
              'La app muestra todas las versiones.')
@@ -906,7 +887,7 @@ def a_json(X, res, R):
             'variantes': [{'retrato': x['v']['p'], 'clave': x['v']['clave'], 'uniforme': x['v']['uni'],
                            'completa': not r['faltantes'] and not x['faltantes'],
                            'funcion': {'pvp': x['v']['funcion_pvp'], 'pve': x['v']['funcion_pve']},
-                           'faltantes': x['faltantes'], 'no_cuenta': x['aparte']} for x in r['variantes']],
+                           'faltantes': x['faltantes']} for x in r['variantes']],
         } for r in res],
     }
 

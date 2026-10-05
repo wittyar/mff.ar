@@ -272,8 +272,8 @@ def resolver():
                 wiki[ide] = val
     wiki = {i: v for i, v in wiki.items() if i not in conflictos}
     # Leads & Supports por retrato, de work/supports.json con la función de fuentes.py (que en el
-    # build corre después) y su mismo roster. completar_liderazgos() no cambia nada acá: solo copia
-    # liderazgos a uniformes cuya Leader Skill no trae marcadores.
+    # build corre después) y su mismo roster. Los liderazgos que fuentes.py deriva de la Leader Skill de
+    # la API (scripts/liderazgos.py) no entran: salen de las mismas skills que se completan acá.
     retratos = {r['portrait'] for r in chars} | {r['base_portrait'] for r in chars}
     ls, conflictos_ls = de_soportes(efs, soportes(retratos, {r['character'] for r in chars}))
     clase_de = {e['id']: e['clase'] for e in efs}

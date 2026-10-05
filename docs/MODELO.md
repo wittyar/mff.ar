@@ -181,19 +181,74 @@ entre las etiquetas de su skill. Lo que dejó el cruce está en `docs/AUDITORIA.
 Quedan 5 efectos, en 4 retratos, que no aparecen en la skill del mismo nombre; se revisan cuando el
 cruce sea parte del build.
 
-A algunos uniformes Leads & Supports no los incluye en ninguna entrada, aunque su Leader Skill es la
-de su base: Knull — Ancient History (`knull1`) quedaba sin liderazgo. El build les da el liderazgo de
-su base (solo `leader` y `leader2`, no los soportes) cuando su Leader Skill, en la API de skills, es
-idéntica a la de la base (Ezequiel, 2 de octubre de 2026; `completar_liderazgos` en
-`scripts/fuentes.py`). Los completados y los que no cierran, con su diferencia, están en la sección
-12 de `docs/AUDITORIA.md`.
+### Liderazgos que Leads & Supports no publica
 
-Los liderazgos que Leads & Supports no publica los arma el build desde la Leader Skill de la API de
-skills (Ezequiel, 4 de octubre de 2026; otro carril). Llegan en `MFF_SOPORTES` como los demás, con
-`"src": "api"`, y la app dice su fuente donde muestra un liderazgo: «según la skill del juego» en el
-Resumen (y su cita suma las skills de thanosvibs), el «Cómo funciona», el detalle de PvP y PvE, el
-«Por qué», la comparativa y el índice del roster; los de Leads & Supports, como siempre. Una fuente
-desconocida corta el arranque.
+Leads & Supports no publica el liderazgo de todas las variantes: con los datos de formato 7, lo tienen
+411 de 888, y a 135 personajes no les publica ninguno. Los que faltan los deriva el build de la Leader
+Skill de la API de skills (Ezequiel, 4 de octubre de 2026: «¿Tomamos los liderazgos que Leads &
+Supports no publica de la Leader Skill de la API?», «si, tomalos de ahí»; `scripts/liderazgos.py`).
+Llegan en `MFF_SOPORTES` como los demás, con `"src": "api"`, y la app dice su fuente donde muestra un
+liderazgo: «según la skill del juego» en el Resumen (y su cita suma las skills de thanosvibs), el
+«Cómo funciona», el detalle de PvP y PvE, el «Por qué», la comparativa y el índice del roster; los de
+Leads & Supports, como siempre. Una fuente desconocida corta el arranque.
+
+Es la única ruta: reemplaza a la regla del 2 de octubre, que les copiaba el liderazgo de la base a los
+uniformes con la Leader Skill idéntica. Los cinco que copiaba (Knull — Ancient History, Shang-Chi —
+Marvel Zombies, Moon Girl — Monsters Unleashed!, Ghost — Thunderbolts* y Sentinel — Stark Sentinels
+Mk II) salen iguales derivados, salvo «Notable», que es una marca de thanosvibs y la API no la tiene:
+Knull — Ancient History y Ghost — Thunderbolts* la pierden, y en la sinergia su liderazgo pasa de 3
+puntos a 2 [Comprobado].
+
+Cómo se derivan:
+
+1. **Partes.** La Leader Skill tiene una etapa (las 888), con un objetivo, una activación y sus
+   efectos, y se parte en los dos slots de liderazgo de Leads & Supports. El objetivo da la
+   restricción: la de un grupo de aliados (`OBJETIVO_GRUPO` en `scripts/dominio.py`), ninguna con
+   «All Allies» y el personaje con «Self». «All Allies for the first effect, Self for the second
+   effect» da dos slots: el primer efecto para todos y el segundo para él. «Give Power» («Acquires
+   the following effect for $TIME sec.») va en un slot aparte, al final: es lo que Leads & Supports
+   publica como segundo liderazgo, en los 19 casos quitar los debuffs al recibir uno, con una duración
+   y una recarga que la API no trae. Ese slot no se deriva nunca.
+2. **Correspondencia.** No se escribe a mano: se aprende en cada build de las variantes que tienen
+   las dos cosas. Cada slot de Leads & Supports va con la parte de su Leader Skill del mismo lugar, y
+   los efectos en orden: cada número del texto de la API da un stat de Leads & Supports con ese valor
+   (con su signo: «Decreases Debuff Duration by 30%» es Debuff Duration −30), y la duración es la del
+   efecto. Así salen 34 efectos (de «Increases all Basic Attacks by #%», en 117 variantes, a los que
+   se ven una sola vez), dos activaciones («when debuffed» → «When Debuffed», «when HP is below 99%» →
+   «When HP is below 99%») y la condición de cada efecto del objetivo «Self\nActivates when: Mutant
+   Ally enters» (Exodus: «when 1 Mutant»...). Lo que dos variantes dicen distinto no se usa: con el
+   objetivo «All Allies\nActivates when: Combat Type Ally enters», Leads & Supports pone la condición
+   («when 1 Combat»...) a Drax y Drax — All-New, All-Different, pero no a Drax — Classic ni a Drax —
+   Annihilation.
+3. **Todo o nada por slot.** Un slot se deriva si cierra entero: el objetivo con restricción
+   conocida, la activación y cada efecto con su correspondencia, y cada valor publicado (sin $TIME ni
+   $HEROSUBTYPE1 sin resolver). Si no, no se deriva, y la sección 12 de `docs/AUDITORIA.md` y
+   `docs/COMPLETITUD.md` («Liderazgo sin completar») lo listan con sus motivos. Lo derivado lleva el
+   nombre de la Leader Skill y los textos de Leads & Supports, que ya tienen traducción.
+4. **Verificación.** La misma regla, sobre las variantes con liderazgo de Leads & Supports: de sus 448
+   slots, 392 dan igual derivados (stats, valores, duración, condición, restricción, activación y
+   recarga). 51 no se pueden derivar: 19 del «Give Power», 27 con un objetivo que la API no nombra
+   («Target ID: 183») o que no es un grupo (Arachknight 2099), los 4 de Drax por la contradicción y
+   Invisible Woman — Classic, con «Immunity to all Debuffs», que Leads & Supports parte en dos slots.
+   Tres dan distinto: Black Swan (recarga 25 s en la API, 20 s en Leads & Supports), The Hood (la API
+   lo da a los supervillanos y Leads & Supports a todos) y Mephisto (Leads & Supports parte en dos
+   slots lo que la API da junto al recibir un debuff).
+
+Lo que dio con los datos de formato 7 (`armar_datos_lideres.py`, en las pruebas; sin `work/` el build
+no se pudo correr) [Comprobado]:
+
+- **Derivados:** 328 variantes (345 slots). Ahora tienen liderazgo 739 de 888 variantes, y los
+  personajes sin ninguno bajan de 135 a 34. Casi todos son liderazgos chicos: todas las velocidades
+  (76 slots), evasión (54), duración de los debuffs (54), todas las defensas (48), crítico (33), recarga
+  de skills (28). Cuatro traen anti-mermas, al recibir un debuff: Carnage — Fallen Soul y Superior Carnage
+  (para los Simbiontes), Thane — Phoenix Force y Sentinel — Stark Sentinels Mk II.
+- **Sin derivar:** 151 slots, de 151 variantes de 44 personajes. 99 por un efecto sin correspondencia,
+  porque Leads & Supports no publica ningún liderazgo con él: defensa física (24), resistencia al fuego
+  (14) y eléctrica (13), escudo de energía (11), velocidad de ataque (8), entre otros. 80 por la
+  activación, porque Leads & Supports solo publica liderazgos que se activan al recibir un debuff o con
+  la vida baja: «25% rate when hit» y otros porcentajes (27), «when tagging» (15), «when dealing
+  Critical Attack» (15). 33 tienen las dos cosas. Además, Nebula (5, por la contradicción de Drax) y el
+  «Give Power» de Sentry — Thunderbolts* y Mephisto — Master of Hell, que tienen derivado el otro slot.
 
 ### Lo que corrigió el glosario del juego
 

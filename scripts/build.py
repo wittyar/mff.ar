@@ -133,7 +133,9 @@ hoy = hoy.isoformat()
 #    anterior los mostraría como datos de la wiki.
 # 7: el catálogo trae a quién le sirve cada stat de liderazgo, soporte y bono de equipo
 #    (MFF_CATALOGO.soporte), y la tabla de valor de los equipos (MFF_VALOR) trae los pesos de PvP y
-#    PvE: la app ya no tiene escrito ninguno de los dos.
+#    PvE: la app ya no tiene escrito ninguno de los dos. MFF_SOPORTES trae además los liderazgos que
+#    el build deriva de la Leader Skill de la API ("src": "api", scripts/liderazgos.py), que la app de
+#    formato 7 muestra con su fuente.
 FORMATO = 7
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
