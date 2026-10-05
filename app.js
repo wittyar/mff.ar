@@ -236,8 +236,8 @@ const T = {
   md_cancel_read:    { es:'En cada integrante, "Parálisis: 1/4" quiere decir que sus skills 1 y 4 aplican parálisis (6 = la definitiva).',
                        en:'On each member, "Paralyze: 1/4" means their skills 1 and 4 apply Paralyze (6 = the ultimate).' },
   md_day:            { es:'Día del ciclo',       en:'Cycle day' },
-  md_day_note:       { es:'Ciclo de 28 días. La fuente no dice qué día es hoy: elegilo mirando el juego.',
-                       en:'28-day cycle. The source does not say which day is today: pick it from the game.' },
+  md_day_note:       { es:'Ciclo de {n} días. La fuente no dice qué día es hoy: elegilo mirando el juego.',
+                       en:'{n}-day cycle. The source does not say which day is today: pick it from the game.' },
   md_no_restr:       { es:'sin restricción',     en:'no restriction' },
   md_no_teams:       { es:'La fuente no recomienda equipos para este día.', en:'The source recommends no teams for this day.' },
   md_added:          { es:'agregado en',         en:'added in' },
@@ -306,14 +306,17 @@ const T = {
   sp_req:            { es:'Requiere',            en:'Requires' },
   sp_notable:        { es:'Notable',             en:'Notable' },
   sp_notable_t:      { es:'thanosvibs lo marca como notable', en:'thanosvibs marks it as notable' },
-  sp_at6:            { es:'a 6★',                en:'at 6★' },
+  sp_est:            { es:'a {n}★',              en:'at {n}★' },
   sp_np:             { es:'Buena elección para empezar (thanosvibs)', en:'New player pick (thanosvibs)' },
   us_guide:          { es:'En la guía de principiantes', en:"In the Beginner's Guide" },
   us_guide_none:     { es:'La guía no lo nombra en sus secciones de personajes.', en:'The guide does not name it in its character sections.' },
   us_obelisk:        { es:'Obelisco',            en:'Obelisk' },
   us_cancels:        { es:'Controles que aplica (cortan a los jefes):', en:'Controls it applies (they cancel the bosses):' },
-  us_cancels_none:   { es:'No aplica ninguno de los controles que cortan a los jefes de Extreme ni de Legend.',
-                       en:'It applies none of the controls that cancel Extreme or Legend bosses.' },
+  us_cancels_none:   { es:'No aplica ninguno de los controles que cortan a los jefes de {m}.',
+                       en:'It applies none of the controls that cancel {m} bosses.' },
+  us_cancels_ni:     { es:' ni de ',             en:' or ' },
+  us_equipos:        { es:'Cómo se arma un equipo, según la guía', en:'How a team is built, per the guide' },
+  us_equipos_tema:   { es:'Equipos temáticos',   en:'Themed teams' },
   us_abx_teams:      { es:'Equipos recomendados que lo incluyen:', en:'Recommended teams that include it:' },
   us_abx_none:       { es:'No está en los equipos recomendados.', en:'Not in the recommended teams.' },
   us_day:            { es:'Día',                 en:'Day' },
@@ -326,7 +329,7 @@ const T = {
   ar_ctp_nolist:     { es:'No está en esa lista.', en:'Not in that list.' },
   ar_ctp_noimport:   { es:'Esa lista no está entre las importadas: sincronizá las tier lists.', en:'That list is not among the imported ones: sync the tier lists.' },
   ar_ctp_guide:      { es:'Sugeridos por la guía de principiantes:', en:"Suggested by the Beginner's Guide:" },
-  ar_iso_pve:        { es:'PvE: uno de los tres sets de ataque.', en:'PvE: one of the three Attack sets.' },
+  ar_iso_pve:        { es:'PvE: uno de los {n} sets de ataque.', en:'PvE: one of the {n} Attack sets.' },
   ar_uru_fisico:     { es:'Urus de ataque físico.', en:'Physical Attack Urus.' },
   ar_uru_energia:    { es:'Urus de ataque de energía.', en:'Energy Attack Urus.' },
   ar_uru_vida:       { es:'Su daño escala con la vida: la guía no da una regla de urus para este caso (sí dice que para estos personajes la vida importa).',
@@ -434,8 +437,8 @@ const T = {
   gl_cuenta:         { es:'{t} términos del juego · {e} efectos', en:'{t} game terms · {e} effects' },
   gl_nada:           { es:'Nada coincide con la búsqueda.', en:'Nothing matches the search.' },
   gl_errores:        { es:'Lo que el inglés traduce mal', en:'What the English gets wrong' },
-  gl_errores_nota:   { es:'Tres errores del glosario en inglés que se repiten en varios términos, y las otras diferencias con el coreano.',
-                       en:'Three mistakes of the English glossary that repeat across several terms, and the other differences with the Korean.' },
+  gl_errores_nota:   { es:'Los {n} errores del glosario en inglés que se repiten en varios términos, y las otras diferencias con el coreano.',
+                       en:'The {n} mistakes of the English glossary that repeat across several terms, and the other differences with the Korean.' },
   gl_otras:          { es:'Otras diferencias',   en:'Other differences' },
   gl_terminos:       { es:'Glosario del juego',  en:'Game glossary' },
   gl_terminos_nota:  { es:'Los {n} términos del glosario de skills del juego (Skill Name Glossary · 스킬 용어 사전), en su orden.',
@@ -673,10 +676,11 @@ const T = {
                        en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier list, then a fixed order.' },
   cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
                        en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
-  cx_sin_funcion_pvp: { es:'{x} no figura en la tier list de PvP ({l}): no tiene función en PvP y este orden no arma combinaciones.',
-                       en:'{x} is not on the PvP tier list ({l}): it has no role in PvP, so this order builds no combinations.' },
-  cx_sin_funcion_pve: { es:'{x} no figura en las tier lists de PvE ({l}), o solo como «Not for wbl»: no tiene función en PvE y este orden no arma combinaciones.',
-                       en:'{x} is not on the PvE tier lists ({l}), or only as «Not for wbl»: it has no role in PvE, so this order builds no combinations.' },
+  cx_sin_funcion_pvp: { es:'{x} no figura en la tier list de PvP ({l}){f}: no tiene función en PvP y este orden no arma combinaciones.',
+                       en:'{x} is not on the PvP tier list ({l}){f}: it has no role in PvP, so this order builds no combinations.' },
+  cx_sin_funcion_pve: { es:'{x} no figura en las tier lists de PvE ({l}){f}: no tiene función en PvE y este orden no arma combinaciones.',
+                       en:'{x} is not on the PvE tier lists ({l}){f}: it has no role in PvE, so this order builds no combinations.' },
+  cx_o_solo:         { es:', o solo como {f}',   en:', or only as {f}' },
   cx_anti:           { es:'Anti-mermas',         en:'Debuff removal' },
   cx_de_lid:         { es:'{x} (liderazgo)',     en:'{x} (leadership)' },
   cx_de_sop:         { es:'{x} (soporte)',       en:'{x} (support)' },
@@ -2943,7 +2947,7 @@ function enlaceSkill ({ de, k, x }) {
     const art = ARTES.find(y => y.p === de.ch.p);
     if (!art) return sinSkill;
     tab = 'armado'; ancla = 'artefacto'; txt = art.name; titulo += ': ' + art.name + ' · ' + art.pasiva;
-    extra = ` <span class="muted">(${h(t('sp_at6'))})</span>`;
+    extra = x.est ? ` <span class="muted">(${h(t('sp_est').replace('{n}', x.est))})</span>` : '';
   } else {
     const sk = skillDeSoporte(de, k, x);
     if (!sk) return sinSkill;
@@ -3219,6 +3223,13 @@ function rolEn (v, ctx) {
 /** ¿Tiene función en el contexto? Según Ezequiel, quien no figura en las tier lists del contexto, o
  *  solo en una fila que lo deja fuera («Not for wbl»), no la tiene (Thor base, en PvP y en PvE), y
  *  el orden de ese contexto no le arma combinaciones. */
+/** Las filas de las listas del contexto que lo dejan fuera (rol «fuera» en MFF_ROLES_LISTAS), para el aviso:
+ *  «, o solo como «Not for wbl»», o nada si el contexto no tiene. */
+function filasFueraTxt (ctx) {
+  const fs = Object.entries(ROLES_LISTAS[ctx]).flatMap(([lid, filas]) => Object.entries(filas).filter(([, [rol]]) => rol === 'fuera')
+    .map(([fid]) => '«' + rowsOf(listById(lid)).find(r => r.id === fid).label + '»'));
+  return fs.length ? t('cx_o_solo').replace('{f}', fs.join(', ')) : '';
+}
 function tieneFuncion (v, ctx) { const r = rolEn(v, ctx); return r.dps > 0 || r.soporte > 0 || r.lider || r.striker; }
 /** Liderazgos y soportes de un retrato (con el slot de cada soporte), y cuáles dan anti-mermas, para el
  *  puntaje de contexto. */
@@ -3527,7 +3538,7 @@ function combinacionesHtml (v) {
   // calcula la consulta.
   if (ctx && !tieneFuncion(v, ctx)) {
     return `<div class="section" id="combos">${cab}<div class="row eqfiltros">${ordenCombinacionesHtml()}</div>
-      <p class="muted cxnota">${h(t('cx_sin_funcion_' + ctx).replace('{x}', fullLabel(v))
+      <p class="muted cxnota">${h(t('cx_sin_funcion_' + ctx).replace('{x}', fullLabel(v)).replace('{f}', filasFueraTxt(ctx))
         .replace('{l}', nombresListas(ctx === 'pvp' ? LISTAS_PVP : LISTAS_PVE)))}</p></div>`;
   }
   if (!CONSULTA || CONSULTA.clave !== v.key) {
@@ -3654,7 +3665,7 @@ function terminoGl (x, errores) {
 /** Los errores del inglés que se repiten, con sus términos, y las otras diferencias. */
 function erroresGl () {
   return `<div class="section"><h3>${h(t('gl_errores'))}</h3>
-    <p class="muted glnota">${h(t('gl_errores_nota'))}</p>
+    <p class="muted glnota">${h(t('gl_errores_nota').replace('{n}', GLOSARIO.errores.length))}</p>
     ${GLOSARIO.errores.map(e => `<div class="glerr" id="gle-${e.id}"><b>${h(bi(e.titulo))}</b><p>${h(bi(e.texto))}</p>
       <div class="row">${GLOSARIO.terminos.filter(x => x.error === e.id).map(x => enlaceGl('gl-' + x.id, nombreGl(x))).join('')}</div></div>`).join('')}
     <h4 class="glh4">${h(t('gl_otras'))}</h4>
@@ -4065,7 +4076,7 @@ function soporteHtml (tipo, clave, x) {
     <div class="soph"><span class="slotbadge ${tipo.startsWith('leader') ? 'lead' : 'pass'}">${h(t(clave))}</span>
       ${x.n ? nombreTabla(x.n) : ''}
       ${x.sig ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('sp_notable_t'))}">${h(t('sp_notable'))}</span>` : ''}
-      ${x.est ? `<span class="tag dim">${h(t('sp_at6'))}</span>` : ''}</div>
+      ${x.est ? `<span class="tag dim">${h(t('sp_est').replace('{n}', x.est))}</span>` : ''}</div>
     <div class="sopr">${restrHtml(x)}</div>
     ${categoriasDe(x).length ? `<div class="row sopcats" title="${h(t('ct_title'))}">${categoriasDe(x).map(k =>
       `<span class="tag ghost">${h(t('ct_' + k))}</span>`).join('')}</div>` : ''}
@@ -4094,10 +4105,19 @@ function usoSoportes (v) {
   if (!tipos.length) return `<p class="muted">${h(t('us_sup_none'))}</p>`;
   return `${s.np ? `<p><span class="tag solid" style="background:var(--role-soporte)">${h(t('sp_np'))}</span></p>` : ''}
     <div class="sops">${tipos.map(([k, clave]) => soporteHtml(k, clave, s[k])).join('')}</div>
-    <p class="muted">${h(bi(GUIA.equipos.pve[1]))}</p>
-    <div class="fuentes">${fuentesHtml(['tv-sup', 'tv-guia-4'])}</div>`;
+    <div class="fuentes">${fuentesHtml(['tv-sup'])}</div>
+    ${equiposGuiaHtml()}`;
 }
 
+/** Lo que dice la guía de principiantes de cómo se arma un equipo (líder, principal y soporte; dónde vale el
+ *  liderazgo y dónde los soportes), plegado: todas sus notas, en el orden de la guía. */
+function equiposGuiaHtml () {
+  const E = GUIA.equipos, notas = (xs) => xs.map(x => `<p class="muted">${h(bi(x))}</p>`).join('');
+  return `<details class="usgrupo"><summary>${h(t('us_equipos'))}</summary>
+    <p><b>PvE</b></p>${notas(E.pve)}<p><b>PvP</b></p>${notas(E.pvp)}
+    <p><b>${h(t('us_equipos_tema'))}</b></p>${notas([E.tematicos])}
+    <div class="fuentes">${fuentesHtml(E.fuente)}</div></details>`;
+}
 /** Dónde lo recomienda la guía de principiantes (cualquiera de sus variantes). */
 function usoGuia (ch, v) {
   const es = variantesDe(ch).flatMap(vv => (GUIA_PJ[vv.p] || []).map(e => ({ e, vv })));
@@ -4121,7 +4141,8 @@ function usoABX (ch, v) {
   const cortes = ab && ab.cancels ? Object.entries(ab.cancels).map(([modo, tipos]) => {
     const c = cortesHtml(v.p, tipos); return c ? `<div class="row" style="gap:5px"><span class="tag dim">${h(modo)}</span>${c}</div>` : ''; }).join('') : '';
   const rol = (e, p) => p === e.lider && e.dps.includes(p) ? t('md_r_leaddps') : p === e.lider ? t('md_r_lead') : e.dps.includes(p) ? t('md_r_dps') : t('md_r_support');
-  return `${cortes ? `<p class="muted">${h(t('us_cancels'))}</p>${cortes}` : `<p class="muted">${h(t('us_cancels_none'))}</p>`}
+  return `${cortes ? `<p class="muted">${h(t('us_cancels'))}</p>${cortes}`
+                  : `<p class="muted">${h(t('us_cancels_none').replace('{m}', Object.keys(ab.cancels).join(t('us_cancels_ni'))))}</p>`}
     ${eqs.length ? `<p class="muted" style="margin-top:8px">${h(t('us_abx_teams'))}</p>
       <div class="usabx">${eqs.map(e => { const p = e.pj.find(x => ps.has(x));
         return `<div class="row" style="gap:5px"><span class="tag dim">${h(t('us_day'))} ${e.d}</span><span class="tag dim">${h(e.m)}</span>
@@ -4295,18 +4316,18 @@ function isoArmado (ch, v) {
       (e.ob_x || []).map(sinInterpretar).join('')}</div>` : '<p class="muted">—</p>'}
     ${fuenteArmado()}`;
 }
-/** Sets ISO de ataque (PvE) y la nota de piedra que corresponde a su tipo de ataque. */
+/** Sets ISO de ataque (PvE), la nota de piedra que corresponde a su tipo de ataque y las notas de ISO-8 de la
+ *  guía (todas, como en Modos). */
 function armadoISO (ta) {
   const G = GUIA.iso, P = G.piedras, k = ta ? ta.k : null;
   const piedras = k === 'fisico' ? ['roja'] : k === 'energia' ? ['blanca'] : k === 'mixto' ? ['roja', 'blanca'] : [];
-  return `<p class="muted">${h(t('ar_iso_pve'))}</p>
+  return `<p class="muted">${h(t('ar_iso_pve').replace('{n}', G.sets_pve.length))}</p>
     ${G.sets_pve.map(s => `<div class="isoset"><b>${h(s.nombre)}</b> ${piedrasHtml(s.piedras)}
       <div class="muted">${s.stats.map(statNom).join(' · ')}</div></div>`).join('')}
     ${piedras.map(p => `<p>${piedrasHtml([p])} <b>${h(P[p].nombre)}</b>: ${h(bi(P[p]))}</p>`).join('')}
-    ${k === 'vida' ? `<p>${h(bi(G.notas_pve[2]))}</p>` : ''}
     <p>${piedrasHtml(['caos'])} <b>${h(P.caos.nombre)}</b>: ${h(bi(P.caos))}</p>
-    <p class="muted">${h(bi(G.notas_pve[1]))}</p>
-    <p class="muted"><b>PvP:</b> ${h(bi(G.notas_pvp[0]))}</p>
+    ${G.notas_pve.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
+    ${G.notas_pvp.map(x => `<p class="muted"><b>PvP:</b> ${h(bi(x))}</p>`).join('')}
     <div class="fuentes">${fuentesHtml(G.fuente)}</div>`;
 }
 /** Urus: primero los del tipo de ataque del personaje; después, los topes en orden. */
@@ -4316,7 +4337,8 @@ function armadoUrus (ta) {
     <p class="muted">${h(bi(G.ataque))}</p>
     <p class="muted">${h(bi(G.prioridad_nota))}</p>
     <ol class="prio">${G.prioridad.map(x => `<li>${h(statNom(x))}</li>`).join('')}</ol>
-    <p class="muted"><b>${h(t('md_gear4'))}:</b> ${GUIA.gear4.prioridad.map(x => h(statNom(x))).join(' › ')}. ${h(bi(GUIA.gear4.notas[1]))}</p>
+    <p class="muted"><b>${h(t('md_gear4'))}:</b> ${GUIA.gear4.prioridad.map(x => h(statNom(x))).join(' › ')}.</p>
+    ${GUIA.gear4.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
     <div class="fuentes">${fuentesHtml(G.fuente.concat(GUIA.gear4.fuente.filter(x => !G.fuente.includes(x))))}</div>`;
 }
 /** Artefacto exclusivo: el texto del juego con los valores del nivel de estrellas elegido. */
@@ -4335,7 +4357,7 @@ function armadoArtefacto (ch) {
   return `<div class="row" style="gap:8px;margin-bottom:6px;flex-wrap:nowrap">${imgUrl('art-' + a.p) ? `<img class="artico" src="${imgUrl('art-' + a.p)}" alt="">` : ''}
       <div><b>${h(a.name)}</b><div class="muted">${h(a.pasiva)} · ${h(t('ar_since'))} ${h(a.desde)}</div></div></div>
     <div class="row" style="gap:6px;margin-bottom:8px">${puntaje('PvE', a.pve)}${puntaje('PvP', a.pvp)}</div>
-    <div class="seg" style="margin-bottom:8px">${['3', '4', '5', '6'].map(e => `<button class="${e === est ? 'on' : ''}" data-a="artEst" data-v="${e}">${e}★</button>`).join('')}</div>
+    <div class="seg" style="margin-bottom:8px">${Object.keys(a.valores).map(e => `<button class="${e === est ? 'on' : ''}" data-a="artEst" data-v="${e}">${e}★</button>`).join('')}</div>
     <div class="artlineas">${a.lineas.map(linea).join('')}</div>
     ${a.obtencion.length ? `<details class="usgrupo"><summary>${h(t('ar_obtain'))} (${a.obtencion.length})</summary>
       <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
@@ -4359,8 +4381,10 @@ function armadoOpciones (v) {
  *  marca hasta dónde llegó con ese personaje. */
 function armadoRuta (ch, v) {
   const P = GUIA.progresion, R = Object.fromEntries(P.requisitos.items.map(x => [x.id, x]));
-  const techo = v.t === 'T2' ? 'n70' : v.t === 'T3' ? 'n80' : 't4';
-  const pasos = P.pasos.slice(0, P.pasos.findIndex(p => p.id === techo) + 1);
+  // Un T2 llega hasta el paso de antes de subir a Tier-3; un T3, hasta el de antes de Tier-4 (el orden de la guía).
+  const corte = { T2: 't3', T3: 't4' }[v.t], fin = corte ? P.pasos.findIndex(p => p.id === corte) : P.pasos.length;
+  if (fin < 0) throw new Error('la hoja de ruta de la guía no tiene el paso ' + corte);
+  const pasos = P.pasos.slice(0, fin);
   // El avance es del personaje: si marcó un paso que esta variante no tiene (Tier-4 en
   // una sin Tier-4), todos los que sí tiene quedan hechos.
   const hecho = Math.min(P.pasos.findIndex(p => p.id === U.ruta[ch.id]), pasos.length - 1);
@@ -4566,21 +4590,22 @@ function bloqueLista (l, elegir) {
   </div>`;
 }
 
-/** Alliance Battle: restricciones de un día del ciclo de 28 y los equipos recomendados,
- *  con qué integrante corta a los jefes (cancels) y con qué skill. */
+/** Alliance Battle: restricciones de un día del ciclo (los días, los modos y su orden, como los publica la
+ *  fuente) y los equipos recomendados, con qué integrante corta a los jefes (cancels) y con qué skill. */
 function panelABX (m) {
-  const dia = ui.abxDia;
+  const dia = ui.abxDia, dias = [...new Set(ABX.restricciones.map(r => r.d))].sort((a, b) => a - b);
   const rs = ABX.restricciones.filter(r => r.d === dia);
   const eqs = ABX.equipos.filter(e => e.d === dia);
-  const orden = ['Normal', 'Extreme', 'Legend', 'Infinite Challenge'];
+
   const restr = (r) => r.length ? r.map(x => `<span class="tag dim">${icon(x)}${h(dom(x))}</span>`).join(' ') : `<span class="muted">${h(t('md_no_restr'))}</span>`;
   const cortes = (p, modo) => cortesHtml(p, (m.cancels || {})[modo] || []);
   return `<div class="bloque"><h4>${h(t('md_abx'))}</h4>
     <div class="row" style="margin-bottom:8px"><span class="muted">${h(t('md_day'))}</span>
-      <select data-a="abxDia">${Array.from({ length: 28 }, (_, i) => `<option value="${i + 1}" ${i + 1 === dia ? 'selected' : ''}>${i + 1}</option>`).join('')}</select>
-      <span class="muted">${h(t('md_day_note'))}</span></div>
-    <table class="abx"><tbody>${orden.filter(o => rs.some(r => r.m === o)).map(o => `<tr><th>${h(o)}</th><td>${restr(rs.find(r => r.m === o).r)}</td></tr>`).join('')}</tbody></table>
-    ${m.cancels ? `<p class="muted" style="margin:8px 0">${h(bi(m.cancels_nota))} <b>Extreme</b>: ${h(m.cancels.Extreme.map(trTxt).join(', '))} · <b>Legend</b>: ${h(m.cancels.Legend.map(trTxt).join(', '))}.
+      <select data-a="abxDia">${dias.map(d => `<option value="${d}" ${d === dia ? 'selected' : ''}>${d}</option>`).join('')}</select>
+      <span class="muted">${h(t('md_day_note').replace('{n}', dias.length))}</span></div>
+    <table class="abx"><tbody>${rs.map(r => `<tr><th>${h(r.m)}</th><td>${restr(r.r)}</td></tr>`).join('')}</tbody></table>
+    ${m.cancels ? `<p class="muted" style="margin:8px 0">${h(bi(m.cancels_nota))} ${Object.entries(m.cancels).map(([modo, tipos]) =>
+      `<b>${h(modo)}</b>: ${h(tipos.map(trTxt).join(', '))}`).join(' · ')}.
       ${h(t('md_cancel_read'))}</p>` : ''}
     ${eqs.length ? `<div class="abxeqs">${eqs.map(e => `<div class="abxeq">
         <div class="row" style="gap:6px;margin-bottom:6px"><span class="tag dim">${h(e.m)}</span>
