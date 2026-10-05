@@ -1769,7 +1769,8 @@ function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
   if (vs.length < 2) return { score: 0, razones: [], aplicados: [], lider: null, art: false };
   // razones: lo que suma, para explicarlo (sin soloPuntaje): cada soporte o liderazgo con los
   // integrantes a los que les llega y les sirve, cada versión de un bono de equipo, los roles, las
-  // clases y cada ventaja de clase. Los textos salen de ahí (razonesTxt, porqueHtml).
+  // clases y cada ventaja de clase, cada una con lo que suma (pts; el punto de un bono va con su
+  // primera versión). Los textos salen de ahí (razonesTxt y el «Por qué»).
   // aplicados: { de, a: [integrantes] }, los soportes y bonos de equipo que suman: quién le da algo a
   // quién (en un bono de equipo, cada integrante a los otros, que están juntos por el bono). El
   // liderazgo no va: vincula según quién lidera (vinculoLider), y el líder depende del contexto.
@@ -1786,9 +1787,10 @@ function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
     for (const [k] of TIPOS_SOPORTE) {
       const x = s[k]; if (!x || LIDERAZGOS.includes(k) || !cuenta(a, x)) continue;
       const bs = alcanza(a, x); if (!bs.length) continue;
-      score += x.sig ? 3 : 2; aplicados.push({ de: a, a: bs });
+      const pts = x.sig ? 3 : 2;
+      score += pts; aplicados.push({ de: a, a: bs });
       if (k === 'artifact') art = true;
-      if (!soloPuntaje) razones.push({ tipo: 'soporte', de: a, k, x, a: bs });
+      if (!soloPuntaje) razones.push({ tipo: 'soporte', de: a, k, x, a: bs, pts });
     }
   }
   // Liderazgo: el del líder del equipo (liderDe, sin contexto; o el que se pasa, el de la tarjeta en PvP o
@@ -1798,8 +1800,9 @@ function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
   if (sl) for (const k of LIDERAZGOS) {
     const x = sl[k]; if (!x || !cuenta(lider, x)) continue;
     const bs = alcanza(lider, x); if (!bs.length) continue;
-    score += x.sig ? 3 : 2;
-    if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k, x, a: bs });
+    const pts = x.sig ? 3 : 2;
+    score += pts;
+    if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k, x, a: bs, pts });
   }
   // Bonos de equipo: con todos sus integrantes en el equipo, les suben stats a todos. Cada uno suma
   // 1 si le sirve a alguien; con foco, si lo involucra: él está en el bono o le sirve a él. Sus
@@ -1814,20 +1817,21 @@ function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
       const integrantes = vs.filter(x => b.m.includes(x.cid));
       score += 1;
       for (const x of integrantes) aplicados.push({ de: x, a: integrantes.filter(y => y !== x) });
-      // cada versión de sus stats (más de una si las páginas de la wiki no coinciden), a quienes les sirve
-      if (!soloPuntaje) b.vs.forEach((v, i) => razones.push({ tipo: 'bono', b, i, x: v, integrantes, a: reciben.filter(x => leSirve(v, x)) }));
+      // cada versión de sus stats (más de una si las páginas de la wiki no coinciden), a quienes les sirve; su
+      // punto va con la primera
+      if (!soloPuntaje) b.vs.forEach((v, i) => razones.push({ tipo: 'bono', b, i, x: v, integrantes, a: reciben.filter(x => leSirve(v, x)), pts: i ? 0 : 1 }));
     }
   }
   const covered = ROLES_EQUIPO.filter(r => vs.some(v => v.r.includes(r)));
-  if (covered.length >= 2) { score += 1; if (!soloPuntaje) razones.push({ tipo: 'roles', roles: covered }); }
-  if (vs.every((v, i) => vs.findIndex(w => w.c === v.c) === i)) { score += 1; if (!soloPuntaje) razones.push({ tipo: 'clases' }); }
+  if (covered.length >= 2) { score += 1; if (!soloPuntaje) razones.push({ tipo: 'roles', roles: covered, pts: 1 }); }
+  if (vs.every((v, i) => vs.findIndex(w => w.c === v.c) === i)) { score += 1; if (!soloPuntaje) razones.push({ tipo: 'clases', pts: 1 }); }
   // a cubre la debilidad de b si a le gana a la clase que le gana a b (un Universal también,
   // con su ventaja menor: suma lo mismo y la razón lo dice).
   for (const a of vs) for (const b of vs) {
     const amenaza = LE_GANA_A[b.c], fuerza = amenaza && VENTAJA[a.c][amenaza];
     if (a !== b && fuerza && (!foco || a === foco || b === foco)) {
       score += 1;
-      if (!soloPuntaje) razones.push({ tipo: 'ventaja', a, b, amenaza, fuerza });
+      if (!soloPuntaje) razones.push({ tipo: 'ventaja', a, b, amenaza, fuerza, pts: 1 });
     }
   }
   return { score, razones, aplicados, lider, art };
