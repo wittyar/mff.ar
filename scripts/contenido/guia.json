@@ -550,6 +550,7 @@
    "tv-guia-3",
    "wiki-uru",
    "juego-guia",
+   "juego-guia-ko",
    "foro-1118083",
    "foro-1715581",
    "foro-1735745",
@@ -561,8 +562,8 @@
     "en": "Each of the four gears has 5 Uru slots: 2 unlock with the gear at +8 and one more at +12, +16 and +20."
    },
    {
-    "es": "Por pieza, como mucho 2 urus pueden subir el mismo stat: 8 por personaje (2 × 4 piezas).",
-    "en": "Per gear, at most 2 equipped Urus can buff the same stat: 8 per character (2 per gear × 4)."
+    "es": "Por pieza, como mucho 2 urus pueden subir el mismo stat, sea cual sea su grado: 8 por personaje (2 × 4 piezas).",
+    "en": "Per gear, at most 2 equipped Urus can buff the same stat, whatever their grade: 8 per character (2 per gear × 4)."
    },
    {
     "es": "Antes de equipar, amplificar las ranuras: amplificar 4 por pieza es el mejor equilibrio entre stats y oro. En una ranura sin amplificar el uru rinde menos de la mitad.",
@@ -594,12 +595,12 @@
    "en": "Fill the other slots up to the caps in this order (HP only once everything before is capped)."
   },
   "odin": {
-   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). Va uno por pieza: la guía de urus del foro oficial (diciembre de 2021) dice «Only a single Odin's Blessings can be equipped on a Character Gear», y la del juego, que se puede equipar uno. La de thanosvibs dice uno solo del mismo tipo por pieza, y las notas de los despertados (noviembre de 2024) prohíben un Odin's Blessing y uno despertado del mismo tipo en la misma pieza: puede que el límite ahora sea por tipo.",
-   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). One per gear: the official forum's Uru guide (December 2021) says \"Only a single Odin's Blessings can be equipped on a Character Gear\", and the in-game guide, that one can be equipped. The thanosvibs guide says only one of the same type per gear, and the notes for the Awakened ones (November 2024) forbid an Odin's Blessing and an Awakened one of the same type on the same gear: the limit may now be per type."
+   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). Va uno por pieza: la guía de urus del foro oficial (diciembre de 2021) dice «Only a single Odin's Blessings can be equipped on a Character Gear». La del juego, en inglés y en coreano, dice que se puede equipar uno, sin decir si por pieza: el «por pieza» (en coreano, 장비별로) lo pone en las 5 ranuras y en el límite de 2 del mismo stat, no en el Odin's Blessing. La de thanosvibs dice uno solo del mismo tipo por pieza, y las notas de los despertados (noviembre de 2024) prohíben un Odin's Blessing y uno despertado del mismo tipo en la misma pieza: puede que el límite ahora sea por tipo.",
+   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). One per gear: the official forum's Uru guide (December 2021) says \"Only a single Odin's Blessings can be equipped on a Character Gear\". The in-game guide, in English and Korean, says one can be equipped, without saying whether per gear: it puts the \"per gear\" (장비별로 in Korean) on the 5 slots and on the limit of 2 of the same stat, not on the Odin's Blessing. The thanosvibs guide says only one of the same type per gear, and the notes for the Awakened ones (November 2024) forbid an Odin's Blessing and an Awakened one of the same type on the same gear: the limit may now be per type."
   },
   "corrobora": {
-   "es": "La wiki confirma las 5 ranuras por pieza en +20 y el límite de 2 del mismo stat por pieza (8 de 20); la guía del juego, las 5 ranuras y el límite de 2.",
-   "en": "The wiki confirms 5 slots per gear at +20 and the limit of 2 of the same stat per gear (8 of 20); the in-game guide, the 5 slots and the limit of 2."
+   "es": "La wiki confirma las 5 ranuras por pieza en +20 y el límite de 2 del mismo stat por pieza (8 de 20); la guía del juego, en inglés y en coreano, las 5 ranuras y el límite de 2, que según el coreano no mira el grado (등급에 상관없이).",
+   "en": "The wiki confirms 5 slots per gear at +20 and the limit of 2 of the same stat per gear (8 of 20); the in-game guide, in English and Korean, the 5 slots and the limit of 2, which per the Korean does not depend on grade (등급에 상관없이)."
   }
  },
  "iso": {
