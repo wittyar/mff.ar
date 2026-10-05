@@ -590,8 +590,8 @@
     "en": "On skill use, raises the attack of skills with an element and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "difiere": {
-    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; el coreano, 속성 증폭: amplificación de elemento. El C.T.P. Judgement reforjado dice en inglés «Increases additional type skill damage».",
-    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; the Korean, 속성 증폭: element amplification. The reforged Judgement C.T.P. says in English \"Increases additional type skill damage\"."
+    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; el coreano, 속성 증폭: amplificación de elemento. El C.T.P. Judgment reforjado dice en inglés «Increases additional type skill damage».",
+    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; the Korean, 속성 증폭: element amplification. The reforged Judgment C.T.P. says in English \"Increases additional type skill damage\"."
    },
    "error": "tipo",
    "efectos": [],

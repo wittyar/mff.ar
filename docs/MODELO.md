@@ -295,7 +295,7 @@ El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ez
 - **«Type» es elemento.** El inglés traduce 속성 (elemento) como «Type»: el daño puro no pasa por la
   defensa ni por las resistencias elementales (el inglés dice «Type Resistance»), y la etiqueta
   «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. **Type Amplification** es 속성
-  증폭, amplificación de elemento: el reforjado de Judgement que en inglés se llama así es un problema
+  증폭, amplificación de elemento: el reforjado de Judgment que en inglés se llama así es un problema
   de traducción (el hallazgo de los C.T.P., en `docs/AUDITORIA.md`).
 - **Penetration** es 간파, «ver a través»: no es la Perforación. Corta el ataque del rival con una
   rotura de guardia, como dice la guía de thanosvibs. Es una de las dos opciones de reforjado de

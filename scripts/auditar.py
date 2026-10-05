@@ -347,6 +347,8 @@ class Auditoria:
                     vistos.add((id(x), tipo))
                     self.listas['soporte'].append((p, tipo, x['rc'], x['r']))
         self.res['soportes_corregidos'] = len(self.listas['soporte'])
+        # Lo que el build corrige con el juego (fuentes.py): el dato corregido lleva el de thanosvibs (tv) y su fuente.
+        self.listas['ctp_nombre'] = [(c['id'], c['tv'], c['name'], c['f']) for c in f['ctps'] if 'tv' in c]
         # Artefactos: los números del texto a 6★ contra los de la página Artifact de la
         # wiki (que los lista a 6★, "Lv.4").
         wt = cargar('work/wiki_artifact.json')['wt']
@@ -418,8 +420,8 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     s.append('# Auditoría de datos\n')
     s.append(f'Generado por `scripts/auditar.py` el {hoy}, sobre los datos del juego {version} '
              f'(thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.\n')
-    s.append('La app muestra thanosvibs. Esto marca dónde otra fuente dice otra cosa, con los dos '
-             'valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron '
+    s.append('La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra '
+             'fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron '
              'viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una '
              'diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.\n')
     s.append('En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".\n')
@@ -508,12 +510,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
              f"en vez de inventar el valor.")
     s.append('')
 
-    s.append('## 5. Efectos de líder y soporte: restricciones corregidas\n')
-    s.append('La fuente clasifica mal estas restricciones; el build las corrige con aviso y la ficha '
-             'muestra la original.\n')
-    for p, tipo, rc, r in L['soporte']:
-        s.append(f'- `{p}` ({tipo}): la fuente dice {rc[0]} "{rc[1]}"; se usa {r[0]} "{r[1]}".')
-    s.append('')
+    s += correcciones_seccion(L, fuentes)
 
     s.append('## 6. Artefactos\n')
     s.append('Los números del texto a 6★ de thanosvibs contra la tabla de la página Artifact de la '
@@ -792,6 +789,25 @@ def liderazgos_seccion(L, chars):
         por_p[x['p']].append(f"`{x['slot']}` {slot_txt(x['x'])}")
     s += [f'- {quienes(ps)}: {det}.' for det, ps in agrupar([{'p': p, 'slot': '', 't': '; '.join(ts)} for p, ts in por_p.items()],
                                                             lambda x: x['t'])]
+    s.append('')
+    return s
+
+
+def correcciones_seccion(L, fuentes):
+    """Sección 5: lo que el build corrige de thanosvibs, con aviso (fuentes.py). L: las listas de la auditoría."""
+    def lista(xs):
+        return xs if xs else ['Ninguna en estos datos.']
+    s = ['## 5. Lo que el build corrige de thanosvibs\n']
+    s.append('El build corrige estos datos de thanosvibs con aviso, y la app usa el corregido.\n')
+    s.append('### Restricciones de liderazgos y soportes\n')
+    s.append('La fuente las clasifica mal; la ficha muestra la original.\n')
+    s += lista([f'- `{p}` ({tipo}): la fuente dice {rc[0]} "{rc[1]}"; se usa {r[0]} "{r[1]}".' for p, tipo, rc, r in L['soporte']])
+    s.append('')
+    s.append('### Nombres de C.T.P.\n')
+    s.append('Va el nombre que escribe la ficha del C.T.P. en el juego. El id sigue siendo el de thanosvibs: es la clave del '
+             'ícono, de la guía de armado y de lo que guarda la capa.\n')
+    s += lista([f"- `{cid}`: thanosvibs dice «{tv}»; se usa «{juego}», como lo escribe el juego "
+                f"({', '.join(fuente_md(fuentes[k]) for k in fs)})." for cid, tv, juego, fs in L['ctp_nombre']])
     s.append('')
     return s
 

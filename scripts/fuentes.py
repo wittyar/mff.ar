@@ -100,13 +100,36 @@ def cargar(ruta):
     return json.load(open(ruta, encoding='utf-8'))
 
 
+# Lo que thanosvibs escribe distinto que el juego, y el build corrige porque el juego manda (Ezequiel, 5 de octubre de
+# 2026). Va con aviso: el dato corregido lleva el de thanosvibs (tv) y la fuente del juego (f), y la sección 5 de
+# docs/AUDITORIA.md lo lista. Nombres de C.T.P. (nombre de thanosvibs: el del juego y su fuente): la ficha de cada
+# C.T.P. dice «C.T.P. of Judgment» en sus tres grados. El id sigue saliendo del nombre de thanosvibs: es la clave del
+# ícono, de la guía de armado y de lo que guarda la capa.
+_CTP_NOMBRE_JUEGO = {'Judgement': ('Judgment', 'juego-ctp')}
+
+
+def nombre_ctp(nombre):
+    """El nombre de un C.T.P. de thanosvibs como lo usa la app, y lo que lleva el dato si lo corrige (tv y f)."""
+    if nombre not in _CTP_NOMBRE_JUEGO:
+        return nombre, {}
+    juego, f = _CTP_NOMBRE_JUEGO[nombre]
+    return juego, {'tv': nombre, 'f': [f]}
+
+
 def ctps(guia):
     grupo = {c: g['id'] for g in guia['ctp_ranking']['grupos'] for c in g['ctps']}
     out = []
-    for c in cargar('work/ctps.json'):
+    datos = cargar('work/ctps.json')
+    for c in datos:
         cid = slug(c['name'])
-        out.append({'id': cid, 'name': c['name'], 'grupo': grupo.get(cid),
-                    'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged'))})
+        nombre, corregido = nombre_ctp(c['name'])
+        if corregido:
+            print(f"AVISO: C.T.P. {c['name']!r}: el juego lo escribe {nombre!r}, y se usa el del juego")
+        out.append({'id': cid, 'name': nombre, 'grupo': grupo.get(cid),
+                    'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged')), **corregido})
+    sobran = set(_CTP_NOMBRE_JUEGO) - {c['name'] for c in datos}
+    if sobran:
+        print(f'AVISO: /api/ctps ya no publica {sorted(sobran)}: sobra su nombre del juego en fuentes.py (_CTP_NOMBRE_JUEGO)')
     ids = {c['id'] for c in out}
     sobran = set(grupo) - ids
     if sobran:
@@ -497,6 +520,9 @@ def main():
     listas = {json.load(open(f, encoding='utf-8'))['slug'] for f in glob.glob('work/tierlists/*.json')}
     bonos_juego = cargar(os.path.join(_DIR, 'contenido', 'bonos.json'))
     validar_contenido(guia, modos, bonos_juego, listas, set(guia['stats']))
+    malas = sorted({f for _, f in _CTP_NOMBRE_JUEGO.values()} - set(guia['fuentes']))
+    if malas:
+        raise SystemExit(f'fuentes.py corrige con fuentes sin definir en contenido/guia.json: {malas}')
     # La guía curada se escribió sobre una versión; si thanosvibs publica otra, se avisa
     # para revisarla (y la app lo muestra), en vez de mostrar recomendaciones viejas como vigentes.
     version_fuente = cargar('work/guia/changelog.json')[0]['update_version']

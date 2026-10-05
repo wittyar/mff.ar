@@ -93,9 +93,6 @@ variante, en `docs/COMPLETITUD.md`.
     barra muestra el nombre) y la lista de Galactus hasta el final (Heralds #3).
   - Urus: el juego habla de urus amplificados y thanosvibs de ranuras amplificadas. Verlo en el
     juego.
-  - Sin cargar, de la guía del juego: los Boost Points de Giant Boss Raid, quién juega Alliance
-    Battle y su requisito del día, las temporadas de 8 semanas de Otherworld; el juego escribe
-    «Judgment» y thanosvibs «Judgement».
 - Completitud: falta decidir si los que la guía de armado marca «dont waste gold» cuentan como
   faltantes y si el informe (unos 220 KB) se achica.
 - Propuesta, sin decidir: que publicar.yml no publique una versión si el `datos.json` de main no es
