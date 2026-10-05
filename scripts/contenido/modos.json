@@ -163,17 +163,18 @@
      "en": "Clear Galactus as soon as you are able (or get carried): he drops Tier-4 materials."
     },
     {
-     "es": "Dormammu (más adelante): da Souls of the Faltine, necesarias para el Tier-4. La guía de thanosvibs dice que es la única forma de conseguirlas; el glosario de ítems del juego nombra también Timeline Battle, Otherworld Battle, Shadowland y Zombie Survival. Si no estás cerca del 10% de perforación, buscá quien te cargue.",
-     "en": "Dormammu (late game): drops Souls of the Faltine, required for Tier-4. The thanosvibs guide says it is the only way to get them; the in-game item glossary also names Timeline Battle, Otherworld Battle, Shadowland and Zombie Survival. Find someone to carry you if you are not around 10% Pierce yet."
+     "es": "Dormammu (más adelante): da Souls of the Faltine, necesarias para el Tier-4. La guía de thanosvibs dice que es la única forma de conseguirlas; el glosario de ítems del juego nombra también Timeline Battle, Otherworld Battle, Shadowland, Zombie Survival y, en coreano (la captura en inglés se corta ahí), Team Battle Arena. Si no estás cerca del 10% de perforación, buscá quien te cargue.",
+     "en": "Dormammu (late game): drops Souls of the Faltine, required for Tier-4. The thanosvibs guide says it is the only way to get them; the in-game item glossary also names Timeline Battle, Otherworld Battle, Shadowland, Zombie Survival and, in Korean (the English screenshot is cut off there), Team Battle Arena. Find someone to carry you if you are not around 10% Pierce yet."
     },
     {
-     "es": "Entran hasta 3 jugadores (se puede con 1 o 2): con más jugadores, el jefe es más difícil y da más recompensas. Los jefes cambian cada día, y en cada batalla hay un personaje bonus elegido al azar: fortalecerlo sube la chance de recompensa.",
-     "en": "Up to 3 players enter (1 or 2 also works): with more players the boss is harder and gives more rewards. Bosses change daily, and each battle has a randomly selected Bonus Character: strengthening it raises the chance of rewards."
+     "es": "Entran hasta 3 jugadores (se puede con 1 o 2): con más jugadores, el jefe es más difícil y da más recompensas. Los jefes cambian cada día, y en cada batalla hay un personaje bonus elegido al azar: fortalecerlo sube la chance de recompensa. En la sala de espera, los Boost Points suben la cantidad de recompensas: al ganar se cobran tantas extra como las que se fijaron.",
+     "en": "Up to 3 players enter (1 or 2 also works): with more players the boss is harder and gives more rewards. Bosses change daily, and each battle has a randomly selected Bonus Character: strengthening it raises the chance of rewards. In the lobby, Boost Points raise the reward count: on a win you get as many extra rewards as the count you set."
     }
    ],
    "fuente": [
     "tv-guia-4",
-    "juego-guia"
+    "juego-guia",
+    "juego-guia-ko"
    ],
    "corrobora": {
     "es": "La wiki confirma que los materiales de Tier-4 salen de Giant Boss Raid: Dormammu y de World Boss Legend.",
