@@ -738,6 +738,8 @@ const T = {
   sk_de_nadie:       { es:'No es striker de nadie en la wiki.', en:'It is nobody\'s striker on the wiki.' },
   sk_ataca:          { es:'{p}% al atacar',     en:'{p}% on attack' },
   sk_atacado:        { es:'{p}% al ser atacado', en:'{p}% when attacked' },
+  sk_imposible:      { es:'Dato imposible de la fuente: una probabilidad no puede pasar de 100%. La wiki dice esto y la app lo muestra tal cual, sin corregirlo (docs/AUDITORIA.md, sección 11).',
+                       en:'Impossible value from the source: a chance cannot exceed 100%. The wiki says this and the app shows it as is, uncorrected (docs/AUDITORIA.md, section 11).' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
   cmp_cost:          { es:'Costo',               en:'Cost' },
 
@@ -2995,7 +2997,7 @@ function strikersPqHtml (foco, vs, nombre) {
   for (const a of vs) for (const [x, p, cuando] of STRIKERS[a.cid] || []) {
     const b = vs.find(y => y !== a && y.cid === x);
     if (b && (a === foco || b === foco)) out.push(`<li>${h(t('cx_striker_de')).replace('{b}', () => nombreHtml(b, nombre)).replace('{a}', () => nombreHtml(a, nombre))} (${
-      h(t('sk_' + cuando).replace('{p}', p))})</li>`);
+      strikerProbHtml(p, cuando)})</li>`);
   }
   return out;
 }
@@ -3075,6 +3077,13 @@ function bonosHtml (ch) {
     </details>
   </div>`;
 }
+/** La probabilidad de que aparezca un striker y cuándo: «12% al atacar», en la ficha, el «Por qué» y el detalle
+ *  de PvP y PvE. Más de 100% es un dato imposible de la wiki (Daken: Doctor Octopus, 219%): va tal cual, sin
+ *  topear, marcado (docs/AUDITORIA.md, sección 11). */
+function strikerProbHtml (p, cuando) {
+  const txt = h(t('sk_' + cuando).replace('{p}', numTxt(p)));
+  return p > 100 ? `<span class="imposible" title="${h(t('sk_imposible'))}">${txt} ⚠</span>` : txt;
+}
 /** Los strikers del personaje (de la pestaña Striker de la wiki; valen con cualquier uniforme) y de
  *  quiénes es striker, plegados: cada uno con su retrato, su probabilidad de aparecer y cuándo, de
  *  mayor a menor probabilidad. */
@@ -3083,7 +3092,7 @@ function strikersHtml (ch) {
   const fotos = (filas) => `<div class="row eqfotos">${filas.slice().sort((a, b) => b[1] - a[1]).map(([cid, p, cuando]) => {
     const x = variant(cid, null);
     return `<button class="eqfoto stk" data-a="open" data-cid="${x.cid}" data-uid="" title="${h(x.name)}"><span class="shot">${shot(x.id)}</span>
-      <span class="stknom">${h(x.name)}</span><span>${h(t('sk_' + cuando).replace('{p}', p))}</span></button>`;
+      <span class="stknom">${h(x.name)}</span><span>${strikerProbHtml(p, cuando)}</span></button>`;
   }).join('')}</div>`;
   return `<div class="section" id="strikers"><h3>${h(t('sk_title'))}</h3>
     <p class="muted">${h(t('sk_note'))}</p>
@@ -3488,7 +3497,7 @@ function detalleContexto (e, vs, ctx) {
     const pares = [];
     for (const x of vs) for (const [c, p, cuando] of STRIKERS[x.cid] || []) {
       const b = vs.find(y => y !== x && y.cid === c);
-      if (b) pares.push(`${h(t('cx_striker_de')).replace('{b}', () => quien(b)).replace('{a}', () => quien(x))} (${h(t('sk_' + cuando).replace('{p}', p))})`);
+      if (b) pares.push(`${h(t('cx_striker_de')).replace('{b}', () => quien(b)).replace('{a}', () => quien(x))} (${strikerProbHtml(p, cuando)})`);
     }
     partes.push([h(t('cx_strikers')), e.partes.striker, pares]);
   }

@@ -10,7 +10,8 @@ tienen strikers en la app, y la auditoría los lista.
 
 Los íconos se pasan a personajes como en los bonos de equipo (scripts/bonos.py). Lo que no se puede
 leer (un ícono que no es de ningún personaje, una fila sin probabilidad) no se adivina: esa fila no
-cuenta y la auditoría lo dice.
+cuenta y la auditoría lo dice. Una probabilidad de más de 100% (Daken: Doctor Octopus, 219%) es un dato
+imposible de la wiki: no se corrige ni se topea, va tal cual (la app la marca) y la auditoría la lista.
 
 Lo usa fuentes.py: los strikers van a la app (MFF_STRIKERS) y lo que no cierra, a docs/AUDITORIA.md."""
 import re
@@ -46,7 +47,7 @@ def strikers(paginas, nombres):
         n = ICONOS.get(icono) or por_norm.get(_norm(icono))
         return n if n in nombres else None
 
-    out, sin_pestana, ilegibles, repetidos = {}, [], [], []
+    out, sin_pestana, ilegibles, repetidos, imposibles = {}, [], [], [], []
     for d in paginas:
         sec = seccion(d['wt'])
         if sec is None:
@@ -67,7 +68,9 @@ def strikers(paginas, nombres):
                 repetidos.append({'pagina': d['name'], 'striker': quien})
                 continue
             filas.append([quien, float(m.group(1)), CUANDO[m.group(2).lower()]])
+            if filas[-1][1] > 100:
+                imposibles.append({'pagina': d['name'], 'striker': quien, 'p': filas[-1][1], 'cuando': filas[-1][2]})
         out[d['name']] = filas
     return {'strikers': out, 'auditoria': {'paginas': len(out), 'sin_pestana': sorted(sin_pestana),
-                                           'ilegibles': ilegibles, 'repetidos': repetidos,
+                                           'ilegibles': ilegibles, 'repetidos': repetidos, 'imposibles': imposibles,
                                            'filas': sum(len(f) for f in out.values())}}

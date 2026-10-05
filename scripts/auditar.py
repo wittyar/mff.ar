@@ -625,7 +625,8 @@ def bonos_resumen(bonos):
 def strikers_resumen(strikers):
     A = strikers['auditoria']
     return (f"| Strikers (pestaña Striker de la wiki) | {A['filas']} filas en {A['paginas']} páginas | "
-            f"{len(A['ilegibles'])} filas que no se pudieron leer | {len(A['sin_pestana'])} páginas sin la pestaña |")
+            f"{len(A['ilegibles'])} filas que no se pudieron leer; {len(A['imposibles'])} con más de 100% | "
+            f"{len(A['sin_pestana'])} páginas sin la pestaña |")
 
 
 def strikers_seccion(strikers):
@@ -648,6 +649,14 @@ def strikers_seccion(strikers):
         s.append('Vale la primera fila.\n')
         for x in A['repetidos']:
             s.append(f"- {x['pagina']}: {x['striker']}")
+        s.append('')
+    if A['imposibles']:
+        s.append(f"### Probabilidades imposibles ({len(A['imposibles'])})\n")
+        s.append('Más de 100%: un error de la wiki. No se corrige ni se topea: la app la muestra tal cual, marcada como '
+                 'dato imposible de la fuente. Hay que verla en el juego.\n')
+        for x in A['imposibles']:
+            s.append(f"- {x['pagina']}: {x['striker']}, {x['p']:g}% "
+                     f"{'cuando él ataca' if x['cuando'] == 'ataca' else 'cuando lo atacan'}")
         s.append('')
     return s
 

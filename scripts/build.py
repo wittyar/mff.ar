@@ -89,7 +89,9 @@ for a in FUENTES['artefactos']:
 from version_juego import ultima
 hoy = datetime.date.today()
 gv = ultima(json.load(open('work/updates.json')), hoy)[1]
-ABIL_VALUES = sorted({a for c in chars for a in c['abilities']})
+# Las habilidades de todas las variantes (un uniforme puede traer otras que su base: Zombi, Guardianes de la
+# Galaxia): de acá sale el filtro de habilidad del roster.
+ABIL_VALUES = sorted({a for c in chars for a in c['abilities']} | {a for c in chars for u in c['uniforms'] for a in u.get('ab', [])})
 SEED = {
  'CLASSES': ['Combate','Detonación','Velocidad','Universal'],
  'ROLES': ['Daño','Soporte','Control','Tanque'],

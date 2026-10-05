@@ -685,6 +685,8 @@ details.ctp summary .ctproles .tag{margin-left:0}
 .isocat > b{display:block;margin-bottom:3px}
 .isocat .isoset{margin:0 0 3px 10px;font-size:12.5px}
 .sinint{color:var(--gold);border-bottom:1px dotted rgba(255,176,32,.5);cursor:help}
+/* Un dato imposible de la fuente (una probabilidad de striker de más de 100%): tal cual, marcado. */
+.imposible{color:var(--accent-2);border-bottom:1px dotted var(--accent);cursor:help}
 /* opciones de uniforme: rango, el uniforme que la habilita y, debajo, el stat que conviene */
 .opuni{display:flex;flex-direction:column}
 .opfila{display:grid;grid-template-columns:78px minmax(0,1fr);column-gap:8px;align-items:center;padding:5px 0;
