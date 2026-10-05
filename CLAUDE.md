@@ -58,7 +58,12 @@ variante, en `docs/COMPLETITUD.md`.
   uniforme», la habilidad que cuenta una vez y si cada stat se acumula y su tope) y lista como
   pendiente la de los recomendados de Modos. `verif_ultimo_uniforme.py`, `verif_solapado.py` y
   `verif_acumula.py` prueban esas cosas en pantalla y contra modelos aparte, y `medir_solapado.py`
-  mide, contra otro app.js, cuánto cambian las listas.
+  mide, contra otro app.js, cuánto cambian las listas. `verif_historico.py` prueba el histórico (datos, la pestaña, los
+  filtros, la ficha, los links, inglés y celular) contra un modelo con `MFF_HISTORICO`. Con datos de una versión más
+  nueva que la publicada, `MFF_DATOS` apunta a datos armados con el build sobre lo bajado ese día (sin `work/` en la
+  carpeta de Ezequiel: se baja con `fetch_all.py --no-portraits` en el contenedor). verif_consistencia tarda más de 25
+  min y su página llega a unos 5,5 GB: en un contenedor de 8 GB va sola (con otra prueba al lado, el OOM mata la página y
+  la prueba queda colgada).
 
 ## Estado (5 de octubre de 2026)
 
@@ -78,6 +83,8 @@ variante, en `docs/COMPLETITUD.md`.
   de crítico; Max Dodge, con el de evasión). Y el C.T.P. recomendado con las dos fuentes, una al lado de la otra (la
   guía de armado y la Ideal CTP List; antes la lista solo aparecía si la guía no daba nada): Ezequiel, 5 de octubre, no
   quiere decidir a mano cada caso sino tener toda la información, clara y con su fuente.
+- Entregada sin publicar, después de la 1.0.22: la 1.0.23, con datos de formato 10: el histórico de los personajes (la
+  pestaña Histórico y el bloque «Historial» de la ficha), con las notas del foro oficial en `fuentes/foro/`.
 
 ## Pendiente
 
@@ -92,10 +99,21 @@ Al publicar la 1.0.22 (versión de los uniformes y acumula):
 - Las listas de PvE bajan con el vínculo del líder del contexto (Knull — Ancient History, de 15.102 a 9.997): que
   Ezequiel mire una con los datos nuevos («Equipos por contexto» de `docs/MODELO.md`).
 
-Histórico (diseño aprobado por Ezequiel el 5 de octubre; en curso): `scripts/foro.py` baja las notas del tablero 2196 del
-foro oficial a `fuentes/foro/`, de a una cada 6 s; `scripts/historico.py` las cruza con `/api/updates`. Primero solo los
-personajes, con el texto de las notas en inglés. Después: revisar las notas del foro coreano (si la traducción inglesa
-está bien y si completa cosas) y sumar los modos de juego.
+Al publicar la 1.0.23 (histórico), después de la 1.0.22 y con sus datos ya publicados:
+- Pide los datos de formato 10: push de main, el workflow de datos a mano (ahora corre también `scripts/foro.py`, que
+  pide la primera página de la lista del foro y baja las notas nuevas) y, cuando termina bien, la etiqueta `v1.0.23`
+  sobre «Datos actualizados». Si el build para, no se etiqueta.
+- Lo que tiene que dar ese build (probado el 5 de octubre): `MFF_HISTORICO` (unos 360 KB más en data.js) y
+  `docs/HISTORICO.md` con 213 versiones (181 con nota), 191 notas (6 sin versión, la 1.3.1 que el foro no deja leer),
+  1.094 de 1.301 llegadas con su nota y 487 hechos de balance.
+- Cómo se arma (`scripts/historico.py`): cada nota va a la versión de thanosvibs de fecha más cercana, a 4 días o menos;
+  cada llegada de `/api/updates` (personaje, uniforme, T3, TP, T4) lleva el texto de esa nota que nombra al personaje
+  (por nombre o alias); cada sección de skills o de balance (título con balanc, rework, adjust, skill, improve...) da un
+  hecho «balance» por personaje nombrado. Por ahora solo personajes y el texto en inglés.
+- Tareas futuras del histórico (Ezequiel, 5 de octubre): revisar las notas del foro coreano (si la traducción inglesa
+  está bien y si completa cosas) y sumar los modos de juego. Las 207 llegadas sin nota (162 en versiones sin nota, casi
+  todas parches de mitad de mes de 2020 y 2021, que es probable estén en otro tablero; el resto, nombres distintos o
+  detalles en imágenes) están en `docs/HISTORICO.md`.
 
 Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
 - Liderazgos: los 34 slots sin stat (escudo de energía y físico, inmunidad al frío, robo de vida, inmunidad a todo
