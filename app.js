@@ -470,6 +470,8 @@ const T = {
   gl_termino:        { es:'Término del glosario del juego', en:'In-game glossary term' },
   gl_en_skills:      { es:'En las skills:',     en:'In skills:' },
   gl_le_sirve:       { es:'Le sirve:',          en:'Helps:' },
+  gl_le_sirve_skills: { es:'Le sirve, en las skills:', en:'Helps, in skills:' },
+  gl_le_sirve_ls:    { es:'Le sirve, como liderazgo, soporte o bono de equipo:', en:'Helps, as a leadership, support or team bonus:' },
   gl_falta_en:       { es:'sin captura en inglés',  en:'no English capture' },
   gl_falta_ko:       { es:'sin captura en coreano', en:'no Korean capture' },
 
@@ -652,8 +654,8 @@ const T = {
   eq_no_gain:        { es:'No mejoran con él:',  en:'Not improved by it:' },
   eq_no_link:        { es:'Sin vínculo con nadie del equipo:', en:'No link with anyone in the team:' },
   eq_new:            { es:'Combinaciones de 3 con él', en:'Combinations of 3 with it' },
-  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo con él (le dan un soporte o el liderazgo, reciben uno suyo o forman con él un bono de equipo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Un efecto cuenta solo si le sirve a quien lo recibe: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills; las resistencias, solo a quien pega según su resistencia, y todas las velocidades, a nadie. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, los bonos de equipo en los que está o que le sirven, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el mismo en todas las pantallas: el que más suma con su liderazgo al equipo (en los órdenes PvP y PvE, con los pesos del contexto); a igual puntaje, el mejor ubicado en las tier lists del contexto (sin contexto, la General).',
-                       en:'Every pair of teammates with a link with it (they give it a support or the leadership, receive one of its own, or form a team bonus with it), one per trio of characters, with each one\'s best uniform for the chosen order. An effect only counts if it is useful to whoever receives it: attack or elemental damage boosts, only for those whose skills hit with that; resists, only for those whose damage grows with their resist, and all speeds, for nobody. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, the team bonuses it is part of or that are useful to it, class advantage with it, and the team\'s roles and classes. The leader is the same on every screen: the one whose leadership adds the most to the team (in the PvP and PvE orders, with that context\'s weights); on a tie, the one ranked best in the context\'s tier lists (with no context, the General list).' },
+  eq_new_note:       { es:'Todas las parejas de compañeros que tienen vínculo con él (le dan un soporte o el liderazgo, reciben uno suyo o forman con él un bono de equipo), una por trío de personajes, con el mejor uniforme de cada uno para el orden elegido. Un efecto cuenta solo si le sirve a quien lo recibe: a quién le sirve cada uno lo dice el Glosario, en su efecto. Los puntos para él son la sinergia de la app contando solo lo que lo involucra: lo que le dan, lo que da él, los bonos de equipo en los que está o que le sirven, la ventaja de clase con él, y los roles y las clases del equipo. El líder es el mismo en todas las pantallas: el que más suma con su liderazgo al equipo (en los órdenes PvP y PvE, con los pesos del contexto); a igual puntaje, el mejor ubicado en las tier lists del contexto (sin contexto, la General).',
+                       en:'Every pair of teammates with a link with it (they give it a support or the leadership, receive one of its own, or form a team bonus with it), one per trio of characters, with each one\'s best uniform for the chosen order. An effect only counts if it is useful to whoever receives it: the Glossary says whom each one helps, under its effect. Points for it are the app\'s synergy counting only what involves it: what it gets, what it gives, the team bonuses it is part of or that are useful to it, class advantage with it, and the team\'s roles and classes. The leader is the same on every screen: the one whose leadership adds the most to the team (in the PvP and PvE orders, with that context\'s weights); on a tie, the one ranked best in the context\'s tier lists (with no context, the General list).' },
   eq_calc:           { es:'Calculando las combinaciones…', en:'Working out the combinations…' },
   eq_sort:           { es:'Ordenar por',         en:'Sort by' },
   eq_sort_foco:      { es:'Puntos para él',      en:'Points for it' },
@@ -736,8 +738,8 @@ const T = {
   cmp_pts:           { es:'pts',                 en:'pts' },
   cmp_no_synergy:    { es:'Sin señales fuertes de sinergia en esta selección.',
                        en:'No strong synergy signals in this selection.' },
-  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven: los que suben un ataque o un daño elemental, solo a quien pega con eso según sus skills; las resistencias, solo a quien pega según su resistencia; todas las velocidades, a nadie (el liderazgo, el del líder del equipo: el que más suma con el suyo; a igual puntaje, el mejor ubicado en la lista General). Cada bono de equipo con todos sus integrantes en el equipo suma 1 (de la wiki, o del juego si se cargó). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase (la guía de thanosvibs y la wiki). No es un cálculo del juego.',
-                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it: attack or elemental damage boosts only for those whose skills hit with that; resists only for those whose damage grows with their resist; all speeds for nobody (leadership, the team leader\'s: the one whose leadership adds the most; on a tie, the one ranked best in the General list). Each team bonus with all its members in the team adds 1 (from the wiki, or from the game when entered). Two readings of our own are added: roles derived from skills and class advantage (per the thanosvibs guide and the wiki). Not a game calculation.' },
+  cmp_heuristic:     { es:'Pesan los efectos de líder y de soporte de thanosvibs que alcanzan a otro integrante y le sirven (a quién le sirve cada uno lo dice el Glosario, en su efecto; el liderazgo, el del líder del equipo: el que más suma con el suyo; a igual puntaje, el mejor ubicado en la lista General). Cada bono de equipo con todos sus integrantes en el equipo suma 1 (de la wiki, o del juego si se cargó). Se suman dos lecturas propias: roles derivados de las skills y ventaja de clase (la guía de thanosvibs y la wiki). No es un cálculo del juego.',
+                       en:'What weighs most are the thanosvibs lead and support effects that reach another member and are useful to it (the Glossary says whom each one helps, under its effect; leadership, the team leader\'s: the one whose leadership adds the most; on a tie, the one ranked best in the General list). Each team bonus with all its members in the team adds 1 (from the wiki, or from the game when entered). Two readings of our own are added: roles derived from skills and class advantage (per the thanosvibs guide and the wiki). Not a game calculation.' },
   sy_unclassified:   { es:'efecto sin clasificar: cuenta para todos', en:'unclassified effect: counts for everyone' },
   sy_bonus:          { es:'Bono de equipo',      en:'Team bonus' },
   sy_bonus_noname:   { es:'sin nombre en la wiki', en:'unnamed on the wiki' },
@@ -1392,44 +1394,26 @@ function aplicaA (x, b) {
   }
   throw new Error('restricción de soporte desconocida: ' + cat);
 }
-// Para quién sirve cada efecto de líder, de soporte y de bono de equipo. Los que suben un
-// ataque o un daño elemental solo le sirven a quien pega con eso, según el daño de sus skills
-// activas (la 6 incluida): un liderazgo de daño de fuego no le aporta nada a uno que pega
-// físico sin elemento. Todos los personajes hacen daño con sus activas, así que el resto (daño
-// básico, crítico, ignorar evasión, vida, defensas, inmunidades...) le sirve a cualquiera;
-// también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que las skills
-// no marcan de una forma que se pueda leer sin suponer. Según Ezequiel, todas las velocidades no le
-// sirven a nadie y las resistencias solo a quien tiene una mejora de daño según su resistencia
-// (res del perfil: su artefacto o su Striker), en ese elemento. Un efecto que no está en ninguna
-// de las dos listas (thanosvibs sumó uno nuevo, o la wiki escribe un stat de bono que la app no
-// conoce) cuenta para todos y la sinergia lo dice.
-// Cada regla: [qué mira del perfil (perfilDano), qué valor pide]; con null, cualquiera. 'nadie': a
-// ninguno.
-const PIDE = {
-  'Physical Attack': ['src', 'Physical Attack'], 'Energy Attack': ['src', 'Energy Attack'],
-  'Fire Damage': ['elem', 'Fire'], 'Fire Damage by % Fire Resist': ['elem', 'Fire'], 'Cold Damage': ['elem', 'Cold'],
-  'Lightning Damage': ['elem', 'Lightning'], 'Poison Damage': ['elem', 'Poison'], 'Mind Damage': ['elem', 'Mind'],
-  'All Element Damage': ['elem', null], 'Physical Reflect Damage Received': ['tipo', 'Physical'],
-  'All Resistances': ['res', null], 'Fire Resist': ['res', 'Fire'], 'Cold Resist': ['res', 'Cold'],
-  'Lightning Resist': ['res', 'Lightning'], 'Mind Resist': ['res', 'Mind'],
-  'All Speeds': ['nadie', null],
-};
-const PARA_TODOS = new Set(['1s Pierce Duration Increase', '1s Snare Duration Increase', 'Additional Pierce Damage',
-  'All Basic Attacks', 'All Basic Attacks (Stackable)', 'All Basic Defenses', 'All Debuffs Effect', 'All Reflect Damage Received',
-  'Barrier', 'Basic Damage Dealt to Boss Types', 'Basic Damage Dealt to Enemies except Mutant Characters',
-  'Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect', 'Basic Damage Dealt to Enemies with "Removes All Debuffs" Effect',
-  'Basic Damage Dealt to Enemies with 25% HP or Higher', 'Basic Damage Dealt to Females', 'Basic Damage Dealt to Heroes',
-  'Basic Damage Dealt to Males', 'Basic Damage Dealt to Universals', 'Basic Damage Dealt to Villains', 'Basic Damage Received',
-  'Basic Damage Received from Heroes', 'Basic Damage Received from Universals', 'Basic Damage Received from Villains', 'Bonus Damage',
-  'Burn Immunity', 'Chain Hit Damage', 'Chain Hit Damage Received', 'Critical Damage', 'Critical Rate', 'Debuff Duration',
-  'Debuff Immunity', 'Dodge', 'Energy Defense', 'Fear Immunity', 'Fire Immunity Chance', 'Guaranteed Critical Rate',
-  'Guard Break Immunity', 'HP', 'Heal', 'Ignore Defense', 'Ignore Dodge', 'Ignore Non-Boss Damage Decrease',
-  'Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction', 'Immortality + Death', 'Immortality + Heal',
-  'Incapacitation Immunity', 'Lightning Immunity Chance', 'Max HP Shield', 'Mind Immunity Chance',
-  'Physical Immunity Chance', 'Recovery Rate', 'Remove All Debuffs', 'Revive with % HP', 'Skill Cooldown', 'Skill Damage',
-  'Stun Immunity', 'Summon', 'Super Armor, All Basic Defenses',
-  // los que solo traen los bonos de equipo (scripts/bonos.py)
-  'Attack Speed', 'Crowd Control Time', 'Movement Speed', 'Physical Defense']);
+// Para quién sirve cada efecto de líder, de soporte y de bono de equipo: la regla de su stat en el catálogo
+// (MFF_CATALOGO.soporte; scripts/contenido/catalogo.json), la misma que muestran el Glosario y el «Cómo
+// funciona». Mira el perfil de combate de quien lo recibe (perfilDano): con qué ataque escala (escala:), qué
+// elementos (elemento:) y qué tipos de daño (tipo:) tienen sus skills activas, y qué resistencias le suben el
+// daño (resistencia:), con «*» para cualquiera; «todos» le sirve a cualquiera y «nadie», a ninguno. Un stat que
+// el catálogo no tiene (thanosvibs sumó uno nuevo, o la wiki escribe un stat de bono que no conoce) cuenta para
+// todos y la sinergia lo dice. PIDE lo arma iniciarDatos(): por stat que pide algo, [qué mira del perfil, qué
+// valor pide (null: cualquiera)], o ['nadie', null].
+const MIRA = { escala: 'src', elemento: 'elem', tipo: 'tipo', resistencia: 'res' };
+let PIDE;
+/** [qué mira, qué valor] de una regla del catálogo para un stat; null si le sirve a cualquiera. Una regla que la
+ *  app no sabe evaluar (de las que miran las skills, como aplica_debuffs) corta: el build no la deja pasar. */
+function reglaStat (stat, r) {
+  if (r === 'todos') return null;
+  if (r === 'nadie') return ['nadie', null];
+  const i = r.indexOf(':'), mira = MIRA[r.slice(0, i)];
+  if (i < 0 || !mira) throw new Error(`regla de «le sirve» que la app no sabe evaluar en ${stat}: ${r}`);
+  const valor = r.slice(i + 1);
+  return [mira, valor === '*' ? null : valor];
+}
 /** Perfil de combate de un retrato, calculado en el build (scripts/modelo.py): de qué ataque
  *  sale su daño (esc), de qué tipo es (tip), qué elementos lleva (ele) y qué resistencias le
  *  suben el daño (res). Un personaje agregado a mano no tiene skills ni perfil: no pega con nada
@@ -1446,7 +1430,7 @@ function perfilDano (v) {
   if (v.p) _PERFIL.set(v.p, pf);
   return pf;
 }
-/** ¿Le sirve a b este efecto (una línea de un soporte o liderazgo)? */
+/** ¿Le sirve a b este efecto (una línea de un soporte, un liderazgo o un bono de equipo)? */
 function sirve (f, b) {
   const q = PIDE[f.s];
   if (!q) return true;
@@ -1467,9 +1451,9 @@ function leSirve (x, b) {
 }
 // ÍNDICE PARA ARMAR EQUIPOS: lo que da cada liderazgo y cada soporte, en las categorías con
 // las que se arman los equipos (las pidió el usuario), con los stats de thanosvibs que entran
-// en cada una. Las de ataque le sirven solo a quien pega con eso (sirve()); las otras cuatro,
-// a cualquiera. Se ven en la ficha, filtran el roster y dicen en cada combinación de 3 qué le
-// dan al personaje sus compañeros. No cambian los puntos de la sinergia.
+// en cada una; a quién le sirve cada stat lo dice su regla en el catálogo (sirve()). Se ven en la
+// ficha, filtran el roster y dicen en cada combinación de 3 qué le dan al personaje sus
+// compañeros. No cambian los puntos de la sinergia.
 const CATEGORIAS = [
   { k: 'fis',      s: ['Physical Attack'], ataque: true },
   { k: 'ene',      s: ['Energy Attack'], ataque: true },
@@ -1487,10 +1471,7 @@ const CATEGORIAS = [
 ];
 const CAT = Object.fromEntries(CATEGORIAS.map(c => [c.k, c]));
 const CAT_DE = {};                    // stat de thanosvibs -> categoría
-for (const c of CATEGORIAS) for (const s of c.s) {
-  if (!PIDE[s] && !PARA_TODOS.has(s)) throw new Error('categoría con un stat que no dice a quién le sirve: ' + s);
-  CAT_DE[s] = c.k;
-}
+for (const c of CATEGORIAS) for (const s of c.s) CAT_DE[s] = c.k;
 /** Categorías de un liderazgo o un soporte, en el orden de CATEGORIAS; con b, solo las de
  *  los efectos que le sirven a b (que le llegue lo dice aplicaA). */
 function categoriasDe (x, b) {
@@ -1656,9 +1637,10 @@ let BONOS_DE;
 /** De quiénes es striker cada personaje: { cid: [[cid del personaje, %, 'ataca'|'atacado'], ...] }, al
  *  revés de STRIKERS. Lo arma iniciarDatos(). */
 let STRIKERS_DE;
-/** Por efecto del catálogo (id): el efecto, los términos del glosario del juego que le corresponden y
+/** Por efecto del catálogo (id): el efecto, los términos del glosario del juego que le corresponden,
  *  las etiquetas de skills que apuntan a él (índices en MFF_TABLAS.ab, solo las que traen los
- *  datos). Lo arma iniciarDatos(). */
+ *  datos) y los stats de liderazgo, soporte y bono de equipo que apuntan a él (MFF_CATALOGO.soporte).
+ *  Lo arma iniciarDatos(). */
 let GL_DE;
 /** ¿Están en el equipo todos estos personajes? */
 function estanTodos (cids, vs) {
@@ -1791,8 +1773,8 @@ function razonesTxt (razones) {
   }
   return [...new Set(out)];
 }
-/** ¿Un stat que no está en ninguna de las dos listas (PIDE, PARA_TODOS)? Cuenta para todos y se dice. */
-function sinClasificar (s) { return !(PARA_TODOS.has(s) || PIDE[s]); }
+/** ¿Un stat que el catálogo no tiene (MFF_CATALOGO.soporte)? Cuenta para todos y se dice. */
+function sinClasificar (s) { return !CATALOGO.soporte[s]; }
 /** Las razones de la sinergia en piezas, para comparar dos equipos (comoEntra): un efecto de un soporte,
  *  de un liderazgo o de un bono de equipo que le llega a un integrante, o una razón entera (roles, clases,
  *  ventaja de clase). { r, f, para, clave } (f y para, solo en las de un efecto). */
@@ -2518,6 +2500,17 @@ function lecturaAn (L, modo) {
 }
 /** La primera letra en minúscula, para seguir una frase («A quien tiene Perforación»). */
 function minuscula (x) { return x ? x[0].toLowerCase() + x.slice(1) : x; }
+/** A quién le sirve un efecto del catálogo, en HTML: la regla del efecto (la de sus skills) y, si un stat de liderazgo,
+ *  soporte o bono de equipo que apunta a él tiene otra (MFF_CATALOGO.soporte: las velocidades, las resistencias...),
+ *  la lista de esos stats con la suya, que es la que usa la app en los equipos. Lo muestran el Glosario y el «Cómo
+ *  funciona», cada uno con sus renglones: renglon(rótulo, texto), los dos ya en HTML. */
+function leSirveEfectoHtml (e, renglon) {
+  const regla = (r) => h(minuscula(bi(CATALOGO.sirve[r])));
+  const otros = GL_DE[e.id].stats.filter(st => CATALOGO.soporte[st].sirve !== e.sirve);
+  if (!otros.length) return renglon(h(t('gl_le_sirve')), regla(e.sirve));
+  return renglon(h(t('gl_le_sirve_skills')), regla(e.sirve)) + renglon(h(t('gl_le_sirve_ls')), `<ul class="sirvestat">${
+    otros.map(st => `<li>${h(trTxt(st))}: ${regla(CATALOGO.soporte[st].sirve)}</li>`).join('')}</ul>`);
+}
 /** La primera letra en mayúscula, para que una frase arranque un renglón («Contra una facción: …»). */
 function mayuscula (x) { return x ? x[0].toUpperCase() + x.slice(1) : x; }
 /** El nombre de un efecto del análisis. Un «Give Power» que queda como entrada es uno que no dice qué otorga. */
@@ -2677,7 +2670,7 @@ function efectoTipHtml (v, x) {
       <li><b>${h(t('tt_grupo'))} ${h(bi(g))}:</b> ${h(bi(g.que))}</li>
       ${GL_DE[e.id].terminos.map(y => `<li><b>${h(nombreGl(y))}</b> <span class="muted">(${h(otrosNombresGl(y).join(', '))})</span>: ${h(bi(y.que))}</li>`).join('')}
       ${cond ? `<li>${h(mayuscula(cond))}</li>` : ''}
-      <li><b>${h(t('gl_le_sirve'))}</b> ${h(minuscula(bi(CATALOGO.sirve[e.sirve])))}</li>
+      ${leSirveEfectoHtml(e, (r, x) => `<li><b>${r}</b> ${x}</li>`)}
       ${notas.map(n => `<li class="muted">${h(bi(n))}</li>`).join('')}
     </ul>
     ${lecturasEfecto(e).map(l => lecturaAn(l.L, l.modo + delGrupo(l))).join('')}`;
@@ -3216,9 +3209,6 @@ const LIDERAZGO_VALE = {
                 'Fire Damage by % Fire Resist', 'Cold Damage', 'Lightning Damage', 'Poison Damage', 'Mind Damage',
                 'All Element Damage', 'Basic Damage Dealt to Boss Types']),
 };
-for (const c of Object.values(LIDERAZGO_VALE)) for (const st of c) {
-  if (!PIDE[st] && !PARA_TODOS.has(st)) throw new Error('liderazgo que vale con un stat que no dice a quién le sirve: ' + st);
-}
 const PESO = { lider: 2, dps: 2, sinergia: 1 };
 /** Índice de cada stat que vale, por contexto, y a quiénes les llega cada uno (bits de integrante:
  *  0-2 por un liderazgo permanente, 3-5 por uno condicional), reusado en los cientos de miles de
@@ -3767,7 +3757,7 @@ function efectoGl (e) {
       ${d.terminos.map(x => enlaceGl('gl-' + x.id, nombreGl(x) + ' · ' + x.ko, t('gl_termino'))).join('')}</div>
     ${lecturasAn(e.pve, e.pvp)}
     ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
-    <div class="muted annota">${h(t('gl_le_sirve'))} ${h(minuscula(bi(CATALOGO.sirve[e.sirve])))}</div>
+    ${leSirveEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${d.etiquetas.length ? `<div class="glet"><span class="muted">${h(t('gl_en_skills'))}</span>${
       d.etiquetas.map(i => `<span class="tag dim">${h(txt('ab', i))}</span>`).join('')}</div>` : ''}
   </div>`;
@@ -5579,6 +5569,12 @@ function pantallaFatal (titulo, detalle) {
 /** Lo que se deriva de data.js. Lo llama arrancar() cuando ya confirmó que los datos son del
  *  formato de esta versión. */
 function iniciarDatos () {
+  PIDE = {};
+  for (const [stat, x] of Object.entries(CATALOGO.soporte)) { const q = reglaStat(stat, x.sirve); if (q) PIDE[stat] = q; }
+  // Los stats con los que la app arma algo tienen que decir a quién le sirven.
+  for (const st of [...CATEGORIAS.flatMap(c => c.s), ...Object.values(LIDERAZGO_VALE).flatMap(c => [...c])]) {
+    if (!CATALOGO.soporte[st]) throw new Error('stat de una categoría o de un liderazgo que vale sin regla de «le sirve» en el catálogo: ' + st);
+  }
   BONOS_DE = {};
   for (const b of BONOS) {
     const bono = { n: b.n, m: b.m, f: b.f, vs: b.v.map(v => ({ fx: v.map(([s, x]) => ({ s, v: x })) })) };
@@ -5586,8 +5582,9 @@ function iniciarDatos () {
   }
   STRIKERS_DE = {};
   for (const [cid, filas] of Object.entries(STRIKERS)) for (const [x, p, cuando] of filas) (STRIKERS_DE[x] = STRIKERS_DE[x] || []).push([cid, p, cuando]);
-  GL_DE = Object.fromEntries(CATALOGO.efectos.map(e => [e.id, { e, terminos: [], etiquetas: [] }]));
+  GL_DE = Object.fromEntries(CATALOGO.efectos.map(e => [e.id, { e, terminos: [], etiquetas: [], stats: [] }]));
   for (const x of GLOSARIO.terminos) for (const id of x.efectos) GL_DE[id].terminos.push(x);
+  for (const [st, x] of Object.entries(CATALOGO.soporte)) for (const id of x.efectos) GL_DE[id].stats.push(st);
   TB.ab.forEach((r, i) => {
     const m = CATALOGO.skills[r.en];
     if (!m) return;

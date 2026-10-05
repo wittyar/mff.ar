@@ -443,7 +443,8 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     falta = catalogo['falta']
     n_falta = len(falta['etiquetas']) + len(falta['patrones']) + len(falta['stats'])
     s.append(f"Catálogo de efectos (docs/CATALOGO.md): {catalogo['total']['etiquetas']} etiquetas de skills y "
-             f"{catalogo['total']['stats']} stats de Leads & Supports en los datos; "
+             f"{catalogo['total']['stats']} stats de Leads & Supports y {catalogo['total']['stats_bonos']} de bonos de equipo "
+             'en los datos; '
              + ('todos clasificados.\n' if not n_falta else f'{n_falta} sin clasificar (sección 9).\n'))
     s.append(f"Liderazgos: {len(liderazgos['completados'])} uniformes que Leads & Supports no lista tienen el de su "
              f"base, porque su Leader Skill es idéntica; {len(liderazgos['sin_completar'])} retratos siguen sin "
@@ -544,9 +545,10 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
 
     sobra = catalogo['sobra']
     s.append('## 9. Efectos que el catálogo no clasifica\n')
-    s.append('Cada etiqueta de efecto de las skills y cada stat de Leads & Supports apunta a efectos del catálogo '
-             '(scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs agregue y el '
-             'catálogo no tenga se lista acá hasta que se clasifique a mano.\n')
+    s.append('Cada etiqueta de efecto de las skills y cada stat de Leads & Supports y de los bonos de equipo apunta a '
+             'efectos del catálogo (scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que '
+             'thanosvibs o la wiki agreguen y el catálogo no tenga se lista acá hasta que se clasifique a mano; '
+             'mientras tanto, la app lo cuenta para todos y lo dice.\n')
     if not n_falta:
         s.append('Ninguno: todo lo que traen los datos está clasificado.\n')
     else:

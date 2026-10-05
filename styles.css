@@ -750,6 +750,7 @@ table.topes input{width:70px;padding:5px 7px}
 .anfila .row{gap:6px}
 .annom{font-weight:600}
 .annota{font-size:12px;margin-top:3px}
+.annota ul.sirvestat{margin:2px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:2px}
 .cert{font-size:10px;text-transform:uppercase;letter-spacing:.04em;padding:1px 6px;border-radius:999px;border:1px solid currentColor}
 .cert.comprobado{color:var(--role-soporte)}
 .cert.probable{color:var(--gold)}

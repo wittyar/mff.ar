@@ -131,8 +131,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
 - **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
   con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
   y qué C.T.P. da cada efecto de la barra de Concentración; y los 126 efectos del catálogo por
-  grupo, con sus lecturas de PvE y de PvP, a quién le sirven y con qué etiquetas aparecen en las
-  skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
+  grupo, con sus lecturas de PvE y de PvP, a quién le sirven (en las skills y, si no es lo mismo,
+  como liderazgo, soporte o bono de equipo) y con qué etiquetas aparecen en las skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
 
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.
@@ -214,7 +214,9 @@ elementos), que calcula `scripts/modelo.py` en el build y la app lee de `data.js
 Las etapas 2 y 3 arrancan con el **catálogo de efectos** (`scripts/contenido/catalogo.json`): cada
 etiqueta de efecto de las skills de thanosvibs y cada stat de Leads & Supports, que son el mismo
 efecto visto de dos lados, apuntan a efectos únicos, y cada efecto dice qué es, a quién le sirve y
-cómo se lee en PvE y en PvP, con su certeza y su fuente. `scripts/catalogo.py` lo valida en el build
+cómo se lee en PvE y en PvP, con su certeza y su fuente. Cada stat de Leads & Supports y de los bonos
+de equipo dice además a quién le sirve como liderazgo, soporte o bono: es la regla que usa la app en
+los equipos, casi siempre la de su efecto. `scripts/catalogo.py` lo valida en el build
 (un error del contenido corta; una etiqueta o un stat nuevo que no está se avisa y va a la sección 9
 de la auditoría) y genera `docs/CATALOGO.md`, el catálogo entero para leerlo y revisarlo.
 
@@ -242,8 +244,9 @@ las que se arman los equipos:
 | Vida | HP | cualquiera |
 | Quita todos los debuffs | Remove All Debuffs | cualquiera |
 
-«Le sirve» es la misma regla de la sinergia: según el daño de sus skills activas (con qué ataque
-escala y qué elementos lleva). Se usa en tres lugares:
+«Le sirve» es la misma regla de la sinergia: la de cada stat en el catálogo de efectos (la muestra el
+Glosario), según el daño de sus skills activas (con qué ataque escala y qué elementos lleva). Se usa
+en tres lugares:
 - **Ficha**: cada liderazgo y soporte muestra sus categorías; el Resumen dice cuáles le sirven.
 - **Roster**: «Su liderazgo da» y «Su soporte da» (dentro de cada grupo, cualquiera de las
   categorías elegidas; entre los dos, ambos), «Liderazgo o soporte solo para» (una clase, bando,
@@ -485,14 +488,13 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   equipo (de la wiki, o del juego si se cargaron): cada bono con todos sus integrantes en el equipo
   suma 1. Roles y ventaja de clase son lecturas propias (la ventaja: Combate > Velocidad >
   Detonación > Combate, y Universal le gana a las tres con ventaja menor, que en la sinergia suma
-  igual y se dice). No es un cálculo del juego. Cada efecto cuenta solo para quien le sirve: los
-  que suben el ataque físico o el de energía, para quien pega con ese ataque; los de un elemento
-  (fuego, frío, rayo, veneno, mente, o todos), para quien hace daño de ese elemento; la reducción
-  del reflejo físico, para quien hace daño físico; todo según el daño de sus skills activas. Los
-  demás (daño básico, crítico, ignorar evasión, defensas, vida, inmunidades) cuentan para todos,
-  también los que dependen de qué debuffs aplica o de si tiene golpes en cadena, que las skills no
-  marcan de forma legible. Un efecto nuevo que la app no conoce cuenta para todos y la sinergia lo
-  dice. Cada efecto vale lo mismo, sin importar cuánto sube.
+  igual y se dice). No es un cálculo del juego. Cada efecto cuenta solo para quien le sirve, con la regla de su stat
+  en el catálogo de efectos (`scripts/contenido/catalogo.json`; la muestra el Glosario, en cada
+  efecto): los que suben el ataque físico o el de energía, para quien pega con ese ataque; los de
+  un elemento, para quien hace daño de ese elemento; la reducción del reflejo físico, para quien
+  hace daño físico; las resistencias, para quien tiene una mejora de daño según esa resistencia;
+  todas las velocidades, para nadie; el resto, para todos. Un stat que el catálogo no tiene cuenta
+  para todos y la sinergia lo dice. Cada efecto vale lo mismo, sin importar cuánto sube.
 - Los bonos de equipo de la wiki están redondeados a un decimal y sus páginas no siempre
   coinciden: vale lo que dice la mayoría y, si empatan, la app muestra las dos versiones
   (`docs/AUDITORIA.md`, sección 10). Faltan los de los personajes que la wiki todavía no tiene,

@@ -123,9 +123,13 @@ def _indice(tgt, texto):
 
 def le_sirve(regla, perfil, efectos, skills):
     """¿Le sirve a la variante un efecto con esta regla del catálogo (sirve)? efectos: los ids
-    de catálogo de todo lo que hace, con su destino; skills: sus skills."""
+    de catálogo de todo lo que hace, con su destino; skills: sus skills. Las reglas que miran solo
+    el perfil son las mismas que evalúa la app en los liderazgos, soportes y bonos de equipo
+    (catalogo.REGLAS_SOPORTE)."""
     if regla in ('todos', 'propio'):
         return True
+    if regla == 'nadie':
+        return False
     tipo, _, valor = regla.partition(':')
     if tipo == 'escala':
         return valor in {src for src, _ in perfil['esc']}
@@ -133,6 +137,8 @@ def le_sirve(regla, perfil, efectos, skills):
         return bool(perfil['ele']) if valor == '*' else valor in perfil['ele']
     if tipo == 'tipo':
         return valor in perfil['tip']
+    if tipo == 'resistencia':
+        return bool(perfil['res']) if valor == '*' else valor in perfil['res']
     if regla == 'aplica_debuffs':
         return any(d == RIVAL and g in ('control', 'debilitar', 'continuo') for _, d, g in efectos)
     if regla == 'invoca':

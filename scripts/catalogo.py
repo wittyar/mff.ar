@@ -11,8 +11,14 @@ Acá se valida contra los datos de la sincronización:
   stat apuntando a efectos que existen, las fuentes citadas definidas en contenido/guia.json.
   Si no, se corta el build: es un error del contenido curado.
 - Cada etiqueta de los datos (y cada patrón, en las que se clasifican por patrón) y cada stat
-  tienen que estar clasificados. Uno nuevo que no está se avisa y va a la auditoría (sección 9),
-  sin cortar la actualización semanal, igual que un marcador o una traducción que falta.
+  (de Leads & Supports y de los bonos de equipo) tienen que estar clasificados. Uno nuevo que no
+  está se avisa y va a la auditoría (sección 9), sin cortar la actualización semanal, igual que un
+  marcador o una traducción que falta.
+
+A quién le sirve: cada efecto tiene su regla (sirve), la de sus skills, que evalúa el build
+(modelo.le_sirve, el «No le sirve» del análisis). Cada stat de liderazgo, soporte o bono de equipo
+tiene la suya, que evalúa la app (sinergia, combinaciones, índice): casi siempre es la de su efecto;
+las velocidades, las resistencias y el efecto de los debuffs tienen otra (reglas de Ezequiel).
 
 También el glosario de skills del juego (scripts/contenido/glosario.json), en inglés y en coreano:
 cada término con lo que dice, lo que el inglés traduce distinto del coreano y los efectos del
@@ -32,6 +38,10 @@ RUTA_GLOSARIO = os.path.join(_DIR, 'contenido', 'glosario.json')
 # La fuente de cada idioma del glosario: un término sin la captura de un idioma no la cita.
 CAPTURA = {'en': 'juego-glosario', 'ko': 'juego-glosario-ko'}
 SLOTS_SOPORTE = ('leader', 'leader2', 'passive', 'passive2', 't2', 't22', 'uniform', 'uniform2', 'artifact')
+# Las reglas de «le sirve» que la app sabe evaluar en un liderazgo, un soporte o un bono de equipo: las que
+# miran el perfil de combate de quien lo recibe (app.js, iniciarDatos). Las demás (aplica_debuffs, invoca...)
+# miran sus skills, y solo las evalúa el build, para el análisis (modelo.le_sirve).
+REGLAS_SOPORTE = ('todos', 'nadie', 'escala:', 'elemento:', 'tipo:', 'resistencia:')
 EFECTOS_ARTEFACTO = ('effect3', 'effect4', 'effect5', 'effect6')
 
 
@@ -80,13 +90,21 @@ def validar(cat, fuentes):
                 mal.append(f'{donde}: {k} va solo')
             texto(x[k], f'{donde} ({k})')
 
-    def mapeo(x, donde, con_para):
-        claves = {'efectos', 'condicion', 'nota'} | ({'para'} if con_para else set())
-        if set(x) - claves or 'efectos' not in x or (con_para and 'para' not in x):
-            mal.append(f"{donde}: lleva {', '.join(sorted(claves))} ({'para y efectos obligatorios' if con_para else 'efectos obligatorio'})")
+    def mapeo(x, donde, de_skill):
+        """Una etiqueta de skill lleva para (a qué lado va); un stat de Leads & Supports, sirve (a quién le sirve)."""
+        propia = 'para' if de_skill else 'sirve'
+        claves = {'efectos', 'condicion', 'nota', propia}
+        if set(x) - claves or 'efectos' not in x or propia not in x:
+            mal.append(f"{donde}: lleva {', '.join(sorted(claves))} ({propia} y efectos obligatorios)")
             return
-        if con_para and x['para'] not in cat['para']:
+        if de_skill and x['para'] not in cat['para']:
             mal.append(f"{donde}: para desconocido {x['para']!r}")
+        if not de_skill:
+            if x['sirve'] not in cat['sirve']:
+                mal.append(f"{donde}: sirve desconocido {x['sirve']!r}")
+            elif not any(x['sirve'] == r or (r.endswith(':') and x['sirve'].startswith(r)) for r in REGLAS_SOPORTE):
+                mal.append(f"{donde}: la app no sabe evaluar en un liderazgo, soporte o bono la regla {x['sirve']!r} "
+                           f"(sabe {', '.join(REGLAS_SOPORTE)})")
         if not x['efectos']:
             mal.append(f'{donde}: sin efectos')
         mal.extend(f'{donde}: efecto desconocido {e!r}' for e in x['efectos'] if e not in ids_efecto)
@@ -189,8 +207,9 @@ def validar_glosario(glos, cat, fuentes, ctps):
     return mal
 
 
-def usos(sp, su):
-    """Retratos que usan cada etiqueta, cada patrón de cada etiqueta y cada stat."""
+def usos(sp, su, bonos):
+    """Retratos que usan cada etiqueta, cada patrón de cada etiqueta y cada stat de Leads & Supports, y bonos de
+    equipo que traen cada stat (bonos: los de work/fuentes.json, con una o más versiones de sus stats)."""
     AB = [x['en'] for x in sp['tablas']['ab']]
     DESC = [x['en'] for x in sp['tablas']['desc']]
     etiqueta, patron = collections.defaultdict(set), collections.defaultdict(lambda: collections.defaultdict(set))
@@ -208,21 +227,29 @@ def usos(sp, su):
                 continue
             for e in [e for k in ('effect',) + EFECTOS_ARTEFACTO for e in x.get(k) or []]:
                 stat[e[0]].update([r['portrait']] + r['sameas'])
+    bono = collections.defaultdict(set)
+    for b in bonos:
+        for version in b['v']:
+            for st in version:
+                bono[st[0]].add(b['n'])
     # Diccionarios comunes: consultar algo que los datos no traen no lo agrega.
-    return {'etiqueta': dict(etiqueta), 'patron': {l: dict(ps) for l, ps in patron.items()}, 'stat': dict(stat)}
+    return {'etiqueta': dict(etiqueta), 'patron': {l: dict(ps) for l, ps in patron.items()}, 'stat': dict(stat),
+            'bono': dict(bono)}
 
 
 def cobertura(cat, U):
-    """Lo de los datos que el catálogo no clasifica, y lo del catálogo que los datos ya no traen."""
+    """Lo de los datos que el catálogo no clasifica, y lo del catálogo que los datos ya no traen. Los stats son los
+    de Leads & Supports y los de los bonos de equipo."""
     S, SO = cat['skills'], cat['soporte']
+    stats = set(U['stat']) | set(U['bono'])
     falta = {'etiquetas': sorted(l for l in U['etiqueta'] if l not in S),
              'patrones': sorted((l, p) for l in U['patron'] if 'por_patron' in S.get(l, {})
                                 for p in U['patron'][l] if p not in S[l]['por_patron']),
-             'stats': sorted(s for s in U['stat'] if s not in SO)}
+             'stats': sorted(s for s in stats if s not in SO)}
     sobra = {'etiquetas': sorted(l for l in S if l not in U['etiqueta']),
              'patrones': sorted((l, p) for l, x in S.items() if 'por_patron' in x and l in U['patron']
                                 for p in x['por_patron'] if p not in U['patron'][l]),
-             'stats': sorted(s for s in SO if s not in U['stat'])}
+             'stats': sorted(s for s in SO if s not in stats)}
     return falta, sobra
 
 
@@ -234,6 +261,18 @@ def md(s):
 
 def retratos(n):
     return f"{n} retrato{'' if n == 1 else 's'}"
+
+
+def quienes_dan(n, nb):
+    """Cuántos retratos (Leads & Supports) y cuántos bonos de equipo dan un stat."""
+    partes = [retratos(n)] if n or not nb else []
+    if nb:
+        partes.append(f"{nb} bono{'' if nb == 1 else 's'} de equipo")
+    return ', '.join(partes)
+
+
+def minuscula(s):
+    return s[0].lower() + s[1:]
 
 
 def fuente_md(f):
@@ -272,10 +311,13 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
             for e in y['efectos']:
                 de_skill[e].append((n, label, pat, y['para'], extra))
                 lados[e].add(y['para'])
+    regla_de = {e['id']: e['sirve'] for e in cat['efectos']}
     for stat, x in cat['soporte'].items():
         extra = ([cond(x['condicion'])] if 'condicion' in x else []) + (['Nota: ' + x['nota']['es']] if 'nota' in x else [])
         for e in x['efectos']:
-            de_stat[e].append((len(U['stat'].get(stat, ())), stat, extra))
+            # La regla del stat, cuando no es la de su efecto (las velocidades, las resistencias...).
+            sirve = ['le sirve: ' + minuscula(cat['sirve'][x['sirve']]['es'])] if x['sirve'] != regla_de[e] else []
+            de_stat[e].append((len(U['stat'].get(stat, ())), len(U['bono'].get(stat, ())), stat, sirve + extra))
     LADO = {frozenset({'propio'}): 'a su lado', frozenset({'rival'}): 'al rival',
             frozenset({'propio', 'rival'}): 'a su lado o al rival, según la etiqueta'}
 
@@ -290,14 +332,17 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
          '(su activación, su objetivo, su restricción): eso lo muestra la ficha.\n',
          '## Cómo se lee\n',
          '- **Se aplica:** a su lado (él o los aliados que diga el objetivo de la skill) o al rival.',
-         '- **Le sirve:** a quién le aporta algo, según con qué pega cada variante (docs/MODELO.md, perfil de combate).',
+         '- **Le sirve:** a quién le aporta algo en sus skills, según con qué pega cada variante (docs/MODELO.md, perfil de '
+         'combate). Cada stat de liderazgo, soporte o bono de equipo tiene su propia regla, casi siempre la misma: '
+         'cuando no, se dice al lado del stat.',
          '- **PvE / PvP:** la lectura de cada modo. Si el efecto no trae una propia, vale la de su grupo.',
          '- **Certeza:**']
     s += [f"  - [{k.capitalize()}] {v['es']}" for k, v in cat['certeza'].items()]
     s += ['- **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.',
-          '- **Leads & Supports:** los stats que apuntan al efecto, con cuántos retratos lo dan.\n',
+          '- **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos '
+          'los dan.\n',
           f"{len(cat['grupos'])} grupos, {len(cat['efectos'])} efectos, {len(cat['skills'])} etiquetas de skills y "
-          f"{len(cat['soporte'])} stats de Leads & Supports. "
+          f"{len(cat['soporte'])} stats de Leads & Supports y de bonos de equipo. "
           + ('Todo lo que traen los datos está clasificado.\n' if not n_falta else
              f'**Sin clasificar: {n_falta}** (docs/AUDITORIA.md, sección 9).\n')]
     for g in cat['grupos']:
@@ -308,8 +353,7 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
         for e in (e for e in cat['efectos'] if e['grupo'] == g['id']):
             s.append(f"### {e['es']}\n")
             lado = LADO[frozenset(lados[e['id']])] if lados[e['id']] else 'a su lado'
-            s.append(f"`{e['id']}` · {e['en']} · Se aplica {lado} · Le sirve: {cat['sirve'][e['sirve']]['es'][0].lower()}"
-                     f"{cat['sirve'][e['sirve']]['es'][1:]}.\n")
+            s.append(f"`{e['id']}` · {e['en']} · Se aplica {lado} · Le sirve: {minuscula(cat['sirve'][e['sirve']]['es'])}.\n")
             for k, nom in (('pve', 'PvE'), ('pvp', 'PvP')):
                 if k in e:
                     s.append(f'- **{nom}:** {cita(e[k])}')
@@ -323,9 +367,9 @@ def documento(cat, U, fuentes, version, falta, glos, ctps):
                     s.append(f'  - {md(label)}' + (f', con {md(pat)}' if pat else '') + f' ({retratos(n)})'
                              + (' — ' + '; '.join(extra) if extra else ''))
             if de_stat[e['id']]:
-                s.append('- **Leads & Supports:**')
-                for n, stat, extra in sorted(de_stat[e['id']], key=lambda x: (-x[0], x[1].lower())):
-                    s.append(f'  - {md(stat)} ({retratos(n)})' + (' — ' + '; '.join(extra) if extra else ''))
+                s.append('- **Leads & Supports y bonos de equipo:**')
+                for n, nb, stat, extra in sorted(de_stat[e['id']], key=lambda x: (-x[0], -x[1], x[2].lower())):
+                    s.append(f'  - {md(stat)} ({quienes_dan(n, nb)})' + (' — ' + '; '.join(extra) if extra else ''))
             s.append('')
     s += glosario_md(glos, cat, ctps)
     citadas = sorted({k for L in [g[x] for g in cat['grupos'] for x in ('pve', 'pvp')] +
@@ -369,14 +413,15 @@ def glosario_md(glos, cat, ctps):
 def main():
     cat, glos = cargar(RUTA), cargar(RUTA_GLOSARIO)
     fuentes = cargar(os.path.join(_DIR, 'contenido', 'guia.json'))['fuentes']
-    ctps = {c['id']: c['name'] for c in cargar('work/fuentes.json')['ctps']}
+    fu = cargar('work/fuentes.json')
+    ctps = {c['id']: c['name'] for c in fu['ctps']}
     mal = validar(cat, fuentes)
     if mal:
         raise SystemExit('scripts/contenido/catalogo.json tiene errores:\n  ' + '\n  '.join(mal))
     mal = validar_glosario(glos, cat, fuentes, ctps)
     if mal:
         raise SystemExit('scripts/contenido/glosario.json tiene errores:\n  ' + '\n  '.join(mal))
-    U = usos(cargar('work/skills_parsed.json'), cargar('work/supports.json'))
+    U = usos(cargar('work/skills_parsed.json'), cargar('work/supports.json'), fu['bonos'])
     falta, sobra = cobertura(cat, U)
     for k, v in falta.items():
         if v:
@@ -389,11 +434,13 @@ def main():
     open('docs/CATALOGO.md', 'w', encoding='utf-8', newline='\n').write(documento(cat, U, fuentes, version, falta, glos, ctps))
     usos_falta = {'etiquetas': {l: sorted(U['etiqueta'][l])[:3] for l in falta['etiquetas']},
                   'patrones': [[l, p, sorted(U['patron'][l][p])[:3]] for l, p in falta['patrones']],
-                  'stats': {s: sorted(U['stat'][s])[:3] for s in falta['stats']}}
+                  'stats': {s: sorted(U['stat'].get(s) or [f'bono «{n}»' for n in U['bono'][s]])[:3] for s in falta['stats']}}
     json.dump({'falta': usos_falta, 'sobra': sobra,
-               'total': {'etiquetas': len(U['etiqueta']), 'stats': len(U['stat']), 'efectos': len(cat['efectos'])}},
+               'total': {'etiquetas': len(U['etiqueta']), 'stats': len(U['stat']), 'stats_bonos': len(U['bono']),
+                         'efectos': len(cat['efectos'])}},
               open('work/catalogo.json', 'w', encoding='utf-8'), ensure_ascii=False)
     print(f"catálogo de efectos: {len(cat['efectos'])} efectos | etiquetas {len(U['etiqueta'])} | stats {len(U['stat'])} | "
+          f"stats de bonos {len(U['bono'])} | "
           f"sin clasificar {sum(len(v) for v in falta.values())} | glosario: {len(glos['terminos'])} términos | docs/CATALOGO.md")
 
 

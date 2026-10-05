@@ -136,9 +136,25 @@ que después la ficha va a decir de cada variante:
 | Qué es | El efecto y su grupo (ataque, daño, elemento, control, reducción de daño...). |
 | Cuándo aplica | Lo propio del efecto, en su condición: solo contra ciertos rivales (una facción, los jefes, los que tienen más vida...), crece o baja (se acumula, según la vida...) o dura unos ataques. Lo demás es de cada skill o soporte: su activación y su duración. |
 | A quién le llega | Si lo recibe su lado o el rival, en la etiqueta. A qué aliados, el objetivo de la skill o la restricción del soporte. |
-| A quién le sirve | Una regla por efecto: a cualquiera del equipo, a quien escala con un ataque, a quien tiene un elemento, a quien hace daño físico, aplica debuffs, invoca, tiene definitiva de Tier-3 o Striker, o solo a él. Se compara con el perfil de combate de la etapa 1 y con sus skills. |
+| A quién le sirve | Una regla por efecto, la de sus skills: a cualquiera del equipo, a quien escala con un ataque, a quien tiene un elemento, a quien hace daño físico, aplica debuffs, invoca, tiene definitiva de Tier-3 o Striker, o solo a él. Se compara con el perfil de combate de la etapa 1 y con sus skills. Y una por stat de Leads & Supports y de bonos de equipo, la de los liderazgos, soportes y bonos, que es la que usa la app en los equipos (ver abajo). |
 | PvE y PvP | Una lectura por modo, del grupo o propia del efecto. |
 | Fuente y certeza | Cada lectura dice su certeza: comprobado (lo dice una fuente, que se cita), probable (se deduce del texto del efecto) o conjetura. |
+
+A quién le sirve un liderazgo, un soporte o un bono de equipo es una sola regla, en el catálogo
+(`soporte`: cada stat con sus efectos y su `sirve`; Ezequiel, 4 de octubre de 2026). La app no tiene
+reglas propias: la sinergia, las combinaciones, el índice, las casillas, el «Por qué» y PvP y PvE leen
+la del stat, y el Glosario y el «Cómo funciona» la muestran en su efecto. La app sabe evaluar las que
+miran el perfil de combate de quien lo recibe (a todos, a nadie, según con qué escala, sus elementos,
+su tipo de daño o su resistencia); el build no deja pasar otra. Casi siempre es la regla del efecto;
+difieren, por decisión de Ezequiel:
+- Todas las velocidades: a nadie como liderazgo, soporte o bono; en las skills (el frenesí) siguen
+  contando.
+- Las resistencias: como liderazgo, soporte o bono, solo a quien tiene una mejora de daño según esa
+  resistencia (*Daño según la resistencia*); en las skills, a cualquiera.
+- El efecto de los debuffs (All Debuffs Effect): como liderazgo, soporte o bono, a cualquiera («es
+  útil»); en las skills, a quien aplica debuffs.
+Un stat que el catálogo no tiene (uno nuevo de Leads & Supports, o uno de un bono de la wiki) cuenta
+para todos y la app lo dice; el build lo avisa y la auditoría lo lista (sección 9).
 
 Las etiquetas que la fuente usa para dos cosas se clasifican por el texto (el patrón): `MINIATURIZE`
 achica al personaje y le sube ataques y defensas, o achica al rival y le baja los suyos;
@@ -329,8 +345,6 @@ el filtro de rol del roster y en los «roles cubiertos» de la sinergia.
    con la facción, el tipo o la raza que escribe Leads & Supports, después de la tabla a mano y
    antes que la wiki (Ezequiel, 3 de octubre de 2026; `scripts/marcadores.py`): Angela — Asgard's
    Assassin quedaba «sin especificar» y Leads & Supports dice Villains.
-2. La regla de «a quién le sirve» del catálogo reemplaza a la que hoy tiene la app para la
-   sinergia y el índice de equipos.
 
 ## Lo que muestran las pantallas del juego
 

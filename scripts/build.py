@@ -43,9 +43,10 @@ chars, images, assign, tierlists = b['characters'], b['images'], b['assign'], b[
 vocab, SKILLS, TABLAS, BUFFS = b['vocab'], b['skills'], b['tablas'], b['buffs']
 PERFILES, ANALISIS = b['perfiles'], b['analisis']
 # El catálogo de efectos (scripts/contenido/catalogo.json, validado por catalogo.py): lo que la
-# app necesita para mostrar el análisis de cada variante.
+# app necesita para mostrar el análisis de cada variante, y a quién le sirve cada stat de liderazgo,
+# soporte o bono de equipo (soporte).
 _CAT = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'catalogo.json'), encoding='utf-8'))
-CATALOGO = {k: _CAT[k] for k in ('certeza', 'sirve', 'contra', 'grupos', 'efectos', 'skills')}
+CATALOGO = {k: _CAT[k] for k in ('certeza', 'sirve', 'contra', 'grupos', 'efectos', 'skills', 'soporte')}
 # El glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json,
 # validado por catalogo.py): la solapa Glosario de la app.
 GLOSARIO = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'glosario.json'), encoding='utf-8'))
@@ -126,7 +127,9 @@ hoy = hoy.isoformat()
 #    personaje (MFF_STRIKERS); el rol que da cada fila de las listas de PvP y PvE (MFF_ROLES_LISTAS).
 # 6: los marcadores de las skills también se completan con Leads & Supports (gs 'l'); la app
 #    anterior los mostraría como datos de la wiki.
-FORMATO = 6
+# 7: el catálogo trae a quién le sirve cada stat de liderazgo, soporte y bono de equipo
+#    (MFF_CATALOGO.soporte), que la app ya no tiene escrito.
+FORMATO = 7
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -157,7 +160,8 @@ parts = [header,
  '// aliados va, y de qué skills sale ([skill, etapa, efecto] en MFF_SKILLS); ns: lo que es para él y\n'
  '// no le sirve; sc: lo que el catálogo no clasifica.\n',
  'window.MFF_ANALISIS = ' + json.dumps(ANALISIS, ensure_ascii=False, separators=(',', ':')) + ';\n',
- '// Catálogo de efectos (scripts/contenido/catalogo.json, docs/CATALOGO.md).\n',
+ '// Catálogo de efectos (scripts/contenido/catalogo.json, docs/CATALOGO.md): grupos, efectos, etiquetas de las\n'
+ '// skills (skills) y stats de liderazgo, soporte y bono de equipo (soporte), cada uno con a quién le sirve.\n',
  'window.MFF_CATALOGO = ' + json.dumps(CATALOGO, ensure_ascii=False) + ';\n',
  '// Glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json): los errores\n'
  '// que se repiten en el inglés y cada término con lo que dice, lo que el inglés traduce distinto y los\n'
