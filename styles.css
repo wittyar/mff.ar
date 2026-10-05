@@ -92,6 +92,8 @@ select{appearance:none;padding-right:28px;
 .tag.solid{color:#0b0d14}
 .tag.ghost{background:transparent;border:1px solid currentColor}
 .tag.dim{background:rgba(255,255,255,.06);color:var(--text-2)}
+/* La recarga de una skill: puede ser una frase (la de la skill y la de un efecto según Leads & Supports). */
+.tag.rec{text-transform:none;letter-spacing:0;white-space:normal}
 
 /* ---------- layout ---------- */
 nav.topnav{

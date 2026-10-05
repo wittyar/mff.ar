@@ -562,6 +562,10 @@ const T = {
   tt_grupo:          { es:'Grupo',               en:'Group' },
   tt_recarga:        { es:'Recarga',             en:'Cooldown' },
   tt_sin_recarga:    { es:'no tiene (la fuente pone 0 s)', en:'none (the source says 0 s)' },
+  rc_skill_0:        { es:'la skill no tiene (la fuente pone 0 s)', en:'the skill has none (the source says 0 s)' },
+  rc_skill:          { es:'la skill se recarga en {n}', en:'the skill recharges in {n}' },
+  rc_efecto:         { es:'según Leads & Supports, el efecto {x} se recarga en {n}', en:'per Leads & Supports, the {x} effect recharges in {n}' },
+  rc_efectos:        { es:'según Leads & Supports, los efectos {x} se recargan en {n}', en:'per Leads & Supports, the {x} effects recharge in {n}' },
   tt_sin_dato:       { es:'la fuente no la publica', en:'the source does not publish it' },
   tt_carga:          { es:'Carga que da',        en:'Charge it gives' },
   tt_al_usar:        { es:'al usarla',           en:'when used' },
@@ -2001,9 +2005,7 @@ function skillCard (sk, v, si) {
       ${fx.join('')}</div>`;
   }).join('');
 
-  const cargas = [];
-  if (sk.cd) cargas.push(`<span class="tag dim">CD ${h(sk.cd)}s</span>`);
-  else if (sk.sl === 'Active Ult' || sk.sl === 'Striker Skill') cargas.push(`<span class="tag dim">${h(t(sk.sl === 'Active Ult' ? 'sk_bar_ult' : 'sk_bar_stk'))}</span>`);
+  const cargas = [recargaHtml(v, sk)];
   if (sk.ult != null) cargas.push(`<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>`);
   if (sk.stk != null) cargas.push(`<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>`);
 
@@ -2029,6 +2031,20 @@ function skillCard (sk, v, si) {
     </div>
   </div>`;
 }
+/** La recarga de una skill, la misma en su tarjeta, la comparativa y el «Cómo funciona», en dos niveles: la de
+ *  la skill (o que se carga con su barra) y, si Leads & Supports le da a un efecto de esa skill una recarga
+ *  distinta (soportesDeSkill), también esa. El liderazgo secundario de Thanos — Wise Harvester: «la skill no
+ *  tiene (la fuente pone 0 s); según Leads & Supports, el efecto Quita todos los debuffs se recarga en 20 s». */
+function recargaTxt (v, sk) {
+  const propia = sk.cd ? numTxt(sk.cd) + ' s' : sk.cd === 0 ? t('tt_sin_recarga')
+    : sk.sl === 'Active Ult' ? t('sk_bar_ult') : sk.sl === 'Striker Skill' ? t('sk_bar_stk') : t('tt_sin_dato');
+  const otras = soportesDeSkill(v, sk).map(([k]) => SOPORTES[v.p][k]).filter(x => x.cd && x.cd !== sk.cd);
+  if (!otras.length) return propia;
+  return [sk.cd ? t('rc_skill').replace('{n}', propia) : sk.cd === 0 ? t('rc_skill_0') : propia].concat(otras.map(x =>
+    t(x.fx.length > 1 ? 'rc_efectos' : 'rc_efecto').replace('{x}', x.fx.map(f => trTxt(f.s)).join(' + ')).replace('{n}', numTxt(x.cd) + ' s'))).join('; ');
+}
+/** recargaTxt como etiqueta, con su rótulo: «Recarga: 12 s». */
+function recargaHtml (v, sk) { return `<span class="tag dim rec">${h(t('tt_recarga'))}: ${h(recargaTxt(v, sk))}</span>`; }
 function srcEs (v) {
   if (LANG === 'en') return v;
   return { 'Physical Attack':'ataque físico', 'Energy Attack':'ataque de energía', 'HP':'vida' }[v] || v;
@@ -2655,8 +2671,6 @@ function tipCuandoHtml (v, sk, es, ti, fi) {
   const acComun = comunEnEtapas(sk, 'ac'), tgComun = comunEnEtapas(sk, 'tg'), sinAc = sk.st.every(st => st.ac == null);
   const activacion = acComun != null ? txt('act', acComun, sk.st.find(st => st.ac === acComun).av)
     : sinAc ? t(/^Active/.test(sk.sl) ? 'tt_al_usar' : 'tt_sin_cond') : null;
-  const recarga = sk.cd ? numTxt(sk.cd) + ' s' : sk.cd === 0 ? t('tt_sin_recarga')
-    : sk.sl === 'Active Ult' ? t('sk_bar_ult') : sk.sl === 'Striker Skill' ? t('sk_bar_stk') : t('tt_sin_dato');
   const carga = [sk.ult != null ? t('c_ult') + ' ' + numTxt(sk.ult) + '%' : '', sk.stk != null ? t('c_striker') + ' ' + numTxt(sk.stk) + '%' : '']
     .filter(Boolean).join(', ');
   const dato = (k, val) => `<li><b>${h(t(k))}:</b> ${h(val)}</li>`;
@@ -2679,7 +2693,7 @@ function tipCuandoHtml (v, sk, es, ti, fi) {
   const ls = soportesDeSkill(v, sk);
   return `<ul class="tiplista">
       ${activacion != null ? dato('st_activation', activacion) : ''}
-      ${dato('tt_recarga', recarga)}
+      ${dato('tt_recarga', recargaTxt(v, sk))}
       ${carga ? dato('tt_carga', carga) : ''}
       ${tgComun != null ? dato('st_target', txt('tgt', tgComun)) : ''}
     </ul>
@@ -3758,7 +3772,7 @@ function renderCompare () {
             ? `<div class="muted" style="margin-bottom:5px">${(sk.st || []).filter(st => st.tg != null && st.tg !== tgC)
                 .map((st, i) => `${h(t('st_stage'))} ${(sk.st.indexOf(st) + 1)}: ${objetivoTexto(st.tg)}`).join(' · ')}</div>` : ''}
           <div class="row" style="gap:4px;margin-bottom:6px">
-            ${sk.cd ? `<span class="tag dim">CD ${h(sk.cd)}s</span>` : ''}
+            ${recargaHtml(v, sk)}
             ${sk.ult != null ? `<span class="tag dim">${h(t('c_ult'))} ${h(sk.ult)}%</span>` : ''}
             ${sk.stk != null ? `<span class="tag dim">${h(t('c_striker'))} ${h(sk.stk)}%</span>` : ''}
           </div>
