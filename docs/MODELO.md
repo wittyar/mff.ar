@@ -466,6 +466,31 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
   superar la defensa o la esquiva del rival, y eso pesa al armar un equipo. Lo dudoso es comparar
   un porcentaje de ataque con un daño agregado contra una facción: no está claro cuál aporta más,
   siempre que haya anti-mermas. La excepción rara es el liderazgo de Molecule Man.
+- **Prioridad en PvP** (Ezequiel, 4 de octubre de 2026): quitar los debuffs (anti-mermas), vida,
+  todos los ataques, todas las defensas, ignorar esquiva y el efecto de los debuffs («es útil, está
+  por debajo de todas las defensas»; lo traen dos o tres liderazgos).
+
+### Tabla de valor
+
+Cuánto vale un equipo según el modo de juego está en `scripts/contenido/valor_equipos.json`
+(Ezequiel, 4 de octubre de 2026), una fila por contexto; cada modo de juego usa la de su tipo
+(`tipo` en `modos.json`), sin pesos propios por ahora. La app no tiene ningún peso escrito: lee la
+tabla (`MFF_VALOR`) y arma con ella el puntaje, el detalle y la nota de cada orden. El build para si
+un stat de la tabla no está en el catálogo de efectos (no tendría regla de «le sirve»), si un modo
+no tiene la fila de su tipo o si falta un dato de una fila.
+
+| Fila | PvP | PvE |
+|---|---|---|
+| Requisito | Anti-mermas para los tres | Ninguno |
+| Liderazgo, por integrante al que le llega y le sirve | Vida 2,5; todos los ataques 2 (también la acumulable); todas las defensas 1,5; ignorar evasión 1; efecto de los debuffs 0,5 | Cada uno de daño 2: todos los ataques, ataque físico y de energía, daño de cada elemento y de todos, daño a jefes |
+| Liderazgo condicional | La mitad | La mitad |
+| Cada nivel de fila de cada DPS | 2 | 2 |
+| Cada soporte que le llega a otro y le sirve | 1 | 1 |
+| Cada bono de equipo activo | 1 | 1 |
+| Strikers | Desempatan | Desempatan |
+
+Anti-mermas: Remove All Debuffs y Debuff Immunity. Los pesos son una propuesta (la tabla lo dice, y
+la nota de cada orden también) y se ajustan con los *Casos de referencia*.
 
 Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órdenes PvP y PvE):
 
@@ -477,20 +502,21 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   contexto, o solo como «Not for wbl», el orden de ese contexto no arma combinaciones y la pestaña
   lo dice (Ezequiel, 2 de octubre de 2026: Thor base no tiene función en PvP ni en PvE). Con los
   datos actuales tienen función 60 de las 888 variantes en PvP y 119 en PvE.
-- Un trío entra si alguno es DPS de ese contexto y, en PvP, si con algún líder los tres tienen
-  anti-mermas (Remove All Debuffs o Debuff Immunity). Cada compañero tiene vínculo con él o es DPS
-  de ese contexto.
-- Puntaje: 2 por cada stat del liderazgo que vale y cada integrante al que le llega y le sirve
-  (cada stat una vez, aunque el liderazgo lo traiga en varias líneas; 1 si solo le llega por un
-  liderazgo que se activa con una condición, el slot con `ac`); 2 por cada nivel de fila de cada
-  DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve y por cada bono de equipo
-  activo. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma de los que cumplen y no depende
+- Un trío entra si alguno es DPS de ese contexto y cumple el requisito de la tabla: en PvP, que con
+  algún líder los tres tengan anti-mermas. Cada compañero tiene vínculo con él o es DPS de ese
+  contexto.
+- Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma su peso por cada
+  integrante al que le llega y le sirve (cada stat una vez, aunque el liderazgo lo traiga en varias
+  líneas; la parte del condicional si solo le llega por un liderazgo que se activa con una condición,
+  el slot con `ac`); cada nivel de fila de cada DPS (3 la más alta), cada soporte que le llega a otro
+  y le sirve y cada bono de equipo activo, lo suyo. Los strikers del trío no suman: a igual puntaje,
+  desempatan. Con pesos con decimales, el orden de las listas usa el puntaje en centésimas. El líder es el que más suma de los que cumplen y no depende
   del orden del trío: a igual puntaje, el mejor ubicado en las tier lists del contexto (la suma de
   su puesto en cada una) y después la clave. Hasta la 1.0.15, a igual puntaje ganaba el primero del
   trío, que es siempre el personaje de la ficha, así que el mismo trío salía con otro líder en cada
   lista (con los datos de la 1.0.14, en 44.583 tríos de PvP). Cada combinación muestra de dónde sale
-  cada punto, y el liderazgo condicional dice que cuenta la mitad. Los pesos se revisaron con casos y
-  quedaron así (ver *Casos de referencia*).
+  cada punto (cada línea del liderazgo, con lo que suma), y el liderazgo condicional dice qué parte
+  cuenta. Los pesos se revisan con casos (ver *Casos de referencia*).
 - Sin contexto (los puntos para él, las tier lists, tus equipos, los favoritos, la comparativa y
   «cómo entraría»), el líder sale de la misma función: el que más suma con su liderazgo en la
   sinergia (cada slot que le llega y le sirve a otro: 3 si es Notable, 2 si no); a igual puntaje, el
@@ -508,21 +534,26 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
 Los pesos se revisaron con cuatro pares reales que Ezequiel comparó (2 de octubre de 2026). Quedaron
 como estaban; lo que cambió es que en PvP cuentan las defensas del liderazgo. Con el líder único y
 el condicional a la mitad solo cambia el de Thor en PvP, que ahora gana por puntaje. Sin los strikers
-en el puntaje (4 de octubre de 2026), los cuatro siguen ganando por puntaje.
+en el puntaje (4 de octubre de 2026), los cuatro siguen ganando por puntaje. Con la tabla de valor
+(4 de octubre de 2026: en PvP, vida 2,5, ataques 2, defensas 1,5, ignorar evasión 1 y efecto de los
+debuffs 0,5) también: Thanos — Annihilation le sigue ganando a Black Cat — Queen in Black (su
+liderazgo suma 10,5 contra 9), y en el par de Galactus lidera Wasp, cuyo liderazgo suma 10,5.
 
-| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → con defensas | Con líder único | Sin strikers |
-|---|---|---|---|---|---|
-| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 | 27 a 22 | 26 a 20 |
-| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual | 25 a 24 | 19 a 18 |
-| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 | 27 a 21 | 21 a 18 |
-| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual | 26 a 21 | 23 a 19 |
+| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → con defensas | Con líder único | Sin strikers | Con la tabla de valor |
+|---|---|---|---|---|---|---|
+| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder; con la tabla, Wasp) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 | 27 a 22 | 26 a 20 | 24,5 a 18,5 |
+| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual | 25 a 24 | 19 a 18 | 19 a 18 |
+| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 | 27 a 21 | 21 a 18 | 19,5 a 17,25 |
+| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual | 26 a 21 | 23 a 19 | 20 a 19 |
 
 - **Galactus.** «Thanos es el mejor líder por el agregado de las mermas y mejoras de daños y
   defensa, y los 3 son DPS»; Black Cat + Wasp «es una opción depositando todo el peso en que
   Galactus haga el trabajo». El liderazgo de Thanos trae Remove All Debuffs, todos los ataques +50%
   y todas las defensas +40%; con los stats de antes solo contaban los ataques (6), y a Black Cat
   (ataques +65%, ignorar evasión +35%) le contaban los dos (12). Con el líder único, Black Cat y
-  Wasp empatan en puntos y en puesto, y lidera Black Cat por la clave.
+  Wasp empatan en puntos y en puesto, y lidera Black Cat por la clave. Con la tabla de valor, el de
+  Thanos suma 10,5 (ataques 6, defensas 4,5) y el de Black Cat 9 (ataques 6, ignorar evasión 3); en
+  su par lidera Wasp, con 10,5.
 - **Thor.** No tiene función en PvP ni en PvE (Ezequiel): los pares valen por los otros dos. En PvP
   eligió el primero «en caso de que haya que sumarlo». Con la 1.0.15 empataban y desempataba la tier
   list, que ponía primero al segundo; con los strikers a 2 ganaba el primero, pero decidían listas
@@ -539,9 +570,11 @@ en el puntaje (4 de octubre de 2026), los cuatro siguen ganando por puntaje.
   mismo trío con otro orden. Los dos dan el mismo anti-mermas (al recibir un debuff, 12 s, recarga
   20 s). Gorr da PG +35% permanente a los supervillanos, y el uniforme Void Knight lo es: 6. Silver
   Surfer da ataques y defensas +30% solo al recibir un debuff: 12 con la 1.0.15, 6 a la mitad.
-  Empatan y lidera Gorr por la tier list de Arena (GOd contra Niche), con 26 puntos en las listas de
-  los tres (24 sin los strikers): gana por desempate, no por peso. Antes lideraba Silver Surfer: con la 1.0.14, en su lista
-  y en la de Knull; con la 1.0.15, en las tres, con 32.
+  Empataban y lideraba Gorr por la tier list de Arena (GOd contra Niche), con 26 puntos en las listas
+  de los tres (24 sin los strikers): ganaba por desempate, no por peso. Con la tabla de valor gana
+  por peso: la vida de Gorr suma 7,5 y el liderazgo condicional de Silver Surfer, 5,25; el trío, 25,5.
+  Antes lideraba Silver Surfer: con la 1.0.14, en su lista y en la de Knull; con la 1.0.15, en las
+  tres, con 32.
 - **Doctor Voodoo — Savage Avengers en la lista de PvP de Adam Warlock**, con Wasp — Quantumania de
   líder. Su pasiva de uniforme es solo para Universales, pero entra por la Tier-2, «Voodoo Shield»:
   ignora la evasión del objetivo 30% para todos los aliados (así lo publican la API de skills, «All

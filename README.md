@@ -90,8 +90,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     como «Not for wbl», no tiene función ahí y ese orden no arma combinaciones. En un contexto entran
     solo los tríos con algún DPS de sus tier lists y, en PvP, con anti-mermas para los tres; un DPS
     entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS y sinergia) dice
-    de dónde sale cada punto (los soportes y bonos de equipo, plegados, con qué es
-    cada uno). Los strikers no suman en ningún orden: a igual puntaje, desempatan, y la tarjeta
+    de dónde sale cada punto (cada línea del liderazgo con lo que suma; los soportes y bonos de
+    equipo, plegados, con qué es cada uno). Los pesos salen de la tabla de valor
+    (`scripts/contenido/valor_equipos.json`, una fila por contexto; ver *Tabla de valor* en
+    `docs/MODELO.md`), y la nota de cada orden los dice. Los strikers no suman en ningún orden: a igual puntaje, desempatan, y la tarjeta
     dice cuántos («desempate: 2 strikers»). Los puntos que cuentan el soporte de un artefacto como
     si lo llevara llevan «*», como las casillas, y el lugar de cada uno en la lista del orden, «+N»
     si está en más de una fila. Se

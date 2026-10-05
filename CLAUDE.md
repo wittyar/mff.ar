@@ -26,7 +26,8 @@ variante, en `docs/COMPLETITUD.md`.
   `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y `docs/COMPLETITUD.md`; para con un mensaje
   si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a
   los datos recién cuando corre el build: sin `work/`, se valida con `catalogo.validar`,
-  `catalogo.validar_glosario` y `fuentes.validar_contenido`.
+  `catalogo.validar_glosario`, `catalogo.validar_valor` (la tabla de valor de los equipos) y
+  `fuentes.validar_contenido`.
 - Pruebas: no están en el repo. Son scripts de Playwright contra la app servida por
   `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`. La
   copia más reciente va en un zip junto al último bundle (`pruebas-mff-*.zip`); su `LEEME.txt` dice
@@ -35,7 +36,7 @@ variante, en `docs/COMPLETITUD.md`.
   Las que leen el contenido curado del repo (verif_glosario) fallan contra un data.js viejo:
   `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo, y `armar_datos_build.py`, con
   lo que el próximo build cambia en data.js (hoy, el formato 7: el catálogo con la regla de cada stat,
-  `SEED.SKILL_TAGS` y el análisis recalculado con `scripts/modelo.py`).
+  la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado con `scripts/modelo.py`).
   `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
   pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
   filtro, efectos de la comparativa, strikers) y lista como pendientes las de las reglas sin decidir.
@@ -60,7 +61,8 @@ variante, en `docs/COMPLETITUD.md`.
 ## Pendiente
 
 - Formato 7 (carril de consistencia, segunda parte): `scripts/build.py` ya escribe datos de formato 7
-  (el catálogo trae a quién le sirve cada stat de liderazgo, soporte y bono), pero `version.json`
+  (el catálogo trae a quién le sirve cada stat de liderazgo, soporte y bono, y `MFF_VALOR` los pesos
+  de PvP y PvE), pero `version.json`
   sigue pidiendo el 6 (el carril no lo tocó). Subirlo a 7 en el push que publica, con la etiqueta.
 - Con el próximo build (carril de consistencia, sin `work/` no se pudo correr): `SEED.SKILL_TAGS` con
   las habilidades de todas las variantes (el filtro del roster suma Zombi y Guardianes de la
@@ -114,9 +116,11 @@ variante, en `docs/COMPLETITUD.md`.
   - Con el primer build, verif_marcadores (necesita `work/`) tiene que actualizar sus cuentas.
   - Los avisos de `soportes()` salen dos veces en el log del build (fuentes.py y marcadores.py).
 
-- El caso Silver Surfer — Void Knight + Knull — Ancient History + Gorr: con las defensas de la
-  1.0.15 y el condicional a la mitad empatan 6 a 6, y lidera Gorr por la tier list, no por peso (ver
-  «Casos de referencia» en `docs/MODELO.md`). Falta decidir si así está bien.
+- Tabla de valor (`scripts/contenido/valor_equipos.json`): los pesos son la propuesta del 4 de
+  octubre (en PvP, vida 2,5, ataques 2, defensas 1,5, ignorar evasión 1, efecto de los debuffs 0,5).
+  Falta que Ezequiel la confirme con los «Casos de referencia» de `docs/MODELO.md`: los cuatro pares
+  siguen ganando por puntaje, y en el trío Silver Surfer — Void Knight + Knull + Gorr ahora lidera
+  Gorr por peso (7,5 a 5,25), no por la tier list.
 - Volumen de las listas (medido el 2 de octubre sobre la 1.0.14, antes de las listas solo con
   función; hay que volver a medirlo). Exigir en PvP un liderazgo que valga saca el 59% de las
   tarjetas (Galactus, de 37.514 a 1.699; Silver Surfer — Void Knight sigue en 37.452). Una lista por
@@ -131,8 +135,8 @@ variante, en `docs/COMPLETITUD.md`.
 - Liderazgo en PvP: Molecule Man es «la excepción rara» (Ezequiel) y hoy no suma nada fuera de los
   anti-mermas, ni tiene lista de PvP; el daño contra una facción no cuenta. Falta decidir cómo
   cuentan. Según NamuWiki, el tercero de un equipo de Timeline suele ser un «buffer» de daño entre
-  facciones (Colossus), y Molecule Man ignora justamente eso. Los pesos se revisaron con casos y
-  quedaron igual (ver «Casos de referencia» en `docs/MODELO.md`).
+  facciones (Colossus), y Molecule Man ignora justamente eso. Los pesos están en la tabla de valor
+  (ver «Casos de referencia» en `docs/MODELO.md`).
 - Compañeros sin función en el contexto: entran igual si tienen vínculo con él. Falta decidir si
   quedan fuera, como el personaje de la ficha.
 - Bonos de equipo del juego por confirmar con capturas. Quedaron anotados así: W, D, R y SW; con

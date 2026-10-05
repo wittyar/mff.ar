@@ -1,0 +1,45 @@
+{
+ "nota": {"es": "Cuánto vale un equipo según el modo de juego (Ezequiel, 4 de octubre de 2026): una fila por contexto (pvp, pve); cada modo de juego (contenido/modos.json) usa la de su tipo, sin pesos propios por ahora. Cada fila dice qué tiene que cumplir el trío (requisito), cuánto suma cada stat del liderazgo del líder por cada integrante al que le llega y le sirve, en el orden de prioridad de Ezequiel (liderazgo), qué parte de eso suma un liderazgo que se activa con una condición (condicional), cuánto suma cada nivel de fila de cada DPS (dps), cada soporte que le llega a otro y le sirve (soporte) y cada bono de equipo activo (bono), y qué hacen los strikers (strikers: desempatan a igual puntaje). anti_mermas: los stats que cuentan como anti-mermas. Los pesos son una propuesta (propuesta: true) y se ajustan con los casos de docs/MODELO.md (Casos de referencia). Contenido curado: se edita a mano; el build para si un stat no está en el catálogo de efectos o si un modo no tiene fila.", "en": "How much a team is worth by game mode (Ezequiel, October 4, 2026): one row per context (pvp, pve); each game mode (contenido/modos.json) uses the one of its type, with no weights of its own for now. Each row says what the trio must meet (requisito), how much each stat of the leader's leadership adds per member it reaches and helps, in Ezequiel's priority order (liderazgo), what part of that a leadership that activates on a condition adds (condicional), how much each row level of each DPS adds (dps), each support that reaches and helps another (soporte) and each active team bonus (bono), and what strikers do (strikers: they break ties on equal score). anti_mermas: the stats that count as debuff removal. The weights are a proposal (propuesta: true) and get adjusted with the cases in docs/MODELO.md (Reference cases). Curated content: edited by hand; the build stops if a stat is not in the effect catalog or if a mode has no row."},
+ "propuesta": true,
+ "anti_mermas": ["Remove All Debuffs", "Debuff Immunity"],
+ "contextos": {
+  "pvp": {
+   "requisito": "anti_mermas",
+   "liderazgo": [
+    {"stat": "HP", "peso": 2.5},
+    {"stat": "All Basic Attacks", "peso": 2},
+    {"stat": "All Basic Attacks (Stackable)", "peso": 2},
+    {"stat": "All Basic Defenses", "peso": 1.5},
+    {"stat": "Ignore Dodge", "peso": 1},
+    {"stat": "All Debuffs Effect", "peso": 0.5}
+   ],
+   "condicional": 0.5,
+   "dps": 2,
+   "soporte": 1,
+   "bono": 1,
+   "strikers": "desempate"
+  },
+  "pve": {
+   "requisito": null,
+   "liderazgo": [
+    {"stat": "All Basic Attacks", "peso": 2},
+    {"stat": "All Basic Attacks (Stackable)", "peso": 2},
+    {"stat": "Physical Attack", "peso": 2},
+    {"stat": "Energy Attack", "peso": 2},
+    {"stat": "Fire Damage", "peso": 2},
+    {"stat": "Fire Damage by % Fire Resist", "peso": 2},
+    {"stat": "Cold Damage", "peso": 2},
+    {"stat": "Lightning Damage", "peso": 2},
+    {"stat": "Poison Damage", "peso": 2},
+    {"stat": "Mind Damage", "peso": 2},
+    {"stat": "All Element Damage", "peso": 2},
+    {"stat": "Basic Damage Dealt to Boss Types", "peso": 2}
+   ],
+   "condicional": 0.5,
+   "dps": 2,
+   "soporte": 1,
+   "bono": 1,
+   "strikers": "desempate"
+  }
+ }
+}

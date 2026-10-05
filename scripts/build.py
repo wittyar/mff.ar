@@ -74,6 +74,10 @@ for _ctx in ('pvp', 'pve'):
 if _mal:
     raise SystemExit('scripts/contenido/roles_listas.json no coincide con las tier lists de thanosvibs:\n- ' + '\n- '.join(_mal))
 ROLES_LISTAS = {c: {lid: {f['fila']: [f['rol'], f['nivel']] for f in fs} for lid, fs in _ROLES[c].items()} for c in ('pvp', 'pve')}
+# Cuánto vale un equipo en PvP y en PvE (scripts/contenido/valor_equipos.json, validado por catalogo.py): el
+# requisito, los pesos del liderazgo, de los DPS, los soportes y los bonos, y qué hacen los strikers.
+_VALOR = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'valor_equipos.json'), encoding='utf-8'))
+VALOR = {k: v for k, v in _VALOR.items() if k != 'nota'}
 # Bonos de equipo (scripts/bonos.py): fuentes.py los deja con los nombres de sus integrantes; la app
 # los busca por id de personaje.
 _CID = {c['name']: c['id'] for c in chars}
@@ -128,7 +132,8 @@ hoy = hoy.isoformat()
 # 6: los marcadores de las skills también se completan con Leads & Supports (gs 'l'); la app
 #    anterior los mostraría como datos de la wiki.
 # 7: el catálogo trae a quién le sirve cada stat de liderazgo, soporte y bono de equipo
-#    (MFF_CATALOGO.soporte), que la app ya no tiene escrito.
+#    (MFF_CATALOGO.soporte), y la tabla de valor de los equipos (MFF_VALOR) trae los pesos de PvP y
+#    PvE: la app ya no tiene escrito ninguno de los dos.
 FORMATO = 7
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
@@ -170,6 +175,10 @@ parts = [header,
  '// Roles por contexto (scripts/contenido/roles_listas.json): por contexto (pvp, pve) y tier list, el rol\n'
  '// [dps, soporte, lider, striker o fuera] y su nivel (3, la mejor fila) que da cada fila.\n',
  'window.MFF_ROLES_LISTAS = ' + json.dumps(ROLES_LISTAS, ensure_ascii=False, separators=(',', ':')) + ';\n',
+ '// Cuánto vale un equipo (scripts/contenido/valor_equipos.json): por contexto (pvp, pve), el requisito, el peso de\n'
+ '// cada stat del liderazgo por integrante, el del condicional, el de cada nivel de DPS, el de cada soporte y bono, y\n'
+ '// los strikers (desempatan); anti_mermas: los stats que cuentan como anti-mermas; propuesta: si los pesos lo son.\n',
+ 'window.MFF_VALOR = ' + json.dumps(VALOR, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Bonos de equipo (scripts/bonos.py): nombre (n), integrantes (m, ids de personaje), stats (v: más de\n'
  '// una versión si las páginas de la wiki empatan; la recarga y la duración de control, en negativo) y\n'
  '// fuentes (f).\n',

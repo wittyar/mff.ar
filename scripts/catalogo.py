@@ -20,6 +20,10 @@ A quién le sirve: cada efecto tiene su regla (sirve), la de sus skills, que eva
 tiene la suya, que evalúa la app (sinergia, combinaciones, índice): casi siempre es la de su efecto;
 las velocidades, las resistencias y el efecto de los debuffs tienen otra (reglas de Ezequiel).
 
+Y la tabla de valor de los equipos (scripts/contenido/valor_equipos.json): cada stat que pesa o que cuenta como
+anti-mermas tiene que estar en el catálogo (con su regla de «le sirve»), y cada modo de juego tiene que tener la
+fila de su tipo. Si no, se corta el build.
+
 También el glosario de skills del juego (scripts/contenido/glosario.json), en inglés y en coreano:
 cada término con lo que dice, lo que el inglés traduce distinto del coreano y los efectos del
 catálogo a los que corresponde. Un término que nombra un efecto, un error que se repite o un
@@ -35,6 +39,7 @@ from version_juego import ultima
 
 RUTA = os.path.join(_DIR, 'contenido', 'catalogo.json')
 RUTA_GLOSARIO = os.path.join(_DIR, 'contenido', 'glosario.json')
+RUTA_VALOR = os.path.join(_DIR, 'contenido', 'valor_equipos.json')
 # La fuente de cada idioma del glosario: un término sin la captura de un idioma no la cita.
 CAPTURA = {'en': 'juego-glosario', 'ko': 'juego-glosario-ko'}
 SLOTS_SOPORTE = ('leader', 'leader2', 'passive', 'passive2', 't2', 't22', 'uniform', 'uniform2', 'artifact')
@@ -147,6 +152,60 @@ def validar(cat, fuentes):
     usados = {e for x in cat['skills'].values() for y in (x['por_patron'].values() if 'por_patron' in x else [x])
               for e in y.get('efectos', [])} | {e for x in cat['soporte'].values() for e in x.get('efectos', [])}
     mal += [f'efecto {i} sin ninguna etiqueta ni stat que apunte a él' for i in ids_efecto if i not in usados]
+    return mal
+
+
+def validar_valor(valor, cat, modos, roles):
+    """Lista de problemas de la tabla de valor de los equipos (vacía si está bien). modos: los de
+    contenido/modos.json; roles: contenido/roles_listas.json (las tier lists de cada contexto)."""
+    mal = []
+    if set(valor) != {'nota', 'propuesta', 'anti_mermas', 'contextos'}:
+        mal.append('valor: lleva nota, propuesta, anti_mermas y contextos')
+        return mal
+    if not (isinstance(valor['nota'], dict) and set(valor['nota']) == {'es', 'en'} and all(valor['nota'].values())):
+        mal.append('valor: la nota tiene que ser {"es": ..., "en": ...} con los dos textos')
+    if not isinstance(valor['propuesta'], bool):
+        mal.append('valor: propuesta es true o false')
+
+    def stat(st, donde):
+        if st not in cat['soporte']:
+            mal.append(f'valor: {donde}: {st!r} no es un stat del catálogo de efectos (soporte), así que no tiene regla de «le sirve»')
+
+    def numero(x, donde, hasta=None):
+        if isinstance(x, bool) or not isinstance(x, (int, float)) or x < 0 or (hasta is not None and x > hasta):
+            mal.append(f'valor: {donde} tiene que ser un número de 0' + (f' a {hasta}' if hasta is not None else ' o más') + f', no {x!r}')
+
+    if not valor['anti_mermas']:
+        mal.append('valor: anti_mermas vacío')
+    for st in valor['anti_mermas']:
+        stat(st, 'anti_mermas')
+    contextos = valor['contextos']
+    for ctx, c in contextos.items():
+        d = f'contexto {ctx}'
+        if set(c) != {'requisito', 'liderazgo', 'condicional', 'dps', 'soporte', 'bono', 'strikers'}:
+            mal.append(f'valor: {d}: lleva requisito, liderazgo, condicional, dps, soporte, bono y strikers')
+            continue
+        if c['requisito'] not in (None, 'anti_mermas'):
+            mal.append(f"valor: {d}: requisito desconocido {c['requisito']!r} (la app sabe null y anti_mermas)")
+        if c['strikers'] != 'desempate':
+            mal.append(f"valor: {d}: strikers desconocido {c['strikers']!r} (los strikers desempatan: desempate)")
+        vistos = set()
+        for x in c['liderazgo']:
+            if set(x) != {'stat', 'peso'}:
+                mal.append(f'valor: {d}: cada stat del liderazgo lleva stat y peso')
+                continue
+            stat(x['stat'], f'{d}, liderazgo')
+            numero(x['peso'], f"{d}, peso de {x['stat']}")
+            if x['stat'] in vistos:
+                mal.append(f"valor: {d}: {x['stat']!r} repetido en el liderazgo")
+            vistos.add(x['stat'])
+        numero(c['condicional'], f'{d}, condicional', 1)
+        for k in ('dps', 'soporte', 'bono'):
+            numero(c[k], f'{d}, {k}')
+        if ctx not in roles:
+            mal.append(f'valor: {d}: no tiene tier lists en contenido/roles_listas.json (de ahí salen sus DPS)')
+    mal += [f"valor: el modo {m['id']} es de tipo {m['tipo']!r} y la tabla no tiene esa fila" for m in modos if m['tipo'] not in contextos]
+    mal += [f'valor: falta la fila {ctx}, que usan los órdenes de las combinaciones' for ctx in roles if ctx not in contextos and ctx != 'nota']
     return mal
 
 
@@ -421,6 +480,10 @@ def main():
     mal = validar_glosario(glos, cat, fuentes, ctps)
     if mal:
         raise SystemExit('scripts/contenido/glosario.json tiene errores:\n  ' + '\n  '.join(mal))
+    mal = validar_valor(cargar(RUTA_VALOR), cat, cargar(os.path.join(_DIR, 'contenido', 'modos.json'))['modos'],
+                        cargar(os.path.join(_DIR, 'contenido', 'roles_listas.json')))
+    if mal:
+        raise SystemExit('scripts/contenido/valor_equipos.json tiene errores:\n  ' + '\n  '.join(mal))
     U = usos(cargar('work/skills_parsed.json'), cargar('work/supports.json'), fu['bonos'])
     falta, sobra = cobertura(cat, U)
     for k, v in falta.items():
