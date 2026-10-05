@@ -52,22 +52,13 @@ variante, en `docs/COMPLETITUD.md`.
   recomendado, el líder del trío, los strikers que desempatan, «le sirve», lo propio y los
   anti-mermas, y la fuente de cada liderazgo) y lista como pendiente la de los recomendados de Modos.
 
-## Estado (4 de octubre de 2026)
+## Estado (5 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.17. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian
-  su Glosario.
+- Publicadas: de la 1.0.14 a la 1.0.19 (etiquetas `v1.0.18` y `v1.0.19` en origin). La 1.0.13 no se
+  publicó; las notas de la 1.0.14 anuncian su Glosario.
 - La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app
-  actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03». En la
-  sección 8 de AUDITORIA.md, los marcadores quedaron así: 3 a mano, 131 de Leads & Supports, 38 de
-  la wiki y 77 sin resolver.
-- Entregadas sin publicar, las dos con datos de formato 6 (el push y la etiqueta pueden ir juntos):
-  - La 1.0.18: casillas por cobertura en las combinaciones, los C.T.P. de la guía de armado en cada
-    tarjeta, y el «Por qué» y el detalle de PvP y PvE rehechos para que se lean (suma de lo que le
-    llega, desglose por origen con link a cada habilidad).
-  - La 1.0.19: el «Cómo funciona» de cada skill (cinco secciones, al tocarla en la pestaña Skills),
-    `docs/COMPLETITUD.md` y el contenido curado revisado con NamuWiki y con las 380 capturas del
-    juego del 2 de octubre. Ese contenido llega a los datos cuando corre el workflow: conviene
-    correrlo a mano después del push.
+  actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
+- Lo último publicado en main es «Datos actualizados 2026-10-04» (29b1ca4), con datos de formato 6.
 
 ## Pendiente
 
