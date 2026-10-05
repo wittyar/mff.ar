@@ -82,7 +82,7 @@ id,valor,personaje,skill,efecto
 1010942011,,Medusa — Ancient Curse,Ancient Curse,Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.
 1010940011,,Medusa — Inhumans vs X-Men,Queenly Gaze,Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.
 1024470012,,Mephisto,Rage of the Pit,Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.
-1224401102,,Mephisto — Master of Hell,Hell Fire,Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.
+1224401102,Supervillano,Mephisto — Master of Hell,Hell Fire,Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.
 1024493012,,Mephisto — Master of Hell,Rage of the Pit,Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.
 1019504012,,Molten Man,Fire Eater,Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 30%.
 1029170011,,Morph,Gender Equality,Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.
