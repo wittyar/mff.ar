@@ -1,6 +1,6 @@
 {
- "version": "1.0.23",
+ "version": "1.0.24",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "Nueva pestaña Histórico: qué llegó de cada personaje en cada versión del juego (personaje, uniformes, Tier-3, Potencial Trascendido, Tier-4) y lo que dicen de él las notas de actualización del foro oficial, con el link a cada nota. En la ficha, pestaña Más, el bloque «Historial»."
+ "notas": "Si la app no puede leer sus datos y los publicados son de una versión más nueva, la pantalla de datos ahora lo dice y ofrece actualizar la app (el parche o el instalador), en vez de quedar trabada."
 }

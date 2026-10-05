@@ -59,7 +59,8 @@ variante, en `docs/COMPLETITUD.md`.
   pendiente la de los recomendados de Modos. `verif_ultimo_uniforme.py`, `verif_solapado.py` y
   `verif_acumula.py` prueban esas cosas en pantalla y contra modelos aparte, y `medir_solapado.py`
   mide, contra otro app.js, cuánto cambian las listas. `verif_historico.py` prueba el histórico (datos, la pestaña, los
-  filtros, la ficha, los links, inglés y celular) contra un modelo con `MFF_HISTORICO`. Con datos de una versión más
+  filtros, la ficha, los links, inglés y celular) contra un modelo con `MFF_HISTORICO`. `verif_trabada.py` prueba la pantalla de datos
+  cuando lo publicado es de otro formato (más nuevo con y sin versión nueva de la app, más viejo, igual, inglés). Con datos de una versión más
   nueva que la publicada, `MFF_DATOS` apunta a datos armados con el build sobre lo bajado ese día (sin `work/` en la
   carpeta de Ezequiel: se baja con `fetch_all.py --no-portraits` en el contenedor). verif_consistencia tarda más de 25
   min y su página llega a unos 5,5 GB: en un contenedor de 8 GB va sola (con otra prueba al lado, el OOM mata la página y
@@ -67,45 +68,33 @@ variante, en `docs/COMPLETITUD.md`.
 
 ## Estado (5 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.21. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su
-  Glosario. La 1.0.21 (etiqueta en 51be511, «Datos actualizados 2026-10-05») trajo los datos de formato 8: su build dio
-  83 stats de `soporte` con `acumula` (65 se suman, 18 cuentan una vez) y 14 con tope, y la regresión con esos datos
-  pasó (38 de 42; verif_parche_119 por diseño y las tres que piden `work/`; verif_consistencia tarda más de 25 min con
-  otra prueba al lado: sola, sin fallas). La 1.0.20 (etiqueta en 5a28aa5, «Datos actualizados 2026-10-05») trajo los datos de formato 7, y
-  su build dio lo que se esperaba: 443 variantes con liderazgo de la Leader Skill (461 slots), 177 de 888
-  completas, `SEED.SKILL_TAGS` con 44 y las correcciones de Judgment y Planet Eater en la sección 5 de
-  `docs/AUDITORIA.md`. La regresión con esos datos pasó (verif_bonos falló una vez por tiempos y pasó sola).
-- La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app actualizada quedó
-  esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
-- Entregada sin publicar: la 1.0.22, con datos de formato 9: la versión de cada uniforme sale de `/api/updates`
-  (Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi, 12.2.5, quedan como últimos de su personaje) y lo
-  que confirmó Ezequiel de los stats dudosos de `acumula` (Guaranteed Critical Rate pasa a contar una vez, con el tope
-  de crítico; Max Dodge, con el de evasión). Y el C.T.P. recomendado con las dos fuentes, una al lado de la otra (la
-  guía de armado y la Ideal CTP List; antes la lista solo aparecía si la guía no daba nada): Ezequiel, 5 de octubre, no
-  quiere decidir a mano cada caso sino tener toda la información, clara y con su fuente.
-- Entregada sin publicar, después de la 1.0.22: la 1.0.23, con datos de formato 10: el histórico de los personajes (la
-  pestaña Histórico y el bloque «Historial» de la ficha), con las notas del foro oficial en `fuentes/foro/`.
+- Publicadas: de la 1.0.14 a la 1.0.23. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario.
+- La 1.0.23 (etiqueta en 39852b8, «Datos actualizados 2026-10-05», datos de formato 10) trajo el histórico de los
+  personajes y lo de la 1.0.22. Su build dio lo esperado: 64 stats que se suman, 19 que cuentan una vez y 16 con tope;
+  `docs/HISTORICO.md` con 213 versiones (181 con nota) y 191 notas.
+- La 1.0.22 salió mal: Ezequiel empujó los dos bundles juntos y la etiqueta `v1.0.22` fue sobre 4a14974 (el commit de la
+  versión, con datos de formato 8), mientras el workflow publicaba desde main los de formato 10. Los de formato 9 nunca
+  se publicaron, y la 1.0.22 instalada quedó trabada en la pantalla de datos («actualizá la app»), que no ofrecía el
+  parche: se arregla con el instalador de la 1.0.23. De ahí la 1.0.24 (abajo).
+- La 1.0.21 trajo los datos de formato 8; la 1.0.20, los de formato 7. La 1.0.17 trajo los de formato 6: su etiqueta salió
+  antes que los datos y la app actualizada quedó esperando hasta «Datos actualizados 2026-10-03».
+- Entregada sin publicar: la 1.0.24, solo programa (datos de formato 10, sin cambio): la pantalla de datos ofrece la
+  versión de la app que lee los datos publicados si son de un formato más nuevo, y publicar.yml no publica una versión si
+  los datos del commit etiquetado o los de main no son del formato que pide `version.json`.
 
 ## Pendiente
 
-Al publicar la 1.0.22 (versión de los uniformes y acumula):
-- Pide los datos de formato 9: push de main, el workflow de datos a mano y, cuando termina bien, la etiqueta `v1.0.22`
-  sobre el commit «Datos actualizados». Si el build para, no se etiqueta: la 1.0.21 sigue con sus datos de formato 8.
-- Lo que tiene que dar ese build (probado el 5 de octubre con los datos bajados ese día): frente a 51be511, solo
-  `up.update: 12.2.5` en esos dos uniformes, el formato, el hallazgo `uniformes-version-12-2-5` en `docs/AUDITORIA.md` y
-  el catálogo: 64 stats que se suman, 19 que cuentan una vez y 16 con tope (`docs/CATALOGO.md`). El log avisa «2
-  uniformes sin versión en /api/uniforms; va la de /api/updates».
+Al publicar la 1.0.24 (pantalla de datos y publicar.yml):
+- Sin formato nuevo: push de main y la etiqueta `v1.0.24` sobre el commit «Versión 1.0.24» (sus datos son los de 39852b8,
+  de formato 10, como los publicados), sin correr el workflow de datos. publicar.yml chequea los dos formatos antes de
+  armar nada.
+- Una versión por vez: con un formato nuevo, primero los datos y la etiqueta de esa versión, y recién después la
+  siguiente (lo que salió mal con la 1.0.22).
 - Guaranteed Critical Rate cuenta una vez y lo dan 10 soportes: la de mayor valor puede cambiar algún trío (sin medir).
 - Las listas de PvE bajan con el vínculo del líder del contexto (Knull — Ancient History, de 15.102 a 9.997): que
   Ezequiel mire una con los datos nuevos («Equipos por contexto» de `docs/MODELO.md`).
 
-Al publicar la 1.0.23 (histórico), después de la 1.0.22 y con sus datos ya publicados:
-- Pide los datos de formato 10: push de main, el workflow de datos a mano (ahora corre también `scripts/foro.py`, que
-  pide la primera página de la lista del foro y baja las notas nuevas) y, cuando termina bien, la etiqueta `v1.0.23`
-  sobre «Datos actualizados». Si el build para, no se etiqueta.
-- Lo que tiene que dar ese build (probado el 5 de octubre): `MFF_HISTORICO` (unos 360 KB más en data.js) y
-  `docs/HISTORICO.md` con 213 versiones (181 con nota), 191 notas (6 sin versión, la 1.3.1 que el foro no deja leer),
-  1.094 de 1.301 llegadas con su nota y 487 hechos de balance.
+Histórico (1.0.23):
 - Cómo se arma (`scripts/historico.py`): cada nota va a la versión de thanosvibs de fecha más cercana, a 4 días o menos;
   cada llegada de `/api/updates` (personaje, uniforme, T3, TP, T4) lleva el texto de esa nota que nombra al personaje
   (por nombre o alias); cada sección de skills o de balance (título con balanc, rework, adjust, skill, improve...) da un
@@ -164,8 +153,6 @@ Sin decidir, de antes:
   de la ficha?
 - Completitud: si los que la guía de armado marca «dont waste gold» cuentan como faltantes y si el informe (unos
   220 KB) se achica.
-- Que publicar.yml no publique una versión si el `datos.json` de main no es del formato de `version.json` (evita lo
-  que pasó con la 1.0.17).
 - Equipos (1.0.18): las casillas siguen marcadas al cambiar de orden, de uniforme o de personaje, como «Sin»;
   Alliance Battle muestra los C.T.P. de PvE, pero la leyenda de la guía dice «ABX: Rage», y sus equipos
   recomendados y los descartados no muestran C.T.P.; el link de un soporte busca la skill por el nombre que le da
