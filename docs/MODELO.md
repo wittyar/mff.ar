@@ -117,7 +117,9 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
 - **Villains en las etapas.** El juego llama «SUPER VILLAIN faction» al bando Supervillano (C.T.P.
   Insight; los artefactos de thanosvibs, igual) y Leads & Supports lo llama «Villains». La guía del
   juego dice que dentro de una etapa los Super Villains, que son jefes, y los Villains son facciones
-  distintas; la línea siguiente quedó cortada en la captura. Los World Bosses cuentan como
+  distintas, y en coreano agrega que los Villains son sus secuaces y aparecen como enemigos comunes
+  («빌런은 슈퍼 빌런의 하수인이며 일반 적으로 등장합니다»). La nota siguiente, en rojo, quedó cortada en
+  las dos capturas. Los World Bosses cuentan como
   Supervillanos (NamuWiki). Falta saber si un efecto contra el bando Supervillano les pega a los
   Villains comunes de una etapa.
 - **Instinto de los 15 sin dato.** La regla de NamuWiki (humano o no, héroe o villano) da el instinto
@@ -533,7 +535,8 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
   puntos para elegir stats, que la app todavía no tiene.
 
 La ficha de Mephisto en coreano (영웅 정보, capturas del 4 de octubre de 2026: Master of Hell y, en el
-도감, la base) coincide con las skills de la API valor por valor, salvo lo que sigue, y agrega:
+도감, la base), con la de Young Apocalypse y el códice de artefactos, coincide con las skills de la API
+valor por valor, salvo lo que sigue, y agrega:
 
 - **El «Give Power» del liderazgo.** Lord of Hell da, al recibir un debuff, quitar todos los debuffs
   (12 s, recarga 20 s) a los Supervillanos: la app lo toma del juego (ver *Liderazgos que Leads &
@@ -550,10 +553,11 @@ La ficha de Mephisto en coreano (영웅 정보, capturas del 4 de octubre de 202
 - **Opciones de uniforme.** Con el uniforme en Mítico, la pantalla muestra todos los ataques y las
   defensas básicas +40%; la nota de la app, de la guía de thanosvibs, dice +2% por mejora (hallazgo
   `opciones-uniforme-mitico`). Falta que Ezequiel diga a qué se debe.
-- **Artefactos.** La ficha de cada artefacto trae dos opciones (옵션1: +250 a un instinto; 옵션2, al
-  azar) y que se compran en la tienda, que la app no tiene. Planet Eater, el de Galactus, es para los
-  integrantes con Poder Cósmico, no solo para él: el build corrige el texto de thanosvibs y la ficha lo
-  marca. El de Annihilus se recarga en 300 s (hallazgo `artefacto-annihilus-recarga`).
+- **Artefactos** (en el códice de artefactos, 아티팩트 도감). Cada uno trae dos opciones (옵션1: +250 a
+  un instinto; 옵션2, al azar) y se compra en la tienda, que la app no tiene. Planet Eater, el de
+  Galactus, es para los integrantes con Poder Cósmico, no solo para él: el build corrige el texto de
+  thanosvibs y la ficha de la app lo marca. El de Annihilus se recarga en 300 s (hallazgo
+  `artefacto-annihilus-recarga`).
 - **Rol recomendado.** La ficha trae «추천 역할» para jefes (보스전) y para PvP (대전), con íconos sin
   texto; el del águila es el que marca el liderazgo (probable). Los roles de la app son propios.
 - **Young Apocalypse.** La quemadura de Armageddon también baja todas las defensas básicas 10%, y la
@@ -830,8 +834,9 @@ Lo que todavía no está:
   [Combat](https://future-fight.fandom.com/wiki/Combat), [Blast](https://future-fight.fandom.com/wiki/Blast),
   [Speed](https://future-fight.fandom.com/wiki/Speed) y [Universal](https://future-fight.fandom.com/wiki/Universal).
 - El juego (capturas de Ezequiel, octubre de 2026): la guía (Type Affinity, Side, Instinct, los
-  glosarios de contenidos, de crecimiento, de ítems y de skills), la ficha de cada C.T.P. y las
-  pantallas de personaje y de equipo.
+  glosarios de contenidos, de crecimiento, de ítems y de skills), en inglés y en coreano; la ficha de
+  cada C.T.P., en los dos idiomas; las pantallas de personaje y de equipo, y la ficha de Mephisto en
+  coreano.
 - NamuWiki, en coreano: [World Boss](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4),
   [sus strikers](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4/%EC%8A%A4%ED%8A%B8%EB%9D%BC%EC%9D%B4%EC%BB%A4),
   [Legend](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4/%EB%A0%88%EC%A0%84%EB%93%9C),

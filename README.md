@@ -16,9 +16,11 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   (planilla de Google) — la **guía de armado** por personaje (pestaña CHAMP BUILDING) y la
   leyenda de los emojis de su tier list (pestaña TIER LIST).
 - MARVEL Future Fight, el juego (capturas de Ezequiel, octubre de 2026) — su glosario de skills,
-  en inglés y en coreano (qué hace cada efecto, en el catálogo), su guía de contenidos, de crecimiento y de ítems, la ficha de cada
-  C.T.P. (contrastada con thanosvibs en `docs/AUDITORIA.md`) y los bonos de equipo de los personajes
-  que la wiki todavía no tiene.
+  en inglés y en coreano (qué hace cada efecto, en el catálogo), su guía de contenidos, de crecimiento
+  y de ítems, en inglés y en coreano, la ficha de cada C.T.P. en los dos idiomas (contrastada con
+  thanosvibs en `docs/AUDITORIA.md`), la ficha de Mephisto y el códice de artefactos en coreano (el
+  «Give Power» del liderazgo de Mephisto — Master of Hell y a quiénes se aplica el artefacto de
+  Galactus) y los bonos de equipo de los personajes que la wiki todavía no tiene.
 - [NamuWiki](https://namu.wiki) (en coreano), páginas generales del juego — para qué sirve la
   habilidad de World Boss, World Boss Legend, la ventaja de tipo, el instinto y lo que se lleva en
   Timeline (ver `docs/MODELO.md`).
