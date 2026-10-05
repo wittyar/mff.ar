@@ -3,8 +3,8 @@
   {
    "id": "golpe",
    "titulo": {
-    "es": "«Basic attacks» donde el coreano dice «reacción al golpe»",
-    "en": "\"Basic attacks\" where the Korean says \"hit reaction\""
+    "es": "«Basic attacks»: según el coreano, la reacción al golpe (피격 모션)",
+    "en": "\"Basic attacks\": per the Korean, the hit reaction (피격 모션)"
    },
    "texto": {
     "es": "피격 모션 es la reacción al recibir un golpe: el personaje se frena y se le corta lo que estaba haciendo. El inglés lo traduce como «basic attacks» o «basic attack motions», que no tiene nada que ver con el stat de ataque básico. Con la traducción correcta todo cierra: la rotura de guardia corta la skill forzando esa reacción, la superarmadura es inmune a ella (y por eso a la rotura de guardia), y el contraataque reemplaza esa reacción, así que no se activa mientras es invencible.",
@@ -14,8 +14,8 @@
   {
    "id": "inmunes",
    "titulo": {
-    "es": "«Sin debuffs» donde el coreano dice «inmunes a los debuffs»",
-    "en": "\"Without debuffs\" where the Korean says \"immune to debuffs\""
+    "es": "«That have no debuffs»: según el coreano, los inmunes a los debuffs",
+    "en": "\"That have no debuffs\": per the Korean, those immune to debuffs"
    },
    "texto": {
     "es": "El coreano dice que estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima. En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.",
@@ -25,8 +25,8 @@
   {
    "id": "tipo",
    "titulo": {
-    "es": "«Type» donde el coreano dice «elemento»",
-    "en": "\"Type\" where the Korean says \"element\""
+    "es": "«Type»: según el coreano, el elemento (속성)",
+    "en": "\"Type\": per the Korean, the element (속성)"
    },
    "texto": {
     "es": "속성 es el elemento (fuego, frío, rayo, veneno, mente). El inglés lo traduce a veces como «Type», que en el juego también es la clase (Combate, Detonación, Velocidad, Universal). El daño puro no pasa por las resistencias elementales (el inglés dice «Type Resistance»), Type Amplification sube el daño de las skills con elemento, y la etiqueta «TYPE PENETRATION» de las skills atraviesa una resistencia elemental.",
@@ -67,7 +67,7 @@
     "en": "Dodge depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to dodge."
    },
    "difiere": {
-    "es": "El inglés dice que esquiva «a una tasa fija»; el coreano, que le suma un valor fijo a la evasión.",
+    "es": "El inglés dice que esquiva «at a set rate»; el coreano, que le suma un valor fijo a la evasión.",
     "en": "The English says it dodges \"at a set rate\"; the Korean, that it adds a fixed amount to dodge."
    },
    "efectos": [
@@ -88,7 +88,7 @@
     "en": "Critical rate depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to critical rate."
    },
    "difiere": {
-    "es": "El inglés dice que hace crítico «a una tasa fija»; el coreano, que le suma un valor fijo a la probabilidad de crítico.",
+    "es": "El inglés dice que hace crítico «at a set rate»; el coreano, que le suma un valor fijo a la probabilidad de crítico.",
     "en": "The English says it crits \"at a set rate\"; the Korean, that it adds a fixed amount to critical rate."
    },
    "efectos": [
@@ -190,7 +190,7 @@
     "en": "Stops damage for a set time and a set number of hits. It stops neither Guard Break nor debuffs."
    },
    "difiere": {
-    "es": "El inglés dice solo «por un tiempo» y que no frena la rotura de guardia; el coreano agrega la cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y que tampoco frena los debuffs.",
+    "es": "El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; el coreano agrega la cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y que tampoco frena los debuffs.",
     "en": "The English only says \"for a set amount of time\" and that it does not stop Guard Break; the Korean adds the number of hits (as skills count it: \"Barrier # time(s)\") and that it does not stop debuffs either."
    },
    "efectos": [
@@ -516,8 +516,8 @@
     "en": "When attacked, it has a chance to cut the foe's attack: higher if its Concentration is above the foe's, lower if below. Its own gauge charges when hit; after use, it does not charge for 5 s."
    },
    "difiere": {
-    "es": "간파 quiere decir «ver venir» (leer el ataque), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; el coreano, su ataque.",
-    "en": "간파 means \"seeing through\" (reading the attack), not piercing: it has nothing to do with Pierce or with the \"TYPE PENETRATION\" skill label. The English says it cancels the foe's skill; the Korean, its attack."
+    "es": "간파 quiere decir ver venir el ataque (leerlo), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; el coreano, su ataque.",
+    "en": "간파 means seeing through the attack (reading it), not piercing: it has nothing to do with Pierce or with the \"TYPE PENETRATION\" skill label. The English says it cancels the foe's skill; the Korean, its attack."
    },
    "efectos": [],
    "ctp": [
@@ -576,8 +576,8 @@
     "en": "On skill use, raises the attack of skills with an element and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "difiere": {
-    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; el coreano, 속성 증폭: amplificación de elemento. El C.T.P. Judgement reforjado dice en inglés que sube el daño de las skills «de tipo».",
-    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; the Korean, 속성 증폭: element amplification. The reforged Judgement C.T.P. says in English that it raises \"type skill\" damage."
+    "es": "El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; el coreano, 속성 증폭: amplificación de elemento. El C.T.P. Judgement reforjado dice en inglés «Increases additional type skill damage».",
+    "en": "The English menu says \"Type Amplification\" and the text \"Element Amplification\"; the Korean, 속성 증폭: element amplification. The reforged Judgement C.T.P. says in English \"Increases additional type skill damage\"."
    },
    "error": "tipo",
    "efectos": [],
