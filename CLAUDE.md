@@ -69,10 +69,12 @@ variante, en `docs/COMPLETITUD.md`.
   Galaxia) y la sección 11 de `docs/AUDITORIA.md` con las dos probabilidades de striker de más de
   100% (Daken: Doctor Octopus, 219%; Molecule Man: Morgan le Fay, 120%), contadas en el resumen.
   Después, verif_consistencia tiene que pasar con los datos del repo.
-- Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir (los
-  liderazgos que Leads & Supports no publica, si el soporte propio cuenta para su dueño y qué es
-  anti-mermas, y los recomendados de Modos contra la función en PvP y PvE). verif_consistencia las
-  tiene listadas.
+- Consistencia entre pantallas: quedan las preguntas de los liderazgos que Leads & Supports no publica
+  y de los recomendados de Modos contra la función en PvP y PvE (verif_consistencia las tiene
+  listadas como pendientes).
+- Anti-mermas propios con probabilidad: no cuentan (Hulkling). Ezequiel nombró a Captain America entre
+  los que tienen anti-mermas propio, pero en la API el suyo es de 50% o 60% al recibir un debuff, así
+  que hoy no cuenta. Falta que lo confirme (lista en «Equipos por contexto» de `docs/MODELO.md`).
 
 - Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
   - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e

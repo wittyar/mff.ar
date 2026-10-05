@@ -694,7 +694,7 @@ const T = {
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
   cx_nota:           { es:'Equipos para {c}, con las reglas de Ezequiel. Entran si alguno es DPS en {l}{req}. Cada compañero tiene vínculo con él o es DPS. Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma, por cada integrante al que le llega y le sirve, su peso ({stats}), y el {cond}% de eso si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); cada nivel de fila de cada DPS (3, 2 o 1{mejor}), {dps}; cada soporte que le llega a otro y le sirve, {sop}, y cada bono de equipo activo, {bono}. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
                        en:'Teams for {c}, with Ezequiel\'s rules. They make it if someone is a DPS in {l}{req}. Each teammate has a link with it or is a DPS. Score, with the value table: each stat of the leader\'s leadership adds its weight for each member it reaches and helps ({stats}), and {cond}% of that if the leadership activates on a condition (when debuffed, for example); each row level of each DPS (3, 2 or 1{mejor}), {dps}; each support that reaches and helps another, {sop}, and each active team bonus, {bono}. The trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
-  cx_req_anti:       { es:' y si los tres tienen anti-mermas ({a}), del liderazgo del líder o del soporte de alguno', en:' and all three have debuff removal ({a}), from the leader\'s leadership or someone\'s support' },
+  cx_req_anti:       { es:' y si los tres tienen anti-mermas ({a}): del liderazgo del líder, del soporte de alguno (también el propio) o de sus propias skills, sin contar los que tienen probabilidad', en:' and all three have debuff removal ({a}): from the leader\'s leadership, someone\'s support (its own too) or their own skills, not counting those with a probability' },
   cx_req_no:         { es:'; los anti-mermas no hacen falta', en:'; debuff removal is not required' },
   cx_o:              { es:' o ',                  en:' or ' },
   cx_mejor_lista:    { es:', el mejor de las listas', en:', the best of the lists' },
@@ -707,6 +707,8 @@ const T = {
   cx_anti:           { es:'Anti-mermas',         en:'Debuff removal' },
   cx_de_lid:         { es:'{x} (liderazgo)',     en:'{x} (leadership)' },
   cx_de_sop:         { es:'{x} (soporte)',       en:'{x} (support)' },
+  cx_de_propio:      { es:'{x} (propio: {s})',   en:'{x} (own: {s})' },
+  cx_prob:           { es:'{x}: anti-mermas propio de su {s} ({a}): tiene probabilidad, no cuenta', en:'{x}: own debuff removal from its {s} ({a}): it has a probability, so it does not count' },
   cx_lider:          { es:'Liderazgo de {x}',    en:'{x}\'s leadership' },
   cx_lider_nada:     { es:'Ningún liderazgo de los que valen en este contexto', en:'No leadership that counts in this context' },
   cx_lider_cond:     { es:'cuenta el {p}%',      en:'counts {p}%' },
@@ -987,7 +989,7 @@ const T = {
   ct_evasion:        { es:'Ignorar evasión',      en:'Ignore Dodge' },
   ct_defensas:       { es:'Todas las defensas',   en:'All Defenses' },
   ct_vida:           { es:'Vida',                 en:'HP' },
-  ct_mermas:         { es:'Quita todos los debuffs', en:'Removes All Debuffs' },
+  ct_mermas:         { es:'Anti-mermas',         en:'Debuff removal' },
   f_lid:             { es:'Su liderazgo da',      en:'Its leadership gives' },
   f_sop:             { es:'Su soporte da',        en:'Its support gives' },
   f_para:            { es:'Que le llegue y le sirva a', en:'Reaching and useful to' },
@@ -1004,8 +1006,8 @@ const T = {
   ls_also:           { es:'y, como a cualquiera:', en:'and, like anyone:' },
   ls_leaders:        { es:'Líderes que se lo dan', en:'Leaders that give it' },
   ls_supports:       { es:'Soportes que se lo dan', en:'Supports that give it' },
-  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos.',
-                       en:'Under each one, what it gets: its teammates\' supports and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points.' },
+  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y los suyos, sus anti-mermas propios (los de sus skills; uno con probabilidad no cuenta) y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos: en la sinergia, un soporte cuenta si le llega a otro.',
+                       en:'Under each one, what it gets: its teammates\' supports and its own, its own debuff removal (from its skills; one with a probability does not count) and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points: in the synergy, a support counts if it reaches another member.' },
   cb_ataque:         { es:'Ataque',               en:'Attack' },
   cb_art:            { es:'* Solo si el compañero que lo da lleva su artefacto.', en:'* Only if the teammate who gives it has its artifact.' },
   pt_art:            { es:'* Cuenta el soporte del artefacto de un integrante, como si lo llevara: vale solo si lo lleva.',
@@ -1471,7 +1473,7 @@ const CATEGORIAS = [
   { k: 'evasion',  s: ['Ignore Dodge'] },
   { k: 'defensas', s: ['All Basic Defenses', 'Super Armor, All Basic Defenses'] },
   { k: 'vida',     s: ['HP'] },
-  { k: 'mermas',   s: ['Remove All Debuffs'] },
+  { k: 'mermas',   s: [] },                           // los de anti-mermas de la tabla de valor (iniciarDatos)
 ];
 const CAT = Object.fromEntries(CATEGORIAS.map(c => [c.k, c]));
 const CAT_DE = {};                    // stat de thanosvibs -> categoría
@@ -1536,19 +1538,74 @@ function aporte (foco, a, esLider) {
   }
   return out;
 }
-/** Lo que le llega a `destino` de un integrante `a` del equipo y le sirve: los soportes de `a` (los
- *  de cada uno son para los demás) y, si `a` es el líder, su liderazgo (también si `a` es `destino`:
- *  el liderazgo es para todo el equipo). [{ de: a, k, x, fx: [los efectos que le sirven] }], en el
- *  orden de TIPOS_SOPORTE. De acá salen la cobertura de la tarjeta y su «Por qué» (porqueHtml). */
+/** Lo que le llega a `destino` de un integrante `a` del equipo y le sirve: los soportes de `a` (también
+ *  los suyos, si `a` es `destino`: el soporte propio cuenta para su dueño, Ezequiel, 4 de octubre de 2026),
+ *  si `a` es el líder su liderazgo (también si `a` es `destino`: el liderazgo es para todo el equipo) y, si
+ *  `a` es `destino`, sus anti-mermas propios que cuentan (los de sus skills, recibePropio()). [{ de: a, k, x,
+ *  fx: [los efectos que le sirven] }], en el orden de TIPOS_SOPORTE y los propios al final. De acá salen la
+ *  cobertura de la tarjeta y su «Por qué» (porqueHtml). En la sinergia, en cambio, un soporte cuenta solo si
+ *  le llega a otro integrante (synergy). */
 function recibe (destino, a, esLider) {
   const out = [], s = SOPORTES[a.p];
   if (s) for (const [k] of TIPOS_SOPORTE) {
     const x = s[k];
-    if (!x || !(LIDERAZGOS.includes(k) ? esLider : a !== destino) || !aplicaA(x, destino)) continue;
+    if (!x || (LIDERAZGOS.includes(k) && !esLider) || !aplicaA(x, destino)) continue;
     const fx = x.fx.filter(f => sirve(f, destino));
     if (fx.length) out.push({ de: a, k, x, fx });
   }
-  return out;
+  return a === destino ? out.concat(recibePropio(a)) : out;
+}
+// ANTI-MERMAS PROPIOS (Ezequiel, 4 de octubre de 2026). Lo que las skills de un personaje le dan a él mismo
+// cuenta como anti-mermas para su dueño (Knull: su pasiva de Tier-2, al recibir un debuff), aunque Leads &
+// Supports no lo publique, porque no es para el equipo. Uno que se activa con una probabilidad (Hulkling: 25% al
+// recibir un golpe) no cubre: se muestra con su probabilidad y se dice que no cuenta. Salen del análisis
+// (MFF_ANALISIS): los efectos de los stats de anti-mermas de la tabla de valor, según el catálogo, que van a él
+// (destino «e»), de sus pasivas (no de las activas ni de la Striker).
+/** Efecto del catálogo (índice) -> el stat de anti-mermas que le corresponde. Lo arma iniciarDatos(). */
+let STAT_ANTI;
+const _ANTI_PROPIO = new Map();
+/** Los anti-mermas propios de v: { cuenta: [...], prob: [...] }, cada uno { sk, st, s, p }: la skill, la etapa,
+ *  el stat de anti-mermas y la probabilidad de su activación (null si no tiene; solo en prob). Uno por etapa. */
+function antiPropio (v) {
+  let r = _ANTI_PROPIO.get(v.p);
+  if (r) return r;
+  r = { cuenta: [], prob: [] };
+  const an = ANALISIS[v.p], vistas = new Set();
+  if (an) for (const [ie, d, , fuentes] of an.fx) {
+    if (d !== 'e' || !STAT_ANTI.has(ie)) continue;
+    for (const [si, ti] of fuentes) {
+      const sk = v.skills[si];
+      if (/^Active/.test(sk.sl) || sk.sl === 'Striker Skill' || vistas.has(si + '|' + ti)) continue;
+      vistas.add(si + '|' + ti);
+      const st = sk.st[ti], p = probabilidad(st);
+      (p == null ? r.cuenta : r.prob).push({ sk, st, s: STAT_ANTI.get(ie), p });
+    }
+  }
+  if (v.p) _ANTI_PROPIO.set(v.p, r);
+  return r;
+}
+/** La probabilidad de la activación de una etapa («25% al recibir un golpe»: 25), o null si no tiene (o es 100%). */
+function probabilidad (st) {
+  const a = st.ac != null ? fila('act', st.ac) : null;
+  if (!a || !/^\{?#\}?%/.test(a.en)) return null;
+  const p = (st.av || [])[0];
+  if (typeof p !== 'number') throw new Error('activación con probabilidad sin el número: ' + a.en);
+  return p >= 100 ? null : p;
+}
+/** La activación de una etapa, en el idioma activo («al recibir un debuff»), o «sin condición». */
+function activacionTxt (st) { return st.ac != null ? txt('act', st.ac, st.av) : t('tt_sin_cond'); }
+/** Los anti-mermas propios de v que cuentan, como lo de recibe(): { de: v, k: 'propio', x, fx }, con la skill
+ *  (x.sk) y su activación (x.ac, ya en el idioma activo). */
+function recibePropio (v) {
+  return antiPropio(v).cuenta.map(({ sk, st, s }) => {
+    const x = { sk, ac: st.ac != null ? txt('act', st.ac, st.av) : null, fx: [{ s }] };
+    return { de: v, k: 'propio', x, fx: x.fx };
+  });
+}
+/** Los anti-mermas propios de los integrantes que no cuentan, por tener probabilidad: un renglón por cada uno. */
+function antiProbHtml (vs, nombre) {
+  return vs.flatMap(m => antiPropio(m).prob.map(x => h(t('cx_prob')).replace('{x}', () => nombreHtml(m, nombre))
+    .replace('{s}', () => h(slotEs(x.sk.sl))).replace('{a}', () => h(activacionTxt(x.st)))));
 }
 /** Personajes a los que alcanza una restricción, con las variantes que la cumplen: cuenta
  *  el uniforme puesto, que puede cambiar la clase, el bando, la raza y las habilidades. */
@@ -2951,7 +3008,7 @@ function anclaSkill (sl) { return 'sk-' + slugId(sl); }
 /** Enlace a la skill (o al artefacto) que da un soporte o un liderazgo, en la ficha de quien lo da, con
  *  su uniforme: la abre en la pestaña donde se ve, la lleva a la vista y la resalta. */
 function enlaceSkill ({ de, k, x }) {
-  const rotulo = t(CLAVE_SOPORTE[k]), sinSkill = `<span title="${h(t('pq_sin_skill'))}">${h(rotulo)}</span>`;
+  const rotulo = k === 'propio' ? slotEs(x.sk.sl) : t(CLAVE_SOPORTE[k]), sinSkill = `<span title="${h(t('pq_sin_skill'))}">${h(rotulo)}</span>`;
   let tab, ancla, txt = rotulo, extra = '', titulo = t('pq_ver').replace('{x}', fullLabel(de));
   if (k === 'artifact') {
     const art = ARTES.find(y => y.p === de.ch.p);
@@ -2959,7 +3016,7 @@ function enlaceSkill ({ de, k, x }) {
     tab = 'armado'; ancla = 'artefacto'; txt = art.name; titulo += ': ' + art.name + ' · ' + art.pasiva;
     extra = x.est ? ` <span class="muted">(${h(t('sp_est').replace('{n}', x.est))})</span>` : '';
   } else {
-    const sk = skillDeSoporte(de, k, x);
+    const sk = k === 'propio' ? x.sk : skillDeSoporte(de, k, x);
     if (!sk) return sinSkill;
     const f = fila('name', sk.n);
     tab = 'skills'; ancla = anclaSkill(sk.sl); titulo += ': ' + slotEs(sk.sl) + (f ? ' · ' + f.en : '');
@@ -3050,7 +3107,8 @@ function porqueHtml (id, foco, vs, lider, demas, pierde, antes) {
             !o.art && o.de === lider ? ` <span class="muted">(${h(t('pq_lider'))})</span>` : ''}</div>
           <ul class="pqlista">${o.skills.map(r => `<li>${enlaceSkill(r)}<ul>${r.fx.map(f => `<li>${efectoSoporteHtml(r.x, f)}</li>`).join('')}</ul></li>`).join('')}</ul>
         </div>`).join('')}</details>`
-      : `<p class="muted">${h(t('pq_nada'))}</p>`}</div>
+      : `<p class="muted">${h(t('pq_nada'))}</p>`}
+      ${antiProbHtml([foco], nombre).map(x => `<p class="muted pqprob">${x}</p>`).join('')}</div>
     ${ademas.length ? `<div class="pqsec"><div class="pqh">${h(t('pq_ademas'))}</div><ul class="pqlista">${ademas.join('')}</ul></div>` : ''}
     ${menos.length ? `<div class="pqsec pqmenos"><div class="pqh">${h(t('pq_pierde'))}</div><ul class="pqlista">${menos.join('')}</ul></div>` : ''}
   </div></details>`;
@@ -3329,11 +3387,14 @@ function liderContexto (vs, ctx, sl, roles, cubreSop) {
   }
   return { li, pts: ptsLider };
 }
+/** Quiénes del equipo tienen anti-mermas sin el liderazgo del líder: de un soporte de alguno (también el propio)
+ *  o de sus propias skills (antiPropio; los que tienen probabilidad no cuentan). sl: los slotsDe de cada uno. */
+function cubiertos (vs, sl) { return vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m))) || antiPropio(m).cuenta.length > 0); }
 /** El líder de un equipo en un contexto (null, 'pvp' o 'pve'); null si no lo tiene. */
 function liderDe (vs, ctx) {
   if (!ctx) return liderSinContexto(vs);
   const sl = vs.map(slotsDe);
-  const { li } = liderContexto(vs, ctx, sl, vs.map(x => rolEn(x, ctx)), vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m)))));
+  const { li } = liderContexto(vs, ctx, sl, vs.map(x => rolEn(x, ctx)), cubiertos(vs, sl));
   return li < 0 ? null : vs[li];
 }
 /** Un equipo con su líder primero (a la izquierda, como en el juego) y los demás en su orden. */
@@ -3346,7 +3407,7 @@ function enContexto (vs, ctx, detalle) {
   const roles = vs.map(x => rolEn(x, ctx));
   if (!roles.some(r => r.dps)) return null;
   const sl = vs.map(slotsDe);
-  const cubreSop = vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m))));
+  const cubreSop = cubiertos(vs, sl);
   const { li, pts: ptsLider } = liderContexto(vs, ctx, sl, roles, cubreSop);
   if (li < 0) return null;
   const C = CONTEXTO[ctx];
@@ -3543,13 +3604,16 @@ function detalleContexto (e, vs, ctx) {
   const partes = [], C = CONTEXTO[ctx];   // [rótulo (HTML), puntos o null, [viñetas (HTML)], plegadas, con el «*» de un artefacto]
   if (C.requisito === 'anti_mermas') {
     const fuentes = new Map();
+    // De cada uno, de dónde sale: un soporte (también el suyo), sus propias skills o el liderazgo del líder.
     vs.forEach(m => {
-      const de = vs.find((x, k) => e.sl[k].antiSop.some(y => aplicaA(y, m)));
-      const k = (de ? 'cx_de_sop|' : 'cx_de_lid|') + (de || e.lider).key;
-      if (!fuentes.has(k)) fuentes.set(k, { de: de || e.lider, clave: de ? 'cx_de_sop' : 'cx_de_lid', ms: [] });
+      const de = vs.find((x, k) => e.sl[k].antiSop.some(y => aplicaA(y, m))), propio = !de && antiPropio(m).cuenta[0];
+      const clave = de ? 'cx_de_sop' : propio ? 'cx_de_propio' : 'cx_de_lid', quienDa = de || (propio ? m : e.lider);
+      const k = clave + '|' + quienDa.key;
+      if (!fuentes.has(k)) fuentes.set(k, { de: quienDa, clave, propio, ms: [] });
       fuentes.get(k).ms.push(m);
     });
-    partes.push([h(t('cx_anti')), null, [...fuentes.values()].map(f => `${h(t(f.clave)).replace('{x}', () => quien(f.de))} → ${a(f.ms)}`)]);
+    partes.push([h(t('cx_anti')), null, [...fuentes.values()].map(f => `${h(t(f.clave)).replace('{x}', () => quien(f.de))
+      .replace('{s}', () => h(slotEs(f.propio.sk.sl)))} → ${a(f.ms)}`).concat(antiProbHtml(vs, nombre))]);
   }
   // Por stat que vale y activación: sus líneas (un liderazgo puede traer varias del mismo stat; cada una
   // con efectoSoporteTxt, que ya dice la activación), a quiénes llega y cuánto suma (su peso por cada uno). Las
@@ -5583,6 +5647,15 @@ function iniciarDatos () {
   PIDE = {};
   for (const [stat, x] of Object.entries(CATALOGO.soporte)) { const q = reglaStat(stat, x.sirve); if (q) PIDE[stat] = q; }
   ANTI_MERMAS = new Set(VALOR.anti_mermas);
+  for (const st of VALOR.anti_mermas) {
+    if (CAT_DE[st]) throw new Error('stat de anti-mermas que ya está en otra categoría: ' + st);
+    CAT.mermas.s.push(st); CAT_DE[st] = 'mermas';
+  }
+  STAT_ANTI = new Map();
+  for (const st of VALOR.anti_mermas) for (const id of CATALOGO.soporte[st].efectos) {
+    const ie = CATALOGO.efectos.findIndex(e => e.id === id);
+    if (!STAT_ANTI.has(ie)) STAT_ANTI.set(ie, st);
+  }
   CONTEXTO = {};
   for (const ctx of ['pvp', 'pve']) {
     const c = VALOR.contextos[ctx];

@@ -98,7 +98,7 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     si lo llevara llevan «*», como las casillas, y el lugar de cada uno en la lista del orden, «+N»
     si está en más de una fila. Se
     filtran con «Con» y «Sin», y con casillas por cobertura (ataque, ignorar evasión, todas las
-    defensas, vida y quita todos los debuffs: de cada pareja queda la mejor combinación de uniformes
+    defensas, vida y anti-mermas: de cada pareja queda la mejor combinación de uniformes
     que las cumple todas). Cada una dice su **líder** (uno solo por trío, el mismo desde la lista de
     cualquiera de los tres: el que más suma con su liderazgo; a igual puntaje, el mejor ubicado en
     las tier lists del contexto o, sin contexto, en la General), que va primero entre los retratos,
@@ -244,7 +244,7 @@ las que se arman los equipos:
 | Ignorar evasión | Ignore Dodge | cualquiera |
 | Todas las defensas | All Basic Defenses, Super Armor + All Basic Defenses | cualquiera |
 | Vida | HP | cualquiera |
-| Quita todos los debuffs | Remove All Debuffs | cualquiera |
+| Anti-mermas | Remove All Debuffs, Debuff Immunity (los de la tabla de valor) | cualquiera |
 
 «Le sirve» es la misma regla de la sinergia: la de cada stat en el catálogo de efectos (la muestra el
 Glosario), según el daño de sus skills activas (con qué ataque escala y qué elementos lleva). Se usa
@@ -256,9 +256,13 @@ en tres lugares:
   personaje: cuenta solo lo que le llega (la restricción del liderazgo o soporte) y le sirve.
   Cada tarjeta dice qué encontró.
 - **Combinaciones de 3**: lo que recibe el personaje en cada equipo: los soportes de sus
-  compañeros y el liderazgo del líder elegido, también si el líder es él, en cinco grupos
-  (ataque, ignorar evasión, defensas, vida, quita debuffs), con * si solo llega con el artefacto
-  del compañero.
+  compañeros y los suyos, sus anti-mermas propios y el liderazgo del líder elegido, también si el
+  líder es él, en cinco grupos (ataque, ignorar evasión, defensas, vida, anti-mermas), con * si
+  solo llega con el artefacto del compañero. Lo propio cuenta para su dueño (Ezequiel, 4 de
+  octubre de 2026): su soporte, si le aplica, y lo que sus skills le dan a él mismo contra los
+  debuffs (la pasiva de Tier-2 de Knull); uno que se activa con una probabilidad (Hulkling, 25% al
+  recibir un golpe) no cuenta, y el «Por qué» y el detalle de PvP lo dicen. En la sinergia, un
+  soporte suma solo si le llega a otro integrante.
 
 No cambia los puntos de la sinergia. Lo que no está en ninguna categoría (velocidad, crítico,
 daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.

@@ -441,7 +441,8 @@ Dudas:
 Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
 
 - **PvP:** los tres tienen que tener anti-mermas (quitar todos los debuffs), del liderazgo del
-  líder o del soporte de alguno; un equipo de PvP sin anti-mermas es un mal equipo. Si viene de un
+  líder, del soporte de alguno o propio (4 de octubre de 2026: «hay muy pocos casos... Knull,
+  Captain America, alguno más»); un equipo de PvP sin anti-mermas es un mal equipo. Si viene de un
   soporte, el lugar de líder queda para otro liderazgo. En PvE no hace falta.
 - **Liderazgos:** los más útiles en general son todos los ataques, PG (vida) e ignorar esquiva; en
   PvP, también todas las defensas: Thanos — Annihilation es el mejor líder por todo lo que suma
@@ -505,6 +506,20 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
 - Un trío entra si alguno es DPS de ese contexto y cumple el requisito de la tabla: en PvP, que con
   algún líder los tres tengan anti-mermas. Cada compañero tiene vínculo con él o es DPS de ese
   contexto.
+- Anti-mermas (Ezequiel, 4 de octubre de 2026): son los stats de la tabla de valor (Remove All
+  Debuffs y Debuff Immunity), los mismos en el filtro de PvP, su detalle, la casilla de las
+  combinaciones y el índice. A cada uno se los da el liderazgo del líder, un soporte de alguno o
+  algo propio: su soporte, si le aplica, o sus skills, lo que le dan a él mismo (el análisis: los
+  efectos de esos stats con destino «él», de sus pasivas). Con los datos actuales, 31 variantes los
+  tienen de sus skills (Knull, por su pasiva de Tier-2, al recibir un debuff), y Leads & Supports no
+  los publica porque no son para el equipo. Uno que se activa con una probabilidad no cubre: el
+  detalle y el «Por qué» lo muestran con su probabilidad y dicen que no cuenta. Son 19 variantes:
+  Captain America (la base y 13 uniformes; 50% al recibir un debuff, o 60% en Back to Basics, Enter the
+  Phoenix, Hydra Supreme y What If... Zombies?!), Hulkling (25% al recibir un golpe), Dormammu y
+  Dormammu — Damnation (25% al atacar), Karnak — All-New, All-Different (35% al recibir un debuff) y
+  Baron Mordo — Doctor Strange 2 (80% al recibir un golpe). Lo propio cuenta para su dueño también
+  en lo que le llega (la casilla y el «Por qué»), pero no en la sinergia: ahí un soporte suma solo
+  si le llega a otro integrante.
 - Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma su peso por cada
   integrante al que le llega y le sirve (cada stat una vez, aunque el liderazgo lo traiga en varias
   líneas; la parte del condicional si solo le llega por un liderazgo que se activa con una condición,
