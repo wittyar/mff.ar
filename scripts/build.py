@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """Reconstruye data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md,
-docs/CATALOGO.md y docs/COMPLETITUD.md desde work/. Correr tras fetch_all.py y parse_instinto.py.
+docs/CATALOGO.md, docs/COMPLETITUD.md y docs/HISTORICO.md desde work/ y fuentes/foro/. Correr tras fetch_all.py,
+parse_instinto.py y foro.py.
 
 Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
 catalogo.py (valida el catálogo de efectos contra los datos; docs/CATALOGO.md),
 auditar.py (work/verificacion.json y docs/AUDITORIA.md) y _core.py (personajes y tier
-lists, work/build2.json); acá se junta todo en data.js. Al final, completitud.py lee el
+lists, work/build2.json); acá se junta todo en data.js, con el histórico de los personajes (historico.py, con
+las notas del foro de fuentes/foro/; lo que no cierra, en docs/HISTORICO.md). Al final, completitud.py lee el
 data.js y el datos.json recién escritos y dice qué le falta a cada variante
 (docs/COMPLETITUD.md).
 
@@ -92,6 +94,11 @@ for c in FUENTES['ctps']:
 for a in FUENTES['artefactos']:
     images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
 from version_juego import ultima
+import historico
+HISTORICO, _historico_md = historico.armar(chars, json.load(open('work/updates.json', encoding='utf-8')),
+                                           os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'))
+with open('docs/HISTORICO.md', 'w', encoding='utf-8', newline='\n') as _f:
+    _f.write(_historico_md)
 hoy = datetime.date.today()
 gv = ultima(json.load(open('work/updates.json')), hoy)[1]
 # Las habilidades de todas las variantes (un uniforme puede traer otras que su base: Zombi, Guardianes de la
@@ -146,7 +153,10 @@ hoy = hoy.isoformat()
 # 9: todos los uniformes traen la versión del juego en que salieron (up.update), de /api/updates de thanosvibs; /api/uniforms
 #    no se la trae a todos (Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi). La app de formato 9 la necesita
 #    para «Solo el último uniforme» y ya no tiene la regla de los uniformes sin versión.
-FORMATO = 9
+# 10: el histórico de los personajes (MFF_HISTORICO, scripts/historico.py): las versiones del juego con su nombre y fecha,
+#     las notas del foro oficial de cada una y lo que llegó o cambió de cada personaje, con su nota. La app de formato 10
+#     tiene la pestaña Histórico y el bloque «Historial» de la ficha.
+FORMATO = 10
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -217,6 +227,8 @@ parts = [header,
  'window.MFF_GUIA_ARMADO = ' + json.dumps(FUENTES['armado'], ensure_ascii=False) + ';\n',
  '// Traducciones de los textos de esas fuentes: inglés -> español (lo que falta viaja en inglés).\n',
  'window.MFF_TXT = ' + json.dumps(FUENTES['txt'], ensure_ascii=False) + ';\n',
+ '// Histórico de los personajes (scripts/historico.py; lo que no cierra entre thanosvibs y el foro, en docs/HISTORICO.md).\n',
+ 'window.MFF_HISTORICO = ' + json.dumps(HISTORICO, ensure_ascii=False, separators=(',', ':')) + ';\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
  'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',
  'window.MFF_DEFAULT_TIER_ROWS = ' + json.dumps(DEFAULT_ROWS, ensure_ascii=False) + ';\n',

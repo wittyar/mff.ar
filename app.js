@@ -455,6 +455,28 @@ const T = {
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
   nav_glossary:      { es:'Glosario',            en:'Glossary' },
+  nav_history:       { es:'Histórico',           en:'History' },
+  hi_title:          { es:'Histórico de los personajes', en:'Character history' },
+  hi_note:           { es:'Qué llegó en cada versión del juego (personajes, uniformes, Tier-3, Potencial Trascendido y Tier-4, según thanosvibs) y lo que dicen de cada personaje las notas de actualización del foro oficial, con el link a cada nota. El texto de las notas va como lo publica el foro, en inglés.',
+                       en:'What came in each game version (characters, uniforms, Tier-3, Potential Transcendence and Tier-4, per thanosvibs) and what the official forum update notes say about each character, with the link to each note.' },
+  hi_pj:             { es:'Personaje',           en:'Character' },
+  hi_pj_todos:       { es:'Todos',               en:'All' },
+  hi_t_todos:        { es:'Todo',                en:'All' },
+  hi_t_personaje:    { es:'Personaje nuevo',     en:'New character' },
+  hi_t_uniforme:     { es:'Uniforme',            en:'Uniform' },
+  hi_t_t3:           { es:'Tier-3',              en:'Tier-3' },
+  hi_t_tp:           { es:'Potencial Trascendido', en:'Potential Transcendence' },
+  hi_t_t4:           { es:'Tier-4',              en:'Tier-4' },
+  hi_t_balance:      { es:'Skills y balance',    en:'Skills and balance' },
+  hi_sin_nota:       { es:'La nota de esta versión no lo nombra (o la versión no tiene nota): ver docs/HISTORICO.md.',
+                       en:'This version\'s note does not name it (or the version has no note): see docs/HISTORICO.md.' },
+  hi_nota_sin_v:     { es:'Nota sin versión de thanosvibs a {d} días o menos', en:'Note with no thanosvibs version within {d} days' },
+  hi_nota_err:       { es:'el foro no deja leerla',  en:'the forum does not let it be read' },
+  hi_vacio:          { es:'Nada con estos filtros.', en:'Nothing with these filters.' },
+  hi_mas:            { es:'Más versiones',       en:'More versions' },
+  hi_cuenta:         { es:'{n} versiones con algo', en:'{n} versions with something' },
+  hi_ficha:          { es:'Historial',           en:'History' },
+  hi_ficha_ver:      { es:'Ver en el Histórico', en:'See in History' },
   gl_title:          { es:'Glosario',            en:'Glossary' },
   gl_note:           { es:'Qué hace cada efecto. Arriba, el glosario de skills del juego: el coreano es el original y, donde el inglés no dice lo mismo, se aclara. Abajo, todos los efectos que la app reconoce en las skills y en Leads & Supports, con cómo se leen en PvE y en PvP.',
                        en:'What each effect does. First, the in-game skill glossary: the Korean is the original and, where the English says something else, it is pointed out. Then, every effect the app recognizes in skills and in Leads & Supports, with how it reads in PvE and PvP.' },
@@ -1370,6 +1392,7 @@ let ui = {
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
+  hiPj: '', hiTipo: 'todos', hiN: 20, // Histórico: personaje, tipo de hecho y cuántas versiones se ven
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
@@ -4448,6 +4471,7 @@ function combinacionesHtml (v) {
 /** El resto: verificación entre fuentes y el retrato propio. */
 function fichaMas (ch, v) {
   return `<div class="section" id="verif"><h3>${h(t('vf_title'))}</h3><div class="bloque">${usoVerificacion(ch, v)}</div></div>
+  ${historialFicha(ch)}
   <div class="section"><h3>${h(t('d_portraits'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('d_portraits_note'))}</p>
     <div class="row">
@@ -4463,6 +4487,79 @@ function irA (id) {
   if (!cab || !cuerpo) return;
   const destino = cuerpo.getBoundingClientRect().top + scrollY - document.querySelector('nav.topnav').offsetHeight - cab.offsetHeight - 14;
   if (scrollY > destino) window.scrollTo({ top: destino, behavior: 'instant' });
+}
+
+// ============================================================================
+// HISTÓRICO (Ezequiel, 5 de octubre de 2026: «una pestaña de histórico... cada cambio con el link a su nota»; por ahora,
+// solo los personajes). Lo arma scripts/historico.py (MFF_HISTORICO, datos de formato 10): las versiones del juego con su
+// nombre y fecha (thanosvibs), las notas del foro oficial que van a cada una y los hechos: [clave, tipo, versión, nota,
+// líneas de la nota en inglés, fecha si es una nota sin versión]. La clave de una llegada es la de la variante
+// (cid::base o cid::uniforme); la de un hecho de balance, la del personaje (las notas no dicen el uniforme). Lo que no
+// cierra entre las dos fuentes, en docs/HISTORICO.md.
+// ============================================================================
+const HISTORICO = window.MFF_HISTORICO;
+const HI_TIPOS = ['personaje', 'uniforme', 't3', 'tp', 't4', 'balance'];
+/** El personaje de un hecho. */
+function cidHecho (x) { return x[0].split('::')[0]; }
+/** Para qué variante o personaje es un hecho: su nombre, y el botón que abre su ficha. */
+function hechoQuien (x) {
+  const [cid, uid] = x[0].split('::');
+  const v = variant(cid, uid || null);
+  if (!v) throw new Error('el histórico nombra una variante que no está en el roster: ' + x[0]);
+  const nom = uid ? fullLabel(v) : v.name;
+  return `<button class="objlink" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}">${h(nom)}</button>`;
+}
+function notaLink (id) {
+  const n = HISTORICO.notas[id];
+  if (!n) throw new Error('el histórico cita una nota que no está en MFF_HISTORICO.notas: ' + id);
+  return `<a href="${h(n[2])}" target="_blank" rel="noopener">${h(n[0].trim())}</a> <span class="muted">(${h(n[1])}${n[3] ? ', ' + h(t('hi_nota_err')) : ''})</span>`;
+}
+function hechoHtml (x, conQuien) {
+  return `<li class="hihecho"><span class="tag dim">${h(t('hi_t_' + x[1]))}</span> ${conQuien ? hechoQuien(x) : ''}
+    ${x[3] != null ? `<div class="hinota">${notaLink(x[3])}</div>` : (x[1] !== 'balance' ? `<div class="muted">${h(t('hi_sin_nota'))}</div>` : '')}
+    ${x[4].length > 1 ? `<details><summary class="muted">${h(x[4][0])}</summary><ul class="hitexto" lang="en">${x[4].slice(1).map(l => `<li>${h(l)}</li>`).join('')}</ul></details>`
+      : x[4].length ? `<div class="muted hitexto1" lang="en">${h(x[4][0])}</div>` : ''}</li>`;
+}
+/** Los grupos del histórico, del más nuevo al más viejo: una versión (con sus notas) o una nota sin versión, con sus
+ *  hechos filtrados. */
+function gruposHistorico (filtro) {
+  const porV = new Map(), sinV = new Map();
+  for (const x of HISTORICO.hechos) {
+    if (!filtro(x)) continue;
+    if (x[2] != null) { if (!porV.has(x[2])) porV.set(x[2], []); porV.get(x[2]).push(x); }
+    else { if (!sinV.has(x[3])) sinV.set(x[3], []); sinV.get(x[3]).push(x); }
+  }
+  const out = HISTORICO.versiones.filter(v => porV.has(v[0])).map(v => ({ fecha: v[2], v, hechos: porV.get(v[0]) }));
+  for (const [id, hs] of sinV) out.push({ fecha: HISTORICO.notas[id][1], nota: id, hechos: hs });
+  return out.sort((a, b) => a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0);
+}
+function grupoHistoricoHtml (g, conQuien) {
+  const orden = (x) => HI_TIPOS.indexOf(x[1]);
+  const cab = g.v
+    ? `<b>${h(g.v[0])}</b> · ${h(g.v[1])} · <span class="muted">${h(g.v[2])}</span>${g.v[3].length ? '<div class="hinotas">' + g.v[3].map(notaLink).join('<br>') + '</div>' : ''}`
+    : `<span class="muted">${h(t('hi_nota_sin_v').replace('{d}', HISTORICO.ventana))}</span><div class="hinotas">${notaLink(g.nota)}</div>`;
+  return `<div class="hiversion"><div class="hicab">${cab}</div>
+    <ul class="hihechos">${g.hechos.slice().sort((a, b) => orden(a) - orden(b)).map(x => hechoHtml(x, conQuien)).join('')}</ul></div>`;
+}
+function renderHistorico () {
+  const pj = ui.hiPj, tipo = ui.hiTipo;
+  const grupos = gruposHistorico(x => (!pj || cidHecho(x) === pj) && (tipo === 'todos' || x[1] === tipo));
+  const personajes = CHARS.slice().sort((a, b) => a.name.localeCompare(b.name));
+  return `<div class="page-head"><div><h1>${h(t('hi_title'))}</h1><div class="sub">${h(t('hi_note'))}</div></div></div>
+    <div class="row" style="gap:10px;margin-bottom:12px;flex-wrap:wrap">
+      <label>${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}${personajes.map(c => opcionHtml(c.id, c.name, pj)).join('')}</select></label>
+      <div class="seg">${['todos'].concat(HI_TIPOS).map(k => `<button class="${tipo === k ? 'on' : ''}" data-a="hiTipo" data-v="${k}">${h(t(k === 'todos' ? 'hi_t_todos' : 'hi_t_' + k))}</button>`).join('')}</div>
+    </div>
+    <p class="muted">${h(t('hi_cuenta').replace('{n}', grupos.length))}</p>
+    ${grupos.length ? grupos.slice(0, ui.hiN).map(g => grupoHistoricoHtml(g, true)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
+    ${grupos.length > ui.hiN ? `<button class="btn" data-a="hiMas">${h(t('hi_mas'))}</button>` : ''}`;
+}
+/** El bloque «Historial» de la ficha: lo del personaje, de lo más nuevo a lo más viejo, con el link al Histórico. */
+function historialFicha (ch) {
+  const grupos = gruposHistorico(x => cidHecho(x) === ch.id);
+  return `<div class="section" id="historial"><h3>${h(t('hi_ficha'))}</h3>
+    ${grupos.length ? grupos.map(g => grupoHistoricoHtml(g, true)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
+    <p><button class="btn sm" data-a="goHistorico" data-cid="${ch.id}">${h(t('hi_ficha_ver'))}</button></p></div>`;
 }
 
 // ============================================================================
@@ -5893,6 +5990,7 @@ function renderNav () {
     ${link('modos','nav_modes','goModos')}
     ${link('teams','nav_teams','goTeams')}
     ${link('glosario','nav_glossary','goGlosario')}
+    ${link('historico','nav_history','goHistorico')}
     <span class="navspace"></span>
     <div class="navtools">
       <button class="langbtn" data-a="lang" title="${h(t('lang_title'))}">
@@ -5917,6 +6015,7 @@ function render () {
     case 'modos':    body = renderModos(); break;
     case 'teams':    body = renderTeams(); break;
     case 'glosario': body = renderGlosario(); break;
+    case 'historico': body = renderHistorico(); break;
     case 'editor':   body = renderEditor(); break;
     case 'settings': body = renderSettings(); break;
     default:         body = renderRoster();
@@ -6082,6 +6181,9 @@ document.addEventListener('click', (e) => {
     case 'goTier': ui.view = 'tierlist'; render(); break;
     case 'goModos': ui.view = 'modos'; render(); break;
     case 'goGlosario': ui.view = 'glosario'; ui.focusSearch = false; render(); break;
+    case 'goHistorico': ui.view = 'historico'; ui.hiPj = d.cid || ''; ui.hiN = 20; render(); window.scrollTo(0, 0); break;
+    case 'hiTipo': ui.hiTipo = d.v; ui.hiN = 20; render(); break;
+    case 'hiMas': ui.hiN += 20; render(); break;
     case 'irGlos': {
       // Si la búsqueda deja afuera el destino, se vacía para que aparezca (sin volver a poner el
       // foco en la búsqueda: en el celular abriría el teclado).
@@ -6266,6 +6368,7 @@ document.addEventListener('change', (e) => {
   if (a === 'uniformSel') { ui.uniformId = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'eqOrden') { ui.eqOrden = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
+  if (a === 'hiPj') { ui.hiPj = el.value; ui.hiN = 20; render(); return; }
   if (a === 'eqExcluir') { if (el.value) ui.eqExcluir = ui.eqExcluir.concat(el.value); ui.eqPagina = 0; render(); return; }
   if (a === 'eqCobertura') { ui.eqCobertura = COBERTURA.map(g => g.k).filter(k => k === d.g ? el.checked : ui.eqCobertura.includes(k));
     ui.eqPagina = 0; render(); return; }

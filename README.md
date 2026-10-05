@@ -163,6 +163,14 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   grupo, con sus lecturas de PvE y de PvP, a quién le sirven (en las skills y, si no es lo mismo,
   como liderazgo, soporte o bono de equipo), si se suman o cuentan una vez cuando a alguien le llegan
   de dos fuentes, su tope en la guía y con qué etiquetas aparecen en las skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
+- **Histórico**: qué llegó de cada personaje en cada versión del juego, de la más nueva a la más
+  vieja: el personaje, sus uniformes, su Tier-3, su Potencial Trascendido y su Tier-4 (según
+  `/api/updates` de thanosvibs, con el nombre y la fecha de cada versión), y lo que dicen de él las
+  notas de actualización del foro oficial en sus secciones de skills y de balance, con el link a cada
+  nota y el texto como lo publica el foro, en inglés. Se filtra por personaje y por tipo. En la
+  ficha, pestaña *Más*, el bloque «Historial» muestra lo del personaje. Lo que no cierra entre las
+  dos fuentes (una llegada que la nota no nombra, una versión sin nota, una nota sin versión) va a
+  `docs/HISTORICO.md`. Por ahora solo los personajes; los modos de juego vendrán después.
 
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.
@@ -503,6 +511,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   (el perfil de combate), `bonos.py` los bonos de equipo (de la wiki y de lo que se vio en el
   juego) y `liderazgos.py` los liderazgos que Leads & Supports no publica, desde la Leader Skill.
 - `fuentes/guia-armado/` — la copia en uso de la guía de armado y su estado.
+- `fuentes/foro/` — las notas de actualización del foro oficial (las baja `scripts/foro.py`, de a una
+  cada 6 s; el workflow de datos baja las nuevas).
 - `scripts/traducciones/` — las tablas de traducción, editables a mano.
 - `scripts/contenido/` — lo curado a mano, con fuentes.
 - `docs/AUDITORIA.md` — el informe de la auditoría entre fuentes (se regenera en cada build).
@@ -511,6 +521,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   `scripts/contenido/catalogo.json`).
 - `docs/COMPLETITUD.md` — qué le falta a cada variante y de dónde podría salir (se regenera en
   cada build con `scripts/completitud.py`).
+- `docs/HISTORICO.md` — lo que no cierra entre thanosvibs y las notas del foro en el histórico (se
+  regenera en cada build con `scripts/historico.py`).
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
   `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
   verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
