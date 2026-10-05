@@ -1759,13 +1759,23 @@ function ordenEquipo (vs, lider) {
 }
 /** La fuente cuya línea del stat s, uno que no se acumula, se le aplica a m en el equipo vs con ese líder: de las que le
  *  llegan, la de mayor valor y, a igual valor (o sin valor), la primera en el orden: lo propio, el liderazgo del líder y los
- *  soportes de los demás en ordenEquipo. { de, k, x, val }, o null si no le llega de nadie. */
+ *  soportes de los demás en ordenEquipo. { de, k, x, val, r }, o null si no le llega de nadie. Sin armar ordenEquipo, porque
+ *  se pregunta millones de veces: r es su lugar en ese orden (0 lo propio, 1 el liderazgo del líder, 2 sus soportes, 3 los
+ *  de los demás, y entre dos de los demás, el de clave menor); entre las líneas de uno mismo, la primera. */
 function fuenteQueSeAplica (m, s, vs, lider) {
   let p = null;
-  const toma = (de, e) => { if (!p || (e.val !== null && p.val !== null && e.val > p.val)) p = { de, k: e.k, x: e.x, val: e.val }; };
-  for (const e of noAcumulablesDe(m).propio.get(s) || []) toma(m, e);
-  if (lider) for (const e of noAcumulablesDe(lider).lid.get(s) || []) if (aplicaA(e.x, m)) toma(lider, e);
-  for (const a of ordenEquipo(vs, lider)) if (a !== m) for (const e of noAcumulablesDe(a).sop.get(s) || []) if (aplicaA(e.x, m)) toma(a, e);
+  const toma = (de, e, r) => {
+    if (p && !(e.val !== null && p.val !== null && e.val !== p.val ? e.val > p.val : r < p.r || (r === p.r && de !== p.de && de.key < p.de.key))) return;
+    p = { de, k: e.k, x: e.x, val: e.val, r };
+  };
+  const propio = noAcumulablesDe(m).propio.get(s);
+  if (propio) for (const e of propio) toma(m, e, 0);
+  if (lider) { const ls = noAcumulablesDe(lider).lid.get(s); if (ls) for (const e of ls) if (aplicaA(e.x, m)) toma(lider, e, 1); }
+  for (const a of vs) {
+    if (a === m) continue;
+    const ss = noAcumulablesDe(a).sop.get(s);
+    if (ss) for (const e of ss) if (aplicaA(e.x, m)) toma(a, e, a === lider ? 2 : 3);
+  }
   return p;
 }
 /** La fuente de la que le llegan primero a m los anti-mermas (cualquiera de sus stats), en el mismo orden: la que lo
@@ -4213,8 +4223,10 @@ function vistaConsulta (q) {
       vs[1] = q.pool[a]; vs[2] = q.pool[b];
       const e = enContexto(vs, ctx);
       if (!e) continue;
-      // El vínculo con el líder del contexto: si no es el de la sinergia y en el trío el soporte depende del líder, se cuenta con él.
-      const li = vs.indexOf(e.lider), g = sv && li !== q.L[i] && (q.puede[a] || q.puede[b]) ? vinculosSoporte(vs, e.lider) : q.G[i];
+      // El vínculo con el líder del contexto: si no es el de la sinergia y en el trío el soporte depende del líder, se cuenta con él,
+      // salvo que no haga falta: si con el liderazgo y los DPS ya alcanza, la fila entra sea cual sea el vínculo por un soporte.
+      const li = vs.indexOf(e.lider);
+      const g = sv && li !== q.L[i] && (q.puede[a] || q.puede[b]) && !sirveEn(vinculosFila(q, i, li, 0), i) ? vinculosSoporte(vs, e.lider) : q.G[i];
       if (!sirveEn(vinculosFila(q, i, li, g), i)) continue;
       pts = Math.round(e.score * 100); stk = e.strikers; tope = 65536;
       if (lider) lider[i] = vs.indexOf(e.lider);
