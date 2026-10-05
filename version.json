@@ -1,6 +1,6 @@
 {
- "version": "1.0.21",
- "formato_datos": 8,
+ "version": "1.0.22",
+ "formato_datos": 9,
  "python": "3.14.7",
- "notas": "Equipos: filtro «Solo el último uniforme», para armar combinaciones solo con el uniforme más nuevo de cada personaje. Las habilidades que el juego no deja solapar (anti-mermas, inmunidades) cuentan una sola vez aunque lleguen de dos personajes, y las estadísticas se suman, con el tope de la guía a la vista (crítico, daño crítico, evasión, recarga) y un aviso si se pasa."
+ "notas": "Equipos: con «Solo el último uniforme», Red Skull y Sister Grimm entran solo con su uniforme más nuevo (The Crimson Fall y Princess Tsukimi, de la 12.2.5): sus versiones ya vienen en los datos. El crítico garantizado cuenta una vez si lo dan dos (el mayor) y tiene el tope de la prob. de crítico; «Max Dodge», el de la evasión. Las notas del Glosario sobre qué se suma ya no son conjeturas. C.T.P. recomendado: además de la guía de armado, la Ideal CTP List, cada una con el enlace a su fuente (en la ficha y en los equipos)."
 }

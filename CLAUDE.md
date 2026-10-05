@@ -62,39 +62,47 @@ variante, en `docs/COMPLETITUD.md`.
 
 ## Estado (5 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.20. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su
-  Glosario. La 1.0.20 (etiqueta en 5a28aa5, «Datos actualizados 2026-10-05») trajo los datos de formato 7, y
+- Publicadas: de la 1.0.14 a la 1.0.21. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su
+  Glosario. La 1.0.21 (etiqueta en 51be511, «Datos actualizados 2026-10-05») trajo los datos de formato 8: su build dio
+  83 stats de `soporte` con `acumula` (65 se suman, 18 cuentan una vez) y 14 con tope, y la regresión con esos datos
+  pasó (38 de 42; verif_parche_119 por diseño y las tres que piden `work/`; verif_consistencia tarda más de 25 min con
+  otra prueba al lado: sola, sin fallas). La 1.0.20 (etiqueta en 5a28aa5, «Datos actualizados 2026-10-05») trajo los datos de formato 7, y
   su build dio lo que se esperaba: 443 variantes con liderazgo de la Leader Skill (461 slots), 177 de 888
   completas, `SEED.SKILL_TAGS` con 44 y las correcciones de Judgment y Planet Eater en la sección 5 de
   `docs/AUDITORIA.md`. La regresión con esos datos pasó (verif_bonos falló una vez por tiempos y pasó sola).
 - La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app actualizada quedó
   esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
-- Entregada sin publicar: la 1.0.21, con datos de formato 8: el filtro «Solo el último uniforme», los efectos
-  iguales (las habilidades cuentan una vez, las estadísticas se suman) y los topes de la guía en lo que recibe
-  cada integrante.
+- Entregada sin publicar: la 1.0.22, con datos de formato 9: la versión de cada uniforme sale de `/api/updates`
+  (Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi, 12.2.5, quedan como últimos de su personaje) y lo
+  que confirmó Ezequiel de los stats dudosos de `acumula` (Guaranteed Critical Rate pasa a contar una vez, con el tope
+  de crítico; Max Dodge, con el de evasión). Y el C.T.P. recomendado con las dos fuentes, una al lado de la otra (la
+  guía de armado y la Ideal CTP List; antes la lista solo aparecía si la guía no daba nada): Ezequiel, 5 de octubre, no
+  quiere decidir a mano cada caso sino tener toda la información, clara y con su fuente.
 
 ## Pendiente
 
-Al publicar la 1.0.21 (filtro «Solo el último uniforme», efectos iguales y topes):
-- Pide los datos de formato 8, que escribe `scripts/build.py` (el catálogo dice de cada stat de soporte si se
-  acumula y su tope): push de main, el workflow de datos a mano y, cuando termina bien, la etiqueta `v1.0.21`
-  sobre el commit «Datos actualizados». Si el build para, no se etiqueta: la 1.0.20 sigue con sus datos de
-  formato 7.
-- Lo que tiene que dar ese build: los 83 stats de `soporte` con `acumula` (65 se suman y 18 cuentan una vez) y
-  los 14 con tope; el resto, igual que el del 5 de octubre.
+Al publicar la 1.0.22 (versión de los uniformes y acumula):
+- Pide los datos de formato 9: push de main, el workflow de datos a mano y, cuando termina bien, la etiqueta `v1.0.22`
+  sobre el commit «Datos actualizados». Si el build para, no se etiqueta: la 1.0.21 sigue con sus datos de formato 8.
+- Lo que tiene que dar ese build (probado el 5 de octubre con los datos bajados ese día): frente a 51be511, solo
+  `up.update: 12.2.5` en esos dos uniformes, el formato, el hallazgo `uniformes-version-12-2-5` en `docs/AUDITORIA.md` y
+  el catálogo: 64 stats que se suman, 19 que cuentan una vez y 16 con tope (`docs/CATALOGO.md`). El log avisa «2
+  uniformes sin versión en /api/uniforms; va la de /api/updates».
+- Guaranteed Critical Rate cuenta una vez y lo dan 10 soportes: la de mayor valor puede cambiar algún trío (sin medir).
 - Las listas de PvE bajan con el vínculo del líder del contexto (Knull — Ancient History, de 15.102 a 9.997): que
   Ezequiel mire una con los datos nuevos («Equipos por contexto» de `docs/MODELO.md`).
+
+Histórico (diseño aprobado por Ezequiel el 5 de octubre; en curso): `scripts/foro.py` baja las notas del tablero 2196 del
+foro oficial a `fuentes/foro/`, de a una cada 6 s; `scripts/historico.py` las cruza con `/api/updates`. Primero solo los
+personajes, con el texto de las notas en inglés. Después: revisar las notas del foro coreano (si la traducción inglesa
+está bien y si completa cosas) y sumar los modos de juego.
 
 Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
 - Liderazgos: los 34 slots sin stat (escudo de energía y físico, inmunidad al frío, robo de vida, inmunidad a todo
   daño, resistencia al veneno, inmunidad al sangrado y a la fractura; el sangrado y la parálisis son para el rival):
   ¿se agregan stats al catálogo? «When enemies are below 30% HP,» (Warwolf) va con la coma de la API.
-- Efectos repetidos en el equipo (Ezequiel, 5 de octubre: las estadísticas se suman y las habilidades cuentan una
-  vez): lo dice `acumula` en cada stat de `soporte` del catálogo. Los dudosos, con [Conjetura] en su nota: se suman
-  Guaranteed Critical Rate, Heal, Ignore Non-Boss Damage Decrease, «Super Armor, All Basic Defenses» (el número es
-  el de las defensas), Max Dodge y Attack Defense (no se sabe qué suben); cuentan una vez Immortality + Heal e
-  Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction. ¿Y un aviso de Insight o Liberation
-  repetidos en un equipo?
+- ¿Un aviso de Insight o Liberation repetidos en un equipo? (Los stats dudosos de `acumula` los confirmó el 5 de
+  octubre.)
 - De las habilidades que cuentan una vez (carril filtro2), lo que decidió Claude y falta confirmar: entre dos
   soportes de los que no lideran, va primero el de clave menor (un orden fijo, para que el trío dé lo mismo desde la
   lista de cualquiera: el juego no dice cuál; cambia el puntaje si solo uno de los dos trae además otra cosa que se
@@ -103,9 +111,6 @@ Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
   liderazgo que solo le da a los demás lo que ya tienen propio no suma ni vincula); y en PvP y PvE el vínculo por un
   soporte se cuenta con el líder del contexto. Los topes se muestran con lo que suman liderazgos, soportes y
   artefactos, sin lo que el personaje ya tiene ni los bonos de equipo, y no cambian los puntos.
-- Último uniforme: Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi no traen versión en thanosvibs, y
-  son los de número más alto de su personaje (en los 1.033 pares con distinta versión, el número sube con la versión
-  salvo en uno, Yelena Belova). ¿Cuál es el último de cada uno? Hoy entran los dos de cada personaje, con aviso.
 - C.T.P.: ¿la app muestra los números del juego por grado (un archivo de contenido nuevo y formato)?
 - Las opciones de uniforme en Mítico muestran ataques y defensas +40% (hallazgo `opciones-uniforme-mitico`): ¿a
   qué se debe?
