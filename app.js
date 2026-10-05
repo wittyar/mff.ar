@@ -50,7 +50,7 @@ function blankUser () {
   return {
     charEdits: {},                    // id de data.js -> personaje editado (reemplaza al del seed)
     charNew: [],                      // personajes creados a mano
-    teams: [],
+    teams: [],                        // equipos de tu cuenta: {id, name, members (claves, en orden canónico), reason, modeId}
     favoritos: [],                    // equipos de 3 marcados con ★ en las combinaciones: {id, members, ctx: 'pvp', 'pve' o null}
     descartados: [],                  // equipos de 3 ocultos de las combinaciones: sus tres personajes (ids, en orden), con cualquier uniforme
     lists: [],                        // tier lists propias: {id,name,rows}
@@ -93,6 +93,8 @@ function normalizarCapa (saved) {
   // Los favoritos guardan el contexto del orden en que se marcaron; los de antes no lo traen y quedan sin
   // contexto, que es como se mostraban.
   for (const f of u.favoritos) if (!('ctx' in f)) f.ctx = null;
+  // Los equipos se guardan en orden canónico (teamSave); los de antes, en el orden en que se armaron.
+  for (const tt of u.teams) tt.members = tt.members.slice().sort();
   return u;
 }
 /** Lee capa.json. Sin archivo (primer uso) es una capa vacía; un archivo ilegible es un
@@ -123,6 +125,7 @@ let CONSULTA = null;                   // última consulta de combinaciones de 3
 function rebuild () {
   CONSULTA = null;
   _ROL.clear();
+  _PUESTO_SC.clear();
   CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
   CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
   LISTS = TIERLISTS_SEED.concat(U.lists);
@@ -666,6 +669,8 @@ const T = {
   eq_count_1:        { es:'1 combinación',       en:'1 combination' },
   eq_none_q:         { es:'Ninguna combinación con estos filtros.', en:'No combination with these filters.' },
   eq_leader:         { es:'Líder: {x}',          en:'Leader: {x}' },
+  eq_lider_de:       { es:'Líder: {x}',          en:'Leader: {x}' },
+  eq_lider_pill:     { es:'Líder',               en:'Leader' },
   eq_no_leader:      { es:'Ningún liderazgo le suma', en:'No leadership adds for it' },
   eq_fav_add:        { es:'Marcar como favorito', en:'Mark as favorite' },
   eq_descartar:      { es:'Descartar',           en:'Discard' },
@@ -847,6 +852,7 @@ const T = {
   tm_in_use:         { es:'ya está en «{e}» (mismo modo)', en:'already in «{e}» (same mode)' },
   tm_favs:           { es:'Favoritos',           en:'Favorites' },
   tm_fav_ctx:        { es:'marcado en {c}',      en:'marked in {c}' },
+  tm_ya_esta:        { es:'Ese equipo ya está guardado con este modo: «{e}».', en:'That team is already saved with this mode: «{e}».' },
   tm_favs_note:      { es:'Los que marcaste con ★ en las combinaciones de cada personaje. Desde acá los armás para tu cuenta.',
                        en:'The ones you starred in each character\'s combinations. Build them for your account from here.' },
   tm_no_leader:      { es:'Ningún liderazgo suma', en:'No leadership adds' },
@@ -1668,8 +1674,9 @@ function estanTodos (cids, vs) {
 let VENTAJA, LE_GANA_A;
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
  *  soporte de thanosvibs que alcanzan a otro integrante y le sirven (sirve()): los de soporte
- *  valen en cualquier lugar del equipo; el liderazgo solo en el lugar de líder, así que se
- *  cuenta el mejor líder posible. Cada bono de equipo con todos sus integrantes en el equipo
+ *  valen en cualquier lugar del equipo; el liderazgo, el del líder del equipo (liderDe: el
+ *  mismo sea cual sea el orden y desde la lista de quien se mire; lider, si se pasa, es el de
+ *  un contexto). Cada bono de equipo con todos sus integrantes en el equipo
  *  suma 1 (de la wiki, o del juego si se cargó). Se suman dos lecturas propias, dichas como tales:
  *  los roles derivados de las skills y la ventaja de tipo (Combate > Velocidad > Detonación >
  *  Combate; Universal le gana a las tres con ventaja menor y no tiene debilidad). No es un
@@ -1677,7 +1684,7 @@ let VENTAJA, LE_GANA_A;
  *  foco: cuenta solo lo que involucra a ese integrante (los equipos armados para él).
  *  Escrita con bucles y sin armar textos si no hacen falta: la consulta de combinaciones la
  *  llama cientos de miles de veces. */
-function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
+function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
   if (vs.length < 2) return { score: 0, razones: [], aplicados: [], lider: null, art: false };
   // razones: lo que suma, para explicarlo (sin soloPuntaje): cada soporte o liderazgo con los
   // integrantes a los que les llega y les sirve, cada versión de un bono de equipo, los roles, las
@@ -1702,23 +1709,15 @@ function synergy (vs, { soloPuntaje = false, foco = null } = {}) {
       if (!soloPuntaje) razones.push({ tipo: 'soporte', de: a, k, x, a: bs });
     }
   }
-  // Liderazgo: el del integrante que más alcanza a los demás (con foco, el que más le sirve a
-  // él); si empatan, el primero.
-  let lider = null, ptsLider = 0, xsLider = null;
-  for (const a of vs) {
-    const s = SOPORTES[a.p]; if (!s) continue;
-    let pts = 0; const xs = [];
-    for (const k of LIDERAZGOS) {
-      const x = s[k]; if (!x || !cuenta(a, x)) continue;
-      const bs = alcanza(a, x); if (!bs.length) continue;
-      pts += x.sig ? 3 : 2; xs.push({ k, x, bs });
-    }
-    if (pts > ptsLider) { lider = a; ptsLider = pts; xsLider = xs; }
-  }
-  if (lider) {
-    score += ptsLider;
-    for (const o of xsLider) { aplicados.push({ de: lider, a: o.bs });
-      if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k: o.k, x: o.x, a: o.bs }); }
+  // Liderazgo: el del líder del equipo (liderDe, sin contexto; o el que se pasa, el de la tarjeta en PvP o
+  // PvE), el mismo desde la lista de cualquiera de los integrantes. Con foco, cuenta si lo involucra.
+  if (lider === undefined) lider = liderDe(vs, null);
+  const sl = lider && SOPORTES[lider.p];
+  if (sl) for (const k of LIDERAZGOS) {
+    const x = sl[k]; if (!x || !cuenta(lider, x)) continue;
+    const bs = alcanza(lider, x); if (!bs.length) continue;
+    score += x.sig ? 3 : 2; aplicados.push({ de: lider, a: bs });
+    if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k, x, a: bs });
   }
   // Bonos de equipo: con todos sus integrantes en el equipo, les suben stats a todos. Cada uno suma
   // 1 si le sirve a alguien; con foco, si lo involucra: él está en el bono o le sirve a él. Sus
@@ -3064,9 +3063,9 @@ function fichaEquipos (ch, v) {
         <div class="eqpts"><b>${o.despues.score}</b>${artPts(o.despues.art)} ${h(t('tm_synergy_pts'))} <span class="eqdelta">+${o.delta}</span>
           <div class="muted">${h(t('eq_before')).replace('{n}', () => o.antes.score + artPts(o.antes.art))}</div></div>
       </div>
-      ${retratosEquipo(o.vs, v.key)}
+      ${retratosEquipo(o.vs, v.key, o.despues.lider)}
       ${porqueHtml('pq-t-' + o.tt.id, v, o.vs, o.despues.lider, o.gana, o.pierde, o.antesVs)}
-      ${ctpsEquipo(o.vs, o.ctp)}
+      ${ctpsEquipo(conLider(o.vs, o.despues.lider), o.ctp)}
       <div class="row">${botonArmar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
     ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
@@ -3142,10 +3141,14 @@ function comoEntra (v, tt) {
            gana: pd.filter(p => !habia.has(p.clave) && !(p.f && p.r.tipo !== 'bono' && (p.para === v || p.r.de === v))),
            pierde: pa.filter(p => !hay.has(p.clave)) };
 }
-/** Retratos de un equipo; el de la clave `resaltada` (el personaje de la ficha) va marcado. */
-function retratosEquipo (vs, resaltada) {
-  return `<div class="row eqfotos">${vs.map(x => `<button class="eqfoto ${x.key === resaltada ? 'nuevo' : ''}" data-a="open" data-cid="${x.cid}"
-    data-uid="${x.uid || ''}" title="${h(fullLabel(x))}"><span class="shot">${shot(x.id)}</span><span>${h(x.name)}</span></button>`).join('')}</div>`;
+/** Retratos de un equipo. Con su líder (liderDe), el líder va primero (a la izquierda, como en el juego) con su
+ *  marca: el aro del color de acento y la pastilla «Líder», también en el title. El de la clave `resaltada` (el
+ *  personaje de la ficha) va marcado aparte. */
+function retratosEquipo (vs, resaltada, lider) {
+  return `<div class="row eqfotos">${conLider(vs, lider).map(x => { const titulo = x === lider ? t('eq_lider_de').replace('{x}', fullLabel(x)) : fullLabel(x);
+    return `<button class="eqfoto${x.key === resaltada ? ' nuevo' : ''}${x === lider ? ' lider' : ''}" data-a="open" data-cid="${x.cid}"
+    data-uid="${x.uid || ''}" title="${h(titulo)}" aria-label="${h(titulo)}"><span class="shot">${shot(x.id)}${
+      x === lider ? `<span class="pillider" aria-hidden="true">${h(t('eq_lider_pill'))}</span>` : ''}</span><span>${h(x.name)}</span></button>`; }).join('')}</div>`;
 }
 // COMBINACIONES DE 3 CON ÉL: una consulta sobre los datos, no listas armadas de antemano.
 // Para el personaje (con el uniforme elegido) recorre todas las parejas de compañeros y se
@@ -3266,11 +3269,45 @@ function slotsDe (v) {
  *  con el que los tres tengan anti-mermas. Si entra: { score, lider, partes: { lider, dps, sinergia,
  *  striker }, art: si sumó el soporte de un artefacto }; con detalle, también de dónde sale cada punto
  *  (detalleContexto lo escribe). */
-function enContexto (vs, ctx, detalle) {
-  const roles = vs.map(x => rolEn(x, ctx));
-  if (!roles.some(r => r.dps)) return null;
-  const sl = vs.map(slotsDe);
-  const cubreSop = vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m))));
+// LÍDER DE UN EQUIPO (Ezequiel, 4 de octubre de 2026: la regla de la 1.0.16 para todo). Un equipo tiene un
+// solo líder, el mismo sea cual sea el orden de sus integrantes y desde la lista de quien se lo mire: el que
+// más puntos de liderazgo suma en el contexto; a igual puntaje, el mejor ubicado en las tier lists del
+// contexto (sin contexto, la General de thanosvibs) y después la clave. En PvP solo puede liderar uno con el
+// que todos tienen anti-mermas. Lo usan la sinergia (puntos para él, del equipo, tus equipos, favoritos, la
+// comparativa, «cómo entraría» y las tier lists sin contexto) y los órdenes PvP y PvE.
+const LISTA_SIN_CONTEXTO = 'tv-general';
+const _PUESTO_SC = new Map();
+/** Puesto de una variante en la lista que desempata al líder sin contexto (puesto()). Se guarda hasta el
+ *  próximo rebuild(). */
+function puestoSinContexto (v) {
+  let p = _PUESTO_SC.get(v.key);
+  if (p === undefined) {
+    const l = listById(LISTA_SIN_CONTEXTO);
+    if (!l) throw new Error('falta la tier list ' + LISTA_SIN_CONTEXTO + ', la que desempata al líder sin contexto');
+    _PUESTO_SC.set(v.key, p = puesto(l, v.key));
+  }
+  return p;
+}
+/** El líder de un equipo sin contexto: el que más suma con su liderazgo (cada slot de liderazgo que le llega y
+ *  le sirve a otro integrante, 3 si es Notable y 2 si no, como en la sinergia). null si ninguno suma. */
+function liderSinContexto (vs) {
+  let lider = null, ptsLider = 0;
+  for (const a of vs) {
+    const s = SOPORTES[a.p]; if (!s) continue;
+    let pts = 0;
+    for (const k of LIDERAZGOS) {
+      const x = s[k]; if (!x) continue;
+      for (const b of vs) if (b !== a && aplicaA(x, b) && leSirve(x, b)) { pts += x.sig ? 3 : 2; break; }
+    }
+    if (pts && (pts > ptsLider || (pts === ptsLider && (puestoSinContexto(a) < puestoSinContexto(lider)
+        || (puestoSinContexto(a) === puestoSinContexto(lider) && a.key < lider.key))))) { lider = a; ptsLider = pts; }
+  }
+  return lider;
+}
+/** El líder de un equipo en PvP o PvE, con lo que enContexto ya sabe de él (los slots de cada uno, sus roles y a
+ *  quiénes les cubre anti-mermas un soporte): { li: su índice en vs (-1 si en PvP ninguno deja a todos con
+ *  anti-mermas), pts: sus puntos de liderazgo }. */
+function liderContexto (vs, ctx, sl, roles, cubreSop) {
   const vale = VALE_IDX[ctx], llega = _LLEGA[ctx];
   let li = -1, ptsLider = 0;
   for (let i = 0; i < vs.length; i++) {
@@ -3290,11 +3327,26 @@ function enContexto (vs, ctx, detalle) {
     }
     let pts = 0;
     for (const bits of llega) pts += aCuantos(bits) * PESO.lider + aCuantos(bits >> 3 & ~bits) * PESO.lider / 2;
-    // El mismo líder sea cual sea el orden de vs: a igual puntaje, el mejor ubicado en las tier lists
-    // del contexto y después la clave.
     if (li < 0 || pts > ptsLider || (pts === ptsLider && (roles[i].puesto < roles[li].puesto
         || (roles[i].puesto === roles[li].puesto && vs[i].key < vs[li].key)))) { li = i; ptsLider = pts; }
   }
+  return { li, pts: ptsLider };
+}
+/** El líder de un equipo en un contexto (null, 'pvp' o 'pve'); null si no lo tiene. */
+function liderDe (vs, ctx) {
+  if (!ctx) return liderSinContexto(vs);
+  const sl = vs.map(slotsDe);
+  const { li } = liderContexto(vs, ctx, sl, vs.map(x => rolEn(x, ctx)), vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m)))));
+  return li < 0 ? null : vs[li];
+}
+/** Un equipo con su líder primero (a la izquierda, como en el juego) y los demás en su orden. */
+function conLider (vs, lider) { return lider ? [lider].concat(vs.filter(x => x !== lider)) : vs; }
+function enContexto (vs, ctx, detalle) {
+  const roles = vs.map(x => rolEn(x, ctx));
+  if (!roles.some(r => r.dps)) return null;
+  const sl = vs.map(slotsDe);
+  const cubreSop = vs.map(m => sl.some(s => s.antiSop.some(x => aplicaA(x, m))));
+  const { li, pts: ptsLider } = liderContexto(vs, ctx, sl, roles, cubreSop);
   if (li < 0) return null;
   let dps = 0;
   for (const r of roles) dps += r.dps * PESO.dps;
@@ -3569,18 +3621,18 @@ function combinacionesHtml (v) {
   const personajes = CHARS.filter(c => c.id !== v.cid).sort((a, b) => a.name.localeCompare(b.name));
   const fila = (i) => {
     const vs = [v, q.pool[q.A[i]], q.pool[q.B[i]]], keys = vs.map(x => x.key);
-    const sc = synergy(vs, { foco: v }), equipo = synergy(vs, { soloPuntaje: true });
-    // En PvP y PvE, el líder y los puntos son los del contexto; los de siempre quedan abajo.
-    const e = ctx ? enContexto(vs, ctx, true) : null, lider = e ? e.lider : sc.lider;
+    // En PvP y PvE, el líder y los puntos son los del contexto, y los de siempre (abajo) se cuentan con ese líder.
+    const e = ctx ? enContexto(vs, ctx, true) : null, lider = e ? e.lider : liderDe(vs, null);
+    const sc = synergy(vs, { foco: v, lider }), equipo = synergy(vs, { soloPuntaje: true, lider });
     return `<div class="card combo">
       <div class="combofila">
-        ${estrella(keys)}${retratosEquipo(vs, v.key)}
+        ${estrella(keys)}${retratosEquipo(vs, v.key, lider)}
         <div class="combotx">
           <div>${h(vs.slice(1).map(fullLabel).join(' + '))}</div>
           <div class="combolider">${h(lider ? t('eq_leader').replace('{x}', fullLabel(lider)) : t('eq_no_leader'))}</div>
           ${e ? detalleContexto(e, vs, ctx) : ''}
           ${coberturaHtml(cobertura(v, vs, lider))}
-          ${ls.map(l => `<div class="muted">${h(listName(l))}: ${vs.map(x => puestoHtml(l, x.key)).join(' · ')}</div>`).join('')}
+          ${ls.map(l => `<div class="muted">${h(listName(l))}: ${conLider(vs, lider).map(x => puestoHtml(l, x.key)).join(' · ')}</div>`).join('')}
         </div>
         ${e ? `<div class="eqpts"><b>${e.score}</b>${artPts(e.art)} ${h(t('cx_pts_' + ctx))}
           <div class="muted">${h(t('cx_para_el')).replace('{a}', () => sc.score + artPts(sc.art)).replace('{b}', () => equipo.score + artPts(equipo.art))}</div></div>`
@@ -3592,7 +3644,7 @@ function combinacionesHtml (v) {
           : `<button class="btn sm" data-a="descartar" data-c="${vs.map(x => x.cid).join(',')}" title="${h(t('eq_descartar_title'))}">${h(t('eq_descartar'))}</button>`}
       </div>
       ${porqueHtml('pq-c-' + keys.join('_'), v, vs, lider, piezas(sc.razones).filter(p => !p.f || p.r.tipo === 'bono'), [], null)}
-      ${ctpsEquipo(vs, ctx)}
+      ${ctpsEquipo(conLider(vs, lider), ctx)}
     </div>`;
   };
   const numero = (n) => n.toLocaleString(LANG === 'es' ? 'es-AR' : 'en-US');
@@ -4752,12 +4804,11 @@ function equipoCard (tt, borrable) {
     ${borrable ? `<button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>` : ''}
     <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
     ${modo ? `<div class="row" style="margin-bottom:6px"><span class="tag dim">${h(modo.name)}</span></div>` : ''}
-    <div class="row" style="gap:5px;margin-bottom:8px">${vs.map(v => imgUrl('portrait-' + v.id)
-      ? `<img src="${imgUrl('portrait-' + v.id)}" title="${h(fullLabel(v))}" style="width:44px;height:44px;border-radius:8px;object-fit:cover">` : '').join('')}</div>
-    <div class="muted">${vs.map(fullLabel).join(' + ')}</div>
+    <div class="eqcompacto" style="margin-bottom:8px">${retratosEquipo(vs, null, sc.lider)}</div>
+    <div class="muted">${conLider(vs, sc.lider).map(fullLabel).join(' + ')}</div>
     ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
     <div class="muted" style="margin-top:6px">${sc.score}${artPts(sc.art)} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
-    ${ctpsEquipo(vs, modo ? modo.ctp : null)}
+    ${ctpsEquipo(conLider(vs, sc.lider), modo ? modo.ctp : null)}
   </div>`;
 }
 /** Un favorito: equipo de 3 marcado con ★ en las combinaciones de un personaje (el primero). */
@@ -4766,12 +4817,12 @@ function favoritoCard (f) {
   const sc = synergy(vs);
   return `<div class="card eqsug">
     <div class="row" style="justify-content:space-between;align-items:flex-start">
-      <div class="row" style="gap:10px;align-items:flex-start">${estrella(f.members)}${retratosEquipo(vs, vs[0].key)}</div>
+      <div class="row" style="gap:10px;align-items:flex-start">${estrella(f.members)}${retratosEquipo(vs, vs[0].key, sc.lider)}</div>
       <div class="eqpts"><b>${sc.score}</b>${artPts(sc.art)} ${h(t('tm_synergy_pts'))}</div>
     </div>
-    <div class="muted">${h(vs.map(fullLabel).join(' + '))}${f.ctx ? ` <span class="tag dim">${h(t('tm_fav_ctx').replace('{c}', t('ctp_ctx_' + f.ctx)))}</span>` : ''}</div>
+    <div class="muted">${h(conLider(vs, sc.lider).map(fullLabel).join(' + '))}${f.ctx ? ` <span class="tag dim">${h(t('tm_fav_ctx').replace('{c}', t('ctp_ctx_' + f.ctx)))}</span>` : ''}</div>
     <div><b>${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</b></div>
-    ${ctpsEquipo(vs, f.ctx)}
+    ${ctpsEquipo(conLider(vs, sc.lider), f.ctx)}
     <div class="row">${botonArmar(vs, '', '')}</div>
   </div>`;
 }
@@ -5310,10 +5361,15 @@ document.addEventListener('click', (e) => {
       else eq.members.push(d.key);
       render(); break; }
     case 'teamPage': ui.teamPage = parseInt(d.p, 10); render(); break;
+    // Se guarda en orden canónico (el que lo muestra va con su líder primero): el mismo equipo, desde la lista de
+    // cualquiera de sus integrantes, es uno solo. Si ya está guardado con ese modo, no se repite y se dice.
     case 'teamSave': { const eq = ui.team; if (eq.members.length < 2 || eq.members.length > tamModo(eq.modeId)) break;
-      const vs = eq.members.map(k => variant(...k.split('::'))).filter(Boolean);
-      U.teams.unshift({ id: 'eq-' + Date.now(), name: eq.name || vs.map(fullLabel).join(' + '),
-                        members: eq.members.slice(), reason: eq.reason, modeId: eq.modeId || '' });
+      const members = eq.members.slice().sort(), modeId = eq.modeId || '';
+      const ya = U.teams.find(x => x.modeId === modeId && x.members.join('|') === members.join('|'));
+      if (ya) { ui.avisoEquipo = t('tm_ya_esta').replace('{e}', ya.name); render(); break; }
+      const vs = members.map(k => variant(...k.split('::'))).filter(Boolean);
+      U.teams.unshift({ id: 'eq-' + Date.now(), name: eq.name || conLider(vs, liderDe(vs, null)).map(fullLabel).join(' + '),
+                        members, reason: eq.reason, modeId });
       ui.teamOpen = false; commit(); break; }
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
 

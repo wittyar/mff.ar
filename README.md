@@ -96,7 +96,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     fila. Se
     filtran con «Con» y «Sin», y con casillas por cobertura (ataque, ignorar evasión, todas las
     defensas, vida y quita todos los debuffs: de cada pareja queda la mejor combinación de uniformes
-    que las cumple todas). Cada una dice su líder y su **cobertura** (lo que recibe él en
+    que las cumple todas). Cada una dice su **líder** (uno solo por trío, el mismo desde la lista de
+    cualquiera de los tres: el que más suma con su liderazgo; a igual puntaje, el mejor ubicado en
+    las tier lists del contexto o, sin contexto, en la General), que va primero entre los retratos,
+    a la izquierda como en el juego, con un aro de color y la pastilla «Líder»; y su **cobertura** (lo que recibe él en
     ese equipo, por categoría del índice); en *Por qué*, la suma de lo que le llega, por beneficio,
     y el desglose por origen con el link a cada habilidad; y, plegados, los **C.T.P.**
     recomendados a cada integrante, con su fuente: los de la guía de armado (los de PvP o de PvE en
@@ -121,7 +124,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
   restaurarlos. Al armar uno, avisa si un personaje ya está en otro equipo tuyo del mismo modo; con
   el equipo lleno, el que se toca no entra y se dice, y un modo más chico que el equipo no le saca
-  a nadie: dice cuántos sobran y no lo guarda hasta que se quiten.
+  a nadie: dice cuántos sobran y no lo guarda hasta que se quiten. Cada equipo se guarda en un orden
+  fijo: el mismo equipo con el mismo modo no se guarda dos veces (se dice cuál es). En cada tarjeta,
+  el líder va primero, marcado.
 - **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
   con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
   y qué C.T.P. da cada efecto de la barra de Concentración; y los 126 efectos del catálogo por

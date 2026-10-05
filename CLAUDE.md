@@ -63,10 +63,10 @@ variante, en `docs/COMPLETITUD.md`.
   Galaxia) y la sección 11 de `docs/AUDITORIA.md` con las dos probabilidades de striker de más de
   100% (Daken: Doctor Octopus, 219%; Molecule Man: Morgan le Fay, 120%), contadas en el resumen.
   Después, verif_consistencia tiene que pasar con los datos del repo.
-- Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir (líder del
-  trío, «le sirve», los liderazgos que Leads & Supports no publica, si el soporte propio cuenta para
-  su dueño y qué es anti-mermas, los strikers fuera de PvP y PvE, y los recomendados de Modos contra
-  la función en PvP y PvE). verif_consistencia las tiene listadas.
+- Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir («le
+  sirve», los liderazgos que Leads & Supports no publica, si el soporte propio cuenta para su dueño
+  y qué es anti-mermas, los strikers fuera de PvP y PvE, y los recomendados de Modos contra la
+  función en PvP y PvE). verif_consistencia las tiene listadas.
 
 - Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
   - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e
@@ -94,8 +94,6 @@ variante, en `docs/COMPLETITUD.md`.
 - Las «permutaciones» de los mismos integrantes que Ezequiel vio en la lista de Adam Warlock no
   aparecen en las listas de combinaciones; si vuelven, falta una captura.
 - Equipos (1.0.18):
-  - En PvP y PvE, el «X para él» usa el líder de la sinergia y la tarjeta, el del contexto. En Adam
-    Warlock + Wasp + Doctor Voodoo, la tarjeta dice Wasp y la sinergia usa a Doctor Voodoo.
   - Las casillas siguen marcadas al cambiar de orden, de uniforme o de personaje, como «Sin».
     Falta decidir.
   - Alliance Battle muestra los C.T.P. de PvE, pero la leyenda de la guía dice «ABX: Rage». Falta
@@ -120,9 +118,6 @@ variante, en `docs/COMPLETITUD.md`.
   tarjetas (Galactus, de 37.514 a 1.699; Silver Surfer — Void Knight sigue en 37.452). Una lista por
   personaje en vez de una por uniforme deja 290 listas en vez de 888 y saca el 54%, con cada lista
   casi igual. Las dos juntas sacan el 80%. Falta decidir.
-- Fuera de los órdenes PvP y PvE, el líder sigue siendo el de la sinergia, el que más le suma al
-  personaje de la ficha: «puntos para él», las tier lists sin contexto, Favoritos y Mis equipos. Mis
-  equipos guarda dos veces el mismo trío si se guarda desde dos listas. Falta decidir.
 - El filtro de PvP acepta anti-mermas condicionales (al recibir un debuff). Falta decidir.
 - Liderazgos completados por Leader Skill idéntica a la de la base (sección 12 de AUDITORIA.md):
   según la prueba, knull1, shangchi2, moongirl1, ghost2 y sentinel2. Falta decidir si se extiende a

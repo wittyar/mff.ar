@@ -240,7 +240,13 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .eqfoto{display:flex;flex-direction:column;align-items:center;gap:4px;width:74px;padding:0;background:none;border:0;
   color:inherit;font:inherit;cursor:pointer}
 .eqfoto .shot{width:56px;height:56px;border-radius:var(--r-md);box-shadow:0 0 0 1px var(--line-2)}
-.eqfoto.nuevo .shot{box-shadow:0 0 0 2px var(--accent)}
+/* El personaje de la ficha, marcado sin competir con el líder (un aro claro, separado del retrato). */
+.eqfoto.nuevo .shot{box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--text-3)}
+/* El líder del equipo: primero, con el aro del color de acento y la pastilla «Líder» sobre el retrato. */
+.eqfoto.lider .shot{box-shadow:0 0 0 2px var(--accent),0 0 12px -2px var(--accent-glow)}
+.pillider{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);z-index:2;padding:1px 5px;border-radius:99px;
+  background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.02em;line-height:1.35;white-space:nowrap;
+  box-shadow:0 1px 4px rgba(0,0,0,.5)}
 .eqfoto > span:last-child{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* Combinaciones por contexto (PvP, PvE): de dónde sale cada punto, debajo del líder. */
@@ -285,6 +291,10 @@ details.cxdesp > summary{cursor:pointer}
 .combo .eqfoto{width:auto}
 .combo .eqfoto .shot{width:44px;height:44px}
 .combo .eqfoto > span:last-child{display:none}
+.eqcompacto .eqfotos{gap:6px}
+.eqcompacto .eqfoto{width:auto}
+.eqcompacto .eqfoto .shot{width:44px;height:44px}
+.eqcompacto .eqfoto > span:last-child{display:none}
 .combotx{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:2px}
 .combolider{color:var(--text-2);font-weight:600}
 /* Cobertura de un trío: lo que le dan al personaje sus compañeros. */

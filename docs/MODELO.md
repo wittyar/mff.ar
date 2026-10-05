@@ -437,7 +437,10 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
 - **Líder:** un trío tiene un solo líder, el mismo en las listas de los tres: el orden solo cambia
   cuando hay un peso real distinto entre las opciones. Un liderazgo que se activa con una condición
   (al recibir un debuff, por ejemplo) pesa la mitad, sin mirar los porcentajes (Ezequiel, 2 de
-  octubre de 2026: «único + condicional a la mitad»; ver *Casos de referencia*).
+  octubre de 2026: «único + condicional a la mitad»; ver *Casos de referencia*). La misma regla vale
+  para todo, también sin contexto (Ezequiel, 4 de octubre de 2026). Y donde se ve un equipo, el líder
+  va siempre primero, a la izquierda como en el juego, con una marca en el retrato, para reconocer
+  quién lidera sin leer el texto.
 - **Ataque contra daño a una facción:** para hacer daño hay que tener ataque suficiente para
   superar la defensa o la esquiva del rival, y eso pesa al armar un equipo. Lo dudoso es comparar
   un porcentaje de ataque con un daño agregado contra una facción: no está claro cuál aporta más,
@@ -467,6 +470,14 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   lista (con los datos de la 1.0.14, en 44.583 tríos de PvP). Cada combinación muestra de dónde sale
   cada punto, y el liderazgo condicional dice que cuenta la mitad. Los pesos se revisaron con casos y
   quedaron así (ver *Casos de referencia*).
+- Sin contexto (los puntos para él, las tier lists, tus equipos, los favoritos, la comparativa y
+  «cómo entraría»), el líder sale de la misma función: el que más suma con su liderazgo en la
+  sinergia (cada slot que le llega y le sirve a otro: 3 si es Notable, 2 si no); a igual puntaje, el
+  mejor ubicado en la General de thanosvibs, y después la clave. Antes era el que más le sumaba al
+  personaje de la ficha y, a igual puntaje, el primero: el mismo trío salía con otro líder según
+  desde qué lista se lo mirara, y la tarjeta de PvP decía un líder y contaba los puntos «para él»
+  con otro. En una tarjeta de PvP o PvE, esos puntos se cuentan con el líder del contexto. Tus
+  equipos se guardan en un orden fijo: el mismo equipo, guardado desde dos listas, es uno.
 - Con los datos actuales, la lista de PvP de Knull — Ancient History tiene 1.993 equipos. Las de
   Galactus y de Jean Grey — Summer Flare Phoenix tienen unos 37.000: sus liderazgos dan
   anti-mermas a cualquiera, así que con ellos de líder cualquier trío con un DPS cumple.
