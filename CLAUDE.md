@@ -20,8 +20,10 @@ variante, en `docs/COMPLETITUD.md`.
   de lectura.
 - Versiones: `version.json` (versión, notas para el usuario, formato de datos). El formato sube
   cuando la app nueva necesita algo que los datos viejos no traen (`FORMATO` en `scripts/build.py`,
-  con la historia de cada uno). Los datos publicados salen de main: con un formato nuevo, el push y
-  la etiqueta `vX.Y.Z` van juntos. El workflow arma la release con la etiqueta.
+  con la historia de cada uno). Los datos publicados salen de main. Con un formato nuevo, primero va el
+  push de main, después se corre a mano el workflow de datos y, cuando termina bien, la etiqueta `vX.Y.Z`
+  va sobre ese commit de datos: así la release ya sale con los datos que pide (con la 1.0.17, la etiqueta
+  salió antes y la app quedó esperando). El workflow arma la release con la etiqueta.
 - Build: `python3 scripts/build.py`, sobre lo bajado en `work/` (sin red). Regenera `data.js`,
   `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y `docs/COMPLETITUD.md`; para con un mensaje
   si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a
@@ -65,9 +67,9 @@ variante, en `docs/COMPLETITUD.md`.
 
 Al publicar la 1.0.20 (las reglas de los equipos, los liderazgos de la Leader Skill y lo que dejaron el foro y las
 capturas en coreano):
-- Pide los datos de formato 7, que escribe `scripts/build.py`: el push y la etiqueta `v1.0.20` van juntos, y
-  después del push se corre a mano el workflow de datos. Hasta que termine, la app actualizada espera los datos
-  nuevos (como con la 1.0.17).
+- Pide los datos de formato 7, que escribe `scripts/build.py`: push de main, el workflow de datos a mano y,
+  cuando termina bien, la etiqueta `v1.0.20` sobre el commit «Datos actualizados». Si el build para, no se
+  etiqueta: la 1.0.19 sigue con sus datos de formato 6, porque no acepta los de otro formato.
 - Lo que tiene que dar el próximo build (sin `work/` no se pudo correr; las cifras son de los datos de prueba de
   formato 7 del 5 de octubre y se mueven si thanosvibs cambió algo; lo que no puede pasar es algo sin listar):
   - `SEED.SKILL_TAGS` con Zombi y Guardianes de la Galaxia, y en la sección 11 de `docs/AUDITORIA.md` las dos
