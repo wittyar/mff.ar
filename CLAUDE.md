@@ -59,13 +59,15 @@ variante, en `docs/COMPLETITUD.md`.
 - La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app
   actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
 - Lo último publicado en main es «Datos actualizados 2026-10-04» (29b1ca4), con datos de formato 6.
+- Entregada sin publicar: la 1.0.20, con datos de formato 7 (ver «Al publicar la 1.0.20»).
 
 ## Pendiente
 
-Al publicar (lo del 4 y 5 de octubre: las reglas de los equipos, los liderazgos de la Leader Skill y lo que
-dejaron el foro y las capturas en coreano):
-- `version.json` pide el formato 6 y `scripts/build.py` escribe el 7: subir `formato_datos` a 7 en el commit que
-  publica, con la etiqueta, y correr el workflow de datos después del push.
+Al publicar la 1.0.20 (las reglas de los equipos, los liderazgos de la Leader Skill y lo que dejaron el foro y las
+capturas en coreano):
+- Pide los datos de formato 7, que escribe `scripts/build.py`: el push y la etiqueta `v1.0.20` van juntos, y
+  después del push se corre a mano el workflow de datos. Hasta que termine, la app actualizada espera los datos
+  nuevos (como con la 1.0.17).
 - Lo que tiene que dar el próximo build (sin `work/` no se pudo correr; las cifras son de los datos de prueba de
   formato 7 del 5 de octubre y se mueven si thanosvibs cambió algo; lo que no puede pasar es algo sin listar):
   - `SEED.SKILL_TAGS` con Zombi y Guardianes de la Galaxia, y en la sección 11 de `docs/AUDITORIA.md` las dos
@@ -81,7 +83,7 @@ dejaron el foro y las capturas en coreano):
   - Después, verif_consistencia y la regresión tienen que pasar con los datos del repo, y verif_marcadores (con
     `work/`) tiene que actualizar sus cuentas.
 - Las listas de PvE bajan con el vínculo del líder del contexto (Knull — Ancient History, de 15.102 a 9.997): que
-  Ezequiel mire una antes de publicar («Equipos por contexto» de `docs/MODELO.md`).
+  Ezequiel mire una con los datos nuevos («Equipos por contexto» de `docs/MODELO.md`).
 
 Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
 - Liderazgos: los 34 slots sin stat (escudo de energía y físico, inmunidad al frío, robo de vida, inmunidad a todo
