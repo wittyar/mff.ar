@@ -205,6 +205,10 @@ Al abrir, la app consulta GitHub:
   Python, un aviso muestra las novedades y, confirmado, baja el parche (solo los archivos del
   programa, unos 100 KB), lo verifica, guarda el programa anterior en `programa-anterior/` y se
   reinicia sola en la misma ventana. Si cambia Python, ofrece el instalador completo.
+- **Si la app no puede leer los datos que tiene** (es de otro formato), antes de mostrar nada se fija
+  qué hay publicado: si es de su formato, lo baja y arranca; si es de uno más nuevo, ofrece la versión
+  de la app que lo lee (el parche o el instalador) o, si todavía no salió, dice que hay que esperarla;
+  si es de uno más viejo, espera a la próxima publicación de datos.
 - **Retratos e íconos** que falten: se bajan solos. Los que thanosvibs no publica se cuentan en
   Ajustes y la app muestra el nombre sin ícono.
 
@@ -526,7 +530,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
   `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
   verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
-- `.github/workflows/` — `actualizar.yml` (datos, semanal) y `publicar.yml` (release al etiquetar).
+- `.github/workflows/` — `actualizar.yml` (datos, semanal) y `publicar.yml` (release al etiquetar; corta si los datos
+  del commit etiquetado o los publicados no son del formato que pide `version.json`).
 - `MFF.bat` / `MFF.sh` — lanzadores desde el repo.
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual).
 

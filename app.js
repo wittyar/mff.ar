@@ -1159,6 +1159,13 @@ const T = {
   pd_title:           { es:'Actualizando los datos del juego', en:'Updating game data' },
   pd_note:            { es:'Esta versión de la app usa datos de otro formato: se bajan de GitHub y la ventana se recarga sola.',
                         en:'This app version uses data in another format: it is downloaded from GitHub and the window reloads on its own.' },
+  pd_nueva:           { es:'Los datos publicados son de formato {r} y esta versión de la app ({v}) usa el {a}: los lee una versión más nueva de la app. Actualizala acá abajo; tus datos y tu capa no se tocan.',
+                        en:'The published data is format {r} and this app version ({v}) uses {a}: a newer app version reads it. Update it below; your data and your layer are not touched.' },
+  pd_nueva_falta:     { es:'Los datos publicados son de formato {r} y esta versión de la app ({v}) usa el {a}, pero la versión de la app que los lee todavía no está publicada: volvé a abrir la app en un rato.',
+                        en:'The published data is format {r} and this app version ({v}) uses {a}, but the app version that reads it is not published yet: open the app again in a while.' },
+  pd_vieja:           { es:'Los datos publicados son de formato {r} y esta versión de la app usa el {a}: esperá a la próxima publicación de datos y volvé a abrir la app.',
+                        en:'The published data is format {r} and this app version uses {a}: wait for the next data publication and open the app again.' },
+  pd_err_nov:         { es:'No se pudo consultar qué hay publicado en GitHub:', en:'Could not check what is published on GitHub:' },
   sy_srv_down:        { es:'Se cerró el programa de la app.', en:'The app program closed.' },
   sy_srv_down_note:   { es:'Esta ventana sigue con lo que ya había cargado, pero tus cambios no se guardan, los retratos e íconos que no estaban cargados no aparecen y la sincronización no anda. Cerrala y abrí la app de nuevo; si vuelve a pasar, el motivo queda en registro.txt, en la carpeta de datos.',
                         en:'This window keeps what it had already loaded, but your changes are not saved, portraits and icons that were not loaded yet do not show up and sync does not work. Close it and open the app again; if it happens again, the reason is in registro.txt, in the data folder.' },
@@ -1285,10 +1292,28 @@ function recargar () {
 }
 function mb (bytes) { return (bytes / 1048576).toFixed(1).replace('.', LANG === 'es' ? ',' : '.') + ' MB'; }
 /** Primer arranque de una versión que usa otro formato de datos (o sin data.js): baja
- *  los publicados antes de mostrar nada, porque la app no puede leer los que hay. */
+ *  los publicados antes de mostrar nada, porque la app no puede leer los que hay. Primero pregunta qué hay publicado: si
+ *  los datos son de un formato más nuevo que el de esta versión, no hay nada que bajar y se ofrece la versión de la app
+ *  que los lee (el mismo aviso de siempre, con su botón o el instalador; antes de la 1.0.24 esta pantalla no lo ofrecía
+ *  y la app quedaba trabada: le pasó a la 1.0.22 el 5 de octubre de 2026); si son de uno más viejo, se espera a la
+ *  próxima publicación. */
 async function pantallaDatos () {
   const pintar = (extra) => pantallaFatal(t('pd_title'), t('pd_note') + (extra ? ' ' + extra : ''));
   pintar();
+  let n;
+  try { n = await apiLocal('/api/novedades'); }
+  catch (e) { return pintar(t('pd_err_nov') + ' ' + e.message); }
+  if (n.datos.error) return pintar(t('pd_err_nov') + ' ' + n.datos.error);
+  NOV.datos = n.datos; NOV.app = n.app; NOV.hora = new Date();
+  const r = n.datos.remoto.formato, a = ESCRITORIO.formato_datos;
+  const txt = (k) => t(k).replace('{r}', r).replace('{a}', a).replace('{v}', ESCRITORIO.version);
+  if (r > a) {
+    if (n.app.error) return pantallaFatal(t('pd_title'), txt('pd_nueva') + ' ' + t('pd_err_nov') + ' ' + n.app.error);
+    if (!n.app.hay) return pantallaFatal(t('pd_title'), txt('pd_nueva_falta'));
+    $('#app').innerHTML = `<main><div class="fatal"><h1>${h(t('pd_title'))}</h1><p>${h(txt('pd_nueva'))}</p><div id="avisos"></div></div></main>`;
+    return pintarAvisos();
+  }
+  if (r < a) return pantallaFatal(t('pd_title'), txt('pd_vieja'));
   try { await apiLocal('/api/datos/actualizar', 'POST'); }
   catch (e) { return pintar(t('av_dl_err') + ' ' + e.message); }
   const poll = setInterval(async () => {
