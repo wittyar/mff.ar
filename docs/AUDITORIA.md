@@ -1,8 +1,8 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-10-04, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-10-05, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
-La app muestra thanosvibs. Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
+La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
 En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 
@@ -19,14 +19,14 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Tipo de ataque (infobox de la wiki) | 531 | 21 | — |
 | Instinto (campo vs categoría de la wiki) | 77 | 4 | — |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
-| Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer | 119 páginas sin la pestaña |
+| Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 119 páginas sin la pestaña |
 | Artefactos a 6★ (thanosvibs vs wiki) | 209 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
 Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvibs, 2270 (39%) se pudieron comparar; 1222 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 305 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
 
-Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports en los datos; todos clasificados.
+Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; todos clasificados.
 
-Liderazgos: 5 uniformes que Leads & Supports no lista tienen el de su base, porque su Leader Skill es idéntica; 58 retratos siguen sin liderazgo aunque una hermana lo tiene (sección 12).
+Liderazgos: el build deriva de la Leader Skill de la API el de 443 variantes que Leads & Supports no publica; 35 slots no se pudieron derivar (sección 12).
 
 ## 1. Skills: daño y recarga
 
@@ -238,15 +238,31 @@ thanosvibs no publica el instinto: la app lo toma del infobox de la wiki. Acá, 
 - Retratos con skill 6 (Tier-3 o Trascendido) sin Definitiva en sus skills: 1: Black Swan (Modern, Tier-3)
 - Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 320 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
 
-## 5. Efectos de líder y soporte: restricciones corregidas
+## 5. Lo que el build corrige de thanosvibs
 
-La fuente clasifica mal estas restricciones; el build las corrige con aviso y la ficha muestra la original.
+El build corrige estos datos de thanosvibs con aviso, y la app usa el corregido.
+
+### Restricciones de liderazgos y soportes
+
+La fuente las clasifica mal; la ficha muestra la original.
 
 - `thing3` (uniform): la fuente dice Allies "Fantastic Four"; se usa Ability "Los 4 Fantásticos".
 - `thing4` (uniform): la fuente dice Allies "Fantastic Four"; se usa Ability "Los 4 Fantásticos".
 - `weaponhex1` (uniform2): la fuente dice Type "Zombie"; se usa Ability "Zombi".
 - `kang` (leader): la fuente dice Character "Kang"; se usa Character "Kang the Conqueror".
 - `kang1` (leader): la fuente dice Character "Kang"; se usa Character "Kang the Conqueror".
+
+### Nombres de C.T.P.
+
+Va el nombre que escribe la ficha del C.T.P. en el juego. El id sigue siendo el de thanosvibs: es la clave del ícono, de la guía de armado y de lo que guarda la capa.
+
+- `judgement`: thanosvibs dice «Judgement»; se usa «Judgment», como lo escribe el juego (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026)).
+
+### Texto de los artefactos
+
+Va lo que dice la ficha del artefacto en el juego; la app marca la línea y dice lo que publica thanosvibs.
+
+- `galactus` (Planet Eater): thanosvibs dice «Applies to: Self»; se usa «Applies to: Allies with Power Cosmic Ability», como dice el juego (MARVEL Future Fight — 아티팩트 도감 (los artefactos dentro del juego, en coreano; octubre de 2026)).
 
 ## 6. Artefactos
 
@@ -294,15 +310,30 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 - **Leads & Supports: reducciones de daño con signo positivo** — En 17 soportes, Leads & Supports publica la reducción de daño recibido con valor positivo: 16 «Basic Damage Received from Villains» y un «Physical Reflect Damage Received» (Black Dwarf, Dwarf Charge). La skill del mismo personaje dice siempre que reduce (Shuri, Panther God's Protection: +40 en Leads & Supports; «Decreases basic damage received from … faction by 40%» en la skill), y en otros soportes el mismo stat viene negativo. El catálogo de efectos los lee siempre como reducción. ([THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **API de skills: «Give Power» sin lo que otorga** — En 27 retratos, la skill trae «Give Power» («Acquires the following effect for … sec.») sin el efecto que sigue, y Leads & Supports dice cuál es: casi siempre «Remove All Debuffs» (Deadpool en Marvel's Savior, Odin, Thanos, Sentry, Blue Dragon, Gorr, Kang, entre otros), y también inmunidad a debuffs (Invisible Woman, First Steps), curación y reducción de daño (Jessica Jones, Jewel), curación (Groot, Bloom) o ataque físico (Toxin). La ficha muestra la skill como viene y el soporte con su efecto. ([THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports))
 - **API de skills: códigos en lugar de nombres** — Algunas descripciones traen un número donde va el nombre de un efecto o de un elemento, y la app los muestra como vienen: «Natural Enemy» («Increases damage dealt to targets with 206 effect by 50%»), «DURATION INCREASE», «ELEMENT CONVERSION», «Accumulate All True Element Damage Dealt», «REMOVE», «Selective Removal», «DEBUFF EFFECT ↓», «Counter Reflect» y «SET SKILL CD». Los de tres cifras son el id de una habilidad de la misma API (abilityId): 206 es «Removes all Debuffs», 401 «Mockery», 108 «SHOCK», 205 «WEB», 204 «SNARE» y 120 «PIERCE». 407 y 577 no son el id de ninguna habilidad de las skills; Leads & Supports nombra 407 «Debuff Removal (Instinct)» en el soporte de Kahhori (Hero's Decree). Los de cifras sueltas («1234 skill», «pure 23 damage») parecen listas de ranuras o de elementos. La wiki nombra otro: el «REMOVE» del Striker de Spider-Man le quita al rival sus buffs activos. Es probable que 407 sea el efecto de cinco artefactos, los de Aero, Punisher, Scarlet Spider, Domino y Yelena Belova («[P1]% chance to ignore all debuffs received, and an additional [P2]% of total Instinct»): es lo único de los datos que deja de lado los debuffs según el instinto. 577, del Striker de Winter Soldier, no tiene nombre en ninguna fuente que se pudo leer. ([THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Artifacts](https://thanosvibs.money/artifacts))
-- **C.T.P.: thanosvibs contra el juego** — En el juego, los números de los 15 C.T.P. coinciden con los de thanosvibs en 6★ y en los reforjados Mighty y Brilliant (lo que queda fuera de la parte visible de cada captura no se pudo ver), salvo donde thanosvibs escribe un número fijo en vez de uno por rango, que en Brilliant cambia: Steel (Authority) dura 6 s, no 5; Beatdown dura 6 s, no 5 (Energy), y se recarga en 9 s, no en 10 (Energy y Transcendence); Penetration se recarga en 7 s, no en 8 (Regeneration y Transcendence). En Transcendence, thanosvibs no da la duración de Beatdown (5 s en Mighty, 6 s en Brilliant). thanosvibs redondea además 51,75% a 51,8% (Authority, Destruction, Energy y Transcendence) y 44,85% a 44,9% (Insight). Transcendence reforjado trae Penetration y Beatdown juntos, en el juego y en thanosvibs. El texto difiere: los escudos de Regeneration y Veteran también bloquean el daño de instinto ("Blocks instinct damage"), que thanosvibs no dice; en Judgement, thanosvibs agrega que la baja de resistencias ignora la inmunidad, y el juego no; donde el juego dice "basic damage" (Energy, Destruction, Veteran, Rage, Greed e Insight), thanosvibs dice "damage"; Ambush (Greed) ignora la reducción de daño del rival ("damage decrease", como dice también el glosario de skills del juego), y thanosvibs dice reducción de defensa; Greed tiene en el juego dos opciones, que cambian qué par de clases recibe primero el aumento de daño, y thanosvibs muestra una. Dentro del juego, el reforjado de Judgement se llama "Type Amplification" y dice subir el daño de las skills "de tipo", pero el glosario lo describe como "Element Amplification", que sube el ataque de las skills con elemento, y el glosario en coreano lo llama 속성 증폭 (amplificación de elemento): es un problema de traducción del inglés (Judgement es un C.T.P. de elemento). La app muestra el texto de thanosvibs. (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps))
-- **Instinto: la regla de NamuWiki contra el infobox de la wiki** — Según NamuWiki, el instinto (en coreano 천성) depende de si el personaje es humano y de si es héroe o villano, y no cambia con el uniforme: humano y héroe, Justicia (정의); humano y villano, Crueldad (냉혹); no humano y héroe, Orden (질서); no humano y villano, Destrucción (파멸). Con la raza y el bando de la base que publica thanosvibs, la regla da el instinto del infobox en 268 de los 274 personajes que lo tienen y son héroes o villanos (Destroyer, Neutral, queda afuera). No lo da en Quicksilver, Scarlet Witch, Shadow Shell, Kahhori y Quasar (Wendell Vaughn), que tienen Orden, ni en Agent Venom, que tiene Crueldad. De los cuatro personajes cuya página contradice al infobox (sección 3), la regla da la categoría de la página en Agent Venom, Kahhori y Quasar (Justicia) y el infobox en Marvel Boy (Orden; es alienígena). A los 15 sin instinto, la regla les daría Justicia a Aero, Agent 13, Black Knight, Blue Marvel, Captain Marvel, Daredevil, Falcon, Human Torch, Invisible Woman y Wave; Orden a Gorgon; Crueldad a Mysterio y Vulture, y Destrucción a Stryfe y Supergiant. Por las seis excepciones, la regla no alcanza para afirmarlo, y la app no los completa. ([NamuWiki — MARVEL 퓨처파이트/영웅 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%98%81%EC%9B%85), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **C.T.P.: thanosvibs contra el juego** — En el juego (la ficha de cada C.T.P., en inglés y en coreano), los números de los 15 C.T.P. coinciden con los de thanosvibs en 6★ y en los reforjados Mighty y Brilliant, en lo que se ve de cada ficha, salvo donde thanosvibs escribe un número fijo en vez de uno por rango, que en Brilliant cambia: Steel (Authority) dura 6 s, no 5; Beatdown dura 6 s, no 5 (Energy), y se recarga en 9 s, no en 10 (Energy y Transcendence); Penetration se recarga en 7 s, no en 8 (Regeneration y Transcendence). En Transcendence, thanosvibs no da la duración de Beatdown (5 s en Mighty, 6 s en Brilliant). thanosvibs redondea además 51,75% a 51,8% (Authority, Destruction, Energy y Transcendence) y 44,85% a 44,9% (Insight). La ficha en coreano deja ver más de la opción fija de los Brilliant, y coincide: Competition ignora el 65% de la reducción de daño de los jefes, Energy y Veteran suben 50% el daño de los golpes en cadena, Patience baja 90% el daño recibido por reflejo, Judgment baja 50% las resistencias, Insight sube 30% el daño básico del equipo a los Supervillanos, y Liberation da +32,2% a los ataques y defensas básicos y se activa con 15% al atacar. El texto difiere: los escudos de Regeneration y Veteran también bloquean el daño de instinto ("Blocks instinct damage"), que thanosvibs no dice; en Judgment, thanosvibs dice en los tres grados que la baja de resistencias ignora la inmunidad, y el juego no lo dice en 6★ ni en Mighty, y en Brilliant sí, donde agrega que se acumula hasta −50% (la línea se lee por su mitad de arriba); donde el juego dice "basic damage" (Energy, Destruction, Veteran, Rage, Greed e Insight), thanosvibs dice "damage"; Ambush (Greed) ignora la reducción de daño del rival ("damage decrease", como dice también el glosario de skills del juego), y thanosvibs dice reducción de defensa; Greed tiene en el juego dos opciones, que cambian qué par de clases recibe primero el aumento de daño, y thanosvibs muestra una; Greed vuelve a activarse 12 s después de que se termina su efecto ("Effect reactivates in 12 sec after removed"), y thanosvibs lo pone como una recarga de 12 s; Liberation sube el daño contra todos los instintos ("All damage dealt to all Instincts"), y thanosvibs lo parte en dos pares de instintos. Dentro del juego, el reforjado de Judgment se llama "Type Amplification" y dice subir el daño de las skills "de tipo", pero el glosario lo describe como "Element Amplification", que sube el ataque de las skills con elemento, y en coreano la ficha y el glosario dicen 속성 증폭 y 속성 스킬 (elemento): es un problema de traducción del inglés (Judgment es un C.T.P. de elemento). La app muestra el texto de thanosvibs. (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 특수 장비 도감 (los C.T.P. dentro del juego, en coreano, octubre de 2026), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps))
+- **C.T.P. reforjados: una de las dos opciones de reforjado (probable), y valores por debajo de los de la ficha** — La ficha de cada C.T.P. reforjado (Mighty y Brilliant) lista dos opciones de reforjado: un efecto con barra propia (Fury, Steel, Clash…) y, en la mayoría, +20% (Mighty) o +32% (Brilliant) a todos los ataques y defensas básicos; en Transcendence, Penetration y Beatdown, y en Insight y Liberation, dos efectos para todo el equipo. thanosvibs las publica como "special" y "generic". Los tres reforjados que se ven equipados traen una sola, seguida de la opción fija: Mephisto lleva un Conquest Mighty con Clash y un Competition Mighty con Fury, y Gorr, un Conquest Brilliant con Clash; y las notas del 4 de octubre de 2023 hablan de dos C.T.P. of Insight "with different reforge options". Es probable que cada C.T.P. reforjado lleve una de las dos. Las fichas aclaran además que muestran el valor más alto que se puede obtener ("Greatest Option Value Displayed"), y los equipados pueden tener menos, también en la opción fija: el Competition Mighty de Mephisto tiene Fury 40% y 40% (la ficha dice 60% y 60%), crítico y crítico de instinto +20,55% (34%) y daño crítico de instinto 31,63% (45%); el Conquest Brilliant de Gorr, Clash 70% y 60% con recarga de 8 s (90%, 80% y 7 s). La app muestra el texto de thanosvibs, sin números. (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 특수 장비 도감 (los C.T.P. dentro del juego, en coreano, octubre de 2026), MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), [Foro oficial de MARVEL Future Fight — 10/4 Update Details (notas del 4 de octubre de 2023)](https://forum.netmarble.com/futurefight_en/view/2196/1799063), [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps))
+- **C.T.P. por contenido: la guía del juego dice uno por personaje, y la ficha tiene una ranura para PvP y otra para PvE** — La guía del juego dice que cada personaje puede equipar como máximo un C.T.P. ("A max of 1 Custom Gear can be equipped per character"; en coreano, lo mismo). La ficha del personaje tiene ranuras numeradas, y cada una dice en qué contenido se aplica su C.T.P. ("Applied Content", 적용 콘텐츠): Gorr, con una sola ranura y un "+" al lado, lleva su Conquest Brilliant en PVE y en PVP; Mephisto, con dos, lleva un Conquest Mighty en PVP y un Competition Mighty en PVE, y el detalle de sus stats se ve por ranura. Al lado del contenido hay un botón para editarlo: es probable que el contenido de cada ranura lo elija el jugador. Las fichas de los C.T.P. no nombran contenidos, así que no es un dato del C.T.P. Qué modos cuentan como PVP y cuáles como PVE no se ve. La app recomienda un C.T.P. para PvP y otro para PvE y, en cada modo, usa el del tipo del modo (modos.json). (MARVEL Future Fight — guía dentro del juego (contenidos, crecimiento e ítems, octubre de 2026), MARVEL Future Fight — 가이드, 콘텐츠 사전 y 아이템 사전 (la guía dentro del juego, en coreano: contenidos, crecimiento e ítems; octubre de 2026), MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026))
+- **Instinto: la regla de NamuWiki contra el infobox de la wiki** — Según NamuWiki, el instinto (en coreano 천성) depende de si el personaje es humano y de si es héroe o villano, y no cambia con el uniforme: humano y héroe, Justicia (정의); humano y villano, Crueldad (냉혹); no humano y héroe, Orden (질서); no humano y villano, Destrucción (파멸). Con la raza y el bando de la base que publica thanosvibs, la regla da el instinto del infobox en 268 de los 274 personajes que lo tienen y son héroes o villanos (Destroyer, Neutral, queda afuera). No lo da en Quicksilver, Scarlet Witch, Shadow Shell, Kahhori y Quasar (Wendell Vaughn), que tienen Orden, ni en Agent Venom, que tiene Crueldad. En Quicksilver y Scarlet Witch lo explica Netmarble: en las notas del 4 de noviembre de 2025 pasaron a «Human» y «Their Instinct remains as Order», así que el instinto no sigue a un cambio de raza.De los cuatro personajes cuya página contradice al infobox (sección 3), la regla da la categoría de la página en Agent Venom, Kahhori y Quasar (Justicia) y el infobox en Marvel Boy (Orden; es alienígena). A los 15 sin instinto, la regla les daría Justicia a Aero, Agent 13, Black Knight, Blue Marvel, Captain Marvel, Daredevil, Falcon, Human Torch, Invisible Woman y Wave; Orden a Gorgon; Crueldad a Mysterio y Vulture, y Destrucción a Stryfe y Supergiant. Por las seis excepciones, la regla no alcanza para afirmarlo, y la app no los completa. Desde el 15 de octubre de 2024 el juego filtra los personajes por instinto: ahí se pueden ver. ([NamuWiki — MARVEL 퓨처파이트/영웅 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%98%81%EC%9B%85), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [Foro oficial de MARVEL Future Fight — 11/4 Update Details (notas del 4 de noviembre de 2025)](https://forum.netmarble.com/futurefight_en/view/2196/1861240), [Foro oficial de MARVEL Future Fight — 10/15 Update Details (notas del 15 de octubre de 2024)](https://forum.netmarble.com/futurefight_en/view/2196/1825274))
 - **Habilidad de World Boss: para qué sirve, y NamuWiki contra thanosvibs** — En World Boss, además de los tres del equipo se eligen cinco strikers, que suben stats del equipo, bajan los del rival y aparecen a pegar cuando se usa la skill cooperativa (NamuWiki). El bono de cada uno depende de su habilidad: Liderazgo (en coreano 영웅심, «heroísmo») sube 10% el daño a los Supervillanos, Agente ignora la evasión del objetivo con 20% de probabilidad y Fuerza (괴력) sube 8% el ataque físico, entre otras. Los personajes que NamuWiki pone en Liderazgo y en Agente tienen esa habilidad de World Boss en thanosvibs, incluida Daisy Johnson solo con el uniforme Modern (Quake): es la habilidad de World Boss de cada variante. En Fuerza, NamuWiki pone además a Luke Cage, She-Hulk, Hulk, Hulk (Amadeus Cho) y Thanos, que en thanosvibs tienen otra (Defensores, Radiación Gamma o Poder Cósmico); la sección de Radiación Gamma de NamuWiki está vacía. ([NamuWiki — MARVEL 퓨처파이트/월드 보스/스트라이커 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%EC%9B%94%EB%93%9C%20%EB%B3%B4%EC%8A%A4/%EC%8A%A4%ED%8A%B8%EB%9D%BC%EC%9D%B4%EC%BB%A4), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **Adaptation (Sentinel): el texto dejó de decir «element»** — La pasiva «Mutant Suppressor» de Sentinel (etiqueta Adaptation, 3 retratos) dice en thanosvibs «#% chance to become immune to the greatest damage received.», y no se sabía si era el golpe más fuerte o un tipo de daño. Las notas oficiales del 15 de septiembre de 2020 cambiaron ese texto («Previous: become immune to the greatest element damage received by a certain rate of chance») y aclararon «The Skill Info has been changed, and the skill effect is applied as previously». La inmunidad es al elemento del mayor daño recibido, y el catálogo lo dice así. ([Foro oficial de MARVEL Future Fight — 9/15 Update Details (notas del 15 de septiembre de 2020)](https://forum.netmarble.com/futurefight_en/view/2196/1645272), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **«Bonus Damage» de las pasivas de Tier-2: el daño adicional (probable)** — Las pasivas de Tier-2 con la etiqueta «SKILL AND BONUS DAMAGE ↑» dicen «Increases Skill damage by #%, increases Bonus Damage by #%.», y las skills no usan ese término: dicen, por ejemplo, «Physical Damage: #% of Physical Attack. Additional # Physical Damage.». Una guía de mecánicas de un jugador en el foro oficial (DarkGamer0, diciembre de 2018) los une: «The first part is the Skill Damage, the second part is the Bonus Damage; both of which get boosted by certain T2 passives.». No es oficial ni trae pruebas, pero coincide con la guía de thanosvibs, que llama «Additional Damage» a la segunda parte y dice que es la única que sube con el nivel de la skill. En inglés, «Bonus damage» nombra además el daño continuo de la maldición y de la pérdida. En el juego en coreano, la pasiva de Tier-2 de Mephisto — Master of Hell dice «스킬 피해량 40% 상승, 추가 피해량 40% 상승» (los valores de la API), y sus skills escriben la segunda parte del golpe «추가 화염 피해 672»: el coreano usa la misma palabra, 추가 (adicional), para las dos (capturas 255, 261 y 285 del 4 de octubre de 2026). Sigue siendo lo probable. ([Foro oficial de MARVEL Future Fight — «An explanation to some of the mechanics found in-game» (guía de un jugador, DarkGamer0, diciembre de 2018)](https://forum.netmarble.com/futurefight_en/view/85/1317588), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026))
+- **Efectos repetidos en el equipo: en los C.T.P. vale el mayor; de los soportes no hay nada oficial** — Lo que dice Netmarble es de los C.T.P.: las notas del 7 de abril de 2026 arreglan que «the highest value was not applied when multiple identical C.T.P. effects were active simultaneously», y las del 4 de octubre de 2023, que si dos o más llevan C.T.P. of Insight con distinto reforjado se aplican los dos; el juego dice en Insight y en Liberation que su efecto para todo el equipo no se aplica dos veces. En las colecciones de equipo, de un personaje que está en varios temas vale solo la opción de colección más alta, y las opciones de equipo de todos los temas (enero de 2026). De los soportes no dice nada: una guía de un jugador de 2018 afirma, sin pruebas, que si dos compañeros tienen el mismo buff de equipo (crítico garantizado, reducción de daño) cada uno usa el suyo y el tercero el del líder, y que los aumentos del daño contra una facción y las bajas del daño recibido de ella sí se suman. La sinergia de la app cuenta cada soporte por quien lo da. ([Foro oficial de MARVEL Future Fight — 4/7 Update Details (notas del 7 de abril de 2026)](https://forum.netmarble.com/futurefight_en/view/2196/1867762), [Foro oficial de MARVEL Future Fight — 10/4 Update Details (notas del 4 de octubre de 2023)](https://forum.netmarble.com/futurefight_en/view/2196/1799063), MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), [Foro oficial de MARVEL Future Fight — 1/20 Update Details (notas del 20 de enero de 2026)](https://forum.netmarble.com/futurefight_en/view/2196/1864090), [Foro oficial de MARVEL Future Fight — «An explanation to some of the mechanics found in-game» (guía de un jugador, DarkGamer0, diciembre de 2018)](https://forum.netmarble.com/futurefight_en/view/85/1317588))
+- **Alliance Conquest: la guía en coreano y la inglesa dan reglas distintas de las defensas** — En el paso «2. 전투» (batalla) de Alliance Conquest, justo después de decir que los que conquistan una región quedan defendiéndola, la guía en coreano dice «연합원과 전투 중인 방어 병력은 공격할 수 없습니다» (traducción de Claude: no se puede atacar a una defensa que está peleando con alguien de la alianza), y la inglesa, en el mismo renglón, «Characters that are defending a region cannot be used to attack other regions». Son reglas distintas. El juego es de un estudio coreano (Netmarble), así que lo probable es que la inglesa sea una mala traducción; lo que dice, además, ya se sigue de la frase anterior: un personaje usado no vuelve hasta el reinicio. El coreano agrega que la región conquistada queda protegida «일정 시간동안» (por un tiempo; el inglés no lo dice). La app muestra la regla del coreano y aclara que la inglesa dice otra cosa. (MARVEL Future Fight — 가이드, 콘텐츠 사전 y 아이템 사전 (la guía dentro del juego, en coreano: contenidos, crecimiento e ítems; octubre de 2026), MARVEL Future Fight — guía dentro del juego (contenidos, crecimiento e ítems, octubre de 2026))
+- **Amplificación de urus: la guía del juego habla de urus; el foro y thanosvibs, de ranuras** — La guía del juego, en inglés y en coreano, describe la amplificación sobre los urus equipados: «Uru Amplification can be used to increase the stats of equipped Uru» y «all equipped Uru will attempt amplification»; en coreano, «장착된 모든 강화 우루의 증폭을 시도» (traducción de Claude: se intenta amplificar todos los urus equipados), y el dibujo rotula el resultado «증폭된 강화 우루» (uru amplificado). Lo que se cargó del foro oficial (las notas de la 4.0, de abril de 2018, y la guía de urus de diciembre de 2021) dice que lo que se amplifica es la ranura y que se puede amplificar sin urus, y la guía de thanosvibs también habla de ranuras. Que repetir pueda quitarle la amplificación a un uru («has a chance of losing its amplification»; «증폭이 해제될 수도 있습니다») no contradice al foro: cada intento vuelve a sortear qué ranuras quedan amplificadas. Se resuelve en el juego, amplificando una pieza en +20 sin urus. La app dice lo del foro y que la guía del juego habla de urus. (MARVEL Future Fight — guía dentro del juego (contenidos, crecimiento e ítems, octubre de 2026), MARVEL Future Fight — 가이드, 콘텐츠 사전 y 아이템 사전 (la guía dentro del juego, en coreano: contenidos, crecimiento e ítems; octubre de 2026), [Foro oficial de MARVEL Future Fight — 4.0 Update Details (notas de abril de 2018)](https://forum.netmarble.com/futurefight_en/view/2196/1118083), [Foro oficial de MARVEL Future Fight — Enchanted Uru Guide (guía oficial, diciembre de 2021)](https://forum.netmarble.com/futurefight_en/view/2524/1735745), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **La guía del juego: lo que el coreano dice distinto del inglés** — Además de lo de Alliance Conquest (hallazgo aparte), la guía del juego en coreano y la inglesa difieren en cinco cosas que la app no muestra. Mejora de uniforme: el inglés dice «You must have a Specific Uniform of another character to do this»; el coreano, «다른 영웅의 특정 유니폼을 가지고 있지 않으면 강화해도 추가 옵션을 획득할 수 없습니다» (traducción de Claude: si no tenés el uniforme de otro personaje, mejorarlo no da la opción adicional), que es lo que dice la guía de thanosvibs de las opciones de uniforme. Epic Quest: en inglés, el protagonista se recibe al empezarla («When you begin an Epic Quest»); en coreano, al completarla («에픽 퀘스트를 완료하면»). Combinar ISO-8: el inglés pide una piedra en +5 («If a specific ISO-8 has been enhanced to +5, you may combine 2»), el coreano dos («최대 단계(+5)까지 강화한 ISO-8 두 개»), y el dibujo, en los dos idiomas, muestra las dos en +5; lo curado en guia.json (iso.mejora, que la app no muestra) dice «con la primera en +5». Piedras de invocación de Dimension Rift: el glosario de ítems en inglés dice que salen de Story («Summon Stones can be acquired in Story»); el coreano, de Dimension Rift (획득처: 차원의 틈), como el diccionario de contenidos en los dos idiomas. Trascender el Potencial: el inglés dice «can Awaken their Potential» donde el coreano dice 잠재력 초월 (trascender). (MARVEL Future Fight — guía dentro del juego (contenidos, crecimiento e ítems, octubre de 2026), MARVEL Future Fight — 가이드, 콘텐츠 사전 y 아이템 사전 (la guía dentro del juego, en coreano: contenidos, crecimiento e ítems; octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **C.T.P. of Judgment: el juego y thanosvibs lo escriben distinto, y la app usa el del juego** — El juego escribe «C.T.P. of Judgment» en la ficha de los tres grados (6★, Mighty y Brilliant); thanosvibs, «Judgement». La app usa el del juego (Ezequiel, 5 de octubre de 2026): el build corrige el nombre de thanosvibs con aviso, y la sección 5 lo lista. El id (judgement) sigue siendo el de thanosvibs, porque es la clave del ícono, de la guía de armado y de lo que guarda la capa. Los textos de las fuentes que lo nombran van como los escriben: las descripciones y las rotaciones de thanosvibs, y la leyenda de la guía de armado de Cynicalex («Elemental characters: Judgement»). En coreano es 심판의 C.T.P. (심판, «juicio»), así que la captura en coreano no decide la ortografía inglesa. (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 특수 장비 도감 (los C.T.P. dentro del juego, en coreano, octubre de 2026), [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps), [Cynicalex Mega Guides — Character Building Guide](https://docs.google.com/spreadsheets/d/1H0Hcl9oVZV9gA266xkJAqPv5bD1qwqhC5NeVbLj_-FE/edit?gid=190850363#gid=190850363))
+- **Mephisto: Leads & Supports publica para la base el liderazgo de Master of Hell (probable)** — En el juego, el liderazgo de Mephisto con el uniforme Master of Hell (지옥 군주, Lord of Hell) tiene dos partes para los aliados del bando Supervillano: fuego +30%, sin activación, y, al recibir un debuff, quitar todos los debuffs (12 s), con recarga de 20 s. La segunda es el «Give Power» que la API no publica, y la app la toma del juego. Son, valor por valor, los dos liderazgos que Leads & Supports publica para la base (Soul Contract), cuya Leader Skill en la API es otra: una sola parte, al recibir un debuff, con quitar los debuffs 11 s y fuego +30% 15 s, y recarga de 20 s (la verificación de la sección 12 la lista como distinta). Además, el efecto de uniforme de Master of Hell dice que cambia el efecto de Soul Contract («영혼의 계약 스킬의 효과 변경»): en el juego, la base no tiene el liderazgo del uniforme. Es probable que Leads & Supports le haya puesto a la base el liderazgo de Master of Hell. Ninguna captura muestra Soul Contract en el juego, que lo confirmaría. La app muestra para la base lo que publica Leads & Supports. (MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports))
+- **Armageddon (Young Apocalypse): en el juego, su quemadura también baja las defensas** — La Definitiva de Apocalypse con el uniforme Marvel Animation's X-Men '97 (Young Apocalypse), Armageddon, aplica en el juego una quemadura que además baja todas las defensas básicas: «화상 : 1초마다 30% 추가 화염 피해, 10%만큼 모든 일반 방어력을 감소(5 초)» (traducción de Claude: quemadura, 30% de daño de fuego adicional por segundo y todas las defensas básicas −10%, por 5 s; captura 295 del 4 de octubre de 2026). La API de skills dice solo «Burn: Deals additional 30% Flame Damage every 1 sec.» (5 s), así que la app no cuenta la baja de defensas. (MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **Las habilidades dan un efecto propio, según el juego** — En el detalle de stats del personaje (영웅 상세 정보), cada ícono de habilidad abre un globo con un efecto para él (capturas del 4 de octubre de 2026; las 301 a 303, que se habían tomado por bonos de equipo, son estos globos): Durabilidad (내구력), todas las defensas básicas +5%; Maldad Pura (사악), daño básico a la facción SUPER HERO (영웅 진영) +4%; Movimiento Rápido (고속 이동), velocidad de movimiento +3%, en Apocalypse — Marvel Animation's X-Men '97 (Young Apocalypse); Magia (마법), ataque de energía +4%; Fuego Infernal (지옥불), daño de fuego +10%, y Maldad Pura, en Mephisto — Master of Hell. Las tres de cada uno son sus habilidades en la app. thanosvibs no lo publica y la app no lo tiene: las habilidades solo restringen liderazgos, soportes y artefactos. No se sabe en qué contenidos vale ni qué dan las demás habilidades. (MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **Strikers de Mephisto: el juego tiene al menos 91; la app, 90** — La pestaña Striker de la ficha de Mephisto en el juego (capturas 379 a 386 del 4 de octubre de 2026) muestra al menos 91 strikers distintos: son ocho capturas, siete de 12 retratos y una de 11, y la última fila de la séptima se repite como primera de la octava (comparadas por píxeles). La grilla, de a cuatro, termina en una fila de tres; si el desplazamiento salteó filas, hay más. No pueden ser los 90 que la app toma de la pestaña Striker de la wiki (41 cuando él ataca y 49 cuando lo atacan): a la app le falta al menos uno. Las capturas muestran solo retratos, así que no se sabe cuál. La cabecera de la pestaña confirma que el striker tiene que ir en el mismo equipo: «같은 팀으로 편성할 경우 특수 조건에서 발동되며» (traducción de Claude: si se lo arma en el mismo equipo, se activa en condiciones especiales). (MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), Future Fight Wiki — pestaña Striker de cada personaje)
+- **Opciones de uniforme: en Mítico, el juego muestra ataques y defensas +40%** — Con el uniforme Master of Hell de Mephisto en el grado más alto (신화, Mítico: «최고 등급»), la pantalla de opciones del uniforme muestra, arriba de las cinco opciones, «모든 일반 공격력 상승 +40%» y «모든 일반 방어력 상승 +40%»: todos los ataques y todas las defensas básicas +40% (captura 277 del 4 de octubre de 2026). La nota de la app sobre la mejora del uniforme, de la guía de thanosvibs, dice +2% por mejora (+3% en los de costo doble). La app no lo explica. (MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **Artefacto de Annihilus: el juego dice que se recarga en 300 s, y la app no lo tiene** — La ficha del artefacto de Annihilus en el códice de artefactos del juego (아티팩트 도감: 네거티브 존의 지배자, Lord of the Negative Zone; captura 211 del 4 de octubre de 2026) termina con «재사용 대기시간 300초»: se recarga en 300 s. Antes dice lo mismo que thanosvibs (al morir, revive con 80% de la vida, más 0,5% del instinto total, hasta 100%). thanosvibs no publica la recarga, así que la app no la muestra. La página Artifact de la wiki trae un 300 que thanosvibs no tiene (sección 6): es probable que sea esta recarga. (MARVEL Future Fight — 아티팩트 도감 (los artefactos dentro del juego, en coreano; octubre de 2026), [THANO$VIB$ — Artifacts](https://thanosvibs.money/artifacts))
 
 ## 8. Facción, tipo o raza que la fuente no publica
 
 thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: `uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en el orden en que aparecen. En la ficha, el valor completado va subrayado y dice de dónde salió.
 
-De los 249: 3 a mano, 131 de Leads & Supports, 38 de la wiki y 77 sin resolver (la app los muestra "sin especificar").
+De los 249: 4 a mano, 131 de Leads & Supports, 38 de la wiki y 76 sin resolver (la app los muestra "sin especificar").
 
 - **Valores de Leads & Supports distintos de la wiki (gana Leads & Supports):** 1022870012, 1022870013
 
@@ -350,7 +381,6 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Malekith — War of the Realms | Dark Blessing | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002036011 |
 | Maximus | Mad Scientist | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1011504012 |
 | Mephisto | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024470012 |
-| Mephisto — Master of Hell | Hell Fire | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1224401102 |
 | Mephisto — Master of Hell | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024493012 |
 | Molten Man | Fire Eater | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 30%.` | 1019504012 |
 | Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243012 |
@@ -390,7 +420,7 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 
 ## 9. Efectos que el catálogo no clasifica
 
-Cada etiqueta de efecto de las skills y cada stat de Leads & Supports apunta a efectos del catálogo (scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs agregue y el catálogo no tenga se lista acá hasta que se clasifique a mano.
+Cada etiqueta de efecto de las skills y cada stat de Leads & Supports y de los bonos de equipo apunta a efectos del catálogo (scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs o la wiki agreguen y el catálogo no tenga se lista acá hasta que se clasifique a mano; mientras tanto, la app lo cuenta para todos y lo dice.
 
 Ninguno: todo lo que traen los datos está clasificado.
 
@@ -602,77 +632,341 @@ Esa fila no cuenta.
 - Rocket Raccoon: no se lee la probabilidad o cuándo aparece (`| style="text-align:left"|[[Image:LincolnCampbellIcon.png|30px]] Lincoln Campbell ||  chance to appear when attacking.`)
 - Vision: no se lee la probabilidad o cuándo aparece (`| style="text-align:left"|[[Image:SpiderGwenIcon.png|30px]] Spider-Gwen || 19% chance to appear when attack.`)
 
-## 12. Liderazgos que Leads & Supports no lista
+### Probabilidades imposibles (2)
 
-Leads & Supports de thanosvibs publica el liderazgo de cada retrato con los uniformes que comparten su entrada, y a algunos uniformes no los lista. Si la Leader Skill de uno de ellos, en la API de skills, es idéntica a la de su base, el build le copia el liderazgo de la base (Ezequiel, 2 de octubre de 2026): solo el liderazgo (`leader` y `leader2`), no los soportes. Idéntica es igual en todo lo que la API publica de ella, salvo sus ids: el nombre, la recarga y, en cada etapa, el objetivo, la activación, el elemento y cada efecto, con su etiqueta, su texto (sin negritas ni espacios de más) con sus números, su duración y su intervalo. Una Leader Skill con un valor que la API no publica (`$TIME`, `$HEROSUBTYPE1`) no se puede comparar, así que no se completa. Si otra hermana con la misma Leader Skill tiene otro liderazgo, el build para (scripts/fuentes.py, `completar_liderazgos`).
+Más de 100%: un error de la wiki. No se corrige ni se topea: la app la muestra tal cual, marcada como dato imposible de la fuente. Hay que verla en el juego.
 
-### Completados (5)
+- Daken: Doctor Octopus, 219% cuando lo atacan
+- Molecule Man: Morgan le Fay, 120% cuando él ataca
 
-- Ghost — Marvel Studios' Thunderbolts* (`ghost2`) ← Ghost (`ghost`)
-- Knull — Ancient History (`knull1`) ← Knull (`knull`)
-- Moon Girl — Monsters Unleashed! (MFF Variant) (`moongirl1`) ← Moon Girl (`moongirl`)
-- Sentinel — Stark Sentinels Mk II (`sentinel2`) ← Sentinel (`sentinel`)
-- Shang-Chi — Marvel Animation's Marvel Zombies (`shangchi2`) ← Shang-Chi (`shangchi`)
+## 12. Liderazgos que Leads & Supports no publica
 
-### Sin completar aunque una hermana tiene liderazgo (58)
+Leads & Supports de thanosvibs no publica el liderazgo de todas las variantes. Los que no publica los deriva el build de la Leader Skill de la API de skills (Ezequiel, 4 de octubre de 2026; scripts/liderazgos.py, explicado en docs/MODELO.md) y van en los datos con `"src": "api"`: la app dice «según la skill del juego». La Leader Skill se parte en los dos slots de liderazgo de Leads & Supports, y cada efecto, cada activación y la condición de cada efecto pasan a lo que publica Leads & Supports según las variantes que tienen las dos cosas (la correspondencia aprendida, abajo) o, lo que Leads & Supports no publica en ningún liderazgo, según scripts/contenido/liderazgos_api.json (la correspondencia a mano: un stat del catálogo para cada efecto, y la activación con el texto de la API). Todo o nada por slot: si algo no cierra, ese slot no se deriva y va abajo con su motivo. Lo derivado no lleva «Notable», que es una marca de thanosvibs que la API no tiene.
 
-En qué difiere su Leader Skill (la suya / la de la otra): si la base tiene liderazgo, de la de la base, y se nombran las hermanas que la tienen igual; si no, de la de la hermana con liderazgo más parecida. Las hermanas con la misma Leader Skill van juntas.
+411 variantes tienen liderazgo de Leads & Supports y 477 no. El build deriva el de 443 (461 slots); 35 slots, de 35 variantes, no se pudieron derivar.
 
-- Arachknight (`arachknight`): es la base, y la regla es para uniformes. Contra `arachknight1`: nombre: Spider-Totem / Guardian of Dimensions; etapa 1, objetivo: All Allies / Infinity Warps Allies\nActivates when: Infinity Warps type Ally enters; etapa 1, efecto 1: «Dodge Rate increases by 6%.» (DODGE ↑) / «Increases all Basic Attacks by 45%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 2: «Decreases Debuff Duration by 24%.» (CROWD CONTROL TIME ↓) / «Increases all Basic Attacks by 55%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 3: — / «Increases all Basic Attacks by 65%» (ALL BASIC ATTACKS INCREASE).
-- Blade (`blade`): es la base, y la regla es para uniformes. Contra `blade3`: nombre: Daywalker / Master Hunter; recarga: 25 s / 0 s; etapa 1, objetivo: All Allies / Weapon Master Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 10 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Blade — 70's Classic (`blade1`): su base no tiene liderazgo en Leads & Supports. Contra `blade3`: nombre: Daywalker / Master Hunter; recarga: 25 s / 0 s; etapa 1, objetivo: All Allies / Weapon Master Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 10 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Blade — Avengers (`blade2`): su base no tiene liderazgo en Leads & Supports. Contra `blade3`: nombre: Daywalker / Master Hunter; recarga: 25 s / 0 s; etapa 1, objetivo: All Allies / Weapon Master Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 10 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Captain America (`captainamerica`): es la base, y la regla es para uniformes. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Avengers 3099 (`captainamerica10`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Avengers: Age of Ultron (`captainamerica1`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Enter the Phoenix (`captainamerica12`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Galactic Talon (`captainamerica15`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: idéntica.
-- Captain America — Hydra Supreme (`captainamerica11`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Marvel NOW! (`captainamerica5`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Marvel Studios' Avengers: Endgame (`captainamerica9`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Marvel Studios' Avengers: Infinity War (`captainamerica6`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Marvel Studios' Captain America: Civil War (`captainamerica4`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Marvel Studios' Captain America: The Winter Soldier (`captainamerica3`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Secret Wars: 2099 (`captainamerica2`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Captain America — Team Suit (`captainamerica8`): su base no tiene liderazgo en Leads & Supports. Contra `captainamerica13`, `captainamerica14`: etapa 1, efecto 1: «30% increase of HP.» (MAX HP ↑) / «45% increase of HP.» (MAX HP ↑).
-- Deadpool (`deadpool`): es la base, y la regla es para uniformes. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
-- Deadpool — 30th Anniversary Black Version (`deadpool4`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
-- Deadpool — 30th Anniversary White Version (`deadpool5`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
-- Deadpool — Holiday Party (`deadpool3`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
-- Deadpool — Lady Deadpool (`deadpool2`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
-- Deadpool — X-Force (`deadpool1`): su base no tiene liderazgo en Leads & Supports. Contra `deadpool8`: nombre: Natural Born Leader?! / Marvel's Savior; etapa 1, efecto 1: «6% increase of Recovery Rate.» (RECOVERY RATE ↑) / «Increases all Basic Attacks by 40%, all Basic Defenses by 40%, and all Speeds by 15%.» (Increases all basic stats); etapa 1, efecto 2: «Increases all Basic Attacks by 35%, all Basic Defenses by 35%, and all Speeds by 10%.» (Increases all basic stats) / «Acquires the following effect for $TIME sec.» (Give Power).
-- Dormammu (`dormammu`): es la base, y la regla es para uniformes. Contra `dormammu1`: etapa 1, objetivo: All Allies / Super Villain Allies; etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction).
-- Gamora (`gamora`): es la base, y la regla es para uniformes. Contra `gamora3`: nombre: Most Dangerous Woman / Assassination Technique; etapa 1, efecto 1: «Attack Speed increases by 13.5%.» (ATTACK SPEED ↑) / «55% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: — / «Increases All Speeds by 6%.» (ALL SPEED ↑).
-- Gamora — All-New, All-Different (`gamora1`): su base no tiene liderazgo en Leads & Supports. Contra `gamora3`: nombre: Most Dangerous Woman / Assassination Technique; etapa 1, efecto 1: «Attack Speed increases by 13.5%.» (ATTACK SPEED ↑) / «55% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: — / «Increases All Speeds by 6%.» (ALL SPEED ↑).
-- Gamora — Guardians of the Galaxy 2 (`gamora2`): su base no tiene liderazgo en Leads & Supports. Contra `gamora3`: nombre: Most Dangerous Woman / Assassination Technique; etapa 1, efecto 1: «Attack Speed increases by 13.5%.» (ATTACK SPEED ↑) / «55% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: — / «Increases All Speeds by 6%.» (ALL SPEED ↑).
-- Green Goblin (`greengoblin`): es la base, y la regla es para uniformes. Contra `greengoblin2`: etapa 1, objetivo: All Allies / Dark Avengers Allies; etapa 1, efecto 1: «Increases Poison Resist by 50%.» (POISON RESIST ↑) / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Green Goblin — Gold Goblin (`greengoblin5`): su base no tiene liderazgo en Leads & Supports. Contra `greengoblin3`, `greengoblin4`: idéntica.
-- Green Goblin — Ultimate (`greengoblin1`): su base no tiene liderazgo en Leads & Supports. Contra `greengoblin2`: etapa 1, objetivo: All Allies / Dark Avengers Allies; etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Heimdall (`heimdall`): es la base, y la regla es para uniformes. Contra `heimdall1`: etapa 1, efecto 1: «Increases all Basic Defenses by 36%.» (ALL BASIC DEFENSES INCREASE) / «Increases all Basic Defenses by 40%.» (ALL BASIC DEFENSES INCREASE); etapa 1, efecto 2: — / «Ignores target's Dodge Rate by 30%.» (IGNORE DODGE).
-- Hulk — Fear Itself (`hulk7`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑).
-- Hulk — Immortal Hulk (`hulk6`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑).
-- Hulk — Marvel Studios' Spider-Man: Brand New Day (`hulk9`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: nombre: Banner's Biotech / Hulk Roar; etapa 1, objetivo: All Allies for the first effect, Self for the second effect / All Allies; etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: «30% increase of HP.» (MAX HP ↑) / —.
-- Hulk — Titan (`hulk8`): su Leader Skill no es idéntica a la de su base. Contra `hulk`, `hulk1`, `hulk2`, `hulk3`, `hulk4`, `hulk5`: nombre: Titan's Vigor / Hulk Roar; etapa 1, objetivo: All Allies for the first effect, Self for the second effect / All Allies; etapa 1, efecto 1: «Increases all Basic Defenses by 24%.» (ALL BASIC DEFENSES INCREASE) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑); etapa 1, efecto 2: «30% increase of HP.» (MAX HP ↑) / —.
-- Human Torch — Classic (`humantorch2`): su Leader Skill no es idéntica a la de su base. Contra `humantorch`, `humantorch1`: etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases Flame Damage by 25%.» (FLAME DAMAGE ↑).
-- Human Torch — Marvel Studios' The Fantastic Four: First Steps (`humantorch4`): su Leader Skill no es idéntica a la de su base. Contra `humantorch`, `humantorch1`: etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases Flame Damage by 25%.» (FLAME DAMAGE ↑).
-- Human Torch — The Fall of the Fantastic Four (`humantorch3`): su Leader Skill no es idéntica a la de su base. Contra `humantorch`, `humantorch1`: etapa 1, efecto 1: «Increases Flame Resist by 50%.» (FLAME RESIST ↑) / «Increases Flame Damage by 25%.» (FLAME DAMAGE ↑).
-- Invisible Woman (`invisiblewoman`): es la base, y la regla es para uniformes. Contra `invisiblewoman3`, `invisiblewoman4`: nombre: Strong Willpower / Motherly Guidance; etapa 1, efecto 1: «Increases Mind Resist by 50%.» (MIND RESIST ↑) / «45% increase of Energy Attack.» (ENERGY ATTACK ↑).
-- Invisible Woman — Future Foundation (`invisiblewoman1`): su base no tiene liderazgo en Leads & Supports. Contra `invisiblewoman3`, `invisiblewoman4`: nombre: Strong Willpower / Motherly Guidance; etapa 1, efecto 1: «Increases Mind Resist by 50%.» (MIND RESIST ↑) / «45% increase of Energy Attack.» (ENERGY ATTACK ↑).
-- Iron Fist (`ironfist`): es la base, y la regla es para uniformes. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Iron Fist — All-New, All-Different (`ironfist2`): su base no tiene liderazgo en Leads & Supports. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Iron Fist — Marvel Studios' Iron Fist (`ironfist3`): su base no tiene liderazgo en Leads & Supports. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Iron Fist — New Avengers (`ironfist1`): su base no tiene liderazgo en Leads & Supports. Contra `ironfist4`: recarga: 40 s / 0 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% chance when attacking / —; etapa 1, efecto 1: «Attack Speed increases by 12%.» (ATTACK SPEED ↑), 30 s / «Increases all Basic Attacks by 60%» (ALL BASIC ATTACKS INCREASE).
-- Luke Cage (`lukecage`): es la base, y la regla es para uniformes. Contra `lukecage3`: recarga: 50 s / 20 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% rate when hit / when debuffed; etapa 1, efecto 1: «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 11 s / «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 6 s; etapa 1, efecto 2: — / «Removes all Debuffs.» (Removes all Debuffs.), 12 s.
-- Luke Cage — All-New, All-Different (`lukecage1`): su base no tiene liderazgo en Leads & Supports. Contra `lukecage3`: recarga: 40 s / 20 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% rate when hit / when debuffed; etapa 1, efecto 1: «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 12 s / «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 6 s; etapa 1, efecto 2: — / «Removes all Debuffs.» (Removes all Debuffs.), 12 s.
-- Luke Cage — Marvel Studios' Luke Cage (`lukecage2`): su base no tiene liderazgo en Leads & Supports. Contra `lukecage3`: recarga: 40 s / 20 s; etapa 1, objetivo: All Allies / Defenders Allies; etapa 1, activación: 25% rate when hit / when debuffed; etapa 1, efecto 1: «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 12 s / «100% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY), 6 s; etapa 1, efecto 2: — / «Removes all Debuffs.» (Removes all Debuffs.), 12 s.
-- Magik (`magik`): es la base, y la regla es para uniformes. Contra `magik2`, `magik3`: nombre: Darkchylde / Limbo Leader; etapa 1, objetivo: All Allies / Mutant Allies; etapa 1, efecto 1: «Critical Rate increases by 13%.» (CRITICAL RATE ↑) / «Increases all Basic Attacks by 40%» (ALL BASIC ATTACKS INCREASE).
-- Magik — Phoenix Five (`magik1`): su base no tiene liderazgo en Leads & Supports. Contra `magik2`, `magik3`: nombre: Darkchylde / Limbo Leader; etapa 1, objetivo: All Allies / Mutant Allies; etapa 1, efecto 1: «Critical Rate increases by 13%.» (CRITICAL RATE ↑) / «Increases all Basic Attacks by 40%» (ALL BASIC ATTACKS INCREASE).
-- Mephisto — Master of Hell (`mephisto1`): su Leader Skill no es idéntica a la de su base. Contra `mephisto`: nombre: Lord of Hell / Soul Contract; recarga: 0 s / 20 s; etapa 1, activación: — / when debuffed; etapa 1, efecto 1: «Increases Flame Damage by 30%.» (FLAME DAMAGE ↑) / «Removes all Debuffs.» (Removes all Debuffs.), 11 s; etapa 1, efecto 2: «Acquires the following effect for $TIME sec.» (Give Power) / «Increases Flame Damage by 30%.» (FLAME DAMAGE ↑), 15 s.
-- Rachel Summers (`rachelsummers`): es la base, y la regla es para uniformes. Contra `rachelsummers1`: nombre: Mental Enhancement / Phoenix's Majesty; etapa 1, objetivo: All Allies / Phoenix Force Allies; etapa 1, efecto 2: — / «Acquires the following effect for $TIME sec.» (Give Power).
-- Rescue (`rescue`): es la base, y la regla es para uniformes. Contra `rescue1`, `rescue2`: etapa 1, activación: when HP is below 30% / when HP is below 99%; etapa 1, efecto 1: «Creates a Shield equal to 20% of Max HP» (SHIELD), 10 s / «Creates a Shield equal to 50% of Max HP» (SHIELD), 5 s.
-- Sentry — Marvel Studios' Thunderbolts* (`sentry2`): su Leader Skill no es idéntica a la de su base. Contra `sentry`: recarga: 0 s / 20 s; etapa 1, activación: — / when debuffed; etapa 1, efecto 1: «Increases all Basic Attacks by 30%» (ALL BASIC ATTACKS INCREASE) / «Removes all Debuffs.» (Removes all Debuffs.), 12 s; etapa 1, efecto 2: «Acquires the following effect for $TIME sec.» (Give Power) / «Increases all Basic Attacks by 30%.» (Increases all Basic Attacks), 12 s. Contra `sentry1`: el mismo texto, con valores que la API no publica.
-- Spider-Man (Miles Morales) (`milesmorales`): es la base, y la regla es para uniformes. Contra `milesmorales2`: etapa 1, objetivo: All Allies / Target ID: 72; etapa 1, efecto 2: — / «Increases all Basic Attacks by 70%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 3: — / «Decreases basic damage received by 20%.» (Decreases all basic damage).
-- Spider-Man (Miles Morales) — Into the Spider-Verse (`milesmorales1`): su base no tiene liderazgo en Leads & Supports. Contra `milesmorales2`: etapa 1, objetivo: All Allies / Target ID: 72; etapa 1, efecto 2: — / «Increases all Basic Attacks by 70%» (ALL BASIC ATTACKS INCREASE); etapa 1, efecto 3: — / «Decreases basic damage received by 20%.» (Decreases all basic damage).
-- Sword Master (`swordmaster`): es la base, y la regla es para uniformes. Contra `swordmaster1`: etapa 1, efecto 1: «Increases all Basic Defenses by 35%.» (ALL BASIC DEFENSES INCREASE) / «Increases all Basic Defenses by 50%.» (ALL BASIC DEFENSES INCREASE); etapa 1, efecto 2: — / «30% increase of HP.» (MAX HP ↑).
-- Thane — Phoenix Force (`thane1`): su Leader Skill no es idéntica a la de su base. Contra `thane`: recarga: 20 s / 25 s.
-- Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): su Leader Skill no es idéntica a la de su base. Contra `wintersoldier`, `wintersoldier1`, `wintersoldier2`, `wintersoldier3`, `wintersoldier4`: etapa 1, efecto 1: «45% increase of Physical Attack.» (PHYSICAL ATTACK ↑) / «30% increase of Physical Attack.» (PHYSICAL ATTACK ↑). Contra `wintersoldier5`: idéntica.
+### Correspondencia aprendida
+
+De las variantes con liderazgo de Leads & Supports, efecto por efecto: lo que da cada uno de los 34 efectos de la API (el número del texto, con su signo) y en cuántas variantes se ve.
+
+| Efecto de la API | Leads & Supports | Variantes |
+|---|---|---|
+| «Increases all Basic Attacks by #%» (ALL BASIC ATTACKS INCREASE) | All Basic Attacks +n1 | 117 |
+| «#% increase of Energy Attack.» (ENERGY ATTACK ↑) | Energy Attack +n1 | 70 |
+| «#% increase of Physical Attack.» (PHYSICAL ATTACK ↑) | Physical Attack +n1 | 57 |
+| «Ignores target's Dodge Rate by #%.» (IGNORE DODGE) | Ignore Dodge +n1 | 39 |
+| «Removes all Debuffs.» (Removes all Debuffs. ) | Remove All Debuffs | 37 |
+| «#% increase of HP.» (MAX HP ↑) | HP +n1 | 36 |
+| «Increases all Basic Defenses by #%.» (ALL BASIC DEFENSES INCREASE) | All Basic Defenses +n1 | 27 |
+| «Increases all Basic Attacks by #%, all Basic Defenses by #%, and all Speeds by #%.» (Increases all basic stats) | All Basic Attacks +n1, All Basic Defenses +n2, All Speeds +n3 | 16 |
+| «Increases Flame Damage by #%.» (FLAME DAMAGE ↑) | Fire Damage +n1 | 14 |
+| «Increases All Debuffs effect by #%.» (DEBUFF EFFECT ↑) | All Debuffs Effect +n1 | 10 |
+| «Decreases Debuff Duration by #%.» (CROWD CONTROL TIME ↓) | Debuff Duration −n1 | 9 |
+| «Increases all Basic Attacks by #%.» (Increases all Basic Attacks) | All Basic Attacks +n1 | 7 |
+| «Critical Damage increases by #%.» (CRITICAL DAMAGE ↑) | Critical Damage +n1 | 6 |
+| «Critical Rate increases by #%.» (CRITICAL RATE ↑) | Critical Rate +n1 | 6 |
+| «Increases Lightning Damage by #%.» (LIGHTNING DAMAGE ↑) | Lightning Damage +n1 | 6 |
+| «#% increase of Energy Defense.» (ENERGY DEFENSE ↑) | Energy Defense +n1 | 5 |
+| «Dodge Rate increases by #%.» (DODGE ↑) | Dodge +n1 | 5 |
+| «Increases All Speeds by #%.» (ALL SPEED ↑) | All Speeds +n1 | 5 |
+| «Increases basic damage dealt to $HEROSUBTYPE# types by #%.» (INCREASES BASIC DAMAGE BASED ON CHARACTER'S GENDER), con Masculino | Basic Damage Dealt to Males +n2 | 5 |
+| «Immunity to BURN Effect.» (RESIST) | Burn Immunity | 4 |
+| «Increases Mind Resist by #%.» (MIND RESIST ↑) | Mind Resist +n1 | 4 |
+| «Creates a Shield equal to #% of Max HP» (SHIELD) | Max HP Shield +n1 | 2 |
+| «Increases All Resistances by #%.» (ALL RESISTANCE ↑) | All Resistances +n1 | 2 |
+| «Increases Mind Damage by #%.» (MIND DAMAGE ↑) | Mind Damage +n1 | 2 |
+| «Recovers #% of HP.» (HP RECOVERY) | Heal +n1 | 2 |
+| «#% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY) | Physical Immunity Chance +n1 | 1 |
+| «#% increase of Recovery Rate.» (RECOVERY RATE ↑) | Recovery Rate +n1 | 1 |
+| «Decreases Chain Hit damage by #% when attacked.» (CHAIN HIT DMG RECEIVED ↓) | Chain Hit Damage Received −n1 | 1 |
+| «Decreases Skill Cooldown by #%.» (COOLDOWN DURATION ↓) | Skill Cooldown −n1 | 1 |
+| «Ignores Damage Increase/Decrease effect between self and opposing faction» (Ignores Damage Increase effect between factions) | Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction | 1 |
+| «Increases Cold Damage by #%.» (COLD DAMAGE ↑) | Cold Damage +n1 | 1 |
+| «Increases Poison Damage by #%.» (POISON DAMAGE ↑) | Poison Damage +n1 | 1 |
+| «Increases basic damage dealt to $HEROSUBTYPE# faction by #%.» (Increases basic damage based on character's faction), con Superhéroe | Basic Damage Dealt to Heroes +n2 | 1 |
+| «Increases basic damage dealt to boss types by #%.» (Increases basic damage when attacking boss types) | Basic Damage Dealt to Boss Types +n1 | 1 |
+
+`n1`, `n2`...: el primer número del texto, el segundo... La duración es la del efecto, si la publica.
+
+Activaciones: «when HP is below 99%» → «When HP is below 99%» (2 variantes); «when debuffed» → «When Debuffed» (37 variantes).
+
+Condición de cada efecto: «All Allies\nActivates when: Combat Type Ally enters» → when 1 Combat, when 2 Combats, when 3 Combats (2 variantes); «Self\nActivates when: Mutant Ally enters» → when 1 Mutant, when 2 Mutants, when 3 Mutants (1 variante).
+
+### Correspondencia a mano
+
+De scripts/contenido/liderazgos_api.json: lo que Leads & Supports no publica en ningún liderazgo. Cada efecto, con su texto de la API, da un stat del catálogo con el número del texto, y cada activación va con el texto de la API. Variantes: las que lo tienen en la Leader Skill.
+
+| Efecto de la API | Stat | Variantes |
+|---|---|---|
+| «Attack Speed increases by #%.» (ATTACK SPEED ↑) | Attack Speed +n1 | 8 |
+| «Increases Flame Resist by #%.» (FLAME RESIST ↑) | Fire Resist +n1 | 14 |
+| «#% Ignore Defense» (IGNORE DEFENSE) | Ignore Defense +n1 | 2 |
+| «Increases Lightning Resist by #%.» (LIGHTNING RESIST ↑) | Lightning Resist +n1 | 13 |
+| «#% increase of Physical Defense.» (PHYSICAL DEFENSE ↑) | Physical Defense +n1 | 24 |
+| «Super Armor, increases all Basic Defenses by #%.» (SUPER ARMOR) | Super Armor, All Basic Defenses +n1 | 3 |
+
+Activaciones: «#% chance when attacking» (12 variantes); «#% rate when dodging» (5 variantes); «#% rate when hit» (27 variantes); «When enemies are below #% HP,» (1 variante); «when dealing Critical Attack» (15 variantes); «when dodging» (4 variantes); «when HP is below #%» (3 variantes); «when tagging» (15 variantes).
+
+«Give Power» que dice el juego: la API no publica qué otorga la Leader Skill, y la ficha del juego sí. El slot lleva la restricción del objetivo de la API y, de lo que dice el juego, los efectos, la activación y la recarga; la app cita su fuente.
+
+- Mephisto — Master of Hell (`mephisto1`), Lord of Hell: `leader2` Remove All Debuffs (12 s) — para Side: Supervillano, When Debuffed, recarga 20 s. MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026): La ficha de Mephisto con el uniforme Master of Hell, 지옥 군주 (리더 스킬 Lv.6), renglón por renglón: «적용 대상: 빌런 진영인 팀원만 / · 화염 피해량 +30% 상승 / 발동 확률: 상태 이상에 걸렸을 때 / 적용 대상: 빌런 진영인 팀원만 / · 모든 상태 이상 제거(12 초) / 재사용 대기시간 20초» (traducción de Claude: para los integrantes del bando Villano, daño de fuego +30%; y, al recibir un debuff, para los mismos, quitar todos los debuffs por 12 s, con recarga de 20 s). Capturas 253, 269 y 286 del 4 de octubre de 2026.
+
+### Verificación contra Leads & Supports
+
+Cada slot de liderazgo de Leads & Supports contra el que la misma regla deriva de su Leader Skill, en stats, valores, duración, condición, restricción, activación y recarga (no en el nombre ni en «Notable»): de 448 slots, 394 iguales, 5 distintos, 47 que no se pueden derivar, 2 que la Leader Skill no da aparte.
+
+Distintos (lo derivado / Leads & Supports):
+
+- Black Swan (`blackswan`), `leader`: recarga: 25 s / 20 s.
+- Drax (`drax3`, `drax2`), `leader`: efectos: HP +45% (when 1 Combat), HP +55% (when 2 Combats), HP +65% (when 3 Combats) / HP +45%, HP +55%, HP +65%.
+- Mephisto (`mephisto`), `leader`: activación: When Debuffed / ninguna; recarga: 20 s / ninguna; efectos: Remove All Debuffs (11 s), Fire Damage +30% (15 s) / Fire Damage +30%.
+- The Hood (`thehood`), `leader`: restricción: Side: Supervillano / ninguna.
+
+No se pueden derivar:
+
+- Arachknight — Arachknight 2099 (`arachknight1`), `leader`: la API no dice a quiénes llega («Infinity Warps Allies\nActivates when: Infinity Warps type Ally enters»).
+- Blue Dragon (`bluedragon`, `bluedragon1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Deadpool — April Pools (`deadpool6`), `leader`: la API no dice a quiénes llega («Target ID: 88»).
+- Deadpool — April Pools (`deadpool6`), `leader2`: la API no dice a quiénes llega («Target ID: 88»).
+- Deadpool — Marvel Studios' Deadpool & Wolverine (`deadpool8`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Gorr (`gorr1`, `gorr2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Hope Summers (`hopesummers`), `leader`: la API no dice a quiénes llega («Target ID: 142»).
+- Hope Summers (`hopesummers`), `leader2`: la API no dice a quiénes llega («Target ID: 142»).
+- Hulkbuster — Celestial Hulkbuster (`hulkbuster4`), `leader`: la API no dice a quiénes llega («Target ID: 3»).
+- Hulkbuster — Celestial Hulkbuster (`hulkbuster4`), `leader2`: la API no dice a quiénes llega («Target ID: 3»).
+- Hulkbuster (Iron Man Mark 44) — 3099 (`hulkbuster3`), `leader`: la API no dice a quiénes llega («Target ID: 3»).
+- Hulkbuster (Iron Man Mark 44) — 3099 (`hulkbuster3`), `leader2`: la API no dice a quiénes llega («Target ID: 3»).
+- Invisible Woman — Classic (`invisiblewoman2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to all Debuffs.» (IMMUNE).
+- Kang the Conqueror (`kang`, `kang1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Katy (`katy`), `leader`: la API no dice a quiénes llega («Target ID: 89»).
+- Katy (`katy`), `leader2`: la API no dice a quiénes llega («Target ID: 89»).
+- Maya Lopez — Marvel Studios' Hawkeye (`echo1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Maya Lopez (Echo) — Marvel Studios' Echo (`echo2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Molecule Man (`moleculeman`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Odin (`odin2`, `odin3`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Quasar (Wendell Vaughn) (`wendellvaughn`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Rachel Summers — X-Men: Days of Future Past (`rachelsummers1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Sentry — Merged (`sentry1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Sleeper (`sleeper`), `leader`: la API no dice a quiénes llega («Target ID: 42»).
+- Sleeper (`sleeper`), `leader2`: la API no dice a quiénes llega («Target ID: 42»).
+- Spider-Man (Miles Morales) — Absolute Carnage (`milesmorales2`), `leader`: la API no dice a quiénes llega («Target ID: 72»).
+- Spider-Man (Miles Morales) — Anniversary Special (`milesmorales3`), `leader`: la API no dice a quiénes llega («Target ID: 10»).
+- Spider-Man (Miles Morales) — Absolute Carnage (`milesmorales2`), `leader2`: la API no dice a quiénes llega («Target ID: 72»).
+- Spider-Man (Miles Morales) — Anniversary Special (`milesmorales3`), `leader2`: la API no dice a quiénes llega («Target ID: 10»).
+- Spider-Woman — Spider-Man: Across the Spider-Verse (`spiderwoman1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Thanos (`thanos7`, `thanos6`, `thanos5`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Victorious (`victorious`, `victorious1`), `leader`: la API no dice a quiénes llega («Target ID: 183»).
+- Victorious (`victorious`, `victorious1`), `leader2`: la API no dice a quiénes llega («Target ID: 183»).
+- Vision — Marvel Studios' WandaVision (`vision3`), `leader`: la API no dice a quiénes llega («Target ID: 140»).
+- Vision — Marvel Studios' WandaVision (`vision3`), `leader2`: la API no dice a quiénes llega («Target ID: 140»).
+- Wave (`wave`, `wave1`), `leader`: la API no dice a quiénes llega («Target ID: 198»).
+- Wave (`wave`, `wave1`), `leader2`: la API no dice a quiénes llega («Target ID: 198»).
+
+Solo en Leads & Supports:
+
+- Invisible Woman — Classic (`invisiblewoman2`), `leader2`.
+- Mephisto (`mephisto`), `leader2`.
+
+### Sin derivar (35 slots en 35 variantes)
+
+Variantes sin liderazgo de Leads & Supports con un slot de su Leader Skill que no se pudo derivar, con todos sus motivos. En docs/COMPLETITUD.md son el faltante «Liderazgo sin completar».
+
+Por motivo (un slot puede tener más de uno): efecto sin stat, 35; «Give Power», 1. Van juntas las variantes de un personaje con los mismos motivos.
+
+Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «30% chance to become immune to Cold Damage.» (COLD IMMUNITY), 6; «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Creates an energy Shield equal to 20% of Max HP» (ENERGY SHIELD), 4; «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD), 3; «Creates an energy Shield equal to 50% of Max HP» (ENERGY SHIELD), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «100% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE), 2; «Creates an energy Shield equal to 30% of Max HP» (ENERGY SHIELD), 2; «Creates an energy Shield equal to 60% of Max HP» (ENERGY SHIELD), 2; «Paralyze» (PARALYZE), 2; «Immunity to BLEED Effect.» (RESIST), 1; «Immunity to Fracture Effect.» (RESIST), 1; «Increases Poison Resist by 50%.» (POISON RESIST ↑), 1.
+
+- Blade (`blade`, `blade1`, `blade2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL).
+- Captain America (Sharon Rogers) (`sharonrogers`, `sharonrogers2`, `sharonrogers1`, `sharonrogers3`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 20% of Max HP» (ENERGY SHIELD).
+- Captain America (Sharon Rogers) (`sharonrogers6`, `sharonrogers4`, `sharonrogers5`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 50% of Max HP» (ENERGY SHIELD).
+- Daisy Johnson (`daisyjohnson`, `daisyjohnson2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD).
+- Green Goblin (`greengoblin`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Poison Resist by 50%.» (POISON RESIST ↑).
+- Hydro-Man (`hydroman`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to BLEED Effect.» (RESIST); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to Fracture Effect.» (RESIST).
+- Luna Snow (`lunasnow`, `lunasnow1`, `lunasnow2`, `lunasnow3`, `lunasnow5`, `lunasnow4`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «30% chance to become immune to Cold Damage.» (COLD IMMUNITY).
+- Quake — Modern (`daisyjohnson1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD).
+- Sentry — Marvel Studios' Thunderbolts* (`sentry2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Silk (`silk`, `silk2`, `silk1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
+- Sister Grimm (`sistergrimm`, `sistergrimm1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 30% of Max HP» (ENERGY SHIELD).
+- Sister Grimm (`sistergrimm3`, `sistergrimm2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 60% of Max HP» (ENERGY SHIELD).
+- White Tiger (`whitetiger`, `whitetiger1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
+- Wong (`wong2`, `wong3`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «100% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE).
+- Yellowjacket (`yellowjacket`, `yellowjacket1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Paralyze» (PARALYZE).
+
+### Derivados (443 variantes)
+
+Van juntas las variantes de un personaje con el mismo liderazgo derivado.
+
+- Absorbing Man (`absorbingman`, `absorbingman1`): `leader` Physical Defense +45%.
+- Adam Warlock (`adamwarlock`, `adamwarlock1`, `adamwarlock2`): `leader` Energy Defense +60%.
+- Aero (`aero`, `aero1`): `leader` All Speeds +6%.
+- Agent 13 (`sharoncarter`, `sharoncarter1`): `leader` Skill Cooldown −24%.
+- Amadeus Cho — Heroic Age (`amadeuscho3`): `leader` Critical Rate +6%, Critical Damage +6%.
+- Angela (`angela`, `angela2`, `angela3`, `angela1`): `leader` Physical Defense +30%.
+- Annihilus (`annihilus`): `leader` All Speeds +6%; `leader2` Poison Damage +60% — para Character: Annihilus.
+- Ant-Man (`antman`, `antman6`, `antman1`, `antman3`, `antman4`, `antman2`, `antman5`): `leader` All Speeds +9%.
+- Arachknight (`arachknight`): `leader` Dodge +6%, Debuff Duration −24%.
+- Athena (`athena`): `leader` All Basic Defenses +24%.
+- Baron Mordo (`baronmordo`): `leader` Dodge +6%.
+- Black Cat (`blackcat`, `blackcat2`, `blackcat1`): `leader` All Speeds +6%.
+- Black Dwarf (`blackdwarf`): `leader` Physical Immunity Chance +100% (8 s) — 30% rate when hit, recarga 15 s.
+- Black Dwarf — Dark Obsidian Armor (`blackdwarf2`): `leader` Physical Immunity Chance +100% (10 s) — 50% rate when hit, recarga 15 s.
+- Black Knight (`blackknight`): `leader` Debuff Duration −24%.
+- Black Panther (`blackpanther`, `blackpanther3`, `blackpanther4`, `blackpanther2`, `blackpanther1`): `leader` Critical Rate +15%.
+- Black Widow (`blackwidow`, `blackwidow7`, `blackwidow1`, `blackwidow10`, `blackwidow5`, `blackwidow4`, `blackwidow8`, `blackwidow9`, `blackwidow3`, `blackwidow2`, `blackwidow6`, `blackwidow11`): `leader` All Speeds +9% (10 s) — when tagging.
+- Blue Marvel (`bluemarvel`, `bluemarvel1`): `leader` All Basic Defenses +50%.
+- Bobbi Morse — Marvel Studios' Agents of S.H.I.E.L.D. (`mockingbird1`): `leader` Dodge +6%.
+- Captain America (`captainamerica`, `captainamerica10`, `captainamerica1`, `captainamerica12`, `captainamerica11`, `captainamerica5`, `captainamerica9`, `captainamerica6`, `captainamerica4`, `captainamerica3`, `captainamerica2`, `captainamerica8`): `leader` HP +30%.
+- Captain America — Galactic Talon (`captainamerica15`): `leader` HP +45%.
+- Captain America (Sam Wilson) (`falcon6`, `falcon4`): `leader` Dodge +15%.
+- Captain Britain — Hellfire Gala (`psylocke3`): `leader` Mind Resist +50%.
+- Carnage (`carnage`, `carnage1`): `leader` Critical Rate +6%, Critical Damage +18%.
+- Carnage (`carnage2`, `carnage3`): `leader` Remove All Debuffs (12 s), All Basic Defenses +30% (12 s) — para Ability: Simbionte, When Debuffed, recarga 20 s.
+- Cassie Lang (`cassielang`): `leader` Critical Rate +18%.
+- Chasm — Dark Web (`scarletspider1`): `leader` Dodge +6%.
+- Clea (`clea`): `leader` Skill Cooldown −24%.
+- Colossus (`colossus`, `colossus3`, `colossus2`, `colossus1`): `leader` Physical Immunity Chance +100% (11 s) — 25% rate when hit, recarga 40 s.
+- Corvus Glaive (`corvusglaive`, `corvusglaive2`, `corvusglaive1`): `leader` Skill Cooldown −24%.
+- Cull Obsidian — Marvel Studios' Avengers: Infinity War (`blackdwarf1`): `leader` Physical Immunity Chance +100% (8 s) — 30% rate when hit, recarga 15 s.
+- Daken (`daken`, `daken1`): `leader` Debuff Duration −30%.
+- Daredevil (`daredevil`, `daredevil2`, `daredevil1`, `daredevil3`, `daredevil4`): `leader` Critical Rate +12% (18 s), Critical Damage +12% (18 s) — 30% rate when dodging, recarga 30 s.
+- Darkhawk (`darkhawk`): `leader` All Speeds +6%.
+- Dazzler (`dazzler`, `dazzler1`): `leader` Critical Rate +6%.
+- Deadpool (`deadpool`, `deadpool4`, `deadpool5`, `deadpool3`, `deadpool2`, `deadpool1`): `leader` Recovery Rate +6%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Deadpool.
+- Destroyer (`destroyer`, `destroyer1`, `destroyer2`): `leader` Energy Defense +30%.
+- Dormammu (`dormammu`): `leader` All Basic Defenses +24%.
+- Elektra (`elektra`, `elektra3`, `elektra1`, `elektra2`): `leader` All Speeds +6%.
+- Emma Frost (`emmafrost`, `emmafrost3`, `emmafrost1`, `emmafrost2`, `emmafrost4`): `leader` Debuff Duration −24%.
+- Erik Killmonger (Black Panther) — Marvel Studios' Black Panther (`killmonger1`): `leader` Physical Defense +50%.
+- Falcon (`falcon`, `falcon1`, `falcon3`, `falcon2`): `leader` Dodge +6%.
+- Falcon — What If... Zombies?! (`falcon5`): `leader` Dodge +15%.
+- Falcon (Joaquin Torres) (`joaquintorres`): `leader` All Speeds +6%.
+- Fandral (`fandral`): `leader` All Speeds +9%.
+- Fantomex (`fantomex`): `leader` All Speeds +6%.
+- Franklin Richards (`franklinrichards`): `leader` Debuff Duration −24%.
+- Gamora (`gamora`, `gamora1`, `gamora2`): `leader` Attack Speed +13.5% — para Type: Velocidad.
+- Ghost — Marvel Studios' Thunderbolts* (`ghost2`): `leader` All Basic Attacks +50% — para Ability: Máquina.
+- Ghost Rider (`ghostrider`, `ghostrider1`, `ghostrider2`, `ghostrider3`, `ghostrider4`, `ghostrider5`): `leader` Fire Resist +50%.
+- Gilgamesh (`gilgamesh`, `gilgamesh1`): `leader` All Basic Defenses +50%.
+- Gorilla-Man (`gorillaman`): `leader` All Speeds +6%.
+- Green Goblin — Gold Goblin (`greengoblin5`): `leader` All Basic Attacks +40%, Ignore Dodge +40%.
+- Green Goblin — Ultimate (`greengoblin1`): `leader` Fire Resist +50%.
+- Groot (`groot`, `groot3`, `groot5`, `groot6`): `leader` Physical Defense +45% — para Type: Combate.
+- Groot (`groot2`, `groot4`): `leader` Physical Defense +45% — para Type: Velocidad.
+- Groot — Secret Wars: Thors (`groot1`): `leader` Physical Defense +45% — para Type: Universal.
+- Gwenpool (`gwenpool`, `gwenpool3`, `gwenpool4`, `gwenpool1`, `gwenpool2`): `leader` All Speeds +6%.
+- Hawkeye (`hawkeye`, `hawkeye1`, `hawkeye3`, `hawkeye2`, `hawkeye5`, `hawkeye6`): `leader` Critical Damage +12%.
+- Hawkeye (Kate Bishop) (`katebishop`, `katebishop1`, `katebishop2`): `leader` Critical Rate +15%.
+- Heimdall (`heimdall`): `leader` All Basic Defenses +36%.
+- Hellcat (`hellcat`): `leader` All Speeds +9%.
+- Hellstorm (`hellstorm`, `hellstorm1`): `leader` Fire Resist +50%.
+- Hulk (`hulk7`, `hulk6`): `leader` All Basic Defenses +24%.
+- Hulk (`hulk9`, `hulk8`): `leader` All Basic Defenses +24%; `leader2` HP +30% — para Character: Hulk.
+- Hulk (Amadeus Cho) (`amadeuscho`, `amadeuscho2`, `amadeuscho1`): `leader` Critical Rate +6%, Critical Damage +6%.
+- Hulkling (`hulkling`): `leader` Physical Defense +30%.
+- Human Torch (`humantorch2`, `humantorch4`, `humantorch3`): `leader` Fire Resist +50%.
+- Iceman (`iceman`, `iceman2`, `iceman1`): `leader` Skill Cooldown −24%.
+- Ikon (`ikon`): `leader` Critical Rate +8%.
+- Inferno (`inferno`, `inferno1`): `leader` Fire Resist +50%.
+- Invisible Woman (`invisiblewoman`, `invisiblewoman1`): `leader` Mind Resist +50%.
+- Iron Fist (`ironfist`, `ironfist2`, `ironfist3`, `ironfist1`): `leader` Attack Speed +12% (30 s) — 25% chance when attacking, recarga 40 s.
+- Iron Man (`ironman`, `ironman7`, `ironman1`, `ironman9`, `ironman5`, `ironman4`, `ironman3`, `ironman10`, `ironman2`, `ironman8`, `ironman6`): `leader` Skill Cooldown −24%.
+- Jeff the Land Shark (`jeffthelandshark`): `leader` Debuff Duration −24%.
+- Jessica Jones (`jessicajones`, `jessicajones1`): `leader` Physical Immunity Chance +100% (10 s) — 25% rate when hit, recarga 45 s.
+- Jubilee (`jubilee`, `jubilee1`): `leader` Mind Resist +50%.
+- Juggernaut (`juggernaut`, `juggernaut1`, `juggernaut2`): `leader` All Basic Defenses +50%.
+- Kaecilius (`kaecilius`): `leader` Physical Defense +45%.
+- Kahhori (`kahhori`): `leader` Energy Defense +45%.
+- Karnak (`karnak`, `karnak1`): `leader` All Speeds +9%.
+- Killmonger (`killmonger`): `leader` Physical Defense +50%.
+- Kingo (`kingo`, `kingo1`): `leader` Dodge +15%.
+- Knull — Ancient History (`knull1`): `leader` All Basic Attacks +60% — para Ability: Simbionte.
+- Korath (`korath`): `leader` All Speeds +10%.
+- Kraven The Hunter (`kraventhehunter`, `kraventhehunter1`): `leader` Critical Damage +12%.
+- Loki (`loki`, `loki4`, `loki3`, `loki1`, `loki7`, `loki6`, `loki5`, `loki2`, `loki8`): `leader` Mind Resist +50%.
+- Luke Cage (`lukecage`): `leader` Physical Immunity Chance +100% (11 s) — 25% rate when hit, recarga 50 s.
+- Luke Cage (`lukecage1`, `lukecage2`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 40 s.
+- Magik (`magik`, `magik1`): `leader` Critical Rate +13%.
+- Makkari (`makkari`, `makkari1`): `leader` All Speeds +6%.
+- Mantis (`mantis`, `mantis1`): `leader` Debuff Duration −24%.
+- Maximus (`maximus`): `leader` Debuff Duration −24%.
+- Mephisto — Master of Hell (`mephisto1`): `leader` Fire Damage +30% — para Side: Supervillano; `leader2` Remove All Debuffs (12 s) — para Side: Supervillano, When Debuffed, recarga 20 s.
+- Minn-Erva (`minn-erva`, `minn-erva1`): `leader` Debuff Duration −24%.
+- Mister Sinister (`mistersinister`, `mistersinister1`): `leader` Mind Resist +50%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Mister Sinister.
+- Mockingbird (`mockingbird`, `mockingbird2`): `leader` Dodge +6%.
+- Molten Man (`moltenman`): `leader` All Basic Defenses +45%.
+- Moon Girl — Monsters Unleashed! (MFF Variant) (`moongirl1`): `leader` All Basic Attacks +36%.
+- Moon Knight (`moonknight`, `moonknight1`, `moonknight4`, `moonknight3`, `moonknight2`): `leader` Debuff Duration −24%.
+- Moonstone (`moonstone`): `leader` Dodge +6%.
+- Mordo (`baronmordo1`, `baronmordo2`): `leader` Dodge +6%.
+- Morgan le Fay (`morganlefay`, `morganlefay1`): `leader` Debuff Duration −24%.
+- Morph (`morph`): `leader` Debuff Duration −24%.
+- Ms. Marvel (Kamala Khan) (`kamalakhan`, `kamalakhan2`, `kamalakhan1`, `kamalakhan5`, `kamalakhan3`, `kamalakhan4`): `leader` Physical Defense +45%.
+- Mysterio (`mysterio`, `mysterio1`, `mysterio2`): `leader` Skill Cooldown −24%.
+- Mystique (`mystique`, `mystique1`): `leader` All Speeds +6%; `leader2` All Basic Attacks +45% — para Character: Mystique.
+- Namor (`namor`, `namor2`, `namor1`): `leader` Critical Rate +24%.
+- Nebula (`nebula`, `nebula1`, `nebula4`, `nebula5`): `leader` Dodge +4.2% (when 1 Combat), Dodge +6% (when 2 Combats), Dodge +7.8% (when 3 Combats).
+- Negasonic Teenage Warhead (`negasonicteenagewarhead`): `leader` Debuff Duration −30%.
+- Nightcrawler (`nightcrawler`, `nightcrawler2`, `nightcrawler1`): `leader` All Speeds +6%.
+- Nova (Sam Alexander) (`samalexander`): `leader` All Speeds +6%.
+- Okoye (`okoye`): `leader` All Speeds +9%.
+- Omega Red (`omegared`): `leader` All Speeds +6%; `leader2` Physical Attack +30% — para Character: Omega Red.
+- Phil Coulson (`philcoulson`, `philcoulson1`, `philcoulson2`): `leader` Skill Cooldown −30% (10 s) — para Side: Superhéroe, when dealing Critical Attack, recarga 15 s.
+- Phyla-Vell (`phylavell`, `phylavell1`): `leader` Energy Defense +50%.
+- Psylocke (`psylocke`, `psylocke2`, `psylocke4`): `leader` Mind Resist +50%.
+- Quasar (Avril Kincaid) (`quasar`, `quasar1`): `leader` Skill Cooldown −24%.
+- Quicksilver (`quicksilver`, `quicksilver1`, `quicksilver4`, `quicksilver3`, `quicksilver2`): `leader` All Speeds +6%, Dodge +6%.
+- Rachel Summers (`rachelsummers`): `leader` Mind Resist +40%.
+- Red Skull (`redskull`, `redskull2`, `redskull1`, `redskull3`): `leader` All Basic Defenses +24%.
+- Rescue (`rescue`): `leader` Max HP Shield +20% (10 s) — when HP is below 30%, recarga 10 s.
+- Rhino (`rhino`, `rhino1`): `leader` Ignore Defense +20%.
+- Rocket Raccoon (`rocketraccoon`, `rocketraccoon1`, `rocketraccoon2`, `rocketraccoon4`, `rocketraccoon3`, `rocketraccoon6`, `rocketraccoon5`): `leader` Skill Cooldown −30% (10 s) — when dealing Critical Attack, recarga 10 s.
+- Rogue (`rogue`, `rogue1`, `rogue3`, `rogue2`, `rogue4`): `leader` All Basic Defenses +36%.
+- Ronin — Marvel Studios' Avengers: Endgame (`hawkeye4`): `leader` Critical Damage +12%.
+- Sabretooth (`sabretooth`, `sabretooth2`, `sabretooth1`): `leader` Debuff Duration −24%.
+- Sandman (`sandman`, `sandman1`): `leader` All Basic Defenses +24%.
+- Scarlet Spider (`scarletspider`, `scarletspider2`): `leader` Dodge +6%.
+- Scorpion (`scorpion`, `scorpion1`): `leader` All Basic Defenses +50%.
+- Scream (`scream`, `scream1`): `leader` Critical Rate +12%.
+- Sentinel — Stark Sentinels Mk II (`sentinel2`): `leader` Remove All Debuffs (12 s) — When Debuffed, recarga 20 s.
+- Sentry — Marvel Studios' Thunderbolts* (`sentry2`): `leader` All Basic Attacks +30%.
+- Sersi (`sersi`, `sersi1`): `leader` All Speeds +6%.
+- Shadow Shell (`shadowshell`, `shadowshell1`): `leader` Debuff Duration −24%.
+- Shang-Chi — Marvel Animation's Marvel Zombies (`shangchi2`): `leader` All Basic Attacks +24%.
+- Shuri (`shuri`, `shuri2`, `shuri1`): `leader` All Speeds +6%.
+- Silver Surfer (Shalla-Bal) (`shallabal`): `leader` Debuff Duration −24%.
+- Skurge (`skurge`): `leader` Critical Rate +9%, Attack Speed +9%.
+- Slapstick (`slapstick`): `leader` Lightning Resist +50%.
+- Songbird (`songbird`): `leader` All Speeds +9%.
+- Spider-Gwen (`spidergwen`, `spidergwen1`, `spidergwen2`, `spidergwen3`): `leader` Skill Cooldown −30% (10 s) — when dodging, recarga 10 s.
+- Spider-Man (`spiderman`, `spiderman2`, `spiderman10`, `spiderman5`, `spiderman3`, `spiderman12`, `spiderman1`, `spiderman6`, `spiderman7`, `spiderman4`, `spiderman9`, `spiderman8`, `spiderman11`): `leader` Dodge +6%.
+- Spider-Man (Miles Morales) (`milesmorales`, `milesmorales1`): `leader` Debuff Duration −24%.
+- Spot (`spot`): `leader` Dodge +6%, Critical Rate +12%.
+- Squirrel Girl (`squirrelgirl`, `squirrelgirl1`, `squirrelgirl2`): `leader` Dodge +6%.
+- Storm (`storm`, `storm3`, `storm4`, `storm5`, `storm1`): `leader` All Speeds +6%.
+- Sun Bird (`sunbird`, `sunbird1`): `leader` All Speeds +6%.
+- Sunspot (`sunspot`): `leader` All Speeds +6%.
+- Super Nova Nebula — Marvel Studios' What If...? (`nebula6`): `leader` Dodge +4.2% (when 1 Combat), Dodge +6% (when 2 Combats), Dodge +7.8% (when 3 Combats).
+- Sword Master (`swordmaster`): `leader` All Basic Defenses +35% — para Side: Superhéroe.
+- Sylvie (`sylvie`): `leader` Mind Resist +50%.
+- Taskmaster (`taskmaster`, `taskmaster1`, `taskmaster2`): `leader` Dodge +6%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Taskmaster.
+- Thane — Phoenix Force (`thane1`): `leader` Remove All Debuffs (12 s), All Basic Attacks +25% (12 s) — When Debuffed, recarga 20 s.
+- The Thing (`thing`, `thing2`, `thing1`, `thing4`, `thing3`): `leader` All Basic Defenses +50%.
+- Thor (`thor`, `thor10`, `thor7`, `thor8`, `thor5`, `thor4`, `thor9`, `thor3`, `thor6`, `thor2`): `leader` Lightning Resist +50%.
+- Thor (Jane Foster) (`janefoster`, `janefoster1`): `leader` Lightning Resist +50%, Critical Damage +6%.
+- Ulysses Klaue (`ulyssesklaue`): `leader` Critical Rate +13%.
+- Valkyrie (`valkyrie`, `valkyrie3`, `valkyrie1`, `valkyrie2`): `leader` Dodge +11%.
+- Venom (`venom`, `venom2`, `venom4`, `venom1`, `venom6`, `venom3`, `venom5`): `leader` Debuff Duration −24%.
+- Vision (`vision`, `vision1`, `vision2`): `leader` Super Armor, All Basic Defenses +30% (10 s) — when tagging, recarga 30 s.
+- Volstagg (`volstagg`): `leader` All Basic Defenses +24%.
+- Vulture (`vulture`, `vulture1`): `leader` Dodge +6%, Critical Rate +9%.
+- War Tiger (`wartiger`, `wartiger1`): `leader` Skill Cooldown −24%.
+- Warpath (`warpath`): `leader` All Speeds +6%.
+- Warwolf (`warwolf`): `leader` Critical Rate +18% (5 s), Critical Damage +18% (5 s) — When enemies are below 30% HP,, recarga 1 s.
+- Wasp (Nadia Van Dyne) (`nadiavandyne`): `leader` Dodge +11%.
+- Weapon Hex (`weaponhex`, `weaponhex1`): `leader` Dodge +6%, Debuff Duration −24%.
+- Whiplash (`whiplash`): `leader` Skill Cooldown −24%.
+- Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): `leader` Physical Attack +45%.
+- Wolverine (`wolverine`, `wolverine1`, `wolverine2`, `wolverine5`, `wolverine4`, `wolverine7`, `wolverine6`, `wolverine3`): `leader` Debuff Duration −30%.
+- Wong (`wong`, `wong1`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 60 s.
+- X-23 (`x-23`, `x-232`, `x-233`, `x-231`): `leader` Debuff Duration −24%.
+- Yelena Belova (`yelenabelova`, `yelenabelova1`, `yelenabelova2`, `yelenabelova3`): `leader` All Speeds +6%.
+- Yondu (`yondu`, `yondu1`, `yondu2`, `yondu3`): `leader` Critical Rate +7.8%.

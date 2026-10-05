@@ -54293,6 +54293,11 @@
      "wba": "Proyección de Energía",
      "trans": false,
      "new": false,
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
      "up": {
       "uniform_xp": [
        20000,
@@ -69982,7 +69987,7 @@
     "General"
    ],
    "rating": 5,
-   "ratings": 1,
+   "ratings": 2,
    "rows": [
     {
      "id": "tier-s",
@@ -82826,6 +82831,10 @@
     "icon": "images/icons/phoenixforce.png"
    },
    {
+    "value": "Guardianes de la Galaxia",
+    "icon": "images/icons/guardiansofthegalaxy.png"
+   },
+   {
     "value": "Guerreros del Cielo",
     "icon": "images/icons/warriorsofthesky.png"
    },
@@ -82940,6 +82949,10 @@
    {
     "value": "Vengadores Oscuros",
     "icon": "images/icons/darkavengers.png"
+   },
+   {
+    "value": "Zombi",
+    "icon": "images/icons/zombie.png"
    }
   ]
  },
