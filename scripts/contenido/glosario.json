@@ -466,6 +466,10 @@
     "es": "Acumula reducción del daño físico recibido. No la sacan la cancelación (Cancel) ni la incapacitación; el sangrado, sí.",
     "en": "Stacks reduction of physical damage taken. Neither Cancel nor Incapacitation removes it; Bleed does."
    },
+   "difiere": {
+    "es": "El inglés dice que la elasticidad «can be stacked with Physical Damage Decrease», que se lee como que se suma a otra reducción del daño físico; según el coreano, es un efecto que da esa reducción en cargas que se acumulan.",
+    "en": "The English says Elasticity \"can be stacked with Physical Damage Decrease\", which reads as adding to another physical damage decrease; per the Korean, it is an effect that grants that decrease in stacks."
+   },
    "efectos": [
     "dano_fisico_recibido"
    ],
