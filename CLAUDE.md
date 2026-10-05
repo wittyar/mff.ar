@@ -52,7 +52,10 @@ variante, en `docs/COMPLETITUD.md`.
   pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
   filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.
   recomendado, el líder del trío, los strikers que desempatan, «le sirve», lo propio y los
-  anti-mermas, y la fuente de cada liderazgo) y lista como pendiente la de los recomendados de Modos.
+  anti-mermas, y la fuente de cada liderazgo; con las del 5 de octubre, el filtro «Solo el último
+  uniforme» y el efecto sin valor contado una vez) y lista como pendiente la de los recomendados de
+  Modos. `verif_ultimo_uniforme.py` y `verif_solapado.py` prueban esas dos cosas en pantalla y contra
+  modelos aparte, y `medir_solapado.py` mide, contra otro app.js, cuánto cambian las listas.
 
 ## Estado (5 de octubre de 2026)
 
@@ -62,6 +65,9 @@ variante, en `docs/COMPLETITUD.md`.
   actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
 - Lo último publicado en main es «Datos actualizados 2026-10-04» (29b1ca4), con datos de formato 6.
 - Entregada sin publicar: la 1.0.20, con datos de formato 7 (ver «Al publicar la 1.0.20»).
+- Sin publicar, sobre la 1.0.20 (carril filtro2, 5 de octubre; sin versión nueva: `version.json` no se tocó): el
+  filtro «Solo el último uniforme» de las combinaciones y los efectos sin valor que no se suman (*Efectos iguales* en
+  `docs/MODELO.md`). Las notas de la versión que los publique tienen que decirlo.
 
 ## Pendiente
 
@@ -91,8 +97,18 @@ Preguntas para Ezequiel (de los carriles del 4 y 5 de octubre):
 - Liderazgos: los 34 slots sin stat (escudo de energía y físico, inmunidad al frío, robo de vida, inmunidad a todo
   daño, resistencia al veneno, inmunidad al sangrado y a la fractura; el sangrado y la parálisis son para el rival):
   ¿se agregan stats al catálogo? «When enemies are below 30% HP,» (Warwolf) va con la coma de la API.
-- Efectos repetidos en el equipo: lo oficial de los C.T.P. apunta a contar el mayor y no la suma, y la sinergia
-  suma cada soporte (`docs/MODELO.md`). ¿Se cambia? ¿Y un aviso de Insight o Liberation repetidos en un equipo?
+- Efectos repetidos en el equipo: los sin valor ya se aplican una vez (Ezequiel, 5 de octubre). Los que tienen valor
+  se siguen sumando: ¿se suman o vale el mayor, como en los C.T.P.? Es una línea (`seAcumula` en `app.js`). ¿Y un
+  aviso de Insight o Liberation repetidos en un equipo?
+- De los efectos sin valor (carril filtro2), lo que decidió Claude y falta confirmar: entre dos soportes de los que no
+  lideran, va primero el de clave menor (un orden fijo, para que el trío dé lo mismo desde la lista de cualquiera: el
+  juego no dice cuál; cambia el puntaje si solo uno de los dos trae además otra cosa que se aplica: con el orden al
+  revés, en 20.000 tríos con algo sin valor cambian 3 sinergias y 2 puntajes de PvP y de PvE); la regla vale también
+  para el liderazgo en la sinergia sin contexto (un liderazgo que solo le da a los demás lo que ya tienen propio no
+  suma ni vincula); y en PvP y PvE el vínculo por un soporte se cuenta con el líder del contexto.
+- Último uniforme: Red Skull — The Crimson Fall y Sister Grimm — Princess Tsukimi no traen versión en thanosvibs, y
+  son los de número más alto de su personaje (en los 1.033 pares con distinta versión, el número sube con la versión
+  salvo en uno, Yelena Belova). ¿Cuál es el último de cada uno? Hoy entran los dos de cada personaje, con aviso.
 - C.T.P.: ¿la app muestra los números del juego por grado (un archivo de contenido nuevo y formato)?
 - Las opciones de uniforme en Mítico muestran ataques y defensas +40% (hallazgo `opciones-uniforme-mitico`): ¿a
   qué se debe?
@@ -147,5 +163,9 @@ Sin decidir, de antes:
 - Las «permutaciones» de los mismos integrantes que Ezequiel vio en la lista de Adam Warlock no aparecen en las
   listas; si vuelven, falta una captura.
 - Rendimiento: con quien da algo a todos (Galactus), la consulta de combinaciones tarda cerca de 1,5 s y el orden
-  PvP otro tanto.
+  PvP otro tanto. Con *Efectos iguales* (5 de octubre), la consulta tarda en promedio 1,57 s (1,49 s antes) y las
+  listas de PvP y PvE más pesadas con un soporte sin valor, hasta 3 o 4 s (Silver Surfer (Shalla-Bal) en PvP, de
+  1,8 a 3,0 s; Invisible Woman — The Fall of the Fantastic Four en PvE, de 2,1 a 3,8 s): el vínculo por un
+  soporte se recalcula con el líder del contexto (`vinculosSoporte`, unas 200.000 veces en esas listas). No
+  recalcularlo cuando el liderazgo o los DPS ya alcanzan da lo mismo y ahorra entre el 15 y el 55% de esas llamadas.
 - Si las pruebas pasan al repo.
