@@ -141,6 +141,19 @@ def ctps(guia):
 
 
 _SANGRIA = re.compile(r'^((?:&emsp;)*)(•\s*)?(.*)$')
+# Líneas de artefacto que el juego dice distinto, como los nombres de C.T.P. (_CTP_NOMBRE_JUEGO): (artefacto, línea de
+# thanosvibs): la línea del juego y su fuente. Planet Eater (Galactus): la ficha del artefacto en coreano dice «적용
+# 대상: 파워 코스믹 타입인 팀원만», solo los integrantes con Poder Cósmico (captura 213 del 4 de octubre de 2026); va
+# con las palabras con que thanosvibs restringe otros artefactos a una habilidad («Applies to: Allies with … Ability»).
+_ARTEFACTO_LINEA_JUEGO = {('Planet Eater', 'Applies to: Self'): ('Applies to: Allies with Power Cosmic Ability', 'juego-ficha-ko')}
+
+
+def linea_artefacto(artefacto, texto):
+    """Una línea del texto de un artefacto como la usa la app, y lo que lleva el dato si la corrige (tv y f)."""
+    if (artefacto, texto) not in _ARTEFACTO_LINEA_JUEGO:
+        return texto, {}
+    juego, f = _ARTEFACTO_LINEA_JUEGO[(artefacto, texto)]
+    return juego, {'tv': texto, 'f': [f]}
 
 
 def artefactos(retratos_base):
@@ -148,7 +161,7 @@ def artefactos(retratos_base):
     con marcadores [P1]..[Pn] que se llenan con los valores de cada nivel de estrellas
     (3 a 6); la sangría es la jerarquía del texto del juego (efectos dentro de una
     condición) y viaja como nivel, no como HTML."""
-    out = []
+    out, corregidas = [], set()
     for a in cargar('work/artifacts.json'):
         if a['portrait'] not in retratos_base:
             raise SystemExit(f"artefacto {a['artifact_name']} de un retrato que no está en el roster: {a['portrait']}")
@@ -157,7 +170,12 @@ def artefactos(retratos_base):
             m = _SANGRIA.match(ln)
             if '&' in m.group(3):
                 raise SystemExit(f"artefacto {a['artifact_name']}: entidad HTML sin tratar en {ln!r}")
-            lineas.append({'n': len(m.group(1)) // len('&emsp;'), 'b': 1 if m.group(2) else 0, 't': TXP(m.group(3))})
+            texto, corregida = linea_artefacto(a['artifact_name'], m.group(3))
+            if corregida:
+                corregidas.add((a['artifact_name'], m.group(3)))
+                print(f"AVISO: artefacto {a['artifact_name']}: el juego dice {texto!r} donde thanosvibs dice "
+                      f"{m.group(3)!r}, y se usa lo del juego")
+            lineas.append({'n': len(m.group(1)) // len('&emsp;'), 'b': 1 if m.group(2) else 0, 't': TXP(texto), **corregida})
         # La fuente trae niveles sin valores (o con menos de los que usa el texto) en
         # algunos artefactos: se avisa y la app marca cada número que falta.
         usados = {int(x[2:-1]) for ln in lineas for x in re.findall(r'\[P\d+\]', ln['t'])}
@@ -168,6 +186,9 @@ def artefactos(retratos_base):
         out.append({'p': a['portrait'], 'name': a['artifact_name'], 'pasiva': a['passive_name'],
                     'pve': a['pve_score'], 'pvp': a['pvp_score'], 'desde': a['update'],
                     'lineas': lineas, 'valores': a['values'], 'obtencion': [TXP(x) for x in a['acquisition']]})
+    sobran = sorted(set(_ARTEFACTO_LINEA_JUEGO) - corregidas)
+    if sobran:
+        print(f'AVISO: /api/artifacts ya no publica {sobran}: sobra su línea del juego en fuentes.py (_ARTEFACTO_LINEA_JUEGO)')
     return out
 
 
@@ -520,7 +541,7 @@ def main():
     listas = {json.load(open(f, encoding='utf-8'))['slug'] for f in glob.glob('work/tierlists/*.json')}
     bonos_juego = cargar(os.path.join(_DIR, 'contenido', 'bonos.json'))
     validar_contenido(guia, modos, bonos_juego, listas, set(guia['stats']))
-    malas = sorted({f for _, f in _CTP_NOMBRE_JUEGO.values()} - set(guia['fuentes']))
+    malas = sorted({f for _, f in [*_CTP_NOMBRE_JUEGO.values(), *_ARTEFACTO_LINEA_JUEGO.values()]} - set(guia['fuentes']))
     if malas:
         raise SystemExit(f'fuentes.py corrige con fuentes sin definir en contenido/guia.json: {malas}')
     # La guía curada se escribió sobre una versión; si thanosvibs publica otra, se avisa

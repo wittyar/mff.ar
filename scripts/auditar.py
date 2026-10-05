@@ -349,6 +349,8 @@ class Auditoria:
         self.res['soportes_corregidos'] = len(self.listas['soporte'])
         # Lo que el build corrige con el juego (fuentes.py): el dato corregido lleva el de thanosvibs (tv) y su fuente.
         self.listas['ctp_nombre'] = [(c['id'], c['tv'], c['name'], c['f']) for c in f['ctps'] if 'tv' in c]
+        self.listas['art_linea'] = [(a['p'], a['name'], ln['tv'], ln['t'], ln['f']) for a in f['artefactos']
+                                    for ln in a['lineas'] if 'tv' in ln]
         # Artefactos: los números del texto a 6★ contra los de la página Artifact de la
         # wiki (que los lista a 6★, "Lv.4").
         wt = cargar('work/wiki_artifact.json')['wt']
@@ -808,6 +810,11 @@ def correcciones_seccion(L, fuentes):
              'ícono, de la guía de armado y de lo que guarda la capa.\n')
     s += lista([f"- `{cid}`: thanosvibs dice «{tv}»; se usa «{juego}», como lo escribe el juego "
                 f"({', '.join(fuente_md(fuentes[k]) for k in fs)})." for cid, tv, juego, fs in L['ctp_nombre']])
+    s.append('')
+    s.append('### Texto de los artefactos\n')
+    s.append('Va lo que dice la ficha del artefacto en el juego; la app marca la línea y dice lo que publica thanosvibs.\n')
+    s += lista([f"- `{p}` ({nombre}): thanosvibs dice «{tv}»; se usa «{t}», como dice el juego "
+                f"({', '.join(fuente_md(fuentes[k]) for k in fs)})." for p, nombre, tv, t, fs in L['art_linea']])
     s.append('')
     return s
 

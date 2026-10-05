@@ -403,7 +403,10 @@ sin Striker, skill 6 sin Definitiva). **No corrige nada**: la app sigue mostrand
 una diferencia es algo para revisar en el juego (la wiki suele estar vieja), no un error
 confirmado. El informe completo queda en `docs/AUDITORIA.md`; cada ficha muestra lo suyo en
 «Verificación entre fuentes». Los hallazgos que no se detectan solos están en
-`scripts/contenido/hallazgos.json`.
+`scripts/contenido/hallazgos.json`. Lo único que el build corrige de thanosvibs, con aviso, está en
+`scripts/fuentes.py` y en la sección 5 del informe: restricciones de liderazgo y soporte mal
+clasificadas, y lo que el juego dice distinto en el nombre de un C.T.P. («Judgment») o en una línea
+de artefacto (Planet Eater, para los integrantes con Poder Cósmico, que la ficha marca).
 
 ## Idioma
 La app tiene un botón **ES / EN** en la barra superior. Cambia la interfaz completa y también

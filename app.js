@@ -357,6 +357,7 @@ const T = {
   ar_nodata:         { es:'sin dato',            en:'no data' },
   ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
   ar_obtain:         { es:'Cómo se consigue',    en:'How to get it' },
+  ar_corregida:      { es:'Corregida con el juego: thanosvibs dice «{tv}».', en:'Corrected with the game: thanosvibs says "{tv}".' },
   ga_title:          { es:'Guía de armado de Cynicalex', en:"Cynicalex's Character Building Guide" },
   ga_none:           { es:'La guía de armado no lo incluye.', en:'The building guide does not include it.' },
   ga_no_data:        { es:'Los datos cargados no traen la guía de armado: son de antes de que la app la sumara. Actualizá los datos desde Ajustes.',
@@ -4612,7 +4613,8 @@ function armadoUrus (ta) {
     ${GUIA.gear4.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
     <div class="fuentes">${fuentesHtml(G.fuente.concat(GUIA.gear4.fuente.filter(x => !G.fuente.includes(x))))}</div>`;
 }
-/** Artefacto exclusivo: el texto del juego con los valores del nivel de estrellas elegido. */
+/** Artefacto exclusivo: el texto del juego con los valores del nivel de estrellas elegido. Una línea que el build
+ *  corrige con el juego (scripts/fuentes.py) va marcada, con lo que publica thanosvibs, y cita su fuente. */
 function armadoArtefacto (ch) {
   const a = ARTES.find(x => x.p === ch.p);
   if (!a) return `<p class="muted">${h(t('ar_art_none'))}</p>`;
@@ -4622,7 +4624,8 @@ function armadoArtefacto (ch) {
     const txt = h(es == null ? ln.t : es).replace(/\[P(\d+)\]/g, (_, n) => vals[n - 1] != null ? `<b>${h(vals[n - 1])}</b>`
       : `<i class="tpl" title="${h(t('ar_nodata_t'))}">${h(t('ar_nodata'))}</i>`);
     return `<div class="artl" style="padding-left:${ln.n * 14}px">${ln.b ? '• ' : ''}${es == null
-      ? `<span class="sintrad" title="${h(t('untranslated'))}">${txt}</span>` : txt}</div>`;
+      ? `<span class="sintrad" title="${h(t('untranslated'))}">${txt}</span>` : txt}${ln.tv
+      ? ` <span class="corr" title="${h(t('ar_corregida').replace('{tv}', ln.tv))}">⚠</span>` : ''}</div>`;
   };
   const puntaje = (lbl, n) => `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${'★'.repeat(n)}${'☆'.repeat(Math.max(0, 3 - n))}</span>`;
   return `<div class="row" style="gap:8px;margin-bottom:6px;flex-wrap:nowrap">${imgUrl('art-' + a.p) ? `<img class="artico" src="${imgUrl('art-' + a.p)}" alt="">` : ''}
@@ -4632,7 +4635,7 @@ function armadoArtefacto (ch) {
     <div class="artlineas">${a.lineas.map(linea).join('')}</div>
     ${a.obtencion.length ? `<details class="usgrupo"><summary>${h(t('ar_obtain'))} (${a.obtencion.length})</summary>
       <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
-    <div class="fuentes">${fuentesHtml(['tv-art'])}</div>`;
+    <div class="fuentes">${fuentesHtml(['tv-art', ...new Set(a.lineas.flatMap(ln => ln.f || []))])}</div>`;
 }
 /** Opciones del uniforme abierto: qué uniforme habilita cada una (thanosvibs) y qué stat
  *  conviene elegir en cada rango (guía de principiantes). */
