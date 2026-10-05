@@ -165,6 +165,22 @@
   "foro-1317588": {
    "nombre": "Foro oficial de MARVEL Future Fight — «An explanation to some of the mechanics found in-game» (guía de un jugador, DarkGamer0, diciembre de 2018)",
    "url": "https://forum.netmarble.com/futurefight_en/view/85/1317588"
+  },
+  "foro-1118083": {
+   "nombre": "Foro oficial de MARVEL Future Fight — 4.0 Update Details (notas de abril de 2018)",
+   "url": "https://forum.netmarble.com/futurefight_en/view/2196/1118083"
+  },
+  "foro-1715581": {
+   "nombre": "Foro oficial de MARVEL Future Fight — 6/29 Update Details (notas del 29 de junio de 2021)",
+   "url": "https://forum.netmarble.com/futurefight_en/view/2196/1715581"
+  },
+  "foro-1735745": {
+   "nombre": "Foro oficial de MARVEL Future Fight — Enchanted Uru Guide (guía oficial, diciembre de 2021)",
+   "url": "https://forum.netmarble.com/futurefight_en/view/2524/1735745"
+  },
+  "foro-1827362": {
+   "nombre": "Foro oficial de MARVEL Future Fight — 11/19 Update Details (notas del 19 de noviembre de 2024)",
+   "url": "https://forum.netmarble.com/futurefight_en/view/2196/1827362"
   }
  },
  "stats": {
@@ -496,12 +512,16 @@
   "fuente": [
    "tv-guia-3",
    "wiki-uru",
-   "juego-guia"
+   "juego-guia",
+   "foro-1118083",
+   "foro-1715581",
+   "foro-1735745",
+   "foro-1827362"
   ],
   "reglas": [
    {
-    "es": "Cada una de las 4 piezas tiene 5 ranuras de uru, que se habilitan del todo con el gear en +20.",
-    "en": "Each of the four gears has 5 Uru slots, fully unlocked at +20."
+    "es": "Cada una de las 4 piezas tiene 5 ranuras de uru: 2 se habilitan con el gear en +8 y una más en +12, +16 y +20.",
+    "en": "Each of the four gears has 5 Uru slots: 2 unlock with the gear at +8 and one more at +12, +16 and +20."
    },
    {
     "es": "Por pieza, como mucho 2 urus pueden subir el mismo stat: 8 por personaje (2 × 4 piezas).",
@@ -510,6 +530,10 @@
    {
     "es": "Antes de equipar, amplificar las ranuras: amplificar 4 por pieza es el mejor equilibrio entre stats y oro. En una ranura sin amplificar el uru rinde menos de la mitad.",
     "en": "Amplify slots before equipping: 4 amplified slots per gear is the accepted balance of stats vs. Gold. An Uru in a non-amplified slot gives less than half the bonus."
+   },
+   {
+    "es": "Lo que se amplifica es la ranura, no el uru: desde la 4.0 (abril de 2018) se puede amplificar sin urus equipados, con el gear en +20. Cada intento vuelve a sortear qué ranuras quedan amplificadas, y si salen menos que antes queda lo anterior; la amplificación en cadena prueba hasta 10 veces o hasta tener las 5 (foro oficial).",
+    "en": "What gets amplified is the slot, not the Uru: since 4.0 (April 2018) slots can be amplified with no Urus equipped, with the gear at +20. Each attempt rerolls which slots end up amplified, and if fewer come out than before, the previous result stays; Chain Amplification tries up to 10 times or until all 5 are amplified (official forum)."
    },
    {
     "es": "Urus de 4★ para la mayoría; los de más estrellas u Odin's Blessing, para los personajes que más uses.",
@@ -533,8 +557,8 @@
    "en": "Fill the other slots up to the caps in this order (HP only once everything before is capped)."
   },
   "odin": {
-   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). La guía de thanosvibs dice que va uno solo del mismo tipo por pieza; la del juego, que se puede equipar uno solo, sin decir si por pieza o por personaje.",
-   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). The thanosvibs guide says only one of the same type per gear; the in-game guide, that only one can be equipped, without saying whether per gear or per character."
+   "es": "Odin's Blessing: urus premium con 2 stats cada uno (17 tipos). Va uno por pieza: la guía de urus del foro oficial (diciembre de 2021) dice «Only a single Odin's Blessings can be equipped on a Character Gear», y la del juego, que se puede equipar uno. La de thanosvibs dice uno solo del mismo tipo por pieza, y las notas de los despertados (noviembre de 2024) prohíben un Odin's Blessing y uno despertado del mismo tipo en la misma pieza: puede que el límite ahora sea por tipo.",
+   "en": "Odin's Blessings: premium Urus with 2 stats each (17 types). One per gear: the official forum's Uru guide (December 2021) says \"Only a single Odin's Blessings can be equipped on a Character Gear\", and the in-game guide, that one can be equipped. The thanosvibs guide says only one of the same type per gear, and the notes for the Awakened ones (November 2024) forbid an Odin's Blessing and an Awakened one of the same type on the same gear: the limit may now be per type."
   },
   "corrobora": {
    "es": "La wiki confirma las 5 ranuras por pieza en +20 y el límite de 2 del mismo stat por pieza (8 de 20); la guía del juego, las 5 ranuras y el límite de 2.",
