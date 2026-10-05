@@ -12,7 +12,8 @@ MFF_SOPORTES con "src": "api", y lo demás a la sección 12 de docs/AUDITORIA.md
    - El objetivo da la restricción: un grupo de aliados, la suya (scripts/dominio.py, OBJETIVO_GRUPO, que viaja
      en MFF_TABLAS.tgt); «All Allies», ninguna; «Self», el personaje. «All Allies for the first effect, Self for
      the second effect» da dos partes: el primer efecto, para todos; el segundo, para él. «X\\nActivates when: Y
-     enters» es X, con una condición por efecto (cuántos Y hay en el equipo), que se aprende.
+     enters» es X, con una condición por efecto (cuántos Y hay en el equipo): la lleva porque el texto de la API
+     la trae, y su texto se aprende.
    - «Give Power» («Acquires the following effect for $TIME sec.») y lo que sigue van en una parte aparte, al
      final: es lo que Leads & Supports publica como segundo liderazgo. La API no dice qué otorga ni por cuánto
      tiempo, así que esa parte no se deriva nunca.
@@ -23,8 +24,9 @@ MFF_SOPORTES con "src": "api", y lo demás a la sección 12 de docs/AUDITORIA.md
    por cada número de su texto (salvo el de un marcador, como $HEROSUBTYPE1), con ese número de valor (con o sin
    signo), o uno sin valor si no trae números, y la duración si la publican los dos. De ahí sale qué stats da cada efecto de la API (por su etiqueta, su texto y
    el valor de su marcador), qué texto de Leads & Supports tiene cada activación y qué condición lleva cada efecto
-   de un objetivo «Activates when». Si dos variantes dicen distinto para lo mismo, no se usa: es una contradicción
-   y se lista.
+   de un objetivo «Activates when» (de las variantes en que Leads & Supports la publica: si no la publica, es una
+   diferencia que lista la verificación, no otra condición). Si dos variantes dicen distinto para lo mismo, no se
+   usa: es una contradicción y se lista.
 3. Derivación. Para cada variante sin liderazgo de Leads & Supports, cada parte de su Leader Skill da un slot si
    todo cierra: el objetivo con restricción conocida, la activación y cada efecto con su correspondencia y sus
    valores publicados (sin $TIME ni un marcador sin resolver). Si algo no cierra, ese slot no se deriva y se dice
@@ -241,9 +243,12 @@ def _aprender(P, sop, T):
                 obs['efectos'][clave(f, T)].append((p, k, _plantilla(f, gs, T)))
             if x['ac'] is not None:
                 obs['activaciones'][x['ac']].append((p, k, e[k].get('ac')))
+            # La condición la trae el texto de la API («Activates when»); de Leads & Supports sale su texto, de las
+            # variantes en que la publica en todos los efectos (Drax — Classic y Annihilation no la publican: la
+            # verificación lo lista como diferencia).
             if x['al_entrar']:
                 cs = [{g.get('c') for g in gs} for _, _, gs in al]
-                if all(len(c) == 1 for c in cs):
+                if all(len(c) == 1 and None not in c for c in cs):
                     obs['condiciones'][x['al_entrar']].append((p, k, tuple(c.pop() for c in cs)))
     return obs
 
