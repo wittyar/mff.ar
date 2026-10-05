@@ -366,7 +366,8 @@
     "wiki-t3",
     "wiki-tp",
     "wiki-t4",
-    "juego-guia"
+    "juego-guia",
+    "juego-guia-ko"
    ],
    "items": [
     {
@@ -375,7 +376,8 @@
      "en": "Tier-3: first Tier-2 and 20/20/20/20 gear; realise Potential in World Boss and raise it (each level raises the max level from 62 to 70 and gear from +21 to +25); Lv.70 and +25 gear enable Tier-3.",
      "fuente": [
       "wiki-t3",
-      "juego-guia"
+      "juego-guia",
+      "juego-guia-ko"
      ]
     },
     {
@@ -388,11 +390,12 @@
     },
     {
      "id": "t4",
-     "es": "Tier-4: personaje Tier-3 o con Potencial Trascendido, Nv. 80, gear +30 y todas las skills en Nv. 10. Desbloquea la Striker Skill. Los materiales son Book of the Vishanti, Life Seed, Carbonadium y Soul of the Faltine: salen de Giant Boss Raid: Dormammu y World Boss Legend y, según el glosario de ítems del juego, Life Seed, Carbonadium y Soul of the Faltine también de Timeline Battle, Otherworld Battle, Zombie Survival y otros modos.",
-     "en": "Tier-4: a Tier-3 or Potential Transcended character at Lv.80 with all gear at +30 and all skills at Lv.10. Unlocks the Striker Skill. Materials are Book of the Vishanti, Life Seed, Carbonadium and Soul of the Faltine: they come from Giant Boss Raid: Dormammu and World Boss Legend and, per the in-game item glossary, Life Seed, Carbonadium and Soul of the Faltine also from Timeline Battle, Otherworld Battle, Zombie Survival and other modes.",
+     "es": "Tier-4: personaje Tier-3 o con Potencial Trascendido, Nv. 80, gear +30 y todas las skills en Nv. 10. Desbloquea la Striker Skill. Los materiales son el Book of the Vishanti de su clase, Life Seed, Carbonadium y Soul of the Faltine: salen de Giant Boss Raid: Dormammu y World Boss Legend y, según el glosario de ítems del juego, Life Seed, Carbonadium y Soul of the Faltine también de Timeline Battle, Otherworld Battle, Zombie Survival y otros modos; el Book of the Vishanti, solo de Giant Boss Raid (lo dice el coreano: la captura en inglés se corta).",
+     "en": "Tier-4: a Tier-3 or Potential Transcended character at Lv.80 with all gear at +30 and all skills at Lv.10. Unlocks the Striker Skill. Materials are the Book of the Vishanti for its type, Life Seed, Carbonadium and Soul of the Faltine: they come from Giant Boss Raid: Dormammu and World Boss Legend and, per the in-game item glossary, Life Seed, Carbonadium and Soul of the Faltine also from Timeline Battle, Otherworld Battle, Zombie Survival and other modes; the Book of the Vishanti, only from Giant Boss Raid (the Korean says so: the English screenshot is cut off).",
      "fuente": [
       "wiki-t4",
-      "juego-guia"
+      "juego-guia",
+      "juego-guia-ko"
      ]
     }
    ],
