@@ -85,10 +85,6 @@ variante, en `docs/COMPLETITUD.md`.
   que hoy no cuenta. Falta que lo confirme (lista en «Equipos por contexto» de `docs/MODELO.md`).
 
 - Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
-  - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e
-    Incapacitation, pero en las 380 que llegaron a esta conversación la lista coreana nunca los abre.
-    Si salen de otra tanda, está bien; si no, hay que sacarles esa cita y a Mind Control su
-    diferencia y el error «inmunes». Pánico en coreano sigue sin captura.
   - Strikers del juego: Galactus tiene 16 y la app ninguno; los 37 visibles de Kingpin coinciden
     con la wiki. Cargarlos pide un archivo de contenido, una fuente y código nuevos (el juego por
     encima de la wiki, fila por fila) y probablemente formato 7. Falta decidir.

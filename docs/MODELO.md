@@ -322,8 +322,10 @@ seducir, control mental, pánico).
 
 ### Lo que agrega el glosario en coreano
 
-El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ezequiel, 2 de octubre de
-2026) dice lo mismo que el inglés casi siempre. Donde no, el inglés traduce mal:
+El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ezequiel del 2 de octubre de
+2026, con 43, y del 4 de octubre, con los 44) dice lo mismo que el inglés casi siempre. Donde no, el
+inglés traduce mal o deja algo afuera. Cada diferencia dice «según el coreano» (decisión de Ezequiel,
+5 de octubre), y entre comillas va solo el texto del juego:
 
 - **피격 모션**, la reacción al recibir un golpe, sale en inglés como «basic attacks» o «basic attack
   motions» en invencible, superarmadura, escudo, inmunidad al daño y contraataque. La invencibilidad
@@ -335,20 +337,32 @@ El mismo glosario en coreano (스킬 용어 사전, 44 términos; capturas de Ez
   debuffs. El inglés dice solo el tiempo, y las skills cuentan los golpes («# time(s)»): las dos
   cosas son ciertas.
 - **Escudo:** frena una cantidad fija de daño.
+- **Elasticidad:** el inglés dice «can be stacked with Physical Damage Decrease», que se lee como que
+  se suma a otra reducción del daño físico; según el coreano, es un efecto que da esa reducción en
+  cargas que se acumulan, que es lo que ya leía el catálogo.
 - **Jefes inmunes.** En detención del tiempo, encanto, seducción y control mental, el inglés dice
-  que sirven contra rivales «sin debuffs»; el coreano, contra los jefes y rivales a los que no se
-  les aplican debuffs: los inmunes. El catálogo corrigió las cuatro lecturas.
-- **Crítico y evasión garantizados** le suman un valor fijo a la probabilidad; el inglés dice «a una
-  tasa fija».
+  que sirven contra rivales «that have no debuffs» o «that don't have debuffs»; según el coreano,
+  contra los jefes y rivales a los que no se les aplican debuffs: los inmunes. En pánico y en la
+  marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by
+  debuffs»). El catálogo corrigió las cuatro lecturas, y la de pánico, que se podía leer igual.
+- **Crítico y evasión garantizados** le suman un valor fijo a la probabilidad; el inglés dice «at a
+  set rate».
 - **«Type» es elemento.** El inglés traduce 속성 (elemento) como «Type»: el daño puro no pasa por la
   defensa ni por las resistencias elementales (el inglés dice «Type Resistance»), y la etiqueta
   «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. **Type Amplification** es 속성
   증폭, amplificación de elemento: el reforjado de Judgment que en inglés se llama así es un problema
-  de traducción (el hallazgo de los C.T.P., en `docs/AUDITORIA.md`).
-- **Penetration** es 간파, «ver a través»: no es la Perforación. Corta el ataque del rival con una
+  de traducción (el hallazgo de los C.T.P., en `docs/AUDITORIA.md`). En Recharge Shield, en cambio,
+  el coreano usa 속성 para el tipo de escudo (físico o de energía), y ahí el inglés «Shield type» está
+  bien.
+- **Penetration** es 간파, ver a través (leer el ataque): no es la Perforación. Corta el ataque del rival con una
   rotura de guardia, como dice la guía de thanosvibs. Es una de las dos opciones de reforjado de
   Regeneration y de Transcendence (la otra de Transcendence es Beatdown): un C.T.P. reforjado lleva,
   probablemente, una sola (los que se ven equipados traen una).
+- **Lo que el inglés omite** (anotado como diferencia desde el 5 de octubre): según el coreano,
+  Strike, Enraged, Fury y Type Amplification se activan al usar una skill (스킬 사용 시); Ambush se
+  activa sola (el inglés lo dice de Clash y no de Ambush); en Penetration la probabilidad también baja
+  con menos Concentración que el rival, y a Agonía no la quitan los efectos que quitan buffs, donde el
+  inglés dice «cannot be removed». Los textos de cada término ya lo decían.
 
 Confirma lo que el catálogo ya decía del encanto (frena también los ataques que se activan solos),
 la elasticidad (la saca el sangrado; la cancelación y la incapacitación, no), la fractura y lo que
@@ -357,7 +371,10 @@ que el catálogo todavía no tiene: el contraataque no se activa mientras el per
 el muro (Wall) no se usa junto con la barrera ni se suma a la reducción de daño, Enraged (reforjado
 de Rage) ignora el tope de daño crítico y Vitality (reforjado de Refinement) da inmunidad a la
 rotura y a la superrotura de guardia, y vida por segundo. Las capturas en inglés de Enraged,
-Vitality y Wall llegaron el 4 de octubre y dicen lo mismo.
+Vitality y Wall llegaron el 4 de octubre y dicen lo mismo. Pánico tiene su captura en coreano desde el
+4 de octubre (la 154), y siete lecturas del catálogo que citaban solo el inglés citan también el
+coreano, que dice lo mismo: daño perforante adicional, rotura de guardia e inmunidad a ella, atrapar,
+fractura, miedo y pérdida.
 
 NamuWiki (4 de octubre de 2026) agrega nombres que el glosario no tiene: Liderazgo es 영웅심
 («heroísmo»), el instinto es 천성 («naturaleza») y Destrucción y Crueldad son 파멸 («ruina») y 냉혹
