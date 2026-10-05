@@ -173,5 +173,12 @@
   "es": "Con el uniforme Master of Hell de Mephisto en el grado más alto (신화, Mítico: «최고 등급»), la pantalla de opciones del uniforme muestra, arriba de las cinco opciones, «모든 일반 공격력 상승 +40%» y «모든 일반 방어력 상승 +40%»: todos los ataques y todas las defensas básicas +40% (captura 277 del 4 de octubre de 2026). La nota de la app sobre la mejora del uniforme, de la guía de thanosvibs, dice +2% por mejora (+3% en los de costo doble). La app no lo explica.",
   "en": "With Mephisto's Master of Hell uniform at the highest grade (신화, Mythic: \"최고 등급\"), the uniform options screen shows, above the five options, \"모든 일반 공격력 상승 +40%\" and \"모든 일반 방어력 상승 +40%\": All Basic Attacks and All Basic Defenses +40% (screenshot 277, October 4, 2026). The app's note on uniform upgrades, from the thanosvibs guide, says +2% per upgrade (+3% for double-cost uniforms). The app does not explain it.",
   "fuente": ["juego-ficha-ko", "tv-guia-3"]
+ },
+ {
+  "id": "artefacto-annihilus-recarga",
+  "titulo": "Artefacto de Annihilus: el juego dice que se recarga en 300 s, y la app no lo tiene",
+  "es": "La ficha del artefacto de Annihilus en el juego (네거티브 존의 지배자, Lord of the Negative Zone; captura 211 del 4 de octubre de 2026) termina con «재사용 대기시간 300초»: se recarga en 300 s. Antes dice lo mismo que thanosvibs (al morir, revive con 80% de la vida, más 0,5% del instinto total, hasta 100%). thanosvibs no publica la recarga, así que la app no la muestra. La página Artifact de la wiki trae un 300 que thanosvibs no tiene (sección 6): es probable que sea esta recarga.",
+  "en": "The in-game card of Annihilus's artifact (네거티브 존의 지배자, Lord of the Negative Zone; screenshot 211, October 4, 2026) ends with \"재사용 대기시간 300초\": a 300 s cooldown. Before that it says the same as thanosvibs (on death, revives with 80% of Max HP, plus 0.5% of total Instinct, up to 100%). thanosvibs does not publish the cooldown, so the app does not show it. The wiki's Artifact page has a 300 that thanosvibs does not (section 6): it is likely this cooldown.",
+  "fuente": ["juego-ficha-ko", "tv-art"]
  }
 ]
