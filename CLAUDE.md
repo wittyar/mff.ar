@@ -62,37 +62,26 @@ variante, en `docs/COMPLETITUD.md`.
 
 ## Estado (5 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.19 (etiquetas `v1.0.18` y `v1.0.19` en origin). La 1.0.13 no se
-  publicó; las notas de la 1.0.14 anuncian su Glosario.
-- La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app
-  actualizada quedó esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
-- Lo último publicado en main es «Datos actualizados 2026-10-04» (29b1ca4), con datos de formato 6.
-- Entregada sin publicar: la 1.0.20, con datos de formato 7 (ver «Al publicar la 1.0.20»).
-- Sin publicar, sobre la 1.0.20 (carril filtro2, 5 de octubre; sin versión nueva: `version.json` no se tocó): el
-  filtro «Solo el último uniforme» de las combinaciones y los efectos sin valor que no se suman (*Efectos iguales* en
-  `docs/MODELO.md`). Las notas de la versión que los publique tienen que decirlo.
+- Publicadas: de la 1.0.14 a la 1.0.20. La 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su
+  Glosario. La 1.0.20 (etiqueta en 5a28aa5, «Datos actualizados 2026-10-05») trajo los datos de formato 7, y
+  su build dio lo que se esperaba: 443 variantes con liderazgo de la Leader Skill (461 slots), 177 de 888
+  completas, `SEED.SKILL_TAGS` con 44 y las correcciones de Judgment y Planet Eater en la sección 5 de
+  `docs/AUDITORIA.md`. La regresión con esos datos pasó (verif_bonos falló una vez por tiempos y pasó sola).
+- La 1.0.17 trajo los datos de formato 6. Su etiqueta salió antes que los datos, y la app actualizada quedó
+  esperando hasta que el workflow publicó «Datos actualizados 2026-10-03».
+- Entregada sin publicar: la 1.0.21, con datos de formato 8: el filtro «Solo el último uniforme», los efectos
+  iguales (las habilidades cuentan una vez, las estadísticas se suman) y los topes de la guía en lo que recibe
+  cada integrante.
 
 ## Pendiente
 
-Al publicar la 1.0.20 (las reglas de los equipos, los liderazgos de la Leader Skill y lo que dejaron el foro y las
-capturas en coreano):
-- Pide los datos de formato 7, que escribe `scripts/build.py`: push de main, el workflow de datos a mano y,
-  cuando termina bien, la etiqueta `v1.0.20` sobre el commit «Datos actualizados». Si el build para, no se
-  etiqueta: la 1.0.19 sigue con sus datos de formato 6, porque no acepta los de otro formato.
-- Lo que tiene que dar el próximo build (sin `work/` no se pudo correr; las cifras son de los datos de prueba de
-  formato 7 del 5 de octubre y se mueven si thanosvibs cambió algo; lo que no puede pasar es algo sin listar):
-  - `SEED.SKILL_TAGS` con Zombi y Guardianes de la Galaxia, y en la sección 11 de `docs/AUDITORIA.md` las dos
-    probabilidades de striker de más de 100% (Daken: Doctor Octopus, 219%; Molecule Man: Morgan le Fay, 120%).
-  - Liderazgos de la Leader Skill: 443 variantes (461 slots, con `"src": "api"`) derivadas y 35 slots sin derivar
-    (34 por un efecto sin stat en el catálogo y el «Give Power» de Sentry — Thunderbolts*); en la verificación, de
-    448 slots, 394 iguales, 5 distintos, 47 que no se pueden derivar y 2 solo en Leads & Supports; en
-    `docs/COMPLETITUD.md`, «Liderazgo sin completar» en 35 variantes y 177 de 888 completas. Hasta ese build,
-    `scripts/completitud.py` sobre el data.js del repo para con «data.js no trae los liderazgos…»: es lo esperado.
-  - Con aviso en el log y en la sección 5 de `docs/AUDITORIA.md`: «Judgment» y Planet Eater. En la sección 8, un
-    marcador más a mano (Hell Fire de Mephisto — Master of Hell). En el análisis, 80 «Give Power» sin lo que
-    otorgan, en 69 variantes, y Stryfe — The Tyrant of Spring con el rol Soporte.
-  - Después, verif_consistencia y la regresión tienen que pasar con los datos del repo, y verif_marcadores (con
-    `work/`) tiene que actualizar sus cuentas.
+Al publicar la 1.0.21 (filtro «Solo el último uniforme», efectos iguales y topes):
+- Pide los datos de formato 8, que escribe `scripts/build.py` (el catálogo dice de cada stat de soporte si se
+  acumula y su tope): push de main, el workflow de datos a mano y, cuando termina bien, la etiqueta `v1.0.21`
+  sobre el commit «Datos actualizados». Si el build para, no se etiqueta: la 1.0.20 sigue con sus datos de
+  formato 7.
+- Lo que tiene que dar ese build: los 83 stats de `soporte` con `acumula` (65 se suman y 18 cuentan una vez) y
+  los 14 con tope; el resto, igual que el del 5 de octubre.
 - Las listas de PvE bajan con el vínculo del líder del contexto (Knull — Ancient History, de 15.102 a 9.997): que
   Ezequiel mire una con los datos nuevos («Equipos por contexto» de `docs/MODELO.md`).
 

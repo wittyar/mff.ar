@@ -1,6 +1,6 @@
 {
- "version": "1.0.20",
- "formato_datos": 7,
+ "version": "1.0.21",
+ "formato_datos": 8,
  "python": "3.14.7",
- "notas": "Equipos: cada equipo tiene un solo líder, siempre primero y marcado en su retrato. En PvP los liderazgos suman en tu orden (vida, ataques, defensas, ignorar evasión, efecto de debuffs) y los strikers solo desempatan. El «Por qué» se abre en una ventana con una pestaña por integrante. El C.T.P. recomendado es el mismo en la ficha y en cada equipo, y dice de dónde sale. Con los datos de esta versión, los liderazgos que Leads & Supports no publica salen de la Leader Skill del juego, y llegan el glosario completo en coreano, los C.T.P. y Mephisto revisados con capturas del juego y lo que dice el foro oficial."
+ "notas": "Equipos: filtro «Solo el último uniforme», para armar combinaciones solo con el uniforme más nuevo de cada personaje. Las habilidades que el juego no deja solapar (anti-mermas, inmunidades) cuentan una sola vez aunque lleguen de dos personajes, y las estadísticas se suman, con el tope de la guía a la vista (crítico, daño crítico, evasión, recarga) y un aviso si se pasa."
 }
