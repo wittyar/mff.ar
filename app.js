@@ -689,10 +689,10 @@ const T = {
   cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
   cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
-  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en la tier list y después un orden fijo.',
-                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier list, then a fixed order.' },
-  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo activo y por cada striker del trío. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
-                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another, each active team bonus and each striker in the trio. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
+  cx_nota_pvp:       { es:'Equipos para PvP, con las reglas de Ezequiel. Entran si alguno es DPS en {l} y si los tres tienen anti-mermas (Remove All Debuffs o Debuff Immunity), del liderazgo del líder o del soporte de alguno. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo que vale (todos los ataques, todas las defensas, PG, ignorar evasión) y cada uno al que le llega y le sirve, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1); 1 por cada soporte que le llega a otro y le sirve y por cada bono de equipo activo; los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en la tier list y después un orden fijo.',
+                       en:'Teams for PvP, with Ezequiel\'s rules. They make it if someone is a DPS in {l} and all three have debuff removal (Remove All Debuffs or Debuff Immunity), from the leader\'s leadership or someone\'s support. Each teammate has a link with it or is a DPS. Score: 2 for each leadership that counts (all attacks, all defenses, HP, ignore dodge) and each one it reaches and helps, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1); 1 for each support that reaches and helps another and each active team bonus; the trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier list, then a fixed order.' },
+  cx_nota_pve:       { es:'Equipos para PvE, con las reglas de Ezequiel. Entran si alguno es DPS en {l}; los anti-mermas no hacen falta. Cada compañero tiene vínculo con él o es DPS. Puntaje: 2 por cada liderazgo de daño (ataque, daño elemental, daño a jefes) y cada uno al que le llega y pega con eso, 1 si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); 2 por cada nivel de fila de cada DPS (3, 2 o 1, el mejor de las dos listas); 1 por cada soporte que le llega a otro y le sirve y por cada bono de equipo activo; los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
+                       en:'Teams for PvE, with Ezequiel\'s rules. They make it if someone is a DPS in {l}; debuff removal is not required. Each teammate has a link with it or is a DPS. Score: 2 for each damage leadership (attack, elemental damage, boss damage) and each one it reaches that hits with it, 1 if the leadership activates on a condition (when debuffed, for example); 2 for each row level of each DPS (3, 2 or 1, the best of both lists); 1 for each support that reaches and helps another and each active team bonus; the trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
   cx_sin_funcion_pvp: { es:'{x} no figura en la tier list de PvP ({l}){f}: no tiene función en PvP y este orden no arma combinaciones.',
                        en:'{x} is not on the PvP tier list ({l}){f}: it has no role in PvP, so this order builds no combinations.' },
   cx_sin_funcion_pve: { es:'{x} no figura en las tier lists de PvE ({l}){f}: no tiene función en PvE y este orden no arma combinaciones.',
@@ -706,7 +706,8 @@ const T = {
   cx_lider_mitad:    { es:'cuenta la mitad',     en:'counts half' },
   cx_dps:            { es:'DPS',                 en:'DPS' },
   cx_sinergia:       { es:'Soportes y bonos de equipo', en:'Supports and team bonuses' },
-  cx_strikers:       { es:'Strikers',            en:'Strikers' },
+  cx_desempate:      { es:'desempate: {n} strikers', en:'tiebreak: {n} strikers' },
+  cx_desempate_1:    { es:'desempate: 1 striker',  en:'tiebreak: 1 striker' },
   cx_striker_de:     { es:'{b} de {a}',          en:'{b} for {a}' },
   d_race:            { es:'Raza',                en:'Race' },
   d_gender:          { es:'Género',              en:'Gender' },
@@ -750,8 +751,8 @@ const T = {
   bn_noname:         { es:'(sin nombre en la wiki)', en:'(unnamed on the wiki)' },
   bn_tie:            { es:'La wiki no coincide: sus páginas dicen otra cosa', en:'The wiki disagrees: its pages say different things' },
   sk_title:          { es:'Strikers',            en:'Strikers' },
-  sk_note:           { es:'Pueden aparecer a pegar junto a él, con esa probabilidad, cuando él ataca o cuando lo atacan. Según Ezequiel, el striker tiene que estar en el mismo equipo. Son del personaje: valen con cualquier uniforme.',
-                       en:'They may show up to strike alongside it, with that chance, when it attacks or when it is attacked. Per Ezequiel, the striker has to be on the same team. They belong to the character: any uniform works.' },
+  sk_note:           { es:'Pueden aparecer a pegar junto a él, con esa probabilidad, cuando él ataca o cuando lo atacan. Según Ezequiel, el striker tiene que estar en el mismo equipo, y suma muy poco: en los equipos no da puntos, desempata. Son del personaje: valen con cualquier uniforme.',
+                       en:'They may show up to strike alongside it, with that chance, when it attacks or when it is attacked. Per Ezequiel, the striker has to be on the same team, and it adds very little: in teams it gives no points, it breaks ties. They belong to the character: any uniform works.' },
   sk_suyos:          { es:'Sus {n} strikers',    en:'Its {n} strikers' },
   sk_de:             { es:'Es striker de {n}',   en:'Striker of {n}' },
   sk_de_nota:        { es:'Aparece junto a ellos cuando ellos atacan o los atacan.', en:'It shows up alongside them when they attack or are attacked.' },
@@ -3007,16 +3008,33 @@ function grupoHtml (g, vs, nombre) {
   const a = (ms) => ` → ${aQuienesHtml(ms, vs, nombre)}`;
   return `<li>${cab}${iguales ? a(efs[0][1]) : ''}<ul>${efs.map(([f, ms]) => `<li>${efectoSoporteHtml(r.x, f)}${iguales ? '' : a(ms)}</li>`).join('')}</ul></li>`;
 }
-/** Los strikers del equipo en los que está el foco, como viñetas: «Jeff de Adam Warlock (5% al atacar)». */
-function strikersPqHtml (foco, vs, nombre) {
+// STRIKERS EN UN EQUIPO (Ezequiel, 4 de octubre de 2026: «suman, MUY poco... sería un sistema de desempate»). No
+// suman puntos en ningún lado: a igual puntaje, desempatan (el orden de las combinaciones y el mejor lugar en «cómo
+// entraría»), y cada tarjeta dice cuántos.
+/** Los strikers de un equipo: [a, b, %, cuándo] por cada integrante b que es striker de otro a (de la pestaña
+ *  Striker de la wiki). Con foco, solo los pares en que está él. */
+function strikersDe (vs, foco) {
   const out = [];
   for (const a of vs) for (const [x, p, cuando] of STRIKERS[a.cid] || []) {
     const b = vs.find(y => y !== a && y.cid === x);
-    if (b && (a === foco || b === foco)) out.push(`<li>${h(t('cx_striker_de')).replace('{b}', () => nombreHtml(b, nombre)).replace('{a}', () => nombreHtml(a, nombre))} (${
-      strikerProbHtml(p, cuando)})</li>`);
+    if (b && (!foco || a === foco || b === foco)) out.push([a, b, p, cuando]);
   }
   return out;
 }
+/** Cuántos son (strikersDe), sin armarlos: la consulta de combinaciones lo pregunta cientos de miles de veces. */
+function cuantosStrikers (vs, foco) {
+  let n = 0;
+  for (const a of vs) { const ss = STRIKER_SET[a.cid]; if (ss) for (const b of vs) if (b !== a && ss.has(b.cid) && (!foco || a === foco || b === foco)) n++; }
+  return n;
+}
+/** Un striker del equipo, en texto: «Jeff de Adam Warlock (5% al atacar)». */
+function strikerParHtml ([a, b, p, cuando], nombre) {
+  return `${h(t('cx_striker_de')).replace('{b}', () => nombreHtml(b, nombre)).replace('{a}', () => nombreHtml(a, nombre))} (${strikerProbHtml(p, cuando)})`;
+}
+/** El desempate de una tarjeta: «desempate: 2 strikers», o nada si no tiene. */
+function desempateHtml (n) { return n ? `<div class="muted desempate">${h(t(n === 1 ? 'cx_desempate_1' : 'cx_desempate').replace('{n}', n))}</div>` : ''; }
+/** Los strikers del equipo en los que está el foco, como viñetas. */
+function strikersPqHtml (foco, vs, nombre) { return strikersDe(vs, foco).map(x => `<li>${strikerParHtml(x, nombre)}</li>`); }
 /** El «Por qué» de una tarjeta de equipo, plegado (ver arriba). id: el de la tarjeta (con él se vuelve
  *  a abrir con «Atrás»); lider: el de la tarjeta; demas: las piezas que van en «Además» junto a lo que
  *  da él (en una combinación, las que no son de un soporte ni de un liderazgo: esos, de él y para él,
@@ -3024,7 +3042,7 @@ function strikersPqHtml (foco, vs, nombre) {
 function porqueHtml (id, foco, vs, lider, demas, pierde, antes) {
   const nombre = nombreEn(vs), os = origenesDe(foco, vs, lider), suma = sumaDe(os), st = strikersPqHtml(foco, vs, nombre);
   const ademas = daGrupos(foco, vs, lider).concat(agrupar(demas)).map(g => grupoHtml(g, vs, nombre));
-  if (st.length) ademas.push(`<li>${h(t('cx_strikers'))}<ul>${st.join('')}</ul></li>`);
+  if (st.length) ademas.push(`<li>${h(mayuscula(t(st.length === 1 ? 'cx_desempate_1' : 'cx_desempate').replace('{n}', st.length)))}<ul>${st.join('')}</ul></li>`);
   const menos = pierde.length ? agrupar(pierde).map(g => grupoHtml(g, antes, nombreEn(antes))) : [];
   return `<details class="usgrupo pq" id="${h(id)}"><summary>${h(t('eq_why'))}</summary><div class="pqcuerpo">
     <div class="pqsec"><div class="pqh">${h(t('pq_recibe').replace('{x}', nombre(foco)))}</div>
@@ -3061,7 +3079,7 @@ function fichaEquipos (ch, v) {
         <div><b>${h(o.tt.name)}</b>${o.modo ? ` <span class="tag dim">${h(o.modo)}</span>` : ''}
           <div class="muted">${h(o.sale ? t('eq_instead').replace('{x}', fullLabel(o.sale)) : t('eq_room'))}</div></div>
         <div class="eqpts"><b>${o.despues.score}</b>${artPts(o.despues.art)} ${h(t('tm_synergy_pts'))} <span class="eqdelta">+${o.delta}</span>
-          <div class="muted">${h(t('eq_before')).replace('{n}', () => o.antes.score + artPts(o.antes.art))}</div></div>
+          <div class="muted">${h(t('eq_before')).replace('{n}', () => o.antes.score + artPts(o.antes.art))}</div>${desempateHtml(cuantosStrikers(o.vs, null))}</div>
       </div>
       ${retratosEquipo(o.vs, v.key, o.despues.lider)}
       ${porqueHtml('pq-t-' + o.tt.id, v, o.vs, o.despues.lider, o.gana, o.pierde, o.antesVs)}
@@ -3132,7 +3150,8 @@ function comoEntra (v, tt) {
     .filter(o => o.vs.some(x => x !== v && vinculo(v, x, o.despues.aplicados)));
   if (!validas.length) return { tt, sinVinculo: true };
   const antes = synergy(vs);
-  const mejor = validas.sort((a, b) => b.despues.score - a.despues.score)[0];
+  // El mejor lugar: el de más puntos; a igual puntaje, el de más strikers (desempatan).
+  const mejor = validas.sort((a, b) => b.despues.score - a.despues.score || cuantosStrikers(b.vs, null) - cuantosStrikers(a.vs, null))[0];
   const modo = modosEquipo().find(m => m.id === tt.modeId);
   const pa = piezas(antes.razones), pd = piezas(mejor.despues.razones);
   const habia = new Set(pa.map(p => p.clave)), hay = new Set(pd.map(p => p.clave));
@@ -3181,12 +3200,12 @@ function puedeVincular (de, a) {
 //   pega con eso. Las defensas, desde que Ezequiel eligió a Thanos — Annihilation de líder por todo
 //   lo que suma (anti-mermas, ataques y defensas) por sobre Black Cat — Queen in Black (ataques e
 //   ignorar evasión): con los tres stats de antes, Black Cat sumaba el doble.
-// - La sinergia (soportes y bonos de equipo) y los strikers son relevantes pero no definitorios:
-//   pesan la mitad.
+// - La sinergia (soportes y bonos de equipo) es relevante pero no definitoria: pesa la mitad. Los
+//   strikers no suman: a igual puntaje, desempatan (4 de octubre de 2026; strikersDe).
 // Puntaje de contexto: 2 por cada stat que vale del liderazgo del líder y cada integrante al que le
 // llega y le sirve (1 si el liderazgo se activa con una condición: el slot trae ac), 2 por cada nivel
-// de fila de cada DPS (3 la más alta), 1 por cada soporte que le llega a otro y le sirve, 1 por cada
-// bono de equipo activo que le sirve a alguien y 1 por cada striker del trío (uno es striker de otro).
+// de fila de cada DPS (3 la más alta), 1 por cada soporte que le llega a otro y le sirve y 1 por cada
+// bono de equipo activo que le sirve a alguien.
 // El líder es el que más suma de los que cumplen; a igual puntaje, el mejor ubicado en las tier lists
 // del contexto y después la clave. Es el mismo en las listas de los tres (Ezequiel, 2 de octubre de
 // 2026: «único + condicional a la mitad», sin mirar los porcentajes).
@@ -3200,7 +3219,7 @@ const LIDERAZGO_VALE = {
 for (const c of Object.values(LIDERAZGO_VALE)) for (const st of c) {
   if (!PIDE[st] && !PARA_TODOS.has(st)) throw new Error('liderazgo que vale con un stat que no dice a quién le sirve: ' + st);
 }
-const PESO = { lider: 2, dps: 2, sinergia: 1, striker: 1 };
+const PESO = { lider: 2, dps: 2, sinergia: 1 };
 /** Índice de cada stat que vale, por contexto, y a quiénes les llega cada uno (bits de integrante:
  *  0-2 por un liderazgo permanente, 3-5 por uno condicional), reusado en los cientos de miles de
  *  tríos de la consulta. */
@@ -3265,10 +3284,6 @@ function slotsDe (v) {
   if (v.p) _SLOTS.set(v.p, s);
   return s;
 }
-/** Un trío en un contexto. null si no entra: sin ningún DPS de ese contexto o, en PvP, sin un líder
- *  con el que los tres tengan anti-mermas. Si entra: { score, lider, partes: { lider, dps, sinergia,
- *  striker }, art: si sumó el soporte de un artefacto }; con detalle, también de dónde sale cada punto
- *  (detalleContexto lo escribe). */
 // LÍDER DE UN EQUIPO (Ezequiel, 4 de octubre de 2026: la regla de la 1.0.16 para todo). Un equipo tiene un
 // solo líder, el mismo sea cual sea el orden de sus integrantes y desde la lista de quien se lo mire: el que
 // más puntos de liderazgo suma en el contexto; a igual puntaje, el mejor ubicado en las tier lists del
@@ -3341,6 +3356,10 @@ function liderDe (vs, ctx) {
 }
 /** Un equipo con su líder primero (a la izquierda, como en el juego) y los demás en su orden. */
 function conLider (vs, lider) { return lider ? [lider].concat(vs.filter(x => x !== lider)) : vs; }
+/** Un trío en un contexto. null si no entra: sin ningún DPS de ese contexto o, en PvP, sin un líder
+ *  con el que los tres tengan anti-mermas. Si entra: { score, lider, partes: { lider, dps, sinergia },
+ *  strikers: cuántos (desempatan), art: si sumó el soporte de un artefacto }; con detalle, también de
+ *  dónde sale cada punto (detalleContexto lo escribe). */
 function enContexto (vs, ctx, detalle) {
   const roles = vs.map(x => rolEn(x, ctx));
   if (!roles.some(r => r.dps)) return null;
@@ -3366,9 +3385,8 @@ function enContexto (vs, ctx, detalle) {
       if (detalle) bonos.push({ b, integrantes: vs.filter(x => b.m.includes(x.cid)), a: vs.filter(x => b.vs.some(bv => leSirve(bv, x))) });
     }
   }
-  let striker = 0;
-  for (const a of vs) { const ss = STRIKER_SET[a.cid]; if (ss) for (const b of vs) if (b !== a && ss.has(b.cid)) striker += PESO.striker; }
-  const out = { score: ptsLider + dps + sinergia + striker, lider: vs[li], partes: { lider: ptsLider, dps, sinergia, striker }, art };
+  // Los strikers del trío no suman: desempatan (strikersDe).
+  const out = { score: ptsLider + dps + sinergia, lider: vs[li], partes: { lider: ptsLider, dps, sinergia }, strikers: cuantosStrikers(vs, null), art };
   if (detalle) Object.assign(out, { roles, sl, cubreSop, sops, bonos });
   return out;
 }
@@ -3383,7 +3401,9 @@ function consultaCon (v) {
   // L: el líder de la sinergia, el de la tarjeta (0 él, 1 o 2 el compañero, 3 ninguno; lo usa el
   // filtro de cobertura), solo con los dos vinculados (el orden «puntos para él» y las tier lists
   // solo usan esas filas).
-  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), F = new Uint8Array(max), L = new Uint8Array(max);
+  // S: cuántos strikers del trío lo involucran (desempatan los puntos para él).
+  const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), F = new Uint8Array(max), L = new Uint8Array(max),
+        S = new Uint8Array(max);
   // Un solo arreglo de equipo y unas solas opciones para los cientos de miles de llamadas
   // (synergy no se los guarda: lo que devuelve se usa acá mismo y se descarta).
   const vs = [v, null, null], op = { soloPuntaje: true, foco: v };
@@ -3403,10 +3423,10 @@ function consultaCon (v) {
         if (sc.lider) li = vs.indexOf(sc.lider);
       }
       if (f !== 3 && !((f & 1 || dps[i]) && (f & 2 || dps[j]))) continue;
-      A[n] = i; B[n] = j; P[n] = pts; F[n] = f; L[n] = li; n++;
+      A[n] = i; B[n] = j; P[n] = pts; F[n] = f; L[n] = li; S[n] = cuantosStrikers(vs, v); n++;
     }
   }
-  CONSULTA = { clave: v.key, cid: v.cid, v, pool, A, B, P, F, L, n, vista: null };
+  CONSULTA = { clave: v.key, cid: v.cid, v, pool, A, B, P, F, L, S, n, vista: null };
   return CONSULTA;
 }
 /** Contexto del orden elegido: 'pvp', 'pve' o null (puntos para él, o una tier list). */
@@ -3425,8 +3445,9 @@ function puestoHtml (l, key) { const f = filaEn(l, key); return f ? `<span title
 /** Filas de la consulta en el orden elegido y con los filtros, una por trío de personajes: la
  *  primera en ese orden (el mejor uniforme de cada uno para ese orden) que pasa los filtros; con
  *  casillas de cobertura, la primera con ✓ en todas. Con tier lists, gana el trío mejor ubicado
- *  (suma de puestos); a igual puesto, más puntos para él; después, el mejor ubicado en tu lista
- *  de referencia. Los tríos descartados no van (o van solos, si se piden): { filas, ocultos }. */
+ *  (suma de puestos); a igual puesto, más puntos para él; a igual puntaje, más strikers (desempatan);
+ *  después, el mejor ubicado en tu lista de referencia. Los tríos descartados no van (o van solos, si
+ *  se piden): { filas, ocultos }. */
 function vistaConsulta (q) {
   // Descartes en los que está él: los otros dos personajes de cada uno.
   const descartes = new Set(U.descartados.filter(d => d.includes(q.cid)).map(d => d.filter(c => c !== q.cid).join('|')));
@@ -3443,28 +3464,29 @@ function vistaConsulta (q) {
   const lider = cubre && (ctx ? new Uint8Array(q.n) : q.L);
   // Orden por una sola clave numérica por fila: el orden nativo de un Float64Array es varias veces
   // más rápido que comparar de a pares. Cada parte entra en su lugar: si no entrara, el orden
-  // saldría mal sin avisar. Sin contexto: puestos, puntos para él al revés, referencia y fila, solo
-  // con los dos compañeros vinculados. En PvP y PvE: el puntaje de contexto al revés, los puestos,
-  // la referencia y la fila, con cada compañero vinculado o DPS de ese contexto, y si el trío entra.
+  // saldría mal sin avisar. Sin contexto: puestos, puntos para él al revés, sus strikers al revés
+  // (desempatan), referencia y fila, solo con los dos compañeros vinculados. En PvP y PvE: el
+  // puntaje de contexto al revés, los strikers del trío al revés, los puestos, la referencia y la
+  // fila, con cada compañero vinculado o DPS de ese contexto, y si el trío entra.
   const claves = new Float64Array(q.n), vs = [q.v, null, null];
   let m = 0;
   for (let i = 0; i < q.n; i++) {
     const ps = pos[q.A[i]] + pos[q.B[i]], rf = ref[q.A[i]] + ref[q.B[i]];
-    let pts;
+    let pts, stk;
     if (!ctx) {
       if (q.F[i] !== 3) continue;
-      pts = q.P[i];
+      pts = q.P[i]; stk = q.S[i];
     } else {
       if (!((q.F[i] & 1 || dpsCtx[q.A[i]]) && (q.F[i] & 2 || dpsCtx[q.B[i]]))) continue;
       vs[1] = q.pool[q.A[i]]; vs[2] = q.pool[q.B[i]];
       const e = enContexto(vs, ctx);
       if (!e) continue;
-      pts = e.score;
+      pts = e.score; stk = e.strikers;
       if (lider) lider[i] = vs.indexOf(e.lider);
     }
-    if (ps >= 4096 || pts < 0 || pts >= 128 || rf >= 2048) throw new Error('orden de combinaciones fuera de rango: ' + [ps, pts, rf]);
-    claves[m++] = ctx ? (((127 - pts) * 4096 + ps) * 2048 + rf) * 1048576 + i
-                      : ((ps * 128 + (127 - pts)) * 2048 + rf) * 1048576 + i;
+    if (ps >= 4096 || pts < 0 || pts >= 128 || stk >= 8 || rf >= 2048) throw new Error('orden de combinaciones fuera de rango: ' + [ps, pts, stk, rf]);
+    claves[m++] = ctx ? ((((127 - pts) * 8 + (7 - stk)) * 4096 + ps) * 2048 + rf) * 1048576 + i
+                      : (((ps * 128 + (127 - pts)) * 8 + (7 - stk)) * 2048 + rf) * 1048576 + i;
   }
   const ordenadas = claves.subarray(0, m).sort();
   const fuera = new Set(ui.eqExcluir), vistos = new Set(), filas = [];
@@ -3569,14 +3591,10 @@ function detalleContexto (e, vs, ctx) {
   if (e.partes.sinergia) partes.push([h(t('cx_sinergia')), e.partes.sinergia, e.sops.map(x => `${quien(x.de)}: ${enlaceSkill(x)}${
       x.k === 'artifact' ? artPts(true) : ''} → ${a(x.a)}`)
     .concat(e.bonos.map(x => `${h(nombreBono({ b: x.b, integrantes: x.integrantes, i: 0 }, false))} → ${a(x.a)}`)), true, e.art]);
-  if (e.partes.striker) {
-    const pares = [];
-    for (const x of vs) for (const [c, p, cuando] of STRIKERS[x.cid] || []) {
-      const b = vs.find(y => y !== x && y.cid === c);
-      if (b) pares.push(`${h(t('cx_striker_de')).replace('{b}', () => quien(b)).replace('{a}', () => quien(x))} (${strikerProbHtml(p, cuando)})`);
-    }
-    partes.push([h(t('cx_strikers')), e.partes.striker, pares]);
-  }
+  // Los strikers no suman: se dicen como desempate, sin puntos.
+  const st = strikersDe(vs, null);
+  if (st.length) partes.push([h(mayuscula(t(st.length === 1 ? 'cx_desempate_1' : 'cx_desempate').replace('{n}', st.length))), null,
+    st.map(x => strikerParHtml(x, nombre))]);
   return `<ul class="cxpts">${partes.map(([k, pts, vi, plegadas, art]) => {
     const cab = `<b>${k}${pts != null ? ` +${pts}` : ''}</b>${artPts(art)}`, lista = vi.length ? `<ul>${vi.map(x => `<li>${x}</li>`).join('')}</ul>` : '';
     return `<li>${plegadas ? `<details class="cxdesp"><summary>${cab}</summary>${lista}</details>` : cab + lista}</li>`;
@@ -3635,9 +3653,11 @@ function combinacionesHtml (v) {
           ${ls.map(l => `<div class="muted">${h(listName(l))}: ${conLider(vs, lider).map(x => puestoHtml(l, x.key)).join(' · ')}</div>`).join('')}
         </div>
         ${e ? `<div class="eqpts"><b>${e.score}</b>${artPts(e.art)} ${h(t('cx_pts_' + ctx))}
-          <div class="muted">${h(t('cx_para_el')).replace('{a}', () => sc.score + artPts(sc.art)).replace('{b}', () => equipo.score + artPts(equipo.art))}</div></div>`
+          <div class="muted">${h(t('cx_para_el')).replace('{a}', () => sc.score + artPts(sc.art)).replace('{b}', () => equipo.score + artPts(equipo.art))}</div>
+          ${desempateHtml(e.strikers)}</div>`
             : `<div class="eqpts"><b>${sc.score}</b>${artPts(sc.art)} ${h(t('eq_pts_for'))}
-          <div class="muted">${h(t('eq_pts_team')).replace('{n}', () => equipo.score + artPts(equipo.art))}</div></div>`}
+          <div class="muted">${h(t('eq_pts_team')).replace('{n}', () => equipo.score + artPts(equipo.art))}</div>
+          ${desempateHtml(cuantosStrikers(vs, v))}</div>`}
         ${botonArmar(vs, '', '')}
         ${ui.eqVerDescartados
           ? `<button class="btn sm" data-a="restaurar" data-c="${vs.map(x => x.cid).join(',')}">${h(t('eq_restaurar'))}</button>`

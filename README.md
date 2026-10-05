@@ -89,11 +89,12 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     `docs/MODELO.md`). Si él no figura en las tier lists del contexto (Arena; Alianza y WBL), o solo
     como «Not for wbl», no tiene función ahí y ese orden no arma combinaciones. En un contexto entran
     solo los tríos con algún DPS de sus tier lists y, en PvP, con anti-mermas para los tres; un DPS
-    entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS, sinergia y
-    strikers) dice de dónde sale cada punto (los soportes y bonos de equipo, plegados, con qué es
-    cada uno). Los puntos que cuentan el soporte de un artefacto como si lo llevara llevan «*»,
-    como las casillas, y el lugar de cada uno en la lista del orden, «+N» si está en más de una
-    fila. Se
+    entra aunque no tenga vínculo con él, y el puntaje de equipo (liderazgo, DPS y sinergia) dice
+    de dónde sale cada punto (los soportes y bonos de equipo, plegados, con qué es
+    cada uno). Los strikers no suman en ningún orden: a igual puntaje, desempatan, y la tarjeta
+    dice cuántos («desempate: 2 strikers»). Los puntos que cuentan el soporte de un artefacto como
+    si lo llevara llevan «*», como las casillas, y el lugar de cada uno en la lista del orden, «+N»
+    si está en más de una fila. Se
     filtran con «Con» y «Sin», y con casillas por cobertura (ataque, ignorar evasión, todas las
     defensas, vida y quita todos los debuffs: de cada pareja queda la mejor combinación de uniformes
     que las cumple todas). Cada una dice su **líder** (uno solo por trío, el mismo desde la lista de

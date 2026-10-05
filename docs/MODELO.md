@@ -408,6 +408,12 @@ falta a 119 personajes, casi todos recientes (Galactus, Annihilus, Apocalypse, e
 app no tienen strikers propios, aunque pueden ser strikers de otros. Galactus tiene 16 en el juego.
 Lo que no se pudo leer va a `docs/AUDITORIA.md` (sección 11).
 
+En los equipos (Ezequiel, 4 de octubre de 2026: «suman, MUY poco... sería un sistema de desempate»),
+los strikers no dan puntos en ningún lado, ni en la sinergia ni en PvP y PvE: a igual puntaje,
+desempatan. Las combinaciones van por puntaje y, a igual puntaje, por cuántos strikers tiene el trío
+(en PvP y PvE, todos; en los puntos para él, los que lo involucran), y cada tarjeta lo dice
+(«desempate: 2 strikers»). «Cómo entraría» elige el lugar igual.
+
 Dudas:
 - **Set Striker.** El juego tiene además un striker que se elige para cada personaje (solo de 6★ o
   más), que aparece con su Striker Skill y cuyo efecto crece con el tier (captura de Gorr con Silver
@@ -433,7 +439,8 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
 - **DPS:** no todos pegan bien, y sin quien pegue un equipo no es relevante. Agent 13 no le aporta
   nada a ningún equipo (relleno); Black Cat sirve de soporte o de líder, no de DPS; hay quien es
   las tres cosas, como Apocalypse.
-- **Sinergia y strikers:** relevantes, no definitorios. El striker tiene que estar en el mismo equipo.
+- **Sinergia y strikers:** relevantes, no definitorios. El striker tiene que estar en el mismo equipo y
+  solo desempata (4 de octubre de 2026).
 - **Líder:** un trío tiene un solo líder, el mismo en las listas de los tres: el orden solo cambia
   cuando hay un peso real distinto entre las opciones. Un liderazgo que se activa con una condición
   (al recibir un debuff, por ejemplo) pesa la mitad, sin mirar los porcentajes (Ezequiel, 2 de
@@ -462,8 +469,8 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
 - Puntaje: 2 por cada stat del liderazgo que vale y cada integrante al que le llega y le sirve
   (cada stat una vez, aunque el liderazgo lo traiga en varias líneas; 1 si solo le llega por un
   liderazgo que se activa con una condición, el slot con `ac`); 2 por cada nivel de fila de cada
-  DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve, por cada bono de equipo
-  activo y por cada striker del trío. El líder es el que más suma de los que cumplen y no depende
+  DPS (3 la más alta); 1 por cada soporte que le llega a otro y le sirve y por cada bono de equipo
+  activo. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma de los que cumplen y no depende
   del orden del trío: a igual puntaje, el mejor ubicado en las tier lists del contexto (la suma de
   su puesto en cada una) y después la clave. Hasta la 1.0.15, a igual puntaje ganaba el primero del
   trío, que es siempre el personaje de la ficha, así que el mismo trío salía con otro líder en cada
@@ -486,14 +493,15 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
 
 Los pesos se revisaron con cuatro pares reales que Ezequiel comparó (2 de octubre de 2026). Quedaron
 como estaban; lo que cambió es que en PvP cuentan las defensas del liderazgo. Con el líder único y
-el condicional a la mitad solo cambia el de Thor en PvP, que ahora gana por puntaje.
+el condicional a la mitad solo cambia el de Thor en PvP, que ahora gana por puntaje. Sin los strikers
+en el puntaje (4 de octubre de 2026), los cuatro siguen ganando por puntaje.
 
-| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → con defensas | Con líder único |
-|---|---|---|---|---|
-| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 | 27 a 22 |
-| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual | 25 a 24 |
-| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 | 27 a 21 |
-| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual | 26 a 21 |
+| Contexto y foco | Mejor, según Ezequiel | Contra | Puntos: antes → con defensas | Con líder único | Sin strikers |
+|---|---|---|---|---|---|
+| PvP, Galactus | Thanos — Annihilation (líder) + Kang — Rama-Tut: tres DPS | Black Cat — Queen in Black (líder) + Wasp — Quantumania: un DPS | 21 a 22 → 27 a 22 | 27 a 22 | 26 a 20 |
+| PvE, Thor | Phil Coulson — Winter Ops + Invisible Woman — The Fall of the Fantastic Four (líder): un DPS | Crystal — Spring Lady (líder) + Mephisto — Master of Hell: dos DPS | 25 a 24, igual | 25 a 24 | 19 a 18 |
+| PvP, Thor | Wasp — Quantumania (líder) + Sentry — Thunderbolts*: un DPS | Silver Surfer — Void Knight (líder) + Gorr: dos DPS | 21 a 21 → 27 a 27 | 27 a 21 | 21 a 18 |
+| PvP, Jean Grey — Summer Flare Phoenix | Black Cat — Queen in Black (líder) + Invisible Woman — First Steps: un DPS | Knull + Gorr: tres DPS GOd | 26 a 21, igual | 26 a 21 | 23 a 19 |
 
 - **Galactus.** «Thanos es el mejor líder por el agregado de las mermas y mejoras de daños y
   defensa, y los 3 son DPS»; Black Cat + Wasp «es una opción depositando todo el peso en que
@@ -518,7 +526,7 @@ el condicional a la mitad solo cambia el de Thor en PvP, que ahora gana por punt
   20 s). Gorr da PG +35% permanente a los supervillanos, y el uniforme Void Knight lo es: 6. Silver
   Surfer da ataques y defensas +30% solo al recibir un debuff: 12 con la 1.0.15, 6 a la mitad.
   Empatan y lidera Gorr por la tier list de Arena (GOd contra Niche), con 26 puntos en las listas de
-  los tres: gana por desempate, no por peso. Antes lideraba Silver Surfer: con la 1.0.14, en su lista
+  los tres (24 sin los strikers): gana por desempate, no por peso. Antes lideraba Silver Surfer: con la 1.0.14, en su lista
   y en la de Knull; con la 1.0.15, en las tres, con 32.
 - **Doctor Voodoo — Savage Avengers en la lista de PvP de Adam Warlock**, con Wasp — Quantumania de
   líder. Su pasiva de uniforme es solo para Universales, pero entra por la Tier-2, «Voodoo Shield»:

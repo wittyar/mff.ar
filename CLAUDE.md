@@ -65,8 +65,8 @@ variante, en `docs/COMPLETITUD.md`.
   Después, verif_consistencia tiene que pasar con los datos del repo.
 - Consistencia entre pantallas: quedan las preguntas que dependen de reglas sin decidir («le
   sirve», los liderazgos que Leads & Supports no publica, si el soporte propio cuenta para su dueño
-  y qué es anti-mermas, los strikers fuera de PvP y PvE, y los recomendados de Modos contra la
-  función en PvP y PvE). verif_consistencia las tiene listadas.
+  y qué es anti-mermas, y los recomendados de Modos contra la función en PvP y PvE).
+  verif_consistencia las tiene listadas.
 
 - Capturas del 2 de octubre (380, transcriptas el 4 de octubre):
   - El glosario cita la captura en coreano de Mind Control, Recharge Shield, Fracture e
