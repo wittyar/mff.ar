@@ -440,10 +440,9 @@ leídas el 4 de octubre de 2026; las fichas de personaje no se pudieron leer.
   (Instinct)»). 407 es probablemente el efecto de cinco artefactos (Aero, Punisher, Scarlet Spider,
   Domino y Yelena Belova: ignorar los debuffs según el instinto); 577 sigue sin fuente. La app
   todavía muestra los números: podría mostrar el nombre de los que tienen id.
-- **Efectos para todo el equipo que se repiten.** Decidido en parte (Ezequiel, 5 de octubre de 2026): un
-  efecto sin valor que a un integrante le llega de dos fuentes se le aplica una sola vez (ver *Efectos
-  iguales* en *Equipos por contexto*). Falta decidir los que tienen valor, que se siguen sumando: si se
-  suman o vale el mayor. Los C.T.P. Insight y Liberation dicen en el juego
+- **Efectos para todo el equipo que se repiten.** Decidido (Ezequiel, 5 de octubre de 2026): las
+  estadísticas se suman y las habilidades cuentan una vez, la de mayor valor (ver *Efectos iguales* en
+  *Equipos por contexto*). Los C.T.P. Insight y Liberation dicen en el juego
   que su efecto para todo el equipo no se aplica dos veces si lo llevan dos (y son los únicos que lo
   dicen). Lo oficial es de los C.T.P. y de las colecciones: de efectos de C.T.P. iguales activos a la
   vez vale el mayor (notas del 7 de abril de 2026), dos Insight con distinto reforjado aplican los
@@ -451,8 +450,8 @@ leídas el 4 de octubre de 2026; las fichas de personaje no se pudieron leer.
   de colección más alta (enero de 2026). De los soportes no hay nada oficial: una guía de un jugador
   de 2018 dice, sin pruebas, que dos compañeros con el mismo buff de equipo usan cada uno el suyo
   (conjetura), y una respuesta de GameFAQs de 2016, que dos bonos de equipo iguales se acumulan
-  (conjetura). La sinergia cuenta cada soporte por quien lo da, salvo lo que no tiene valor (hallazgo
-  `efectos-repetidos`).
+  (conjetura). La sinergia cuenta cada soporte por quien lo da, salvo una habilidad que a alguien ya se le
+  aplica de otra fuente (hallazgo `efectos-repetidos`).
 
 Resuelto con el foro oficial (4 de octubre de 2026): **«Adaptation»** («inmune al mayor daño
 recibido», la pasiva de Sentinel) es inmunidad al elemento del mayor daño recibido. Las notas
@@ -687,23 +686,61 @@ Reglas de Ezequiel para armar equipos (2 de octubre de 2026):
 - **Efectos iguales** (Ezequiel, 5 de octubre de 2026: «El juego no permite el solapado de habilidades
   iguales... por lo que el antimermas de apocalipsis y el de deadpool solo va a funcionar uno. Vi varias
   veces que en muchos casos pones mas de un personaje con la misma habilidad, sin tener en cuenta que
-  solo una de ellas se puede aplicar»): un efecto sin valor (una línea de un liderazgo o de un soporte
-  sin número: quitar todos los debuffs, las inmunidades) que a un integrante le llega de dos o más
-  fuentes se le aplica una sola vez. Se aplica, en este orden: el propio (el de sus skills, que la app
-  ya cuenta como propio, o el de su soporte), el del liderazgo del líder y el del primer soporte en el
-  orden del trío: el líder primero y los otros dos por su clave, un orden fijo para que el trío sea el
-  mismo desde la lista de cualquiera (el juego no dice cuál va primero; con el orden al revés, en 20.000
-  tríos con algo sin valor cambian 3 sinergias y 2 puntajes de PvP y de PvE). Las demás fuentes de ese
-  efecto no le suman nada a ese integrante. Los efectos con valor se suman como antes, hasta que
-  Ezequiel diga si se suman o vale el mayor: la regla está en una sola función (`seAcumula`, en
-  `app.js`). En la práctica el que se repite es quitar todos los debuffs: de las 102 líneas sin valor de
-  los liderazgos y los soportes, 86 son ese; las otras 16 (inmunidad a los debuffs, a la quemadura, a la
-  incapacitación, al miedo, al aturdimiento y a la rotura de guardia, invocar, un segundo más de
-  perforación y de enredo, y la de Molecule Man contra las facciones) las traen pocas variantes, y
-  ningún artefacto trae una. En 20.000 tríos al azar con dos o tres de las 125 variantes que traen algo
-  sin valor (o anti-mermas propios), en 6.581 hay algo que no se suma, y siempre es quitar todos los
-  debuffs [Comprobado, con los datos del 5 de octubre: `medir_solapado.py`; lo que cambia, en *Cómo lo
-  aplica la app*].
+  solo una de ellas se puede aplicar»; y después: «el daño contra facciones si se suma. EL ataque se
+  suma. La defensa se suma. la vida se suma... Las habilidades especificas, inmunidad a romper guardia,
+  por ejemplo no se solapan es decir cuenta una sola vez»): cuando a un integrante le llega el mismo
+  stat de dos o más fuentes, las estadísticas se suman y las habilidades cuentan una vez. De una
+  habilidad se le aplica la de mayor valor y, a igual valor (o sin valor), la primera en este orden: la
+  propia (la de sus skills, que la app ya cuenta como propia, o la de su soporte), la del liderazgo del
+  líder y la del primer soporte en el orden del trío: el líder primero y los otros dos por su clave, un
+  orden fijo para que el trío sea el mismo desde la lista de cualquiera (el juego no dice cuál va
+  primero; con el orden al revés, en 20.000 tríos con algo sin valor cambian 3 sinergias y 2 puntajes de
+  PvP y de PvE, medido con la primera parte de la regla). Las demás fuentes no le suman nada a ese
+  integrante. Qué es cada stat lo dice el
+  catálogo: `acumula` en cada stat de `soporte` de `scripts/contenido/catalogo.json` (datos de formato
+  8; `catalogo.validar` exige que todos lo digan, y la tabla entera va en *Qué se acumula y los topes*
+  de `docs/CATALOGO.md` desde el próximo build). Los dudosos van con [Conjetura] en su nota, para que
+  Ezequiel los confirme:
+
+  | Si le llega de dos fuentes | Stats |
+  |---|---|
+  | Cuenta una vez, la de mayor valor (18) | Remove All Debuffs y Debuff Immunity (los anti-mermas); Burn, Fear, Stun, Guard Break e Incapacitation Immunity; Physical, Fire, Lightning y Mind Immunity Chance; Barrier; Max HP Shield; Revive with % HP; Summon; Immortality + Death; Immortality + Heal [Conjetura: la inmortalidad es una habilidad, y la curación viene con ella]; Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction [Conjetura: no tiene número; ignora o no ignora] |
+  | Se suma (65) | Todos los demás: ataques, defensas, vida, daño contra facciones y recibido de ellas, daño de elemento, a jefes, crítico y daño crítico, evasión, ignorar evasión y defensa, recarga, recuperación, velocidades, resistencias, duraciones... Con [Conjetura]: Guaranteed Critical Rate (le suma un valor fijo a la probabilidad de crítico, como un stat), Heal (cada curación es aparte), Ignore Non-Boss Damage Decrease (un porcentaje, como ignorar la defensa), «Super Armor, All Basic Defenses» (la superarmadura cuenta una vez, pero el número es el de las defensas, y la defensa se suma), «Max Dodge» y «Attack Defense» (no se sabe qué suben) |
+
+  En la práctica la que se repite es quitar todos los debuffs: de las líneas de liderazgo y de soporte
+  que cuentan una vez, 86 de 128 son esa, y ningún artefacto trae una habilidad salvo Immortality +
+  Heal. Las habilidades con valor no le llegan a nadie de dos fuentes en un mismo trío: o las traen solo
+  liderazgos (Physical Immunity Chance, Max HP Shield), o uniformes de un solo personaje (Storm, Sun
+  Bird, Invisible Woman), o una sola variante. Así que con los datos del 5 de octubre «la de mayor
+  valor» todavía no decide nada, y frente a la primera parte de la regla (lo sin valor, una vez) no
+  cambia ninguna lista, ningún puntaje ni ningún líder, tampoco por las dos líneas sin valor que ahora
+  se suman (un segundo más de perforación y de enredo) [Comprobado: `medir_solapado.py`, en *Cómo lo
+  aplica la app*]. La regla vive en `seAcumula`, que lee el catálogo, y en `fuenteQueSeAplica`.
+- **Topes** (Ezequiel, 5 de octubre de 2026: «Hay algunas estadsiticas que llegana tope, indice critico,
+  daño critico, esquiva»): el tope de cada stat lo dice la guía (`scripts/contenido/guia.json`, *topes*:
+  la guía de thanosvibs, parte 3), y qué stat de liderazgo, soporte o bono lo tiene, el catálogo
+  (`tope`: las claves de la guía; el build valida que existan y que cada tope de la guía lo nombre algún
+  stat). En lo que recibe cada integrante (la ventana del «Por qué»), un stat con tope lo muestra con su
+  fuente y, si lo que suman los buffs que se le aplican pasa lo que queda hasta el tope (el tope menos
+  la base: la velocidad de ataque, con tope de 130% desde 100%, deja 30%), avisa que lo de más no suma;
+  un renglón con condición se cuenta con lo que le llega siempre del mismo stat, y la recarga, que se
+  escribe en negativo, por su valor absoluto. Cuenta solo lo de la tabla, no lo que el personaje ya
+  tiene ni los bonos de equipo, y no cambia los puntos. El Glosario y «Cómo funciona» lo dicen en cada
+  efecto. Con los datos del 5 de octubre, el único stat que podría pasar su tope sumando liderazgos y
+  soportes es el daño crítico: con Warwolf de líder, Ulysses Klaue y Katy, 108% contra 100%. Pero en ese
+  trío lidera Katy (a cada uno le llegan 60%, y 30% más con la Tier-2 de Warwolf) y en PvP y PvE no
+  entra, así que con los datos de hoy el aviso no sale en ningún equipo [Comprobado].
+
+  | Tope de la guía | Stats |
+  |---|---|
+  | Prob. de crítico 75% | Critical Rate |
+  | Daño crítico 200% (desde 100%) | Critical Damage |
+  | Evasión 75% | Dodge |
+  | Recarga de skills 50% | Skill Cooldown |
+  | Ignorar defensa 50% | Ignore Defense |
+  | Vel. de ataque y de movimiento 130% (desde 100%) | Attack Speed, Movement Speed, All Speeds |
+  | Tasa de recuperación 250% (desde 100%) | Recovery Rate |
+  | Resistencia elemental 200% | Cold, Fire, Lightning y Mind Resist, All Resistances |
 
 ### Tabla de valor
 
@@ -739,12 +776,12 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   datos actuales tienen función 60 de las 888 variantes en PvP y 119 en PvE.
 - Un trío entra si alguno es DPS de ese contexto y cumple el requisito de la tabla: en PvP, que con
   algún líder los tres tengan anti-mermas. Cada compañero tiene vínculo con él o es DPS de ese
-  contexto. El vínculo por un bono de equipo no depende del líder. Por un soporte, sí, en lo que no tiene
-  valor: un soporte que solo le da al otro lo que ya tiene (ver *Efectos iguales*) no los vincula, y lo
-  que ya tiene depende de quién lidera. El del liderazgo es con el líder del contexto: lidera él y su
-  liderazgo le llega al compañero, o lidera el compañero y le llega a él (regla 2 de Ezequiel, 4 de octubre
-  de 2026: un solo líder, el del modo, para todo lo de ese modo; decidido el 5 de octubre). Sin contexto,
-  con el de la sinergia.
+  contexto. El vínculo por un bono de equipo no depende del líder. Por un soporte, sí, en lo que no se
+  acumula: un soporte que solo le da al otro una habilidad que se le aplica de otra fuente (ver
+  *Efectos iguales*) no los vincula, y cuál se le aplica depende de quién lidera. El del liderazgo es
+  con el líder del contexto: lidera él y su liderazgo le llega al compañero, o lidera el compañero y
+  le llega a él (regla 2 de Ezequiel, 4 de octubre de 2026: un solo líder, el del modo, para todo lo
+  de ese modo; decidido el 5 de octubre). Sin contexto, con el de la sinergia.
 - Anti-mermas (Ezequiel, 4 de octubre de 2026): son los stats de la tabla de valor (Remove All
   Debuffs y Debuff Immunity), los mismos en el filtro de PvP, su detalle, la casilla de las
   combinaciones y el índice. A cada uno se los da el liderazgo del líder, un soporte de alguno o
@@ -777,13 +814,14 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   cuenta. Los pesos se revisan con casos (ver *Casos de referencia*).
 - Sin contexto (los puntos para él, las tier lists, tus equipos, los favoritos, la comparativa y
   «cómo entraría»), el líder sale de la misma función: el que más suma con su liderazgo en la
-  sinergia (cada slot con el que a otro le llega algo que se le aplica y le sirve: 3 si es Notable, 2 si
-  no; con él de líder, lo que no tiene valor se le aplica a quien no lo tiene propio); a igual puntaje, el
-  mejor ubicado en la General de thanosvibs, y después la clave. Antes era el que más le sumaba al
-  personaje de la ficha y, a igual puntaje, el primero: el mismo trío salía con otro líder según
-  desde qué lista se lo mirara, y la tarjeta de PvP decía un líder y contaba los puntos «para él»
-  con otro. En una tarjeta de PvP o PvE, esos puntos se cuentan con el líder del contexto. Tus
-  equipos se guardan en un orden fijo: el mismo equipo, guardado desde dos listas, es uno.
+  sinergia (cada slot con el que a otro le llega algo que se le aplica y le sirve: 3 si es Notable, 2
+  si no; con él de líder, una habilidad se le aplica a quien no la tiene propia con igual o más
+  valor); a igual puntaje, el mejor ubicado en la General de thanosvibs, y después la clave. Antes era
+  el que más le sumaba al personaje de la ficha y, a igual puntaje, el primero: el mismo trío salía
+  con otro líder según desde qué lista se lo mirara, y la tarjeta de PvP decía un líder y contaba los
+  puntos «para él» con otro. En una tarjeta de PvP o PvE, esos puntos se cuentan con el líder del
+  contexto. Tus equipos se guardan en un orden fijo: el mismo equipo, guardado desde dos listas, es
+  uno.
 - Con los datos actuales, la lista de PvP de Knull — Ancient History tiene 1.956 equipos. Las de
   Galactus y de Jean Grey — Summer Flare Phoenix tienen unos 36.500 (36.488 y 36.219): sus
   liderazgos dan anti-mermas a cualquiera, así que con ellos de líder cualquier trío con un DPS
@@ -839,7 +877,37 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
     de PvP o PvE lo mismo que antes en la mediana; las más pesadas con un soporte sin valor tardan más,
     porque el vínculo por un soporte se recalcula con el líder del contexto: PvP de Silver Surfer
     (Shalla-Bal), de 1,8 a 3,0 s; PvE de Invisible Woman — The Fall of the Fantastic Four, de 2,1 a 3,8 s
-    (Chromium sin pantalla, en el contenedor de las pruebas).
+    (Chromium sin pantalla, en el contenedor de las pruebas). Con el arreglo de la segunda parte (abajo),
+    2,4 y 3,2 s.
+- Con lo que se acumula según el catálogo y la habilidad de mayor valor (medido el 5 de octubre de 2026
+  sobre los datos de prueba de formato 8, contra la app de la primera parte: `medir_solapado.py`), no
+  cambia nada [Comprobado]:
+  - Las 60 listas de PvP (468.009 combinaciones), las 119 de PvE (2.152.985) y las 888 de puntos para él
+    (19.449.164) tienen las mismas filas, en el mismo orden, con el mismo puntaje y el mismo líder.
+  - En 20.000 tríos al azar y en 20.000 con dos o tres de las 146 variantes que traen una habilidad (o
+    anti-mermas propios), no cambian la sinergia, el líder sin contexto ni el puntaje de PvP y PvE. En
+    5.259 de los segundos hay algo que no se suma, y siempre es quitar todos los debuffs.
+  - Tiempo: elegir la fuente que se aplica sin ordenar el equipo, y no recontar el vínculo por un soporte
+    cuando con el liderazgo y los DPS la fila ya entra, baja lo que había subido con la primera parte,
+    sin llegar a lo de antes de la regla. Lo que queda es la regla misma: qué fuente se le aplica a cada
+    uno (entre 0,6 y 1,6 millones de veces al ordenar una de estas listas) y el vínculo con el líder del
+    contexto (entre 77.000 y 195.000 veces; con la primera parte, entre 166.000 y 255.000). Invisible
+    Woman baja menos: la barrera de su pasiva («1 hit»), que ahora cuenta una vez, está en todas las filas
+    de su lista, y la fuente se elige casi el doble de veces que con la primera parte [Probable]. El
+    mínimo de tres corridas, consulta + orden, en segundos:
+
+    | Lista | Antes de la regla | Primera parte | Ahora |
+    |---|---|---|---|
+    | PvP de Silver Surfer (Shalla-Bal) | 1,31 + 1,57 | 2,05 + 2,99 | 1,68 + 2,28 |
+    | PvP de Stryfe — The Tyrant of Spring | 1,55 + 1,61 | 2,15 + 2,77 | 1,80 + 2,14 |
+    | PvE de Stryfe — The Tyrant of Spring | 1,56 + 1,61 | 2,11 + 2,82 | 1,78 + 2,52 |
+    | PvE de Invisible Woman — The Fall of the Fantastic Four | 1,66 + 1,77 | 2,46 + 3,69 | 2,37 + 3,34 |
+    | PvP de Galactus | 1,29 + 1,46 | 1,56 + 1,50 | 1,72 + 1,46 |
+    | PvE de Knull — Ancient History | 0,79 + 0,83 | 0,84 + 0,96 | 0,84 + 0,88 |
+
+    En todas las listas (una corrida cada una, en la medición), la consulta tarda en promedio 1,50 s
+    (1,52 s con la primera parte), y ordenar las 60 de PvP suma 35,5 s (37,1 s) y las 119 de PvE, 138,3 s
+    (139,4 s).
 
 ### Casos de referencia
 

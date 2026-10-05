@@ -127,7 +127,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     parte (en PvP y PvE, el detalle del contexto; si no, la sinergia; los strikers, como desempate);
     después, una pestaña por integrante con lo que recibe, en una tabla (cada efecto con su total, sin
     topes, y de dónde sale cada parte: el retrato y el nombre de quien la da, con el link a su skill o
-    a su artefacto; lo que no se le suma porque ya lo tiene, atenuado, con de dónde lo tiene) y lo que
+    a su artefacto; lo que no se le suma porque ya lo tiene, atenuado, con de dónde lo tiene; si el stat
+    tiene tope en la guía, el tope, con un aviso si lo que suman los buffs lo pasa) y lo que
     aporta; y abajo, los **C.T.P.** recomendados a cada integrante, con su
     fuente: los de la guía de armado (los de PvP o de PvE en ese contexto; si no, el mejor y el
     segundo) y, si la guía no le da ninguno, los de la Ideal CTP List («Not worth» se dice). Se cierra
@@ -161,7 +162,8 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   y qué C.T.P. da cada efecto de la barra de Concentración y de qué opción sale (la fija, que tienen
   todos los grados, o una de reforjado); y los 126 efectos del catálogo por
   grupo, con sus lecturas de PvE y de PvP, a quién le sirven (en las skills y, si no es lo mismo,
-  como liderazgo, soporte o bono de equipo) y con qué etiquetas aparecen en las skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
+  como liderazgo, soporte o bono de equipo), si se suman o cuentan una vez cuando a alguien le llegan
+  de dos fuentes, su tope en la guía y con qué etiquetas aparecen en las skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
 
 Todo lo que viene de una fuente la cita; lo derivado se dice derivado; lo que falta en la fuente
 se marca como faltante en vez de inventarse.
@@ -290,14 +292,16 @@ en tres lugares:
   octubre de 2026): su soporte, si le aplica, y lo que sus skills le dan a él mismo contra los
   debuffs (la pasiva de Tier-2 de Knull); uno que se activa con una probabilidad (Hulkling, 25% al
   recibir un golpe) no cuenta, y el «Por qué» y el detalle de PvP lo dicen. En la sinergia, un
-  soporte suma solo si a otro integrante le llega algo que se le aplica: un efecto sin valor
-  (anti-mermas, inmunidades) que le llega de dos fuentes se le aplica una vez, el propio, si no el
-  del liderazgo del líder y si no el del primer soporte en el orden del equipo (Ezequiel, 5 de
-  octubre de 2026; ver *Equipos por contexto* en `docs/MODELO.md`, con cuánto cambian las listas:
-  con los datos del 5 de octubre, de las 485.558 combinaciones de PvP salen 17.549 y 15.259 bajan de
-  puntaje). Un soporte que solo le da al otro lo que ya tiene no los vincula. El «Por qué», el
-  detalle de PvP y PvE y la comparativa muestran atenuada la fuente que no se suma («Apocalypse:
-  Pasiva 4★ → Wolverine (Deadpool ya lo tiene de su liderazgo)»).
+  soporte suma solo si a otro integrante le llega algo que se le aplica. Si a alguien le llega lo
+  mismo de dos fuentes, las estadísticas se suman y una habilidad (anti-mermas, inmunidades, barrera,
+  escudos, revivir...) se le aplica una vez: la de mayor valor y, a igual valor, la propia, si no la
+  del liderazgo del líder y si no la del primer soporte en el orden del equipo (Ezequiel, 5 de octubre
+  de 2026; qué es cada stat lo dice el catálogo y lo muestra el Glosario; ver *Equipos por contexto* en
+  `docs/MODELO.md`, con cuánto cambian las listas: con los datos del 5 de octubre, de las 485.558
+  combinaciones de PvP salen 17.549 y 15.259 bajan de puntaje). Un soporte que solo le da al otro lo
+  que ya tiene no los vincula. El «Por qué», el detalle de PvP y PvE y la comparativa muestran
+  atenuada la fuente que no se suma («Apocalypse: Pasiva 4★ → Wolverine (Deadpool ya lo tiene de su
+  liderazgo)»).
 
 No cambia los puntos de la sinergia. Lo que no está en ninguna categoría (velocidad, crítico,
 daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.
@@ -544,8 +548,9 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   hace daño físico; las resistencias, para quien tiene una mejora de daño según esa resistencia;
   todas las velocidades, para nadie; el resto, para todos. Un stat que el catálogo no tiene cuenta
   para todos y la sinergia lo dice. Cada efecto vale lo mismo, sin importar cuánto sube.
-  Uno sin valor que a un integrante le llega de dos fuentes se le aplica una vez; los que tienen
-  valor se suman (falta que Ezequiel diga si se suman o vale el mayor).
+  Si a un integrante le llega lo mismo de dos fuentes, una estadística se suma y una habilidad cuenta
+  una vez, la de mayor valor; cuál es cuál lo dice el catálogo, con los dudosos marcados [Conjetura].
+  El tope de la guía se muestra y se avisa si se pasa, pero no cambia los puntos.
 - Los bonos de equipo de la wiki están redondeados a un decimal y sus páginas no siempre
   coinciden: vale lo que dice la mayoría y, si empatan, la app muestra las dos versiones
   (`docs/AUDITORIA.md`, sección 10). Faltan los de los personajes que la wiki todavía no tiene,
