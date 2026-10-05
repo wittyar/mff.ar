@@ -3393,48 +3393,65 @@ function puestoSinContexto (v) {
   }
   return p;
 }
-/** El líder de un equipo sin contexto: el que más suma con su liderazgo (cada slot de liderazgo que le llega y
- *  le sirve a otro integrante, 3 si es Notable y 2 si no, como en la sinergia). null si ninguno suma. */
+/** Lo que suma el liderazgo de a en un equipo sin contexto: cada slot de liderazgo que le llega y le sirve a otro
+ *  integrante, 3 si es Notable y 2 si no, como en la sinergia. */
+function ptsLiderSinContexto (a, vs) {
+  const s = SOPORTES[a.p]; if (!s) return 0;
+  let pts = 0;
+  for (const k of LIDERAZGOS) {
+    const x = s[k]; if (!x) continue;
+    for (const b of vs) if (b !== a && aplicaA(x, b) && leSirve(x, b)) { pts += x.sig ? 3 : 2; break; }
+  }
+  return pts;
+}
+/** El líder de un equipo sin contexto: el que más suma con su liderazgo (ptsLiderSinContexto). null si ninguno suma. */
 function liderSinContexto (vs) {
   let lider = null, ptsLider = 0;
   for (const a of vs) {
-    const s = SOPORTES[a.p]; if (!s) continue;
-    let pts = 0;
-    for (const k of LIDERAZGOS) {
-      const x = s[k]; if (!x) continue;
-      for (const b of vs) if (b !== a && aplicaA(x, b) && leSirve(x, b)) { pts += x.sig ? 3 : 2; break; }
-    }
+    const pts = ptsLiderSinContexto(a, vs);
     if (pts && (pts > ptsLider || (pts === ptsLider && (puestoSinContexto(a) < puestoSinContexto(lider)
         || (puestoSinContexto(a) === puestoSinContexto(lider) && a.key < lider.key))))) { lider = a; ptsLider = pts; }
   }
   return lider;
 }
+/** ¿Puede liderar vs[i] en el contexto (la fila C de la tabla de valor)? En PvP, solo si con su liderazgo los tres
+ *  tienen anti-mermas (cubreSop: a quiénes ya se los cubre otra cosa, cubiertos()). sl: los slotsDe de cada uno. */
+function puedeLiderar (vs, i, C, sl, cubreSop) {
+  return C.requisito !== 'anti_mermas' || vs.every((m, j) => cubreSop[j] || sl[i].antiLid.some(x => aplicaA(x, m)));
+}
+/** Lo que suma el liderazgo de vs[i] en el contexto (la fila C de la tabla de valor). Cada stat que vale cuenta una
+ *  vez por integrante, aunque el liderazgo lo traiga en varias líneas (Arachknight 2099: todos los ataques +45%,
+ *  +55% o +65% según sus Infinity Warps), con la de más peso: el suyo si le llega por un liderazgo permanente y la
+ *  parte del condicional si solo le llega por uno que se activa con una condición (Silver Surfer: al recibir un
+ *  debuff). Usa C.llega, que se reusa en los cientos de miles de tríos de la consulta. */
+function ptsLiderazgo (vs, i, C, sl) {
+  const vale = C.vale, llega = C.llega;
+  llega.fill(0);
+  for (const x of sl[i].lid) {
+    const b = x.ac ? 3 : 0;
+    for (const f of x.fx) {
+      const k = vale.get(f.s);
+      if (k === undefined) continue;
+      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])) llega[k] |= 1 << (b + j);
+    }
+  }
+  let pts = 0;
+  for (let k = 0; k < llega.length; k++) {
+    const bits = llega[k];
+    pts += aCuantos(bits) * C.peso[k] + aCuantos(bits >> 3 & ~bits) * C.peso[k] * C.condicional;
+  }
+  return pts;
+}
 /** El líder de un equipo en PvP o PvE, con lo que enContexto ya sabe de él (los slots de cada uno, sus roles y a
- *  quiénes les cubre anti-mermas un soporte): { li: su índice en vs (-1 si en PvP ninguno deja a todos con
- *  anti-mermas), pts: sus puntos de liderazgo }. */
+ *  quiénes les cubre anti-mermas un soporte): de los que pueden liderar (puedeLiderar), el que más suma con su
+ *  liderazgo (ptsLiderazgo); a igual puntaje, el mejor ubicado en las tier lists del contexto y después la clave.
+ *  { li: su índice en vs (-1 si en PvP ninguno deja a todos con anti-mermas), pts: sus puntos de liderazgo }. */
 function liderContexto (vs, ctx, sl, roles, cubreSop) {
-  const C = CONTEXTO[ctx], vale = C.vale, llega = C.llega;
+  const C = CONTEXTO[ctx];
   let li = -1, ptsLider = 0;
   for (let i = 0; i < vs.length; i++) {
-    if (C.requisito === 'anti_mermas' && !vs.every((m, j) => cubreSop[j] || sl[i].antiLid.some(x => aplicaA(x, m)))) continue;
-    // Cada stat que vale cuenta una vez por integrante, aunque el liderazgo lo traiga en varias
-    // líneas (Arachknight 2099: todos los ataques +45%, +55% o +65% según sus Infinity Warps), con
-    // la de más peso: el suyo si le llega por un liderazgo permanente y la parte del condicional si
-    // solo le llega por uno que se activa con una condición (Silver Surfer: al recibir un debuff).
-    llega.fill(0);
-    for (const x of sl[i].lid) {
-      const b = x.ac ? 3 : 0;
-      for (const f of x.fx) {
-        const k = vale.get(f.s);
-        if (k === undefined) continue;
-        for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])) llega[k] |= 1 << (b + j);
-      }
-    }
-    let pts = 0;
-    for (let k = 0; k < llega.length; k++) {
-      const bits = llega[k];
-      pts += aCuantos(bits) * C.peso[k] + aCuantos(bits >> 3 & ~bits) * C.peso[k] * C.condicional;
-    }
+    if (!puedeLiderar(vs, i, C, sl, cubreSop)) continue;
+    const pts = ptsLiderazgo(vs, i, C, sl);
     if (li < 0 || pts > ptsLider || (pts === ptsLider && (roles[i].puesto < roles[li].puesto
         || (roles[i].puesto === roles[li].puesto && vs[i].key < vs[li].key)))) { li = i; ptsLider = pts; }
   }
