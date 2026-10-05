@@ -249,29 +249,93 @@ table.dt tbody tr:last-child td{border-bottom:none}
   box-shadow:0 1px 4px rgba(0,0,0,.5)}
 .eqfoto > span:last-child{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-/* Combinaciones por contexto (PvP, PvE): de dónde sale cada punto, debajo del líder. */
-.cxpts{margin:4px 0 2px;padding:0;list-style:none;font-size:12px;color:var(--text-2);display:flex;flex-direction:column;gap:2px}
-.cxpts b{color:var(--text)}
 .cxnota{margin-bottom:10px}
 /* Strikers en la ficha: el retrato, el nombre y, debajo, la probabilidad de aparecer y cuándo. */
 .eqfoto .stknom{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2)}
 .eqfoto.stk > span:last-child{color:var(--gold);font-weight:600}
-/* «Por qué» de una tarjeta de equipo: lo que recibe (la suma, con el desglose plegado), lo demás y lo
-   que se pierde, en viñetas; las de adentro, un poco más chicas. */
-.pqcuerpo{display:flex;flex-direction:column;gap:10px;margin:4px 0 2px}
-.pqh{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);font-weight:700;margin-bottom:3px}
-.pqmenos .pqh{color:var(--accent-2)}
-ul.pqlista{margin:0;padding-left:18px;font-size:12.5px;display:flex;flex-direction:column;gap:2px;overflow-wrap:anywhere}
-ul.pqlista ul{margin:2px 0 3px;padding-left:16px;font-size:12px;color:var(--text-2);list-style:circle}
-ul.pqlista b{color:var(--text);font-weight:600}
+/* El «*» de lo que solo llega (o solo suma) si el compañero lleva su artefacto, y su leyenda. */
 .pqart{color:var(--gold);font-weight:700;cursor:help}
 .pqley{font-size:11.5px;margin-top:3px}
-details.pqdesg > summary{cursor:pointer;font-size:12px;color:var(--text-2)}
-.pqorig{margin-top:6px}
-.pqoh{font-size:12.5px;font-weight:600;margin-bottom:1px}
-.cxpts ul{margin:1px 0 2px;padding-left:18px;list-style:disc;display:flex;flex-direction:column;gap:1px}
-/* La parte del puntaje que se despliega (soportes y bonos de equipo): de quién es cada uno. */
-details.cxdesp > summary{cursor:pointer}
+/* «Por qué» de una tarjeta de equipo, en una ventana (<dialog>; app.js, pqHtml): arriba el equipo, quién lidera y
+   de dónde salen los puntos; una pestaña por integrante con lo que recibe (una tabla: efecto, total y de dónde) y lo
+   que aporta; abajo, lo demás y los C.T.P. En la compu va centrada; hasta 600 px, a pantalla completa. La cabecera
+   (con el botón de cerrar) queda fija y el cuerpo se recorre adentro: la página de atrás no se mueve. Los colores,
+   los de :root. */
+.combo > .pqabrir{margin-top:8px}
+html:has(dialog.pqdlg[open]){overflow:hidden}
+dialog.pqdlg{padding:0;width:min(1040px,calc(100vw - 48px));max-width:none;max-height:calc(100dvh - 48px);
+  border:1px solid var(--line-2);border-radius:var(--r-lg);background:var(--surface);color:var(--text);box-shadow:var(--sh-3);overflow:hidden}
+dialog.pqdlg[open]{display:flex;flex-direction:column}
+dialog.pqdlg::backdrop{background:rgba(4,6,11,.72);backdrop-filter:blur(5px)}
+.pqm-cab{flex:none;display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);background:var(--surface)}
+.pqm-cab h2{flex:1;min-width:0;font-size:17px;letter-spacing:.04em;overflow-wrap:anywhere}
+.pqm-cab h2:focus{outline:none}
+.pqm-cuerpo{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:14px 18px 22px;display:flex;flex-direction:column;gap:18px}
+.pqm-sub{margin-bottom:-6px;overflow-wrap:anywhere}
+.pqm-sec > h3{margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.pqm-sec > h3::after{content:'';flex:1;height:1px;background:var(--line)}
+/* El equipo: los retratos (el líder primero, con su marca; el de la ficha, con su aro) y los puntos de la tarjeta. */
+.pqm-equipo{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+.pqm-equipo .eqfoto{cursor:default}
+.pqm-equipo .eqpts{margin-left:auto}
+.pqm-porque{margin-top:-8px;font-size:13px;color:var(--text-2)}
+.pqm-porque b{color:var(--text);font-weight:600}
+/* De dónde salen los puntos: cada parte con lo que suma, a la izquierda, y sus viñetas. */
+.pqm-parte{display:grid;grid-template-columns:minmax(190px,270px) minmax(0,1fr);column-gap:18px;row-gap:3px;padding:8px 0;border-top:1px solid var(--line)}
+.pqm-parte:first-child{border-top:0;padding-top:0}
+.pqm-parteh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:13px}
+.pqm-parteh b{font-weight:600}
+.pqm-pts{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+ul.pqm-lista{margin:0;padding-left:18px;font-size:12.5px;display:flex;flex-direction:column;gap:3px;overflow-wrap:anywhere}
+ul.pqm-lista ul{margin:2px 0 3px;padding-left:16px;font-size:12px;color:var(--text-2);list-style:circle}
+ul.pqm-lista b{color:var(--text);font-weight:600}
+/* Una pestaña por integrante: su retrato y su nombre (el líder, con el aro y la pastilla). */
+.pqm-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.pqm-tab{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:9px;padding:7px 10px 8px;margin-bottom:-1px;border:0;
+  border-bottom:2px solid transparent;border-radius:var(--r-sm) var(--r-sm) 0 0;background:none;color:var(--text-2);font:inherit;
+  font-size:13px;font-weight:600;line-height:1.25;text-align:left;cursor:pointer}
+.pqm-tab:hover{color:var(--text);background:var(--surface-2)}
+.pqm-tab[aria-selected="true"]{color:var(--text);background:var(--surface-2);border-bottom-color:var(--accent)}
+.pqm-tab .shot{width:36px;height:36px;flex:none;border-radius:8px;box-shadow:0 0 0 1px var(--line-2)}
+.pqm-tab.lider .shot{box-shadow:0 0 0 2px var(--accent)}
+.pqm-tabnom{min-width:0;overflow-wrap:anywhere}
+.pqm-pill{display:inline-block;padding:0 6px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;
+  letter-spacing:.02em;line-height:1.5;vertical-align:1px;white-space:nowrap}
+.pqm-panel{container:pqm / inline-size}
+.pqm-panel:focus{outline:none}
+.pqm-panel:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.pqm-quien{font-size:14px}
+.pqm-panel h4{margin:14px 0 4px;color:var(--text-2)}
+/* Lo que recibe: Efecto | Total | De dónde. Cada parte de «De dónde», con el retrato de quien la da. En una pestaña
+   angosta (el celular), «De dónde» va debajo del efecto y su total. */
+.pqm-fila{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(104px,.55fr) minmax(0,1.7fr);column-gap:14px;align-items:baseline;
+  padding:6px 0;border-top:1px solid var(--line);font-size:12.5px}
+.pqm-th{border-top:0;padding:0 0 3px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);font-weight:700}
+.pqm-ef{min-width:0;overflow-wrap:anywhere}
+.pqm-cond{font-size:11.5px}
+.pqm-tot{min-width:0}
+.pqm-de{display:flex;flex-wrap:wrap;gap:4px 6px;min-width:0}
+.pqm-de1{display:inline-flex;align-items:center;gap:5px;max-width:100%;padding:1px 7px 1px 2px;border:1px solid var(--line);
+  border-radius:6px;background:var(--surface-2);font-size:12px;line-height:1.55}
+.pqm-de1 > span:last-child{min-width:0;overflow-wrap:anywhere}
+.pqm-de1 .shot{width:20px;height:20px;flex:none;border-radius:4px}
+.pqm-de1 .shot::after{display:none}
+/* Los C.T.P. de la ventana: el uniforme de la guía, entero (en la tarjeta va cortado, con el nombre en el title). */
+.pqdlg .ga-eq .tag.varx{white-space:normal;overflow:visible}
+@container pqm (max-width:560px){
+  .pqm-fila{grid-template-columns:minmax(0,1fr) auto}
+  .pqm-de{grid-column:1/-1;margin-top:4px}
+  .pqm-th > :last-child{display:none}
+  .pqm-tot{text-align:right}
+}
+@media (max-width:600px){
+  dialog.pqdlg{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;margin:0;border:0;border-radius:0}
+  .pqm-cab{padding:10px 14px}
+  .pqm-cuerpo{padding:14px 14px 24px}
+  .pqm-parte{grid-template-columns:minmax(0,1fr)}
+  .pqm-equipo .eqpts{margin-left:0;text-align:left}
+  .pqm-tab{flex-direction:column;align-items:center;gap:4px;padding:6px 4px 7px;font-size:12px;text-align:center}
+}
 /* Lo que se abre desde un «Por qué»: la skill o el artefacto, en la ficha de quien lo da. */
 .resaltada{outline:2px solid var(--accent);outline-offset:3px}
 .eqfiltros{gap:12px;margin-bottom:10px;align-items:flex-end}
@@ -304,7 +368,6 @@ details.cxdesp > summary{cursor:pointer}
 .tag.cob.art{background:var(--gold-soft);color:var(--gold);cursor:help}
 .tag.cob.no{background:rgba(255,255,255,.04);color:var(--text-3)}
 .combo .eqpts{flex:none}
-.combo details{margin-top:6px}
 /* Armador: personaje que ya está en otro equipo del mismo modo. */
 .avisoeq{color:var(--gold);font-size:13px;margin-bottom:6px}
 .avisoeq.avisopick{margin:0}
