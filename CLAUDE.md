@@ -43,7 +43,9 @@ variante, en `docs/COMPLETITUD.md`.
   `scripts/contenido/liderazgos_api.json`, sus traducciones en `MFF_TXT` y la sección 12 de
   `docs/AUDITORIA.md` y `docs/COMPLETITUD.md` rehechas), y `liderazgos_api/prueba.py` prueba esa función
   y `liderazgos.validar` sin `work/`. `verif_otorga.py` prueba el aviso del «Give Power» que ninguna
-  fuente publica, y que no va donde lo dice el juego.
+  fuente publica, y que no va donde lo dice el juego. `armar_datos_cierre.py` les suma lo que el build
+  corrige de thanosvibs con el juego (`fuentes.nombre_ctp` y `fuentes.linea_artefacto`, con la sección 5
+  de `docs/AUDITORIA.md`), y `verif_cierre.py` lo prueba en la app.
   `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
   pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
   filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.
