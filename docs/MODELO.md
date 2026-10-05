@@ -532,6 +532,34 @@ Capturas de Ezequiel (octubre de 2026), de su cuenta.
 - **Elite Gear.** Los Tier-4 con Nv. 80 y gear +30 pueden desbloquearlo: otra progresión, con
   puntos para elegir stats, que la app todavía no tiene.
 
+La ficha de Mephisto en coreano (영웅 정보, capturas del 4 de octubre de 2026: Master of Hell y, en el
+도감, la base) coincide con las skills de la API valor por valor, salvo lo que sigue, y agrega:
+
+- **El «Give Power» del liderazgo.** Lord of Hell da, al recibir un debuff, quitar todos los debuffs
+  (12 s, recarga 20 s) a los Supervillanos: la app lo toma del juego (ver *Liderazgos que Leads &
+  Supports no publica*). La facción de Hell Fire (A2), que la API deja en «$HEROSUBTYPE1», es SUPER
+  VILLAIN, y va a mano en `marcadores.csv`. La Activa 4 puede atacar a quien tiene «No se deja
+  apuntar» activo, que la API no publica.
+- **Maestría.** Con las estrellas rojas se habilita el liderazgo: en el 도감 su ícono se enciende con
+  la primera, y el de Master of Hell pide «필요 마스터리 등급 : ★6 이상» (maestría 6). Cada estrella roja
+  suma lo mismo a los stats (en Mephisto, cerca de 1,1% a 1,2% cada una).
+- **Habilidades.** Cada habilidad le da un efecto propio al personaje (Magia, ataque de energía +4%;
+  Fuego Infernal, daño de fuego +10%; Maldad Pura, daño básico a SUPER HERO +4%; en Young Apocalypse,
+  Durabilidad y Movimiento Rápido), que thanosvibs no publica y la app no tiene (hallazgo
+  `habilidades-efecto-propio`). No se sabe en qué contenidos vale.
+- **Opciones de uniforme.** Con el uniforme en Mítico, la pantalla muestra todos los ataques y las
+  defensas básicas +40%; la nota de la app, de la guía de thanosvibs, dice +2% por mejora (hallazgo
+  `opciones-uniforme-mitico`). Falta que Ezequiel diga a qué se debe.
+- **Artefactos.** La ficha de cada artefacto trae dos opciones (옵션1: +250 a un instinto; 옵션2, al
+  azar) y que se compran en la tienda, que la app no tiene. Planet Eater, el de Galactus, es para los
+  integrantes con Poder Cósmico, no solo para él: el build corrige el texto de thanosvibs y la ficha lo
+  marca. El de Annihilus se recarga en 300 s (hallazgo `artefacto-annihilus-recarga`).
+- **Rol recomendado.** La ficha trae «추천 역할» para jefes (보스전) y para PvP (대전), con íconos sin
+  texto; el del águila es el que marca el liderazgo (probable). Los roles de la app son propios.
+- **Young Apocalypse.** La quemadura de Armageddon también baja todas las defensas básicas 10%, y la
+  API publica solo su daño (hallazgo `armageddon-quemadura-defensas`); el liderazgo se llama End of
+  Days, como en la API, y no «Unavoidable Apocalypse», como en Leads & Supports.
+
 ## Bonos de equipo
 
 `scripts/bonos.py` lee la sección Team Bonus de la página de cada personaje en la wiki y la junta
@@ -561,13 +589,17 @@ Dudas:
 
 `scripts/strikers.py` lee la pestaña Striker de la página de cada personaje en la wiki: quién puede
 aparecer a pegar junto a él y con qué probabilidad, cuando él ataca o cuando lo atacan («12% chance
-to appear when attacking»). Según Ezequiel, el striker tiene que estar en el mismo equipo. La tienen
+to appear when attacking»). Según Ezequiel, el striker tiene que estar en el mismo equipo, y lo dice
+el juego en la pestaña Striker de la ficha: «같은 팀으로 편성할 경우 특수 조건에서 발동되며» (si se lo
+arma en el mismo equipo, se activa en condiciones especiales; capturas del 4 de octubre). La tienen
 171 de 290 páginas (unas 7.000 filas). En el juego (capturas de Ezequiel, 2 de octubre de 2026),
 los 37 strikers de Kingpin que se ven coinciden con la wiki en nombre, probabilidad, condición y
 orden, con un uniforme que no es el base: que la lista no dependa del uniforme es probable. Les
 falta a 119 personajes, casi todos recientes (Galactus, Annihilus, Apocalypse, entre otros): en la
 app no tienen strikers propios, aunque pueden ser strikers de otros. Galactus tiene 16 en el juego.
-Lo que no se pudo leer va a `docs/AUDITORIA.md` (sección 11).
+Mephisto tiene en el juego al menos 91 y la wiki, 90: a la app le falta al menos uno (hallazgo
+`mephisto-strikers-juego`; las capturas muestran solo retratos). Lo que no se pudo leer va a
+`docs/AUDITORIA.md` (sección 11).
 
 En World Boss, los jefes resisten lo que aplican los strikers: si un jefe recibe más de dos veces el
 mismo efecto de un striker, le dura menos; lo acumulable se acumula una vez; no afecta las skills de
