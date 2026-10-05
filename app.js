@@ -682,6 +682,15 @@ const T = {
   pq_gana:           { es:'Se gana, además de lo de {x}', en:'Also gained, besides what {x} brings' },
   pq_pierde:         { es:'Se pierde',           en:'Lost' },
   pq_todos:          { es:'a todos',             en:'everyone' },
+  ya_propio:         { es:'propio ({s})',        en:'as its own ({s})' },
+  ya_su_lid:         { es:'de su liderazgo',     en:'from its own leadership' },
+  ya_lid:            { es:'del liderazgo de {x}', en:'from {x}\'s leadership' },
+  ya_sop:            { es:'de {x} ({s})',        en:'from {x} ({s})' },
+  rep_no_suma:       { es:'no se suma: ya lo tiene {de}', en:'not added: it already has it {de}' },
+  rep_quien:         { es:'{y} ya lo tiene {de}', en:'{y} already has it {de}' },
+  rep_nada:          { es:'no suma',             en:'adds nothing' },
+  rep_regla:         { es:'Un efecto sin valor (anti-mermas, inmunidades) que a alguien le llega de dos fuentes se le aplica una sola vez: el propio; si no, el del liderazgo del líder; si no, el del primer soporte en el orden del equipo (el líder primero y los demás en un orden fijo). Las otras fuentes de ese efecto no le suman, y el «Por qué» las muestra atenuadas.',
+                       en:'An effect with no value (debuff removal, immunities) that reaches someone from two sources applies only once: its own; otherwise, the leader\'s leadership; otherwise, the first support in the team order (the leader first, then the rest in a fixed order). The other sources of that effect do not add for it, and the «Why» shows them dimmed.' },
   eq_could:          { es:'Cómo entraría en tus otros equipos', en:'How it would fit your other teams' },
   eq_could_note:     { es:'Con {v}: el mejor cambio en cada equipo según la sinergia de la app, siempre que quede con vínculo con alguien del equipo (le da un soporte o el liderazgo, recibe uno suyo o forman juntos un bono de equipo).',
                        en:'With {v}: the best change in each team according to the app\'s synergy, as long as it has a link with someone in the team (gives it a support or the leadership, receives one of its own, or they form a team bonus together).' },
@@ -738,8 +747,8 @@ const T = {
   cx_pts_pvp:        { es:'pts PvP',             en:'PvP pts' },
   cx_pts_pve:        { es:'pts PvE',             en:'PvE pts' },
   cx_para_el:        { es:'{a} para él · {b} del equipo', en:'{a} for it · {b} for the team' },
-  cx_nota:           { es:'Equipos para {c}, con las reglas de Ezequiel. Entran si alguno es DPS en {l}{req}. Cada compañero tiene vínculo con él o es DPS. Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma, por cada integrante al que le llega y le sirve, su peso ({stats}), y el {cond}% de eso si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); cada nivel de fila de cada DPS (3, 2 o 1{mejor}), {dps}; cada soporte que le llega a otro y le sirve, {sop}, y cada bono de equipo activo, {bono}. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
-                       en:'Teams for {c}, with Ezequiel\'s rules. They make it if someone is a DPS in {l}{req}. Each teammate has a link with it or is a DPS. Score, with the value table: each stat of the leader\'s leadership adds its weight for each member it reaches and helps ({stats}), and {cond}% of that if the leadership activates on a condition (when debuffed, for example); each row level of each DPS (3, 2 or 1{mejor}), {dps}; each support that reaches and helps another, {sop}, and each active team bonus, {bono}. The trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
+  cx_nota:           { es:'Equipos para {c}, con las reglas de Ezequiel. Entran si alguno es DPS en {l}{req}. Cada compañero tiene vínculo con él o es DPS. Puntaje, con la tabla de valor: cada stat del liderazgo del líder suma, por cada integrante al que le llega y le sirve, su peso ({stats}), y el {cond}% de eso si el liderazgo se activa con una condición (al recibir un debuff, por ejemplo); cada nivel de fila de cada DPS (3, 2 o 1{mejor}), {dps}; cada soporte con el que a otro le llega algo que le sirve y no tiene ya, {sop}, y cada bono de equipo activo, {bono}. Los strikers del trío no suman: a igual puntaje, desempatan. El líder es el que más suma y es el mismo en las listas de los tres: a igual puntaje, el mejor ubicado en las tier lists y después un orden fijo.',
+                       en:'Teams for {c}, with Ezequiel\'s rules. They make it if someone is a DPS in {l}{req}. Each teammate has a link with it or is a DPS. Score, with the value table: each stat of the leader\'s leadership adds its weight for each member it reaches and helps ({stats}), and {cond}% of that if the leadership activates on a condition (when debuffed, for example); each row level of each DPS (3, 2 or 1{mejor}), {dps}; each support that gives another member something useful it does not already have, {sop}, and each active team bonus, {bono}. The trio\'s strikers do not add: on equal score, they break the tie. The leader is the one that adds the most and is the same in the lists of all three: on a tie, the best placed on the tier lists, then a fixed order.' },
   cx_req_anti:       { es:' y si los tres tienen anti-mermas ({a}): del liderazgo del líder, del soporte de alguno (también el propio) o de sus propias skills, sin contar los que tienen probabilidad', en:' and all three have debuff removal ({a}): from the leader\'s leadership, someone\'s support (its own too) or their own skills, not counting those with a probability' },
   cx_req_no:         { es:'; los anti-mermas no hacen falta', en:'; debuff removal is not required' },
   cx_o:              { es:' o ',                  en:' or ' },
@@ -1052,8 +1061,8 @@ const T = {
   ls_also:           { es:'y, como a cualquiera:', en:'and, like anyone:' },
   ls_leaders:        { es:'Líderes que se lo dan', en:'Leaders that give it' },
   ls_supports:       { es:'Soportes que se lo dan', en:'Supports that give it' },
-  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y los suyos, sus anti-mermas propios (los de sus skills; uno con probabilidad no cuenta) y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos: en la sinergia, un soporte cuenta si le llega a otro.',
-                       en:'Under each one, what it gets: its teammates\' supports and its own, its own debuff removal (from its skills; one with a probability does not count) and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points: in the synergy, a support counts if it reaches another member.' },
+  cb_note:           { es:'Debajo de cada una, lo que recibe él: los soportes de sus compañeros y los suyos, sus anti-mermas propios (los de sus skills; uno con probabilidad no cuenta) y el liderazgo del líder elegido (también si el líder es él), solo lo que le llega y le sirve. ✓ lo recibe, ✗ no; * solo si el compañero lleva su artefacto. No cambia los puntos: en la sinergia, un soporte cuenta si a otro le llega algo que no tiene ya.',
+                       en:'Under each one, what it gets: its teammates\' supports and its own, its own debuff removal (from its skills; one with a probability does not count) and the chosen leader\'s leadership (also when it is the leader), only what reaches it and is useful to it. ✓ it gets it, ✗ it does not; * only if the teammate has its artifact. It does not change the points: in the synergy, a support counts if it gives another member something it does not already have.' },
   cb_ataque:         { es:'Ataque',               en:'Attack' },
   cb_art:            { es:'* Solo si el compañero que lo da lleva su artefacto.', en:'* Only if the teammate who gives it has its artifact.' },
   pt_art:            { es:'* Cuenta el soporte del artefacto de un integrante, como si lo llevara: vale solo si lo lleva.',
@@ -1614,18 +1623,19 @@ function aporte (foco, a, esLider) {
  *  los suyos, si `a` es `destino`: el soporte propio cuenta para su dueño, Ezequiel, 4 de octubre de 2026),
  *  si `a` es el líder su liderazgo (también si `a` es `destino`: el liderazgo es para todo el equipo) y, si
  *  `a` es `destino`, sus anti-mermas propios que cuentan (los de sus skills, recibePropio()). [{ de: a, k, x,
- *  fx: [los efectos que le sirven] }], en el orden de TIPOS_SOPORTE y los propios al final. De acá salen la
+ *  fx: [los efectos que le sirven] }], en el orden en que se aplican (ver «Efectos iguales que no se suman»): de él
+ *  mismo, los de sus skills, sus soportes y su liderazgo; de otro, su liderazgo y sus soportes. De acá salen la
  *  cobertura de la tarjeta y su «Por qué» (lo que recibe y aporta cada integrante, en la ventana). En la
  *  sinergia, en cambio, un soporte cuenta solo si le llega a otro integrante (synergy). */
 function recibe (destino, a, esLider) {
-  const out = [], s = SOPORTES[a.p];
-  if (s) for (const [k] of TIPOS_SOPORTE) {
+  const propio = a === destino, out = propio ? recibePropio(a) : [], s = SOPORTES[a.p];
+  if (s) for (const k of propio ? (esLider ? SLOTS_SOPORTE.concat(LIDERAZGOS) : SLOTS_SOPORTE) : (esLider ? LIDERAZGOS.concat(SLOTS_SOPORTE) : SLOTS_SOPORTE)) {
     const x = s[k];
-    if (!x || (LIDERAZGOS.includes(k) && !esLider) || !aplicaA(x, destino)) continue;
+    if (!x || !aplicaA(x, destino)) continue;
     const fx = x.fx.filter(f => sirve(f, destino));
     if (fx.length) out.push({ de: a, k, x, fx });
   }
-  return a === destino ? out.concat(recibePropio(a)) : out;
+  return out;
 }
 // ANTI-MERMAS PROPIOS (Ezequiel, 4 de octubre de 2026). Lo que las skills de un personaje le dan a él mismo
 // cuenta como anti-mermas para su dueño (Knull: su pasiva de Tier-2, al recibir un debuff), aunque Leads &
@@ -1667,12 +1677,144 @@ function probabilidad (st) {
 /** La activación de una etapa, en el idioma activo («al recibir un debuff»), o «sin condición». */
 function activacionTxt (st) { return st.ac != null ? txt('act', st.ac, st.av) : t('tt_sin_cond'); }
 /** Los anti-mermas propios de v que cuentan, como lo de recibe(): { de: v, k: 'propio', x, fx }, con la skill
- *  (x.sk) y su activación (x.ac, ya en el idioma activo). */
+ *  (x.sk), su activación (x.ac, ya en el idioma activo) y su entrada de antiPropio (x.ap). */
 function recibePropio (v) {
-  return antiPropio(v).cuenta.map(({ sk, st, s }) => {
-    const x = { sk, ac: st.ac != null ? txt('act', st.ac, st.av) : null, fx: [{ s }] };
+  return antiPropio(v).cuenta.map(ap => {
+    const { sk, st, s } = ap, x = { sk, ac: st.ac != null ? txt('act', st.ac, st.av) : null, fx: [{ s }], ap };
     return { de: v, k: 'propio', x, fx: x.fx };
   });
+}
+// EFECTOS IGUALES QUE NO SE SUMAN (Ezequiel, 5 de octubre de 2026: «El juego no permite el solapado de habilidades
+// iguales... el antimermas de apocalipsis y el de deadpool solo va a funcionar uno»). Un efecto sin valor (una línea sin
+// número: anti-mermas, inmunidades) que a un integrante le llega de dos o más fuentes se aplica una sola vez: el de la
+// primera en este orden, lo propio (sus anti-mermas de las skills y lo de sus soportes que le llega), el liderazgo del
+// líder y los soportes de los demás en el orden del equipo (el líder primero y los otros en un orden fijo, su clave: el
+// mismo desde la lista de cualquiera). Las demás fuentes de ese efecto no le suman nada a ese integrante: un soporte o un
+// liderazgo suma en la sinergia, y un soporte en PvP y PvE, solo si a algún otro integrante le llega algo que se le
+// aplica y le sirve, y las pantallas muestran atenuada la fuente que no se aplica, con la que sí. Los efectos con valor
+// se suman como hasta ahora: si se suman o vale el mayor lo decide Ezequiel, y cambia en seAcumula().
+/** ¿Se suma el efecto f (una línea de un liderazgo o un soporte) cuando a un integrante le llega de más de una fuente?
+ *  Hoy, si tiene valor. */
+function seAcumula (f) { return f.v != null; }
+const _SIN_VALOR = new WeakMap();
+/** ¿Trae x (un liderazgo o un soporte) algún efecto que no se acumula? Pocos: se anota, porque la consulta de
+ *  combinaciones lo pregunta millones de veces. */
+function traeSinValor (x) {
+  let r = _SIN_VALOR.get(x);
+  if (r === undefined) { r = x.fx.some(f => !seAcumula(f)); _SIN_VALOR.set(x, r); }
+  return r;
+}
+/** Lo propio de v que no se acumula, por stat: la primera fuente de cada uno, sus anti-mermas de las skills (antiPropio, los
+ *  que cuentan: { k: 'propio', x: la entrada }) y después sus soportes que le llegan ({ k, x }). Sin la variante: se guarda
+ *  por retrato, y variant() arma otra cada vez. */
+const _PROPIO_SV = new Map();
+function propioSinValor (v) {
+  let m = _PROPIO_SV.get(v.p);
+  if (m) return m;
+  m = new Map();
+  for (const ap of antiPropio(v).cuenta) if (!m.has(ap.s)) m.set(ap.s, { k: 'propio', x: ap });
+  const so = SOPORTES[v.p];
+  if (so) for (const k of SLOTS_SOPORTE) {
+    const x = so[k];
+    if (x && aplicaA(x, v)) for (const f of x.fx) if (!seAcumula(f) && !m.has(f.s)) m.set(f.s, { k, x });
+  }
+  if (v.p) _PROPIO_SV.set(v.p, m);
+  return m;
+}
+/** El equipo en el orden en que se aplican sus soportes: el líder primero y los demás por su clave. */
+function ordenEquipo (vs, lider) {
+  const otros = vs.filter(x => x !== lider).sort((a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0);
+  return lider ? [lider].concat(otros) : otros;
+}
+/** La fuente de la que le llega primero a m la línea sin valor del stat s (su lugar en ese orden: lo propio, el liderazgo
+ *  del líder, los soportes de los demás en ordenEquipo); null si no le llega de nadie. */
+function primeraFuente (m, s, vs, lider) {
+  const p = propioSinValor(m).get(s);
+  if (p) return { de: m, k: p.k, x: p.x };
+  const da = (a, ks) => {
+    const so = SOPORTES[a.p];
+    if (so) for (const k of ks) { const x = so[k]; if (x && aplicaA(x, m) && x.fx.some(f => f.s === s && !seAcumula(f))) return { de: a, k, x }; }
+    return null;
+  };
+  let r = lider && da(lider, LIDERAZGOS);
+  if (r) return r;
+  for (const a of ordenEquipo(vs, lider)) if (a !== m && (r = da(a, SLOTS_SOPORTE))) return r;
+  return null;
+}
+/** La fuente de la que le llegan primero a m los anti-mermas (cualquiera de sus stats), en el mismo orden: la que lo
+ *  cubre. null si no le llegan. */
+function primeraAnti (m, vs, lider) {
+  const ap = antiPropio(m).cuenta[0];
+  if (ap) return { de: m, k: 'propio', x: ap };
+  const da = (a, ks) => {
+    const so = SOPORTES[a.p];
+    if (so) for (const k of ks) { const x = so[k]; if (x && aplicaA(x, m) && x.fx.some(f => ANTI_MERMAS.has(f.s))) return { de: a, k, x }; }
+    return null;
+  };
+  let r = da(m, SLOTS_SOPORTE) || (lider && da(lider, LIDERAZGOS));
+  if (r) return r;
+  for (const a of ordenEquipo(vs, lider)) if (a !== m && (r = da(a, SLOTS_SOPORTE))) return r;
+  return null;
+}
+/** ¿Es la fuente p la línea (de, k, x) de recibe()? La de las skills trae su entrada de antiPropio en x.ap. Cada integrante,
+ *  por su clave: variant() arma otra variante cada vez. */
+function esLaFuente (p, de, k, x) { return p.de.key === de.key && p.k === k && p.x === (k === 'propio' ? x.ap : x); }
+/** De los efectos fx (los que le sirven) que le llegan a m de la línea (de, k, x): los que se le aplican (si) y los que no
+ *  se suman porque ya los tiene de otra fuente (no: [[efecto, esa fuente]]). */
+function aplicacion (m, de, k, x, fx, vs, lider) {
+  const si = [], no = [];
+  for (const f of fx) {
+    if (seAcumula(f)) { si.push(f); continue; }
+    const p = primeraFuente(m, f.s, vs, lider);
+    if (esLaFuente(p, de, k, x)) si.push(f); else no.push([f, p]);
+  }
+  return { si, no };
+}
+/** ¿Le llega a b algo de x (el slot k de de) que se le aplica y le sirve? */
+function aplicaAlgo (b, de, k, x, vs, lider) {
+  if (!aplicaA(x, b) || !leSirve(x, b)) return false;
+  if (!traeSinValor(x)) return true;
+  for (const f of x.fx) if (sirve(f, b) && (seAcumula(f) || esLaFuente(primeraFuente(b, f.s, vs, lider), de, k, x))) return true;
+  return false;
+}
+/** A quiénes del equipo (menos de) les llega x y les sirve: { si: a los que se les aplica algo, no: [[integrante, [[efecto,
+ *  la fuente que ya se lo da]]]] los que reciben algo que ya tienen }, o null si no le llega ni le sirve a nadie más.
+ *  conNo: también lo que no se suma (para mostrarlo; la consulta de combinaciones no lo pide). */
+function reparto (de, k, x, vs, lider, conNo) {
+  let si = null, no = null;
+  for (const b of vs) {
+    if (b === de || !aplicaA(x, b) || !leSirve(x, b)) continue;
+    if (!traeSinValor(x)) { (si || (si = [])).push(b); continue; }
+    if (!conNo) { if (aplicaAlgo(b, de, k, x, vs, lider)) (si || (si = [])).push(b); continue; }
+    const ap = aplicacion(b, de, k, x, x.fx.filter(f => sirve(f, b)), vs, lider);
+    if (ap.si.length) (si || (si = [])).push(b);
+    if (ap.no.length) (no || (no = [])).push([b, ap.no]);
+  }
+  return si || no ? { si: si || [], no: no || [] } : null;
+}
+/** De quién ya tiene m un efecto (p, de primeraFuente): «propio (Pasiva T2)», «de su liderazgo», «del liderazgo de
+ *  Thanos» o «de Wasp (Pasiva 4★)». nombre: cómo se nombra a cada integrante; con html, el nombre va con su title y el
+ *  resto escapado. */
+function yaDe (m, p, nombre, html) {
+  const slot = p.k === 'propio' ? slotEs(p.x.sk.sl) : t(CLAVE_SOPORTE[p.k]), esc = html ? h : (s) => s;
+  if (p.de.key === m.key) return esc(t(LIDERAZGOS.includes(p.k) ? 'ya_su_lid' : 'ya_propio').replace('{s}', slot));
+  return esc(t(LIDERAZGOS.includes(p.k) ? 'ya_lid' : 'ya_sop').replace('{s}', slot)).replace('{x}', () => html ? nombreHtml(p.de, nombre) : nombre(p.de));
+}
+/** Las fuentes distintas de unos efectos que no se suman ([[efecto, fuente]]), en su orden. */
+function fuentesDistintas (fs) {
+  const m = new Map();
+  for (const [, p] of fs) { const c = p.de.key + '|' + p.k + (p.k === 'propio' ? '|' + p.x.sk.sl : ''); if (!m.has(c)) m.set(c, p); }
+  return [...m.values()];
+}
+/** «(no se suma: ya lo tiene de su liderazgo)», atenuado: lo que le llega a m de una fuente y ya tiene de otra (p). */
+function noSumaHtml (m, p, nombre) { return `<span class="muted pqrep">(${h(t('rep_no_suma')).replace('{de}', () => yaDe(m, p, nombre, true))})</span>`; }
+/** « (Deadpool ya lo tiene de su liderazgo)», atenuado: los integrantes a los que les llega algo de una fuente que no se les
+ *  suma (no: [[integrante, [[efecto, fuente]]]]), con de quién ya lo tienen. Vacío si no hay. */
+function yaLoTienenHtml (no, nombre) {
+  if (!no.length) return '';
+  const y = LANG === 'es' ? ' y ' : ' and ';
+  return ` <span class="muted pqrep">(${no.map(([b, fs]) => h(t('rep_quien')).replace('{y}', () => nombreHtml(b, nombre))
+    .replace('{de}', () => fuentesDistintas(fs).map(p => yaDe(b, p, nombre, true)).join(y))).join('; ')})</span>`;
 }
 /** Los anti-mermas propios de los integrantes que no cuentan, por tener probabilidad: un renglón por cada uno. */
 function antiProbHtml (vs, nombre) {
@@ -1789,7 +1931,8 @@ function estanTodos (cids, vs) {
  *  con ventaja normal; Universal no tiene. Las arma iniciarDatos(). */
 let VENTAJA, LE_GANA_A;
 /** Sinergia de un grupo de variantes. Lo que puntúa más son los efectos de líder y de
- *  soporte de thanosvibs que alcanzan a otro integrante y le sirven (sirve()): los de soporte
+ *  soporte de thanosvibs que alcanzan a otro integrante, se le aplican (un efecto sin valor, una sola
+ *  vez: ver «Efectos iguales que no se suman») y le sirven (sirve()): los de soporte
  *  valen en cualquier lugar del equipo; el liderazgo, el del líder del equipo (liderDe: el
  *  mismo sea cual sea el orden y desde la lista de quien se mire; lider, si se pasa, es el de
  *  un contexto). Cada bono de equipo con todos sus integrantes en el equipo
@@ -1803,42 +1946,36 @@ let VENTAJA, LE_GANA_A;
 function synergy (vs, { soloPuntaje = false, foco = null, lider } = {}) {
   if (vs.length < 2) return { score: 0, razones: [], aplicados: [], lider: null, art: false };
   // razones: lo que suma, para explicarlo (sin soloPuntaje): cada soporte o liderazgo con los
-  // integrantes a los que les llega y les sirve, cada versión de un bono de equipo, los roles, las
-  // clases y cada ventaja de clase, cada una con lo que suma (pts; el punto de un bono va con su
-  // primera versión). Los textos salen de ahí (razonesTxt y el «Por qué»).
+  // integrantes a los que se les aplica algo que les sirve (a) y a los que solo les llega lo que ya
+  // tienen (no: [[integrante, [[efecto, la fuente que ya se lo da]]]]; si no se le aplica a nadie, va
+  // con 0), cada versión de un bono de equipo, los roles, las clases y cada ventaja de clase, cada una
+  // con lo que suma (pts; el punto de un bono va con su primera versión). Los textos salen de ahí
+  // (razonesTxt y el «Por qué»).
   // aplicados: { de, a: [integrantes] }, los soportes y bonos de equipo que suman: quién le da algo a
   // quién (en un bono de equipo, cada integrante a los otros, que están juntos por el bono). El
   // liderazgo no va: vincula según quién lidera (vinculoLider), y el líder depende del contexto.
   // art: algún soporte de artefacto sumó (cuenta como si lo llevara; los puntos lo marcan con «*»).
   const razones = [], aplicados = []; let score = 0, art = false;
-  // Un soporte o un liderazgo suma si le llega a otro integrante y le sirve (sirve()). Con foco
-  // (un equipo armado para un integrante) solo cuenta lo que lo involucra: lo que le dan a él y
-  // lo que da él. Lo que los demás se dan entre ellos no suma para él.
-  const cuenta = (a, x) => !foco || a === foco || (aplicaA(x, foco) && leSirve(x, foco));
-  const alcanza = (a, x) => { const bs = []; for (const b of vs) if (b !== a && aplicaA(x, b) && leSirve(x, b)) bs.push(b); return bs; };
-  // Soportes: pasivas de 4★ y Tier-2, efecto de uniforme y artefacto (si lo lleva).
-  for (const a of vs) {
-    const s = SOPORTES[a.p]; if (!s) continue;
-    for (const [k] of TIPOS_SOPORTE) {
-      const x = s[k]; if (!x || LIDERAZGOS.includes(k) || !cuenta(a, x)) continue;
-      const bs = alcanza(a, x); if (!bs.length) continue;
-      const pts = x.sig ? 3 : 2;
-      score += pts; aplicados.push({ de: a, a: bs });
-      if (k === 'artifact') art = true;
-      if (!soloPuntaje) razones.push({ tipo: 'soporte', de: a, k, x, a: bs, pts });
-    }
-  }
-  // Liderazgo: el del líder del equipo (liderDe, sin contexto; o el que se pasa, el de la tarjeta en PvP o
-  // PvE), el mismo desde la lista de cualquiera de los integrantes. Con foco, cuenta si lo involucra.
+  // El líder del equipo (liderDe, sin contexto; o el que se pasa, el de la tarjeta en PvP o PvE), el mismo desde la lista
+  // de cualquiera de los integrantes: de él depende qué se le aplica a cada uno (ver «Efectos iguales que no se suman»).
   if (lider === undefined) lider = liderDe(vs, null);
+  // Un soporte o un liderazgo suma si a otro integrante le llega algo que se le aplica y le sirve (reparto: lo que no
+  // tiene valor, solo si no lo tiene ya de una fuente anterior). Con foco (un equipo armado para un integrante) solo
+  // cuenta lo que lo involucra: lo que le dan a él y lo que da él. Lo que los demás se dan entre ellos no suma para él.
+  // Sin soloPuntaje, también va a las razones, con 0, lo que le llega y no se le suma (para decirlo).
+  const suma = (tipo, a, k, x) => {
+    const r = reparto(a, k, x, vs, lider, !soloPuntaje); if (!r) return;
+    const involucra = (ms) => ms.includes(foco);
+    if (foco && a !== foco && !involucra(r.si) && !r.no.some(([b]) => b === foco)) return;
+    const pts = r.si.length && (!foco || a === foco || involucra(r.si)) ? (x.sig ? 3 : 2) : 0;
+    if (pts) { score += pts; if (tipo === 'soporte') aplicados.push({ de: a, a: r.si }); if (k === 'artifact') art = true; }
+    if (!soloPuntaje) razones.push({ tipo, de: a, k, x, a: r.si, no: r.no, pts });
+  };
+  // Soportes: pasivas de 4★ y Tier-2, efecto de uniforme y artefacto (si lo lleva).
+  for (const a of vs) { const s = SOPORTES[a.p]; if (s) for (const k of SLOTS_SOPORTE) if (s[k]) suma('soporte', a, k, s[k]); }
+  // Liderazgo: con foco, cuenta si lo involucra.
   const sl = lider && SOPORTES[lider.p];
-  if (sl) for (const k of LIDERAZGOS) {
-    const x = sl[k]; if (!x || !cuenta(lider, x)) continue;
-    const bs = alcanza(lider, x); if (!bs.length) continue;
-    const pts = x.sig ? 3 : 2;
-    score += pts;
-    if (!soloPuntaje) razones.push({ tipo: 'liderazgo', de: lider, k, x, a: bs, pts });
-  }
+  if (sl) for (const k of LIDERAZGOS) if (sl[k]) suma('liderazgo', lider, k, sl[k]);
   // Bonos de equipo: con todos sus integrantes en el equipo, les suben stats a todos. Cada uno suma
   // 1 si le sirve a alguien; con foco, si lo involucra: él está en el bono o le sirve a él. Sus
   // integrantes quedan vinculados entre sí, porque están juntos por el bono; a los demás les llega
@@ -1894,19 +2031,22 @@ function razonTxt (r, nombre) {
  *  efectos que le sirven: los que reciben lo mismo van en una línea. */
 function razonesTxt (razones) {
   const ES = LANG === 'es', out = [];
-  const lineas = (prefijo, x, bs) => {
+  // A cada uno, lo que le sirve; lo que ya tiene de otra fuente (r.no), con «(no se suma: ya lo tiene de X)».
+  const lineas = (prefijo, x, bs, no) => {
     const grupos = new Map();
-    for (const b of bs) {
-      const fx = x.fx.filter(f => sirve(f, b)), k = fx.map(f => x.fx.indexOf(f)).join(',');
-      if (!grupos.has(k)) grupos.set(k, { fx, bs: [] });
+    for (const b of bs.concat(no.map(([b]) => b).filter(b => !bs.includes(b)))) {
+      const ya = new Map((no.find(([y]) => y === b) || [b, []])[1]);
+      const fx = x.fx.filter(f => sirve(f, b)), txts = fx.map(f => efectoSoporteTxt(x, f)
+        + (ya.has(f) ? ` (${t('rep_no_suma').replace('{de}', yaDe(b, ya.get(f), fullLabel, false))})` : '')), k = txts.join('\u0000');
+      if (!grupos.has(k)) grupos.set(k, { txts, bs: [] });
       grupos.get(k).bs.push(b);
     }
-    for (const g of grupos.values()) out.push(`${prefijo} → ${g.bs.map(fullLabel).join(', ')}: ${g.fx.map(f => efectoSoporteTxt(x, f)).join(' · ')}`);
+    for (const g of grupos.values()) out.push(`${prefijo} → ${g.bs.map(fullLabel).join(', ')}: ${g.txts.join(' · ')}`);
   };
   for (const r of razones) {
-    if (r.tipo === 'soporte') lineas(`${fullLabel(r.de)} · ${t(CLAVE_SOPORTE[r.k])}${r.k === 'artifact' ? ' (' + t('pq_si_art') + ')' : ''}`, r.x, r.a);
-    else if (r.tipo === 'liderazgo') lineas(`${ES ? 'Con' : 'With'} ${fullLabel(r.de)} ${ES ? 'de líder' : 'as leader'}${srcTxt(r.x)}`, r.x, r.a);
-    else if (r.tipo === 'bono') lineas(nombreBono(r), r.x, r.a);
+    if (r.tipo === 'soporte') lineas(`${fullLabel(r.de)} · ${t(CLAVE_SOPORTE[r.k])}${r.k === 'artifact' ? ' (' + t('pq_si_art') + ')' : ''}`, r.x, r.a, r.no || []);
+    else if (r.tipo === 'liderazgo') lineas(`${ES ? 'Con' : 'With'} ${fullLabel(r.de)} ${ES ? 'de líder' : 'as leader'}${srcTxt(r.x)}`, r.x, r.a, r.no || []);
+    else if (r.tipo === 'bono') lineas(nombreBono(r), r.x, r.a, []);
     else out.push(razonTxt(r, fullLabel));
   }
   return [...new Set(out)];
@@ -1923,8 +2063,10 @@ function piezas (razones) {
       out.push({ r, clave: r.tipo + '|' + (r.tipo === 'roles' ? r.roles.join('+') : r.tipo === 'ventaja' ? r.a.key + '|' + r.b.key : '') });
       continue;
     }
+    // Solo lo que se le aplica: lo que ya tenía de otra fuente (r.no) no es una pieza.
     const origen = r.tipo === 'bono' ? 'b|' + r.b.m.join('+') + '|' + r.i : 's|' + r.de.key + '|' + r.k;
-    for (const b of r.a) r.x.fx.forEach((f, n) => { if (sirve(f, b)) out.push({ r, f, para: b, clave: origen + '|' + n + '|' + b.key }); });
+    const ya = (b, f) => !!r.no && r.no.some(([y, fs]) => y === b && fs.some(([g]) => g === f));
+    for (const b of r.a) r.x.fx.forEach((f, n) => { if (sirve(f, b) && !ya(b, f)) out.push({ r, f, para: b, clave: origen + '|' + n + '|' + b.key }); });
   }
   return out;
 }
@@ -1941,10 +2083,11 @@ function vinculo (v, x, aplicados) {
  *  PvE, el del modo (Ezequiel, 4 de octubre de 2026, regla 2: un solo líder, el del modo, para todo lo de
  *  ese modo). */
 function vinculoLider (v, x, lider) { return (lider === v && llegaLiderazgo(v, x)) || (lider === x && llegaLiderazgo(x, v)); }
-/** ¿Algún liderazgo de a le llega a b y le sirve? */
+/** ¿Le llega a b algo del liderazgo de a que se le aplica y le sirve? (Lo que no tiene valor solo se le aplica si no lo
+ *  tiene propio: con a de líder, lo propio es lo único que va antes.) */
 function llegaLiderazgo (a, b) {
-  const s = SOPORTES[a.p];
-  return !!s && LIDERAZGOS.some(k => s[k] && aplicaA(s[k], b) && leSirve(s[k], b));
+  const s = SOPORTES[a.p], vs = [a, b];
+  return !!s && LIDERAZGOS.some(k => s[k] && aplicaAlgo(b, a, k, s[k], vs, a));
 }
 
 // ---------------------------------------------------------------------------
@@ -3045,12 +3188,13 @@ function nombreEn (vs) { return (x) => vs.some(y => y !== x && y.name === x.name
 function nombreHtml (x, nombre) { return `<span title="${h(fullLabel(x))}">${h(nombre(x))}</span>`; }
 /** A quiénes les llega algo: «a todos» si les llega a todos los del equipo; si no, sus nombres. */
 function aQuienesHtml (ms, vs, nombre) { return ms.length === vs.length ? h(t('pq_todos')) : ms.map(x => nombreHtml(x, nombre)).join(', '); }
-/** Lo que le llega al foco, por origen: primero el líder, después los demás en el orden del equipo y, al
- *  final, el artefacto de cada uno. [{ de, art, skills: [lo de recibe()] }] */
+/** Lo que le llega al foco, por origen, en el orden en que se aplica (ver «Efectos iguales que no se suman»): lo
+ *  suyo, el líder (su liderazgo y sus soportes) y los demás en el orden del equipo; al final, el artefacto de cada
+ *  uno. [{ de, art, skills: [lo de recibe(), con no: los efectos que no se le suman → la fuente que ya se los da] }] */
 function origenesDe (foco, vs, lider) {
   const pjs = [], arts = [];
-  for (const a of lider ? [lider].concat(vs.filter(x => x !== lider)) : vs) {
-    const rs = recibe(foco, a, a === lider);
+  for (const a of [foco].concat(ordenEquipo(vs, lider).filter(x => x !== foco))) {
+    const rs = recibe(foco, a, a === lider).map(r => Object.assign(r, { no: new Map(aplicacion(foco, r.de, r.k, r.x, r.fx, vs, lider).no) }));
     const sin = rs.filter(r => r.k !== 'artifact'), con = rs.filter(r => r.k === 'artifact');
     if (sin.length) pjs.push({ de: a, art: false, skills: sin });
     if (con.length) arts.push({ de: a, art: true, skills: con });
@@ -3060,18 +3204,20 @@ function origenesDe (foco, vs, lider) {
 /** La suma de lo que le llega: un renglón por stat y condición (los que llegan siempre primero), sin
  *  topes. De cada uno, lo que llega sin artefacto y lo que solo llega con uno: v y i (% del instinto),
  *  [sin, con], null si de ese lado no llega nada con número; sin: si algo le llega sin artefacto; de: de dónde
- *  sale cada parte, en el orden de los orígenes ({ o: el origen, r: lo de recibe(), f: el efecto }). */
+ *  sale cada parte, en el orden de los orígenes ({ o: el origen, r: lo de recibe(), f: el efecto, ya: la fuente de
+ *  la que ya lo tiene si no se le suma }); rep: si ninguna parte se le suma (todo lo tiene ya de otro renglón). */
 function sumaDe (origenes) {
   const m = new Map();
   for (const o of origenes) for (const r of o.skills) for (const f of r.fx) {
     const cond = condicionTxt(r.x, f), txt = typeof f.v === 'string' ? f.v : null, clave = f.s + '|' + cond + '|' + (txt || '');
     let l = m.get(clave);
-    if (!l) m.set(clave, l = { s: f.s, cond, txt, v: [null, null], i: [null, null], sin: false, de: [] });
-    const j = o.art ? 1 : 0;
+    if (!l) m.set(clave, l = { s: f.s, cond, txt, v: [null, null], i: [null, null], sin: false, de: [], rep: true });
+    const j = o.art ? 1 : 0, ya = r.no.get(f) || null;
     if (typeof f.v === 'number') l.v[j] = (l.v[j] || 0) + f.v;
     if (f.i != null) l.i[j] = (l.i[j] || 0) + f.i;
     if (!o.art) l.sin = true;
-    l.de.push({ o, r, f });
+    if (!ya) l.rep = false;
+    l.de.push({ o, r, f, ya });
   }
   return [...m.values()].sort((a, b) => !!a.cond - !!b.cond);
 }
@@ -3080,30 +3226,32 @@ function sumaDe (origenes) {
 function conArtefacto (l) { return l.v[1] != null || l.i[1] != null || (!l.sin && l.v[0] == null && l.i[0] == null); }
 /** El «*» de lo que solo llega si el compañero lleva su artefacto. */
 function marcaArt () { return `<span class="pqart" title="${h(t('cb_art'))}">*</span>`; }
-/** Lo que recibe un integrante, en una tabla «Efecto | Total | De dónde»: un renglón por stat y condición (sumaDe), con
+/** Lo que recibe el integrante m, en una tabla «Efecto | Total | De dónde»: un renglón por stat y condición (sumaDe), con
  *  la leyenda del «*» si algún renglón la lleva. hid: el id del título que la nombra. */
-function recibeTablaHtml (suma, nombre, hid) {
+function recibeTablaHtml (m, suma, nombre, hid) {
   return `<div class="pqm-tabla" role="table" aria-labelledby="${hid}">
       <div class="pqm-fila pqm-th" role="row"><span role="columnheader">${h(t('pq_col_efecto'))}</span><span role="columnheader">${
         h(t('pq_col_total'))}</span><span role="columnheader">${h(t('pq_col_de'))}</span></div>
-      ${suma.map(l => recibeFilaHtml(l, nombre)).join('')}
+      ${suma.map(l => recibeFilaHtml(m, l, nombre)).join('')}
     </div>${suma.some(conArtefacto) ? `<p class="muted pqley">${h(t('cb_art'))}</p>` : ''}`;
 }
 /** Un renglón de la tabla: el efecto (con su condición, que es la de todas sus partes), el total sin topes (con «*» si
  *  algo de él solo llega con un artefacto y, si también llega algo sin artefacto, cuánto) y de dónde sale cada parte:
- *  quién la da (su retrato y su nombre), el enlace a su skill o a su artefacto y lo que suma. */
-function recibeFilaHtml (l, nombre) {
+ *  quién la da (su retrato y su nombre), el enlace a su skill o a su artefacto y lo que suma. La parte que no se le suma
+ *  (un efecto sin valor que ya tiene de otra fuente) va atenuada, con de dónde ya lo tiene; si no se le suma ninguna,
+ *  el renglón entero. */
+function recibeFilaHtml (m, l, nombre) {
   const tot = (p) => p[0] == null && p[1] == null ? null : (p[0] || 0) + (p[1] || 0);
   const art = conArtefacto(l), val = valorTxt(l.txt != null ? l.txt : tot(l.v), tot(l.i));
   const sin = art && (l.v[0] != null || l.i[0] != null) ? valorTxt(l.v[0], l.i[0]) : '';
-  return `<div class="pqm-fila" role="row">
+  return `<div class="pqm-fila${l.rep ? ' rep' : ''}" role="row">
       <div class="pqm-ef" role="cell">${trHtml(l.s)}${sinClasificar(l.s) ? ` <span class="muted">(${h(t('sy_unclassified'))})</span>` : ''}${
         l.cond ? ` <div class="muted pqm-cond">(${h(l.cond)})</div>` : ''}</div>
       <div class="pqm-tot" role="cell">${val ? `<b>${h(val)}</b>` : ''}${art ? marcaArt() : ''}${
         sin ? ` <div class="muted">(${h(t('pq_sin_art').replace('{x}', sin))})</div>` : ''}</div>
-      <div class="pqm-de" role="cell">${l.de.map(({ o, r, f }) => { const v = valorTxt(f.v, f.i);
-        return `<span class="pqm-de1"><span class="shot" aria-hidden="true">${shot(r.de.id)}</span><span>${nombreHtml(r.de, nombre)}: ${
-          enlaceSkill(r)}${v ? ` <b>${h(v)}</b>` : ''}${o.art ? marcaArt() : ''}</span></span>`; }).join('')}</div>
+      <div class="pqm-de" role="cell">${l.de.map(({ o, r, f, ya }) => { const v = valorTxt(f.v, f.i);
+        return `<span class="pqm-de1${ya ? ' rep' : ''}"><span class="shot" aria-hidden="true">${shot(r.de.id)}</span><span>${nombreHtml(r.de, nombre)}: ${
+          enlaceSkill(r)}${v ? ` <b>${h(v)}</b>` : ''}${o.art ? marcaArt() : ''}${ya ? ' ' + noSumaHtml(m, ya, nombre) : ''}</span></span>`; }).join('')}</div>
     </div>`;
 }
 // Slot de Leads & Supports -> tipo de la skill que lo da en la ficha.
@@ -3146,7 +3294,11 @@ function daGrupos (foco, vs, lider) {
   for (const b of vs) if (b !== foco) for (const r of recibe(b, foco, foco === lider)) {
     let g = gs.get(r.k);
     if (!g) gs.set(r.k, g = { r: { tipo: LIDERAZGOS.includes(r.k) ? 'liderazgo' : 'soporte', de: foco, k: r.k, x: r.x }, fx: new Map() });
-    for (const f of r.fx) { if (!g.fx.has(f)) g.fx.set(f, []); g.fx.get(f).push(b); }
+    const no = new Map(aplicacion(b, foco, r.k, r.x, r.fx, vs, lider).no);
+    for (const f of r.fx) {
+      if (!g.fx.has(f)) g.fx.set(f, { si: [], no: [] });
+      if (no.has(f)) g.fx.get(f).no.push([b, [[f, no.get(f)]]]); else g.fx.get(f).si.push(b);
+    }
   }
   const orden = TIPOS_SOPORTE.map(([k]) => k);
   return [...gs.values()].sort((a, b) => orden.indexOf(a.r.k) - orden.indexOf(b.r.k));
@@ -3159,8 +3311,8 @@ function agrupar (ps) {
     if (!p.f) { out.push({ r: p.r }); continue; }
     let g = gs.get(p.r);
     if (!g) { gs.set(p.r, g = { r: p.r, fx: new Map() }); out.push(g); }
-    if (!g.fx.has(p.f)) g.fx.set(p.f, []);
-    g.fx.get(p.f).push(p.para);
+    if (!g.fx.has(p.f)) g.fx.set(p.f, { si: [], no: [] });
+    g.fx.get(p.f).si.push(p.para);
   }
   return out;
 }
@@ -3174,10 +3326,12 @@ function grupoHtml (g, vs, nombre, conEnlace, tras) {
   const art = r.k === 'artifact' ? ` <span class="muted">(${h(t('pq_si_art'))})</span>` : '';
   const cab = r.tipo === 'bono' ? h(nombreBono(r)) : conEnlace ? enlaceSkill(r) + art
     : `${nombreHtml(r.de, nombre)}: ${h(t(CLAVE_SOPORTE[r.k]))}${art}${srcHtml(r.x)}`;
+  // Cada efecto con a quiénes se les aplica (si) y, atenuado, a quiénes les llega y ya lo tienen de otra fuente (no).
   const efs = [...g.fx].sort((a, b) => r.x.fx.indexOf(a[0]) - r.x.fx.indexOf(b[0]));
-  const quienes = (ms) => ms.map(x => x.key).join('|'), iguales = efs.every(([, ms]) => quienes(ms) === quienes(efs[0][1]));
-  const a = (ms) => ` → ${aQuienesHtml(ms, vs, nombre)}`;
-  return `${cab}${iguales ? a(efs[0][1]) : ''}${tras || ''}<ul>${efs.map(([f, ms]) => `<li>${efectoSoporteHtml(r.x, f)}${iguales ? '' : a(ms)}</li>`).join('')}</ul>`;
+  const quienes = (e) => e.si.map(x => x.key).join('|') + '/' + e.no.map(([x, [[, p]]]) => x.key + ':' + p.de.key + ':' + p.k).join('|');
+  const iguales = efs.every(([, e]) => quienes(e) === quienes(efs[0][1]));
+  const a = (e) => ` → ${aQuienesHtml(e.si, vs, nombre)}${yaLoTienenHtml(e.no, nombre)}`;
+  return `${cab}${iguales ? a(efs[0][1]) : ''}${tras || ''}<ul>${efs.map(([f, e]) => `<li>${efectoSoporteHtml(r.x, f)}${iguales ? '' : a(e)}</li>`).join('')}</ul>`;
 }
 /** Grupos (agrupar, daGrupos) como lista. */
 function gruposHtml (gs, vs, conEnlace) {
@@ -3242,10 +3396,12 @@ function partesSinergia (sc, vs, st) {
   const nombre = nombreEn(vs), quien = (x) => nombreHtml(x, nombre), a = (ms) => aQuienesHtml(ms, vs, nombre);
   const de = (...tipos) => sc.razones.filter(r => tipos.includes(r.tipo)), suma = (rs) => rs.reduce((n, r) => n + r.pts, 0);
   const lid = de('liderazgo'), sop = de('soporte'), bonos = de('bono'), otras = de('roles', 'clases', 'ventaja'), partes = [];
+  // Cada liderazgo y soporte con a quiénes se les aplica y, atenuado, a quiénes les llega algo que ya tienen (con 0 si es lo único).
+  const pts = (r) => r.pts ? ptsHtml(r.pts) : `<span class="muted pqrep">· ${h(t('rep_nada'))}</span>`;
   if (lid.length) partes.push([h(t('cx_lider')).replace('{x}', () => quien(lid[0].de)), suma(lid),
-    lid.map(r => `${enlaceSkill(r)} → ${a(r.a)} ${ptsHtml(r.pts)}`)]);
+    lid.map(r => `${enlaceSkill(r)} → ${a(r.a)}${yaLoTienenHtml(r.no, nombre)} ${pts(r)}`)]);
   if (sop.length) partes.push([h(t('pq_p_sop')), suma(sop), sop.map(r => `${quien(r.de)}: ${enlaceSkill(r)}${r.k === 'artifact' ? artPts(true) : ''} → ${
-    a(r.a)} ${ptsHtml(r.pts)}`), sop.some(r => r.k === 'artifact')]);
+    a(r.a)}${yaLoTienenHtml(r.no, nombre)} ${pts(r)}`), sop.some(r => r.k === 'artifact' && r.pts)]);
   if (bonos.length) partes.push([h(t('pq_p_bonos')), suma(bonos), agrupar(piezas(bonos)).map(g => grupoHtml(g, vs, nombre, false, g.r.pts ? ' ' + ptsHtml(g.r.pts) : ''))]);
   if (otras.length) partes.push([h(t('pq_p_otras')), suma(otras), otras.map(r => grupoHtml({ r }, vs, nombre, false, ' ' + ptsHtml(r.pts)))]);
   const total = partes.reduce((n, p) => n + p[1], 0);
@@ -3314,7 +3470,7 @@ function integranteHtml (m, vs, lider, i, activo) {
   return `<div class="pqm-panel" role="tabpanel" id="pqm-p${i}" aria-labelledby="pqm-tab${i}" tabindex="0"${activo ? '' : ' hidden'}>
       <div class="pqm-quien"><b>${h(fullLabel(m))}</b>${m === lider ? ` <span class="pqm-pill">${h(t('eq_lider_pill'))}</span>` : ''}</div>
       <h4 id="pqm-r${i}">${h(t('pq_recibe').replace('{x}', nombre(m)))}</h4>
-      ${suma.length ? recibeTablaHtml(suma, nombre, 'pqm-r' + i) : `<p class="muted">${h(t('pq_nada'))}</p>`}
+      ${suma.length ? recibeTablaHtml(m, suma, nombre, 'pqm-r' + i) : `<p class="muted">${h(t('pq_nada'))}</p>`}
       ${antiProbHtml([m], nombre).map(x => `<p class="muted pqprob">${x}</p>`).join('')}
       <h4>${h(t('pq_aporta').replace('{x}', nombre(m)))}</h4>
       ${da.length ? gruposHtml(da, vs, true) : `<p class="muted">${h(t('pq_aporta_nada'))}</p>`}
@@ -3659,14 +3815,14 @@ function puestoSinContexto (v) {
   }
   return p;
 }
-/** Lo que suma el liderazgo de a en un equipo sin contexto: cada slot de liderazgo que le llega y le sirve a otro
- *  integrante, 3 si es Notable y 2 si no, como en la sinergia. */
+/** Lo que suma el liderazgo de a en un equipo sin contexto: cada slot de liderazgo con el que a otro integrante le llega
+ *  algo que se le aplica y le sirve, 3 si es Notable y 2 si no, como en la sinergia (con a de líder). */
 function ptsLiderSinContexto (a, vs) {
   const s = SOPORTES[a.p]; if (!s) return 0;
   let pts = 0;
   for (const k of LIDERAZGOS) {
     const x = s[k]; if (!x) continue;
-    for (const b of vs) if (b !== a && aplicaA(x, b) && leSirve(x, b)) { pts += x.sig ? 3 : 2; break; }
+    for (const b of vs) if (b !== a && aplicaAlgo(b, a, k, x, vs, a)) { pts += x.sig ? 3 : 2; break; }
   }
   return pts;
 }
@@ -3698,7 +3854,8 @@ function ptsLiderazgo (vs, i, C, sl) {
     for (const f of x.fx) {
       const k = vale.get(f.s);
       if (k === undefined) continue;
-      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j])) llega[k] |= 1 << (b + j);
+      // Un stat sin valor (la tabla de hoy no pesa ninguno) no se le suma a quien lo tiene propio (seAcumula).
+      for (let j = 0; j < vs.length; j++) if (aplicaA(x, vs[j]) && sirve(f, vs[j]) && (seAcumula(f) || !propioSinValor(vs[j]).has(f.s))) llega[k] |= 1 << (b + j);
     }
   }
   let pts = 0;
@@ -3749,15 +3906,23 @@ function enContexto (vs, ctx, detalle) {
   const C = CONTEXTO[ctx];
   let dps = 0;
   for (const r of roles) dps += r.dps * C.dps;
-  // Con detalle, también qué soportes (de quién, cuál y a quiénes les llega) y qué bonos sumaron.
+  // Un soporte suma si a otro integrante le llega algo que se le aplica y le sirve (reparto: lo que no tiene valor, solo
+  // si no lo tiene ya de una fuente anterior). Con detalle, también qué soportes (de quién, cuál, a quiénes se les aplica
+  // y a quiénes les llega algo que ya tienen; con 0 los que no suman por eso) y qué bonos sumaron.
   let sinergia = 0, art = false;
-  const sops = detalle ? [] : null, bonos = detalle ? [] : null;
+  const sops = detalle ? [] : null, bonos = detalle ? [] : null, lider = vs[li];
   for (let a = 0; a < vs.length; a++) for (let n = 0; n < sl[a].sop.length; n++) {
-    const x = sl[a].sop[n];
-    if (!vs.some((b, j) => j !== a && aplicaA(x, b) && leSirve(x, b))) continue;
-    sinergia += C.soporte;
-    if (sl[a].sopK[n] === 'artifact') art = true;
-    if (detalle) sops.push({ de: vs[a], k: sl[a].sopK[n], x, a: vs.filter((b, j) => j !== a && aplicaA(x, b) && leSirve(x, b)) });
+    const x = sl[a].sop[n], k = sl[a].sopK[n];
+    if (!detalle) {
+      if (!vs.some((b, j) => j !== a && aplicaAlgo(b, vs[a], k, x, vs, lider))) continue;
+      sinergia += C.soporte;
+      if (k === 'artifact') art = true;
+      continue;
+    }
+    const r = reparto(vs[a], k, x, vs, lider, true);
+    if (!r) continue;
+    if (r.si.length) { sinergia += C.soporte; if (k === 'artifact') art = true; }
+    sops.push({ de: vs[a], k, x, a: r.si, no: r.no, pts: r.si.length ? C.soporte : 0 });
   }
   for (const a of vs) for (const b of BONOS_DE[a.cid] || []) {
     if (b.m[0] === a.cid && estanTodos(b.m, vs) && vs.some(x => b.vs.some(bv => leSirve(bv, x)))) {
@@ -3779,12 +3944,16 @@ function consultaCon (v) {
   // El liderazgo vincula según quién lidera (vinculoLider), de a pares: si el de cada compañero le llega a
   // él (ld) y si el suyo le llega a cada compañero (lv). vinculosFila lo suma con el líder de cada orden.
   const ld = Uint8Array.from(pool, x => llegaLiderazgo(x, v)), lv = Uint8Array.from(pool, x => llegaLiderazgo(v, x));
+  // sv: quiénes tienen un soporte que trae algo que no se acumula (y él, svV). En un trío con alguno, el vínculo por un
+  // soporte depende del líder (de él depende qué se le aplica a cada uno: ver «Efectos iguales que no se suman»).
+  const sv = Uint8Array.from(pool, sopSinValor), svV = sopSinValor(v);
   const max = pool.length * (pool.length - 1) / 2;
   // G: qué compañeros tienen vínculo con él por un soporte o un bono de equipo (1, el primero; 2, el
-  // segundo). P: los puntos para él y L: el líder de la sinergia, el de la tarjeta sin contexto (0 él, 1
-  // o 2 el compañero, 3 ninguno; lo usan el filtro de cobertura y los vínculos sin contexto). Van las
-  // filas que pueden entrar en algún orden: con los dos vinculados, con cualquiera de los tres de líder,
-  // o con un DPS de PvP o PvE en lugar del que no.
+  // segundo), con el líder de la sinergia. P: los puntos para él y L: el líder de la sinergia, el de la
+  // tarjeta sin contexto (0 él, 1 o 2 el compañero, 3 ninguno; lo usan el filtro de cobertura y los
+  // vínculos sin contexto). Van las filas que pueden entrar en algún orden: con los dos vinculados, con
+  // cualquiera de los tres de líder (en un trío con sv, por un soporte con cualquier líder: puede), o con
+  // un DPS de PvP o PvE en lugar del que no.
   // S: cuántos strikers del trío lo involucran (desempatan los puntos para él).
   const A = new Int32Array(max), B = new Int32Array(max), P = new Int16Array(max), G = new Uint8Array(max), L = new Uint8Array(max),
         S = new Uint8Array(max);
@@ -3806,20 +3975,29 @@ function consultaCon (v) {
         pts = sc.score;
         if (sc.lider) li = vs.indexOf(sc.lider);
       }
-      const f = g | (ld[i] || lv[i] ? 1 : 0) | (ld[j] || lv[j] ? 2 : 0);
+      const gs = svV || sv[i] || sv[j] ? (puede[i] ? 1 : 0) | (puede[j] ? 2 : 0) : g;
+      const f = gs | (ld[i] || lv[i] ? 1 : 0) | (ld[j] || lv[j] ? 2 : 0);
       if (f !== 3 && !((f & 1 || dps[i]) && (f & 2 || dps[j]))) continue;
       A[n] = i; B[n] = j; P[n] = pts; G[n] = g; L[n] = li; S[n] = cuantosStrikers(vs, v); n++;
     }
   }
-  CONSULTA = { clave: v.key, cid: v.cid, v, pool, ld, lv, A, B, P, G, L, S, n, vista: null };
+  CONSULTA = { clave: v.key, cid: v.cid, v, pool, puede: Uint8Array.from(puede), sv, svV, ld, lv, A, B, P, G, L, S, n, vista: null };
   return CONSULTA;
 }
+/** ¿Tiene v algún soporte que trae algo que no se acumula? */
+function sopSinValor (v) { const so = SOPORTES[v.p]; return !!so && SLOTS_SOPORTE.some(k => so[k] && traeSinValor(so[k])); }
+/** Con qué compañeros (1, vs[1]; 2, vs[2]) tiene vs[0] un vínculo por un soporte o un bono de equipo, con este líder (G de
+ *  la consulta, contado con otro). */
+function vinculosSoporte (vs, lider) {
+  const ap = synergy(vs, { soloPuntaje: true, foco: vs[0], lider }).aplicados;
+  return (vinculo(vs[0], vs[1], ap) ? 1 : 0) | (vinculo(vs[0], vs[2], ap) ? 2 : 0);
+}
 /** Con qué compañeros de la fila i de la consulta tiene vínculo él (1, el primero; 2, el segundo), con li de
- *  líder (0 él, 1 o 2 el compañero, 3 ninguno): por un soporte o un bono de equipo (G) y por el liderazgo
- *  del líder (vinculoLider). */
-function vinculosFila (q, i, li) {
+ *  líder (0 él, 1 o 2 el compañero, 3 ninguno): por un soporte o un bono de equipo (g: el de la consulta, G, que
+ *  se contó con el líder de la sinergia) y por el liderazgo del líder (vinculoLider). */
+function vinculosFila (q, i, li, g = q.G[i]) {
   const a = q.A[i], b = q.B[i];
-  return q.G[i] | (li === 0 ? (q.lv[a] ? 1 : 0) | (q.lv[b] ? 2 : 0) : li === 1 ? (q.ld[a] ? 1 : 0) : li === 2 ? (q.ld[b] ? 2 : 0) : 0);
+  return g | (li === 0 ? (q.lv[a] ? 1 : 0) | (q.lv[b] ? 2 : 0) : li === 1 ? (q.ld[a] ? 1 : 0) : li === 2 ? (q.ld[b] ? 2 : 0) : 0);
 }
 /** Contexto del orden elegido: 'pvp', 'pve' o null (puntos para él, o una tier list). */
 function contextoOrden () { return ui.eqOrden === 'pvp' || ui.eqOrden === 'pve' ? ui.eqOrden : null; }
@@ -3931,11 +4109,17 @@ function vistaConsulta (q) {
       if (vinculosFila(q, i, q.L[i]) !== 3) continue;
       pts = q.P[i]; stk = q.S[i]; tope = 128;
     } else {
-      // Antes de calcular el trío: ¿podría entrar con alguno de los tres de líder?
-      if (!sirveEn(q.G[i] | (q.ld[q.A[i]] || q.lv[q.A[i]] ? 1 : 0) | (q.ld[q.B[i]] || q.lv[q.B[i]] ? 2 : 0), i)) continue;
-      vs[1] = q.pool[q.A[i]]; vs[2] = q.pool[q.B[i]];
+      // Antes de calcular el trío: ¿podría entrar con alguno de los tres de líder? En un trío con algún soporte que trae
+      // algo que no se acumula, el vínculo por un soporte depende del líder: con cualquiera, el que puede (q.puede).
+      const sv = q.svV || q.sv[q.A[i]] || q.sv[q.B[i]], a = q.A[i], b = q.B[i];
+      const gs = sv ? (q.puede[a] ? 1 : 0) | (q.puede[b] ? 2 : 0) : q.G[i];
+      if (!sirveEn(gs | (q.ld[a] || q.lv[a] ? 1 : 0) | (q.ld[b] || q.lv[b] ? 2 : 0), i)) continue;
+      vs[1] = q.pool[a]; vs[2] = q.pool[b];
       const e = enContexto(vs, ctx);
-      if (!e || !sirveEn(vinculosFila(q, i, vs.indexOf(e.lider)), i)) continue;
+      if (!e) continue;
+      // El vínculo con el líder del contexto: si no es el de la sinergia y en el trío el soporte depende del líder, se cuenta con él.
+      const li = vs.indexOf(e.lider), g = sv && li !== q.L[i] && (q.puede[a] || q.puede[b]) ? vinculosSoporte(vs, e.lider) : q.G[i];
+      if (!sirveEn(vinculosFila(q, i, li, g), i)) continue;
       pts = Math.round(e.score * 100); stk = e.strikers; tope = 65536;
       if (lider) lider[i] = vs.indexOf(e.lider);
     }
@@ -4017,43 +4201,47 @@ function detalleContexto (e, vs, ctx) {
   const partes = [], C = CONTEXTO[ctx];   // [rótulo (HTML), puntos o null, [viñetas (HTML)], con el «*» de un artefacto]
   if (C.requisito === 'anti_mermas') {
     const fuentes = new Map();
-    // De cada uno, de dónde sale: un soporte (también el suyo), sus propias skills o el liderazgo del líder.
+    // De cada uno, quién lo cubre: la fuente de anti-mermas que se le aplica (primeraAnti: lo propio, de sus skills o de su
+    // soporte; el liderazgo del líder; o el soporte de otro, en el orden del equipo).
     vs.forEach(m => {
-      const de = vs.find((x, k) => e.sl[k].antiSop.some(y => aplicaA(y, m))), propio = !de && antiPropio(m).cuenta[0];
-      const clave = de ? 'cx_de_sop' : propio ? 'cx_de_propio' : 'cx_de_lid', quienDa = de || (propio ? m : e.lider);
-      const k = clave + '|' + quienDa.key;
-      if (!fuentes.has(k)) fuentes.set(k, { de: quienDa, clave, propio, ms: [] });
+      const p = primeraAnti(m, vs, e.lider), clave = p.k === 'propio' ? 'cx_de_propio' : LIDERAZGOS.includes(p.k) ? 'cx_de_lid' : 'cx_de_sop';
+      const k = clave + '|' + p.de.key;
+      if (!fuentes.has(k)) fuentes.set(k, { p, clave, ms: [] });
       fuentes.get(k).ms.push(m);
     });
-    partes.push([h(t('cx_anti')), null, [...fuentes.values()].map(f => `${h(t(f.clave)).replace('{x}', () => quien(f.de))
-      .replace('{s}', () => h(slotEs(f.propio.sk.sl)))} → ${a(f.ms)}`).concat(antiProbHtml(vs, nombre))]);
+    partes.push([h(t('cx_anti')), null, [...fuentes.values()].map(f => `${h(t(f.clave)).replace('{x}', () => quien(f.p.de))
+      .replace('{s}', () => h(f.p.k === 'propio' ? slotEs(f.p.x.sk.sl) : ''))} → ${a(f.ms)}`).concat(antiProbHtml(vs, nombre))]);
   }
   // Por stat que vale y activación: sus líneas (un liderazgo puede traer varias del mismo stat; cada una
   // con efectoSoporteTxt, que ya dice la activación), a quiénes llega y cuánto suma (su peso por cada uno). Las
   // de un liderazgo condicional cuentan la parte del condicional, y solo para quien no recibe el mismo stat de
   // uno permanente (cada stat cuenta una vez por integrante, la de más peso).
+  // Un stat sin valor no se le suma a quien lo tiene propio (como en ptsLiderazgo; la tabla de hoy no pesa ninguno).
   const grupos = new Map(), lleno = new Set();
   for (const x of slotsDe(e.lider).lid) for (const f of x.fx) {
     if (!C.vale.has(f.s)) continue;
     const k = f.s + '|' + (x.ac || '');
-    const g = grupos.get(k) || { s: f.s, ac: x.ac, txt: [], ms: new Set() };
+    const g = grupos.get(k) || { s: f.s, ac: x.ac, txt: [], ms: new Set(), no: new Map() };
     grupos.set(k, g);
     g.txt.push(efectoSoporteTxt(x, f) + srcTxt(x));
-    vs.forEach(m => { if (aplicaA(x, m) && sirve(f, m)) { g.ms.add(m); if (!x.ac) lleno.add(f.s + '|' + m.key); } });
+    vs.forEach(m => { if (!aplicaA(x, m) || !sirve(f, m)) return;
+      if (!seAcumula(f) && propioSinValor(m).has(f.s)) { g.no.set(m, [[f, { de: m, ...propioSinValor(m).get(f.s) }]]); return; }
+      g.ms.add(m); if (!x.ac) lleno.add(f.s + '|' + m.key); });
   }
   const liderazgo = [...grupos.values()].map(g => {
     const ms = vs.filter(m => g.ms.has(m) && !(g.ac && lleno.has(g.s + '|' + m.key)));
     const pts = ms.length * C.peso[C.vale.get(g.s)] * (g.ac ? C.condicional : 1);
-    return ms.length ? `${h(g.txt.join(' / ') + (g.ac ? ': ' + t('cx_lider_cond').replace('{p}', numTxt(C.condicional * 100)) : ''))} → ${a(ms)} ${
-      ptsHtml(pts)}` : null;
+    return ms.length || g.no.size ? `${h(g.txt.join(' / ') + (g.ac ? ': ' + t('cx_lider_cond').replace('{p}', numTxt(C.condicional * 100)) : ''))} → ${
+      a(ms)}${yaLoTienenHtml([...g.no], nombre)} ${ptsHtml(pts)}` : null;
   }).filter(Boolean);
   partes.push([h(t('cx_lider')).replace('{x}', () => quien(e.lider)), e.partes.lider, liderazgo.length ? liderazgo : [h(t('cx_lider_nada'))]]);
   const dps = vs.map((m, j) => ({ m, r: e.roles[j] })).filter(x => x.r.dps).map(({ m, r }) =>
     `${quien(m)} (${h(r.filas.filter(([l, fid]) => ROLES_LISTAS[ctx][l.id][fid][0] === 'dps')
       .map(([l, fid]) => `${listName(l)}: ${rowsOf(l).find(x => x.id === fid).label}`).join(', '))})`);
   partes.push([h(t('cx_dps')), e.partes.dps, dps]);
-  if (e.partes.sinergia) partes.push([h(t('cx_sinergia')), e.partes.sinergia, e.sops.map(x => `${quien(x.de)}: ${enlaceSkill(x)}${
-      x.k === 'artifact' ? artPts(true) : ''} → ${a(x.a)}`)
+  // Cada soporte con a quiénes se les aplica y, atenuado, a quiénes les llega algo que ya tienen (con 0 si es lo único).
+  if (e.sops.length || e.bonos.length) partes.push([h(t('cx_sinergia')), e.partes.sinergia, e.sops.map(x => `${quien(x.de)}: ${enlaceSkill(x)}${
+      x.k === 'artifact' ? artPts(true) : ''} → ${a(x.a)}${yaLoTienenHtml(x.no, nombre)}${x.pts ? '' : ` <span class="muted pqrep">· ${h(t('rep_nada'))}</span>`}`)
     .concat(e.bonos.map(x => `${h(nombreBono({ b: x.b, integrantes: x.integrantes, i: 0 }, false))} → ${a(x.a)}`)), e.art]);
   // Los strikers no suman: se dicen como desempate, sin puntos.
   const st = strikersDe(vs, null);
@@ -4088,7 +4276,7 @@ function ordenCombinacionesHtml () {
         </select></label>`;
 }
 function combinacionesHtml (v) {
-  const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))}</p>
+  const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))} ${h(t('rep_regla'))}</p>
     <p class="muted" style="margin-bottom:10px">${h(t('cb_note'))}</p>`;
   const ctx = contextoOrden();
   // Sin función en el contexto, no hay lista: solo el aviso y el orden, para cambiarlo. Tampoco se
