@@ -547,9 +547,13 @@ Cómo lo aplica la app, en las combinaciones de 3 de la pestaña *Equipos* (órd
   desde qué lista se lo mirara, y la tarjeta de PvP decía un líder y contaba los puntos «para él»
   con otro. En una tarjeta de PvP o PvE, esos puntos se cuentan con el líder del contexto. Tus
   equipos se guardan en un orden fijo: el mismo equipo, guardado desde dos listas, es uno.
-- Con los datos actuales, la lista de PvP de Knull — Ancient History tiene 1.993 equipos. Las de
-  Galactus y de Jean Grey — Summer Flare Phoenix tienen unos 37.000: sus liderazgos dan
-  anti-mermas a cualquiera, así que con ellos de líder cualquier trío con un DPS cumple.
+- Con los datos actuales, la lista de PvP de Knull — Ancient History tiene 1.956 equipos. Las de
+  Galactus y de Jean Grey — Summer Flare Phoenix tienen unos 36.500 (36.488 y 36.219): sus
+  liderazgos dan anti-mermas a cualquiera, así que con ellos de líder cualquier trío con un DPS
+  cumple. Con el líder único bajaron (Galactus tenía 37.514, Jean Grey 37.089 y Knull 1.979): un
+  compañero que se vinculaba con él solo por su liderazgo ya no se vincula si no es el líder del
+  equipo. Con lo propio, la de Knull subió de 1.915 a 1.956, porque su pasiva de Tier-2 le da
+  anti-mermas.
 
 ### Casos de referencia
 
