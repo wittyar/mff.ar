@@ -27,7 +27,8 @@ variante, en `docs/COMPLETITUD.md`.
   si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a
   los datos recién cuando corre el build: sin `work/`, se valida con `catalogo.validar`,
   `catalogo.validar_glosario`, `catalogo.validar_valor` (la tabla de valor de los equipos) y
-  `fuentes.validar_contenido`.
+  `fuentes.validar_contenido`; `scripts/contenido/liderazgos_api.json` lo valida `liderazgos.validar`
+  contra las tablas de la API (sin `work/`, con el `MFF_TABLAS` de data.js: `liderazgos_api/prueba.py`).
 - Pruebas: no están en el repo. Son scripts de Playwright contra la app servida por
   `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`. La
   copia más reciente va en un zip junto al último bundle (`pruebas-mff-*.zip`); su `LEEME.txt` dice
@@ -37,9 +38,12 @@ variante, en `docs/COMPLETITUD.md`.
   `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo, y `armar_datos_build.py`, con
   lo que el próximo build cambia en data.js (hoy, el formato 7: el catálogo con la regla de cada stat,
   la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado con `scripts/modelo.py`).
-  `armar_datos_lideres.py` les suma los liderazgos que el build deriva de la Leader Skill
-  (`scripts/liderazgos.py`, con `docs/AUDITORIA.md` y `docs/COMPLETITUD.md` rehechos), y
-  `liderazgos_api/prueba.py` prueba esa función sin `work/`.
+  `armar_datos_build.py` recalcula también los roles. `armar_datos_lideres.py` les suma los liderazgos
+  que el build deriva de la Leader Skill (`scripts/liderazgos.py`, con las correspondencias a mano de
+  `scripts/contenido/liderazgos_api.json`, sus traducciones en `MFF_TXT` y la sección 12 de
+  `docs/AUDITORIA.md` y `docs/COMPLETITUD.md` rehechas), y `liderazgos_api/prueba.py` prueba esa función
+  y `liderazgos.validar` sin `work/`. `verif_otorga.py` prueba el aviso del «Give Power» que ninguna
+  fuente publica, y que no va donde lo dice el juego.
   `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
   pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
   filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.

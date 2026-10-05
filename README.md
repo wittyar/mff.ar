@@ -40,8 +40,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     valor y, entre paréntesis, su activación y su recarga, lo que pide, cuánto dura y hasta dónde
     acumula, escrito igual que en el «Cómo funciona», el «Por qué», la comparativa, los bonos y el
     detalle de PvP y PvE; un liderazgo que Leads & Supports no publica y sale de la Leader Skill de
-    la API dice «según la skill del juego», ahí y en cada pantalla que lo muestra; y, plegado, lo que
-    dice la guía de cómo se arma un equipo), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
+    la API dice «según la skill del juego», ahí y en cada pantalla que lo muestra; si la Leader Skill
+    da un poder que ninguna fuente publica («Give Power»), lo avisa, y si lo dice el juego (Mephisto
+    — Master of Hell), el liderazgo lo trae y cita la ficha del juego; y, plegado, lo que dice la
+    guía de cómo se arma un equipo), dónde lo recomienda la guía, en qué equipos de Alliance Battle aparece, qué
     controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
     su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
     consigue y la nota.
@@ -500,9 +502,11 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - La sinergia se apoya en los efectos de líder y de soporte de thanosvibs y en los bonos de
   equipo (de la wiki, o del juego si se cargaron): cada bono con todos sus integrantes en el equipo
   suma 1. Los liderazgos que Leads & Supports no publica los deriva el build de la Leader Skill de la API
-  (`scripts/liderazgos.py`, ver `docs/MODELO.md`); el slot que no se puede derivar (un efecto o una
-  activación que Leads & Supports no publica en ningún liderazgo, un «Give Power») no cuenta y queda
-  listado en `docs/AUDITORIA.md` (sección 12). Roles y ventaja de clase son lecturas propias (la ventaja: Combate > Velocidad >
+  (`scripts/liderazgos.py`, ver `docs/MODELO.md`); lo que Leads & Supports no publica en ningún liderazgo
+  se pasa a mano (`scripts/contenido/liderazgos_api.json`: un stat del catálogo para cada efecto, con el
+  texto de la API, y lo que otorga un «Give Power» cuando lo dice el juego); el slot que no se puede
+  derivar (un efecto sin stat en el catálogo, como un escudo de energía; un «Give Power» sin fuente) no
+  cuenta y queda listado en `docs/AUDITORIA.md` (sección 12). Roles y ventaja de clase son lecturas propias (la ventaja: Combate > Velocidad >
   Detonación > Combate, y Universal le gana a las tres con ventaja menor, que en la sinergia suma
   igual y se dice). No es un cálculo del juego. Cada efecto cuenta solo para quien le sirve, con la regla de su stat
   en el catálogo de efectos (`scripts/contenido/catalogo.json`; la muestra el Glosario, en cada

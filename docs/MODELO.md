@@ -208,47 +208,90 @@ Cómo se derivan:
    effect» da dos slots: el primer efecto para todos y el segundo para él. «Give Power» («Acquires
    the following effect for $TIME sec.») va en un slot aparte, al final: es lo que Leads & Supports
    publica como segundo liderazgo, en los 19 casos quitar los debuffs al recibir uno, con una duración
-   y una recarga que la API no trae. Ese slot no se deriva nunca.
-2. **Correspondencia.** No se escribe a mano: se aprende en cada build de las variantes que tienen
-   las dos cosas. Cada slot de Leads & Supports va con la parte de su Leader Skill del mismo lugar, y
-   los efectos en orden: cada número del texto de la API da un stat de Leads & Supports con ese valor
-   (con su signo: «Decreases Debuff Duration by 30%» es Debuff Duration −30), y la duración es la del
-   efecto. Así salen 34 efectos (de «Increases all Basic Attacks by #%», en 117 variantes, a los que
-   se ven una sola vez), dos activaciones («when debuffed» → «When Debuffed», «when HP is below 99%» →
-   «When HP is below 99%») y la condición de cada efecto del objetivo «Self\nActivates when: Mutant
-   Ally enters» (Exodus: «when 1 Mutant»...). Lo que dos variantes dicen distinto no se usa: con el
-   objetivo «All Allies\nActivates when: Combat Type Ally enters», Leads & Supports pone la condición
-   («when 1 Combat»...) a Drax y Drax — All-New, All-Different, pero no a Drax — Classic ni a Drax —
-   Annihilation.
+   y una recarga que la API no trae. Ese slot no se deriva, salvo que el juego diga qué otorga (punto 2).
+2. **Correspondencia.** Se aprende en cada build de las variantes que tienen las dos cosas. Cada slot
+   de Leads & Supports va con la parte de su Leader Skill del mismo lugar, y los efectos en orden.
+   Cada número del texto de la API da un stat de Leads & Supports con ese valor, con su signo
+   («Decreases Debuff Duration by 30%» es Debuff Duration −30), y la duración es la del efecto.
+
+   Así salen 34 efectos (de «Increases all Basic Attacks by #%», en 117 variantes, a los que se ven
+   una sola vez), dos activaciones («when debuffed» → «When Debuffed», «when HP is below 99%» → «When
+   HP is below 99%») y la condición de cada efecto de dos objetivos «Activates when». Exodus lleva
+   «when 1 Mutant»…; Drax y Nebula, «when 1 Combat»…: la condición va porque el texto de la API la
+   trae, y su texto sale de las variantes en que Leads & Supports la publica. Que Drax — Classic y
+   Drax — Annihilation no la tengan en Leads & Supports es una diferencia de la verificación. Lo que
+   dos variantes dicen distinto no se usa.
+
+   Lo que Leads & Supports no publica en ningún liderazgo va a mano (decisión del 5 de octubre de
+   2026; `scripts/contenido/liderazgos_api.json`):
+   - un efecto, con su texto de la API citado literal, da un stat que ya está en el catálogo (con su
+     «le sirve»), con el número del texto. Son defensa física, resistencia al fuego y eléctrica,
+     velocidad de ataque, superarmadura y perforación de defensa. Tres de ellos Leads & Supports los
+     publica igual en pasivas: Fire Resist en Robbie Reyes — Hellfire Charge, Ignore Defense en Mantis,
+     Super Armor en Nick Fury — Director of S.H.I.E.L.D.;
+   - una activación («25% rate when hit», «when tagging», «when dealing Critical Attack»…) va con el
+     texto de la API y su traducción;
+   - lo que otorga un «Give Power», si lo dice el juego (decisión del 5 de octubre): sus efectos, su
+     activación (un texto de la API, que pasa como las demás) y su recarga, con la fuente y el texto
+     del juego; la restricción es la del objetivo de la API, y el slot lleva la fuente (`otorga`), que
+     la app cita. Hoy, Mephisto — Master of Hell: la ficha en coreano dice que su liderazgo, al recibir
+     un debuff, les quita todos los debuffs a los del bando Villano (12 s), con recarga de 20 s
+     (capturas 253, 269 y 286 del 4 de octubre). Son, valor por valor, los dos liderazgos que Leads &
+     Supports publica para la base, cuya Leader Skill en la API es otra: es probable que Leads &
+     Supports le haya puesto a la base el de Master of Hell (hallazgo `mephisto-base-leads-supports`;
+     los datos de la base no se tocan).
+
+   El build valida el archivo (texto de la API, stat del catálogo, la misma clasificación, las fuentes)
+   y para si Leads & Supports dice otra cosa. Lo que no tiene stat no se inventa: queda sin derivar y
+   listado.
 3. **Todo o nada por slot.** Un slot se deriva si cierra entero: el objetivo con restricción
    conocida, la activación y cada efecto con su correspondencia, y cada valor publicado (sin $TIME ni
    $HEROSUBTYPE1 sin resolver). Si no, no se deriva, y la sección 12 de `docs/AUDITORIA.md` y
    `docs/COMPLETITUD.md` («Liderazgo sin completar») lo listan con sus motivos. Lo derivado lleva el
-   nombre de la Leader Skill y los textos de Leads & Supports, que ya tienen traducción.
-4. **Verificación.** La misma regla, sobre las variantes con liderazgo de Leads & Supports: de sus 448
-   slots, 392 dan igual derivados (stats, valores, duración, condición, restricción, activación y
-   recarga). 51 no se pueden derivar: 19 del «Give Power», 27 con un objetivo que la API no nombra
-   («Target ID: 183») o que no es un grupo (Arachknight 2099), los 4 de Drax por la contradicción y
-   Invisible Woman — Classic, con «Immunity to all Debuffs», que Leads & Supports parte en dos slots.
-   Tres dan distinto: Black Swan (recarga 25 s en la API, 20 s en Leads & Supports), The Hood (la API
-   lo da a los supervillanos y Leads & Supports a todos) y Mephisto (Leads & Supports parte en dos
-   slots lo que la API da junto al recibir un debuff).
+   nombre de la Leader Skill y los textos de Leads & Supports, que ya tienen traducción; no lleva
+   «Notable» (decisión del 5 de octubre).
+4. **Verificación.** La misma regla, sobre las variantes con liderazgo de Leads & Supports. De sus 448
+   slots, 394 dan igual derivados (stats, valores, duración, condición, restricción, activación y
+   recarga). 47 no se pueden derivar:
+   - 19 por el «Give Power»;
+   - 27 por un objetivo que la API no nombra («Target ID: 183») o que no es un grupo (Arachknight 2099);
+   - Invisible Woman — Classic, con «Immunity to all Debuffs», que Leads & Supports parte en dos slots.
+
+   Cinco dan distinto:
+   - Black Swan: recarga de 25 s en la API, 20 s en Leads & Supports;
+   - The Hood: la API lo da a los supervillanos y Leads & Supports a todos;
+   - Mephisto: Leads & Supports parte en dos slots lo que la API da junto al recibir un debuff;
+   - Drax — Classic y Drax — Annihilation: sin la condición en Leads & Supports.
+
+   Y 2 están solo en Leads & Supports.
 
 Lo que dio con los datos de formato 7 (`armar_datos_lideres.py`, en las pruebas; sin `work/` el build
 no se pudo correr) [Comprobado]:
 
-- **Derivados:** 328 variantes (345 slots). Ahora tienen liderazgo 739 de 888 variantes, y los
-  personajes sin ninguno bajan de 135 a 34. Casi todos son liderazgos chicos: todas las velocidades
-  (76 slots), evasión (54), duración de los debuffs (54), todas las defensas (48), crítico (33), recarga
-  de skills (28). Cuatro traen anti-mermas, al recibir un debuff: Carnage — Fallen Soul y Superior Carnage
-  (para los Simbiontes), Thane — Phoenix Force y Sentinel — Stark Sentinels Mk II.
-- **Sin derivar:** 151 slots, de 151 variantes de 44 personajes. 99 por un efecto sin correspondencia,
-  porque Leads & Supports no publica ningún liderazgo con él: defensa física (24), resistencia al fuego
-  (14) y eléctrica (13), escudo de energía (11), velocidad de ataque (8), entre otros. 80 por la
-  activación, porque Leads & Supports solo publica liderazgos que se activan al recibir un debuff o con
-  la vida baja: «25% rate when hit» y otros porcentajes (27), «when tagging» (15), «when dealing
-  Critical Attack» (15). 33 tienen las dos cosas. Además, Nebula (5, por la contradicción de Drax) y el
-  «Give Power» de Sentry — Thunderbolts* y Mephisto — Master of Hell, que tienen derivado el otro slot.
+- **Derivados:** 443 variantes (461 slots).
+  - Tienen liderazgo 854 de 888 variantes, y los personajes sin ninguno bajan de 135 a 8 (Captain
+    America (Sharon Rogers), Daisy Johnson, Hydro-Man, Luna Snow, Silk, Sister Grimm, White Tiger y
+    Yellowjacket).
+  - Casi todos son liderazgos chicos: todas las velocidades (88 slots), evasión (69), duración de los
+    debuffs (54), todas las defensas (48), recarga de skills (42), crítico (40).
+  - Lo de a mano deriva 111 slots, de 111 variantes: defensa física (23), inmunidad física al recibir
+    un golpe (14), resistencia al fuego (14) y eléctrica (13), recarga de skills al asestar un crítico
+    o al esquivar, todas las velocidades al cambiar de personaje (12)… y el «Give Power» de Mephisto —
+    Master of Hell.
+  - Cinco traen anti-mermas, al recibir un debuff: Carnage — Fallen Soul y Superior Carnage (para los
+    Simbiontes), Thane — Phoenix Force, Sentinel — Stark Sentinels Mk II y Mephisto — Master of Hell
+    (para los Supervillanos, según el juego).
+- **Sin derivar:** 35 slots de 35 variantes de 12 personajes.
+  - 34 por un efecto sin stat en el catálogo: escudo de energía (11) y físico (3), contra los que «Max
+    HP Shield» diría más que la skill; inmunidad al frío (6); sangrado (5) y parálisis (2), que son
+    para el rival; robo de vida (3); inmunidad a todo daño (2); resistencia al veneno (1); inmunidad al
+    sangrado y a la fractura (Hydro-Man).
+  - 1 por el «Give Power» de Sentry — Thunderbolts*, que tiene derivado el otro slot y del que ninguna
+    fuente dice qué otorga.
+
+La app avisa, donde muestra el liderazgo, que la Leader Skill da un poder que ninguna fuente publica:
+en Sentry — Thunderbolts* y en los 19 pares con Leads & Supports. En los pares no se deduce de lo que
+publica Leads & Supports (decisión del 5 de octubre).
 
 ### Lo que corrigió el glosario del juego
 
@@ -375,8 +418,10 @@ catálogo, anota:
 - **Si le sirve**, cuando es para él: la regla «le sirve» del catálogo contra su perfil de combate y
   sus skills (un buff de Striker sin Striker, o de un elemento que no usa, no le sirve).
 - **Lo que la fuente no dice.** «Give Power» («Acquires the following effect») es un envoltorio:
-  lo que otorga viene después, en la misma etapa o en las que siguen. Si no le sigue nada, la fuente
-  no dice qué otorga, y el análisis lo muestra así (76 casos, en 65 variantes, en estos datos). Lo
+  lo que otorga viene después, en la misma etapa o en las que siguen. En una etapa con un objetivo
+  para cada efecto, lo que le sigue va a otro objetivo y no es lo que otorga (el «Give Power» de Kang
+  the Conqueror es para todos y la suba de ataque, para él). Si no le sigue nada, la fuente no dice
+  qué otorga, y el análisis lo muestra así (80 casos, en 69 variantes, con los datos de formato 7). Lo
   que el catálogo no clasifica también se ve, como lo publica la fuente.
 
 El daño de los golpes no va en el análisis: es el perfil de combate de la etapa 1. Viaja en
