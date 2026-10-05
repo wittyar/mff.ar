@@ -4190,7 +4190,7 @@ function statNom (k) { const s = GUIA.stats[k]; return s ? bi(s) : k; }
 /** Chips con las fuentes citadas: con su enlace, o sin él si la fuente no tiene dirección (la
  *  guía dentro del juego). */
 function fuentesHtml (claves) {
-  return (claves || []).map(k => { const f = GUIA.fuentes[k]; if (!f) return '';
+  return (claves || []).map(k => { const f = GUIA.fuentes[k]; if (!f) throw new Error('fuente desconocida: ' + k);
     return f.url ? `<a class="fuente" href="${h(f.url)}" target="_blank" rel="noopener" title="${h(t('md_source'))}">${h(f.nombre)}</a>`
                  : `<span class="fuente" title="${h(t('md_source'))}">${h(f.nombre)}</span>`; }).join('');
 }
