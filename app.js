@@ -1333,7 +1333,12 @@ let ui = {
 // HELPERS
 // ============================================================================
 const $ = (s, r) => (r || document).querySelector(s);
-function h (v) { const d = document.createElement('div'); d.textContent = v == null ? '' : String(v); return d.innerHTML; }
+/** Texto escapado para HTML, en el contenido o en un atributo: también las comillas, que innerHTML deja como están
+ *  (un title con «"Give Power"» se cortaba en la primera). */
+function h (v) {
+  const d = document.createElement('div'); d.textContent = v == null ? '' : String(v);
+  return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 function classColor (c) { return ({'Combate':'var(--class-combate)','Detonación':'var(--class-detonacion)','Velocidad':'var(--class-velocidad)','Universal':'var(--class-universal)'})[c] || 'var(--text-3)'; }
 function dmgColor (d) { return ({'Físico':'var(--dmg-fisico)','Energía':'var(--dmg-energia)','PG':'var(--dmg-pg)'})[d] || 'var(--text-3)'; }
 function tierColor (t) { return ({'T2':'var(--tier-t2)','T3':'var(--tier-t3)','T4':'var(--tier-t4)'})[t] || 'var(--text-3)'; }
