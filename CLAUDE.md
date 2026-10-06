@@ -63,7 +63,12 @@ variante, en `docs/COMPLETITUD.md`.
   pendiente la de los recomendados de Modos. `verif_ultimo_uniforme.py`, `verif_solapado.py` y
   `verif_acumula.py` prueban esas cosas en pantalla y contra modelos aparte, y `medir_solapado.py`
   mide, contra otro app.js, cuánto cambian las listas. `verif_historico.py` prueba el histórico (datos, la pestaña, los
-  filtros, la ficha, los links, inglés y celular) contra un modelo con `MFF_HISTORICO`. `verif_trabada.py` prueba la pantalla de datos
+  filtros, la ficha, los links, inglés y celular) contra un modelo con `MFF_HISTORICO`. `verif_mesa.py` prueba la mesa de trabajo (1.0.25: tres
+  paneles, poner y quitar, líder, restricción de Alliance Battle contra un modelo, bonos activos, guardar, la capa, comparar,
+  ventana angosta); desde la 1.0.25 las que usaban el armador viejo de Equipos o la barra de comparar del roster usan la mesa.
+  `verif_filas` y `verif_export_viejo` comparan contra versiones viejas (worktrees que ya no están) y no corren solas; las
+  que miran retratos (`verif_paginador`, `verif_servidor_caido`) necesitan `images/` en el repo (un enlace a las bajadas
+  sirve: `.gitignore` no tapa un enlace, que no se commitea). `verif_trabada.py` prueba la pantalla de datos
   cuando lo publicado es de otro formato (más nuevo con y sin versión nueva de la app, más viejo, igual, inglés). Con datos de una versión más
   nueva que la publicada, `MFF_DATOS` apunta a datos armados con el build sobre lo bajado ese día (sin `work/` en la
   carpeta de Ezequiel: se baja con `fetch_all.py --no-portraits` en el contenedor). verif_consistencia tarda más de 25
@@ -73,6 +78,14 @@ variante, en `docs/COMPLETITUD.md`.
 ## Estado (6 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.24 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario).
+- Entregada sin publicar: la 1.0.25, solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
+  (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
+  aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
+  tres paneles: la lista del roster a la izquierda en la ficha, la mesa a la derecha en todas las secciones (`U.mesa` en la
+  capa). La mesa reemplaza al armador de Equipos. Maquetas: «Arquitectura MFF.ar» (#24) y «MFF.ar · dos direcciones».
+  Al publicarla: push de main y la etiqueta `v1.0.25` sobre el commit «Versión 1.0.25», sin correr el workflow de datos.
+  Pendiente de Ezequiel: si la mesa se queda; si el equipo guardado recuerda el líder de la mesa (hoy la tarjeta muestra el
+  de la sinergia); la barra de arriba sigue sin entrar en una ventana angosta (#24).
 - La 1.0.24 (etiqueta en ae17e4e, «Versión 1.0.24», solo programa, datos de formato 10 sin cambio): la pantalla de
   datos ofrece la versión de la app que lee los datos publicados si son de un formato más nuevo, y publicar.yml no
   publica una versión con datos de otro formato. Release con sus tres archivos (instalador, parche y `latest.json`).

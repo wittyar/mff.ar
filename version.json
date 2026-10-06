@@ -1,6 +1,6 @@
 {
- "version": "1.0.24",
+ "version": "1.0.25",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "Si la app no puede leer sus datos y los publicados son de una versión más nueva, la pantalla de datos ahora lo dice y ofrece actualizar la app (el parche o el instalador), en vez de quedar trabada."
+ "notas": "Nueva disposición, a prueba: la mesa de trabajo. A la derecha, en todas las secciones, la mesa: armás un equipo (el primero es el líder), elegís el modo (en Alliance Battle, el día y la dificultad, con la restricción marcada en cada uno), ves lo que le llega a cada integrante y los bonos activos, y lo guardás en Mis equipos; abajo, los que elegiste para comparar. En la ficha, la lista del roster a la izquierda para pasar de uno a otro. La mesa reemplaza al armador de la sección Equipos. Colores y letras nuevos."
 }
