@@ -3286,19 +3286,20 @@ function atraparFoco (e) {
   }
 }
 /** Cómo armarlo: lo que las fuentes le asignan al personaje; las reglas generales de su
- *  tipo de ataque (iguales para todos) van plegadas. */
+ *  tipo de ataque (iguales para todos) van plegadas. Los bloques van en dos columnas que se reparten la altura
+ *  (Ezequiel, 6 de octubre de 2026: sin el espacio en blanco que dejaba una grilla de filas parejas). */
 function fichaArmado (ch, v) {
   const ta = tipoAtaque(v);
   return `<div class="section"><h3>${h(t('ar_title'))} ${ayudaHtml(t('ar_note'))}</h3>
     <p class="muted" style="margin-bottom:12px"><a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
-    <div class="usogrid par">
+    <div class="armado2">
       <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
       <div class="bloque" id="artefacto"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}${artArmado(ch)}</div>
       <div class="bloque"><h4>${h(t('ga_iso_title'))}</h4>${isoArmado(ch, v)}</div>
       <div class="bloque"><h4>${h(t('md_uni_opts'))}</h4>${armadoOpciones(v)}</div>
     </div>
     <details class="reglas"><summary>${h(t('ar_rules'))}</summary>
-      <div class="usogrid par">
+      <div class="armado2">
         <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
         <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
       </div></details></div>

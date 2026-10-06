@@ -954,6 +954,9 @@ table.topes input{width:70px;padding:5px 7px}
 .fxlabel.dano{width:210px;padding:2px 7px;border-radius:4px;background:rgba(255,106,92,.14);color:var(--danger);margin:0}
 @media (max-width:760px){ .fxlabel.dano{width:auto} }
 .stageblock{border-left:2px solid var(--line-2);padding-left:10px}
+/* Armado: dos columnas que se reparten la altura (los bloques tienen largos muy distintos) */
+.armado2{columns:2 380px;column-gap:12px}
+.armado2 > .bloque{break-inside:avoid;margin-bottom:12px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:12px;display:block}
 .stageblock{border-left:0;padding-left:0}
 .stageblock.varias{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start}
 .stageblock.varias .stnum{margin-top:3px}

@@ -102,7 +102,7 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     armado; las **opciones del uniforme** abierto (qué uniforme habilita cada una y qué stat
     conviene elegir); plegadas, las reglas generales de ISO y urus para su tipo de ataque
     (derivado de sus skills). Lo de la guía de armado es de su mejor uniforme: si está abierto
-    otro, lo dice. Abajo, **tu progreso**: la hoja de ruta de progresión y la calculadora de topes de
+    otro, lo dice. Los bloques van en dos columnas que se reparten la altura. Abajo, **tu progreso**: la hoja de ruta de progresión y la calculadora de topes de
     stats, que se guardan en tu capa (hasta la 1.0.26, la pestaña *Progreso*).
   - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
