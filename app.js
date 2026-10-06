@@ -61,6 +61,7 @@ function blankUser () {
     modes: [],                        // modos propios: {id, name, teamSize}; los del juego salen de MFF_MODOS
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
+    mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
              filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[] },
@@ -94,7 +95,7 @@ function normalizarCapa (saved) {
   // Los favoritos guardan el contexto del orden en que se marcaron; los de antes no lo traen y quedan sin
   // contexto, que es como se mostraban.
   for (const f of u.favoritos) if (!('ctx' in f)) f.ctx = null;
-  // Los equipos se guardan en orden canónico (teamSave); los de antes, en el orden en que se armaron.
+  // Los equipos se guardan en orden canónico (mesaGuardar); los de antes, en el orden en que se armaron.
   for (const tt of u.teams) tt.members = tt.members.slice().sort();
   return u;
 }
@@ -671,8 +672,7 @@ const T = {
   eq_none:           { es:'Todavía no armaste equipos. Cuando armes, acá vas a ver en cuáles está y cómo entraría en los demás.',
                        en:'You have not built any team yet. Once you do, this shows which ones it is in and how it would fit the others.' },
   eq_in_none:        { es:'No está en ninguno de tus equipos.', en:'It is not in any of your teams.' },
-  eq_build:          { es:'Armar para mi cuenta', en:'Build for my account' },
-  eq_build_with:     { es:'Armar un equipo con él', en:'Build a team with it' },
+  eq_build:          { es:'Llevar a la mesa',    en:'Take to the desk' },
   eq_why:            { es:'Por qué',             en:'Why' },
   pq_abrir:          { es:'Por qué y C.T.P.',    en:'Why and C.T.P.' },
   pq_abrir_t:        { es:'De dónde salen los puntos, quién lidera y por qué, lo que recibe y aporta cada integrante y sus C.T.P. recomendados',
@@ -928,24 +928,15 @@ const T = {
   tl_open_sheet:     { es:'Ver ficha',           en:'Open sheet' },
 
   tm_title:          { es:'Equipos',             en:'Teams' },
-  tm_note:           { es:'Los que armás vos, con la sinergia estimada por la app.',
-                       en:'The ones you build, with the synergy the app estimates.' },
-  tm_build:          { es:'+ Armar equipo',      en:'+ Build team' },
-  tm_name_ph:        { es:'Nombre del equipo',   en:'Team name' },
+  tm_note:           { es:'Los que guardaste desde la mesa, con la sinergia estimada por la app. Se arman en la mesa, a la derecha.',
+                       en:'The ones you saved from the desk, with the synergy the app estimates. You build them on the desk, on the right.' },
   tm_nomode:         { es:'Sin modo (3)',        en:'No mode (3)' },
-  tm_members:        { es:'Miembros',            en:'Members' },
   tm_lleno:          { es:'El equipo ya tiene {n} de {n}: quitá uno para sumar a {x}.', en:'The team already has {n} of {n}: remove one to add {x}.' },
   tm_sobran:         { es:'Este modo es de {n} y hay {m}: quitá {k} para guardarlo.', en:'This mode takes {n} and there are {m}: remove {k} to save it.' },
-  tm_sorted_by:      { es:'ordenados por',       en:'sorted by' },
-  tm_search:         { es:'Buscar…',             en:'Search…' },
-  tm_reason_ph:      { es:'Por qué funciona (opcional)', en:'Why it works (optional)' },
-  tm_cancel:         { es:'Cancelar',            en:'Cancel' },
-  tm_save:           { es:'Guardar',             en:'Save' },
   tm_synergy_pts:    { es:'pts de sinergia',     en:'synergy pts' },
   tm_empty:          { es:'Todavía no armaste ningún equipo.', en:'You have not built any team yet.' },
   tm_mine:           { es:'Equipos de tu cuenta', en:'Your account\'s teams' },
   tm_dup:            { es:'{x} ya está en «{e}», del mismo modo.', en:'{x} is already in «{e}», same mode.' },
-  tm_in_use:         { es:'ya está en «{e}» (mismo modo)', en:'already in «{e}» (same mode)' },
   tm_favs:           { es:'Favoritos',           en:'Favorites' },
   tm_fav_ctx:        { es:'marcado en {c}',      en:'marked in {c}' },
   tm_ya_esta:        { es:'Ese equipo ya está guardado con este modo: «{e}».', en:'That team is already saved with this mode: «{e}».' },
@@ -998,6 +989,41 @@ const T = {
                        en:'Game modes, with their team size per the source, are in the Modes section. Here you can add your own for building teams.' },
   tm_modes_game:     { es:'Modos del juego',     en:'Game modes' },
   tm_modes_own:      { es:'Modos propios',       en:'Your own modes' },
+  ms_title:          { es:'Mesa',                en:'Desk' },
+  ms_team:           { es:'Equipo',              en:'Team' },
+  ms_libre:          { es:'Lugar libre',         en:'Free slot' },
+  ms_libre_nota:     { es:'«Poner en la mesa» en una ficha, «+» en la lista o «Llevar a la mesa» en un equipo.',
+                       en:'«Put on the desk» on a sheet, «+» on the list or «Take to the desk» on a team.' },
+  ms_lider:          { es:'Líder',               en:'Leader' },
+  ms_hacer_lider:    { es:'Hacer líder',         en:'Make leader' },
+  ms_quitar:         { es:'Quitar',              en:'Remove' },
+  ms_modo:           { es:'Modo',                en:'Mode' },
+  ms_dia:            { es:'Día',                 en:'Day' },
+  ms_dif:            { es:'Dificultad',          en:'Difficulty' },
+  ms_restr:          { es:'Restricción del día', en:"Day's restriction" },
+  ms_restr_src:      { es:'Alliance Battle, según thanosvibs', en:'Alliance Battle, per thanosvibs' },
+  ms_recibe:         { es:'Lo que le llega a cada uno', en:'What reaches each one' },
+  ms_recibe_nota:    { es:'Soportes de los demás y el propio, y el liderazgo del líder (el primero), si le sirven. * solo con el artefacto.',
+                       en:"Supports from the others and their own, and the leader's leadership (the first one), if they serve them. * only with the artifact." },
+  ms_bonos:          { es:'Bonos de equipo activos', en:'Active team bonuses' },
+  ms_sin_bonos:      { es:'Ninguno con estos integrantes.', en:'None with these members.' },
+  ms_nombre_ph:      { es:'Nombre (opcional)',   en:'Name (optional)' },
+  ms_guardar:        { es:'Guardar en Mis equipos', en:'Save to My teams' },
+  ms_vaciar:         { es:'Vaciar',              en:'Clear' },
+  ms_guardado:       { es:'Guardado en Mis equipos: «{e}».', en:'Saved to My teams: «{e}».' },
+  ms_pocos:          { es:'Para guardarlo hacen falta al menos 2.', en:'It takes at least 2 to save it.' },
+  ms_ya:             { es:'{x} ya está en la mesa.', en:'{x} is already on the desk.' },
+  ms_cambia:         { es:'{x} ya estaba en la mesa con otro uniforme: queda con este.', en:'{x} was already on the desk with another uniform: it now has this one.' },
+  ms_poner:          { es:'Poner en la mesa',    en:'Put on the desk' },
+  ms_en_mesa:        { es:'En la mesa',          en:'On the desk' },
+  ms_cmp:            { es:'Comparar',            en:'Compare' },
+  ms_cmp_vacio:      { es:'Hasta 4: «+ Comparar esta versión» en una ficha o «Comparar» en el roster.',
+                       en:'Up to 4: «+ Compare this version» on a sheet or «Compare» on the roster.' },
+  ms_cmp_ir:         { es:'Comparar {n} →',      en:'Compare {n} →' },
+  ms_lista:          { es:'Personajes · {i} de {n}', en:'Characters · {i} of {n}' },
+  ms_lista_tab:      { es:'Lista',               en:'List' },
+  ms_ver_tab:        { es:'Ver',                 en:'View' },
+  base_word:         { es:'Base',                en:'Base' },
   st_add_mode:       { es:'+ Agregar modo',      en:'+ Add mode' },
   st_new_mode:       { es:'Modo nuevo',          en:'New mode' },
   st_sources:        { es:'Fuentes',             en:'Sources' },
@@ -1407,8 +1433,8 @@ let ui = {
   pickMode: false, picks: [], avisoPick: null,  // avisoPick: por qué no se sumó la última que se tocó
   charId: null, uniformId: 'base',
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
-  teamOpen: false, team: { name:'', members:[], reason:'', modeId:'' }, teamSearch:'', teamPage:0,
-  avisoEquipo: null,                 // por qué el armador no sumó al último que se tocó
+  avisoMesa: null,                   // { txt, ok }: por qué la mesa no sumó al último que se puso, o que se guardó (ok)
+  movil: 'centro',                   // ventana angosta: qué panel se ve ('lista', 'centro' o 'mesa')
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
@@ -2431,7 +2457,7 @@ function elemEs (v) { return LANG === 'en' ? v : (txt('elem', (TB.elem || []).fi
 /** Columnas de la comparación. */
 const MAX_COMPARAR = 4;
 /** Elige o deja de elegir una variante para comparar. Con MAX_COMPARAR elegidas no suma otra: lo dice
- *  (ui.avisoPick, en la barra de abajo del roster) en vez de descartar una. */
+ *  (ui.avisoPick, en la mesa) en vez de descartar una. */
 function togglePick (cid, uid) {
   const key = cid + '::' + (uid || 'base');
   const i = ui.picks.findIndex(x => x.key === key);
@@ -2694,16 +2720,10 @@ function renderRoster () {
        <button class="btn sm" style="margin-top:12px" data-a="clearFilters">${h(t('clear_filters'))}</button></div>`
     : U.prefs.view === 'table' ? tableHtml(slice)
     : `<div class="grid ${U.prefs.view === 'dense' ? 'dense' : ''}">${slice.map(cardHtml).join('')}</div>`;
-  return toolbar(total, rows.length) + body + pager(pages, ui.page, 'page') +
-    (ui.pickMode && ui.picks.length >= 2
-      ? `<div style="position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;padding:16px;
-           background:linear-gradient(to top,var(--bg) 62%,transparent);z-index:50;gap:12px;align-items:center;flex-wrap:wrap">
-           ${ui.avisoPick ? `<span class="avisoeq avisopick">⚠ ${h(ui.avisoPick)}</span>` : ''}
-           <button class="btn primary" data-a="goCompare">${h(t('compare'))} ${ui.picks.length} →</button></div>` : '');
+  return toolbar(total, rows.length) + body + pager(pages, ui.page, 'page');
 }
-/** Paginador del roster y del armador de equipos: extremos, vecinos de la actual y "…"
- *  entre medio, así llega a todas las páginas sin una fila de veintitantos botones.
- *  `accion` es el data-a que atiende el clic ('page' o 'teamPage'). */
+/** Paginador: extremos, vecinos de la actual y "…" entre medio, así llega a todas las páginas sin una fila de
+ *  veintitantos botones. `accion` es el data-a que atiende el clic. */
 function pager (pages, cur, accion) {
   if (pages <= 1) return '';
   const nums = [];
@@ -2741,7 +2761,8 @@ function renderDetail () {
   <div class="row" style="margin-bottom:14px">
     ${ant && ant.view !== 'roster' ? `<button class="btn sm primary" data-a="atras" title="${h(t('back_to').replace('{x}', nombreLugar(ant, true)))}">← ${h(nombreLugar(ant))}</button>` : ''}
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
-    <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}">${h(t('compare_this'))}</button>
+    ${botonPoner(v)}
+    <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}" ${ui.picks.some(p => p.key === v.key) ? 'disabled' : ''}>${h(t('compare_this'))}</button>
     <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
     <button class="btn sm ${ui.marcando ? 'primary' : ''}" data-a="marcarModo">${h(ui.marcando ? t('at_done') : t('at_edit'))}</button>
   </div>
@@ -2751,7 +2772,7 @@ function renderDetail () {
 /** Cabecera fija: quién es, con qué uniforme y qué parte de la ficha se está viendo. */
 /** Abre la ficha de un personaje (con un uniforme) desde el roster o desde las flechas. */
 function abrirFicha (cid, uid) {
-  ui.view = 'detail'; ui.charId = cid; ui.uniformId = uid || 'base';
+  ui.view = 'detail'; ui.charId = cid; ui.uniformId = uid || 'base'; ui.movil = 'centro';
   ui.eqPagina = 0; ui.eqCon = ''; ui.eqVerDescartados = false;
   render(); window.scrollTo(0, 0);
 }
@@ -3750,7 +3771,7 @@ function fichaEquipos (ch, v) {
     ${!U.teams.length ? `<p class="muted" style="margin-bottom:10px">${h(t('eq_none'))}</p>` : ''}
     ${suyos.length ? `<div class="grid eqgrid">${suyos.map(tt => equipoCard(tt)).join('')}</div>`
                    : U.teams.length ? `<p class="muted">${h(t('eq_in_none'))}</p>` : ''}
-    <div class="row" style="margin-top:10px">${botonArmar([v], '', '', t('eq_build_with'))}</div>
+    <div class="row" style="margin-top:10px">${botonPoner(v)}</div>
   </div>
   ${otros.length ? `<div class="section"><h3>${h(t('eq_could'))}</h3>
     <p class="muted" style="margin-bottom:10px">${h(t('eq_could_note').replace('{v}', fullLabel(v)))}</p>
@@ -3761,7 +3782,7 @@ function fichaEquipos (ch, v) {
         ${ptsEntraHtml(o)}
       </div>
       ${retratosEquipo(o.vs, v.key, o.despues.lider)}
-      <div class="row">${porqueBoton('t|' + o.tt.id + '|' + v.key)}${botonArmar(o.vs, o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
+      <div class="row">${porqueBoton('t|' + o.tt.id + '|' + v.key)}${botonArmar(conLider(o.vs, o.despues.lider), o.tt.modeId, t('eq_name_swap').replace('{e}', o.tt.name).replace('{v}', v.name))}</div>
     </div>`).join('')}
     ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
     ${sinVinculo.length ? `<p class="muted">${h(t('eq_no_link'))} ${sinVinculo.map(o => h(o.tt.name)).join(' · ')}</p>` : ''}
@@ -4454,7 +4475,7 @@ function combinacionesHtml (v) {
           ${ls.map(l => `<div class="muted">${h(listName(l))}: ${conLider(vs, lider).map(x => puestoHtml(l, x.key)).join(' · ')}</div>`).join('')}
         </div>
         ${ptsComboHtml(e, ctx, sc, equipo, e ? e.strikers : cuantosStrikers(vs, v))}
-        ${botonArmar(vs, '', '')}
+        ${botonArmar(conLider(vs, lider), '', '')}
         ${ui.eqVerDescartados
           ? `<button class="btn sm" data-a="restaurar" data-c="${vs.map(x => x.cid).join(',')}">${h(t('eq_restaurar'))}</button>`
           : `<button class="btn sm" data-a="descartar" data-c="${vs.map(x => x.cid).join(',')}" title="${h(t('eq_descartar_title'))}">${h(t('eq_descartar'))}</button>`}
@@ -5732,6 +5753,7 @@ function equipoCard (tt, borrable) {
     ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
     <div class="muted" style="margin-top:6px">${sc.score}${artPts(sc.art)} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
     ${ctpsEquipo(conLider(vs, sc.lider), modo ? modo.ctp : null)}
+    ${borrable ? `<div class="row" style="margin-top:8px">${botonArmar(conLider(vs, sc.lider), tt.modeId, tt.name)}</div>` : ''}
   </div>`;
 }
 /** Un favorito: equipo de 3 marcado con ★ en las combinaciones de un personaje (el primero). */
@@ -5746,57 +5768,13 @@ function favoritoCard (f) {
     <div class="muted">${h(conLider(vs, sc.lider).map(fullLabel).join(' + '))}${f.ctx ? ` <span class="tag dim">${h(t('tm_fav_ctx').replace('{c}', t('ctp_ctx_' + f.ctx)))}</span>` : ''}</div>
     <div><b>${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</b></div>
     ${ctpsEquipo(conLider(vs, sc.lider), f.ctx)}
-    <div class="row">${botonArmar(vs, '', '')}</div>
+    <div class="row">${botonArmar(conLider(vs, sc.lider), '', '')}</div>
   </div>`;
 }
 function renderTeams () {
-  const eq = ui.team;                 // 't' es la función de idioma: el equipo se llama 'eq'
-  const max = tamModo(eq.modeId);
-  const modos = modosEquipo();
-  const q = ui.teamSearch.trim().toLowerCase();
-  const pool = allVariants().filter(v => !q || fullLabel(v).toLowerCase().includes(q)).sort((a, b) => rankIndex(a.key) - rankIndex(b.key));
-  const PS = 40, pages = Math.max(1, Math.ceil(pool.length / PS));
-  ui.teamPage = Math.min(ui.teamPage, pages - 1);
-  const slice = pool.slice(ui.teamPage * PS, (ui.teamPage + 1) * PS);
-  // Personajes que ya están en otro equipo de tu cuenta del mismo modo: dentro de un modo no se
-  // repiten (por ejemplo, las dos escuadras de Alliance Conquest). Se avisa; no se impide.
-  const enModo = new Map();
-  if (eq.modeId) U.teams.filter(tt => tt.modeId === eq.modeId)
-    .forEach(tt => tt.members.forEach(k => { const cid = k.split('::')[0]; if (!enModo.has(cid)) enModo.set(cid, tt.name); }));
-  const repetidos = eq.members.map(k => k.split('::')[0]).filter(cid => enModo.has(cid));
   return `
   <div class="page-head"><div><h1>${h(t('tm_title'))}</h1>
-    <div class="sub">${h(t('tm_note'))}</div></div>
-    <button class="btn primary" data-a="teamOpen">${h(t('tm_build'))}</button></div>
-  ${ui.teamOpen ? `<div class="card" style="margin-bottom:20px">
-    <div class="row" style="margin-bottom:10px">
-      <input placeholder="${h(t('tm_name_ph'))}" value="${h(eq.name)}" data-a="teamName" style="flex:2;min-width:180px">
-      <select data-a="teamMode" style="flex:1;min-width:160px">
-        <option value="">${h(t('tm_nomode'))}</option>
-        ${[[true, 'tm_modes_game'], [false, 'tm_modes_own']].map(([juego, k]) => { const ms = modos.filter(m => m.juego === juego);
-          return ms.length ? `<optgroup label="${h(t(k))}">${ms.map(m => `<option value="${m.id}" ${m.id === eq.modeId ? 'selected' : ''}>${h(m.name)} (${m.tam})</option>`).join('')}</optgroup>` : ''; }).join('')}
-      </select>
-    </div>
-    <div class="muted" style="margin-bottom:6px">${h(t('tm_members'))} ${eq.members.length} / ${max} — ${h(t('tm_sorted_by'))} ${h(listName(listById(U.prefs.refList)) || t('s_name'))}</div>
-    ${eq.members.length > max ? `<div class="avisoeq">⚠ ${h(t('tm_sobran').replace('{n}', max).replace('{m}', eq.members.length).replace('{k}', eq.members.length - max))}</div>` : ''}
-    ${ui.avisoEquipo ? `<div class="avisoeq">⚠ ${h(ui.avisoEquipo)}</div>` : ''}
-    ${repetidos.map(cid => `<div class="avisoeq">⚠ ${h(t('tm_dup').replace('{x}', CHAR_BY_ID[cid].name).replace('{e}', enModo.get(cid)))}</div>`).join('')}
-    <input placeholder="${h(t('tm_search'))}" value="${h(ui.teamSearch)}" data-a="teamSearch" style="width:100%;margin-bottom:10px">
-    <div class="row" style="gap:6px">
-      ${slice.map(v => `<div title="${h(fullLabel(v) + (enModo.has(v.cid) ? ' — ' + t('tm_in_use').replace('{e}', enModo.get(v.cid)) : ''))}" data-a="teamToggle" data-key="${v.key}"
-        class="${enModo.has(v.cid) && !eq.members.includes(v.key) ? 'enuso' : ''}"
-        style="width:50px;height:50px;border-radius:9px;overflow:hidden;cursor:pointer;flex:none;
-        box-shadow:0 0 0 ${eq.members.includes(v.key) ? '2px var(--accent)' : '1px var(--line-2)'}">
-        ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" style="width:100%;height:100%;object-fit:cover" loading="lazy">` : ''}
-      </div>`).join('')}
-    </div>
-    ${pager(pages, ui.teamPage, 'teamPage')}
-    <textarea placeholder="${h(t('tm_reason_ph'))}" style="width:100%;margin-top:10px;min-height:54px" data-a="teamReason">${h(eq.reason)}</textarea>
-    <div class="row" style="justify-content:flex-end;margin-top:10px">
-      <button class="btn" data-a="teamClose">${h(t('tm_cancel'))}</button>
-      <button class="btn primary" data-a="teamSave" ${eq.members.length < 2 || eq.members.length > max ? 'disabled' : ''}>${h(t('tm_save'))}</button>
-    </div>
-  </div>` : ''}
+    <div class="sub">${h(t('tm_note'))}</div></div></div>
   ${U.descartados.length ? `<div class="section"><details class="usgrupo"><summary>${h(t('tm_desc').replace('{n}', U.descartados.length))}</summary>
     <p class="muted" style="margin:8px 0 10px">${h(t('tm_desc_note'))}</p>
     ${U.descartados.map(d => { const vs = d.map(c => variant(c, null)).filter(Boolean);
@@ -5810,6 +5788,131 @@ function renderTeams () {
   <div class="section"><h3>${h(t('tm_mine'))}</h3>
   ${U.teams.length ? `<div class="grid eqgrid">${U.teams.map(tt => equipoCard(tt, true)).join('')}</div>`
   : `<div class="empty"><div class="big">◇</div><div>${h(t('tm_empty'))}</div></div>`}</div>`;
+}
+
+// ============================================================================
+// MESA DE TRABAJO (1.0.25, Ezequiel, 6 de octubre de 2026: «lo podemos probar a ver si realmente mejora»)
+// La pantalla va en tres paneles: en la ficha, la lista del roster a la izquierda (la misma de las flechas ‹ ›);
+// en el centro, la sección; a la derecha, en todas las secciones, la mesa. La mesa es el único lugar donde se arma
+// un equipo: sus integrantes en orden (el primero es el líder, como en el juego), el modo y, en Alliance Battle, el
+// día y la dificultad, con la restricción marcada en cada integrante; los bonos de equipo activos; lo que le llega a
+// cada uno (las casillas de cobertura de las combinaciones, sin puntajes); guardarlo en Mis equipos. Abajo, los que
+// se van a comparar. Se guarda en la capa (U.mesa): sigue ahí al cambiar de sección y al volver a abrir la app.
+// En una ventana angosta los paneles se ven de a uno, con pestañas abajo (ui.movil).
+// ============================================================================
+function mesaVs () { return U.mesa.members.map(k => variant(...k.split('::'))).filter(Boolean); }
+/** Restricción del día de Alliance Battle elegida en la mesa ({ d, m, r }), o null si el modo no es Alliance Battle. */
+function restriccionMesa () {
+  if (U.mesa.modeId !== 'alliance-battle') return null;
+  const del = ABX.restricciones.filter(r => r.d === U.mesa.abxDia);
+  return del.find(r => r.m === U.mesa.abxDif) || del[0];
+}
+/** ¿v cumple un valor de una restricción de Alliance Battle? Cada valor es una clase, un bando, un género o una raza. */
+function cumpleRestriccion (v, x) {
+  if (SEED.CLASSES.includes(x)) return v.c === x;
+  if (SEED.FACTIONS.includes(x)) return v.f === x;
+  if (SEED.GENDERS.includes(x)) return v.gender === x;
+  if (SEED.RACES.includes(x)) return v.race === x;
+  throw new Error('restricción de Alliance Battle que no es clase, bando, género ni raza: ' + x);
+}
+/** Pone una variante en la mesa: al final, o en el lugar del mismo personaje si ya estaba con otro uniforme (el
+ *  juego no deja dos veces al mismo). Con la mesa llena no suma: lo dice. */
+function ponerEnMesa (key) {
+  const v = variant(...key.split('::')), m = U.mesa, max = tamModo(m.modeId);
+  ui.avisoMesa = null;
+  if (m.members.includes(key)) { ui.avisoMesa = { txt: t('ms_ya').replace('{x}', fullLabel(v)) }; return; }
+  const i = m.members.findIndex(k => k.split('::')[0] === v.cid);
+  if (i > -1) { m.members[i] = key; ui.avisoMesa = { txt: t('ms_cambia').replace('{x}', v.name) }; return; }
+  if (m.members.length >= max) { ui.avisoMesa = { txt: t('tm_lleno').replace(/\{n\}/g, max).replace('{x}', fullLabel(v)) }; return; }
+  m.members.push(key);
+}
+function botonPoner (v) {
+  const ya = U.mesa.members.includes(v.key);
+  return `<button class="btn sm ${ya ? '' : 'primary'}" data-a="mesaPoner" data-key="${v.key}" ${ya ? 'disabled' : ''}>${h(t(ya ? 'ms_en_mesa' : 'ms_poner'))}</button>`;
+}
+/** La lista de la izquierda en la ficha: el roster tal como está filtrado y ordenado. */
+function panelListaHtml () {
+  const lista = rosterData(), v = variant(ui.charId, ui.uniformId), nav = vecinosEnListado(v);
+  return `<div class="panelcab"><span>${h(t('ms_lista').replace('{i}', nav.i + 1).replace('{n}', lista.length))}</span>
+      <button class="btn sm" data-a="back">${h(t('nav_roster'))}</button></div>
+    <div class="plitems">${lista.map(x => `<div class="plit${x.key === v.key ? ' on' : ''}">
+      <button class="plabrir" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}" ${x.key === v.key ? 'aria-current="true"' : ''}>
+        <span class="plfoto" style="--cc:${classColor(x.c)}">${shot(x.id)}</span>
+        <span class="pltx"><b>${h(x.name)}</b><small>${h(x.uid ? x.sub : t('base_word'))}</small></span>
+        <span class="tag dim">${h(x.t)}</span></button>
+      <button class="plmas" data-a="mesaPoner" data-key="${x.key}" title="${h(t('ms_poner') + ': ' + fullLabel(x))}" aria-label="${h(t('ms_poner') + ': ' + fullLabel(x))}">+</button>
+    </div>`).join('')}</div>`;
+}
+function mesaHtml () {
+  const m = U.mesa, vs = mesaVs(), max = tamModo(m.modeId), modos = modosEquipo(), lider = vs[0] || null;
+  const rs = restriccionMesa();
+  // Personajes que ya están en otro equipo de tu cuenta del mismo modo: dentro de un modo no se repiten (las dos
+  // escuadras de Alliance Conquest). Se avisa; no se impide.
+  // El equipo guardado igual al de la mesa no cuenta: es el mismo.
+  const enModo = new Map(), este = m.members.slice().sort().join('|');
+  if (m.modeId) U.teams.filter(tt => tt.modeId === m.modeId && tt.members.join('|') !== este)
+    .forEach(tt => tt.members.forEach(k => { const cid = k.split('::')[0]; if (!enModo.has(cid)) enModo.set(cid, tt.name); }));
+  const bonos = [];
+  for (const a of vs) for (const b of BONOS_DE[a.cid] || []) if (b.m[0] === a.cid && estanTodos(b.m, vs)) bonos.push(b);
+  const lugares = [];
+  for (let i = 0; i < Math.max(max, vs.length); i++) {
+    const x = vs[i];
+    lugares.push(x ? `<div class="mslot${i === 0 ? ' lider' : ''}${i >= max ? ' sobra' : ''}">
+        <button class="msfoto" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}" title="${h(fullLabel(x))}" style="--cc:${classColor(x.c)}">${shot(x.id)}</button>
+        <div class="mstx"><span class="msrol">${i === 0 ? h(t('ms_lider')) : '&nbsp;'}</span><b>${h(x.name)}</b><small>${h(x.uid ? x.sub : t('base_word'))}</small></div>
+        <div class="msacc">${i > 0 ? `<button class="btn icon sm" data-a="mesaLider" data-i="${i}" title="${h(t('ms_hacer_lider'))}" aria-label="${h(t('ms_hacer_lider') + ': ' + fullLabel(x))}">↑</button>` : ''}
+          <button class="btn icon sm" data-a="mesaQuitar" data-i="${i}" title="${h(t('ms_quitar'))}" aria-label="${h(t('ms_quitar') + ': ' + fullLabel(x))}">×</button></div>
+      </div>` : `<div class="mslot libre"><span class="msfoto"></span><div class="mstx"><b>${h(t('ms_libre'))}</b>${i === vs.length ? `<small>${h(t('ms_libre_nota'))}</small>` : ''}</div></div>`);
+  }
+  const dias = [...new Set(ABX.restricciones.map(r => r.d))].sort((a, b) => a - b);
+  const avisos = [ui.avisoMesa && !ui.avisoMesa.ok ? ui.avisoMesa.txt : null,
+    vs.length > max ? t('tm_sobran').replace('{n}', max).replace('{m}', vs.length).replace('{k}', vs.length - max) : null,
+    ...vs.filter(x => enModo.has(x.cid)).map(x => t('tm_dup').replace('{x}', x.name).replace('{e}', enModo.get(x.cid)))].filter(Boolean);
+  return `<div class="panelcab"><span>${h(t('ms_title'))} · ${h(t('ms_team'))}</span><span>${vs.length} / ${max}</span></div>
+    <div class="msbloque">
+      <select data-a="mesaModo" aria-label="${h(t('ms_modo'))}">
+        <option value="">${h(t('tm_nomode'))}</option>
+        ${[[true, 'tm_modes_game'], [false, 'tm_modes_own']].map(([juego, k]) => { const ms = modos.filter(x => x.juego === juego);
+          return ms.length ? `<optgroup label="${h(t(k))}">${ms.map(x => `<option value="${x.id}" ${x.id === m.modeId ? 'selected' : ''}>${h(x.name)} (${x.tam})</option>`).join('')}</optgroup>` : ''; }).join('')}
+      </select>
+      ${rs ? `<div class="row msabx"><label>${h(t('ms_dia'))} <select data-a="mesaDia">${dias.map(d => `<option value="${d}" ${d === m.abxDia ? 'selected' : ''}>${d}</option>`).join('')}</select></label>
+        <label>${h(t('ms_dif'))} <select data-a="mesaDif">${ABX.restricciones.filter(r => r.d === m.abxDia).map(r => `<option ${r.m === rs.m ? 'selected' : ''}>${h(r.m)}</option>`).join('')}</select></label></div>` : ''}
+    </div>
+    <div class="msslots">${lugares.join('')}</div>
+    ${ui.avisoMesa && ui.avisoMesa.ok ? `<div class="okmesa">✓ ${h(ui.avisoMesa.txt)}</div>` : ''}
+    ${avisos.map(x => `<div class="avisoeq">⚠ ${h(x)}</div>`).join('')}
+    ${rs ? `<div class="panelcab sub"><span>${h(t('ms_restr'))}</span></div><div class="msbloque">
+      ${rs.r.length ? `<table class="msrestr"><thead><tr><th></th>${vs.map(x => `<th title="${h(fullLabel(x))}">${h(x.name.slice(0, 3))}</th>`).join('')}</tr></thead>
+        <tbody>${rs.r.map(x => `<tr><td>${icon(x)}${h(dom(x))}</td>${vs.map(y => cumpleRestriccion(y, x) ? '<td class="si">✓</td>' : '<td class="no">✗</td>').join('')}</tr>`).join('')}</tbody></table>`
+        : `<p class="muted">${h(t('md_no_restr'))}</p>`}
+      <div class="fuentes muted">${h(t('ms_restr_src'))}</div></div>` : ''}
+    ${vs.length >= 2 ? `<div class="panelcab sub"><span>${h(t('ms_recibe'))}</span></div><div class="msbloque">
+      ${vs.map(x => `<div class="msrecibe"><b>${h(x.name)}</b>${coberturaHtml(cobertura(x, vs, lider))}</div>`).join('')}
+      <p class="muted">${h(t('ms_recibe_nota'))}</p></div>
+    <div class="panelcab sub"><span>${h(t('ms_bonos'))}</span></div><div class="msbloque">
+      ${bonos.length ? bonos.map(b => `<div class="msbono"><b>${h(b.n || t('bn_noname'))}</b> <span class="muted">${h(b.m.map(c => CHAR_BY_ID[c].name).join(' + '))}</span>
+        ${b.vs.map(v => `<div class="muted">${h(v.fx.map(f => efectoSoporteTxt(v, f)).join(' · '))}</div>`).join('')}</div>`).join('')
+        : `<p class="muted">${h(t('ms_sin_bonos'))}</p>`}</div>` : ''}
+    <div class="msbloque">
+      <input data-a="mesaNombre" value="${h(m.name)}" placeholder="${h(t('ms_nombre_ph'))}" aria-label="${h(t('ms_nombre_ph'))}">
+      <div class="row"><button class="btn primary" data-a="mesaGuardar" ${vs.length < 2 || vs.length > max ? 'disabled' : ''}>${h(t('ms_guardar'))}</button>
+        <button class="btn" data-a="mesaVaciar" ${vs.length || m.name ? '' : 'disabled'}>${h(t('ms_vaciar'))}</button></div>
+    </div>
+    <div class="panelcab sub"><span>${h(t('ms_cmp'))}</span><span>${ui.picks.length} / ${MAX_COMPARAR}</span></div>
+    <div class="msbloque">
+      ${ui.picks.length ? ui.picks.map(pk => { const x = variant(pk.cid, pk.uid);
+        return `<div class="mscmp"><button class="plabrir" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}"><span class="plfoto" style="--cc:${classColor(x.c)}">${shot(x.id)}</span>
+          <span class="pltx"><b>${h(x.name)}</b><small>${h(x.uid ? x.sub : t('base_word'))}</small></span></button>
+          <button class="btn icon sm" data-a="unpick" data-cid="${x.cid}" data-uid="${x.uid || ''}" aria-label="${h(t('ms_quitar') + ': ' + fullLabel(x))}">×</button></div>`; }).join('')
+        : `<p class="muted">${h(t('ms_cmp_vacio'))}</p>`}
+      ${ui.avisoPick ? `<div class="avisoeq">⚠ ${h(ui.avisoPick)}</div>` : ''}
+      ${ui.picks.length >= 2 ? `<button class="btn primary" data-a="goCompare">${h(t('ms_cmp_ir').replace('{n}', ui.picks.length))}</button>` : ''}
+    </div>`;
+}
+/** Pestañas de abajo en una ventana angosta: qué panel se ve. */
+function movilTabsHtml (conLista) {
+  const tabs = (conLista ? [['lista', t('ms_lista_tab')]] : []).concat([['centro', t('ms_ver_tab')], ['mesa', t('ms_title') + ' · ' + U.mesa.members.length]]);
+  return `<nav class="movtabs" aria-label="${h(t('ms_title'))}">${tabs.map(([k, n]) => `<button data-a="movil" data-v="${k}" aria-pressed="${ui.movil === k}">${h(n)}</button>`).join('')}</nav>`;
 }
 
 // ============================================================================
@@ -6047,8 +6150,19 @@ function render () {
   }
   // Los avisos van fuera de <main>: la barra del roster se pega arriba de main con margen
   // negativo y los taparía.
-  $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div><main>' + body + '</main>'
+  // Tres paneles (ver MESA DE TRABAJO): la lista y la mesa conservan su desplazamiento al repintar.
+  const conLista = ui.view === 'detail' && ui.charId != null, previo = {};
+  for (const sel of ['.plista', '.mesa']) { const x = $(sel); if (x) previo[sel] = x.scrollTop; }
+  $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div>'
+    + `<div class="trabajo${conLista ? ' con-lista' : ''}" data-movil="${ui.movil}">`
+    + (conLista ? `<aside class="plista" aria-label="${h(t('ms_lista_tab'))}">${panelListaHtml()}</aside>` : '')
+    + '<main>' + body + '</main>'
+    + `<aside class="mesa" aria-label="${h(t('ms_title'))}">${mesaHtml()}</aside></div>` + movilTabsHtml(conLista)
     + (ui.aliados != null ? aliadosModal() : '') + tipHtml();
+  for (const sel in previo) { const x = $(sel); if (x) x.scrollTop = previo[sel]; }
+  const actual = $('.plista .plit.on'), pl = $('.plista');
+  if (actual && pl && (actual.offsetTop < pl.scrollTop || actual.offsetTop + actual.offsetHeight > pl.scrollTop + pl.clientHeight))
+    pl.scrollTop = actual.offsetTop - pl.clientHeight / 2;
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
   sincronizarLugar();
@@ -6145,6 +6259,7 @@ document.addEventListener('click', (e) => {
   const el = e.target.closest('[data-a]'); if (!el) return;
   const a = el.getAttribute('data-a'), d = el.dataset;
   const P = U.prefs;
+  if (/^go/.test(a) || a === 'back') ui.movil = 'centro';   // ir a otra sección muestra la sección (ventana angosta)
   switch (a) {
     case 'back': {
       const ant = lugarAnterior();
@@ -6171,7 +6286,8 @@ document.addEventListener('click', (e) => {
     case 'kind': P.kind = d.v; ui.page = 0; commit(); break;
     case 'dir': P.dir = -P.dir; commit(); break;
     case 'page': ui.page = parseInt(d.p, 10); render(); window.scrollTo({top:0,behavior:'smooth'}); break;
-    case 'pickMode': ui.pickMode = !ui.pickMode; ui.picks = []; ui.avisoPick = null; ui.view = 'roster'; render(); break;
+    case 'pickMode': ui.pickMode = !ui.pickMode; ui.avisoPick = null; ui.view = 'roster'; render(); break;
+    // «+ Comparar esta versión» la suma y lleva al roster a elegir las otras; las elegidas se ven en la mesa.
     case 'pick': case 'pickThis': {
       e.stopPropagation();
       togglePick(d.cid, d.uid || null);
@@ -6179,7 +6295,7 @@ document.addEventListener('click', (e) => {
       render(); break; }
     case 'unpick': { const key = d.cid + '::' + (d.uid || 'base');
       ui.picks = ui.picks.filter(p => p.key !== key); ui.avisoPick = null;
-      if (ui.picks.length < 2) ui.view = 'roster';
+      if (ui.picks.length < 2 && ui.view === 'compare') ui.view = 'roster';
       render(); break; }
     case 'goCompare': ui.view = 'compare'; ui.avisoPick = null; render(); window.scrollTo(0, 0); break;
     case 'open': {
@@ -6272,9 +6388,6 @@ document.addEventListener('click', (e) => {
     case 'tlCerrar': ui.tlPick = null; render(); break;
 
     case 'goTeams': ui.view = 'teams'; render(); break;
-    case 'teamOpen': ui.teamOpen = true; ui.team = { name:'', members:[], reason:'', modeId:'' }; ui.teamSearch = ''; ui.teamPage = 0;
-      ui.avisoEquipo = null; render(); break;
-    case 'teamClose': ui.teamOpen = false; ui.avisoEquipo = null; render(); break;
     case 'eqIncluir': ui.eqExcluir = ui.eqExcluir.filter(c => c !== d.cid); ui.eqPagina = 0; render(); break;
     // Descartar y restaurar no cambian los datos del juego: sin rebuild(), la consulta queda.
     case 'descartar': if (!estaDescartado(d.c.split(','))) U.descartados.unshift(trioDe(d.c.split(','))); saveUser(); render(); break;
@@ -6288,28 +6401,26 @@ document.addEventListener('click', (e) => {
       const i = U.favoritos.findIndex(f => claveFavorito(f.members) === c);
       if (i > -1) U.favoritos.splice(i, 1); else U.favoritos.unshift({ id: 'fav-' + Date.now(), members: keys, ctx: contextoOrden() });
       saveUser(); render(); break; }
-    case 'teamDesde': ui.view = 'teams'; ui.teamOpen = true; ui.teamSearch = ''; ui.teamPage = 0; ui.avisoEquipo = null;
-      ui.team = { name: d.nombre, members: d.m.split(','), reason: '', modeId: d.modo };
-      render(); window.scrollTo(0, 0); break;
-    // Con el equipo lleno no se suma otro: se avisa (antes se descartaba el primero sin decirlo).
-    case 'teamToggle': { const eq = ui.team, max = tamModo(eq.modeId);
-      const i = eq.members.indexOf(d.key);
-      ui.avisoEquipo = null;
-      if (i > -1) eq.members.splice(i, 1);
-      else if (eq.members.length >= max) ui.avisoEquipo = t('tm_lleno').replace(/\{n\}/g, max).replace('{x}', fullLabel(variant(...d.key.split('::'))));
-      else eq.members.push(d.key);
-      render(); break; }
-    case 'teamPage': ui.teamPage = parseInt(d.p, 10); render(); break;
-    // Se guarda en orden canónico (el que lo muestra va con su líder primero): el mismo equipo, desde la lista de
-    // cualquiera de sus integrantes, es uno solo. Si ya está guardado con ese modo, no se repite y se dice.
-    case 'teamSave': { const eq = ui.team; if (eq.members.length < 2 || eq.members.length > tamModo(eq.modeId)) break;
-      const members = eq.members.slice().sort(), modeId = eq.modeId || '';
+    // «Llevar a la mesa» (combinaciones, favoritos, tus equipos): el equipo reemplaza lo que había en la mesa, con su
+    // líder primero, su modo y su nombre. No cambia de sección: la mesa está a la vista.
+    case 'teamDesde': U.mesa.members = d.m.split(','); U.mesa.modeId = d.modo || ''; U.mesa.name = d.nombre || '';
+      ui.avisoMesa = null; if (ui.movil !== 'centro') ui.movil = 'mesa'; saveUser(); render(); break;
+    case 'mesaPoner': ponerEnMesa(d.key); saveUser(); render(); break;
+    case 'mesaQuitar': U.mesa.members.splice(+d.i, 1); ui.avisoMesa = null; saveUser(); render(); break;
+    case 'mesaLider': U.mesa.members.unshift(U.mesa.members.splice(+d.i, 1)[0]); saveUser(); render(); break;
+    case 'mesaVaciar': U.mesa.members = []; U.mesa.name = ''; ui.avisoMesa = null; saveUser(); render(); break;
+    // Se guarda en orden canónico (el que lo muestra va con su líder primero): el mismo equipo es uno solo. Si ya está
+    // guardado con ese modo, no se repite y se dice.
+    case 'mesaGuardar': { const m = U.mesa, max = tamModo(m.modeId);
+      if (m.members.length < 2) { ui.avisoMesa = { txt: t('ms_pocos') }; render(); break; }
+      if (m.members.length > max) break;
+      const members = m.members.slice().sort(), modeId = m.modeId || '';
       const ya = U.teams.find(x => x.modeId === modeId && x.members.join('|') === members.join('|'));
-      if (ya) { ui.avisoEquipo = t('tm_ya_esta').replace('{e}', ya.name); render(); break; }
-      const vs = members.map(k => variant(...k.split('::'))).filter(Boolean);
-      U.teams.unshift({ id: 'eq-' + Date.now(), name: eq.name || conLider(vs, liderDe(vs, null)).map(fullLabel).join(' + '),
-                        members, reason: eq.reason, modeId });
-      ui.teamOpen = false; commit(); break; }
+      if (ya) { ui.avisoMesa = { txt: t('tm_ya_esta').replace('{e}', ya.name) }; render(); break; }
+      const nombre = m.name || mesaVs().map(fullLabel).join(' + ');
+      U.teams.unshift({ id: 'eq-' + Date.now(), name: nombre, members, reason: '', modeId });
+      ui.avisoMesa = { txt: t('ms_guardado').replace('{e}', nombre), ok: true }; commit(); break; }
+    case 'movil': ui.movil = d.v; render(); window.scrollTo(0, 0); break;
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
 
     case 'goEditor': ui.view = 'editor'; ui.edId = null; ui.edStep = 0; ui.edDraft = blankDraft(); render(); break;
@@ -6363,9 +6474,7 @@ document.addEventListener('input', (e) => {
     if (r) { r.label = el.value; saveUser(); } return; }
   if (a === 'listName') { const l = U.lists.find(x => x.id === d.id); if (l) { l.name = el.value; saveUser(); } return; }
   if (a === 'poolSearch') { ui.poolSearch = el.value; render(); $('[data-a="poolSearch"]')?.focus(); return; }
-  if (a === 'teamName') { ui.team.name = el.value; return; }
-  if (a === 'teamReason') { ui.team.reason = el.value; return; }
-  if (a === 'teamSearch') { ui.teamSearch = el.value; ui.teamPage = 0; render(); return; }
+  if (a === 'mesaNombre') { U.mesa.name = el.value; saveUser(); return; }
   if (a === 'edField') { ui.edDraft[d.f] = el.value; return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'modeName') { U.modes[d.i].name = el.value; saveUser(); return; }
@@ -6403,8 +6512,10 @@ document.addEventListener('change', (e) => {
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
   if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }
   if (a === 'restr') { U.prefs.restr = el.value; ui.page = 0; commit(); return; }
-  // Un modo más chico que el equipo no le saca a nadie: el armador dice cuántos sobran y no guarda hasta que se quiten.
-  if (a === 'teamMode') { ui.team.modeId = el.value; ui.avisoEquipo = null; render(); return; }
+  // Un modo más chico que el equipo no le saca a nadie: la mesa dice cuántos sobran y no guarda hasta que se quiten.
+  if (a === 'mesaModo') { U.mesa.modeId = el.value; ui.avisoMesa = null; saveUser(); render(); return; }
+  if (a === 'mesaDia') { U.mesa.abxDia = parseInt(el.value, 10); U.mesa.abxDif = ''; saveUser(); render(); return; }
+  if (a === 'mesaDif') { U.mesa.abxDif = el.value; saveUser(); render(); return; }
   if (a === 'edUni') { ui.edDraft.uniforms[d.i][d.f] = el.value; return; }
   if (a === 'marca') { marcar(d.p, d.sl, d.k, el.checked); return; }
   if (a === 'tlFila') { const actuales = filasDe(ui.tierList, ui.tlPick);

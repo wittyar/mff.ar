@@ -29,6 +29,25 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   repetidos, la resistencia de los jefes de World Boss a los strikers y el instinto.
 
 ## Qué hay en la app
+La pantalla va en tres paneles (la *mesa de trabajo*, desde la 1.0.25, a prueba): en la ficha, a la izquierda,
+la lista del roster tal como está filtrado y ordenado (la misma de las flechas ‹ ›; tocar uno abre su ficha y su
+«+» lo pone en la mesa); en el centro, la sección; a la derecha, en todas las secciones, la **mesa**:
+- El equipo que se está armando, en orden: el primero es el líder, como en el juego, y «↑» hace líder a otro. Se
+  pone desde la ficha («Poner en la mesa»), desde el «+» de la lista o con «Llevar a la mesa» en una tarjeta de
+  equipo (combinaciones, favoritos, tus equipos, «cómo entraría»), que reemplaza lo que había con su líder primero.
+  El mismo personaje con otro uniforme reemplaza al que estaba (el juego no deja dos veces al mismo) y se dice; con
+  la mesa llena no se suma y se dice; un modo más chico no le saca a nadie: dice cuántos sobran y no guarda.
+- El modo (con su tamaño de equipo) y, en Alliance Battle, el día y la dificultad, con la restricción del día
+  marcada en cada integrante (✓ o ✗ según su clase, bando, género o raza con el uniforme puesto).
+- Lo que le llega a cada uno (las casillas de cobertura de las combinaciones, con el líder de la mesa) y los
+  bonos de equipo activos. Sin puntajes.
+- Guardarlo en *Equipos de tu cuenta*, con un nombre o sin él (entonces, los integrantes); avisa si alguno ya
+  está en otro equipo tuyo del mismo modo, y si ese mismo equipo ya está guardado con ese modo.
+- Los elegidos para comparar (hasta 4), con el botón que abre la comparación.
+
+La mesa se guarda en la capa: sigue ahí al cambiar de sección y al volver a abrir la app. En una ventana angosta se
+ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
+
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
   atributos marcados, y lo que da su liderazgo o su soporte: ver *Índice para armar equipos*) y
   orden por la tier list que elijas.
@@ -134,14 +153,15 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
     con Esc, con su botón o tocando afuera; si desde ella se va a una skill, «Atrás» vuelve con la
     ventana abierta. Lo mismo en «cómo entraría» (con lo que se gana y lo que se pierde); tus equipos
     (según su modo) y Favoritos (en el orden en que se marcó) muestran los C.T.P., plegados. En el
-    celular, la ventana va a pantalla completa. Se marca con ★ como favorita, se arma
-    para tu cuenta o se *descarta*: el trío se oculta en las combinaciones de sus tres
+    celular, la ventana va a pantalla completa. Se marca con ★ como favorita, se lleva
+    a la mesa o se *descarta*: el trío se oculta en las combinaciones de sus tres
     personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
   - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
     en tu capa.
   - *Más*: la verificación entre fuentes y el retrato propio.
 - **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada; con 4 elegidas, la
-  quinta no se suma y la barra de abajo lo dice. Cada skill con todos sus efectos: pasados los
+  quinta no se suma y la mesa lo dice. Se eligen con «+ Comparar esta versión» en la ficha o con
+  «Comparar» en el roster, y se ven en la mesa. Cada skill con todos sus efectos: pasados los
   seis primeros, el resto plegado, con cuántos son.
 - **Tier lists**: todas las listas públicas de thanosvibs, con sus filas originales; listas
   propias de personajes, de C.T.P., de artefactos o de tus equipos, con filas a medida. Una entrada
@@ -151,11 +171,9 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   uniforme, obelisco) para PvE y PvP.
 - **Equipos**: los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
   Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
-  restaurarlos. Al armar uno, avisa si un personaje ya está en otro equipo tuyo del mismo modo; con
-  el equipo lleno, el que se toca no entra y se dice, y un modo más chico que el equipo no le saca
-  a nadie: dice cuántos sobran y no lo guarda hasta que se quiten. Cada equipo se guarda en un orden
-  fijo: el mismo equipo con el mismo modo no se guarda dos veces (se dice cuál es). En cada tarjeta,
-  el líder va primero, marcado.
+  restaurarlos. Se arman en la mesa. Cada equipo se guarda en un orden fijo: el mismo equipo con el
+  mismo modo no se guarda dos veces (se dice cuál es). En cada tarjeta, el líder (el de la sinergia de
+  la app) va primero, marcado, y «Llevar a la mesa» lo carga en la mesa.
 - **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
   con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
   y qué C.T.P. da cada efecto de la barra de Concentración y de qué opción sale (la fija, que tienen
