@@ -1,6 +1,6 @@
 {
- "version": "1.0.31",
+ "version": "1.0.32",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "Pantalla de rescate: si la app no puede arrancar, se abre una pantalla aparte que dice por qué y deja actualizar la app, bajar el instalador, volver a la versión anterior o volver a bajar los datos."
+ "notas": "Español con los términos del juego: el glosario, los stats y las etiquetas de las skills usan los nombres que el juego usa en español (Hechizo, Ignorar blanco, Paliza, Acero, PG, Esquiva, Probab. crítico...), y las opciones de los C.T.P. se llaman como en el juego (opción bloqueada, opción de reforja). Los nombres llegan con la próxima actualización de datos."
 }

@@ -98,7 +98,12 @@ variante, en `docs/COMPLETITUD.md`.
   data.js). La página avisa el arranque (`POST /api/arranque`); el lanzador abre `/rescate` con un error o sin aviso en
   `--espera-arranque` s; desde ahí, parche, instalador, volver al programa anterior (`actualizador.volver_al_anterior`)
   y volver a bajar los datos. Prueba: `verif_rescate.py`. #1 y #2 se pueden cerrar.
-- Entregado sin versión (solo datos y documentos, sin cambio de la app): #3, las notas del foro coreano (ver Pendiente).
+- Entregadas sin publicar: #3 sin versión (solo datos y documentos: las notas del foro coreano, ver Pendiente) y la
+  1.0.32 (#32, primera tanda): las capturas del juego en español transcriptas en `fuentes/juego-es/`, la tabla
+  `scripts/contenido/terminos_es.json` y su validación en el build (`scripts/terminos_es.py`); el glosario, los stats de
+  la guía, etiquetas de skills y efectos del catálogo con los términos del juego; «opción bloqueada» y «opción de
+  reforja». Sin formato nuevo: etiqueta sobre «Versión 1.0.32»; los nombres llegan a la app con el build (correr a mano
+  el workflow de datos después del push, o esperar el del lunes).
 - La 1.0.25 (etiqueta en 676f50a), solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
   (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
   aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
@@ -129,7 +134,11 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Antes de cualquier cambio visual, la propuesta de arquitectura de la información y de navegación (#24, con los
   casos de strikers y Glosario en sus comentarios); después el rediseño visual (#6) y el tooltip de las habilidades
   (#39).
-- Español de la app con los términos del juego en español (#32), con capturas que va a pasar Ezequiel.
+- Español de la app con los términos del juego en español (#32). Álbum de Ezequiel (Google Fotos,
+  https://photos.app.goo.gl/EK155akXC5fjtSV7A, 267 capturas). Hecho: glosario, stats de la ficha, opciones y nombres de
+  los C.T.P. (transcriptos). Falta: los nombres de los C.T.P. en la app (formato de datos nuevo), los textos de las
+  skills (`traducciones/skills.json` y `efectos.json`: «vida» → «PG», «debuff» → «merma», «buff» → «potenciador»), los
+  textos propios de la app, objetos (capturas 116 a 162), modos (90 a 115) y las skills de Gorr (235 a 244).
 - Robustez: datos por formato (#1, en la 1.0.30) y pantalla de rescate (#2, en la 1.0.31).
 - Apartados nuevos: Cromos de cómic (#35), Espadas (#36), Jarvis (#37, falta el alcance); atributos de las skills
   (#38).
