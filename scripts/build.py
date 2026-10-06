@@ -102,6 +102,19 @@ HISTORICO, _historico_md = historico.armar(chars, json.load(open('work/updates.j
                                            os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'))
 with open('docs/HISTORICO.md', 'w', encoding='utf-8', newline='\n') as _f:
     _f.write(_historico_md)
+# Los nombres de los C.T.P. en el juego en español (#43, fuentes/juego-es/ctps.json): el del base, el poderoso y el
+# brillante; el juego no siempre los llama igual (Judgment: «de justiciero» y «de juicio»), y la app muestra el del base.
+_CTP_ES = {c['id']: c for c in json.load(open(os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'juego-es', 'ctps.json'),
+                                               encoding='utf-8'))['ctps']}
+if {c['id'] for c in FUENTES['ctps']} != set(_CTP_ES):
+    raise SystemExit('fuentes/juego-es/ctps.json no tiene los mismos C.T.P. que thanosvibs: '
+                     f"{sorted({c['id'] for c in FUENTES['ctps']} ^ set(_CTP_ES))}")
+for c in FUENTES['ctps']:
+    c['es'] = {k: _CTP_ES[c['id']][k] for k in ('base', 'poderoso', 'brillante')}
+# La información dudosa entre el coreano, el inglés y el español (#32, scripts/contenido/dudas.json).
+import dudas
+DUDAS = dudas.armar(FUENTES['ctps'], json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8')),
+                    _CAT, GLOSARIO, SKILLS, HISTORICO)
 # Las notas en inglés contra sus pares coreanas (#3): docs/NOTAS_COREANO.md.
 import cotejo_ko
 cotejo_ko.escribir(os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'),
@@ -163,7 +176,10 @@ hoy = hoy.isoformat()
 # 10: el histórico de los personajes (MFF_HISTORICO, scripts/historico.py): las versiones del juego con su nombre y fecha,
 #     las notas del foro oficial de cada una y lo que llegó o cambió de cada personaje, con su nota. La app de formato 10
 #     tiene la pestaña Histórico y el bloque «Historial» de la ficha.
-FORMATO = 10
+# 11: cada C.T.P. trae su nombre en el juego en español (MFF_CTPS[].es: base, poderoso y brillante), y la información
+#     dudosa entre el coreano, el inglés y el español (MFF_DUDAS, scripts/dudas.py), que la app de formato 11 muestra en
+#     un «≠» junto a lo que corresponde.
+FORMATO = 11
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -236,6 +252,8 @@ parts = [header,
  'window.MFF_TXT = ' + json.dumps(FUENTES['txt'], ensure_ascii=False) + ';\n',
  '// Histórico de los personajes (scripts/historico.py; lo que no cierra entre thanosvibs y el foro, en docs/HISTORICO.md).\n',
  'window.MFF_HISTORICO = ' + json.dumps(HISTORICO, ensure_ascii=False, separators=(',', ':')) + ';\n',
+ '// Lo que un idioma del juego dice distinto de otro, con lo que quiere decir el coreano (scripts/contenido/dudas.json).\n',
+ 'window.MFF_DUDAS = ' + json.dumps(DUDAS, ensure_ascii=False) + ';\n',
  'window.MFF_SEED_IMAGES = ' + json.dumps(images, ensure_ascii=False) + ';\n',
  'window.MFF_VOCAB_EN = ' + json.dumps(vocab, ensure_ascii=False, indent=1) + ';\n',
  'window.MFF_DEFAULT_TIER_ROWS = ' + json.dumps(DEFAULT_ROWS, ensure_ascii=False) + ';\n',

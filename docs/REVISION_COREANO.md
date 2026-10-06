@@ -59,4 +59,5 @@ muestra en una imagen.
 - Los topes de resistencias (200%) y de tasa de recuperación (250%) que usa la app salen de la guía de thanosvibs
   (`scripts/contenido/guia.json`); la nota coreana del 15 de marzo de 2016 los confirma con una fuente oficial.
 - Los textos del histórico en la app (`MFF_HISTORICO`) son los de las notas en inglés: en los casos de la primera tabla,
-  el coreano dice más. Mostrar el coreano en la app sería un formato de datos nuevo; queda para decidir.
+  el coreano dice más. Desde la 1.0.33 (formato 11), esos casos llevan en la app un «≠» junto a la nota con lo que dice el
+  coreano (`scripts/contenido/dudas.json`, tipo `nota`). Mostrar el texto coreano entero sigue en #42.

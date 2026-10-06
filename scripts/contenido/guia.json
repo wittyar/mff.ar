@@ -238,6 +238,33 @@
   "foro-1896518": {
    "nombre": "Foro oficial de MARVEL Future Fight — 9/21 Patch Details (notas del 21 de septiembre de 2026)",
    "url": "https://forum.netmarble.com/futurefight_en/view/2196/1896518"
+  },
+  "juego-skills-es": {
+   "nombre": "MARVEL Future Fight — las skills de Gorr en español (dentro del juego, octubre de 2026; transcripto en fuentes/juego-es/ficha_heroe.json)"
+  },
+  "cafe-328127": {
+   "nombre": "Café oficial de MARVEL Future Fight (coreano) — 12월 15일(화) 업데이트 상세 내용 안내[12/15 14:27 내용추가] (2015-12-14 · 1.8.0)",
+   "url": "https://cafe.naver.com/futurefight/328127"
+  },
+  "cafe-450400": {
+   "nombre": "Café oficial de MARVEL Future Fight (coreano) — 3월 16일(수) 업데이트 상세 내용 안내 (2016-03-15 · 2.0.0)",
+   "url": "https://cafe.naver.com/futurefight/450400"
+  },
+  "cafe-2610003": {
+   "nombre": "Café oficial de MARVEL Future Fight (coreano) — 10월 28일 (수) 업데이트 상세 공지[11/12 16:47] (2020-10-27)",
+   "url": "https://cafe.naver.com/futurefight/2610003"
+  },
+  "cafe-2652062": {
+   "nombre": "Café oficial de MARVEL Future Fight (coreano) — 1월 6일 (수) 업데이트 상세 공지[1/7 19:01] (2021-01-05)",
+   "url": "https://cafe.naver.com/futurefight/2652062"
+  },
+  "cafe-2698916": {
+   "nombre": "Café oficial de MARVEL Future Fight (coreano) — 4월 21일 (수) 업데이트 상세 공지[4/30 14:36] (2021-04-20)",
+   "url": "https://cafe.naver.com/futurefight/2698916"
+  },
+  "cafe-2748064": {
+   "nombre": "Café oficial de MARVEL Future Fight (coreano) — 7월 14일(수) 패치 안내 (2021-07-13)",
+   "url": "https://cafe.naver.com/futurefight/2748064"
   }
  },
  "stats": {

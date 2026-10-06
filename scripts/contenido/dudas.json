@@ -1,0 +1,924 @@
+{
+ "_doc": "La información dudosa entre el juego en coreano (el original), el inglés y el español (#32): lo que un idioma dice distinto de otro, con lo que quiere decir el coreano. La app la muestra en un «≠» junto a lo que corresponde, en español y en inglés. sobre: a qué va (ctp: id del C.T.P.; stat: clave de guia.json; efecto: id del catálogo; skill: «retrato|slot» de MFF_SKILLS; glosario: id del término; nota: id de la nota del foro del histórico). ko, en, es: lo que dice cada idioma (vacío si no hay captura). Lo valida scripts/dudas.py en el build.",
+ "dudas": [
+  {
+   "id": "ctp-judgement-elementos",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "judgement"
+   },
+   "ko": "모든 속성 피해량 +200% 상승(5 초)",
+   "en": "Judgment: \"An amazing persistent-proc C.T.P. for Elemental Damage characters\"",
+   "es": "Aumenta todo tipo de daño +200% (5 s)",
+   "nota": {
+    "es": "El español del juego dice «Aumenta todo tipo de daño +200%»; el coreano dice el daño de todos los elementos (속성: fuego, frío, rayo, veneno, mental). Solo sube el daño elemental, como lo entiende thanosvibs en inglés.",
+    "en": "The Spanish game says «Aumenta todo tipo de daño +200%» (all damage types); the Korean says the damage of all elements (속성: fire, cold, lightning, poison, mind). Only elemental damage goes up, as thanosvibs reads it in English."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es",
+    "tv-ctps"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-judgement-nombre",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "judgement"
+   },
+   "ko": "심판의 C.T.P. / 강력한 심판의 C.T.P. / 찬란한 심판의 C.T.P.; 속성 증폭 (속성 스킬 피해량 40% 상승, 집중의 70%만큼 추가 상승)",
+   "en": "Judgment; reforge effect Type Amplification",
+   "es": "C.T.P. de justiciero / C.T.P. poderoso de juicio / C.T.P. brillante de juicio; Amplificación de clase (Aumenta el daño de habilidad de clase en 40%, …)",
+   "nota": {
+    "es": "En español el base se llama «C.T.P. de justiciero» y los reforjados «de juicio»: es el mismo C.T.P. (심판 = juicio). El efecto reforjado dice «daño de habilidad de clase», pero el coreano dice el daño de las skills con elemento (속성 스킬 피해량); la «clase» del juego en español es otra cosa (Combate, Detonación…).",
+    "en": "In Spanish the base one is «C.T.P. de justiciero» (vigilante) and the reforged ones «de juicio» (judgment): it is the same C.T.P. (심판 = judgment). The reforged effect says «daño de habilidad de clase» (class skill damage), but the Korean says damage of skills with an element (속성 스킬 피해량); «clase» in the Spanish game is something else (Combat, Blast…)."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-rage-nombre",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "rage"
+   },
+   "ko": "분노의 C.T.P. / 강력한 분노의 C.T.P. / 찬란한 분노의 C.T.P.; 경쟁 reforjado: 맹렬",
+   "en": "Rage; Competition reforge effect: Fury",
+   "es": "C.T.P. de ira / C.T.P. poderoso de furia / C.T.P. brillante de furia; Competición reforjado: «Furia»",
+   "nota": {
+    "es": "En español el base se llama «C.T.P. de ira» y los reforjados «de furia» (분노 = ira; es el mismo C.T.P.). Ojo: «Furia» es también el efecto reforjado de Competición (맹렬), que no tiene que ver con este C.T.P.; el de este es «Rabioso» (격노).",
+    "en": "In Spanish the base one is «C.T.P. de ira» and the reforged ones «de furia» (분노 = rage; same C.T.P.). Careful: «Furia» is also Competition's reforged effect (맹렬, Fury), unrelated to this C.T.P.; this one's is «Rabioso» (격노, Enraged)."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-transcendence-penetracion",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "transcendence"
+   },
+   "ko": "간파 (성공 확률 50%); 압도 (추가 관통 피해 6% 상승, 집중의 20%만큼 추가 상승)",
+   "en": "Penetration (descR: \"allows a Reforged Transcendence to be a decent option for PvP characters with innate Guard Break Immunity\")",
+   "es": "Penetración (Tasa de éxito 50%); Paliza (Aumenta el daño de perforación adicional en 6%, …)",
+   "nota": {
+    "es": "«Penetración» (Penetration) traduce 간파, que es ver venir el ataque: al recibir un golpe, con cierta probabilidad corta el ataque del rival. No perfora nada. La perforación está en la otra opción reforjada, «Paliza» (daño de perforación adicional), que thanosvibs no menciona para este C.T.P. El nombre también cambia: «transcendencia» en el base y «trascendencia» en los reforjados.",
+    "en": "«Penetration» translates 간파, which means seeing the attack coming: when hit, with some chance it cuts the foe's attack. It does not pierce anything. Piercing is in the other reforged option, Beatdown (additional pierce damage), which thanosvibs does not mention for this C.T.P. The Spanish name also changes: «transcendencia» in the base one and «trascendencia» in the reforged ones."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es",
+    "tv-ctps"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-regeneration-penetracion",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "regeneration"
+   },
+   "ko": "간파 (성공 확률 50%) 재사용 대기시간 8초",
+   "en": "Penetration: \"allows you to cancel enemies' attacks, causing hard Guard Breaks if/when it triggers\"",
+   "es": "Penetración (Tasa de éxito 50%) Tiempo de recarga: 8 s",
+   "nota": {
+    "es": "«Penetración» (Penetration) traduce mal 간파, que es ver venir el ataque: cuando lo atacan, con cierta probabilidad corta el ataque del rival. No perfora nada. thanosvibs agrega que provoca roturas de guardia; el coreano solo dice que corta el ataque.",
+    "en": "«Penetration» mistranslates 간파, which means seeing the attack coming: when attacked, with some chance it cuts the foe's attack. It does not pierce anything. thanosvibs adds that it causes Guard Breaks; the Korean only says it cuts the attack."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es",
+    "tv-ctps"
+   ],
+   "certeza": "probable"
+  },
+  {
+   "id": "ctp-conquest",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "conquest"
+   },
+   "ko": "극복의 C.T.P.; 격돌 (일반 피해량 60% 증가, 적의 수에 따라 집중의 50%만큼 추가 증가,최대 3명)",
+   "en": "Conquest; descR: \"Provides an attack boost that increases with multiple enemies.\"",
+   "es": "C.T.P. de conquista; Choque (Aumenta el daño básico en 60%. Aumento adicional de 50% sobre Concentración según el número de enemigos [hasta 3])",
+   "nota": {
+    "es": "El coreano llama a este C.T.P. 극복 (superación), no «conquista»; su efecto reforjado es 격돌 = «Choque» (Clash). thanosvibs dice que sube el ataque; el coreano dice daño normal (일반 피해량), y lo único que crece con la cantidad de enemigos (hasta 3) es el extra por Concentración.",
+    "en": "The Korean calls this C.T.P. 극복 (overcoming), not «conquest»; its reforged effect is 격돌 = Clash. thanosvibs says it boosts attack; the Korean says normal damage (일반 피해량), and the only thing that grows with the number of enemies (up to 3) is the Concentration-based extra."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es",
+    "tv-ctps"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-greed",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "greed"
+   },
+   "ko": "피해량 증가 효과는 번갈아가며 발동; reforjado: 맹공",
+   "en": "Greed; reforge effect Ambush",
+   "es": "Activa un efecto de aumento de daño en el turno.; reforjado: Emboscada",
+   "nota": {
+    "es": "El español dice «activa un efecto de aumento de daño en el turno»; el coreano dice que los dos aumentos de daño (contra Combate/Detonación y contra Velocidad/Universal) se activan alternándose (번갈아가며). Además, el efecto reforjado se llama 맹공 (embestida), que el español traduce «Emboscada» (Ambush).",
+    "en": "The Spanish says «activa un efecto de aumento de daño en el turno» (activates a damage boost on the turn); the Korean says the two damage boosts (against Combat/Blast and against Speed/Universal) activate alternately (번갈아가며). Also, the reforged effect is 맹공 (onslaught), which the game translates as Ambush."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-destruction-golpe",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "destruction"
+   },
+   "ko": "강타 (보스 타입에게 주는 피해량 120% 상승, 집중의 30%만큼 추가 상승)",
+   "en": "descR: \"The Strike effect provides a huge buff to damage output\"",
+   "es": "Golpe (Aumenta el daño infligido a jefes en 120%, …)",
+   "nota": {
+    "es": "thanosvibs habla de una gran suba de daño en general; el coreano (y el español del juego) dicen que «Golpe» (Strike) sube solo el daño contra jefes.",
+    "en": "thanosvibs talks about a big damage boost in general; the Korean (and the Spanish game) say Strike only raises damage against bosses."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es",
+    "tv-ctps"
+   ],
+   "certeza": "probable"
+  },
+  {
+   "id": "ctp-energy-nombre",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "energy"
+   },
+   "ko": "격동의 C.T.P.",
+   "en": "Energy",
+   "es": "C.T.P. de energía",
+   "nota": {
+    "es": "El nombre coreano es 격동 (sacudida, agitación), no «energía»: el inglés y el español le cambiaron el nombre. Es el mismo C.T.P.",
+    "en": "The Korean name is 격동 (upheaval, agitation), not «energy»: English and Spanish renamed it. It is the same C.T.P."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "ctp-refinement-nombre",
+   "sobre": {
+    "tipo": "ctp",
+    "id": "refinement"
+   },
+   "ko": "제련된 C.T.P.",
+   "en": "Refinement",
+   "es": "C.T.P. de ajuste",
+   "nota": {
+    "es": "El coreano dice 제련된 C.T.P. (refinado, como el metal fundido); el español lo llama «de ajuste». Es el mismo C.T.P. No confundir con 재련 (reforjar).",
+    "en": "The Korean says 제련된 C.T.P. (refined, like smelted metal); the Spanish calls it «de ajuste» (adjustment). Same C.T.P. Not to be confused with 재련 (reforge)."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "stat-crit",
+   "sobre": {
+    "tipo": "stat",
+    "id": "crit"
+   },
+   "ko": "치명타율",
+   "en": "Critical Rate",
+   "es": "PROBAB. CRÍTICO (ficha) / ÍNDICE CRÍTICO ↑ (C.T.P., ISO-8, equipo de élite) / probabilidad de crítico (textos)",
+   "nota": {
+    "es": "El juego en español usa tres nombres para la misma stat: «Probab. crítico» en la ficha, «Índice crítico» en las opciones de equipo y «probabilidad de crítico» en los textos. En coreano es siempre 치명타율 (probabilidad de crítico).",
+    "en": "The Spanish game uses three names for the same stat: «Probab. crítico» on the stat sheet, «Índice crítico» on gear options and «probabilidad de crítico» in texts. In Korean it is always 치명타율 (critical rate)."
+   },
+   "fuente": [
+    "juego-ficha-ko",
+    "juego-ficha-es",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "stat-rec",
+   "sobre": {
+    "tipo": "stat",
+    "id": "rec"
+   },
+   "ko": "회복률",
+   "en": "Recovery Rate",
+   "es": "ÍNDICE DE RECUPERACIÓN (ficha y equipo) / «Reduce la velocidad de recuperación en -80%» (Sangrado de Gorr)",
+   "nota": {
+    "es": "La stat es 회복률: cuánto cura cada curación (arranca en 100%). El español la llama «índice de recuperación», pero en el Sangrado de Gorr dice «velocidad de recuperación», que suena a otra cosa. Probablemente es la misma stat: el coreano de ese Sangrado no está en las capturas.",
+    "en": "The stat is 회복률: how much each heal heals (it starts at 100%). The Spanish calls it «índice de recuperación», but Gorr's Bleed says «velocidad de recuperación» (recovery speed), which sounds like something else. Probably the same stat: the Korean of that Bleed is not in the screenshots."
+   },
+   "fuente": [
+    "juego-ficha-ko",
+    "juego-ficha-es",
+    "juego-ctp-es",
+    "juego-skills-es"
+   ],
+   "certeza": "probable"
+  },
+  {
+   "id": "stat-allatk",
+   "sobre": {
+    "tipo": "stat",
+    "id": "allatk"
+   },
+   "ko": "모든 일반 공격력 (일반 = normal, frente a 천성); 기본 공격 = ataque básico (el combo)",
+   "en": "All Basic Attacks",
+   "es": "MEJORA LOS ATAQUES BÁSICOS / «al usar habilidades (excepto los ataques básicos)»",
+   "nota": {
+    "es": "En coreano la stat es 모든 일반 공격력: todo el ataque «normal» (el que no es de instinto). El inglés y el español la llaman «ataques básicos», el mismo nombre que usan para los golpes del combo (기본 공격, por ejemplo «excepto los ataques básicos» en Cuchilla). La stat sube el ataque de todo, no solo el del combo.",
+    "en": "In Korean the stat is 모든 일반 공격력: all \"normal\" attack (the non-Instinct one). English and Spanish call it \"basic attacks\", the same name they use for combo hits (기본 공격, e.g. \"except basic attacks\" in Blade). The stat raises attack for everything, not just the combo."
+   },
+   "fuente": [
+    "juego-ficha-ko",
+    "juego-ficha-es",
+    "juego-ctp-es",
+    "juego-glosario-ko"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "efecto-impacto-cadena",
+   "sobre": {
+    "tipo": "efecto",
+    "id": "golpes_encadenados"
+   },
+   "ko": "공격 시 다단히트 피해량 (상승)",
+   "en": "Chain Hit damage (CHAIN HIT DMG DEALT ↑)",
+   "es": "DAÑO INFLIGIDO POR CADENA ↑ (opción de Juicio) / «Aumenta el daño por impacto en cadena … cuando atacas» (Energía, Veterano, uniforme de Gorr)",
+   "nota": {
+    "es": "El mismo texto coreano (공격 시 다단히트 피해량: el daño de los ataques de varios golpes al atacar) sale en español como «daño infligido por cadena» en la opción de Juicio y «daño por impacto en cadena» en los demás. Es la misma stat.",
+    "en": "The same Korean text (공격 시 다단히트 피해량: multi-hit damage when attacking) shows in Spanish as «daño infligido por cadena» on the Judgment option and «daño por impacto en cadena» elsewhere. It is the same stat."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "efecto-cancelar",
+   "sobre": {
+    "tipo": "efecto",
+    "id": "quitar_buffs"
+   },
+   "ko": "해제 (해제와 관통을 무시하는 …; 대상의 액티브 버프 제거); 취소 (가드 브레이크, 간파: 스킬/공격을 취소)",
+   "en": "CANCEL (= Removes Active Buffs from Target); Guard Break / Penetration \"cancel\" the foe's skill",
+   "es": "«ignora los efectos de cancelar y perforar» (escudo de Regeneración y Veterano, barrera de Defender); Romper guardia y Penetración «cancelan» la habilidad",
+   "nota": {
+    "es": "«Cancelar» (Cancel) se usa para dos cosas: el efecto que quita los potenciadores activos del rival (해제) y el corte de una skill o de un ataque (취소: rotura de guardia, Penetración). El escudo que «ignora cancelar y perforar» resiste que se lo saquen (해제); no tiene que ver con cortar skills.",
+    "en": "\"Cancel\" is used for two things: the effect that removes the foe's active buffs (해제) and cutting a skill or an attack (취소: Guard Break, Penetration). The shield that \"ignores cancel and pierce\" resists being removed (해제); it has nothing to do with cutting skills."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ctp-es",
+    "juego-glosario-ko"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "efecto-dano-normal",
+   "sobre": {
+    "tipo": "efecto",
+    "id": "dano_basico"
+   },
+   "ko": "일반 피해량 (1회 일반 피해량 200% 상승; 일반 피해량 60% 증가; 컴뱃 타입에게 추가되는 일반 피해 증가)",
+   "en": "basic damage",
+   "es": "«daño básico» (Energía, Destrucción, Choque, Codicia) / «Aumento del daño normal a los personajes de tipo Combate» (ventana Tipo)",
+   "nota": {
+    "es": "일반 피해 es el daño normal (el que no es de instinto, 천성), no el daño de los ataques básicos del combo. El español lo traduce casi siempre «daño básico» (y el inglés «basic damage»), pero en la ventana de Tipo dice «daño normal», que es lo correcto.",
+    "en": "일반 피해 is normal damage (the non-Instinct kind, 천성), not the damage of combo basic attacks. English says \"basic damage\" and Spanish almost always «daño básico», but the Spanish Type window says «daño normal» (normal damage), which is right."
+   },
+   "fuente": [
+    "juego-ctp-ko",
+    "juego-ficha-ko",
+    "juego-ctp-es",
+    "juego-skills-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-heart-pierce",
+   "sobre": {
+    "tipo": "skill",
+    "id": "gorr2|Active 4"
+   },
+   "ko": "",
+   "en": "Immunity to all Debuffs. (4s)",
+   "es": "Inmune a todos los controles de masas(4 s)",
+   "nota": {
+    "es": "El inglés dice inmune a todas las mermas («Immunity to all Debuffs», incluye las bajas de stats); el español del juego, solo a los controles de masas (aturdir, paralizar…). No hay captura en coreano para decidir.",
+    "en": "The English says immune to all debuffs (stat decreases included); the Spanish game, only to crowd control (stun, paralysis…). There is no Korean screenshot to settle it."
+   },
+   "fuente": [
+    "juego-skills-es",
+    "tv-pj"
+   ],
+   "certeza": "probable"
+  },
+  {
+   "id": "skill-mortal-vengeance",
+   "sobre": {
+    "tipo": "skill",
+    "id": "gorr2|Active 2"
+   },
+   "ko": "",
+   "en": "Bleed: Deals additional 50% Damage every 1 sec. (Removes Elasticity) (3s)",
+   "es": "Sangrado: Inflige 50% de daño adicional cada 1 s. Reduce la velocidad de recuperación en -80%. Elimina la Elasticidad.(3 s)",
+   "nota": {
+    "es": "En el español del juego, el Sangrado de esta skill además reduce 80% la recuperación del rival; el texto en inglés no lo dice.",
+    "en": "In the Spanish game this skill's Bleed also lowers the foe's recovery by 80%; the English text does not say so."
+   },
+   "fuente": [
+    "juego-skills-es",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-all-black-the-godslayer",
+   "sobre": {
+    "tipo": "skill",
+    "id": "gorr2|Active 5"
+   },
+   "ko": "",
+   "en": "Bleed: Deals additional 50% Damage every 1 sec. (Removes Elasticity) (3s)",
+   "es": "Sangrado: Inflige 50% de daño adicional cada 1 s. Reduce la velocidad de recuperación en -80%. Elimina la Elasticidad.(3 s)",
+   "nota": {
+    "es": "En el español del juego, el Sangrado de esta skill además reduce 80% la recuperación del rival; el texto en inglés no lo dice.",
+    "en": "In the Spanish game this skill's Bleed also lowers the foe's recovery by 80%; the English text does not say so."
+   },
+   "fuente": [
+    "juego-skills-es",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-godless-prayer",
+   "sobre": {
+    "tipo": "skill",
+    "id": "gorr2|Tier-2 Passive"
+   },
+   "ko": "",
+   "en": "Increases Additional Pierce Damage by 5%; Decreases basic damage received by 40%.",
+   "es": "Probabilidad de activación: muere / Se aplica a: ti / · Revive con el 100% de PG máximos / Tiempo de recarga: 300 s",
+   "nota": {
+    "es": "En el español del juego, la pasiva además revive con el 100% de los PG al morir (recarga 300 s); el texto en inglés de thanosvibs no lo trae.",
+    "en": "In the Spanish game the passive also revives at 100% HP on death (300 s cooldown); thanosvibs' English text lacks it."
+   },
+   "fuente": [
+    "juego-skills-es",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-indigarr-anger",
+   "sobre": {
+    "tipo": "skill",
+    "id": "gorr2|Passive"
+   },
+   "ko": "",
+   "en": "Increases Skill damage by 40%, increases Bonus Damage by 40%. Super Armor, increases all Basic Defenses by 50%.",
+   "es": "Probabilidad de activación: al tener menos de un 99 % de PG / · Recupera 5% de PG.(1 s) / Tiempo de recarga: 1 s",
+   "nota": {
+    "es": "En el español del juego, la pasiva además recupera 5% de los PG cada segundo mientras tiene menos del 99%; el texto en inglés de thanosvibs no lo trae.",
+    "en": "In the Spanish game the passive also recovers 5% HP every second while below 99% HP; thanosvibs' English text lacks it."
+   },
+   "fuente": [
+    "juego-skills-es",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-whispers-of-darkness",
+   "sobre": {
+    "tipo": "skill",
+    "id": "gorr2|Leader Skill"
+   },
+   "ko": "",
+   "en": "35% increase of HP. (Super Villain Allies)",
+   "es": "Probabilidad de activación: al estar mermado / Se aplica a: aliados supervillanos / · Elimina todas las mermas(12 s) / Tiempo de recarga: 20 s",
+   "nota": {
+    "es": "En el español del juego, el liderazgo además elimina todas las mermas de los aliados supervillanos al estar mermados (12 s, recarga 20 s); el texto en inglés de thanosvibs no lo trae.",
+    "en": "In the Spanish game the leader skill also removes all debuffs from Super Villain allies when debuffed (12 s, 20 s cooldown); thanosvibs' English text lacks it."
+   },
+   "fuente": [
+    "juego-skills-es",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-lord-of-hell",
+   "sobre": {
+    "tipo": "skill",
+    "id": "mephisto1|Leader Skill"
+   },
+   "ko": "발동 확률: 상태 이상에 걸렸을 때 / 적용 대상: 빌런 진영인 팀원만 / · 모든 상태 이상 제거(12 초) / 재사용 대기시간 20초",
+   "en": "Increases Flame Damage by 30%. (Super Villain Allies)",
+   "es": "",
+   "nota": {
+    "es": "Con este uniforme, el coreano dice que el liderazgo además elimina todas las mermas de los aliados villanos al estar mermados (12 s, recarga 20 s); el texto en inglés de thanosvibs solo trae el +30% de daño de fuego.",
+    "en": "With this uniform, the Korean says the leader skill also removes all debuffs from villain allies when debuffed (12 s, 20 s cooldown); thanosvibs' English text only has the +30% Flame Damage."
+   },
+   "fuente": [
+    "juego-ficha-ko",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "skill-abandon-all-hope-ye-who-enter-here",
+   "sobre": {
+    "tipo": "skill",
+    "id": "mephisto1|Active 4"
+   },
+   "ko": "· 1초마다 생명력 5% 회복(누적 피해량 1%당 회복량 4% 증가) / · 최대 생명력의 100%까지 회복(7 초)",
+   "en": "Recovers 5% HP.Recovery amount increases by 4% per 1% of total damage received.Recovery amount cannot exceed 100% of max HP. (7s)",
+   "es": "",
+   "nota": {
+    "es": "El coreano dice que recupera 5% de los PG cada segundo (y 4% más por cada 1% de daño acumulado); el inglés dice «Recovers 5% HP» sin «cada segundo», que se lee como una sola curación.",
+    "en": "The Korean says it recovers 5% HP every second (plus 4% more per 1% of accumulated damage); the English says \"Recovers 5% HP\" without \"every second\", which reads as a single heal."
+   },
+   "fuente": [
+    "juego-ficha-ko",
+    "tv-pj"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-team_passive",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "team_passive"
+   },
+   "ko": "팀 패시브란 해당 능력을 가진 영웅을 리더로 지정하지 않아도 팀에 참가하기만 하면 모든 팀원에게 효과를 주는 패시브를 말합니다. 스킬 설명 중 [적용 대상: 모든 팀원]으로 되어 있는 경우가 이에 해당합니다.",
+   "en": "Team Passive",
+   "es": "Equipo pasivo es un efecto pasivo que se comparte con todos los miembros del equipo, incluso aunque no se le designe a un personaje con la habilidad. Por ejemplo, esto se aplica si [Se aplica a: todos los miembros del equipo] se incluye en la descripción de la habilidad.",
+   "nota": {
+    "es": "El español dice «aunque no se le designe a un personaje con la habilidad» y le falta «como líder». En coreano: el héroe que la tiene no necesita ser el líder, basta con que esté en el equipo.",
+    "en": "The Spanish says \"even if a character with the skill is not designated\" and leaves out \"as leader\". In Korean: the hero with it need not be the leader, being on the team is enough."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-invincible",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "invincible"
+   },
+   "ko": "무적이란 피격모션, 가드 브레이크, 대미지, 디버프 등 영웅이 받을 수 있는 모든 피해에 면역이 된 상태를 말합니다.",
+   "en": "Invincible",
+   "es": "Invencible quiere decir que el personaje es inmune a ataques básicos, Romper guardia, daño y mermas.",
+   "nota": {
+    "es": "El español dice inmune a «ataques básicos»; el coreano, a la reacción al golpe (피격모션).",
+    "en": "The Spanish says immune to \"basic attacks\"; the Korean, to the hit reaction (피격모션)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-barrier",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "barrier"
+   },
+   "ko": "배리어는 일정 시간동안 지정된 횟수만큼 대미지를 차단하는 효과입니다. 대미지는 입지 않지만 가드 브레이크, 디버프는 막지 못합니다.",
+   "en": "Barrier",
+   "es": "Barrera es un efecto que impide el daño durante un tiempo predeterminado. El personaje no sufre daños, pero tampoco puede detener el efecto de Romper guardia.",
+   "nota": {
+    "es": "El español solo dice que frena el daño por un tiempo y que no frena la rotura de guardia; el coreano agrega que dura una cantidad fija de golpes y que tampoco frena las mermas.",
+    "en": "The Spanish only says it stops damage for a time and does not stop Guard Break; the Korean adds that it lasts a set number of hits and does not stop debuffs either."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-shield",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "shield"
+   },
+   "ko": "쉴드는 일정 시간 동안 정해진 대미지를 차단하는 효과입니다. 대미지는 입지 않지만 피격 모션, 가드 브레이크, 디버프는 막지 못합니다. 모든 타입의 피해를 막아낼 수 있는 쉴드, 물리 타입 피해만 막을 수 있는 물리 쉴드, 에너지 타입 피해만 막을 수 있는 에너지 쉴드로 나뉩니다.",
+   "en": "Shield",
+   "es": "Escudo es un efecto que detiene el daño durante un tiempo predeterminado. El personaje no sufre daños, pero tampoco puede detener movimientos de ataque básicos, Romper guardia y mermas. Hay diferentes tipos de escudos: uno puede bloquear todo tipo de daños; otro puede bloquear solo el daño físico; y otro puede bloquear solo los daños de energía.",
+   "nota": {
+    "es": "El español no dice que frena una cantidad fija de daño y llama «movimientos de ataque básicos» a la reacción al golpe (피격 모션).",
+    "en": "The Spanish does not say it stops a fixed amount of damage and calls the hit reaction (피격 모션) \"basic attack movements\"."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-elasticity",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "elasticity"
+   },
+   "ko": "탄성은 물리 피해량 감소 효과를 중첩해서 얻을 수 있는 효과입니다. 탄성은 디버프 해제 효과나 디버프 무력화 효과에도 제거되지 않으며, 디버프 출혈 효과로 제거할 수 있습니다.",
+   "en": "Elasticity",
+   "es": "El efecto Elasticidad puede combinarse con Reducción de daño físico. Elasticidad no desaparecerá al aplicar los efectos Cancelar o Incapacitación, pero sí con el efecto Sangrado.",
+   "nota": {
+    "es": "El español dice que «puede combinarse con» la reducción de daño físico; en coreano, Elasticidad es una reducción de daño físico que se acumula en cargas.",
+    "en": "The Spanish says it \"can be combined with\" Physical Damage Decrease; in Korean, Elasticity is a physical damage decrease that stacks."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-ambush",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "ambush"
+   },
+   "ko": "맹공은 사용 시, 가드 브레이크 및 슈퍼 가드 브레이크에 면역 상태로 만들어 주고 적의 피해 반사 효과에 면역 상태가 됩니다. 또한, 적의 피해 감소 효과를 일정 비율 무시할 수 있습니다. 적의 피해 감소를 무시하는 효과는 집중 수치가 높을수록 상승합니다. 맹공을 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다. 효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(6초)",
+   "en": "Ambush",
+   "es": "Emboscada otorga inmunidad a romper guardia y superrotura de guardia, inmunidad al daño reflejado de los enemigos e ignora la reducción de daño. El efecto de ignorar la reducción de daño aumenta cuanto mayor es la Concentración. El medidor exclusivo tiene que estar lleno para usar Emboscada, y se llena con cada golpe recibido. El medidor para de llenarse durante un tiempo tras usar Emboscada.(6 s)",
+   "nota": {
+    "es": "El español no dice que se activa solo ni que ignora la reducción de daño en una proporción determinada (일정 비율); se lee como que la ignora toda.",
+    "en": "The Spanish does not say it triggers on its own nor that it ignores a set proportion (일정 비율) of damage reduction; it reads as ignoring all of it."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-wall",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "wall"
+   },
+   "ko": "방벽은 사용 시, 피해를 감소 시켜주는 전용 배리어를 얻게 됩니다. 피격시마다 피해 감소 효과는 줄어들고 최소 피해 감소율로 유지시간 동안 효과가 지속 됩니다. 또한, 배리어 효과와 같이 사용할 수 없습니다. 방벽은 일반 피해량 감소와 같은 방어 효과들과는 중첩되서 사용되지 않고 개별 적용됩니다.",
+   "en": "Wall",
+   "es": "Barrera proporciona una barrera exclusiva que reduce el daño recibido. El efecto de reducción de daño se reduce con cada golpe recibido, pero el efecto seguirá activo durante su duración con el menor valor de reducción de daño. Además, esta habilidad no se puede usar con Barrera. Barrera no se acumula con efectos defensivos como la reducción de daño básico y se aplica por separado.",
+   "nota": {
+    "es": "El título dice «Muro» pero el texto lo llama «Barrera» («Barrera proporciona…», «Barrera no se acumula…»); en coreano es 방벽 (Muro) y solo la incompatibilidad es con 배리어 (Barrera).",
+    "en": "The title says «Muro» (Wall) but the text calls it «Barrera» (Barrier); in Korean it is 방벽 (Wall) and only the incompatibility is with 배리어 (Barrier)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-super_armor",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "super_armor"
+   },
+   "ko": "슈퍼 아머란 피격 모션, 가드 브레이크에 면역된 상태입니다. 적의 공격으로 인해 공격이 취소되지 않지만 대미지는 받을 수 있습니다.",
+   "en": "Super Armor",
+   "es": "Superarmadura quiere decir que el personaje es inmune a movimientos de ataque y Romper guardia, No se podrán inutilizar los movimientos del personaje, pero sufrirá daños.",
+   "nota": {
+    "es": "El español dice inmune a «movimientos de ataque» y que «no se podrán inutilizar los movimientos»; el coreano dice inmune a la reacción al golpe (피격 모션) y a la rotura de guardia: los ataques del rival no le cortan la acción, pero recibe el daño.",
+    "en": "The Spanish says immune to \"attack movements\"; the Korean says immune to the hit reaction (피격 모션) and Guard Break: foes' attacks do not cut its action, but it takes the damage."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-damage_immunity",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "damage_immunity"
+   },
+   "ko": "피해 면역은 일정 시간 동안 대미지와 디버프를 차단하는 효과입니다. 대미지와 디버프는 막아내지만 피격 모션, 가드 브레이크 효과는 막을 수 없습니다. 모든 타입의 피해와 디버프를 막아낼 수 있는 모든 피해 면역, 물리 타입의 피해와 디버프만을 막아 주는 물리 피해 면역, 에너지 타입의 피해와 디버프만을 막아주는 에너지 피해 면역으로 나뉩니다.",
+   "en": "Damage Immunity",
+   "es": "Inmunidad a daños es un efecto que detiene el daño y las mermas durante un tiempo predeterminado. Puede bloquear daño y mermas, pero no puede detener movimientos de ataque básicos y Romper guardia. Se dividen en: inmunidad a daños que detiene todos los tipos de daños y mermas, inmunidad a daño físico que detiene todos los tipos de daños y mermas físicos e inmunidad a daño de energía que detiene todos los tipos de daños y mermas de energía.",
+   "nota": {
+    "es": "El español dice que no frena los «movimientos de ataque básicos»; el coreano, la reacción al golpe (피격 모션).",
+    "en": "The Spanish says it does not stop \"basic attack movements\"; the Korean, the hit reaction (피격 모션)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-counterattack",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "counterattack"
+   },
+   "ko": "반격기는 적에게 공격당했을 때, 피격 모션 대신 반격 모션이 발동하여 적에게 반격을 가하는 기술입니다. 피격 모션이 발생해야만 반격기가 발동할 수 있으므로, 무적 상태에서는 반격기가 발동되지 않습니다.",
+   "en": "Counterattack",
+   "es": "Al recibir un ataque enemigo, se activa Contrataque en lugar de los movimientos básicos. Contrataque puede activarse al recibir un ataque, pero no se activará si está activo el efecto Invencible.",
+   "nota": {
+    "es": "El español dice que reemplaza «los movimientos básicos»; el coreano, la reacción al golpe (피격 모션), y por eso no se activa siendo invencible (el invencible no tiene esa reacción). El español no da esa razón.",
+    "en": "The Spanish says it replaces \"basic movements\"; the Korean, the hit reaction (피격 모션), which is why it does not trigger while invincible (an invincible character has no such reaction). The Spanish does not give that reason."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-pure_damage",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "pure_damage"
+   },
+   "ko": "영웅이 받는 피해량은 상대방의 공격력에서 내 영웅의 방어력과 속성 저항값을 계산하여 일정량 감소된 후 결정됩니다. 순수 피해량이란 영웅의 방어도와 속성 저항값과 무관한 피해량을 말합니다.",
+   "en": "Pure Damage",
+   "es": "El daño que sufre un personaje es el cálculo de la fuerza de ataque del oponente, el la defensa del personaje y la estadística de resistencia a la clase del personaje. El daño puro ignora estos factores e inflige una cantidad de daño específica.",
+   "nota": {
+    "es": "El español habla de «resistencia a la clase»; el coreano, de la resistencia elemental (속성 저항값). En el juego en español «clase» es el tipo (Combate, Detonación…).",
+    "en": "The Spanish speaks of «resistencia a la clase» (class resistance); the Korean, of elemental resistance (속성 저항값). In the Spanish game «clase» is the type (Combat, Blast…)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-guaranteed_dodge",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "guaranteed_dodge"
+   },
+   "ko": "회피율은 내 영웅과 상대방의 레벨 차이에 따라 다르게 적용됩니다. 무조건 회피율이란 이런 계산을 거치지 않고 영웅의 회피율을 고정값만큼 무조건 올려주는 효과를 말합니다.",
+   "en": "Guaranteed Dodge Rate",
+   "es": "La esquiva depende de la diferencia de nivel entre el personaje y el oponente. La probabilidad de esquiva garantizada ignora estas diferencias y esquiva con una probabilidad determinada.",
+   "nota": {
+    "es": "El español dice que «esquiva con una probabilidad determinada»; el coreano, que suma un valor fijo a la esquiva sin pasar por la reducción por diferencia de nivel.",
+    "en": "The Spanish says it \"dodges with a set probability\"; the Korean, that it adds a fixed amount to dodge, skipping the level-difference reduction."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-guaranteed_crit",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "guaranteed_crit"
+   },
+   "ko": "치명타율은 내 영웅과 상대방의 레벨 차이에 따라 다르게 적용됩니다. 무조건 치명타율이란 이런 계산을 거치지 않고 영웅의 치명타율을 고정값만큼 무조건 올려주는 효과를 말합니다.",
+   "en": "Guaranteed Critical Rate",
+   "es": "La probabilidad de crítico depende de la diferencia de nivel entre el personaje y el oponente. La probabilidad de crítico garantizado ignora estas diferencias y realiza un ataque crítico con una probabilidad determinada.",
+   "nota": {
+    "es": "El español dice que hace crítico «con una probabilidad determinada»; el coreano, que suma un valor fijo a la probabilidad de crítico sin pasar por la reducción por diferencia de nivel.",
+    "en": "The Spanish says it crits \"with a set probability\"; the Korean, that it adds a fixed amount to critical rate, skipping the level-difference reduction."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-death_throes",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "death_throes"
+   },
+   "ko": "최후의 발악은 일정 시간 동안 생명력이 1 이하로 떨어지지 않으며, 시간 종료 후 즉시 사망합니다. 최후의 발악 효과는 HP가 일정 수치 이하로 떨어졌을 때 자동 발동되며, 효과 발동 시에는 가드 브레이크에 영향을 받지만 버프 제거 효과에 제거되지 않습니다.",
+   "en": "Death Throes",
+   "es": "Agonía letal impide que los PG bajen por debajo de 1 durante un tiempo determinado. Al final del efecto, el personaje muere inmediatamente. Agonía letal se activa automáticamente cuando los PG bajan por debajo de un valor determinado. El personaje puede seguir viéndose afectado por rotura de guardia mientras Agonía letal está activa, pero el efecto de potenciador de Agonía letal no puede eliminarse.",
+   "nota": {
+    "es": "El español dice que el efecto «no puede eliminarse»; el coreano, que no lo quitan los efectos que eliminan potenciadores (버프 제거 효과).",
+    "en": "The Spanish says the effect \"cannot be removed\"; the Korean, that buff-removal effects (버프 제거 효과) do not remove it."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-time_freezing",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "time_freezing"
+   },
+   "ko": "타임 프리징은 일정 시간 동안 상대를 시간 속에 가두어 움직임을 봉쇄하는 효과입니다. 타임 프리징에 걸린 상대는 이동하거나, 공격할 수 없습니다. Tip: 타임 프리징은 디버프가 적용되지 않는 대형 보스도 시간 속에 가둘 수 있지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "en": "",
+   "es": "La Congelación temporal bloquea al objetivo durante un breve período e impide que pueda hacer movimientos. Los personajes que sufran Congelación temporal no podrán moverse ni atacar. Consejo: la Congelación temporal puede atrapar a monstruos épicos sin mermas, pero no es eficaz contra objetivos con habilidades que eliminan todas la mermas.",
+   "nota": {
+    "es": "El español habla de jefes o enemigos «sin mermas»; el coreano, de aquellos a los que no se les pueden aplicar mermas (los inmunes).",
+    "en": "The Spanish speaks of bosses or foes \"without debuffs\"; the Korean, of those debuffs do not apply to (the immune ones)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-charm",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "charm"
+   },
+   "ko": "매혹은 일정 시간 동안 상대를 매료시켜 공격할 수 없게 만드는 효과입니다. 매혹에 걸린 적은 이동 및 스킬을 사용할 수 없으며, 자동 발동형 공격까지 발동되지 않는 상태가 됩니다. Tip: 매혹은 디버프가 적용되지 않는 대형 보스도 매료시킬 수 있지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "en": "",
+   "es": "El Hechizo encantará a los enemigos durante un breve período de tiempo e impide que puedan atacar. Los enemigos que sufran Hechizo no podrán moverse ni utilizar habilidades, e incluso evitará que se activen los ataques automáticos. Consejo: el Hechizo puede atrapar a monstruos épicos sin mermas, pero no es efectivo contra objetivos con habilidades que eliminan todas la mermas.",
+   "nota": {
+    "es": "El español habla de jefes o enemigos «sin mermas»; el coreano, de aquellos a los que no se les pueden aplicar mermas (los inmunes).",
+    "en": "The Spanish speaks of bosses or foes \"without debuffs\"; the Korean, of those debuffs do not apply to (the immune ones)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-entice",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "entice"
+   },
+   "ko": "유혹은 일정 시간 동안 상대를 유혹하여 공격할 수 없게 만드는 효과입니다. 유혹에 걸린 적은 이동 및 스킬을 사용할 수 없으며, 유혹을 사용한 대상에게 천천히 다가가게 됩니다. Tip: 유혹은 월드 보스 또는 디버프가 적용되지 않는 상대에게도 적용되지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "en": "",
+   "es": "Persuasión seduce a los enemigos durante un breve período e impide que puedan atacar. Los enemigos que sufran Persuasión no podrán moverse ni utilizar habilidades, y lentamente caminan hacia el personaje que utilizó esta habilidad. Consejo: Persuasión es efectivo contra jefes mundiales o enemigos sin mermas, pero no contra objetivos con habilidades que eliminan todas la mermas.",
+   "nota": {
+    "es": "El español habla de jefes o enemigos «sin mermas»; el coreano, de aquellos a los que no se les pueden aplicar mermas (los inmunes).",
+    "en": "The Spanish speaks of bosses or foes \"without debuffs\"; the Korean, of those debuffs do not apply to (the immune ones)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "glosario-mind_control",
+   "sobre": {
+    "tipo": "glosario",
+    "id": "mind_control"
+   },
+   "ko": "정신 지배 능력은 적을 아군의 편으로 만들어 함께 싸우도록 만듭니다. 정신 지배에 걸린 적은 추가 대미지를 받게 됩니다. Tip: 정신 지배 효과는 월드보스 또는 디버프가 적용되지 않는 상대에게도 적용되지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "en": "",
+   "es": "Control mental es una habilidad que convierte a los enemigos en aliados. Los enemigos que sufran el efecto de esta habilidad recibirán daño adicional. Consejo: Control mental es muy efectivo contra jefes mundiales o enemigos sin mermas, pero no contra objetivos con habilidades que eliminan todas la mermas.",
+   "nota": {
+    "es": "El español habla de jefes o enemigos «sin mermas»; el coreano, de aquellos a los que no se les pueden aplicar mermas (los inmunes).",
+    "en": "The Spanish speaks of bosses or foes \"without debuffs\"; the Korean, of those debuffs do not apply to (the immune ones)."
+   },
+   "fuente": [
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "nota-173001",
+   "sobre": {
+    "tipo": "nota",
+    "id": "173001"
+   },
+   "ko": "Red Skull «내성 증가»: se activa con 40% de PG o menos (antes 30%). Red Hulk «방사선 흡수»: con 50% de PG (antes 30%).",
+   "en": "«Activates faster», sin los valores.",
+   "es": "",
+   "nota": {
+    "es": "La nota en inglés dice que Military Resistance (Red Skull) y Absorb Radiation (Red Hulk) «se activan antes», sin los valores. El coreano los da: Red Skull, con 40% de PG o menos (antes 30%); Red Hulk, con 50% (antes 30%).",
+    "en": "The English note says Military Resistance (Red Skull) and Absorb Radiation (Red Hulk) \"activate faster\", without the values. The Korean gives them: Red Skull at 40% HP or less (was 30%); Red Hulk at 50% (was 30%)."
+   },
+   "fuente": [
+    "cafe-328127"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "nota-319471",
+   "sobre": {
+    "tipo": "nota",
+    "id": "319471"
+   },
+   "ko": "Punto 15: topes a los stats; resistencias de 75% a 200%; índice de recuperación de 200% a 250%. Jefe mundial: al cambiar de héroe, solo 1 s de invencibilidad.",
+   "en": "No trae los topes; del jefe mundial solo dice que la curación al cambiar no está.",
+   "es": "",
+   "nota": {
+    "es": "La nota en inglés no trae el punto 15 del coreano: los topes de las stats (lo que pasa del tope no cuenta): resistencias a fuego, frío, rayo, veneno y mental, de 75% a 200%; índice de recuperación, de 200% a 250%. Tampoco que en el jefe mundial, al cambiar de héroe, solo queda 1 s de invencibilidad.",
+    "en": "The English note lacks the Korean's point 15: stat caps (anything past the cap does not count): fire, cold, lightning, poison and mind resists, from 75% to 200%; recovery rate, from 200% to 250%. Nor that in World Boss, tagging only gives 1 s of invincibility."
+   },
+   "fuente": [
+    "cafe-450400"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "nota-1654097",
+   "sobre": {
+    "tipo": "nota",
+    "id": "1654097"
+   },
+   "ko": "C.T.P. nuevo, 간파: la barra se carga al recibir golpes y, llena (100%), se activa siempre al recibir un golpe; cancela la skill del primer rival que pegó.",
+   "en": "«The gauge charges when attacked», sin el «siempre al 100%» ni el «primer rival».",
+   "es": "",
+   "nota": {
+    "es": "La nota en inglés del C.T.P. nuevo (간파, «Penetración») dice solo que la barra se carga al recibir golpes. El coreano agrega que, llena (100%), se activa siempre al recibir un golpe y que corta la skill del primer rival que pegó.",
+    "en": "The English note for the new C.T.P. (간파, Penetration) only says the gauge charges when attacked. The Korean adds that, when full (100%), it always triggers when hit and cuts the skill of the first foe who hit."
+   },
+   "fuente": [
+    "cafe-2610003"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "nota-1675721",
+   "sobre": {
+    "tipo": "nota",
+    "id": "1675721"
+   },
+   "ko": "Agregado del 6 de enero: el uniforme nuevo de Loki suma a la skill activa 5 Parálisis (ignora inmunidad) de 2 s.",
+   "en": "No está.",
+   "es": "",
+   "nota": {
+    "es": "La nota en inglés no trae el agregado del 6 de enero: el uniforme nuevo de Loki suma a su skill activa 5 Parálisis (ignora inmunidad) de 2 s.",
+    "en": "The English note lacks the January 6 addendum: Loki's new uniform adds 2 s Paralysis (ignores immunity) to his Active 5."
+   },
+   "fuente": [
+    "cafe-2652062"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "nota-1700347",
+   "sobre": {
+    "tipo": "nota",
+    "id": "1700347"
+   },
+   "ko": "Agregado del 30 de abril: Mister Fantastic <Maker>, skill activa 3: el aturdimiento dura 2 s (estaba escrito 1 s).",
+   "en": "No está.",
+   "es": "",
+   "nota": {
+    "es": "La nota en inglés no trae el agregado del 30 de abril: en Mister Fantastic (Maker), el aturdimiento de la skill activa 3 dura 2 s (la nota decía 1 s).",
+    "en": "The English note lacks the April 30 addendum: on Mister Fantastic (Maker), Active 3's stun lasts 2 s (the note said 1 s)."
+   },
+   "fuente": [
+    "cafe-2698916"
+   ],
+   "certeza": "comprobado"
+  },
+  {
+   "id": "nota-1719250",
+   "sobre": {
+    "tipo": "nota",
+    "id": "1719250"
+   },
+   "ko": "Black Panther <3099>, definitiva de Tier-3: se le saca «probabilidad de crítico +5%» y aumentan la cantidad de golpes y la velocidad de ataque.",
+   "en": "«Critical Rate by +%%» (sin el valor) y «the number of hits and the skill duration».",
+   "es": "",
+   "nota": {
+    "es": "La nota en inglés de Black Panther (3099), definitiva de Tier-3, no trae el valor que se le saca a la probabilidad de crítico (+5%) y dice que aumenta la duración de la skill; el coreano dice la velocidad de ataque.",
+    "en": "The English note on Black Panther (3099), Tier-3 ultimate, lacks the Critical Rate value removed (+5%) and says skill duration goes up; the Korean says attack speed."
+   },
+   "fuente": [
+    "cafe-2748064"
+   ],
+   "certeza": "comprobado"
+  }
+ ]
+}
