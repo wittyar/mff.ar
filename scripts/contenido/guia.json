@@ -306,7 +306,7 @@
    "en": "Debuff Duration"
   },
   "cc": {
-   "es": "Duración de control",
+   "es": "Duración de controles de masas",
    "en": "Crowd Control Time"
   },
   "alldef": {
@@ -486,7 +486,7 @@
   ],
   "notas": [
    {
-    "es": "Tasa de recuperación, daño crítico, vel. de ataque y vel. de movimiento arrancan en 100%: para la vel. de ataque (tope 130%) alcanza con sumar 30%.",
+    "es": "Índice de recuperación, daño crítico, velocidad atq. y velocidad de movimiento arrancan en 100%: para la velocidad atq. (tope 130%) alcanza con sumar 30%.",
     "en": "Recovery Rate, Critical Damage, Attack Speed and Movement Speed start at 100%: Attack Speed (cap 130%) only needs +30% from bonuses."
    },
    {
@@ -494,23 +494,23 @@
     "en": "Characters are designed around 50% (max) Skill Cooldown, so it is crucial that it is capped or very close."
    },
    {
-    "es": "La prob. de crítico sufre una reducción según el nivel del rival: contá con más o menos la mitad de lo que muestra la pantalla. El tope de 75% se aplica antes de esa reducción. La prob. de crítico garantizada (de algunas pasivas) no sufre la reducción. La evasión tiene la misma reducción y también su versión garantizada.",
+    "es": "La probabilidad de crítico sufre una reducción según el nivel del rival: contá con más o menos la mitad de lo que muestra la pantalla. El tope de 75% se aplica antes de esa reducción. La probabilidad de crítico garantizada (de algunas pasivas) no sufre la reducción. La esquiva tiene la misma reducción y también su versión garantizada.",
     "en": "Critical Rate is subject to a level-based reduction: assume about half of what the stats page shows. The 75% cap applies before the reduction. Guaranteed Critical Rate (from some passives) escapes it. Dodge has the same reduction and a Guaranteed counterpart."
    },
    {
-    "es": "Los buffs con duración de las skills activas no aparecen en la pantalla de stats: si el personaje muestra 50% de crítico y una skill le da 30% más, ya está pasado del tope (80% sobre 75%).",
+    "es": "Los potenciadores con duración de las skills activas no aparecen en la pantalla de stats: si el personaje muestra 50% de crítico y una skill le da 30% más, ya está pasado del tope (80% sobre 75%).",
     "en": "Timed stat buffs from active skills do not show on the stats page: 50% Critical Rate shown plus a 30% buff is already over cap (80% vs 75%)."
    },
    {
-    "es": "Defensa: casi inútil. Vida: solo para quienes escalan su daño con la vida (p. ej. Hulk [Titan], Immortal Hulk, Victorious) o personajes de PvP muy resistentes.",
+    "es": "Defensa: casi inútil. PG: solo para quienes escalan su daño con los PG (p. ej. Hulk [Titan], Immortal Hulk, Victorious) o personajes de PvP muy resistentes.",
     "en": "Defense is largely useless. HP only matters for characters whose damage scales with HP (e.g. Titan Hulk, Immortal Hulk, Victorious) or very tanky PvP characters."
    },
    {
-    "es": "El daño elemental es un modificador y los buffs de un mismo elemento se suman entre sí: dos fuentes de daño de fuego rinden menos que una de fuego y otra de daño general.",
+    "es": "El daño elemental es un modificador y los potenciadores de un mismo elemento se suman entre sí: dos fuentes de daño de fuego rinden menos que una de fuego y otra de daño general.",
     "en": "Elemental Damage is a modifier and buffs of the same element are additive with each other: two Fire Damage sources yield less than one Fire and one general Damage buff."
    },
    {
-    "es": "Resistencias elementales y reducción de duración de debuffs: no son importantes.",
+    "es": "Resistencias elementales y reducción de duración de merma: no son importantes.",
     "en": "Elemental Resist and Reduce Debuff Duration are not important."
    }
   ]
@@ -521,7 +521,7 @@
   ],
   "pasos": [
    {
-    "es": "Subir a Nv. 6 todas las skills útiles, teniendo en cuenta los buffs de stats que dan.",
+    "es": "Subir a Nv. 6 todas las skills útiles, teniendo en cuenta los potenciadores de stats que dan.",
     "en": "Upgrade all useful skills to Level 6, keeping in mind the stat buffs they give."
    },
    {
@@ -559,7 +559,7 @@
     "en": "Every character's 4th gear has a randomised blue stat that can be rerolled: use it for the most important stat that isn't capped yet."
    },
    {
-    "es": "Con C.T.P. of Rage, o personajes con mucha evasión propia, puede convenir rolear evasión.",
+    "es": "Con C.T.P. of Rage, o personajes con mucha esquiva propia, puede convenir rolear esquiva.",
     "en": "For C.T.P. of Rage characters, or ones with innately high Dodge, you might want to roll Dodge."
    }
   ],
@@ -614,7 +614,7 @@
    "hp"
   ],
   "prioridad_nota": {
-   "es": "Con el resto de las ranuras, hasta llegar a los topes en este orden (vida solo si todo lo anterior está al tope).",
+   "es": "Con el resto de las ranuras, hasta llegar a los topes en este orden (PG solo si todo lo anterior está al tope).",
    "en": "Fill the other slots up to the caps in this order (HP only once everything before is capped)."
   },
   "odin": {
@@ -679,7 +679,7 @@
     "stats": [
      "hp"
     ],
-    "es": "Solo vida. De los tres sets de ataque, solo Hawk's Eye la usa.",
+    "es": "Solo PG. De los tres sets de ataque, solo Hawk's Eye los usa.",
     "en": "Only HP. Of the three Attack sets, only Hawk's Eye uses it."
    },
    "amarilla": {
@@ -688,7 +688,7 @@
     "stats": [
      "crit"
     ],
-    "es": "Solo prob. de crítico.",
+    "es": "Solo probabilidad de crítico.",
     "en": "Only Critical Rate."
    },
    "violeta": {
@@ -697,14 +697,14 @@
     "stats": [
      "dodge"
     ],
-    "es": "Solo evasión. Ninguno de los tres sets de ataque la usa.",
+    "es": "Solo esquiva. Ninguno de los tres sets de ataque la usa.",
     "en": "Only Dodge. None of the three Attack sets uses it."
    },
    "caos": {
     "nombre": "Chaotic",
     "color": "linear-gradient(135deg,#ff5c8a,#ffd35c,#5cffb0,#5cc8ff)",
     "stats": [],
-    "es": "Dos stats: uno ofensivo, que tiene que ser el ataque del personaje, y uno defensivo: vida para casi todos, evasión con C.T.P. of Rage.",
+    "es": "Dos stats: uno ofensivo, que tiene que ser el ataque del personaje, y uno defensivo: PG para casi todos, esquiva con C.T.P. of Rage.",
     "en": "Two stats: an offensive one that should be the character's attack, and a defensive one: HP for most, Dodge for C.T.P. of Rage characters."
    }
   },
@@ -783,7 +783,7 @@
   ],
   "notas_pve": [
    {
-    "es": "Hawk's Eye rinde algo menos en el mid-game, pero ayuda mucho si a tus cartas les falta vel. de ataque y recarga. Se puede rolear otro después.",
+    "es": "Hawk's Eye rinde algo menos en el mid-game, pero ayuda mucho si a tus cartas les falta velocidad atq. y recarga. Se puede rolear otro después.",
     "en": "Hawk's Eye is slightly worse mid-game, but helps a lot if your cards lack Attack Speed and Cooldown. You can reroll it later."
    },
    {
@@ -791,7 +791,7 @@
     "en": "Rolling a set is a huge Gold sink: keep the first of the three you roll. There is a 50% reroll discount once per update cycle (about 5 weeks)."
    },
    {
-    "es": "El buff de ataque del set crece con el rango de las piedras (estrellas y estrellas rojas) hasta +40% con las 8 despertadas del todo. También sirve para personajes que escalan con la vida.",
+    "es": "El potenciador de ataque del set crece con el rango de las piedras (estrellas y estrellas rojas) hasta +40% con las 8 despertadas del todo. También sirve para personajes que escalan con los PG.",
     "en": "The set attack boost grows with stone rank (stars and red stars) up to +40% with all 8 fully awakened. It also works for characters whose damage scales with HP."
    }
   ],
@@ -837,7 +837,7 @@
      "crit",
      "rec"
     ],
-    "es": "15% al recibir un golpe: escudo del 32% de la vida máxima.",
+    "es": "15% al recibir un golpe: escudo del 32% de los PG máx.",
     "en": "15% when hit: a shield of 32% of Max HP."
    },
    {
@@ -859,7 +859,7 @@
      "cc",
      "igdef"
     ],
-    "es": "12% al atacar: escudo del 32% de la vida máxima.",
+    "es": "12% al atacar: escudo del 32% de los PG máx.",
     "en": "12% when attacking: a shield of 32% of Max HP."
    }
   ],
@@ -981,11 +981,11 @@
    }
   ],
   "pvp": {
-   "es": "PvP: evasión en la opción Advanced (y, según la guía, en Heroic) y vida en Heroic (y quizás en Rare en vez de ataque).",
+   "es": "PvP: esquiva en la opción Advanced (y, según la guía, en Heroic) y PG en Heroic (y quizás en Rare en vez de ataque).",
    "en": "PvP: Dodge on the Advanced (and, per the guide, Heroic) option, and HP on Heroic (and maybe Rare, over Attack)."
   },
   "pvp_inconsistencia": {
-   "es": "Ojo: la misma guía lista el pool de Heroic sin evasión (tasa de recuperación, perforación de defensa, recarga, vida, vel. de ataque). La evasión está en Advanced y en Legendary: probablemente quiso decir Legendary.",
+   "es": "Ojo: la misma guía lista el pool de Heroic sin esquiva (índice de recuperación, ignorar defensa, recarga, PG, velocidad atq.). La esquiva está en Advanced y en Legendary: probablemente quiso decir Legendary.",
    "en": "Note: the same guide lists the Heroic pool without Dodge (Recovery Rate, Ignore Defense, Skill Cooldown, HP, Attack Speed). Dodge is in Advanced and Legendary: it probably meant Legendary."
   }
  },
@@ -999,7 +999,7 @@
     "en": "Custom Gear is arguably the most important part of character building."
    },
    {
-    "es": "Obelisco ideal: stat fijo (naranja) de daño crítico, ignorar evasión o daño elemental; el segundo stat es aleatorio; y el proc exacto \"Increases basic damage by x% for 1 attack(s)\".",
+    "es": "Obelisco ideal: stat fijo (naranja) de daño crítico, ignorar esquiva o daño elemental; el segundo stat es aleatorio; y el proc exacto \"Increases basic damage by x% for 1 attack(s)\".",
     "en": "Ideal Obelisk: fixed (orange) stat of Critical Damage, Ignore Dodge or Elemental Damage; the second stat is random; and the exact proc \"Increases basic damage by x% for 1 attack(s)\"."
    },
    {
@@ -1007,12 +1007,12 @@
     "en": "While good 6-Star Obelisks are scarce, a 4-Star Obelisk with any damage proc works as a placeholder."
    },
    {
-    "es": "El \"mini rage\" (aumento de daño por 5 s según prob. de crítico o evasión) queda muy por debajo del C.T.P. of Rage; solo conviene en personajes poco \"proc-friendly\".",
+    "es": "El \"mini rage\" (aumento de daño por 5 s según probabilidad de crítico o esquiva) queda muy por debajo del C.T.P. of Rage; solo conviene en personajes poco \"proc-friendly\".",
     "en": "The \"Mini Rage\" (5 s damage increase based on Critical or Dodge Rate) is far inferior to C.T.P. of Rage; only worth it on characters that are not proc-friendly."
    }
   ],
   "pvp": {
-   "es": "PvP: vida en el stat fijo e invencibilidad en vez del proc de daño; aunque varios personajes baratos de PvP andan bien con un obelisco de PvE.",
+   "es": "PvP: PG en el stat fijo e invencibilidad en vez del proc de daño; aunque varios personajes baratos de PvP andan bien con un obelisco de PvE.",
    "en": "PvP: HP on the fixed stat and Invincibility instead of the damage proc; though several cheap PvP characters work fine with a standard PvE Obelisk."
   }
  },
@@ -1104,7 +1104,7 @@
   ],
   "pvp": [
    {
-    "es": "En PvP pesan la defensa: reducción de daño, vida y evasión. La inmunidad a debuffs es crucial: si el principal no la tiene, se suma un líder o soporte que la dé.",
+    "es": "En PvP pesan la defensa: reducción de daño, PG y esquiva. La inmunidad a mermas es crucial: si el principal no la tiene, se suma un líder o soporte que la dé.",
     "en": "PvP teams focus on defense: damage reduction, HP and Dodge. Debuff Immunity is crucial: if the Main lacks it, a Lead or Support provides it."
    },
    {
@@ -1123,7 +1123,7 @@
   ],
   "notas": [
    {
-    "es": "Subí solo las skills cuyos buffs o debuffs crecen en porcentaje o en duración con el nivel (suelen ser la 3, la 4 y la 5).",
+    "es": "Subí solo las skills cuyos potenciadores o mermas crecen en porcentaje o en duración con el nivel (suelen ser la 3, la 4 y la 5).",
     "en": "Only upgrade skills whose buffs or debuffs scale by percentage or duration with level (usually skills 3, 4 and 5)."
    },
    {
@@ -1154,7 +1154,7 @@
    },
    {
     "k": "qc",
-    "es": "Cancelación rápida: a más o menos medio segundo (depende de tu vel. de ataque).",
+    "es": "Cancelación rápida: a más o menos medio segundo (depende de tu velocidad atq.).",
     "en": "Quick cancel: after about half a second (depends on your Attack Speed)."
    },
    {

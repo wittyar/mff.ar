@@ -1,13 +1,13 @@
 {
  "Attack Defense": "Defensa de ataque",
- "Attack Speed": "Vel. de ataque",
- "Cold Resist": "Resistencia al hielo",
+ "Attack Speed": "Velocidad atq.",
+ "Cold Resist": "Resistencia a frío",
  "Critical Defense": "Defensa crítica",
- "Crowd Control Time": "Duración de control",
+ "Crowd Control Time": "Duración de controles de masas",
  "Energy Damage": "Daño de energía",
- "Lightning Resist": "Resistencia eléctrica",
- "Max Dodge": "Evasión máxima",
- "Movement Speed": "Vel. de movimiento",
+ "Lightning Resist": "Resistencia a rayo",
+ "Max Dodge": "Esquiva máxima",
+ "Movement Speed": "Velocidad de movimiento",
  "Physical Damage": "Daño físico",
  "Physical Defense": "Defensa física"
 }

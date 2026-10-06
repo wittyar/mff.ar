@@ -50,7 +50,7 @@
      "en": "Generic Artifacts with increased damage to \"Pure Evil\" do not help in WBL: Netmarble confirmed the WBL bosses have no abilities associated with them."
     },
     {
-     "es": "En Legend, los jefes ignoran incluso los controles que ignoran la inmunidad, así que se les gana con daño; el daño perforante adicional de las cartas sí les entra (NamuWiki).",
+     "es": "En Legend, los jefes ignoran incluso los controles que ignoran la inmunidad, así que se les gana con daño; el daño de perforación adicional de las cartas sí les entra (NamuWiki).",
      "en": "In Legend, bosses ignore even the crowd controls that ignore immunity, so they are beaten with damage; Additional Pierce Damage from cards still gets through (NamuWiki)."
     },
     {
@@ -300,7 +300,7 @@
      "en": "Source of Swords and Otherworld Tokens. Play your daily reward matches, and ideally extra until you complete the Daily Challenges."
     },
     {
-     "es": "Las temporadas duran 8 semanas; al reiniciarse, se pierden todos los buffs de campo de batalla que tengas.",
+     "es": "Las temporadas duran 8 semanas; al reiniciarse, se pierden todos los potenciadores de campo de batalla que tengas.",
      "en": "Seasons last 8 weeks; at the reset, all the battlefield buffs you have are lost."
     }
    ],
@@ -311,7 +311,7 @@
    ],
    "equipo": {
     "tam": 5,
-    "es": "Equipo de 5 personajes: a cada uno se le pueden equipar buffs, y se elige dónde aparece cada uno.",
+    "es": "Equipo de 5 personajes: a cada uno se le pueden equipar potenciadores, y se elige dónde aparece cada uno.",
     "en": "A team of 5 characters: buffs can be equipped on each one, and you choose where each one is deployed.",
     "fuente": [
      "wiki-owb",
@@ -461,7 +461,7 @@
      "en": "Unlocked by clearing World Boss Legend Knull once and owning five or more Tier-3 or Potential Transcended heroes at Lv.70."
     },
     {
-     "es": "Las skills prohibidas (la de esa ranura no se puede usar), los peligros de la etapa y los tipos de personaje que no pueden entrar cambian cada semana. Los zombies suben ataque, defensa y vida con el nivel.",
+     "es": "Las skills prohibidas (la de esa ranura no se puede usar), los peligros de la etapa y los tipos de personaje que no pueden entrar cambian cada semana. Los zombies suben ataque, defensa y PG con el nivel.",
      "en": "Skill restrictions (the skill in that slot cannot be used), stage hazards and the character types that cannot be deployed change every week. Zombies gain ATK, DEF and HP as the level rises."
     }
    ],

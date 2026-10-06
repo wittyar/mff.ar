@@ -182,5 +182,351 @@
    "Daño de perforación adicional",
    "glosario"
   ]
- }
+ },
+ "vocabulario": [
+  {
+   "en": "HP",
+   "es": "PG",
+   "fuente": "skills",
+   "captura": 239,
+   "propias": [
+    "\\bvida\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Max HP",
+   "es": "PG máx.",
+   "fuente": "ctps",
+   "captura": 20,
+   "propias": [
+    "\\bvida m[aá]x"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Debuff",
+   "es": "merma",
+   "fuente": "skills",
+   "captura": 239,
+   "propias": [
+    "\\bdebuffs?\\b"
+   ],
+   "excepto": [
+    "Daño básico a enemigos con el efecto «Debuff Removal (Instinct)»"
+   ]
+  },
+  {
+   "en": "When Debuffed",
+   "es": "al estar mermado",
+   "fuente": "skills",
+   "captura": 244,
+   "propias": [
+    "\\bal recibir un debuff\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Remove All Debuffs",
+   "es": "elimina todas las mermas",
+   "fuente": "skills",
+   "captura": 239,
+   "propias": [
+    "\\blimpia todos los debuffs\\b",
+    "\\bquita todos los debuffs\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Debuff duration decrease",
+   "es": "reducir duración de merma",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bduraci[oó]n de debuffs?\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Buff",
+   "es": "potenciador",
+   "fuente": "glosario",
+   "captura": 182,
+   "propias": [
+    "\\bbuffs?\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Active Buff",
+   "es": "potenciador activo",
+   "fuente": "skills",
+   "captura": 235,
+   "propias": [
+    "\\bbuffs? activos?\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Dodge",
+   "es": "esquiva",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bevasi[oó]n\\b",
+    "\\bevad(ir|e|en|iendo)\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Ignore Dodge",
+   "es": "ignorar esquiva",
+   "fuente": "glosario",
+   "captura": 192,
+   "propias": [
+    "\\bignorar evasi[oó]n\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Guaranteed Dodge Rate",
+   "es": "probabilidad de esquiva garantizada",
+   "fuente": "glosario",
+   "captura": 164,
+   "propias": [
+    "\\bevasi[oó]n garantizada\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Recovery Rate",
+   "es": "índice de recuperación",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\btasa de recuperaci[oó]n\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Critical Rate",
+   "es": "probabilidad de crítico",
+   "fuente": "skills",
+   "captura": 241,
+   "propias": [
+    "\\bprob\\. de cr[ií]tico\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Cold",
+   "es": "frío",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bhielo\\b"
+   ],
+   "excepto": [
+    "**1dc4c5** 3(2), cancelá la 1 cuando arma la gran plataforma de hielo sobre el enemigo y la 4 al instante. La animación de la 5 termina cuando ruge el monstruo de hielo: ahí empezá a usar las otras skills",
+    "**2c4c5** 3(1), cancelá la 2 cuando aparece el cristal de hielo y la 4 al instante. La animación de la 5 termina cuando ruge el monstruo de hielo: ahí empezá a usar las otras skills",
+    "**5**2c43, cancelá la 2 cuando aturde; tratá de mantener a los enemigos en el charco de hielo que deja después de la 5",
+    "2dc3dc5c4(c6) 1, cancelá la 2 cuando aparecen los picos de hielo y la 3 cuando levanta las manos; si querés, podés kitear en vez de usar la 1",
+    "5dc2c4dc3dc1, cancelá la 5 después de que explota el círculo naranja alrededor de Rogue, la 4 cuando salen los tornados de hielo y la 3 cuando caen los meteoritos",
+    "6dc en lo que esté disponible; usala solo cuando el proc no está activo y cancelala cuando empiezan a volar los fragmentos de hielo"
+   ]
+  },
+  {
+   "en": "Lightning",
+   "es": "rayo",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bel[eé]ctric[oa]s?\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Chain Hit Damage",
+   "es": "daño por impacto en cadena",
+   "fuente": "ctps",
+   "captura": 10,
+   "propias": [
+    "\\bgolpes? en cadena\\b",
+    "\\bgolpes? encadenados?\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Ignore Defense",
+   "es": "ignorar defensa",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bperforaci[oó]n de defensa\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Crowd Control",
+   "es": "controles de masas",
+   "fuente": "skills",
+   "captura": 241,
+   "propias": [
+    "\\bcontrol de masas\\b",
+    "\\bduraci[oó]n de control\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Additional Pierce Damage",
+   "es": "daño de perforación adicional",
+   "fuente": "glosario",
+   "captura": 186,
+   "propias": [
+    "\\bda[ñn]o perforante\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "All Damage Immune",
+   "es": "inmune a todo el daño",
+   "fuente": "skills",
+   "captura": 235,
+   "propias": [
+    "\\binmunidad a todo da[ñn]o\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Guard Break Immunity",
+   "es": "inmunidad a romper guardia",
+   "fuente": "ctps",
+   "captura": 9,
+   "propias": [
+    "\\binmunidad a (la )?rotura de guardia\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Movement Speed",
+   "es": "velocidad de movimiento",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bvel\\. de movimiento\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Attack Speed",
+   "es": "velocidad atq.",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bvel\\. de ataque\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Flame Resist",
+   "es": "resistencia a fuego",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bresistencia al fuego\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Poison Resist",
+   "es": "resistencia a veneno",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bresistencia al veneno\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Mind Resist",
+   "es": "resistencia a mental",
+   "fuente": "ficha",
+   "captura": 210,
+   "propias": [
+    "\\bresistencia mental\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Charm",
+   "es": "hechizo",
+   "fuente": "glosario",
+   "captura": 176,
+   "propias": [
+    "\\bencanto\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Entice",
+   "es": "persuasión",
+   "fuente": "glosario",
+   "captura": 178,
+   "propias": [
+    "\\bseducci[oó]n\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Super Hit Shield",
+   "es": "escudo de superimpacto",
+   "fuente": "glosario",
+   "captura": 197,
+   "propias": [
+    "\\bsupergolpe\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Recharge Shield",
+   "es": "recargar escudo",
+   "fuente": "glosario",
+   "captura": 180,
+   "propias": [
+    "\\bescudo recargable\\b",
+    "\\bescudo de recarga\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Time Freezing",
+   "es": "congelación temporal",
+   "fuente": "glosario",
+   "captura": 175,
+   "propias": [
+    "\\bcongelaci[oó]n del tiempo\\b"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Death Throes",
+   "es": "agonía letal",
+   "fuente": "glosario",
+   "captura": 204,
+   "propias": [
+    "\\bagon[ií]a\\b(?! letal)"
+   ],
+   "excepto": []
+  },
+  {
+   "en": "Self",
+   "es": "ti",
+   "fuente": "skills",
+   "captura": 235,
+   "propias": [
+    "\\buno mismo\\b"
+   ],
+   "excepto": []
+  }
+ ]
 }

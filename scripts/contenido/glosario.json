@@ -14,11 +14,11 @@
   {
    "id": "inmunes",
    "titulo": {
-    "es": "«That have no debuffs»: según el coreano, los inmunes a los debuffs",
+    "es": "«That have no debuffs»: según el coreano, los inmunes a las mermas",
     "en": "\"That have no debuffs\": per the Korean, those immune to debuffs"
    },
    "texto": {
-    "es": "Según el coreano, estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima; en pánico y en la marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by debuffs»). En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.",
+    "es": "Según el coreano, estos controles alcanzan también a los jefes y rivales a los que no se les aplican mermas, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin mermas encima; en pánico y en la marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by debuffs»). En los cuatro, lo que no los deja entrar es tener un efecto que elimina todas las mermas.",
     "en": "Per the Korean, these crowd controls also reach bosses and foes that debuffs do not apply to, that is, the immune ones. The English says \"that have no debuffs\" or \"that don't have debuffs\", which reads as foes with no debuffs on them; in Panic and Mark, the same Korean phrase comes out right in English (\"who cannot be debuffed\", \"not affected by debuffs\"). In all four, what keeps them out is an effect that removes all debuffs."
    }
   },
@@ -41,7 +41,7 @@
    "ko": "가드 브레이크",
    "es": "Romper guardia",
    "que": {
-    "es": "Corta la skill que está usando el rival y abre un contraataque. La superrotura de guardia atraviesa además la inmunidad a la rotura de guardia.",
+    "es": "Corta la skill que está usando el rival y abre un contraataque. La superrotura de guardia atraviesa además la inmunidad a romper guardia.",
     "en": "Cuts the skill the foe is using and opens a counterattack. Super Guard Break also goes through Guard Break immunity."
    },
    "difiere": {
@@ -68,11 +68,11 @@
    "ko": "무조건 회피율",
    "es": "Probabilidad de esquiva garantizada",
    "que": {
-    "es": "La evasión depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la evasión.",
+    "es": "La esquiva depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la esquiva.",
     "en": "Dodge depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to dodge."
    },
    "difiere": {
-    "es": "El inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la evasión.",
+    "es": "El inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la esquiva.",
     "en": "The English says it dodges \"at a set rate\"; per the Korean, it adds a fixed amount to dodge."
    },
    "efectos": [
@@ -151,7 +151,7 @@
    "ko": "무적",
    "es": "Invencible",
    "que": {
-    "es": "Inmune a todo lo que lo puede afectar: la reacción a los golpes, la rotura de guardia, el daño y los debuffs.",
+    "es": "Inmune a todo lo que lo puede afectar: la reacción a los golpes, la rotura de guardia, el daño y las mermas.",
     "en": "Immune to everything that can affect it: hit reactions, Guard Break, damage and debuffs."
    },
    "difiere": {
@@ -197,11 +197,11 @@
    "ko": "배리어",
    "es": "Barrera",
    "que": {
-    "es": "Frena el daño por un tiempo y una cantidad de golpes. No frena la rotura de guardia ni los debuffs.",
+    "es": "Frena el daño por un tiempo y una cantidad de golpes. No frena la rotura de guardia ni las mermas.",
     "en": "Stops damage for a set time and a set number of hits. It stops neither Guard Break nor debuffs."
    },
    "difiere": {
-    "es": "El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; según el coreano, además, dura una cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y tampoco frena los debuffs.",
+    "es": "El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; según el coreano, además, dura una cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y tampoco frena las mermas.",
     "en": "The English only says \"for a set amount of time\" and that it does not stop Guard Break; per the Korean, it also lasts a number of hits (as skills count it: \"Barrier # time(s)\") and does not stop debuffs either."
    },
    "efectos": [
@@ -219,7 +219,7 @@
    "ko": "쉴드",
    "es": "Escudo",
    "que": {
-    "es": "Frena una cantidad fija de daño por un tiempo. No frena la reacción a los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía.",
+    "es": "Frena una cantidad fija de daño por un tiempo. No frena la reacción a los golpes, la rotura de guardia ni las mermas. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía.",
     "en": "Stops a set amount of damage for a while. It stops neither hit reactions, Guard Break nor debuffs. There are shields against all damage, only physical or only energy damage."
    },
    "difiere": {
@@ -242,7 +242,7 @@
    "ko": "피해 면역",
    "es": "Inmunidad al daño",
    "que": {
-    "es": "Frena el daño y los debuffs por un tiempo, pero no la reacción a los golpes ni la rotura de guardia. Puede ser contra todo daño, solo el físico o solo el de energía, con sus debuffs.",
+    "es": "Frena el daño y las mermas por un tiempo, pero no la reacción a los golpes ni la rotura de guardia. Puede ser contra todo daño, solo el físico o solo el de energía, con sus mermas.",
     "en": "Stops damage and debuffs for a while, but not hit reactions or Guard Break. It can be against all damage, only physical or only energy damage, with their debuffs."
    },
    "difiere": {
@@ -303,11 +303,11 @@
    "ko": "타임 프리징",
    "es": "Congelación temporal",
    "que": {
-    "es": "Encierra al rival en el tiempo: no se mueve ni ataca. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
+    "es": "Encierra al rival en el tiempo: no se mueve ni ataca. Alcanza también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.",
     "en": "Locks the foe in time: it cannot move or attack. It also reaches large bosses that debuffs do not apply to, but not targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican debuffs.",
+    "es": "El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican mermas.",
     "en": "The English says \"epic monsters that have no debuffs\"; per the Korean, large bosses that debuffs do not apply to."
    },
    "error": "inmunes",
@@ -326,11 +326,11 @@
    "ko": "매혹",
    "es": "Hechizo",
    "que": {
-    "es": "El rival no se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
+    "es": "El rival no se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.",
     "en": "The foe cannot move or use skills, not even attacks that trigger on their own. It also reaches large bosses that debuffs do not apply to, but not targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican debuffs.",
+    "es": "El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican mermas.",
     "en": "The English says \"epic monsters that have no debuffs\"; per the Korean, large bosses that debuffs do not apply to."
    },
    "error": "inmunes",
@@ -366,11 +366,11 @@
    "ko": "유혹",
    "es": "Persuasión",
    "que": {
-    "es": "El rival no se mueve ni usa skills y camina despacio hacia quien lo sedujo. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.",
+    "es": "El rival no se mueve ni usa skills y camina despacio hacia quien lo sedujo. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien tiene un efecto que elimina todas las mermas.",
     "en": "The foe cannot move or use skills and slowly walks toward whoever enticed it. It works on World Bosses and foes that debuffs do not apply to, but not on targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican debuffs.",
+    "es": "El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican mermas.",
     "en": "The English says \"enemies that don't have debuffs\"; per the Korean, foes that debuffs do not apply to."
    },
    "error": "inmunes",
@@ -389,11 +389,11 @@
    "ko": "정신 지배",
    "es": "Control mental",
    "que": {
-    "es": "El rival pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.",
+    "es": "El rival pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien tiene un efecto que elimina todas las mermas.",
     "en": "The foe fights on your side and takes more damage. It works on World Bosses and foes that debuffs do not apply to, but not on targets with an effect that removes all debuffs."
    },
    "difiere": {
-    "es": "El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican debuffs.",
+    "es": "El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican mermas.",
     "en": "The English says \"enemies that don't have debuffs\"; per the Korean, foes that debuffs do not apply to."
    },
    "error": "inmunes",
@@ -448,7 +448,7 @@
    "ko": "무력화",
    "es": "Incapacitación",
    "que": {
-    "es": "Le saca los buffs al rival y le baja todas las defensas (se acumula). No se le aplica a quien tiene un efecto que quita todos los debuffs.",
+    "es": "Le saca los potenciadores al rival y le baja todas las defensas (se acumula). No se le aplica a quien tiene un efecto que elimina todas las mermas.",
     "en": "Strips the foe's buffs and lowers all its defenses (stacks). It does not apply to targets with an effect that removes all debuffs."
    },
    "efectos": [
@@ -586,7 +586,7 @@
    "ko": "압도",
    "es": "Paliza",
    "que": {
-    "es": "Al usar una skill, sube el daño de perforación adicional (sin el tope máximo) y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
+    "es": "Al usar una skill, sube el daño de perforación adicional (sin el tope máximo) y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, raises Additional Pierce Damage (ignoring its cap) and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "efectos": [],
@@ -620,7 +620,7 @@
    "ko": "속성 증폭",
    "es": "Amplificación de clase",
    "que": {
-    "es": "Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
+    "es": "Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, raises the attack of skills with an element and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "difiere": {
@@ -675,7 +675,7 @@
    "ko": "조롱",
    "es": "Burla",
    "que": {
-    "es": "Un debuff que obliga a los rivales a atacarlo a él. A los afectados les sube el ataque, pero con cierta probabilidad no les entra un buff determinado: si la burla anula la invencibilidad, por ejemplo, no pueden volverse invencibles mientras dure.",
+    "es": "Una merma que obliga a los rivales a atacarlo a él. A los afectados les sube el ataque, pero con cierta probabilidad no les entra un potenciador determinado: si la burla anula la invencibilidad, por ejemplo, no pueden volverse invencibles mientras dure.",
     "en": "A debuff that forces foes to attack the caster. Affected foes get more attack, but with a set chance a given buff does not apply to them: if the Mockery nullifies Invincible, for instance, they cannot become invincible while it lasts."
    },
    "efectos": [
@@ -693,7 +693,7 @@
    "ko": "강타",
    "es": "Golpe",
    "que": {
-    "es": "Al usar una skill, ignora la evasión del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
+    "es": "Al usar una skill, ignora la esquiva del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, ignores the foe's dodge and raises damage to bosses; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "difiere": {
@@ -751,7 +751,7 @@
    "ko": "불굴",
    "es": "Fortaleza",
    "que": {
-    "es": "Por un tiempo la vida no baja de 1 y, al terminar, se cura. Se activa sola cuando la vida baja de cierto valor; mientras dura, da inmunidad a la rotura de guardia y no se puede quitar con efectos que quitan buffs.",
+    "es": "Por un tiempo los PG no bajan de 1 y, al terminar, se cura. Se activa sola cuando los PG bajan de cierto valor; mientras dura, da inmunidad a romper guardia y no se puede quitar con efectos que quitan potenciadores.",
     "en": "For a while HP cannot drop below 1 and, when it ends, it heals. It triggers on its own when HP drops below a set value; while active it grants Guard Break immunity and cannot be removed by buff removal."
    },
    "efectos": [
@@ -817,7 +817,7 @@
    "ko": "슈퍼 히트 쉴드",
    "es": "Escudo de superimpacto",
    "que": {
-    "es": "Un escudo que se recarga cada vez que su ataque le pega al rival. Si se activan varios escudos a la vez, ignora los demás y queda solo este. No lo quitan los efectos que quitan buffs ni lo atraviesa la perforación.",
+    "es": "Un escudo que se recarga cada vez que su ataque le pega al rival. Si se activan varios escudos a la vez, ignora los demás y queda solo este. No lo quitan los efectos que quitan potenciadores ni lo atraviesa la perforación.",
     "en": "A shield that recharges every time its attack lands on the foe. If several shields trigger at once, it ignores the others and only this one applies. Buff removal does not remove it and Pierce does not go through it."
    },
    "efectos": [
@@ -835,7 +835,7 @@
    "ko": "격노",
    "es": "Rabioso",
    "que": {
-    "es": "Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
+    "es": "Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
     "en": "On skill use, raises critical damage even past its cap and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); after use, it does not charge for 7 s."
    },
    "difiere": {
@@ -862,7 +862,7 @@
    "ko": "활력",
    "es": "Vitalidad",
    "que": {
-    "es": "Da inmunidad a la rotura y a la superrotura de guardia y cura vida cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.",
+    "es": "Da inmunidad a la rotura y a la superrotura de guardia y cura PG cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.",
     "en": "Grants Guard Break and Super Guard Break immunity and heals HP every second; the heal grows with Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 7 s."
    },
    "efectos": [],
@@ -896,7 +896,7 @@
     }
    ],
    "nota": {
-    "es": "En Conquest se activa con la vida al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»). En español el título dice «Muro» y el texto lo llama «Barrera» (y dice que no se usa con Barrera).",
+    "es": "En Conquest se activa con los PG al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»). En español el título dice «Muro» y el texto lo llama «Barrera» (y dice que no se usa con Barrera).",
     "en": "On Conquest it triggers at 50% HP or less, per the Korean card (\"HP가 50% 이하일 때\"; in English, \"below 50%\"). In Spanish the title says «Muro» and the text calls it «Barrera» (and says it is not used with Barrera)."
    },
    "fuente": [
@@ -937,7 +937,7 @@
    "ko": "공황",
    "es": "Pánico",
    "que": {
-    "es": "Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
+    "es": "Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.",
     "en": "Applies fear to the foe and makes it take more damage. It can be applied to World Bosses and foes that cannot be debuffed, but not to targets with an effect that removes all debuffs."
    },
    "efectos": [
@@ -955,7 +955,7 @@
    "ko": "상실",
    "es": "Pérdida",
    "que": {
-    "es": "Absorbe las habilidades del rival por un rato: no se mueve ni usa skills, pierde sus buffs y recibe más daño. No se le aplica a quien tiene un efecto que quita todos los debuffs.",
+    "es": "Absorbe las habilidades del rival por un rato: no se mueve ni usa skills, pierde sus potenciadores y recibe más daño. No se le aplica a quien tiene un efecto que elimina todas las mermas.",
     "en": "Absorbs the foe's abilities for a while: it cannot move or use skills, loses its buffs and takes more damage. It does not apply to targets with an effect that removes all debuffs."
    },
    "efectos": [
@@ -974,11 +974,11 @@
    "ko": "최후의 발악",
    "es": "Agonía letal",
    "que": {
-    "es": "Por un tiempo la vida no baja de 1 y, al terminar, muere en el acto. Se activa sola cuando la vida baja de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan buffs.",
+    "es": "Por un tiempo los PG no bajan de 1 y, al terminar, muere en el acto. Se activa sola cuando los PG bajan de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan potenciadores.",
     "en": "For a while HP cannot drop below 1 and, when it ends, the character dies at once. It triggers on its own when HP drops below a set value; Guard Break affects it, but buff removal cannot remove it."
    },
    "difiere": {
-    "es": "El inglés dice que no se puede quitar («cannot be removed»); según el coreano, no lo quitan los efectos que quitan buffs (버프 제거 효과에 제거되지 않습니다).",
+    "es": "El inglés dice que no se puede quitar («cannot be removed»); según el coreano, no lo quitan los efectos que quitan potenciadores (버프 제거 효과에 제거되지 않습니다).",
     "en": "The English says it \"cannot be removed\"; per the Korean, buff-removal effects do not remove it (버프 제거 효과에 제거되지 않습니다)."
    },
    "efectos": [
@@ -996,7 +996,7 @@
    "ko": "표식",
    "es": "Marca",
    "que": {
-    "es": "Le pone una marca al rival: las skills que le aplican efectos al marcado hacen más daño. Alcanza a World Bosses, a jefes grandes a los que no se les aplican debuffs y a quien quita todos los debuffs, y no la cambian los aumentos ni las bajas del efecto de los debuffs.",
+    "es": "Le pone una marca al rival: las skills que le aplican efectos al marcado hacen más daño. Alcanza a World Bosses, a jefes grandes a los que no se les aplican mermas y a quien elimina todas las mermas, y no la cambian los aumentos ni las bajas del efecto de las mermas.",
     "en": "Puts a mark on the foe: skills that apply effects to the marked target deal more damage. It reaches World Bosses, large bosses that debuffs do not apply to and targets that remove all debuffs, and increases or decreases in debuff effect do not change it."
    },
    "efectos": [],
@@ -1012,7 +1012,7 @@
    "ko": "맹렬",
    "es": "Furia",
    "que": {
-    "es": "Al usar una skill, sube todo el daño y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
+    "es": "Al usar una skill, sube todo el daño y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
     "en": "On skill use, raises all damage and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); after use, it does not charge for 7 s."
    },
    "difiere": {
