@@ -11,6 +11,7 @@ validar() devuelve lo que no cierra:
 - cada término del glosario (contenido/glosario.json) lleva como nombre en español el del juego;
 - cada stat, etiqueta y efecto de la tabla lleva en guia.json, traducciones/etiquetas.json y catalogo.json lo que dice
   la tabla, y la tabla dice lo que dicen las capturas (el término, sin mayúsculas, en el texto transcripto);
+- cada modo (contenido/modos.json) lleva en nombre_es el nombre del glosario de contenidos del juego (objetos.json);
 - el vocabulario (sección vocabulario de la tabla, #44 y #45): cada término del juego está en la captura que cita, y
   ningún texto en español usa la traducción propia que reemplazó (propias: expresiones regulares sobre el texto en
   minúsculas), salvo los de excepto. Los textos: las traducciones de scripts/traducciones/ (salvo skills.json, los
@@ -74,6 +75,10 @@ def validar():
                 mal.append(f'terminos_es: {seccion} {clave}: no existe')
             elif actual[clave] != es:
                 mal.append(f'terminos_es: {seccion} {clave} dice «{actual[clave]}» y el juego, «{es}»')
+    # Los modos (contenido/modos.json, nombre_es, #45): su nombre en el glosario de contenidos del juego (objetos.json).
+    modos_juego = {c['nombre'].lower() for c in cargar(CAPTURAS, 'objetos.json')['contenidos']}
+    mal += [f"modos: {m['id']} se llama «{m['nombre_es']}» y no está en el glosario de contenidos del juego"
+            for m in cargar(_DIR, 'contenido', 'modos.json')['modos'] if m['nombre_es'].split(' (')[0].lower() not in modos_juego]
     return mal + validar_vocabulario(tabla['vocabulario'])
 
 

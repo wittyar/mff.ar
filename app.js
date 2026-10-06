@@ -5182,7 +5182,7 @@ function equiposGuiaHtml () {
 function usoGuia (ch, v) {
   const es = variantesDe(ch).flatMap(vv => (GUIA_PJ[vv.p] || []).map(e => ({ e, vv })));
   if (!es.length) return `<p class="muted">${h(t('us_guide_none'))}</p>`;
-  const modo = (id) => { const m = MODOS.find(x => x.id === id); return m ? m.nombre : id; };
+  const modo = (id) => { const m = MODOS.find(x => x.id === id); return m ? nombreModo(m) : id; };
   return es.map(({ e, vv }) => `<div class="usguia">
       <div class="muted">${trHtml(e.sec)}${e.sub ? ' › ' + trHtml(e.sub) : ''} ${otraVar(vv, v)}</div>
       ${e.textos.map(x => `<p>${trHtml(x)}</p>`).join('')}
@@ -5651,13 +5651,15 @@ function renderModos () {
     </div>`;
 }
 
+/** El nombre del modo: en español, el del glosario de contenidos del juego (#45). */
+function nombreModo (m) { return LANG === 'es' ? m.nombre_es : m.nombre; }
 function modoCard (m) {
   const abierto = ui.modoAbierto === m.id;
   const eq = m.equipo;
   return `<div class="modo ${abierto ? 'on' : ''}">
     <div class="modohead" data-a="modoAbrir" data-id="${m.id}">
       <span class="tag solid" style="background:${m.tipo === 'pvp' ? 'var(--role-control)' : 'var(--role-soporte)'}">${m.tipo === 'pvp' ? 'PvP' : 'PvE'}</span>
-      <span class="modonom">${h(m.nombre)}</span>
+      <span class="modonom">${h(nombreModo(m))}</span>
       <span class="tag dim">${h(t('md_f_' + m.frecuencia))}</span>
       ${eq ? `<span class="tag dim">${h(t('md_team'))} ${eq.tam}${eq.escuadras ? ' × ' + eq.escuadras : ''}</span>` : ''}
       <span class="flecha">${abierto ? '▾' : '▸'}</span>
@@ -5791,7 +5793,7 @@ function armadoHtml (tipo) {
  *  propios. {id, name, tam, juego, ctp}: ctp es el tipo del modo ('pvp', 'pve' o null), el de
  *  MODOS en los del juego; los propios no tienen. */
 function modosEquipo () {
-  return MODOS.filter(m => m.equipo && m.equipo.tam).map(m => ({ id: m.id, name: m.nombre, tam: m.equipo.tam, juego: true, ctp: m.ctp }))
+  return MODOS.filter(m => m.equipo && m.equipo.tam).map(m => ({ id: m.id, name: nombreModo(m), tam: m.equipo.tam, juego: true, ctp: m.ctp }))
     .concat(U.modes.map(m => ({ id: m.id, name: m.name, tam: m.teamSize, juego: false, ctp: null })));
 }
 function tamModo (id) { const m = modosEquipo().find(x => x.id === id); return m ? m.tam : 3; }

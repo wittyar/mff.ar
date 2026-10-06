@@ -4,6 +4,7 @@
   {
    "id": "world-boss",
    "nombre": "World Boss (Ultimate / Legend)",
+   "nombre_es": "Jefe mundial (definitivo / legendario)",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -79,6 +80,7 @@
   {
    "id": "alliance-battle",
    "nombre": "Alliance Battle (Normal / Extreme / Legend)",
+   "nombre_es": "Batalla de alianza (normal / extremo / leyenda)",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -151,6 +153,7 @@
   {
    "id": "giant-boss-raid",
    "nombre": "Giant Boss Raid (Galactus / Dormammu)",
+   "nombre_es": "Incursión de jefe gigante (Galactus / Dormammu)",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -197,6 +200,7 @@
   {
    "id": "dimension-rift",
    "nombre": "Dimension Rift",
+   "nombre_es": "Brecha dimensional",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -237,6 +241,7 @@
   {
    "id": "dimension-missions",
    "nombre": "Dimension Missions",
+   "nombre_es": "Misión dimensional",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -257,6 +262,7 @@
   {
    "id": "timeline-battle",
    "nombre": "Timeline Battle",
+   "nombre_es": "Duelo dimensional",
    "tipo": "pvp",
    "frecuencia": "diario",
    "que": [
@@ -292,6 +298,7 @@
   {
    "id": "otherworld-battle",
    "nombre": "Otherworld Battle",
+   "nombre_es": "Batalla de otro mundo",
    "tipo": "pvp",
    "frecuencia": "diario",
    "que": [
@@ -330,6 +337,7 @@
   {
    "id": "team-battle-arena",
    "nombre": "Team Battle Arena",
+   "nombre_es": "Arena de batalla por equipos",
    "tipo": "pvp",
    "frecuencia": "diario",
    "que": [
@@ -367,6 +375,7 @@
   {
    "id": "alliance-conquest",
    "nombre": "Alliance Conquest",
+   "nombre_es": "Conquista de alianza",
    "tipo": "pvp",
    "frecuencia": "diario",
    "que": [
@@ -403,6 +412,7 @@
   {
    "id": "multiverse-saga",
    "nombre": "Multiverse Saga",
+   "nombre_es": "Saga del multiverso",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -429,6 +439,7 @@
   {
    "id": "epic-quests",
    "nombre": "Epic Quest Missions",
+   "nombre_es": "Misión épica",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -449,6 +460,7 @@
   {
    "id": "zombie-survival",
    "nombre": "Zombie Survival",
+   "nombre_es": "Supervivencia contra zombis",
    "tipo": "pve",
    "frecuencia": "semanal",
    "que": [
@@ -479,6 +491,7 @@
   {
    "id": "shadowland",
    "nombre": "Shadowland",
+   "nombre_es": "Tierra de sombras",
    "tipo": "pve",
    "frecuencia": "semanal",
    "que": [
@@ -503,6 +516,7 @@
   {
    "id": "story-ultimate",
    "nombre": "Story Mode Ultimate",
+   "nombre_es": "Historia (definitiva)",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
