@@ -1350,7 +1350,7 @@ function refrescarImagenes () {
   });
 }
 /** Recarga la ventana volviendo a la misma sección (la ficha abierta no se conserva). */
-const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'glosario', 'settings'];
+const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'glosario', 'historico', 'settings'];
 function recargar () {
   try { sessionStorage.setItem('mff_volver', VISTAS_PRINCIPALES.includes(ui.view) ? ui.view : 'roster'); } catch (e) {}
   location.reload();
@@ -6275,7 +6275,7 @@ function nombreLugar (d, largo) {
     if (!v) return t('nav_roster');
     return largo ? fullLabel(v) + ' · ' + t('ft_' + d.fichaTab) : v.name;
   }
-  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', glosario: 'nav_glossary', settings: 'nav_settings',
+  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', glosario: 'nav_glossary', historico: 'nav_history', settings: 'nav_settings',
              editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
 }
 window.addEventListener('popstate', (e) => {
