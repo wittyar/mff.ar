@@ -18,7 +18,8 @@ sistema, así que las dos usan los mismos datos y la misma capa.
   y sin abrir otra ventana: la que está abierta se reconecta y recarga.
 
 Opciones para probar fuera de Windows: --datos CARPETA, --sin-ventana, --puerto N,
---espera-latido S, --origen-datos URL (de dónde se bajan los datos; por defecto, GitHub),
+--espera-latido S, --origen-datos URL (la base de los datos publicados: los de cada formato, en
+datos/<formato>/; por defecto, main en GitHub),
 --origen-app URL (el latest.json de la última release).
 """
 import argparse, json, logging, os, shutil, subprocess, sys, threading, time, traceback, urllib.request, webbrowser
@@ -142,7 +143,7 @@ def main():
     ap.add_argument('--espera-latido', type=int, default=180,
                     help='segundos sin latidos de ninguna ventana antes de apagarse')
     ap.add_argument('--origen-datos', default=ORIGEN_DATOS,
-                    help='URL base de datos.json y de los datos publicados')
+                    help='URL base de los datos publicados (los de cada formato, en datos/<formato>/)')
     ap.add_argument('--origen-app', default=ORIGEN_APP, help='URL del latest.json de la última release')
     args = ap.parse_args()
     datos = os.path.abspath(args.datos or carpeta_datos_por_defecto())

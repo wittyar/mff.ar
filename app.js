@@ -1195,8 +1195,6 @@ const T = {
   av_dl_use:          { es:'Usar ahora',          en:'Use now' },
   av_dl_use_t:        { es:'Recarga la ventana',  en:'Reloads the window' },
   av_dl_err:          { es:'No se pudieron bajar los datos nuevos:', en:'The new data could not be downloaded:' },
-  av_incompat:        { es:'Hay datos nuevos del juego, pero son para una versión más nueva de la app.',
-                        en:'There is new game data, but it is for a newer version of the app.' },
   av_check_err:       { es:'No se pudo buscar actualizaciones:', en:'Could not check for updates:' },
   av_hide:            { es:'Ocultar',             en:'Hide' },
   ac_new_app:         { es:'Hay una versión nueva de la app.', en:'There is a new app version.' },
@@ -1224,13 +1222,6 @@ const T = {
   pd_title:           { es:'Actualizando los datos del juego', en:'Updating game data' },
   pd_note:            { es:'Esta versión de la app usa datos de otro formato: se bajan de GitHub y la ventana se recarga sola.',
                         en:'This app version uses data in another format: it is downloaded from GitHub and the window reloads on its own.' },
-  pd_nueva:           { es:'Los datos publicados son de formato {r} y esta versión de la app ({v}) usa el {a}: los lee una versión más nueva de la app. Actualizala acá abajo; tus datos y tu capa no se tocan.',
-                        en:'The published data is format {r} and this app version ({v}) uses {a}: a newer app version reads it. Update it below; your data and your layer are not touched.' },
-  pd_nueva_falta:     { es:'Los datos publicados son de formato {r} y esta versión de la app ({v}) usa el {a}, pero la versión de la app que los lee todavía no está publicada: volvé a abrir la app en un rato.',
-                        en:'The published data is format {r} and this app version ({v}) uses {a}, but the app version that reads it is not published yet: open the app again in a while.' },
-  pd_vieja:           { es:'Los datos publicados son de formato {r} y esta versión de la app usa el {a}: esperá a la próxima publicación de datos y volvé a abrir la app.',
-                        en:'The published data is format {r} and this app version uses {a}: wait for the next data publication and open the app again.' },
-  pd_err_nov:         { es:'No se pudo consultar qué hay publicado en GitHub:', en:'Could not check what is published on GitHub:' },
   sy_srv_down:        { es:'Se cerró el programa de la app.', en:'The app program closed.' },
   sy_srv_down_note:   { es:'Esta ventana sigue con lo que ya había cargado, pero tus cambios no se guardan, los retratos e íconos que no estaban cargados no aparecen y la sincronización no anda. Cerrala y abrí la app de nuevo; si vuelve a pasar, el motivo queda en registro.txt, en la carpeta de datos.',
                         en:'This window keeps what it had already loaded, but your changes are not saved, portraits and icons that were not loaded yet do not show up and sync does not work. Close it and open the app again; if it happens again, the reason is in registro.txt, in the data folder.' },
@@ -1290,7 +1281,7 @@ async function buscarNovedades () {
   try {
     const n = await apiLocal('/api/novedades');
     NOV.datos = n.datos; NOV.app = n.app; NOV.hora = new Date(); NOV.oculto = false;
-    if (n.datos.hay && n.datos.compatible) arrancarTarea('datos', '/api/datos/actualizar');
+    if (n.datos.hay) arrancarTarea('datos', '/api/datos/actualizar');
   } catch (e) { NOV.datos = { error: e.message }; verificarServidor(); }
   NOV.buscando = false;
   pintarAvisos(); pintarActualizaciones();
@@ -1356,29 +1347,13 @@ function recargar () {
   location.reload();
 }
 function mb (bytes) { return (bytes / 1048576).toFixed(1).replace('.', LANG === 'es' ? ',' : '.') + ' MB'; }
-/** Primer arranque de una versión que usa otro formato de datos (o sin data.js): baja
- *  los publicados antes de mostrar nada, porque la app no puede leer los que hay. Primero pregunta qué hay publicado: si
- *  los datos son de un formato más nuevo que el de esta versión, no hay nada que bajar y se ofrece la versión de la app
- *  que los lee (el mismo aviso de siempre, con su botón o el instalador; antes de la 1.0.24 esta pantalla no lo ofrecía
- *  y la app quedaba trabada: le pasó a la 1.0.22 el 5 de octubre de 2026); si son de uno más viejo, se espera a la
- *  próxima publicación. */
+/** Primer arranque de una versión que usa otro formato de datos (o sin data.js): baja los publicados de su formato
+ *  (datos/<formato>/, #1) antes de mostrar nada, porque la app no puede leer los que hay. Hasta la 1.0.29 la app bajaba
+ *  los de la raíz, que son siempre los del formato más nuevo: una versión de un formato anterior no tenía nada que bajar
+ *  (la 1.0.22 quedó trabada el 5 de octubre de 2026; la 1.0.24 ofrecía en esta pantalla la versión que los leía). */
 async function pantallaDatos () {
   const pintar = (extra) => pantallaFatal(t('pd_title'), t('pd_note') + (extra ? ' ' + extra : ''));
   pintar();
-  let n;
-  try { n = await apiLocal('/api/novedades'); }
-  catch (e) { return pintar(t('pd_err_nov') + ' ' + e.message); }
-  if (n.datos.error) return pintar(t('pd_err_nov') + ' ' + n.datos.error);
-  NOV.datos = n.datos; NOV.app = n.app; NOV.hora = new Date();
-  const r = n.datos.remoto.formato, a = ESCRITORIO.formato_datos;
-  const txt = (k) => t(k).replace('{r}', r).replace('{a}', a).replace('{v}', ESCRITORIO.version);
-  if (r > a) {
-    if (n.app.error) return pantallaFatal(t('pd_title'), txt('pd_nueva') + ' ' + t('pd_err_nov') + ' ' + n.app.error);
-    if (!n.app.hay) return pantallaFatal(t('pd_title'), txt('pd_nueva_falta'));
-    $('#app').innerHTML = `<main><div class="fatal"><h1>${h(t('pd_title'))}</h1><p>${h(txt('pd_nueva'))}</p><div id="avisos"></div></div></main>`;
-    return pintarAvisos();
-  }
-  if (r < a) return pantallaFatal(t('pd_title'), txt('pd_vieja'));
   try { await apiLocal('/api/datos/actualizar', 'POST'); }
   catch (e) { return pintar(t('av_dl_err') + ' ' + e.message); }
   const poll = setInterval(async () => {
@@ -1450,7 +1425,6 @@ function avisosHtml () {
     else out.push(`<div class="aviso-app"><b>${h(t('ap_new').replace('{v}', na.version))}</b> ${h(t('ap_installer'))}
       <a class="btn sm primary" href="${h(na.instalador)}" target="_blank" rel="noopener">${h(t('ap_installer_go'))}</a>${notas}</div>`);
   }
-  if (NOV.datos && NOV.datos.hay && !NOV.datos.compatible) out.push(`<div class="aviso-app">${h(t('av_incompat'))}</div>`);
   const errores = [NOV.datos && NOV.datos.error, NOV.app && NOV.app.error].filter(Boolean);
   if (errores.length && !NOV.oculto) out.push(`<div class="aviso-app">${h(t('av_check_err'))} ${h([...new Set(errores)].join(' · '))}
     <button class="btn sm" data-a="ocultarAviso">${h(t('av_hide'))}</button></div>`);
@@ -6137,7 +6111,6 @@ function seccionActualizaciones () {
   if (NOV.buscando) estado = `<span class="muted">${h(t('ac_checking'))}</span>`;
   else if (n.error || (NOV.app && NOV.app.error)) estado = `<span class="tag solid" style="background:var(--danger)">${h(t('av_check_err'))}</span> <span class="muted">${h([n.error, NOV.app && NOV.app.error].filter(Boolean).join(' · '))}</span>`;
   else if (p && p.corriendo) estado = `<span class="muted">${h(t('av_dl'))}…</span>`;
-  else if (n.hay && !n.compatible) estado = `<span class="tag solid" style="background:var(--gold)">${h(t('av_incompat'))}</span>`;
   else if (n.hay || (NOV.app && NOV.app.hay)) estado = `<span class="tag solid" style="background:var(--gold)">${h(t(n.hay ? 'ac_new' : 'ac_new_app'))}</span>`;
   else if (NOV.hora) estado = `<span class="tag dim">${h(t('ac_uptodate'))}</span>`;
   else estado = '';

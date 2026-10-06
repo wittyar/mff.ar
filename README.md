@@ -230,19 +230,20 @@ retratos e íconos (77 MB de thanosvibs), con el avance a la vista.
 
 ### Actualizaciones
 Al abrir, la app consulta GitHub:
-- **Datos del juego**: `datos.json` (publicado por el workflow semanal, ver abajo) dice qué hay.
-  Si hay datos nuevos del formato que entiende esta versión, se bajan solos, se verifican contra
-  su sha256 y un botón recarga la ventana para usarlos. Si son de un formato más nuevo, se avisa
-  (hace falta actualizar la app). La guía de armado llega con los datos; Ajustes dice qué versión
+- **Datos del juego**: el workflow semanal (ver abajo) publica los datos de cada formato en su
+  carpeta, `datos/<formato>/`, y la app consulta la del suyo: su `datos.json` dice qué hay. Si hay
+  datos nuevos, se bajan solos, se verifican contra su sha256 y un botón recarga la ventana para
+  usarlos. Cuando sube el formato, la carpeta del anterior queda como estaba: una versión vieja de la
+  app sigue andando con sus datos y avisa que hay una versión nueva. (Hasta la 1.0.29 la app leía
+  los de la raíz, que se siguen publicando para esas versiones.) La guía de armado llega con los datos; Ajustes dice qué versión
   de la planilla se usa, cuándo se revisó y, si la última no se pudo usar, por qué.
 - **Versión de la app**: cada release publica `latest.json`. Si hay una versión nueva con el mismo
   Python, un aviso muestra las novedades y, confirmado, baja el parche (solo los archivos del
   programa, unos 100 KB), lo verifica, guarda el programa anterior en `programa-anterior/` y se
   reinicia sola en la misma ventana. Si cambia Python, ofrece el instalador completo.
-- **Si la app no puede leer los datos que tiene** (es de otro formato), antes de mostrar nada se fija
-  qué hay publicado: si es de su formato, lo baja y arranca; si es de uno más nuevo, ofrece la versión
-  de la app que lo lee (el parche o el instalador) o, si todavía no salió, dice que hay que esperarla;
-  si es de uno más viejo, espera a la próxima publicación de datos.
+- **Si la app no puede leer los datos que tiene** (es de otro formato), antes de mostrar nada baja los
+  de la carpeta de su formato y arranca; si todavía no hay datos publicados de su formato, lo dice y
+  no toca los que tiene.
 - **Retratos e íconos** que falten: se bajan solos. Los que thanosvibs no publica se cuentan en
   Ajustes y la app muestra el nombre sin ícono.
 
@@ -275,7 +276,8 @@ abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
 `formato_datos` (en `version.json`) y `FORMATO` (en `scripts/build.py`) van juntos: se suben cuando
 una app y unos datos de versiones distintas ya no se entienden (a la app nueva le falta algo que los
 datos viejos no traen, o la anterior leería mal los nuevos). La app solo usa datos de su formato: con
-otros, los baja al arrancar o avisa que hay que actualizarla. Formato 2: el perfil de combate viene
+otros, baja al arrancar los de la carpeta de su formato. Una versión con formato nuevo sale recién cuando main ya
+publica su carpeta (`publicar.yml` lo verifica). Formato 2: el perfil de combate viene
 calculado en `data.js` (ver *Modelo del juego*). Formato 3: también el análisis de cada variante y el
 catálogo de efectos para mostrarlo, y cada uniforme trae sus roles.
 
@@ -356,8 +358,8 @@ El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o 
 Actions → Run workflow) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
 regenera `data.js`, `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md`, `docs/COMPLETITUD.md`
 y el import, copia `datos.json` y los archivos que lista a `datos/<formato>/` (`scripts/carpeta_formato.py`) y los
-commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja ese
-resultado.
+commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja los de la carpeta de su
+formato.
 
 A mano (Linux o macOS; en Windows ver Limitaciones):
 ```
@@ -542,7 +544,7 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `index.html` / `app.js` / `styles.css` — la app (la página).
 - `version.json` — versión de la app, formato de datos que entiende, versión de Python y notas.
 - `data.js` / `datos.json` — snapshot generado de los datos y su manifiesto.
-- `datos/<formato>/` — los mismos, en la carpeta de su formato (desde la 1.0.30, la app instalada los baja de ahí).
+- `datos/<formato>/` — los mismos, en la carpeta de su formato: de ahí los baja la app instalada.
 - `scripts/` — pipeline: `fetch_all` → `parse_instinto` → `build`, que llama a `skills_api.py`,
   `fuentes.py`, `catalogo.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
   `traducir.py` las tablas de las skills, `version_juego.py` la versión del snapshot,

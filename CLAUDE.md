@@ -27,7 +27,9 @@ variante, en `docs/COMPLETITUD.md`.
   versión por vez: con un formato nuevo, los datos y la etiqueta de esa versión van antes de entregar o empujar la
   siguiente (con la 1.0.22, dos bundles empujados juntos dejaron la etiqueta sobre datos de otro formato). Publicar
   es solo empujar la etiqueta: el workflow «Publicar versión» arma la release con ella y no se corre a mano.
-  `publicar.yml` corta si los datos del commit etiquetado o los de main no son del formato de `version.json`.
+  `publicar.yml` corta si los datos del commit etiquetado o los de main en `datos/<formato>/` no son del formato de
+  `version.json`. Desde la 1.0.30 (#1) la app baja los datos de `datos/<formato>/` (los copia ahí
+  `scripts/carpeta_formato.py`, que corre el build); la raíz se sigue publicando para las versiones hasta la 1.0.29.
 - Build: `python3 scripts/build.py`, sobre lo bajado en `work/` (sin red). Regenera `data.js`,
   `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y `docs/COMPLETITUD.md`; para con un mensaje
   si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a

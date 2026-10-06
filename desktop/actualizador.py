@@ -1,8 +1,10 @@
 """Actualizaciones de TA GUIANAEL MFF.
 
-Datos del juego: salen de GitHub ya armados por el workflow semanal. datos.json dice qué
-hay publicado (formato, versión, sha256 y tamaño de cada archivo); se bajan los
-archivos, se verifican contra ese manifiesto y recién ahí reemplazan a los anteriores.
+Datos del juego: salen de GitHub ya armados por el workflow semanal, en la carpeta de cada
+formato (datos/<formato>/): la app baja los del suyo, así que una versión vieja sigue teniendo
+datos que puede leer cuando sube el formato (#1). datos.json dice qué hay publicado (formato,
+versión, sha256 y tamaño de cada archivo); se bajan los archivos, se verifican contra ese
+manifiesto y recién ahí reemplazan a los anteriores.
 Lo último que se escribe es datos.json: si algo corta a mitad de camino, lo local sigue
 siendo la versión anterior completa.
 
@@ -119,39 +121,48 @@ def _escribir(ruta, contenido):
 
 # ---- datos del juego ----
 
+def publicados(origen, formato_app):
+    """La carpeta de los datos del formato de la app y su manifiesto, crudo y leído. Corta si todavía no hay datos
+    publicados de ese formato o si el manifiesto dice otro."""
+    base = f'{origen}datos/{formato_app}/'
+    try:
+        crudo = bajar(base + 'datos.json', 15)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            raise RuntimeError(f'todavía no hay datos publicados de formato {formato_app} ({e.url})') from e
+        raise
+    m = json.loads(crudo)
+    if m['formato'] != formato_app:
+        raise RuntimeError(f'{base}datos.json dice formato {m["formato"]} y está en la carpeta del {formato_app}')
+    return base, crudo, m
+
+
 def novedades_datos(origen, carpeta, formato_app):
-    """Compara el datos.json publicado con el local. 'hay': el data.js publicado es otro.
-    'compatible': es del formato que entiende esta versión de la app."""
-    remoto = json.loads(bajar(origen + 'datos.json', 15))
+    """Compara el datos.json publicado para el formato de la app con el local. 'hay': el data.js publicado es otro."""
+    _, _, remoto = publicados(origen, formato_app)
     local = leer_json(os.path.join(carpeta, 'datos.json'))
     sha_local = local['archivos']['data.js']['sha256'] if local else None
     return {'hay': remoto['archivos']['data.js']['sha256'] != sha_local,
-            'compatible': remoto['formato'] == formato_app,
             'remoto': resumen(remoto), 'local': resumen(local)}
 
 
 def actualizar_datos(origen, carpeta, formato_app, tarea):
-    crudo = bajar(origen + 'datos.json', 15)
-    m = json.loads(crudo)
-    if m['formato'] != formato_app:
-        raise RuntimeError(f'los datos publicados son de formato {m["formato"]} y esta versión de la app '
-                           f'usa el {formato_app}: ' + ('actualizá la app.' if m['formato'] > formato_app
-                                                        else 'esperá a la próxima publicación de datos.'))
+    base, crudo, m = publicados(origen, formato_app)
     archivos = m['archivos']
     for rel in archivos:
         if not ARCHIVO_DE_DATOS.match(rel):
             raise RuntimeError(f'el manifiesto pide un archivo que la app no usa: {rel}')
     tarea.avance(0, sum(a['bytes'] for a in archivos.values()))
-    listos, base = [], 0
+    listos, hecho = [], 0
     try:
         for rel, info in archivos.items():
-            contenido = bajar(origen + rel, 60, lambda h, b=base: tarea.avance(b + h))
+            contenido = bajar(base + rel, 60, lambda h, b=hecho: tarea.avance(b + h))
             if len(contenido) != info['bytes'] or hashlib.sha256(contenido).hexdigest() != info['sha256']:
                 raise RuntimeError(f'{rel} llegó distinto de lo que anuncia datos.json (GitHub puede estar '
                                    'terminando de publicar una actualización): no se usa. Probá de nuevo en unos minutos.')
             destino = os.path.join(carpeta, *rel.split('/'))
             listos.append((_escribir(destino, contenido), destino))
-            base += info['bytes']
+            hecho += info['bytes']
     except Exception:
         for tmp, _ in listos:
             os.remove(tmp)

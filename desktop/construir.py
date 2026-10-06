@@ -5,6 +5,8 @@ al empujar una etiqueta vX.Y.Z; también anda a mano.
   python desktop/construir.py programa            dist/programa/ y el parche
   python desktop/construir.py manifiesto vX.Y.Z   dist/latest.json y dist/notas.md
   python desktop/construir.py formato DATOS.json   corta si los datos no son del formato de version.json
+  python desktop/construir.py formato_datos        el formato de datos de version.json
+  python desktop/construir.py version              la versión de version.json
 
 dist/programa/ es lo que instala el instalador (desktop/instalador.iss): los archivos del
 programa, los datos iniciales (se copian a la carpeta de datos en el primer arranque) y
@@ -90,8 +92,8 @@ def programa():
 
 def formato(publicados):
     """La versión sale solo con los datos que pide (version.json, formato_datos): los del commit etiquetado (datos.json,
-    que van en el instalador como datos del primer arranque) y los publicados, el datos.json de main (`publicados`, una
-    copia). Si no, la app nueva queda esperando datos que no hay (la 1.0.17: la etiqueta salió antes que los datos) o
+    que van en el instalador como datos del primer arranque) y los publicados, el datos.json de la carpeta de su formato
+    en main (datos/<formato>/datos.json, de donde los baja la app; `publicados`, una copia). Si no, la app nueva queda esperando datos que no hay (la 1.0.17: la etiqueta salió antes que los datos) o
     trabada (la 1.0.22: la etiqueta fue sobre el commit de la versión, con datos de formato 8, y main ya publicaba los de
     formato 10)."""
     pide = version()['formato_datos']
@@ -141,5 +143,7 @@ if __name__ == '__main__':
         formato(sys.argv[2])
     elif orden == ['version']:
         print(version()['version'])
+    elif orden == ['formato_datos']:
+        print(version()['formato_datos'])
     else:
         raise SystemExit(__doc__)
