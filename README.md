@@ -53,15 +53,20 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
   atributos marcados, y lo que da su liderazgo o su soporte: ver *Índice para armar equipos*) y
   orden por la tier list que elijas.
-- **Ficha** de cada personaje y uniforme, en pestañas. Arriba, fijos, la foto, el nombre, las
+- **Ficha** de cada personaje y uniforme, en cinco pestañas (desde la 1.0.27, #24: cada una abre con lo que contesta y
+  deja el detalle plegado; las reglas y explicaciones van a un «?» junto al título, no en párrafos arriba). Arriba, fijos, la foto, el nombre, las
   flechas ‹ › para pasar al anterior o al siguiente del listado del roster tal como está
   filtrado y ordenado (también con ← y →; la pestaña se conserva) y el selector de uniforme (el
   uniforme cambia casi todo lo de abajo). Si se llegó desde otro personaje (por ejemplo, desde
   sus combinaciones), «← Nombre» vuelve a él tal como estaba: pestaña, página y posición; también
   con Alt+← o el botón de volver del mouse. «← Roster» vuelve al roster donde se lo dejó:
-  - *Resumen*: los datos del uniforme puesto, lo que **le sirve** de un liderazgo o un soporte
-    (con atajos al roster: «Líderes que se lo dan», «Soportes que se lo dan») y *para qué se
-    usa*: su fila en cada tier list, lo que le da al equipo (liderazgo, pasivas, efecto de
+  - *Resumen*: arriba, tres bloques: **dónde rinde** (su fila en las cinco tier lists principales; las de la
+    comunidad, plegadas), **qué le da al equipo** (cada liderazgo o soporte con lo que da y a quién) y **qué
+    necesita** (el C.T.P. de la guía de armado y de la Ideal CTP List, el artefacto, el ISO-8 y el obelisco, con
+    el atajo al Armado). Después, **quién es**: bando, instinto, roles, con qué pega, los datos del uniforme
+    puesto y lo que **le sirve** de un liderazgo o un soporte
+    (con atajos al roster: «Líderes que se lo dan», «Soportes que se lo dan»). Plegado, lo demás que dicen las
+    fuentes: el detalle de lo que da al equipo (liderazgo, pasivas, efecto de
     uniforme y artefacto, con a quién se aplican y sus categorías del índice; cada efecto con su
     valor y, entre paréntesis, su activación y su recarga, lo que pide, cuánto dura y hasta dónde
     acumula, escrito igual que en el «Cómo funciona», el «Por qué», la comparativa, los bonos y el
@@ -85,13 +90,6 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     juego en inglés y en español; la certeza y las fuentes de cada parte; y lo que el inglés
     traduce distinto del coreano. En el celular es una hoja inferior; se cierra con Esc o
     tocando afuera.
-  - *Análisis*: lo que hace con sus skills según el catálogo de efectos (ver *Modelo del juego*):
-    un resumen (qué da para él, para el equipo y contra el rival, con qué pega y sus roles) y,
-    por grupo de efecto, cada efecto con a quién le llega (él, el equipo y qué aliados, el rival
-    o sus invocaciones), de qué skill sale y cuándo, su condición (contra jefes, contra una
-    facción...), si no le sirve (un buff de algo que él no usa) y cómo se lee en PvE y en PvP,
-    con su certeza y su fuente. Marca lo que la fuente no dice: el «Give Power» que no trae qué
-    otorga y lo que el catálogo todavía no clasifica.
   - *Armado*: su **C.T.P. recomendado** sin contexto, en PvP y en PvE (lo mismo que dicen sus
     tarjetas de equipo): lo que dice la guía de armado y lo que dice la Ideal CTP List, las dos,
     cada una con el enlace a su fuente (pueden no coincidir: con Gorr — The God Butcher, Authority
@@ -102,7 +100,8 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     armado; las **opciones del uniforme** abierto (qué uniforme habilita cada una y qué stat
     conviene elegir); plegadas, las reglas generales de ISO y urus para su tipo de ataque
     (derivado de sus skills). Lo de la guía de armado es de su mejor uniforme: si está abierto
-    otro, lo dice.
+    otro, lo dice. Abajo, **tu progreso**: la hoja de ruta de progresión y la calculadora de topes de
+    stats, que se guardan en tu capa (hasta la 1.0.26, la pestaña *Progreso*).
   - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
     antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo* con alguien
@@ -110,8 +109,9 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     un ataque o un daño elemental solo cuenta para quien pega con eso según sus skills, así que un
     liderazgo de daño de fuego no vincula a uno que pega físico), o forman juntos un bono de
     equipo); sus **bonos de equipo**, plegados: con quiénes, qué suben y de dónde sale cada uno
-    (valen con cualquier uniforme); sus **strikers** y de quiénes es striker, plegados, con la
-    probabilidad de aparecer y cuándo (de la pestaña Striker de la wiki; una de más de 100% es un
+    (valen con cualquier uniforme); sus **strikers**, plegados, en una tabla con una fila por personaje y los
+    dos sentidos (si aparece junto a él y si él aparece junto al otro, con la probabilidad y cuándo; «no» si la
+    pestaña Striker de ese lado no lo trae y «sin dato» si la wiki no tiene esa pestaña; una de más de 100% es un
     dato imposible de la wiki y va tal cual, marcada); y **todas las
     combinaciones de 3 con él**, una consulta sobre los datos: cada pareja de compañeros con vínculo
     con él, una por trío de personajes, de a 20 por página. Se ordenan por *puntos para él* (la
@@ -158,9 +158,10 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     celular, la ventana va a pantalla completa. Se marca con ★ como favorita, se lleva
     a la mesa o se *descarta*: el trío se oculta en las combinaciones de sus tres
     personajes, con cualquier uniforme, y «Ver descartados» los muestra para restaurarlos.
-  - *Progreso*: la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan
-    en tu capa.
-  - *Más*: la verificación entre fuentes y el retrato propio.
+  - *Fuentes*: la verificación entre fuentes, el historial del personaje y el retrato propio.
+
+  El análisis de las skills según el catálogo de efectos (lo que daba la pestaña *Análisis* hasta la 1.0.26) queda en
+  el «Cómo funciona» de cada skill y en el «Pega con» del Resumen, hasta que se rehaga (#33).
 - **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada; con 4 elegidas, la
   quinta no se suma y la mesa lo dice. Se eligen con «+ Comparar esta versión» en la ficha o con
   «Comparar» en el roster, y se ven en la mesa. Cada skill con todos sus efectos: pasados los

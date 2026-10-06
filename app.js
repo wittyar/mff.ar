@@ -298,9 +298,6 @@ const T = {
   iso_amarilla:      { es:'amarilla',            en:'yellow' },
   iso_violeta:       { es:'violeta',             en:'purple' },
   iso_caos:          { es:'caos',                en:'chaos' },
-  us_title:          { es:'Para qué se usa',     en:'What it is used for' },
-  us_note:           { es:'Lo que dicen las fuentes de este personaje y de sus uniformes. Lo derivado se dice derivado.',
-                       en:'What the sources say about this character and its uniforms. Anything derived is labelled as such.' },
   us_lists:          { es:'Tier lists',          en:'Tier lists' },
   us_in_n_lists:     { es:'está en {n} de {t}',  en:'in {n} of {t}' },
   us_atk:            { es:'Tipo de ataque (derivado)', en:'Attack type (derived)' },
@@ -600,7 +597,6 @@ const T = {
   d_uniform:         { es:'Uniforme',            en:'Uniform' },
   ft_resumen:        { es:'Resumen',             en:'Overview' },
   ft_skills:         { es:'Skills',              en:'Skills' },
-  ft_analisis:       { es:'Análisis',            en:'Analysis' },
   an_note:           { es:'Lo que hace con sus skills según el catálogo de efectos: a quién le llega cada efecto, desde qué skill y cuándo, si le sirve, y cómo se lee en PvE y en PvP. Cada lectura dice si lo afirma una fuente (comprobado), si sale del texto del efecto (probable) o si es una suposición (conjetura).',
                        en:'What it does with its skills according to the effect catalog: whom each effect reaches, from which skill and when, whether it is useful to it, and how it reads in PvE and PvP. Each reading says whether a source states it (verified), it follows from the effect text (likely) or it is an assumption (conjecture).' },
   an_resumen:        { es:'En resumen',          en:'In short' },
@@ -681,8 +677,27 @@ const T = {
   el_Poison:         { es:'veneno',              en:'poison' },
   el_Mind:           { es:'mente',               en:'mind' },
   ft_armado:         { es:'Armado',              en:'Build' },
-  ft_progreso:       { es:'Progreso',            en:'Progress' },
-  ft_mas:            { es:'Más',                 en:'More' },
+  ft_progreso:       { es:'Tu progreso',         en:'Your progress' },
+  ft_fuentes:        { es:'Fuentes',             en:'Sources' },
+  ay_label:          { es:'Cómo se lee',         en:'How to read it' },
+  rs_donde:          { es:'Dónde rinde',         en:'Where it performs' },
+  rs_da:             { es:'Qué le da al equipo', en:'What it gives the team' },
+  rs_necesita:       { es:'Qué necesita',        en:'What it needs' },
+  rs_quien:          { es:'Quién es',            en:'Who it is' },
+  rs_pega:           { es:'Pega con',            en:'Hits with' },
+  rs_ver_armado:     { es:'Ver el armado completo →', en:'See the full build →' },
+  rs_det_sop:        { es:'Detalle de lo que da: activación, recarga, condiciones y categorías', en:'What it gives in detail: activation, cooldown, conditions and categories' },
+  rs_mas_fuentes:    { es:'Lo demás que dicen las fuentes', en:'What else the sources say' },
+  rs_ctp_armado:     { es:'guía de armado',      en:'building guide' },
+  rs_ctp_ideal:      { es:'Ideal CTP List',      en:'Ideal CTP List' },
+  sk_resumen:        { es:'Strikers: {n} con él ({a} lo ayudan, él ayuda a {b})', en:'Strikers: {n} with it ({a} help it, it helps {b})' },
+  sk_con:            { es:'Con',                 en:'With' },
+  sk_lo_ayudan:      { es:'Aparece junto a él',  en:'Shows up next to it' },
+  sk_el_ayuda:       { es:'Él aparece junto al otro', en:'It shows up next to them' },
+  sk_no:             { es:'no',                  en:'no' },
+  sk_de_nadie:       { es:'No es striker de nadie en la wiki.', en:'It is nobody\'s striker on the wiki.' },
+  sk_sin_dato:       { es:'sin dato',            en:'no data' },
+  sk_sin_dato_t:     { es:'La wiki no tiene la pestaña Striker de este personaje.', en:'The wiki has no Striker tab for this character.' },
   ft_equipos:        { es:'Equipos',             en:'Teams' },
   nav_prev:          { es:'Anterior del listado', en:'Previous in the list' },
   nav_next:          { es:'Siguiente del listado', en:'Next in the list' },
@@ -870,11 +885,8 @@ const T = {
   sk_title:          { es:'Strikers',            en:'Strikers' },
   sk_note:           { es:'Pueden aparecer a pegar junto a él, con esa probabilidad, cuando él ataca o cuando lo atacan. Según Ezequiel, el striker tiene que estar en el mismo equipo, y suma muy poco: en los equipos no da puntos, desempata. Son del personaje: valen con cualquier uniforme.',
                        en:'They may show up to strike alongside it, with that chance, when it attacks or when it is attacked. Per Ezequiel, the striker has to be on the same team, and it adds very little: in teams it gives no points, it breaks ties. They belong to the character: any uniform works.' },
-  sk_suyos:          { es:'Sus {n} strikers',    en:'Its {n} strikers' },
-  sk_de:             { es:'Es striker de {n}',   en:'Striker of {n}' },
   sk_de_nota:        { es:'Aparece junto a ellos cuando ellos atacan o los atacan.', en:'It shows up alongside them when they attack or are attacked.' },
   sk_sin_pestana:    { es:'La wiki no tiene sus strikers.', en:'The wiki does not list its strikers.' },
-  sk_de_nadie:       { es:'No es striker de nadie en la wiki.', en:'It is nobody\'s striker on the wiki.' },
   sk_ataca:          { es:'{p}% al atacar',     en:'{p}% on attack' },
   sk_atacado:        { es:'{p}% al ser atacado', en:'{p}% when attacked' },
   sk_imposible:      { es:'Dato imposible de la fuente: una probabilidad no puede pasar de 100%. La wiki dice esto y la app lo muestra tal cual, sin corregirlo (docs/AUDITORIA.md, sección 11).',
@@ -2785,13 +2797,13 @@ function statLabel (k) { return LANG === 'es' ? (STAT_ES[k] || k) : dom(k); }
 // vista. Cada pestaña responde una pregunta: qué es y para qué sirve, qué hace (las skills
 // tal como las publica la fuente, y su análisis según el modelo), cómo se arma, cuánto
 // avanzaste con él, y el resto.
-const FICHA_TABS = ['resumen', 'skills', 'analisis', 'armado', 'equipos', 'progreso', 'mas'];
+const FICHA_TABS = ['resumen', 'skills', 'armado', 'equipos', 'fuentes'];
 function renderDetail () {
   const ch = CHAR_BY_ID[ui.charId];
   if (!ch) { ui.view = 'roster'; return renderRoster(); }
   const v = variant(ch.id, ui.uniformId);
-  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, analisis: fichaAnalisis, armado: fichaArmado,
-                   equipos: fichaEquipos, progreso: fichaProgreso, mas: fichaMas }[ui.fichaTab];
+  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, equipos: fichaEquipos, fuentes: fichaFuentes }[ui.fichaTab];
+  if (!cuerpo) throw new Error('pestaña de la ficha desconocida: ' + ui.fichaTab);
   const ant = lugarAnterior();
   return `
   <div class="row" style="margin-bottom:14px">
@@ -2806,6 +2818,10 @@ function renderDetail () {
   <div class="fcuerpo" id="fcuerpo">${cuerpo(ch, v)}</div>`;
 }
 /** Cabecera fija: quién es, con qué uniforme y qué parte de la ficha se está viendo. */
+/** Una regla o una explicación, a un «?» junto al título, en vez de un párrafo arriba de lo que explica (#24). */
+function ayudaHtml (texto) {
+  return `<details class="ayuda"><summary title="${h(t('ay_label'))}" aria-label="${h(t('ay_label'))}">?</summary><div class="ayudatx">${h(texto)}</div></details>`;
+}
 /** Abre la ficha de un personaje (con un uniforme) desde el roster o desde las flechas. */
 function abrirFicha (cid, uid) {
   ui.view = 'detail'; ui.charId = cid; ui.uniformId = uid || 'base'; ui.movil = 'centro';
@@ -2848,24 +2864,29 @@ function fichaCabecera (ch, v) {
 }
 /** Resumen: qué es (datos del uniforme puesto) y para qué se usa según las fuentes. */
 function fichaResumen (ch, v) {
-  const rank = rankLabel(v.key), vf = verifDe(ch, v);
+  // Primero la respuesta (#24, Ezequiel, 6 de octubre de 2026: priorizar la información): dónde rinde, qué le da al
+  // equipo y qué necesita. Después quién es, y plegado lo demás que dicen las fuentes.
+  const vf = verifDe(ch, v);
   const stats = Object.entries(ch.stats || {}).filter(([, val]) => parseFloat(val) !== 0);
   const box = (k, val) => `<div class="stat"><div class="k">${h(k)}</div><div class="v">${val}</div></div>`;
-  return `<div class="fid">
+  return `<div class="resumen3">
+      <section class="bloque"><h4>${h(t('rs_donde'))}</h4>${usoListas(ch, v)}</section>
+      <section class="bloque"><h4>${h(t('rs_da'))}</h4>${queDaHtml(v)}</section>
+      <section class="bloque"><h4>${h(t('rs_necesita'))}</h4>${queNecesitaHtml(ch, v)}</section>
+    </div>
+    <div class="section fid"><h3>${h(t('rs_quien'))}</h3>
     <div class="row">
       <span class="tag dim">${h(dom(v.f))}</span>${insTag(v.ins)}
-      ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join('')}
-      ${rank ? `<span class="muted">${h(listName(listById(U.prefs.refList)))}:</span>
-        <span class="tag solid" style="background:${rank.color}" title="${h(rank.todas.join(' · '))}">${h(rankTexto(rank))}</span>` : ''}
+      ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}" title="${h(t('an_roles_t'))}">${h(dom(r))}</span>`).join('')}
       ${vf.dif.length ? `<a href="#verif" class="tag ghost" style="color:var(--gold)" data-a="irVerif" title="${h(t('vf_title'))}">⚠ ${h(verifCuenta(vf))}</a>` : ''}
     </div>
+    <div class="row"><span class="muted">${h(t('rs_pega'))}</span> ${pegaAn(v)}</div>
     <div class="statgrid">
       ${box(t('d_race'), icon(v.race) + h(dom(v.race) || '—'))}
       ${box(t('d_gender'), icon(v.gender) + h(dom(v.gender) || '—'))}
       ${box(t('d_origin'), h(dom(ch.origin) || '—'))}
       ${box(t('c_striker'), v.striker != null ? 'Skill ' + h(v.striker) : '—')}
       ${box(t('c_worldboss'), icon(v.wba) + h(dom(v.wba) || '—'))}
-      ${box(t('us_atk'), ataqueHtml(tipoAtaque(v)))}
       ${v.cost ? box(t('d_cost'), h(v.cost)) : ''}
       ${stats.map(([k, val]) => box(statLabel(k), h(val))).join('')}
     </div>
@@ -2875,8 +2896,41 @@ function fichaResumen (ch, v) {
     </div>
     ${(ch.tuc || []).length ? `<div class="row"><span class="muted">${h(t('d_tuc'))}</span>${ch.tuc.map(x => `<span class="tag dim">${h(x)}</span>`).join('')}</div>` : ''}
     ${leSirveHtml(v)}
-  </div>
-  ${panelUso(ch, v)}`;
+    </div>
+    <div class="section"><h3>${h(t('rs_mas_fuentes'))}</h3>
+      <details class="usgrupo usodet"><summary>${h(t('rs_det_sop'))}</summary>${usoSoportes(v)}</details>
+      <details class="usgrupo"><summary>Alliance Battle</summary>${usoABX(ch, v)}</details>
+      <details class="usgrupo"><summary>${h(t('us_guide'))}</summary>${usoGuia(ch, v)}</details>
+      <details class="usgrupo"><summary>${h(t('ga_title'))}</summary>${usoArmado(ch, v)}</details>
+    </div>`;
+}
+/** Lo que le da al equipo, corto: cada liderazgo o soporte con lo que da y a quién. El detalle (activación, recarga,
+ *  condiciones, categorías) va plegado más abajo (usoSoportes). */
+function queDaHtml (v) {
+  const s = SOPORTES[v.p], tipos = s ? TIPOS_SOPORTE.filter(([k]) => s[k]) : [];
+  const otorga = otorgaSinPublicar(v) ? `<p class="usotorga" style="color:var(--gold)">⚠ ${h(t('us_otorga'))}</p>` : '';
+  if (!tipos.length) return `${otorga}<p class="muted">${h(t('us_sup_none'))}</p>`;
+  return `${otorga}${tipos.map(([k, clave]) => { const x = s[k];
+    return `<div class="rsda">
+      <div class="row" style="gap:5px"><span class="slotbadge ${k.startsWith('leader') ? 'lead' : 'pass'}">${h(t(clave))}</span>
+        ${x.sig ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('sp_notable_t'))}">${h(t('sp_notable'))}</span>` : ''}
+        ${x.est ? `<span class="tag dim">${h(t('sp_est').replace('{n}', x.est))}</span>` : ''}${srcHtml(x)}</div>
+      <div class="rsfx">${x.fx.map(f => h(efectoSoporteTxt(x, f))).join(' · ')}</div>
+      <div>${restrHtml(x)}</div></div>`; }).join('')}
+    <div class="fuentes">${fuentesHtml(fuentesSop(tipos.map(([k]) => s[k])))}</div>`;
+}
+/** Lo que necesita, corto: C.T.P. (las dos fuentes), artefacto, ISO-8 y obelisco. El detalle, en la pestaña Armado. */
+function queNecesitaHtml (ch, v) {
+  const r = ctpRecomendado(v, null), a = GUIA_ARMADO ? armadoDe(ch) : null, art = ARTES.find(x => x.p === ch.p);
+  const fila = (k, val) => `<div class="rsfila"><span class="muted">${h(k)}</span><span>${val}</span></div>`;
+  const ctps = [r.armado ? `${r.armado.cols.filter(([, c]) => c).map(([, c]) => ctpCorto(c)).join(' ')} <span class="muted">${h(t('rs_ctp_armado'))}</span>${otraVar(r.armado.vv, v)}` : '',
+                r.ideal ? `${r.ideal.filas.map(ctpFilaIdeal).join(' ')} <span class="muted">${h(t('rs_ctp_ideal'))}</span>${otraVar(r.ideal.vv, v)}` : '']
+    .filter(Boolean).map(x => `<div class="row" style="gap:5px">${x}</div>`).join('');
+  return `${fila('C.T.P.', ctps || '<span class="muted">—</span>')}
+    ${fila(t('ar_art'), art ? `${h(art.name)}${a && a.e.art ? ` <span class="muted">· ${trHtml(a.e.art.t)}</span>` : ''}` : '<span class="muted">—</span>')}
+    ${fila('ISO-8', a && (a.e.iso || a.e.iso_x) ? `${(a.e.iso || []).map(trHtml).join(', ')}${a.e.iso_x ? sinInterpretar(a.e.iso_x) : ''}` : '<span class="muted">—</span>')}
+    ${fila(t('ga_obelisk'), a && (a.e.ob || a.e.ob_x) ? `${(a.e.ob || []).map(trHtml).join(', ')}${(a.e.ob_x || []).map(sinInterpretar).join('')}` : '<span class="muted">—</span>')}
+    <button class="btn sm" data-a="fichaTab" data-v="armado">${h(t('rs_ver_armado'))}</button>`;
 }
 /** Skills del uniforme puesto: cargas, buffs clave, rotaciones y cada skill. */
 function fichaSkills (ch, v) {
@@ -2891,30 +2945,18 @@ function fichaSkills (ch, v) {
       ${ks.map(k => `<div class="kbrow"><span class="kbname">${h(k)}</span>
          <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x))}</span>`).join('')}</span></div>`).join('')}
     </div>` : ''}
-    ${panelRotaciones(ch, v)}
-    ${v.skills.map((sk, si) => skillCard(sk, v, si)).join('')}`;
+    ${v.skills.map((sk, si) => skillCard(sk, v, si)).join('')}
+    ${panelRotaciones(ch, v)}`;
 }
 // ---------------------------------------------------------------------------
-// ANÁLISIS (docs/MODELO.md, etapa 2): lo que hace la variante con sus skills según el
-// catálogo de efectos. Lo calcula el build (scripts/modelo.py, MFF_ANALISIS); acá se muestra:
-// a quién le llega cada efecto, desde qué skill y cuándo, con qué condición, si le sirve, y
-// cómo se lee en PvE y en PvP, con su certeza y su fuente.
+// ANÁLISIS (docs/MODELO.md, etapa 2): lo que hace la variante con sus skills según el catálogo de efectos (MFF_ANALISIS).
+// Desde la 1.0.27 no tiene pestaña propia (#33: hay que rehacerla para que conteste preguntas); lo usan el «Cómo
+// funciona» de cada skill y el «Pega con» del Resumen.
 // ---------------------------------------------------------------------------
-const DESTINOS_AN = ['e', 'q', 'r', 'i'];
 /** El efecto de una fuente [skill, etapa, efecto] y cómo lo clasifica el catálogo. */
 function fuenteAn (v, [si, ti, fi]) {
   const sk = v.skills[si], st = sk.st[ti], f = st.fx[fi], m = CATALOGO.skills[fila('ab', f.a).en];
   return { sk, st, f, m: m.por_patron ? m.por_patron[fila('desc', f.p).en] : m };
-}
-/** Desde qué skills sale y cuándo (la activación de su etapa), sin repetir. */
-function fuentesAnHtml (v, fuentes) {
-  const vistas = new Set();
-  return fuentes.map(x => {
-    const { sk, st } = fuenteAn(v, x), ac = st.ac != null ? txt('act', st.ac, st.av) : '', clave = sk.sl + '|' + ac;
-    if (vistas.has(clave)) return '';
-    vistas.add(clave);
-    return `<span class="tag dim">${h(slotEs(sk.sl))}${ac ? ' · ' + h(ac) : ''}</span>`;
-  }).join('');
 }
 /** La condición del catálogo; las fuentes de una entrada comparten la misma. Contra una
  *  facción, un tipo o una raza que la skill nombra con un marcador, va lo que se completó. */
@@ -2985,67 +3027,12 @@ function lecturasAn (pve, pvp) {
   if (pve && pvp && JSON.stringify(pve) === JSON.stringify(pvp)) return lecturaAn(pve, t('an_pve_pvp'));
   return (pve ? lecturaAn(pve, 'PvE') : '') + (pvp ? lecturaAn(pvp, 'PvP') : '');
 }
-/** Una entrada: el efecto, a qué aliados si es al equipo, de qué skills sale, su condición,
- *  si no le sirve, sus lecturas propias y su nota. El build manda «Give Power» solo cuando
- *  la fuente no dice qué otorga. */
-function filaAn (v, an, i) {
-  const [ie, d, objetivo, fuentes] = an.fx[i], e = CATALOGO.efectos[ie];
-  const cond = condicionAn(v, fuentes), noSirve = (an.ns || []).includes(i);
-  return `<div class="anfila">
-    <div class="row">${nombreAnHtml(e)}
-      ${d === 'q' ? objetivoTag(objetivo, true) : ''}${fuentesAnHtml(v, fuentes)}
-      ${cond ? `<span class="muted">${h(cond)}</span>` : ''}
-      ${noSirve ? noSirveHtml(e) : ''}</div>
-    ${lecturasAn(e.pve, e.pvp)}
-    ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
-  </div>`;
-}
-/** Lo que va a un destino (él, el equipo, el rival, sus invocaciones), por grupo del catálogo,
- *  cada grupo con su lectura de PvE y de PvP. */
-function seccionAn (v, an, d) {
-  const porGrupo = new Map();
-  an.fx.forEach((x, i) => {
-    if (x[1] !== d) return;
-    const g = CATALOGO.efectos[x[0]].grupo;
-    if (!porGrupo.has(g)) porGrupo.set(g, []);
-    porGrupo.get(g).push(i);
-  });
-  if (!porGrupo.size) return d === 'i' ? '' : `<div class="section"><h3>${h(t('an_' + d))}</h3><p class="muted">${h(t('an_nada'))}</p></div>`;
-  return `<div class="section"><h3>${h(t('an_' + d))}</h3>
-    ${CATALOGO.grupos.filter(g => porGrupo.has(g.id)).map(g => `<div class="angrupo">
-      <div class="angh"><b>${h(bi(g))}</b> <span class="muted">${h(bi(g.que))}</span></div>
-      ${lecturasAn(g.pve, g.pvp)}
-      ${porGrupo.get(g.id).map(i => filaAn(v, an, i)).join('')}
-    </div>`).join('')}
-  </div>`;
-}
-/** Una línea por destino con los grupos de lo que da. */
-function resumenAn (an) {
-  return DESTINOS_AN.map(d => {
-    const gs = CATALOGO.grupos.filter(g => an.fx.some(x => x[1] === d && CATALOGO.efectos[x[0]].grupo === g.id));
-    return gs.length ? `<div><b>${h(t('an_' + d))}:</b> ${gs.map(g => h(bi(g))).join(', ')}</div>` : '';
-  }).join('');
-}
 /** Con qué pega: de qué ataque sale su daño, de qué tipo y con qué elementos (etapa 1). */
 function pegaAn (v) {
   const pf = perfilDe(v);
   if (!pf.esc.length) return `<span class="muted">${h(t('us_atk_none'))}</span>`;
   return `${h(t('an_escala'))} ${ataqueHtml(tipoAtaque(v))} · ${h(t('an_tipos'))} ${pf.tip.map(x => h(t('el_' + x))).join(' + ')} · ${
     h(t('an_elems'))}: ${pf.ele.length ? pf.ele.map(x => h(t('el_' + x))).join(', ') : h(t('an_sin_elem'))}`;
-}
-function fichaAnalisis (ch, v) {
-  const an = ANALISIS[v.p];
-  if (!an) return `<div class="empty"><div class="big">?</div><div>${h(t('an_sin_datos'))}</div></div>`;
-  return `<p class="muted" style="margin-bottom:12px">${h(t('an_note'))}</p>
-    <div class="section anres"><h3>${h(t('an_resumen'))}</h3>
-      ${resumenAn(an)}
-      <div><b>${h(t('an_pega'))}:</b> ${pegaAn(v)}</div>
-      <div title="${h(t('an_roles_t'))}"><b>${h(t('an_roles'))}:</b> ${v.r.map(r => `<span class="tag ghost" style="color:${roleColor(r)}">${h(dom(r))}</span>`).join(' ')}</div>
-    </div>
-    ${DESTINOS_AN.map(d => seccionAn(v, an, d)).join('')}
-    ${an.sc ? `<div class="section"><h3>${h(t('an_sc'))}</h3><p class="muted">${h(t('an_sc_t'))}</p>
-      ${an.sc.map(([si, ti, fi]) => { const sk = v.skills[si];
-        return `<div class="anfila"><span class="tag dim">${h(slotEs(sk.sl))}</span> ${h(fila('ab', sk.st[ti].fx[fi].a).en)}</div>`; }).join('')}</div>` : ''}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -3311,9 +3298,8 @@ function atraparFoco (e) {
  *  tipo de ataque (iguales para todos) van plegadas. */
 function fichaArmado (ch, v) {
   const ta = tipoAtaque(v);
-  return `<div class="section"><h3>${h(t('ar_title'))}</h3>
-    <p class="muted" style="margin-bottom:12px">${h(t('ar_note'))}
-      <a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
+  return `<div class="section"><h3>${h(t('ar_title'))} ${ayudaHtml(t('ar_note'))}</h3>
+    <p class="muted" style="margin-bottom:12px"><a href="#armado" data-a="irArmadoModos">${h(t('ar_more'))}</a></p>
     <div class="usogrid par">
       <div class="bloque"><h4>C.T.P.</h4>${armadoCTP(ch, v)}</div>
       <div class="bloque" id="artefacto"><h4>${h(t('ar_art'))}</h4>${armadoArtefacto(ch)}${artArmado(ch)}</div>
@@ -3324,7 +3310,8 @@ function fichaArmado (ch, v) {
       <div class="usogrid par">
         <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
         <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
-      </div></details></div>`;
+      </div></details></div>
+  ${fichaProgreso(ch, v)}`;
 }
 /** Tu avance con el personaje: hoja de ruta y topes de stats (se guardan en la capa). */
 function fichaProgreso (ch, v) {
@@ -3832,8 +3819,7 @@ function fichaEquipos (ch, v) {
 function bonosHtml (ch) {
   const bonos = (BONOS_DE[ch.id] || []).slice().sort((a, b) => b.m.length - a.m.length || (a.n || '').localeCompare(b.n || ''));
   if (!bonos.length) return `<div class="section" id="bonos"><h3>${h(t('bn_title'))}</h3><p class="muted">${h(t('bn_none'))}</p></div>`;
-  return `<div class="section" id="bonos"><h3>${h(t('bn_title'))}</h3>
-    <p class="muted">${h(t('bn_note'))}</p>
+  return `<div class="section" id="bonos"><h3>${h(t('bn_title'))} ${ayudaHtml(t('bn_note'))}</h3>
     <details class="reglas"><summary>${h(t('bn_show').replace('{n}', bonos.length))}</summary>
       <div class="grid eqgrid">${bonos.map(b => `<div class="card bono">
         <b>${h(b.n || t('bn_noname'))}</b>
@@ -3856,18 +3842,24 @@ function strikerProbHtml (p, cuando) {
  *  quiénes es striker, plegados: cada uno con su retrato, su probabilidad de aparecer y cuándo, de
  *  mayor a menor probabilidad. */
 function strikersHtml (ch) {
-  const suyos = STRIKERS[ch.id], de = STRIKERS_DE[ch.id] || [];
-  const fotos = (filas) => `<div class="row eqfotos">${filas.slice().sort((a, b) => b[1] - a[1]).map(([cid, p, cuando]) => {
-    const x = variant(cid, null);
-    return `<button class="eqfoto stk" data-a="open" data-cid="${x.cid}" data-uid="" title="${h(x.name)}"><span class="shot">${shot(x.id)}</span>
-      <span class="stknom">${h(x.name)}</span><span>${strikerProbHtml(p, cuando)}</span></button>`;
-  }).join('')}</div>`;
-  return `<div class="section" id="strikers"><h3>${h(t('sk_title'))}</h3>
-    <p class="muted">${h(t('sk_note'))}</p>
-    ${suyos ? (suyos.length ? `<details class="reglas"><summary>${h(t('sk_suyos').replace('{n}', suyos.length))}</summary>${fotos(suyos)}</details>` : '')
-            : `<p class="muted">${h(t('sk_sin_pestana'))}</p>`}
-    ${de.length ? `<details class="reglas"><summary>${h(t('sk_de').replace('{n}', de.length))}</summary>
-      <p class="muted">${h(t('sk_de_nota'))}</p>${fotos(de)}</details>` : `<p class="muted">${h(t('sk_de_nadie'))}</p>`}
+  // Una fila por personaje con los dos sentidos (#24, caso del 6 de octubre de 2026): la relación no es simétrica, y
+  // en dos grillas había que cruzarlas a ojo. «Sin dato»: la wiki no tiene la pestaña Striker de ese lado.
+  const suyos = STRIKERS[ch.id], de = STRIKERS_DE[ch.id] || [], filas = new Map();
+  for (const [cid, p, c] of suyos || []) filas.set(cid, { cid, ayudan: [p, c] });
+  for (const [cid, p, c] of de) filas.set(cid, Object.assign(filas.get(cid) || { cid }, { ayuda: [p, c] }));
+  const max = (f) => Math.max(f.ayudan ? f.ayudan[0] : 0, f.ayuda ? f.ayuda[0] : 0);
+  const celda = (x, conDato) => x ? strikerProbHtml(x[0], x[1])
+    : conDato ? `<span class="muted">${h(t('sk_no'))}</span>` : `<span class="muted" title="${h(t('sk_sin_dato_t'))}">${h(t('sk_sin_dato'))}</span>`;
+  const lista = [...filas.values()].sort((a, b) => max(b) - max(a));
+  return `<div class="section" id="strikers"><h3>${h(t('sk_title'))} ${ayudaHtml(t('sk_note') + ' ' + t('sk_de_nota'))}</h3>
+    ${!suyos ? `<p class="muted">${h(t('sk_sin_pestana'))}</p>` : ''}${!de.length ? `<p class="muted">${h(t('sk_de_nadie'))}</p>` : ''}
+    ${lista.length ? `<details class="reglas"><summary>${h(t('sk_resumen').replace('{n}', lista.length).replace('{a}', (suyos || []).length).replace('{b}', de.length))}</summary>
+      <div class="tablawrap"><table class="sktabla"><thead><tr><th>${h(t('sk_con'))}</th><th>${h(t('sk_lo_ayudan'))}</th><th>${h(t('sk_el_ayuda'))}</th></tr></thead>
+      <tbody>${lista.map(f => { const x = variant(f.cid, null);
+        return `<tr><td><button class="plabrir sk" data-a="open" data-cid="${x.cid}" data-uid=""><span class="plfoto" style="--cc:${classColor(x.c)}">${shot(x.id)}</span>
+          <span class="pltx"><b>${h(x.name)}</b></span></button></td>
+          <td>${celda(f.ayudan, !!suyos)}</td><td>${celda(f.ayuda, !!STRIKERS[f.cid])}</td></tr>`; }).join('')}</tbody></table></div>
+    </details>` : ''}
     <div class="fuentes">${fuentesHtml(['wiki-strikers'])}</div>
   </div>`;
 }
@@ -4473,8 +4465,7 @@ function ordenCombinacionesHtml () {
         </select></label>`;
 }
 function combinacionesHtml (v) {
-  const cab = `<h3>${h(t('eq_new'))}</h3><p class="muted" style="margin-bottom:10px">${h(t('eq_new_note'))} ${h(t('rep_regla'))}</p>
-    <p class="muted" style="margin-bottom:10px">${h(t('cb_note'))}</p>`;
+  const cab = `<h3>${h(t('eq_new'))} ${ayudaHtml(t('eq_new_note') + ' ' + t('rep_regla') + ' ' + t('cb_note'))}</h3>`;
   const ctx = contextoOrden();
   // Sin función en el contexto, no hay lista: solo el aviso y el orden, para cambiarlo. Tampoco se
   // calcula la consulta.
@@ -4552,7 +4543,7 @@ function combinacionesHtml (v) {
   </div>`;
 }
 /** El resto: verificación entre fuentes y el retrato propio. */
-function fichaMas (ch, v) {
+function fichaFuentes (ch, v) {
   return `<div class="section" id="verif"><h3>${h(t('vf_title'))}</h3><div class="bloque">${usoVerificacion(ch, v)}</div></div>
   ${historialFicha(ch)}
   <div class="section"><h3>${h(t('d_portraits'))}</h3>
@@ -5601,17 +5592,6 @@ function usoVerificacion (ch, v) {
     <p class="muted">${h(t('vf_nota'))} <a href="docs/AUDITORIA.md" target="_blank" rel="noopener">docs/AUDITORIA.md</a></p>`;
 }
 
-function panelUso (ch, v) {
-  return `<div class="section uso"><h3>${h(t('us_title'))}</h3>
-    <p class="muted" style="margin-bottom:12px">${h(t('us_note'))}</p>
-    <div class="usogrid">
-      <div class="bloque"><h4>${h(t('us_lists'))}</h4>${usoListas(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('us_sup'))}</h4>${usoSoportes(v)}</div>
-      <div class="bloque"><h4>${h(t('us_guide'))}</h4>${usoGuia(ch, v)}</div>
-      <div class="bloque"><h4>Alliance Battle</h4>${usoABX(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('ga_title'))}</h4>${usoArmado(ch, v)}</div>
-    </div></div>`;
-}
 
 // ============================================================================
 // MODOS DE JUEGO
@@ -6396,7 +6376,7 @@ document.addEventListener('click', (e) => {
     case 'irArmadoModos': e.preventDefault(); ui.view = 'modos'; render();
       document.getElementById('armado')?.scrollIntoView({ behavior: 'smooth' }); break;
     case 'artEst': ui.artEst = d.v; render(); break;
-    case 'irVerif': e.preventDefault(); ui.fichaTab = 'mas'; render(); irA('fcuerpo'); break;
+    case 'irVerif': e.preventDefault(); ui.fichaTab = 'fuentes'; render(); irA('fcuerpo'); break;
     case 'ruta': if (d.v) U.ruta[d.cid] = d.v; else delete U.ruta[d.cid]; commit(); break;
     case 'pickList': ui.tierList = d.id; render(); break;
     case 'addList': { const name = ui.newListName.trim(); if (!name) break;
