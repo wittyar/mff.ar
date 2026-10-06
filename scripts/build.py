@@ -13,7 +13,8 @@ data.js y el datos.json recién escritos y dice qué le falta a cada variante
 
 datos.json es lo que la app instalada consulta en GitHub para saber si hay datos nuevos:
 versión, formato, sha256 y tamaño de cada archivo que baja, y la lista de imágenes con
-su origen. Por eso data.js y el informe se escriben en UTF-8 con finales de línea \n
+su origen. Se publica en la raíz y, con los archivos que lista, en datos/<formato>/
+(carpeta_formato.py), que es de donde los baja la app desde la 1.0.30. Por eso data.js y el informe se escriben en UTF-8 con finales de línea \n
 en cualquier sistema, y .gitattributes impide que git los convierta: el hash publicado
 tiene que ser el de lo que se descarga."""
 import hashlib, json, os, datetime
@@ -263,6 +264,8 @@ manifiesto = {'formato': FORMATO, 'juego': gv, 'generado': hoy,
 with open('datos.json', 'w', encoding='utf-8', newline='\n') as f:
     json.dump(manifiesto, f, ensure_ascii=False, indent=1)
     f.write('\n')
+# Los mismos datos, en la carpeta de su formato: de ahí los baja la app instalada (#1).
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'carpeta_formato.py')], check=True)
 print(f"data.js {os.path.getsize('data.js')//1024} KB | import {os.path.getsize('mff-thanosvibs-import.json')//1024} KB"
       f" | juego {gv} | listas {len(tl)} | sets de skills {len(SKILLS)}")
 # Qué le falta a cada variante, sobre el data.js y el datos.json recién escritos (docs/COMPLETITUD.md).

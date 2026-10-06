@@ -355,7 +355,8 @@ daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.
 El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
 Actions → Run workflow) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
 regenera `data.js`, `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md`, `docs/COMPLETITUD.md`
-y el import, y los commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja ese
+y el import, copia `datos.json` y los archivos que lista a `datos/<formato>/` (`scripts/carpeta_formato.py`) y los
+commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja ese
 resultado.
 
 A mano (Linux o macOS; en Windows ver Limitaciones):
@@ -541,6 +542,7 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `index.html` / `app.js` / `styles.css` — la app (la página).
 - `version.json` — versión de la app, formato de datos que entiende, versión de Python y notas.
 - `data.js` / `datos.json` — snapshot generado de los datos y su manifiesto.
+- `datos/<formato>/` — los mismos, en la carpeta de su formato (desde la 1.0.30, la app instalada los baja de ahí).
 - `scripts/` — pipeline: `fetch_all` → `parse_instinto` → `build`, que llama a `skills_api.py`,
   `fuentes.py`, `catalogo.py`, `auditar.py` y `_core.py`. `dominio.py` tiene el vocabulario cerrado del juego,
   `traducir.py` las tablas de las skills, `version_juego.py` la versión del snapshot,
