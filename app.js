@@ -1042,7 +1042,7 @@ const T = {
   ms_cmp_vacio:      { es:'Hasta 4: «+ Comparar esta versión» en una ficha o «Comparar» en el roster.',
                        en:'Up to 4: «+ Compare this version» on a sheet or «Compare» on the roster.' },
   ms_cmp_ir:         { es:'Comparar {n} →',      en:'Compare {n} →' },
-  ms_lista:          { es:'Personajes · {i} de {n}', en:'Characters · {i} of {n}' },
+  ms_lista_n:        { es:'Personajes · {n} de {t}', en:'Characters · {n} of {t}' },
   ms_lista_tab:      { es:'Lista',               en:'List' },
   ms_ver_tab:        { es:'Ver',                 en:'View' },
   tm_lideres:        { es:'Estos equipos no tenían el líder declarado: quedó el que mostraba su tarjeta (el de la sinergia de la app). Revisalo en cada uno: {e}.',
@@ -1459,6 +1459,7 @@ let ui = {
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
   avisoMesa: null,                   // { txt, ok }: por qué la mesa no sumó al último que se puso, o que se guardó (ok)
   movil: 'centro',                   // ventana angosta: qué panel se ve ('lista', 'centro' o 'mesa')
+  plFiltros: false,                  // la lista de la izquierda con el panel de filtros abierto
   avisoLideres: null,                // equipos de antes a los que se les declaró el líder al cargar la capa (declararLideres)
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
@@ -2610,38 +2611,21 @@ function indiceLinea (v) {
   const s = SOPORTES[v.p], api = LIDERAZGOS.some(k => s[k] && esDeApi(s[k]) && slotPasa(s[k], FI.F.lid, FI.para, FI.restr));
   return `<div class="indlinea">${parte('cd_lid', x.lid, api ? srcHtml({ src: 'api' }) : '')}${parte('cd_sop', x.sop)}</div>`;
 }
-function toolbar (total, shown) {
+/** Cuántos filtros del roster están puestos (los mismos para el roster y la lista de la izquierda). */
+function filtrosActivos () {
+  const P = U.prefs;
+  return Object.values(P.filters).reduce((n, a) => n + a.length, 0) + Object.values(P.flags).filter(Boolean).length
+       + (P.objetivo !== '' ? 1 : 0) + (P.atributo !== '' ? 1 : 0) + (P.para ? 1 : 0) + (P.restr ? 1 : 0);
+}
+/** El panel de filtros del roster: el mismo en el roster y en la lista de la izquierda (una sola regla, rosterData). */
+function filtrosHtml () {
   const P = U.prefs, F = P.filters, G = P.flags;
-  const active = Object.values(F).reduce((n, a) => n + a.length, 0) + Object.values(G).filter(Boolean).length
-               + (P.objetivo !== '' ? 1 : 0) + (P.atributo !== '' ? 1 : 0) + (P.para ? 1 : 0) + (P.restr ? 1 : 0);
   // El valor que viaja en data-v es siempre el del snapshot (español): el idioma solo
   // cambia lo que se ve, nunca la clave con la que se filtra ni la del ícono.
   const group = (clave, cat, values, ancho) => `<div class="filtergroup ${ancho ? 'ancho' : ''}"><div class="lbl">${h(t(clave))}</div><div class="row">${
     values.map(v => `<button class="chip ${F[cat].includes(v) ? 'on' : ''}" data-a="filter" data-cat="${cat}" data-v="${h(v)}">${icon(v)}${h(dom(v))}</button>`).join('')
   }</div></div>`;
-  // Con el panel de filtros abierto la barra no queda fija: el panel es más alto que la
-  // pantalla y, fijo arriba, sus últimos grupos solo se veían al llegar al final de la página.
-  return `<div class="toolbar ${P.filtersOpen ? 'conpanel' : ''}">
-    <div class="line">
-      <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search"></div>
-      <button class="btn ${U.prefs.filtersOpen ? 'primary' : ''}" data-a="toggleFilters">${h(t('filters'))}${active ? ' · ' + active : ''}</button>
-      ${active || ui.search ? `<button class="btn sm" data-a="clearFilters">${h(t('clear'))}</button>` : ''}
-      <div class="seg">
-        <button class="${P.kind === 'todo' ? 'on' : ''}" data-a="kind" data-v="todo">${h(t('all'))}</button>
-        <button class="${P.kind === 'base' ? 'on' : ''}" data-a="kind" data-v="base">${h(t('bases'))}</button>
-        <button class="${P.kind === 'uni' ? 'on' : ''}" data-a="kind" data-v="uni">${h(t('uniforms'))}</button>
-      </div>
-      <div class="seg">
-        <button class="${U.prefs.view === 'grid' ? 'on' : ''}" data-a="view" data-v="grid">${h(t('cards'))}</button>
-        <button class="${U.prefs.view === 'dense' ? 'on' : ''}" data-a="view" data-v="dense">${h(t('compact'))}</button>
-        <button class="${U.prefs.view === 'table' ? 'on' : ''}" data-a="view" data-v="table">${h(t('table'))}</button>
-      </div>
-      <select data-a="sort" title="${h(t('sort'))}">${Object.entries(SORTS).map(([k, o]) => `<option value="${k}" ${k === U.prefs.sort ? 'selected' : ''}>${h(t(o.k))}</option>`).join('')}</select>
-      <button class="btn icon" data-a="dir" title="${h(t('invert'))}">${U.prefs.dir === 1 ? '↑' : '↓'}</button>
-      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `${h(t('comparing'))} (${ui.picks.length}/${MAX_COMPARAR})` : h(t('compare'))}</button>
-      <span class="count"><b>${shown}</b> ${h(t('of'))} ${total}</span>
-    </div>
-    ${U.prefs.filtersOpen ? `<div class="filterpanel">
+  return `
       ${group('f_class','c',SEED.CLASSES)}
       ${group('f_role','r',SEED.ROLES)}
       ${group('f_tier','t',SEED.TIERS)}
@@ -2678,7 +2662,34 @@ function toolbar (total, shown) {
             `<option value="${l.id}" ${l.id === U.prefs.refList ? 'selected' : ''}>${h(listName(l))}</option>`).join('')}</optgroup>`).join('')}
         </select>
       </div>
-    </div>` : ''}
+`;
+}
+function toolbar (total, shown) {
+  const P = U.prefs;
+  const active = filtrosActivos();
+  // Con el panel de filtros abierto la barra no queda fija: el panel es más alto que la
+  // pantalla y, fijo arriba, sus últimos grupos solo se veían al llegar al final de la página.
+  return `<div class="toolbar ${P.filtersOpen ? 'conpanel' : ''}">
+    <div class="line">
+      <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search"></div>
+      <button class="btn ${U.prefs.filtersOpen ? 'primary' : ''}" data-a="toggleFilters">${h(t('filters'))}${active ? ' · ' + active : ''}</button>
+      ${active || ui.search ? `<button class="btn sm" data-a="clearFilters">${h(t('clear'))}</button>` : ''}
+      <div class="seg">
+        <button class="${P.kind === 'todo' ? 'on' : ''}" data-a="kind" data-v="todo">${h(t('all'))}</button>
+        <button class="${P.kind === 'base' ? 'on' : ''}" data-a="kind" data-v="base">${h(t('bases'))}</button>
+        <button class="${P.kind === 'uni' ? 'on' : ''}" data-a="kind" data-v="uni">${h(t('uniforms'))}</button>
+      </div>
+      <div class="seg">
+        <button class="${U.prefs.view === 'grid' ? 'on' : ''}" data-a="view" data-v="grid">${h(t('cards'))}</button>
+        <button class="${U.prefs.view === 'dense' ? 'on' : ''}" data-a="view" data-v="dense">${h(t('compact'))}</button>
+        <button class="${U.prefs.view === 'table' ? 'on' : ''}" data-a="view" data-v="table">${h(t('table'))}</button>
+      </div>
+      <select data-a="sort" title="${h(t('sort'))}">${Object.entries(SORTS).map(([k, o]) => `<option value="${k}" ${k === U.prefs.sort ? 'selected' : ''}>${h(t(o.k))}</option>`).join('')}</select>
+      <button class="btn icon" data-a="dir" title="${h(t('invert'))}">${U.prefs.dir === 1 ? '↑' : '↓'}</button>
+      <button class="btn ${ui.pickMode ? 'primary' : ''}" data-a="pickMode">${ui.pickMode ? `${h(t('comparing'))} (${ui.picks.length}/${MAX_COMPARAR})` : h(t('compare'))}</button>
+      <span class="count"><b>${shown}</b> ${h(t('of'))} ${total}</span>
+    </div>
+    ${U.prefs.filtersOpen ? `<div class="filterpanel">${filtrosHtml()}    </div>` : ''}
   </div>`;
 }
 
@@ -5860,18 +5871,31 @@ function botonPoner (v) {
   const ya = U.mesa.members.includes(v.key);
   return `<button class="btn sm ${ya ? '' : 'primary'}" data-a="mesaPoner" data-key="${v.key}" ${ya ? 'disabled' : ''}>${h(t(ya ? 'ms_en_mesa' : 'ms_poner'))}</button>`;
 }
-/** La lista de la izquierda en la ficha: el roster tal como está filtrado y ordenado. */
+/** La lista de la izquierda (en la ficha y en Equipos): el roster con sus filtros, su búsqueda y su orden (los mismos
+ *  del roster: una sola regla, rosterData), para pasar de uno a otro y poner en la mesa. */
 function panelListaHtml () {
-  const lista = rosterData(), v = variant(ui.charId, ui.uniformId), nav = vecinosEnListado(v);
-  return `<div class="panelcab"><span>${h(t('ms_lista').replace('{i}', nav.i + 1).replace('{n}', lista.length))}</span>
-      <button class="btn sm" data-a="back">${h(t('nav_roster'))}</button></div>
-    <div class="plitems">${lista.map(x => `<div class="plit${x.key === v.key ? ' on' : ''}">
-      <button class="plabrir" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}" ${x.key === v.key ? 'aria-current="true"' : ''}>
+  const lista = rosterData(), P = U.prefs, activos = filtrosActivos(), total = allVariants().length;
+  const v = ui.view === 'detail' ? variant(ui.charId, ui.uniformId) : null;
+  return `<div class="panelcab"><span>${h(t('ms_lista_n').replace('{n}', lista.length).replace('{t}', total))}</span>
+      ${ui.view === 'detail' ? `<button class="btn sm" data-a="back">${h(t('nav_roster'))}</button>` : ''}</div>
+    <div class="plfiltros">
+      <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search"></div>
+      <div class="row">
+        <button class="btn sm ${ui.plFiltros ? 'primary' : ''}" data-a="plFiltros" aria-expanded="${ui.plFiltros}">${h(t('filters'))}${activos ? ' · ' + activos : ''}</button>
+        ${activos || ui.search ? `<button class="btn sm" data-a="clearFilters">${h(t('clear'))}</button>` : ''}
+        <div class="seg">${[['todo', 'all'], ['base', 'bases'], ['uni', 'uniforms']].map(([k, c]) =>
+          `<button class="${P.kind === k ? 'on' : ''}" data-a="kind" data-v="${k}">${h(t(c))}</button>`).join('')}</div>
+      </div>
+      ${ui.plFiltros ? `<div class="filterpanel plpanel">${filtrosHtml()}</div>` : ''}
+    </div>
+    <div class="plitems">${lista.length ? lista.map(x => `<div class="plit${v && x.key === v.key ? ' on' : ''}">
+      <button class="plabrir" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}" ${v && x.key === v.key ? 'aria-current="true"' : ''}>
         <span class="plfoto" style="--cc:${classColor(x.c)}">${shot(x.id)}</span>
         <span class="pltx"><b>${h(x.name)}</b><small>${h(x.uid ? x.sub : t('base_word'))}</small></span>
         <span class="tag dim">${h(x.t)}</span></button>
-      <button class="plmas" data-a="mesaPoner" data-key="${x.key}" title="${h(t('ms_poner') + ': ' + fullLabel(x))}" aria-label="${h(t('ms_poner') + ': ' + fullLabel(x))}">+</button>
-    </div>`).join('')}</div>`;
+      ${U.mesa.members.includes(x.key) ? `<span class="plmas en" title="${h(t('ms_en_mesa'))}" aria-label="${h(t('ms_en_mesa'))}">✓</span>`
+        : `<button class="plmas" data-a="mesaPoner" data-key="${x.key}" title="${h(t('ms_poner') + ': ' + fullLabel(x))}" aria-label="${h(t('ms_poner') + ': ' + fullLabel(x))}">+</button>`}
+    </div>`).join('') : `<p class="muted plvacio">${h(t('no_match'))}</p>`}</div>`;
 }
 function mesaHtml () {
   const m = U.mesa, vs = mesaVs(), max = tamModo(m.modeId), modos = modosEquipo(), lider = vs[0] || null;
@@ -6181,7 +6205,7 @@ function render () {
   // Los avisos van fuera de <main>: la barra del roster se pega arriba de main con margen
   // negativo y los taparía.
   // Tres paneles (ver MESA DE TRABAJO): la lista y la mesa conservan su desplazamiento al repintar.
-  const conLista = ui.view === 'detail' && ui.charId != null, previo = {};
+  const conLista = (ui.view === 'detail' && ui.charId != null) || ui.view === 'teams', previo = {};
   for (const sel of ['.plista', '.mesa']) { const x = $(sel); if (x) previo[sel] = x.scrollTop; }
   $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div>'
     + `<div class="trabajo${conLista ? ' con-lista' : ''}" data-movil="${ui.movil}">`
@@ -6450,6 +6474,7 @@ document.addEventListener('click', (e) => {
       const nombre = m.name || mesaVs().map(fullLabel).join(' + ');
       U.teams.unshift({ id: 'eq-' + Date.now(), name: nombre, members, lider, reason: '', modeId });
       ui.avisoMesa = { txt: t('ms_guardado').replace('{e}', nombre), ok: true }; commit(); break; }
+    case 'plFiltros': ui.plFiltros = !ui.plFiltros; render(); break;
     case 'movil': ui.movil = d.v; render(); window.scrollTo(0, 0); break;
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
 

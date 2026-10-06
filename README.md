@@ -29,9 +29,10 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   repetidos, la resistencia de los jefes de World Boss a los strikers y el instinto.
 
 ## Qué hay en la app
-La pantalla va en tres paneles (la *mesa de trabajo*, desde la 1.0.25, a prueba): en la ficha, a la izquierda,
-la lista del roster tal como está filtrado y ordenado (la misma de las flechas ‹ ›; tocar uno abre su ficha y su
-«+» lo pone en la mesa); en el centro, la sección; a la derecha, en todas las secciones, la **mesa**:
+La pantalla va en tres paneles (la *mesa de trabajo*, desde la 1.0.25, a prueba): en la ficha y en Equipos, a la
+izquierda, la lista del roster con su búsqueda, sus filtros (los mismos del roster: lo que se filtra en uno se ve en
+el otro) y su orden, que dice cuántos quedan (la misma lista de las flechas ‹ ›; tocar uno abre su ficha y su «+» lo
+pone en la mesa; el que ya está lleva ✓); en el centro, la sección; a la derecha, en todas las secciones, la **mesa**:
 - El equipo que se está armando, en orden: el primero es el líder, como en el juego, y «↑» hace líder a otro. Se
   pone desde la ficha («Poner en la mesa»), desde el «+» de la lista o con «Llevar a la mesa» en una tarjeta de
   equipo (combinaciones, favoritos, tus equipos, «cómo entraría»), que reemplaza lo que había con su líder primero.
