@@ -20,6 +20,14 @@ API (solo para la propia página: cabecera X-MFF y Host 127.0.0.1):
   POST /api/imagenes/bajar    baja los retratos e íconos que falten (tarea en segundo plano)
   POST /api/app/actualizar    aplica el parche de la última versión y pide reiniciar
   GET  /api/progreso          avance de las tareas
+  POST /api/arranque          la página avisa que arrancó ({"ok": true}) o por qué no ({"error": "..."})
+  GET  /api/rescate           lo que muestra la pantalla de rescate: por qué se abrió, el programa anterior
+                              guardado y el final de registro.txt
+  POST /api/rescate/volver    vuelve al programa anterior (programa-anterior/) y pide reiniciar
+
+Pantalla de rescate (#2): GET /rescate es una página propia, hecha acá (rescate.py), sin app.js ni data.js. La
+abre el lanzador si la página no avisa que arrancó a tiempo o avisa un error (motivo_rescate); desde ella se
+actualiza la app, se baja el instalador, se vuelve al programa anterior o se vuelven a bajar los datos.
 
 No se corre solo: lo arranca desktop/lanzador.py (crear), que también abre la ventana
 y lo apaga cuando ninguna ventana late durante un rato.
@@ -29,7 +37,7 @@ Solo biblioteca estándar: corre con el Python embebido del instalador.
 import datetime, glob, json, logging, os, re, shutil, threading, time, urllib.parse
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
-import actualizador
+import actualizador, rescate
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATOS = None                          # carpeta de datos; la fija crear()
@@ -72,6 +80,60 @@ def debe_cerrar():
     if any(TAREAS[n].estado()['corriendo'] for n in NO_SE_CORTAN):
         return False
     return time.monotonic() - (_ultimo_latido or _ARRANQUE) > ESPERA
+
+# ---- arranque y rescate (#2) ----
+ESPERA_ARRANQUE = 60                  # segundos para que la página avise que arrancó; la fija crear()
+ARRANQUE = {'ok': False, 'error': None}
+_plazo_arranque = None
+RESCATE = None                        # por qué se abrió la pantalla de rescate, cuando se abrió
+
+def avisar_arranque(cuerpo):
+    """Lo que avisa la página: que arrancó, o el error que cortó el arranque."""
+    if cuerpo == {'ok': True}:
+        ARRANQUE['ok'] = True
+    elif set(cuerpo) == {'error'} and isinstance(cuerpo['error'], str) and cuerpo['error']:
+        ARRANQUE['error'] = cuerpo['error'][:2000]
+        logging.error('la página no pudo arrancar: %s', ARRANQUE['error'])
+    else:
+        raise ValueError('el aviso de arranque es {"ok": true} o {"error": "..."}')
+
+def motivo_rescate():
+    """None mientras no haga falta la pantalla de rescate. Hace falta si la página avisó un error, o si pasaron
+    ESPERA_ARRANQUE segundos sin que avisara que arrancó; mientras se bajan datos o un parche, el plazo se corre (el
+    primer arranque de una versión con otro formato baja los datos antes de mostrar nada)."""
+    global _plazo_arranque, RESCATE
+    if ARRANQUE['ok'] or RESCATE:
+        return None
+    if ARRANQUE['error']:
+        RESCATE = {'tipo': 'error', 'detalle': ARRANQUE['error']}
+        return RESCATE
+    ahora = time.monotonic()
+    if any(TAREAS[n].estado()['corriendo'] for n in NO_SE_CORTAN):
+        _plazo_arranque = ahora + ESPERA_ARRANQUE
+        return None
+    if ahora > _plazo_arranque:
+        RESCATE = {'tipo': 'tiempo', 'segundos': ESPERA_ARRANQUE}
+        logging.error('la página no avisó que arrancó en %s s', ESPERA_ARRANQUE)
+        return RESCATE
+    return None
+
+def _respaldo():
+    return os.path.join(DATOS, 'programa-anterior')
+
+def estado_rescate():
+    registro = os.path.join(DATOS, 'registro.txt')
+    with open(registro, encoding='utf-8', errors='replace') as f:
+        final = f.readlines()[-40:]
+    return {'motivo': RESCATE, 'programa_anterior': actualizador.programa_anterior(_respaldo()),
+            'registro': ''.join(final)}
+
+def volver_al_anterior():
+    if DESDE_REPO:
+        raise RuntimeError('la app corre desde el repo: el programa se cambia con git')
+    resultado = actualizador.volver_al_anterior(RAIZ, _respaldo())
+    logging.info('se volvió al programa anterior (%s)', resultado['version'])
+    threading.Timer(2.0, REINICIAR.set).start()
+    return resultado
 
 def cancelar_tareas():
     """Antes de apagar: las tareas que se pueden cortar dejan de tomar trabajo nuevo."""
@@ -117,7 +179,7 @@ def novedades():
 def tarea_app(t):
     if DESDE_REPO:
         raise RuntimeError('la app corre desde el repo: las versiones nuevas llegan con git pull')
-    resultado = actualizador.actualizar_app(ORIGEN_APP, RAIZ, os.path.join(DATOS, 'programa-anterior'), VERSION, t)
+    resultado = actualizador.actualizar_app(ORIGEN_APP, RAIZ, _respaldo(), VERSION, t)
     # Un par de segundos para que la página vea que terminó antes de que el servidor se vaya.
     threading.Timer(2.0, REINICIAR.set).start()
     return resultado
@@ -221,6 +283,9 @@ class Handler(SimpleHTTPRequestHandler):
                 logging.error('index.html no referencia "%s" una sola vez', f)
                 return self.send_error(500, f'index.html no referencia "{f}" una sola vez')
             html = html.replace(f'"{f}"', f'"{f}?v={VERSION["version"]}"')
+        self._html(html)
+
+    def _html(self, html):
         cuerpo = html.encode('utf-8')
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
@@ -239,8 +304,11 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._host_valido():
             return self.send_error(403)
         if not self.path.startswith('/api/'):
-            if urllib.parse.urlsplit(self.path).path in ('/', '/index.html'):
+            ruta = urllib.parse.urlsplit(self.path).path
+            if ruta in ('/', '/index.html'):
                 return self._index()
+            if ruta == '/rescate':
+                return self._html(rescate.pagina(idioma()))
             return super().do_GET()
         if not self._api():
             return
@@ -253,6 +321,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(novedades())
         if self.path == '/api/progreso':
             return self._json({n: t.estado() for n, t in TAREAS.items()})
+        if self.path == '/api/rescate':
+            return self._json(estado_rescate())
         return self._json({'error': 'no existe'}, 404)
 
     def do_PUT(self):
@@ -287,6 +357,21 @@ class Handler(SimpleHTTPRequestHandler):
         if self.path == '/api/latido':
             latido()
             return self._json({'ok': True})
+        if self.path == '/api/arranque':
+            largo = int(self.headers.get('Content-Length') or 0)
+            if not 0 < largo <= 8192:
+                return self._json({'error': f'tamaño inválido ({largo} bytes)'}, 413)
+            try:
+                avisar_arranque(json.loads(self.rfile.read(largo).decode('utf-8')))
+            except ValueError as e:
+                return self._json({'error': str(e)}, 400)
+            return self._json({'ok': True})
+        if self.path == '/api/rescate/volver':
+            try:
+                return self._json(volver_al_anterior())
+            except Exception as e:
+                logging.error('no se pudo volver al programa anterior: %s', e)
+                return self._json({'error': actualizador.explicar(e)}, 500)
         if self.path == '/api/datos/actualizar':
             tarea = lambda t: actualizador.actualizar_datos(ORIGEN_DATOS, DATOS, VERSION['formato_datos'], t)
             if not TAREAS['datos'].arrancar(tarea):
@@ -302,13 +387,20 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(TAREAS['imagenes'].estado())
         return self._json({'error': 'no existe'}, 404)
 
-def crear(datos, puerto, espera, origen_datos, origen_app):
+def idioma():
+    """El idioma de la capa ('es' si todavía no hay o no se puede leer: la pantalla de rescate tiene que abrir igual)."""
+    codigo, cuerpo = leer_capa()
+    capa = cuerpo.get('capa') if codigo == 200 else None
+    return 'en' if capa and (capa.get('prefs') or {}).get('lang') == 'en' else 'es'
+
+def crear(datos, puerto, espera, origen_datos, origen_app, espera_arranque):
     """Servidor atado a 127.0.0.1. puerto 0 deja que el sistema elija uno libre: la capa no
     depende del origen, así que el puerto puede cambiar entre arranques. Con un puerto
     fijo (el reinicio tras un parche retoma el de la ventana abierta) se reintenta unos
     segundos: el proceso anterior puede estar terminando de soltarlo."""
-    global DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS, ORIGEN_APP
+    global DATOS, ESPERA, _ARRANQUE, ORIGEN_DATOS, ORIGEN_APP, ESPERA_ARRANQUE, _plazo_arranque
     DATOS, ESPERA, _ARRANQUE = os.path.abspath(datos), espera, time.monotonic()
+    ESPERA_ARRANQUE, _plazo_arranque = espera_arranque, _ARRANQUE + espera_arranque
     ORIGEN_DATOS, ORIGEN_APP = origen_datos, origen_app
     limite = time.monotonic() + 20
     while True:

@@ -244,6 +244,12 @@ Al abrir, la app consulta GitHub:
 - **Si la app no puede leer los datos que tiene** (es de otro formato), antes de mostrar nada baja los
   de la carpeta de su formato y arranca; si todavía no hay datos publicados de su formato, lo dice y
   no toca los que tiene.
+- **Si la app no arranca** (no avisa que arrancó en un minuto, sin contar lo que tarde en bajar datos o un parche,
+  o avisa un error), se abre la **pantalla de rescate**: una página del servidor (`/rescate`, `desktop/rescate.py`)
+  que no usa `app.js` ni `data.js`. Dice por qué se abrió, qué está instalado y el final de `registro.txt`, y
+  ofrece actualizar a la última versión (el parche), bajar el instalador, volver al programa anterior (el que guardó
+  el último parche en `programa-anterior/`) y volver a bajar los datos. Desde el repo, el programa se cambia con git.
+  Se puede abrir a mano en `http://127.0.0.1:<puerto>/rescate`.
 - **Retratos e íconos** que falten: se bajan solos. Los que thanosvibs no publica se cuentan en
   Ajustes y la app muestra el nombre sin ícono.
 
@@ -565,8 +571,9 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   cada build con `scripts/completitud.py`).
 - `docs/HISTORICO.md` — lo que no cierra entre thanosvibs y las notas del foro en el histórico (se
   regenera en cada build con `scripts/historico.py`).
-- `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche),
-  `servidor.py` (sirve la app y la API local), `actualizador.py` (datos, imágenes y parches, todo
+- `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche, pantalla de
+  rescate si la app no arranca), `servidor.py` (sirve la app y la API local), `rescate.py` (la pantalla de rescate,
+  sin `app.js` ni `data.js`), `actualizador.py` (datos, imágenes, parches y la vuelta al programa anterior, todo
   verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
 - `.github/workflows/` — `actualizar.yml` (datos, semanal) y `publicar.yml` (release al etiquetar; corta si los datos
   del commit etiquetado o los publicados no son del formato que pide `version.json`).

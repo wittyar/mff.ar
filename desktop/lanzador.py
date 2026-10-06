@@ -14,10 +14,15 @@ sistema, así que las dos usan los mismos datos y la misma capa.
   No hay una consola que cerrar por separado.
 - Un error al arrancar se muestra en un cuadro de diálogo y queda en registro.txt.
 
-- Tras aplicar un parche de versión, el proceso se relanza a sí mismo en el mismo puerto
-  y sin abrir otra ventana: la que está abierta se reconecta y recarga.
+- Tras aplicar un parche de versión (o volver al programa anterior), el proceso se relanza a
+  sí mismo en el mismo puerto (--reinicio) y sin abrir otra ventana: la que está abierta se
+  reconecta y recarga.
+- Pantalla de rescate (#2): si la página no avisa que arrancó en --espera-arranque segundos
+  (sin contar lo que tarde en bajar datos o un parche) o avisa un error, se abre una ventana
+  con /rescate, una página del servidor que no depende de app.js ni de data.js.
 
-Opciones para probar fuera de Windows: --datos CARPETA, --sin-ventana, --puerto N,
+Opciones para probar fuera de Windows: --datos CARPETA, --sin-ventana (ninguna ventana, tampoco
+la de rescate: su dirección va a la salida), --puerto N, --espera-arranque S,
 --espera-latido S, --origen-datos URL (la base de los datos publicados: los de cada formato, en
 datos/<formato>/; por defecto, main en GitHub),
 --origen-app URL (el latest.json de la última release).
@@ -138,7 +143,12 @@ def abrir_ventana(url, datos):
 def main():
     ap = argparse.ArgumentParser(description=f'Arranca {APP}')
     ap.add_argument('--datos', help='carpeta de datos (por defecto, la de la app instalada)')
-    ap.add_argument('--sin-ventana', action='store_true', help='no abrir la ventana')
+    ap.add_argument('--sin-ventana', action='store_true',
+                    help='no abrir ventanas (tampoco la de rescate: su dirección va a la salida)')
+    ap.add_argument('--reinicio', action='store_true',
+                    help='relanzado tras un parche: no abre la ventana principal (la abierta se reconecta)')
+    ap.add_argument('--espera-arranque', type=int, default=60,
+                    help='segundos para que la página avise que arrancó antes de abrir la pantalla de rescate')
     ap.add_argument('--puerto', type=int, default=0, help='puerto fijo (0: lo elige el sistema)')
     ap.add_argument('--espera-latido', type=int, default=180,
                     help='segundos sin latidos de ninguna ventana antes de apagarse')
@@ -165,7 +175,7 @@ def main():
         return 0
 
     sembrar_datos(datos)
-    srv = servidor.crear(datos, args.puerto, args.espera_latido, args.origen_datos, args.origen_app)
+    srv = servidor.crear(datos, args.puerto, args.espera_latido, args.origen_datos, args.origen_app, args.espera_arranque)
     puerto = srv.server_port
     url = f'http://127.0.0.1:{puerto}/index.html'
     ruta_instancia = os.path.join(datos, 'instancia.json')
@@ -176,14 +186,21 @@ def main():
     print(APP, flush=True)
     print(f'  datos: {datos}', flush=True)
     print(f'  abriendo {url}', flush=True)
-    if not args.sin_ventana:
+    if not args.sin_ventana and not args.reinicio:
         abrir_ventana(url, datos)
 
     while not servidor.debe_cerrar() and not servidor.REINICIAR.is_set():
+        motivo = servidor.motivo_rescate()
+        if motivo:
+            rescate = f'http://127.0.0.1:{puerto}/rescate'
+            logging.info('se abre la pantalla de rescate (%s)', motivo['tipo'])
+            print(f'  rescate {rescate}', flush=True)
+            if not args.sin_ventana:
+                abrir_ventana(rescate, datos)
         time.sleep(1)
     reiniciar = servidor.REINICIAR.is_set()
     if reiniciar:
-        logging.info('se aplicó un parche de versión: se reinicia en el puerto %s', puerto)
+        logging.info('cambió el programa (un parche o la vuelta al anterior): se reinicia en el puerto %s', puerto)
     else:
         logging.info('ninguna ventana late hace %s s: se apaga', args.espera_latido)
     if servidor.TAREAS['imagenes'].estado()['corriendo']:
@@ -199,9 +216,11 @@ def main():
 
 
 def relanzar(args, datos, puerto):
-    """Otro proceso con el programa ya parchado, en el mismo puerto y sin ventana nueva."""
-    cmd = [sys.executable, os.path.abspath(__file__), '--datos', datos, '--puerto', str(puerto), '--sin-ventana',
-           '--espera-latido', str(args.espera_latido), '--origen-datos', args.origen_datos,
+    """Otro proceso con el programa ya parchado (o el anterior), en el mismo puerto y sin ventana nueva; la de
+    rescate sí puede abrirse, salvo con --sin-ventana."""
+    cmd = [sys.executable, os.path.abspath(__file__), '--datos', datos, '--puerto', str(puerto),
+           '--sin-ventana' if args.sin_ventana else '--reinicio', '--espera-latido', str(args.espera_latido),
+           '--espera-arranque', str(args.espera_arranque), '--origen-datos', args.origen_datos,
            '--origen-app', args.origen_app]
     if sys.platform == 'win32':
         subprocess.Popen(cmd, close_fds=True,

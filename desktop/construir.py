@@ -25,7 +25,8 @@ REPO = 'wittyar/mff.ar'
 # El programa: lo que instala el instalador y lo que puede traer un parche (tiene que
 # coincidir con DEL_PROGRAMA de actualizador.py).
 PROGRAMA = ['index.html', 'app.js', 'styles.css', 'version.json', 'desktop/mff.ico',
-            'desktop/lanzador.py', 'desktop/servidor.py', 'desktop/actualizador.py']
+            'desktop/lanzador.py', 'desktop/servidor.py', 'desktop/actualizador.py',
+            'desktop/rescate.py']
 # Datos del primer arranque: después se actualizan solos desde GitHub.
 DATOS_INICIALES = ['data.js', 'datos.json', 'docs/AUDITORIA.md']
 # Python embebido de python.org por versión, con su sha256 (se agrega al cambiar

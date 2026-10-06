@@ -295,3 +295,32 @@ def actualizar_app(url, raiz, respaldo, version, tarea):
                 os.remove(tmp)
         raise
     return {'version': ult['version']}
+
+
+def programa_anterior(respaldo):
+    """La versión del programa guardado en `respaldo` antes del último parche, o None si no hay."""
+    v = leer_json(os.path.join(respaldo, 'version.json'))
+    return v['version'] if v else None
+
+
+def volver_al_anterior(raiz, respaldo):
+    """Vuelve a poner los archivos del programa que el último parche guardó en `respaldo` (#2, la pantalla de rescate).
+    version.json va último: hasta ahí el programa sigue siendo el actual. Al terminar, el respaldo se borra (ya es el
+    programa en uso). Un archivo que el parche agregó y no tenía copia queda: la versión anterior no lo usa."""
+    version = programa_anterior(respaldo)
+    if version is None:
+        raise RuntimeError(f'no hay un programa anterior guardado ({respaldo})')
+    nombres = []
+    for carpeta, _, archivos in os.walk(respaldo):
+        for a in archivos:
+            nombres.append(os.path.relpath(os.path.join(carpeta, a), respaldo).replace(os.sep, '/'))
+    ajenos = [n for n in nombres if not DEL_PROGRAMA.match(n)]
+    if ajenos:
+        raise RuntimeError(f'el programa anterior guardado trae archivos que no son del programa: {", ".join(ajenos[:3])}')
+    nombres.sort(key=lambda n: n == 'version.json')
+    for n in nombres:
+        destino = os.path.join(raiz, *n.split('/'))
+        with open(os.path.join(respaldo, *n.split('/')), 'rb') as f:
+            os.replace(_escribir(destino, f.read()), destino)
+    shutil.rmtree(respaldo)
+    return {'version': version}

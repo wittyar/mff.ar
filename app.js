@@ -1230,6 +1230,7 @@ const T = {
   ar_file_t:          { es:'Esta app se abre desde su acceso directo', en:'This app opens from its shortcut' },
   ar_file:            { es:'Abrir index.html suelto no funciona: tus listas, equipos y ajustes se guardan a través del programa. Abrila desde su acceso directo (o con MFF.bat, desde el repo).',
                         en:'Opening index.html directly does not work: your lists, teams and settings are saved through the program. Open it from its shortcut (or with MFF.bat, from the repo).' },
+  ar_err_t:           { es:'La app no pudo arrancar', en:'The app could not start' },
   ar_capa_t:          { es:'No se pudo cargar tu capa', en:'Your layer could not be loaded' },
   ar_capa:            { es:'La app no arranca para no pisar lo que tenés guardado. Si el archivo capa.json se dañó, en la carpeta respaldos/ hay copias de los últimos días.',
                         en:'The app does not start so it does not overwrite what you have saved. If capa.json got damaged, the respaldos/ folder has copies from the last few days.' },
@@ -1354,15 +1355,16 @@ function mb (bytes) { return (bytes / 1048576).toFixed(1).replace('.', LANG === 
 async function pantallaDatos () {
   const pintar = (extra) => pantallaFatal(t('pd_title'), t('pd_note') + (extra ? ' ' + extra : ''));
   pintar();
+  const falla = (e) => fallaArranque(t('pd_title'), t('pd_note') + ' ' + t('av_dl_err') + ' ' + e);
   try { await apiLocal('/api/datos/actualizar', 'POST'); }
-  catch (e) { return pintar(t('av_dl_err') + ' ' + e.message); }
+  catch (e) { return falla(e.message); }
   const poll = setInterval(async () => {
     let p;
     try { p = (await apiLocal('/api/progreso')).datos; }
-    catch (e) { clearInterval(poll); return pintar(t('av_dl_err') + ' ' + e.message); }
+    catch (e) { clearInterval(poll); return falla(e.message); }
     if (p.terminado) {
       clearInterval(poll);
-      return p.error ? pintar(t('av_dl_err') + ' ' + p.error) : location.reload();
+      return p.error ? falla(p.error) : location.reload();
     }
     if (p.total) pintar(`${mb(p.hecho)} / ${mb(p.total)}`);
   }, 700);
@@ -6654,6 +6656,17 @@ function exportCsv () {
 function pantallaFatal (titulo, detalle) {
   $('#app').innerHTML = `<main><div class="fatal"><h1>${h(titulo)}</h1><p>${h(detalle)}</p></div></main>`;
 }
+/** Le avisa al servidor cómo terminó el arranque: {ok: true} o {error}. Con un error, o sin aviso a tiempo, el
+ *  lanzador abre la pantalla de rescate (#2), que no depende de esta página. */
+function avisarArranque (aviso) {
+  return fetch('/api/arranque', { method: 'POST', headers: { 'X-MFF': '1', 'Content-Type': 'application/json' },
+                                  body: JSON.stringify(aviso) });
+}
+/** Un error que corta el arranque: a la vista y al servidor. */
+function fallaArranque (titulo, detalle) {
+  pantallaFatal(titulo, detalle);
+  avisarArranque({ error: titulo + ': ' + detalle });
+}
 /** Lo que se deriva de data.js. Lo llama arrancar() cuando ya confirmó que los datos son del
  *  formato de esta versión. */
 function iniciarDatos () {
@@ -6732,20 +6745,23 @@ async function arrancar () {
   try { ESCRITORIO = await apiLocal('/api/estado'); } catch (e) { ESCRITORIO = null; }
   if (!ESCRITORIO || ESCRITORIO.app !== 'mff-escritorio') return pantallaFatal(t('ar_file_t'), t('ar_file'));
   try { U = await cargarCapa(); }
-  catch (e) { return pantallaFatal(t('ar_capa_t'), e.message + ' ' + t('ar_capa')); }
+  catch (e) { return fallaArranque(t('ar_capa_t'), e.message + ' ' + t('ar_capa')); }
   LANG = U.prefs.lang;
   latir();
   setInterval(latir, ESCRITORIO.latido_cada * 1000);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) latir(); });
   if (!window.MFF_VERSION || window.MFF_VERSION.formato !== ESCRITORIO.formato_datos) return pantallaDatos();
-  iniciarDatos();
-  rebuild();
   try {
-    const v = sessionStorage.getItem('mff_volver');
-    if (VISTAS_PRINCIPALES.includes(v)) ui.view = v;
-    sessionStorage.removeItem('mff_volver');
-  } catch (e) {}
-  render();
+    iniciarDatos();
+    rebuild();
+    try {
+      const v = sessionStorage.getItem('mff_volver');
+      if (VISTAS_PRINCIPALES.includes(v)) ui.view = v;
+      sessionStorage.removeItem('mff_volver');
+    } catch (e) {}
+    render();
+  } catch (e) { return fallaArranque(t('ar_err_t'), e.message); }
+  avisarArranque({ ok: true });
   buscarNovedades();
   if (ESCRITORIO.imagenes.faltan) arrancarTarea('imagenes', '/api/imagenes/bajar');
 }
