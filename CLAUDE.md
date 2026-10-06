@@ -78,6 +78,16 @@ variante, en `docs/COMPLETITUD.md`.
   min y su página llega a unos 5,5 GB: en un contenedor de 8 GB va sola (con otra prueba al lado, el OOM mata la página y
   la prueba queda colgada).
 
+## Capturas del juego
+
+Ezequiel sacó capturas de todo el juego en dos idiomas (álbumes de Google Fotos; el número de captura es el orden en el
+álbum, desde 0). No volver a pedírselas:
+- Español (267): https://photos.app.goo.gl/EK155akXC5fjtSV7A — transcriptas en `fuentes/juego-es/`.
+- Coreano (386): https://photos.app.goo.gl/iuuBUAvSZc3qHzx96 — transcriptas en `fuentes/juego-ko/`.
+Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["https://lh3…",ancho,alto`); el resto, con el
+token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
+key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
+
 ## Estado (6 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.31 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La

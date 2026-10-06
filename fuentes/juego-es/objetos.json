@@ -1,0 +1,1178 @@
+{
+ "fuente": "Capturas del juego en español de Ezequiel (álbum de Google Fotos, 6 de octubre de 2026): las guías (capturas 64 a 89), el glosario de contenidos (90 a 115) y el de objetos (116 a 162). Transcripción a mano, tal cual.",
+ "album": "https://photos.app.goo.gl/EK155akXC5fjtSV7A",
+ "nota": "Una línea lógica del juego = un elemento (las líneas cortadas solo por el ancho del panel se unen; las líneas en blanco se omiten). Los textos en color van sin marcas. «capturas» lista todas las capturas que cubren una misma entrada cuando el panel se desplazó. Lo cortado al pie del panel y no visible en otra captura va marcado entre corchetes.",
+ "guia": [
+  {
+   "captura": 64,
+   "seccion": "EQUIPO",
+   "titulo": "RECLUTAR",
+   "rotulos": [
+    "BIOMETRÍA",
+    "¡Personaje reclutado!"
+   ],
+   "texto": [
+    "Si tienes suficientes biometrías o genes-X, podrás reclutar a un personaje.",
+    "Crea un equipo con personajes reclutados y participa en varias misiones. Cuantos más personajes reclutes, más fácil será completar las misiones."
+   ]
+  },
+  {
+   "captura": 65,
+   "seccion": "EQUIPO",
+   "titulo": "AFINIDAD DE CLASE",
+   "rotulos": [],
+   "texto": [
+    "Los personajes se distinguen por su tipo de batalla. Los tipos de batalla son: Combate, Detonación, Velocidad y Universal. Los 3 primeros tipos son fuertes o débiles unos contra otros, sin embargo, Universal se equilibra frente a estos.",
+    "Cuando ataques a otros tipos de batalla, si tu daño se muestra en AMARILLO, significará que tu tipo es más fuerte que el de tu oponente , pero si el color es GRIS, significará que tu tipo es más débil.",
+    "Puedes ver los tipos de personajes en sus retratos. La afinidad de clases funcionan como piedra, papel y [cortado al pie del panel]"
+   ]
+  },
+  {
+   "captura": 66,
+   "seccion": "EQUIPO",
+   "titulo": "UNIFORME",
+   "rotulos": [],
+   "texto": [
+    "Compra un uniforme de los disponibles en la lista y pónselo a tus personajes.",
+    "Cuando se equipa un uniforme:",
+    "▶aumentan las estadísticas",
+    "▶cambia el diseño",
+    "[línea cortada al pie del panel, ilegible]"
+   ]
+  },
+  {
+   "captura": 67,
+   "seccion": "EQUIPO",
+   "titulo": "BONIFICACIÓN DE EQUIPO",
+   "rotulos": [],
+   "texto": [
+    "Cuando los personajes de tu equipo tengan algún tipo de vínculo especial, se activará una bonificación de equipo.",
+    "Cuando se activa:",
+    "▶aumento de la estadística adicional",
+    "▶usa multijugador en las misiones"
+   ]
+  },
+  {
+   "captura": 68,
+   "seccion": "EQUIPO",
+   "titulo": "INSTINTO",
+   "rotulos": [],
+   "texto": [
+    "Cada héroe tiene un instinto único.",
+    "Hay 4 tipos de instinto y aumentan con el rango y el nivel del personaje.",
+    "Los instintos infligen daño de instinto a los enemigos en la batalla.",
+    "Al ejecutar ataques básicos, los jugadores pueden infligir más daño según las estadísticas de instinto del personaje. Los personajes se pueden defender contra el daño de instinto solamente con habilidades de instinto.",
+    "Las estadísticas de instinto no se ven afectada por los potenciadores ni las mermas que afectan a las estadísticas básicas.",
+    "La página de información muestra estadísticas de instinto en porcentajes, como la prob. de crítico y la prob. de esquiva, en relación a otros jugadores que tengan las mismas estadísticas de instinto totales que el jugador.",
+    "Las estadísticas de instinto en porcentaje son más efectivas contra los jugadores que tengan menos estadísticas de instinto totales y son menos efectivas contra los jugadores que tengan más."
+   ]
+  },
+  {
+   "captura": 69,
+   "seccion": "EQUIPO",
+   "titulo": "BANDO",
+   "rotulos": [
+    "SUPERHÉROE",
+    "SUPERVILLANO",
+    "NEUTRAL"
+   ],
+   "texto": [
+    "Cada personaje pertenece a una facción concreta.",
+    "Las facciones pueden cambiar según el uniforme equipado, y en general se dividen en superhéroes, supervillanos y neutrales.",
+    "Supervillanos y villanos",
+    "Dentro de una misma fase, los supervillanos y los villanos se consideran facciones diferentes.",
+    "Los supervillanos son jefes poderosos.",
+    "Los villanos son los esbirros de los supervillanos, y aparecen como enemigos normales.",
+    "*  Los efectos que se aplican a los supervillanos no se aplican a los villanos."
+   ],
+   "capturas": [
+    69,
+    70
+   ]
+  },
+  {
+   "captura": 71,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "EQUIPO",
+   "rotulos": [
+    "EQUIPO",
+    "MATERIAL DE MEJORA",
+    "RESULTADOS"
+   ],
+   "texto": [
+    "Al hacer que tu personaje suba de nivel, ocurrirá lo mismo con el equipo automáticamente (hasta un máximo de +5). Puedes mejorar el equipo hasta un nivel 30 máximo con materiales obtenidos en las misiones.",
+    "Toca el icono de material para iniciar la misión de inmediato."
+   ]
+  },
+  {
+   "captura": 72,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "POTENCIAR ISO-8",
+   "rotulos": [
+    "ISO-8",
+    "ISO-8"
+   ],
+   "texto": [
+    "Usa ISO-8 adicionales como material de mejora para mejorar el ISO-8 objetivo hasta +5 y aumentar aún más las estadísticas. También puedes potenciar los ISO-8 que ya tienes equipados.",
+    "Puedes conseguir ISO-8 adicionales en las misiones dimensionales."
+   ]
+  },
+  {
+   "captura": 73,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "COMBINAR ISO-8",
+   "rotulos": [
+    "ISO-8 +5",
+    "ISO-8 +5",
+    "RESULTADOS"
+   ],
+   "texto": [
+    "Si ya has potenciado los ISO-8 hasta +5, puedes combinar 2 del mismo tipo para conseguir uno de categoría superior. También puedes combinar los equipados y de categoría superior para conseguir otros de 6 estrellas."
+   ]
+  },
+  {
+   "captura": 74,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "BONIFICACIÓN POR CONJUNTO DE ISO-8",
+   "rotulos": [],
+   "texto": [
+    "Si equipas ciertas combinaciones de ISO-8, obtendrás una bonificación de conjunto. Puedes ver las que se aplican a tu personaje en la página de equipar ISO-8. Equipar los ISO-8 según la guía que aparece allí te permitirá ganar una bonificación de conjunto.",
+    "Si quieres cambiarla por otra, toca en Cambiar conjunto."
+   ]
+  },
+  {
+   "captura": 75,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "DESPERTAR ISO-8",
+   "rotulos": [
+    "ISO-8 +5 de 6 estrellas",
+    "ISO-8 de 6 estrellas",
+    "RESULTADOS"
+   ],
+   "texto": [
+    "Los ISO-8 de 6 estrellas que se mejoran al nivel máximo (+5) pueden usarse como material para despertar otro de 6 estrellas. Los ISO-8 despertados aumentan sus estadísticas básicas. Pueden despertarse hasta 6 veces. Si haces un conjunto con ISO-8 despertados, la habilidad de conjunto será más potente."
+   ]
+  },
+  {
+   "captura": 76,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "MEJORA DE CROMO DE CÓMIC",
+   "rotulos": [
+    "CROMO DE RANGO 1",
+    "CROMO DE RANGO 1 X 5",
+    "CROMO DE RANGO 2"
+   ],
+   "texto": [
+    "Usa 5 cromos del mismo rango como material para mejorar el cromo objetivo hasta un máximo de 6.",
+    "Cuando se mejore, el rango aumentará y se modificarán las estadísticas de cualidad y opciones."
+   ]
+  },
+  {
+   "captura": 77,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "CREACIÓN DE CROMOS DE CÓMIC",
+   "rotulos": [
+    "CROMO PREMIUM",
+    "CUBO DE CREACIÓN DE CROMO",
+    "CREACIÓN COMPLETA"
+   ],
+   "texto": [
+    "Los cromos premium se pueden crear con 5 cromos míticos y un cubo de creación de cromo. Los cromos premium se pueden crear hasta nivel 6. Las nuevas estadísticas se añadirán cada vez que estos se creen.",
+    "El color de la ★ cambiará a uno de los siguientes: rojo, azul o verde. Se conseguirán estadísticas adicionales cuando el número de un determinado color llegue a un número concreto.",
+    "Además, puedes conseguir opciones de bonificación al crear hasta un número determinado de ★."
+   ]
+  },
+  {
+   "captura": 78,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "MEJORAR ARTEFACTO",
+   "rotulos": [
+    "ARTEFACTO",
+    "ESENCIA CELESTIAL",
+    "AUMENTAR RANGO COMPLETO"
+   ],
+   "texto": [
+    "Usa esencia celestial como material para mejorar artefactos hasta +20.",
+    "La estadística de instinto del artefacto aumenta al mejorarlo.",
+    "Desmonta artefactos para conseguir esencia celestial."
+   ]
+  },
+  {
+   "captura": 79,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "TRANSFERIR MEJORA DE ARTEFACTO",
+   "rotulos": [
+    "ARTEFACTO",
+    "EQUIPAR NUEVOS ARTEFACTOS",
+    "[ilegible: rótulo diminuto, el ícono del resultado está en plena animación]"
+   ],
+   "texto": [
+    "El nivel de mejora del artefacto puede transferirse.",
+    "Al sobrescribir un artefacto equipado con uno nuevo, el nivel más alto se puede transferir al artefacto nuevo si el nivel del artefacto antiguo es mayor que el del nuevo.",
+    "El nivel de mejora se puede transferir independientemente del grado o tipo de artefacto."
+   ]
+  },
+  {
+   "captura": 80,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "DESMONTAR ARTEFACTO",
+   "rotulos": [
+    "ARTEFACTO",
+    "ORO",
+    "ESENCIA CELESTIAL"
+   ],
+   "texto": [
+    "La esencia celestial es un ingrediente clave para mejorar artefactos. Desmonta artefactos en propiedad para conseguirla.",
+    "Puedes conseguir más esencia celestial al desmontar artefactos de grado superior."
+   ]
+  },
+  {
+   "captura": 81,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "ENCANTAR ESPADA",
+   "rotulos": [
+    "ESPADA DE LO DESCONOCIDO",
+    "RUNA DE ENCANTAMIENTO"
+   ],
+   "texto": [
+    "Las espadas se pueden encantar hasta el nv. 6 utilizando runas de encantamiento. Encantar una espada le aplica 1 de 6 elementos, además de un poderoso efecto. Las espadas que se hayan encantado al máximo nivel podrán ser despertadas para crear espadas especiales."
+   ]
+  },
+  {
+   "captura": 82,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "DESMANTELAMIENTO DE ESPADAS",
+   "rotulos": [
+    "ESPADA",
+    "ORO",
+    "RUNA DE ENCANTAMIENTO"
+   ],
+   "texto": [
+    "Las runas de encantamiento son un tipo de material que se usa para encantar espadas, y que se puede obtener desmontando las espadas que tienes. Se pueden obtener más runas de encantamiento cuanto mayor sea el nivel de la espada que se desmonte."
+   ]
+  },
+  {
+   "captura": 83,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "AUMENTO DE RANGO DEL EQUIPO PERSONALIZADO",
+   "rotulos": [
+    "OBELISCO",
+    "4 obeliscos",
+    "Obelisco alto"
+   ],
+   "texto": [
+    "Los obeliscos, un tipo de equipo personalizado, se pueden mejorar para crear equipos personalizados de mayor grado.",
+    "Cuando el grado de tu equipo personalizado aumenta como resultado de una mejora, puede recibir aumentos de estadísticas, modificaciones de opciones,",
+    "o incluso opciones nuevas, dependiendo del grado.",
+    "La primera opción de cada equipo personalizado no cambiará, pero la segunda opción y las siguientes [cortado al pie del panel]"
+   ]
+  },
+  {
+   "captura": 84,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "REFORJA DE C.T.P.",
+   "rotulos": [
+    "C.T.P.",
+    "NÚCLEO DE REFORJA DE C.T.P.",
+    "REFORJADO COMPLETADO"
+   ],
+   "texto": [
+    "El C.T.P. se puede reforjar al usar el mismo C.T.P. y un núcleo de reforja de C.T.P.. Se añadirán nuevas estadísticas al reforjar C.T.P.",
+    "C.T.P. con estadísticas altas se puede conseguir al reforjar con superéxito. Se pueden usar C.T.P. adicionales para aumentar el índice de superéxito.",
+    "*Solo se pueden reforjar C.T.P. determinados. Habrá más disponibles en el futuro."
+   ]
+  },
+  {
+   "captura": 85,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "AMPLIFICACIÓN DE URU",
+   "rotulos": [
+    "URU ENCANTADO",
+    "ORO",
+    "URU ENCANTADO AMPLIFICADO"
+   ],
+   "texto": [
+    "Podrás utilizar la amplificación de uru para incrementar las estadísticas del uru equipado.",
+    "Cuando lo amplifiques, todo el uru equipado tratará de amplificarse. Todo el uru que se haya amplificado correctamente obtendrá estadísticas adicionales. Podrás tratar de realizar la amplificación tantas veces como quieras, siempre y cuando tengas suficiente oro. El uru amplificado es aleatorio.",
+    "El uru amplificado se volverá a amplificar, e incluso tiene la posibilidad de perder la amplificación."
+   ]
+  },
+  {
+   "captura": 86,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "COMBINACIÓN DE URU",
+   "rotulos": [
+    "URU ENCANTADO BÁSICO",
+    "URU ENCANTADO BÁSICO",
+    "URU ENCANTADO AVANZADO"
+   ],
+   "texto": [
+    "Usa 2 uru del mismo grado para combinar. Se puede obtener uru del mismo grado o superior de forma aleatoria. Combinar 2 uru del mismo tipo producirá un uru del mismo tipo.",
+    "Existe cierta probabilidad de obtener una Bendición de Odín al combinar uru encantado mítico. Bendición de Odín tiene estadísticas mayores que los otros uru."
+   ]
+  },
+  {
+   "captura": 87,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "Despertar de uru",
+   "rotulos": [
+    "Bendición de Odín",
+    "Llama Eterna",
+    "Despertar completado"
+   ],
+   "texto": [
+    "Usa uru encantado mítico o superior y Llama eterna como material para despertar la Bendición de Odín.",
+    "Puedes obtener una Bendición de Odín grabada o Gloria de Odín para conseguir un efecto mayor al despertar la Bendición de Odín. Si se equipa en el equipo de un personaje, obtendrá un efecto de despertar adicional."
+   ]
+  },
+  {
+   "captura": 88,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "Mejora de JARVIS",
+   "rotulos": [
+    "Chip de JARVIS",
+    "MATERIAL DE MEJORA",
+    "RESULTADOS"
+   ],
+   "texto": [
+    "Puedes usar los Datos de JARVIS exclusivos y los Fragmentos de datos de JARVIS como materiales para mejorar los chips de JARVIS",
+    "Los chips de JARVIS mejorados aumentan sus estadísticas."
+   ]
+  },
+  {
+   "captura": 89,
+   "seccion": "CRECIMIENTO DE EQUIPO",
+   "titulo": "Cambio de opción de JARVIS",
+   "rotulos": [
+    "Chip de JARVIS",
+    "MATERIAL DE MEJORA",
+    "RESULTADOS"
+   ],
+   "texto": [
+    "Puedes utilizar los Datos de JARVIS exclusivos de los chips de JARVIS como material para cambiar sus opciones.",
+    "Si cambias las opciones de un chip de JARVIS mejorado, el nivel de mejora se mantendrá.",
+    "Los Chips EX poseen efectos de bonificación, y el tipo de estadística de los efectos de bonificación del Chip EX también se puede modificar cambiando la opción."
+   ]
+  }
+ ],
+ "menu_guia": {
+  "EQUIPO": [
+   "RECLUTAR",
+   "AFINIDAD DE CLASE",
+   "UNIFORME",
+   "BONIFICACIÓN DE EQUIPO",
+   "INSTINTO",
+   "BANDO"
+  ],
+  "CRECIMIENTO DE EQUIPO": [
+   "EQUIPO",
+   "POTENCIAR ISO-8",
+   "COMBINAR ISO-8",
+   "BONIFICACIÓN POR CONJUNTO DE ISO-8",
+   "DESPERTAR ISO-8",
+   "MEJORA DE CROMO DE CÓMIC",
+   "CREACIÓN DE CROMOS DE CÓMIC",
+   "MEJORAR ARTEFACTO",
+   "TRANSFERIR MEJORA DE ARTEFACTO",
+   "DESMONTAR ARTEFACTO",
+   "ENCANTAR ESPADA",
+   "DESMANTELAMIENTO DE ESPADAS",
+   "AUMENTO DE RANGO DEL EQUIPO PERSONALIZADO",
+   "REFORJA DE C.T.P.",
+   "AMPLIFICACIÓN DE URU",
+   "COMBINACIÓN DE URU",
+   "Despertar de uru",
+   "Mejora de JARVIS",
+   "Cambio de opción de JARVIS"
+  ]
+ },
+ "contenidos": [
+  {
+   "captura": 90,
+   "nombre": "HISTORIA",
+   "texto": [
+    "En el modo Historia puedes conocer la historia principal del juego.",
+    "El modo historia cuenta con dos dificultades: normal y definitiva.",
+    "La dificultad normal es apta para todos los jugadores, incluso los más novatos. Puedes usar cualquier personaje que tengas.",
+    "La dificultad definitiva está pensada para jugadores avezados. Tienes que usar personajes de categoría 3 o potencial trascendido de nivel 70 o más.",
+    "Puedes obtener varios objetos, como fragmentos de historia, o materiales de mejora como biometrías,piedras Norn y kits de mejora de tipo.",
+    "Recoge fragmentos de historia para crear cofres que tienen objetos especiales."
+   ],
+   "en": "Story",
+   "capturas": [
+    90,
+    91
+   ]
+  },
+  {
+   "captura": 92,
+   "nombre": "MISIÓN ÉPICA",
+   "texto": [
+    "Disfruta de las aventuras de varios héroes con las misiones épicas.",
+    "Juega a misiones con historia. Los héroes protagonistas de cada misión crecerán conforme avanzas en la aventura.",
+    "Cuando se completa la misión épica, podrás conseguir al héroe protagonista."
+   ],
+   "en": "Epic Quest"
+  },
+  {
+   "captura": 93,
+   "nombre": "MISIÓN DIMENSIONAL",
+   "texto": [
+    "Lucha contra enemigos de diferentes dimensiones cada día y consigue recompensas en la misión dimensional.",
+    "Elige la dificultad que prefieras para iniciar la batalla. Hay más recompensas disponibles en las dificultades más altas.",
+    "Se pueden adquirir insignias de apoyo en la misión dimensional. Se pueden comprar varios objetos con insignias de apoyo en la Tienda de apoyo."
+   ],
+   "en": "Dimension Mission"
+  },
+  {
+   "captura": 94,
+   "nombre": "MISIÓN DE ENVÍO",
+   "texto": [
+    "En la misión de envío, superas fases en una zona determinada y luego envías personajes a esa zona.",
+    "Al avanzar por una zona, tres personajes pueden luchar al mismo tiempo, y no hay tiempos de recarga separados para entrar.",
+    "En las zonas a las que hayas enviado personajes, podrás conseguir suministros cada cierto tiempo sin entrar en combate.",
+    "Puedes conseguir más suministros si el poder de combate total de los personajes enviados es alto o según tu nivel VIP.",
+    "Cuantas más fases completes en cada zona, más personajes podrás enviar.",
+    "En las misiones de envío puedes ganar PEX de envío al completar fases para aumentar tu nivel de envío.",
+    "Aumentar tu nivel de envío te permite conseguir más suministros."
+   ]
+  },
+  {
+   "captura": 95,
+   "nombre": "DUELO DIMENSIONAL",
+   "texto": [
+    "En Duelo dimensional formas equipos de 3 miembros y luchas contra otros jugadores.",
+    "Tu posición en la clasificación dependerá de los puntos que hayas obtenido, y puede que te asciendan o que te degraden.",
+    "En el Duelo dimensional, podrás conseguir insignias de gloria. Podrás usar estas insignias de gloria en la tienda de la línea temporal para comprar biometrías de personaje y otras recompensas."
+   ],
+   "en": "Timeline Battle"
+  },
+  {
+   "captura": 96,
+   "nombre": "BATALLA DE ALIANZA",
+   "texto": [
+    "Batalla de alianza es un modo en el que puedes competir contra otras alianzas con puntos de superación de fase.",
+    "Solo los jugadores que formen parte de una alianza pueden participar.",
+    "La batalla de alianza consiste en batallas contra jefes y batallas de relevos",
+    "Cuando la batalla contra jefe se desbloquea, las dificultades normal, extremo y leyenda estarán disponibles en ese orden.",
+    "Cuando la batalla de relevos se desbloquea, el modo desafío infinito estará disponible.",
+    "El modo extremo se desbloquea al superar el modo normal.",
+    "El modo leyenda se desbloquea cuando superas el modo extremo con 1 000 000 puntos o más.",
+    "Cuando superes los modos extremo, leyenda y desafío infinito, el modo desafío estará disponible.",
+    "*Puedes obtener una recompensa al alcanzar una puntuación determinada, y también puedes conseguir puntuaciones altas.",
+    "El modo de la batalla de alianza y el día de la semana deciden los personajes que pueden participar.",
+    "Los requisitos diarios podrán pedir tipos de personaje, facciones, razas o géneros específicos. Solo los personajes que cumplan los requisitos del día pueden participar.",
+    "*Los personajes que hayan conseguido la mayor puntuación en cada modo no pueden participar en modos distintos.",
+    "Hay disponibles recompensas de puntuación y de clasificación semanal en las batallas de alianza.",
+    "Se conceden recompensas de puntuación de acuerdo con la puntuación conseguida en cada modo.",
+    "Las recompensas pueden ser oro, piedras Norn, biometrías, que se usan para el crecimiento de personajes, fragmentos de gema de Mandalay y cristales del despertar, necesarios para despertar o trascender potencial.",
+    "Se concedenrecompensas de clasificación semanal de acuerdo con la clasificación, calculada por la suma total de puntos ganados por los miembros de la alianza.",
+    "El miembro de la alianza que consiga la mayor puntuación en la alianza de rango 1 recibe la recompensa por JMV."
+   ],
+   "en": "Alliance Battle",
+   "capturas": [
+    96,
+    97,
+    98
+   ]
+  },
+  {
+   "captura": 99,
+   "nombre": "BATALLA DE OTRO MUNDO",
+   "texto": [
+    "Batalla de otro mundo es un modo en el que puedes luchar contra otros jugadores.",
+    "Formarás un equipo de 5 personajes para luchar contra un equipo enemigo.",
+    "Se pueden aplicar potenciadores a cualquier personaje participante, y estos se pueden desplegar de forma estratégica en los lugares que elijas.",
+    "Los puntos de arena determinan la liga, y tendrás disponibles recompensas de liga y de clasificación en función de tu historial al final de la temporada.",
+    "Los recuerdos de guerrero están disponibles en Batalla de otro mundo. Los recuerdos de guerrero se pueden usar para comprar potenciadores de campo de batalla, objetos de fortalecimiento y materiales de crecimiento en la tienda de otro mundo.",
+    "Una temporada de Batalla de otro mundo dura 8 semanas, tras las cuales se reiniciará. Durante el reinicio de temporada, todos los potenciadores de campo de batalla que tengas también se reiniciarán."
+   ]
+  },
+  {
+   "captura": 100,
+   "nombre": "JEFE MUNDIAL",
+   "texto": [
+    "Enfréntate a poderosos jefes en Jefe mundial.",
+    "Crea tu propio equipo de personajes y lucha contra seres de toda la galaxia con la ayuda de tus aliados.",
+    "La dificultad de este modo se dividirá en 6 modos distintos.",
+    "Jefe mundial principiante es el modo recomendado para los jugadores menos experimentados.",
+    "Jefe mundial normal se recomienda para jugadores con personajes bastante fuertes y que tengan una experiencia considerable.",
+    "Jefe mundial definitivo es ideal para los jugadores que hayan desarrollado a sus personajes a la categoría 2 o superior.",
+    "Jefe mundial legendario es para jugadores avanzados que hayan desarrollado a sus personajes hasta la categoría 3, hayan trascendido su poder o superior.",
+    "Jefe mundial leyenda+ es para jugadores superiores que hayan desarrollado a sus personajes hasta la categoría 4 o superior.",
+    "El jefe mundial mítico es para jugadores expertos del más alto nivel que hayan desarrollado a sus personajes hasta la categoría 4 o superior y estén acostumbrados a la dificultad leyenda+.",
+    "Consigue materiales de desarrollo de categoría 2, antimateria negra, Piedras Norn de caos, material para evolucionar mutantes y de desarrollo de categoría 3, como registros de Titán, fragmentos de Cubo Cósmico, esencia dimensional, paquetes de componentes de Titán, materiales para reforjar C.T.P., como núcleos de reforja de C.T.P., materiales de desarrollo de categoría 4, como carbonadium, semillas de vida y materiales de mejora de JARVIS, como fragmento de datos de JARVIS en Jefe mundial."
+   ],
+   "en": "World Boss",
+   "capturas": [
+    100,
+    101
+   ]
+  },
+  {
+   "captura": 102,
+   "nombre": "SAGA DEL MULTIVERSO",
+   "texto": [
+    "Saga del multiverso es un contenido de historia que te permite vivir las aventuras de unos personajes concretos.",
+    "En las batallas, podrás controlar a personajes sin que se refleje el estado de tu cuenta ni el del crecimiento de dichos personajes.",
+    "Saga del multiverso consta de un paquete de historia normal y un paquete de historia oculta.",
+    "Una vez completes todo el paquete de historia normal, pasarás a la fase del jefe.",
+    "La fase del jefe tiene varias fases, y habrá una función Saltar disponible para las que ya hayas completado.",
+    "Cada historia cuenta con su serie de personajes, y podrás conseguir biometrías.",
+    "Completa episodios de Saga del multiverso para obtener materiales de crecimiento de emblema."
+   ]
+  },
+  {
+   "captura": 103,
+   "nombre": "TIERRA DE SOMBRAS",
+   "texto": [
+    "Daredevil, controlado por Bestia Oscura, crea Tierra de sombras sobre los restos de la Cocina del Infierno, una fortaleza donde su ley es la única válida. Cuando Daredevil empieza a hacerse más y más violento, varios héroes deciden unir sus fuerzas para detenerlo.",
+    "En Tierra de sombras, los héroes deberán enfrentarse a varios campos de batalla desconocidos, superarlos y llegar al último piso."
+   ],
+   "en": "Shadowland"
+  },
+  {
+   "captura": 104,
+   "nombre": "TORNEO DE ALIANZA",
+   "texto": [
+    "El torneo de alianza decidirá cuál es la mejor alianza del multiverso.",
+    "La batalla de alianzas es una competición programada donde podrán participar las 16 mejores alianzas.",
+    "Ánimo: los jugadores que no se incluyan en el torneo podrán animar a la alianza que prefieran. El jugador conseguirá recompensas dependiendo del puesto final de la alianza elegida. Cuanta más gente anime a una alianza, más recompensas recibirá."
+   ],
+   "en": "Alliance Tournament"
+  },
+  {
+   "captura": 105,
+   "nombre": "BATALLA LEGENDARIA",
+   "texto": [
+    "En Batalla legendaria podrás revivir las escenas más famosas del universo de cinemáticas de Marvel.",
+    "Los jugadores podrán disfrutar de las escenas de batalla de la película y jugar en lugares famosos con personajes determinados.",
+    "Solo se podrán reproducir las batallas legendarias con los personajes correspondientes del tema, sin importar si ya se han reclutado o no.",
+    "Completa fases y consigue varias recompensas. Sin embargo, los jugadores podrán conseguir recompensas adicionales dependiendo de la puntuación de crecimiento del personaje que tengan."
+   ],
+   "en": "Legendary Battle"
+  },
+  {
+   "captura": 106,
+   "nombre": "CONQUISTA DE ALIANZA",
+   "texto": [
+    "Conquista de alianza es un modo de juego en el que las alianzas compiten las unas contra las otras.",
+    "Hay un enfrentamiento entre tres alianzas que transcurre en el siguiente orden.",
+    "1. SELECCIÓN DE REGIÓN",
+    "Cuando comienza una conquista, la alianza puede atacar a una región limítrofe con su punto de partida.",
+    "Se defenderán todas las regiones, y habrá que despejarlas para apoderarse de ellas.",
+    "Cuando se haya conseguido tomar el control de una región, la alianza obtendrá puntos de conquista.",
+    "2. BATALLA",
+    "Selecciona las tropas defensivas que van a atacar una región determinada.",
+    "Las batallas comenzarán de forma automática. Al desplegar a un personaje, no podrás volver a utilizarlo hasta el próximo reinicio.",
+    "Cuando se toma el control de una región, los personajes que se emplearon para el ataque se quedarán ahí para realizar la defensa.",
+    "Los personajes que defiendan una región no se podrán usar para atacar otras regiones.",
+    "3. REGIONES PROTEGIDAS",
+    "Cuando se toma el control de una región, se convierte en una región protegida.",
+    "Cuando una región está protegida, otra alianza no puede atacarla o hacerse con ella hasta que se elimine la protección.",
+    "Consejo: Cuando se elimina la protección, se pueden obtener regiones atacándolas. Las alianzas pueden conseguir puntos de conquista adicionales según la duración de la conquista de la región.",
+    "4. FIN DE BATALLA",
+    "Cuando finaliza una conquista, el puesto obtenido dependerá de la cantidad de puntos de conquista que tenga una alianza.",
+    "Las recompensas dependen del puesto de la alianza."
+   ],
+   "en": "Alliance Conquest",
+   "capturas": [
+    106,
+    107
+   ]
+  },
+  {
+   "captura": 108,
+   "nombre": "INCURSIÓN DE JEFE GIGANTE",
+   "texto": [
+    "Únete a personajes de diversas dimensiones para derrotar al jefe gigante en la incursión de jefe gigante.",
+    "3 jugadores pueden entrar a la vez y la batalla también puede iniciarse con 1 o 2 jugadores.",
+    "La dificultad del jefe aumenta cuantos más jugadores participen, otorgando también más recompensas.",
+    "Consigue kits de mejora de tipo, materiales de desarrollo de categoría 4 como libros de los Vishanti y almas de los Faltine en la incursión de jefe gigante.",
+    "Los jefes cambian a diario y cada uno da distintas recompensas.",
+    "Usa puntos de aumento en el punto de encuentro para aumentar el número de recompensas.",
+    "Recompensas adicionales equivalentes al número de recompensas de conjunto disponibles al ganar.",
+    "Fortalece a un personaje de bonificación elegido al azar en cada batalla para aumentar tu probabilidad de obtener recompensas."
+   ],
+   "en": "Giant Boss Raid"
+  },
+  {
+   "captura": 109,
+   "nombre": "EVENTO MUNDIAL",
+   "texto": [
+    "Todos los agentes luchan contra cierto número de enemigos usando personajes con los mismos ajustes de categoría, rango, equipo, ISO-8 y cromo de cómic en el Evento mundial.",
+    "El Evento mundial estará disponible a una hora concreta cada día y los personajes disponibles se seleccionarán al azar cuando comience el evento.",
+    "Todos los participantes pueden adquirir grado de batalla y puntuación según los resultados de la batalla.",
+    "Las recompensas individuales pueden adquirirse en base a tu mejor puntuación durante el periodo del evento,",
+    "las recompensas mundiales pueden adquirirse en base al grado de batalla medio de todos los participantes cuando termine el evento."
+   ]
+  },
+  {
+   "captura": 110,
+   "nombre": "SUPERVIVENCIA EN LA LÍNEA TEMPORAL",
+   "texto": [
+    "La Supervivencia en la línea temporal es un contenido que te permite entrar a la línea temporal para derrotar a villanos y obtener recompensas por derrotar a todos los jefes de la línea temporal actual.",
+    "Hasta tres personajes pueden entrar a la vez durante una fase, y no hay tiempos de recarga separados para entrar.",
+    "Cada vez que entres en la línea temporal, la ubicación en la que aparece el jefe será distinta. Antes de llegar a la fase del jefe, podrás interactuar con varias ubicaciones, como la oficina de administración de héroes, las tiendas, las recompensas y los puntos de interés para aumentar el poder de combate de los personajes participantes.",
+    "Se puede acceder a la supervivencia en la línea temporal durante el evento. Al terminar el evento, los PG, los efectos de supervivencia y las insignias de la AVT de los personajes se reiniciarán."
+   ]
+  },
+  {
+   "captura": 111,
+   "nombre": "BRECHA DIMENSIONAL",
+   "texto": [
+    "La brecha dimensional es un modo cooperativo en el que puedes unirte a amigos o miembros de la alianza para luchar y conseguir recompensas.",
+    "Para abrir brechas dimensionales de mayor categoría tienes que usar piedras de invocación de brecha dimensional que se obtienen en las brechas dimensionales.",
+    "El grado necesario de la piedra de invocación depende de la categoría de la brecha dimensional que se va a abrir. Cuanto más alta es la categoría, mejores son las recompensas.",
+    "Las brechas dimensionales abiertas se pueden compartir con amigos y miembros de la alianza, lo que os permite que os enfrentéis juntos a ellas.",
+    "Completar con éxito una brecha dimensional aumenta su progreso de finalización. El progreso de finalización también aumenta cuando los amigos o miembros de la alianza la completan con éxito.",
+    "Completar con éxito una brecha dimensional otorga recompensas de finalización y desbloquea niveles de dificultad más altos.",
+    "Una vez que el progreso de finalización de la brecha dimensional llegue al 100 %, los participantes que tengan al menos 1 punto de progreso de finalización o los que hayan usado un intento de participación pueden ganar recompensas de finalización por completar fases.",
+    "El participante con el progreso de finalización más alto será nombrado JMV y recibirá la recompensa de JMV."
+   ],
+   "en": "Dimension Rift",
+   "capturas": [
+    111,
+    112
+   ]
+  },
+  {
+   "captura": 113,
+   "nombre": "SUPERVIVENCIA CONTRA ZOMBIS",
+   "texto": [
+    "Supervivencia contra zombis es un modo en el que tendrás que sobrevivir a las oleadas de zombis durante un tiempo determinado.",
+    "En Supervivencia contra zombis, hay restricciones de habilidades, peligros de fase, restricciones de personajes y mejoras de zombis.",
+    "Las restricciones de habilidades te impiden usar la habilidad de ese espacio.",
+    "Los peligros de fase aplican efectos adicionales a los niveles.",
+    "Las restricciones de personajes te impiden usar según qué tipos de personajes.",
+    "Las mejoras de zombis aumentan el ATQ, la DEF y los PG de los zombis de forma acorde al nivel.",
+    "*  Las restricciones de habilidades, los peligros de fase y las restricciones de personajes cambian semanalmente.",
+    "Obtendrás recompensas al completar desafíos de Supervivencia contra zombis y al competir en la clasificación de Supervivencia contra zombis.",
+    "Es posible obtener llamas eternas e insignias de Supervivencia contra zombis al completar desafíos de Supervivencia contra zombis, que son exclusivos de este modo.",
+    "Obtén recompensas al competir en la clasificación contra hasta 50 jugadores que varían semanalmente.",
+    "Recibirás recompensas en función de tu clasificación.",
+    "Se te clasificará según tu puntuación más alta. Los niveles más altos otorgan una puntuación mayor.",
+    "Se otorgan puntos por cada zombi que eliminas, y quienes eliminen más, conseguirán más puntos y se clasificarán en un puesto más alto que los demás jugadores del mismo nivel."
+   ],
+   "capturas": [
+    113,
+    114
+   ]
+  },
+  {
+   "captura": 115,
+   "nombre": "ARENA DE BATALLA POR EQUIPOS",
+   "texto": [
+    "La arena de batalla por equipos es un modo de juego en el que puedes librar combates tácticos contra otros jugadores.",
+    "Puedes crear un máximo de 5 equipos compuestos por 3 personajes con el coste de héroes, y usarlos para combatir contra los equipos de otros jugadores.",
+    "Tu liga se determinará en función de la cantidad de puntos de arena que consigas. Al final de la temporada, recibirás diversas recompensas en función de tu liga y el puesto final.",
+    "Además, puedes conseguir insignias de arena en la arena de batalla por equipos que puedes intercambiar en la tienda de la arena por diversas recompensas, como objetos de fortalecimiento o materiales de crecimiento."
+   ]
+  }
+ ],
+ "menu_contenidos": [
+  "HISTORIA",
+  "MISIÓN ÉPICA",
+  "MISIÓN DIMENSIONAL",
+  "MISIÓN DE ENVÍO",
+  "DUELO DIMENSIONAL",
+  "BATALLA DE ALIANZA",
+  "BATALLA DE OTRO MUNDO",
+  "JEFE MUNDIAL",
+  "SAGA DEL MULTIVERSO",
+  "TIERRA DE SOMBRAS",
+  "TORNEO DE ALIANZA",
+  "BATALLA LEGENDARIA",
+  "CONQUISTA DE ALIANZA",
+  "INCURSIÓN DE JEFE GIGANTE",
+  "EVENTO MUNDIAL",
+  "SUPERVIVENCIA EN LA LÍNEA TEMPORAL",
+  "BRECHA DIMENSIONAL",
+  "SUPERVIVENCIA CONTRA ZOMBIS",
+  "ARENA DE BATALLA POR EQUIPOS"
+ ],
+ "objetos": [
+  {
+   "captura": 116,
+   "nombre": "BIOMETRÍAS",
+   "texto": [
+    "La información sobre los atributos físicos de los personajes, sus patrones de batalla y mucho más se encuentra en Datos.",
+    "Yocasta viene del futuro para reclutar personajes y así evitar la destrucción del mundo.",
+    "Las biometrías sirven para reclutar a un personaje nuevo o para mejorarlo usando aumento de rango."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "Biometrics"
+  },
+  {
+   "captura": 117,
+   "nombre": "ISO-8",
+   "texto": [
+    "El ISO-8 es un objeto extraño que apareció por primera vez en la Tierra tras unos sucesos muy peculiares.",
+    "No se conocen detalles específicos sobre el origen del ISO-8, pero tras mucha investigación, se descubrió que fortalecía cualquier objeto con el que se le combinase.",
+    "Cuando se equipa ISO-8 a un personaje, sus características aumentan."
+   ],
+   "obtencion": "Se consigue en: Misión dimensional, misión de envío",
+   "en": "ISO-8"
+  },
+  {
+   "captura": 118,
+   "nombre": "PIEDRA NORN",
+   "texto": [
+    "Las Piedras Norn son piedras con propiedades mágicas.",
+    "Tienen el poder de satisfacer los deseos de quien la posee y Loki las solía utilizar para sus planes.",
+    "Usa Piedras Norn para aumentar las maestrías de personaje y hacer que tus personajes sean más poderosos."
+   ],
+   "obtencion": "Se consigue en: Misión dimensional, Batalla de alianza",
+   "en": "Norn Stone"
+  },
+  {
+   "captura": 119,
+   "nombre": "KIT DE EQUIPACIÓN",
+   "texto": [
+    "Kit de equipación desarrollado por Tony Stark.",
+    "Stark creó un kit que podía mejorar el equipo más fácilmente durante las misiones.",
+    "Utiliza kits de mejora de equipo para mejorar el equipo de personaje."
+   ],
+   "obtencion": "Se consigue en: Misión dimensional",
+   "en": "Gear Up Kit"
+  },
+  {
+   "captura": 120,
+   "nombre": "RESTOS DIMENSIONALES",
+   "texto": [
+    "Los restos dimensionales son un material excepcional que se puede descubrir en brechas dimensionales.",
+    "Está formado por una sustancia desconocida que no pertenece a ninguna dimensión y posee un poder misterioso.",
+    "Los restos dimensionales son un material de mejora avanzado necesario para cualquier personaje que quiera mejorar su equipo por encima de +10."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "Dimension Debris"
+  },
+  {
+   "captura": 121,
+   "nombre": "CHIP DE PEX",
+   "texto": [
+    "Los chips de PEX contienen datos de combate del personaje y se pueden usar para aumentar el nivel del personaje."
+   ],
+   "obtencion": "Se obtienen en: Misión dimensional"
+  },
+  {
+   "captura": 122,
+   "nombre": "PAQUETE DE COMPONENTES",
+   "texto": [
+    "Esto es un paquete de componentes de Industrias Stark.",
+    "Contiene varias herramientas y proyectos que Tony Stark suele utilizar.",
+    "Utiliza el paquete de componentes para mejorar los componentes en el laboratorio de SHIELD."
+   ],
+   "obtencion": "Se consigue en: Misión dimensional"
+  },
+  {
+   "captura": 123,
+   "nombre": "PROYECTO CON LA MARCA STARK",
+   "texto": [
+    "Los proyectos contienen diseños secretos creados por Industrias Stark.",
+    "Utiliza los proyectos de marca Stark para mejorar los componentes en el laboratorio de SHIELD."
+   ],
+   "obtencion": "Se consigue en: Misión dimensional"
+  },
+  {
+   "captura": 124,
+   "nombre": "CROMOS DE CÓMICS",
+   "texto": [
+    "Los cromos de cómic son cromos muy especiales que poseen los personajes de otras dimensiones.",
+    "Sorprendentemente, los cromos tienen imágenes de varios personajes además de unos escritos ininteligibles.",
+    "Cuando se equipan, las estadísticas adicionales asociadas a cada cromo se añadirán a todos los personajes."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "Comic Cards"
+  },
+  {
+   "captura": 125,
+   "nombre": "ARTEFACTO",
+   "texto": [
+    "Los artefactos pueden ampliar el instinto de los personajes.",
+    "Algunos artefactos otorgan habilidades pasivas a unos personajes concretos al equiparlos.",
+    "Mejora artefactos para ampliar el instinto o desmóntalos para conseguir materiales de mejora."
+   ],
+   "obtencion": "Se consiguen en: Historia, Supervivencia en la línea temporal",
+   "en": "Artifact"
+  },
+  {
+   "captura": 126,
+   "nombre": "ESENCIA CELESTIAL",
+   "texto": [
+    "El poder de los artefactos se condensa en la esencia celestial.",
+    "Desmonta artefactos para conseguir esencia celestial y úsala para mejorar artefactos."
+   ],
+   "obtencion": "Se consigue: Al desmontar artefactos"
+  },
+  {
+   "captura": 127,
+   "nombre": "ESPADA",
+   "texto": [
+    "Las espadas son piezas de equipo que contienen el poder de héroes legendarios.",
+    "Al equipar una espada, se aplica su efecto en todos los personajes.",
+    "Hay 7 tipos de espadas distintas: la espada de lo desconocido y 6 espadas especiales.",
+    "La espada de lo desconocido posee un poder misterioso que se puede encantar con varios efectos mágicos."
+   ]
+  },
+  {
+   "captura": 128,
+   "nombre": "RUNA DE ENCANTAMIENTO",
+   "texto": [
+    "Las runas de encantamiento son piedras que contienen el poder mágico del otro mundo.",
+    "Las runas de encantamiento se usan como materiales de encantamiento de espadas y hay runas de encantamiento especiales que aumentan la probabilidad de aplicar un elemento específico."
+   ],
+   "obtencion": "Se adquiere en: Batalla de otro mundo"
+  },
+  {
+   "captura": 129,
+   "nombre": "EQUIPO PERSONALIZADO",
+   "texto": [
+    "El equipo personalizado son piezas de equipo diseñadas específicamente para amplificarte o defenderte frente a cierto poder.",
+    "Cuando lo lleva un personaje, puede aumentar las estadísticas o concederle una habilidad especial.",
+    "Hay dos tipos de equipo personalizado: obeliscos y C.T.P..",
+    "Los obeliscos son equipo personalizado con capacidades moderadas y están divididos en seis grados, de [cortado al pie del panel; el resto no se ve]"
+   ],
+   "obtencion": "[ilegible: no se ve, el texto sigue debajo]"
+  },
+  {
+   "captura": 130,
+   "nombre": "PIEDRA NORN DE CAOS",
+   "texto": [
+    "Las piedras Norn de caos son unas piedras Norn únicas halladas en el espacio.",
+    "El poder cósmico de Thanos distorsionó el poder de las piedras Norn, y las transformó en piedras Norn del caos.",
+    "Las piedras Norn del caos se usan como material para desarrollar a un personaje de nivel máximo de categoría 1 a 2, o para aumentar el rango de los personajes reclutados en categoría 2."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]"
+  },
+  {
+   "captura": 131,
+   "nombre": "ANTIMATERIA NEGRA",
+   "texto": [
+    "La antimateria negra es una sustancia única que se creó con las investigaciones de Thanos.",
+    "Al desarrollar más aún la antimateria, Thanos creó la antimateria negra, que contiene una energía superior.",
+    "La antimateria negra se usa como material para desarrollar un personaje de nivel máximo de categoría 1 a 2, o para aumentar el rango de los personajes reclutados en categoría 2."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]"
+  },
+  {
+   "captura": 132,
+   "nombre": "URU ENCANTADO",
+   "texto": [
+    "Uru encantado con el poder mágico de Odín.",
+    "El uru encantado puede equiparse cuando el equipo del personaje alcanza un determinado nivel.",
+    "Usa uru encantado en el equipo de un personaje para obtener estadísticas adicionales."
+   ],
+   "obtencion": "Se consigue en: Misión dimensional, misión de envío"
+  },
+  {
+   "captura": 133,
+   "nombre": "FRAGMENTO DE M'KRAAN",
+   "texto": [
+    "El cristal M'kraan es un cristal rosa enorme tan antiguo que se desconoce su origen.",
+    "Se dice que si el cristal M'kraan se rompiese, una energía gravitacional inmensa estallaría por todo el universo y lo atraería todo hacia un agujero negro, lo que provocaría el colapso del universo.",
+    "Incluso los fragmentos que se desprendieron cuando el cristal M'kraan se destruyó hace mucho tiempo todavía contienen un poder increíble.",
+    "Usa los fragmentos de M'kraan para despertar a los personajes mutantes.."
+   ],
+   "en": "M'Kraan Shard"
+  },
+  {
+   "captura": 134,
+   "nombre": "CRISTAL M'KRAAN",
+   "texto": [
+    "El cristal M'kraan es un cristal rosa enorme tan antiguo que se desconoce su origen.",
+    "Se dice que si el cristal M'kraan se rompiese, una energía gravitacional inmensa estallaría por todo el universo y lo atraería todo hacia un agujero negro, lo que provocaría el colapso del universo.",
+    "El poder del cristal M'kraan puede restaurar las habilidades perdidas de los mutantes.",
+    "Usa el cristal M'kraan y plumas de Fénix para desarrollar los personajes mutantes a categoría 2."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "M'Kraan Crystal"
+  },
+  {
+   "captura": 135,
+   "nombre": "PLUMA DE FÉNIX",
+   "texto": [
+    "Se dice que el Fénix es una entidad cósmica que trae consigo la destrucción de todo lo que existe.",
+    "Mediante el poder del Fénix, los mutantes obtienen un poder y habilidades increíbles.",
+    "Aunque las plumas de Fénix contienen una fracción minúscula de su poder, con ello basta para otorgar una cantidad inmensa de energía cósmica.",
+    "Usa el cristal M'kraan y plumas de Fénix para desarrollar personajes mutantes a categoría 2."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "Phoenix Feather"
+  },
+  {
+   "captura": 136,
+   "nombre": "GEN-X",
+   "texto": [
+    "Mediante la transcripción y la traslación, este gen causa una proteína exótica",
+    "que produce señales químicas, incluidas mutaciones en otros genes, lo que da lugar a organismos mutantes fortalecidos de diversas formas.",
+    "El gen-X sirve para reclutar a un mutante nuevo, o para mejorarlo mediante el aumento de rango."
+   ],
+   "en": "X-Gene"
+  },
+  {
+   "captura": 137,
+   "nombre": "FRAGMENTO DE CUBO CÓSMICO",
+   "texto": [
+    "El Cubo Cósmico es un artefacto cósmico que posee un poder misterioso capaz de otorgar un poder inmenso a quien lo use.",
+    "Tras un grave incidente que casi alteró el destino del universo, el cubo se destruyó y sus fragmentos se dispersaron por todo el mundo. Se dice que incluso los fragmentos rotos todavía contienen un poder increíble.",
+    "Los fragmentos de Cubo Cósmico son materiales que se usan para mejorar los personajes, y se pueden [cortado al pie del panel]"
+   ],
+   "obtencion": "[ilegible: no se ve, el texto sigue debajo]",
+   "en": "Cosmic Cube Fragment"
+  },
+  {
+   "captura": 138,
+   "nombre": "PAQUETE DE COMPONENTES DE TITÁN",
+   "texto": [
+    "El paquete de componentes de Titán es una herramienta que incorpora la tecnología avanzada de la raza de los Titanes.",
+    "Estos dispositivos, que se descubrieron en la nave de Thanos, fueron mejorados mediante la investigación conjunta de Iron Man y Maravilla Azul hasta convertirlos en tecnologías capaces de fortalecer a los personajes.",
+    "Los paquetes de componentes de Titán se usan como materiales para mejorar equipo por encima del nivel 20 y para el desarrollo de categoría 3."
+   ],
+   "obtencion": "Se obtiene en: jefe mundial, duelo dimensional, batalla de otro mundo, supervivencia contra zombis",
+   "capturas": [
+    138,
+    139,
+    140
+   ]
+  },
+  {
+   "captura": 141,
+   "nombre": "REGISTRO DE TITÁN",
+   "texto": [
+    "El Registro de Titán es un importante documento que contiene los registros de varias investigaciones llevadas a cabo por Thanos.",
+    "Thanos realizó numerosos experimentos para potenciar su propio cuerpo que se registraron con fines científicos.",
+    "El Registro de Titán sirve como material para desarrollar a la categoría 3."
+   ],
+   "obtencion": "Ubicación: Jefe mundial",
+   "capturas": [
+    141,
+    142
+   ]
+  },
+  {
+   "captura": 143,
+   "nombre": "KIT DE POTENCIACIÓN DE TIPO",
+   "texto": [
+    "El kit de mejora de tipo se elabora mediante el procesado de carbonita, una sustancia que amplifica la energía.",
+    "Tony Stark creó este kit con un Howard Stark de otra dimensión para que los personajes con diferentes tipos pudieran beneficiarse del poder de la carbonita.",
+    "El kit de mejora de tipo se usa para mejorar el tipo del personaje."
+   ],
+   "obtencion": "Se obtiene en: Incursión de Jefe Gigante",
+   "capturas": [
+    143,
+    144
+   ]
+  },
+  {
+   "captura": 145,
+   "nombre": "CRISTAL DEL DESPERTAR",
+   "texto": [
+    "El cristal del despertar es un cristal rojo formado a partir de una energía poderosa.",
+    "Este cristal posee un poder especial, se desconoce cómo se creó y cuál es su poder real. Al activar su poder, una energía roja que sale de su interior despierta el potencial del personaje y le otorga poderes nuevos.",
+    "Usa el cristal del despertar para despertar el potencial de ciertos personajes."
+   ],
+   "obtencion": "Se obtiene en: batalla de alianza, duelo dimensional, batalla de otro mundo",
+   "capturas": [
+    145,
+    146
+   ]
+  },
+  {
+   "captura": 147,
+   "nombre": "FRAGMENTO DE GEMA DE MANDALAY",
+   "texto": [
+    "La gema de Mandalay está compuesta de uno de los minerales más poderosos del universo.",
+    "Aunque muchos han luchado por conseguirla, se fracturó a causa de una gran fuente de energía y sus fragmentos están repartidos por todo el universo. Los fragmentos de la gema de Mandalay todavía emiten una poderosa energía y otorgan a su portador poderes especiales.",
+    "Usa los fragmentos de la gema de Mandalay para despertar el potencial de ciertos personajes."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]"
+  },
+  {
+   "captura": 148,
+   "nombre": "FRAGMENTO DE HISTORIA",
+   "texto": [
+    "Los fragmentos de historia son esencia cristalizada de poderes dimensionales misteriosos.",
+    "Estos fragmentos albergan las historias de los héroes que lucharon para proteger el mundo.",
+    "Reúne todos los fragmentos de historia para crear cofres, de los que obtendrás recompensas especiales."
+   ],
+   "obtencion": "Se obtienen de: Historia"
+  },
+  {
+   "captura": 149,
+   "nombre": "NÚCLEO DE REFORJA DE C.T.P.",
+   "texto": [
+    "El núcleo de reforja de C.T.P. es un componente que fortalece el equipo especial: C.T.P.",
+    "El núcleo de reforja de C.T.P. está hecho de vibránium y amplifica los poderes ocultos dentro del C.T.P., lo que hace que desprenda un gran poder.",
+    "El núcleo de reforja de C.T.P. se usa como material para reforjar C.T.P."
+   ],
+   "obtencion": "Se consigue en: brecha dimensional"
+  },
+  {
+   "captura": 150,
+   "nombre": "CUBO DE CREACIÓN DE CROMO",
+   "texto": [
+    "El cubo de creación de cromo es un componente metálico que libera el poder especial del cromo.",
+    "Se han descubierto los nuevos poderes de los cromos tras muchos experimentos e investigaciones y sus inmensos poderes se han liberado mediante el cubo de creación de cromo.",
+    "Los cubos de creación de cromos de cómic se pueden usar como materiales para crear cromos."
+   ],
+   "obtencion": "Se consigue en: brecha dimensional"
+  },
+  {
+   "captura": 151,
+   "nombre": "PIEDRA DE INVOCACIÓN DE BRECHAS DIMENSIONALES",
+   "texto": [
+    "Las piedras de invocación de brechas dimensionales se usan para abrir el portal que te teletransporta a otro espacio-tiempo.",
+    "Puedes conseguir piedras de invocación en la historia y se usan para abrir brechas dimensionales."
+   ],
+   "obtencion": "Se consigue en: la historia."
+  },
+  {
+   "captura": 152,
+   "nombre": "LIBRO DE LOS VISHANTI",
+   "texto": [
+    "El libro de los vishanti es un libro de hechizos escrito por los vishanti, un grupo de seres místicos omnipotentes que dominan la magia.",
+    "Contiene poderosos hechizos de magia blanca y hechizos defensivos que pueden contrarrestar la maldad del libro de los condenados y otra magia negra.",
+    "El libro de los vishanti puede usarse como material de desarrollo de categoría 4."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "Book of the Vishanti"
+  },
+  {
+   "captura": 153,
+   "nombre": "SEMILLA DE VIDA",
+   "texto": [
+    "La semilla de vida es uno de los misteriosos artefactos creado por los celestiales.",
+    "Se plantó en un planeta muerto para que brotara una nueva vida y tiene el poder de actuar como catalizador de la creación y la evolución.",
+    "La semilla de vida mejora a un héroe y puede usarse como mejora de segundo potencial, desarrollo de categoría 4 o como material para subir de nivel para habilidades de nv. 7 o superior."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]",
+   "en": "Seed of Life"
+  },
+  {
+   "captura": 154,
+   "nombre": "CARBONADIUM",
+   "texto": [
+    "El carbonadium es una sustancia creada en un intento de replicar el adamantium.",
+    "Es más fuerte que el acero y tiene una flexibilidad increíble.",
+    "El carbonadium se usa como material para mejorar equipo por encima de nivel 26 y para el desarrollo de categoría 4."
+   ],
+   "obtencion": "Se obtiene en: jefe mundial, duelo dimensional, batalla de otro mundo, tierra de sombras, supervivencia [el resto, cortado al pie del panel]",
+   "en": "Carbonadium"
+  },
+  {
+   "captura": 155,
+   "nombre": "ALMA DE LOS FALTINE",
+   "texto": [
+    "El alma de los Faltine es una sustancia creada en la Dimensión Oscura en la que existen los Faltine, unos seres nacidos de la magia pura.",
+    "Contiene la llama de los Faltine y posee un poder mágico increíble.",
+    "El alma de los Faltine se usa como material para mejorar equipo por encima de nivel 26 y para el desarrollo de categoría 4."
+   ],
+   "obtencion": "[ilegible: línea cortada al pie del panel]"
+  },
+  {
+   "captura": 156,
+   "nombre": "Llama Eterna",
+   "texto": [
+    "Llama eterna es una llama que hace que Bendición de Odín sea todavía más potente.",
+    "Llama eterna se usa como material durante Despertar de uru."
+   ],
+   "obtencion": "Ubicación de la adquisición: Supervivencia contra zombis"
+  },
+  {
+   "captura": 157,
+   "nombre": "Poder del demiurgo",
+   "texto": [
+    "Poder del demiurgo es un material potente que se usa para subir de nivel el equipo de élite de un personaje de categoría 4."
+   ],
+   "obtencion": "Se obtiene en: jefe mundial: leyenda, duelo dimensional, arena de batalla por equipos"
+  },
+  {
+   "captura": 158,
+   "nombre": "Piedra de los dioses",
+   "texto": [
+    "Piedra de los dioses es un material necesario para desbloquear y superar el límite de nivel del equipo de élite de un personaje de categoría 4."
+   ],
+   "obtencion": "Se obtiene en: jefe mundial: leyenda, duelo dimensional, arena de batalla por equipos"
+  },
+  {
+   "captura": 159,
+   "nombre": "DATOS DE EMBLEMA",
+   "texto": [
+    "Los datos de emblema se dividen en las rarezas normal/de lujo/excepcional/heroica/legendaria/mítica, y se usan para subir de nivel los emblemas de la misma rareza."
+   ],
+   "obtencion": "Se consiguen en: Saga del multiverso"
+  },
+  {
+   "captura": 160,
+   "nombre": "KIT DE MEJORA DE EMBLEMA",
+   "texto": [
+    "Los kits de mejora de emblema son un material de subida de nivel que se necesita en rangos de nivel concretos al subir de nivel los emblemas."
+   ],
+   "obtencion": "Se consiguen en: Saga del multiverso"
+  },
+  {
+   "captura": 161,
+   "nombre": "Datos de JARVIS",
+   "texto": [
+    "Los Datos de JARVIS se obtienen como datos exclusivos al adquirir un chip idéntico a uno que ya posees.",
+    " Los datos se utilizan como material para mejorar chips y cambiar sus opciones."
+   ],
+   "obtencion": "Se consiguen en:Jefe mundial"
+  },
+  {
+   "captura": 162,
+   "nombre": "Fragmento de datos de JARVIS",
+   "texto": [
+    "Los Fragmentos de datos de JARVIS se pueden obtener al desmontar Datos de JARVIS.",
+    "Los fragmentos de datos se utilizan como material de mejora para los chips."
+   ],
+   "obtencion": "Se consiguen en:Jefe mundial"
+  }
+ ],
+ "menu_objetos": [
+  "BIOMETRÍAS",
+  "ISO-8",
+  "PIEDRA NORN",
+  "KIT DE EQUIPACIÓN",
+  "RESTOS DIMENSIONALES",
+  "CHIP DE PEX",
+  "PAQUETE DE COMPONENTES",
+  "PROYECTO CON LA MARCA STARK",
+  "CROMOS DE CÓMICS",
+  "ARTEFACTO",
+  "ESENCIA CELESTIAL",
+  "ESPADA",
+  "RUNA DE ENCANTAMIENTO",
+  "EQUIPO PERSONALIZADO",
+  "PIEDRA NORN DE CAOS",
+  "ANTIMATERIA NEGRA",
+  "URU ENCANTADO",
+  "FRAGMENTO DE M'KRAAN",
+  "CRISTAL M'KRAAN",
+  "PLUMA DE FÉNIX",
+  "GEN-X",
+  "FRAGMENTO DE CUBO CÓSMICO",
+  "ESENCIA DIMENSIONAL",
+  "PAQUETE DE COMPONENTES DE TITÁN",
+  "REGISTRO DE TITÁN",
+  "KIT DE POTENCIACIÓN DE TIPO",
+  "CRISTAL DEL DESPERTAR",
+  "FRAGMENTO DE GEMA DE MANDALAY",
+  "FRAGMENTO DE HISTORIA",
+  "NÚCLEO DE REFORJA DE C.T.P.",
+  "CUBO DE CREACIÓN DE CROMO",
+  "PIEDRA DE INVOCACIÓN DE BRECHAS DIMENSIONALES",
+  "LIBRO DE LOS VISHANTI",
+  "SEMILLA DE VIDA",
+  "CARBONADIUM",
+  "ALMA DE LOS FALTINE",
+  "Llama Eterna",
+  "Poder del demiurgo",
+  "Piedra de los dioses",
+  "DATOS DE EMBLEMA",
+  "KIT DE MEJORA DE EMBLEMA",
+  "Datos de JARVIS",
+  "Fragmento de datos de JARVIS"
+ ]
+}

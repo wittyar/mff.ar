@@ -1,0 +1,1424 @@
+{
+ "fuente": "Capturas del juego en español de Ezequiel (álbum de Google Fotos, 6 de octubre de 2026): las fichas de los C.T.P., capturas 3 a 49, completas. Transcripción a mano, tal cual.",
+ "album": "https://photos.app.goo.gl/EK155akXC5fjtSV7A",
+ "convenciones": [
+  "Cada elemento de «lineas» es una línea lógica del juego: las que empiezan con viñeta llevan «· »; las sangradas van sin viñeta. Cuando el juego parte una línea por el ancho de la caja (la continuación arranca en el margen), se une con un espacio (p. ej. «del 15 %»).",
+  "«cortada»: la caja sigue más abajo y la captura no muestra el resto (el juego la desplaza); la última línea puede estar incompleta.",
+  "El pie va en el orden de la pantalla: la barra «Se muestra el mejor valor» y la frase de abajo. Los resaltados de color y subrayados van sin marcas."
+ ],
+ "ctps": [
+  {
+   "id": "competition",
+   "grado": "base",
+   "captura": 3,
+   "titulo": "C.T.P. de competición",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Aumenta la probabilidad de crítico y la probabilidad de crítico de instinto. +34%",
+      "· Aumenta el daño crítico de instinto 45%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15 %",
+      "Se aplica a: ti",
+      "Ignora la reducción del daño del jefe en un 55%(6 s)",
+      "Aumenta todo el daño infligido a jefes en un valor igual a 6% de instinto total.",
+      "(Aumenta hasta 140%)(6 s)",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "competition",
+   "grado": "poderoso",
+   "captura": 4,
+   "titulo": "C.T.P. poderoso de Competición",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Furia",
+      "(Aumenta todo el daño un 60% y",
+      "además aumenta todo el daño en un valor igual al 60% de la Concentración)(6 s)",
+      "Tiempo de recarga: 10 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Aumenta la probabilidad de crítico y la probabilidad de crítico de instinto. +34%",
+      "· Aumenta el daño crítico de instinto 45%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "competition",
+   "grado": "brillante",
+   "captura": 5,
+   "titulo": "C.T.P. brillante de Competición",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Furia",
+      "(Aumenta todo el daño un 120% y",
+      "además aumenta todo el daño en un valor igual al 90% de la Concentración)(7 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Aumenta la probabilidad de crítico y la probabilidad de crítico de instinto. +39,1%",
+      "· Aumenta el daño crítico de instinto 51,75%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 20"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ],
+   "nota": "El título lo tapa una notificación de WhatsApp; se lee a medias y coincide con la captura 6, que es la misma ficha."
+  },
+  {
+   "id": "competition",
+   "grado": "brillante",
+   "captura": 6,
+   "titulo": "C.T.P. brillante de Competición",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Furia",
+      "(Aumenta todo el daño un 120% y",
+      "además aumenta todo el daño en un valor igual al 90% de la Concentración)(7 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Aumenta la probabilidad de crítico y la probabilidad de crítico de instinto. +39,1%",
+      "· Aumenta el daño crítico de instinto 51,75%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 20"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ],
+   "nota": "Misma ficha que la captura 5, con el título visible."
+  },
+  {
+   "id": "potenciador",
+   "grado": "objeto",
+   "captura": 7,
+   "titulo": "Potenciador",
+   "cajas": [
+    {
+     "rotulo": "Opción 1",
+     "lineas": [
+      "· ÍNDICE DE RECUPERACIÓN ↑ +40%",
+      "· ESQUIVA ↑ +14%",
+      "· IGNORAR ESQUIVAR 20%",
+      "· ÍNDICE CRÍTICO ↑ +14%",
+      "· DAÑO CRÍTICO ↑ +20%"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Obtenible en misión dimensional."
+   ],
+   "nota": "No es un C.T.P.: es el objeto «Potenciador» (1 estrella)."
+  },
+  {
+   "id": "transcendence",
+   "grado": "base",
+   "captura": 8,
+   "titulo": "C.T.P. de transcendencia",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· MEJORA LOS ATAQUES BÁSICOS +32%",
+      "· IGNORAR ESQUIVAR 45%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Reduce el daño recibido de los efectos reflejados en 50%.",
+      "Efecto: REFLEJA TODOS LOS ATAQUES(5 s)",
+      "Invencible(5 s)",
+      "Tiempo de recarga: 10 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Usa vales ocultos en misión dimensionalpara conseguirlo."
+   ]
+  },
+  {
+   "id": "authority",
+   "grado": "base",
+   "captura": 9,
+   "titulo": "C.T.P. de autoridad",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· DAÑO CRÍTICO ↑ +45%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Invencible(5 s)",
+      "Aumenta todos los ataques básicos en +5% por cada 1  % de daño puro recibido(7 s)",
+      "Acumula daño puro hasta un 10% de los PG máximos(7 s)",
+      "Tiempo de recarga: 10 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "energy",
+   "grado": "base",
+   "captura": 10,
+   "titulo": "C.T.P. de energía",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· IGNORAR ESQUIVAR 45%",
+      "· DAÑO CRÍTICO ↑ +45%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %",
+      "Se aplica a: ti",
+      "Aumenta el daño por impacto en cadena en 30% cuando atacas.(5 s)",
+      "Aumenta el daño básico de 1 ataque(s) en 200%.(5 s)",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir como recompensa adicional en Batalla legendaria."
+   ]
+  },
+  {
+   "id": "destruction",
+   "grado": "base",
+   "captura": 11,
+   "titulo": "C.T.P. de destrucción",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· DAÑO CRÍTICO ↑ +45%",
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %",
+      "Se aplica a: ti",
+      "30% de probabilidad de perforar con el efecto SUPERARMADURA, BARRERA, INMUNE A TODO EL DAÑO, INVENCIBLE(5 s)",
+      "Aumenta el daño básico de 1 ataque(s) en 200%.(5 s)",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "patience",
+   "grado": "base",
+   "captura": 12,
+   "titulo": "C.T.P. de paciencia",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· ESQUIVA ↑ +32%",
+      "· MEJORA LOS ATAQUES BÁSICOS +32%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Reduce el daño recibido de los efectos reflejados en 50%.",
+      "Efecto: REFLEJA TODOS LOS ATAQUES(5 s)",
+      "Invencible(5 s)",
+      "Tiempo de recarga: 10 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir como recompensa adicional en Puntos de aumento."
+   ]
+  },
+  {
+   "id": "refinement",
+   "grado": "base",
+   "captura": 13,
+   "titulo": "C.T.P. de ajuste",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +34%",
+      "· ÍNDICE DE RECUPERACIÓN ↑ +90%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 20% de PG.",
+      "Barrera (6 veces)(6 s)",
+      "Tiempo de recarga: 15 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir como recompensa adicional en Batalla legendaria."
+   ]
+  },
+  {
+   "id": "regeneration",
+   "grado": "base",
+   "captura": 14,
+   "titulo": "C.T.P. de regeneración",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +34%",
+      "· Inmunidad a Romper guardia y Aumento del índice de recuperación. +90%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 10% de PG.",
+      "Crea un escudo igual al 35% de los PG máximos e ignora los efectos de cancelar y perforar (bloquea el daño de instinto).(5 s)",
+      "Tiempo de recarga: 10 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "rage",
+   "grado": "base",
+   "captura": 15,
+   "titulo": "C.T.P. de ira",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· ÍNDICE CRÍTICO ↑ +32%",
+      "· ESQUIVA ↑ +32%",
+      "· Probabilidad de activación: cuando atacas con crítico con una probabilidad de 20%",
+      "Se aplica a: ti",
+      "Aumenta 0,9% de daño básico por 1% de probabilidad de esquiva y probabilidad de crítico,",
+      "sin importar la probabilidad de esquiva garantizada y la probabilidad de crítico garantizado.(5 s)",
+      "Ignora la reducción del daño del jefe en un 60%(5 s)",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "veteran",
+   "grado": "base",
+   "captura": 16,
+   "titulo": "C.T.P. de veterano",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Inmunidad a Romper guardia, Ignorar esquiva y Aumento de daño crítico +32%",
+      "· MEJORA TODOS LOS ATAQUES Y DEFENSAS BÁSICOS +28%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15 %",
+      "Se aplica a: ti",
+      "Aumenta el daño por impacto en cadena en 40% cuando atacas.(5 s)",
+      "Aumenta el daño básico de 1 ataque(s) en 150%.(5 s)",
+      "Crea un escudo igual al 30% de los PG máximos e ignora los efectos de cancelar y perforar (bloquea el daño de instinto).(3 s)",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir como una recompensa especial en el Salón del coleccionista."
+   ]
+  },
+  {
+   "id": "judgement",
+   "grado": "base",
+   "captura": 17,
+   "titulo": "C.T.P. de justiciero",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· MEJORA LOS ATAQUES BÁSICOS +32%",
+      "· DAÑO INFLIGIDO POR CADENA ↑ 20%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %",
+      "Se aplica a: enemigos",
+      "Reduce todas las resistencias -30%(5 s)",
+      "Se aplica a: ti",
+      "Aumenta todo tipo de daño +200% (5 s)",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "greed",
+   "grado": "base",
+   "captura": 18,
+   "titulo": "C.T.P. de codicia",
+   "cajas": [
+    {
+     "rotulo": "Opción 1",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Recupera 10% de PG.",
+      "Incrementa el daño básico infligido a personajes de tipo COMBATE, DETONACIÓN en 150%.(5 s)",
+      "Incrementa el daño básico infligido a personajes de tipo VELOCIDAD, UNIVERSAL en 150%.(5 s)",
+      "Activa un efecto de aumento de daño en el turno.",
+      "El efecto se vuelve a activar 12 s después de que desaparezca",
+      "· Se aplica a: ti",
+      "Recupera 10% de PG.",
+      "Incrementa el daño básico infligido a personajes de tipo VELOCIDAD, UNIVERSAL en 150%.(5 s)",
+      "Incrementa el daño básico infligido a personajes de tipo"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "insight",
+   "grado": "base",
+   "captura": 19,
+   "titulo": "C.T.P. de percepción",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +34%",
+      "· MEJORA TODAS LAS DEFENSAS BÁSICAS +39%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %",
+      "Se aplica a: todo el equipo",
+      "Aumenta el daño básico infligido a la facción SUPERVILLANO en 20%.(5 s)",
+      "Aumenta el daño básico infligido a la facción SUPERHÉROE en 20%.(5 s)",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado.",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "conquest",
+   "grado": "base",
+   "captura": 20,
+   "titulo": "C.T.P. de conquista",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· ÍNDICE DE RECUPERACIÓN ↑ +90%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 10% de PG.",
+      "Los PG máx. aumentan en +20%.(6 s)",
+      "Muro",
+      "(Reduce el daño recibido en 80%.",
+      "Reduce la reducción de daño en 3% con cada golpe recibido, con una reducción mínima de daño de 60%)(6 s)",
+      "Tiempo de recarga: 11 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "liberation",
+   "grado": "base",
+   "captura": 21,
+   "titulo": "C.T.P. de liberación",
+   "cajas": [
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Inmunidad a Romper guardia y Aumento del índice de recuperación. +90%",
+      "· MEJORA TODOS LOS ATAQUES Y DEFENSAS BÁSICOS +28%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %",
+      "Se aplica a: todo el equipo",
+      "Aumenta todo el daño infligido a todos los instintos en 20%(5 s)",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado.",
+      "Tiempo de recarga: 7 s"
+     ]
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se puede conseguir en el cofre de equipo personalizado."
+   ]
+  },
+  {
+   "id": "transcendence",
+   "grado": "poderoso",
+   "captura": 22,
+   "titulo": "C.T.P. poderoso de trascendencia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Penetración",
+      "(Tasa de éxito 50%)",
+      "Tiempo de recarga: 8 s",
+      "· Paliza",
+      "(Aumenta el daño de perforación adicional en 6%,",
+      "Aumenta el daño de perforación adicional en 20% de Concentración)(5 s)",
+      "Tiempo de recarga: 10 s"
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· MEJORA LOS ATAQUES BÁSICOS +32%",
+      "· IGNORAR ESQUIVAR 45%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "authority",
+   "grado": "poderoso",
+   "captura": 23,
+   "titulo": "C.T.P. poderoso de autoridad",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Acero",
+      "(Reduce todo el daño recibido en 30%,",
+      "y otro 20% de Concentración)(5 s)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· DAÑO CRÍTICO ↑ +45%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "energy",
+   "grado": "poderoso",
+   "captura": 24,
+   "titulo": "C.T.P. poderoso de energía",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Paliza",
+      "(Aumenta el daño de perforación adicional en 6%,",
+      "Aumenta el daño de perforación adicional en 20% de Concentración)(5 s)",
+      "Tiempo de recarga: 10 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· IGNORAR ESQUIVAR 45%",
+      "· DAÑO CRÍTICO ↑ +45%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "destruction",
+   "grado": "poderoso",
+   "captura": 25,
+   "titulo": "C.T.P. poderoso de destrucción",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Golpe",
+      "(Aumenta el daño infligido a jefes en 120%,",
+      "aumenta el daño adicional infligido a los jefes por 30% de Concentración).(5 s)",
+      "Tiempo de recarga: 10 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· DAÑO CRÍTICO ↑ +45%",
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "patience",
+   "grado": "poderoso",
+   "captura": 26,
+   "titulo": "C.T.P. poderoso de paciencia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Defender",
+      "(Crea una barrera que ignora los efectos de cancelación y perforación 6 vez/veces.",
+      "Recupera 60% de concentración en forma de PG).(5 s)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· ESQUIVA ↑ +32%",
+      "· MEJORA LOS ATAQUES BÁSICOS +32%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "refinement",
+   "grado": "poderoso",
+   "captura": 27,
+   "titulo": "C.T.P. poderoso de ajuste",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Vitalidad",
+      "(Recupera PG en 15% cada segundo",
+      "y una cantidad adicional igual al 35% de la Concentración)(5 s)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +34%",
+      "· ÍNDICE DE RECUPERACIÓN ↑ +90%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 20% de PG."
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "regeneration",
+   "grado": "poderoso",
+   "captura": 28,
+   "titulo": "C.T.P. poderoso de regeneración",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Penetración",
+      "(Tasa de éxito 50%)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +34%",
+      "· Inmunidad a Romper guardia y Aumento del índice de recuperación. +90%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 10% de PG."
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "rage",
+   "grado": "poderoso",
+   "captura": 29,
+   "titulo": "C.T.P. poderoso de furia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Rabioso",
+      "(Aumenta el daño crítico en 200% independientemente del límite máximo",
+      "y una cantidad adicional igual al 40% de la Concentración)(6 s)",
+      "Tiempo de recarga: 10 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· ÍNDICE CRÍTICO ↑ +32%",
+      "· ESQUIVA ↑ +32%",
+      "· Probabilidad de activación: cuando atacas con crítico con una probabilidad de 20%"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "veteran",
+   "grado": "poderoso",
+   "captura": 30,
+   "titulo": "C.T.P. poderoso de veterano",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Cuchilla",
+      "(Aumenta el daño infligido en 40%.",
+      "Aumento adicional en forma de 50% de concentración).(5 s)",
+      "Tiempo de recarga: 10 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Inmunidad a Romper guardia, Ignorar esquiva y Aumento de daño crítico +32%",
+      "· MEJORA TODOS LOS ATAQUES Y DEFENSAS BÁSICOS +28%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15 %"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "judgement",
+   "grado": "poderoso",
+   "captura": 31,
+   "titulo": "C.T.P. poderoso de juicio",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Amplificación de clase",
+      "(Aumenta el daño de habilidad de clase en 40%,",
+      "aumenta el daño de habilidad de clase adicional en 70% de Concentración)(5 s)",
+      "Tiempo de recarga: 10 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· MEJORA LOS ATAQUES BÁSICOS +32%",
+      "· DAÑO INFLIGIDO POR CADENA ↑ 20%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10 %"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "greed",
+   "grado": "poderoso",
+   "captura": 32,
+   "titulo": "C.T.P. poderoso de codicia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Emboscada",
+      "(Ignora un 35% la reducción del daño enemigo",
+      "y un 25% adicional de Concentración).(5 s)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción 1",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Recupera 10% de PG.",
+      "Incrementa el daño básico infligido a personajes de tipo COMBATE, DETONACIÓN en 150%.(5 s)",
+      "Incrementa el daño básico infligido a personajes de tipo"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "insight",
+   "grado": "poderoso",
+   "captura": 33,
+   "titulo": "C.T.P. poderoso de percepción",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Se aplica a: todo el equipo",
+      "Aumenta el daño básico infligido a jefes en 15%.",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado.",
+      "· Se aplica a: todo el equipo",
+      "Reduce el daño de perforación adicional recibido en 20%",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +34%",
+      "· MEJORA TODAS LAS DEFENSAS BÁSICAS +39%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 10"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "conquest",
+   "grado": "poderoso",
+   "captura": 34,
+   "titulo": "C.T.P. poderoso de conquista",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Choque",
+      "(Aumenta el daño básico en 60%.",
+      "Aumento adicional de 50% sobre Concentración según el número de enemigos [hasta 3]).(5 s)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +20%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· ÍNDICE DE RECUPERACIÓN ↑ +90%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "liberation",
+   "grado": "poderoso",
+   "captura": 35,
+   "titulo": "C.T.P. poderoso de liberación",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Se aplica a: todo el equipo",
+      "Aumenta los PG en +15%.",
+      "Reduce el daño por impacto en cadena en 10% cuando te atacan.",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado.",
+      "· Se aplica a: todo el equipo",
+      "Aumenta el daño infligido un 20% contra el objetivo con más PG máximos que el personaje.",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Inmunidad a Romper guardia y Aumento del índice de"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "transcendence",
+   "grado": "brillante",
+   "captura": 36,
+   "titulo": "C.T.P. brillante de trascendencia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Penetración",
+      "(Tasa de éxito 90%)",
+      "Tiempo de recarga: 7 s",
+      "· Paliza",
+      "(Aumenta el daño de perforación adicional en 10%,",
+      "Aumenta el daño de perforación adicional en 30% de Concentración)(6 s)",
+      "Tiempo de recarga: 9 s"
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· MEJORA LOS ATAQUES BÁSICOS +36,8%",
+      "· IGNORAR ESQUIVAR 51,75%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "authority",
+   "grado": "brillante",
+   "captura": 37,
+   "titulo": "C.T.P. brillante de autoridad",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Acero",
+      "(Reduce todo el daño recibido en 60%,",
+      "y otro 40% de Concentración)(6 s)",
+      "Tiempo de recarga: 7 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· DAÑO CRÍTICO ↑ +51,75%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "energy",
+   "grado": "brillante",
+   "captura": 38,
+   "titulo": "C.T.P. brillante de energía",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Paliza",
+      "(Aumenta el daño de perforación adicional en 10%,",
+      "Aumenta el daño de perforación adicional en 30% de Concentración)(6 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· IGNORAR ESQUIVAR 51,75%",
+      "· DAÑO CRÍTICO ↑ +51,75%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15 %"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "destruction",
+   "grado": "brillante",
+   "captura": 39,
+   "titulo": "C.T.P. brillante de destrucción",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Golpe",
+      "(Aumenta el daño infligido a jefes en 200%,",
+      "aumenta el daño adicional infligido a los jefes por 50% de Concentración).(6 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· DAÑO CRÍTICO ↑ +51,75%",
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "patience",
+   "grado": "brillante",
+   "captura": 40,
+   "titulo": "C.T.P. brillante de paciencia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Defender",
+      "(Crea una barrera que ignora los efectos de cancelación y perforación 10 vez/veces.",
+      "Recupera 90% de concentración en forma de PG).(6 s)",
+      "Tiempo de recarga: 8 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· ESQUIVA ↑ +36,8%",
+      "· MEJORA LOS ATAQUES BÁSICOS +36,8%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "refinement",
+   "grado": "brillante",
+   "captura": 41,
+   "titulo": "C.T.P. brillante de ajuste",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Vitalidad",
+      "(Recupera PG en 25% cada segundo",
+      "y una cantidad adicional igual al 50% de la Concentración)(6 s)",
+      "Tiempo de recarga: 7 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +39,1%",
+      "· ÍNDICE DE RECUPERACIÓN ↑ +103,5%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 30% de PG."
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "regeneration",
+   "grado": "brillante",
+   "captura": 42,
+   "titulo": "C.T.P. brillante de regeneración",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Penetración",
+      "(Tasa de éxito 90%)",
+      "Tiempo de recarga: 7 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +39,1%",
+      "· Inmunidad a Romper guardia y Aumento del índice de recuperación. +103,5%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG",
+      "Se aplica a: ti",
+      "Recupera 15% de PG."
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "rage",
+   "grado": "brillante",
+   "captura": 43,
+   "titulo": "C.T.P. brillante de furia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Rabioso",
+      "(Aumenta el daño crítico en 300% independientemente del límite máximo",
+      "y una cantidad adicional igual al 60% de la Concentración)(7 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· ÍNDICE CRÍTICO ↑ +36,8%",
+      "· ESQUIVA ↑ +36,8%",
+      "· Probabilidad de activación: cuando atacas con crítico con una probabilidad de 25%"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "veteran",
+   "grado": "brillante",
+   "captura": 44,
+   "titulo": "C.T.P. brillante de veterano",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Cuchilla",
+      "(Aumenta el daño infligido en 70%.",
+      "Aumento adicional en forma de 80% de concentración).(5 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Inmunidad a Romper guardia, Ignorar esquiva y Aumento de daño crítico +36,8%",
+      "· MEJORA TODOS LOS ATAQUES Y DEFENSAS BÁSICOS +32,2%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15 %"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "judgement",
+   "grado": "brillante",
+   "captura": 45,
+   "titulo": "C.T.P. brillante de juicio",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Amplificación de clase",
+      "(Aumenta el daño de habilidad de clase en 70%,",
+      "aumenta el daño de habilidad de clase adicional en 100% de Concentración)(5 s)",
+      "Tiempo de recarga: 9 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· MEJORA LOS ATAQUES BÁSICOS +36,8%",
+      "· DAÑO INFLIGIDO POR CADENA ↑ 23%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15 %"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "greed",
+   "grado": "brillante",
+   "captura": 46,
+   "titulo": "C.T.P. brillante de codicia",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Emboscada",
+      "(Ignora un 70% la reducción del daño enemigo",
+      "y un 30% adicional de Concentración).(6 s)",
+      "Tiempo de recarga: 7 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción 1",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Recupera 25% de PG.",
+      "Incrementa el daño básico infligido a personajes de tipo COMBATE, DETONACIÓN en 220%.(5.5 s)",
+      "Incrementa el daño básico infligido a personajes de tipo"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "insight",
+   "grado": "brillante",
+   "captura": 47,
+   "titulo": "C.T.P. brillante de percepción",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Se aplica a: todo el equipo",
+      "Aumenta el daño básico infligido a jefes en 25%.",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado.",
+      "· Se aplica a: todo el equipo",
+      "Reduce el daño de perforación adicional recibido en 30%",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· PG MÁX. ↑ +39,1%",
+      "· MEJORA TODAS LAS DEFENSAS BÁSICAS +44,85%",
+      "· Probabilidad de activación: al atacar con una probabilidad del 15"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "conquest",
+   "grado": "brillante",
+   "captura": 48,
+   "titulo": "C.T.P. brillante de conquista",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Choque",
+      "(Aumenta el daño básico en 90%.",
+      "Aumento adicional de 80% sobre Concentración según el número de enemigos [hasta 3]).(6 s)",
+      "Tiempo de recarga: 7 s",
+      "· Se aplica a: ti",
+      "Mejora todos los ataques y defensas básicos en +32%."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Se aplica a: ti",
+      "Inmunidad a Romper guardia",
+      "· ÍNDICE DE RECUPERACIÓN ↑ +110%",
+      "· Probabilidad de activación: al tener menos de un 50 % de PG"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  },
+  {
+   "id": "liberation",
+   "grado": "brillante",
+   "captura": 49,
+   "titulo": "C.T.P. brillante de liberación",
+   "cajas": [
+    {
+     "rotulo": "OPCIÓN DE REFORJA",
+     "lineas": [
+      "· Se aplica a: todo el equipo",
+      "Aumenta los PG en +25%.",
+      "Reduce el daño por impacto en cadena en 20% cuando te atacan.",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado.",
+      "· Se aplica a: todo el equipo",
+      "Aumenta el daño infligido un 30% contra el objetivo con más PG máximos que el personaje.",
+      "El efecto que se aplica a todos los miembros del equipo no se puede aplicar por duplicado."
+     ]
+    },
+    {
+     "rotulo": "Opción Bloqueada",
+     "lineas": [
+      "· Inmunidad a Romper guardia y Aumento del índice de"
+     ],
+     "cortada": true
+    }
+   ],
+   "pie": [
+    "Se muestra el mejor valor",
+    "Se pueden refinar y conseguir C.T.P."
+   ]
+  }
+ ]
+}
