@@ -1,6 +1,6 @@
 {
- "version": "1.0.26",
+ "version": "1.0.27",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "La lista de la izquierda, para armar equipos en la mesa, ahora tiene la búsqueda y los filtros del roster (los mismos: lo que filtrás en uno se ve en el otro) y está también en la sección Equipos. El que ya está en la mesa lleva ✓."
+ "notas": "La ficha, ordenada por lo que importa: el Resumen abre con dónde rinde, qué le da al equipo y qué necesita, y después quién es; lo demás que dicen las fuentes queda plegado. Cinco pestañas: Resumen, Skills, Armado (con tu progreso al final), Equipos y Fuentes. Las explicaciones van a un «?» junto a cada título. Los strikers, en una tabla con los dos sentidos por personaje. La pestaña Análisis sale hasta rehacerla."
 }
