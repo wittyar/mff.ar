@@ -1446,7 +1446,7 @@ function dmgColor (d) { return ({'Físico':'var(--dmg-fisico)','Energía':'var(-
 function tierColor (t) { return ({'T2':'var(--tier-t2)','T3':'var(--tier-t3)','T4':'var(--tier-t4)'})[t] || 'var(--text-3)'; }
 function roleColor (r) { return ({'Daño':'var(--role-dano)','Soporte':'var(--role-soporte)','Control':'var(--role-control)','Tanque':'var(--role-tanque)'})[r] || 'var(--line-2)'; }
 function rowColor (i, n) {
-  const scale = ['#ff2d55','#ff6b3d','#ffb020','#7ed957','#4dd0e1','#7aa8ff','#a78bfa','#8a8f9c','#6b7080'];
+  const scale = ['#ff6a5c','#ff6b3d','#ffb020','#7ed957','#4dd0e1','#7aa8ff','#a78bfa','#8a8f9c','#6b7080'];
   return scale[Math.min(i, scale.length - 1)] || '#6b7080';
 }
 function tagSolid (label, color) { return `<span class="tag solid" style="background:${color}">${h(label)}</span>`; }
@@ -5967,7 +5967,7 @@ function seccionActualizaciones () {
   const p = PROG.datos;
   let estado;
   if (NOV.buscando) estado = `<span class="muted">${h(t('ac_checking'))}</span>`;
-  else if (n.error || (NOV.app && NOV.app.error)) estado = `<span class="tag solid" style="background:var(--accent)">${h(t('av_check_err'))}</span> <span class="muted">${h([n.error, NOV.app && NOV.app.error].filter(Boolean).join(' · '))}</span>`;
+  else if (n.error || (NOV.app && NOV.app.error)) estado = `<span class="tag solid" style="background:var(--danger)">${h(t('av_check_err'))}</span> <span class="muted">${h([n.error, NOV.app && NOV.app.error].filter(Boolean).join(' · '))}</span>`;
   else if (p && p.corriendo) estado = `<span class="muted">${h(t('av_dl'))}…</span>`;
   else if (n.hay && !n.compatible) estado = `<span class="tag solid" style="background:var(--gold)">${h(t('av_incompat'))}</span>`;
   else if (n.hay || (NOV.app && NOV.app.hay)) estado = `<span class="tag solid" style="background:var(--gold)">${h(t(n.hay ? 'ac_new' : 'ac_new_app'))}</span>`;

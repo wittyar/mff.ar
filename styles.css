@@ -1,26 +1,28 @@
 /* TA GUIANAEL MFF — hoja de estilos única. Sin build, sin dependencias. */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 :root{
   /* superficies */
-  --bg:#080a12; --bg-2:#0c101c; --surface:#131828; --surface-2:#182035; --surface-3:#1f2942;
-  --text:#eef0f6; --text-2:rgba(238,240,246,.66); --text-3:rgba(238,240,246,.40);
-  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
+  /* Mesa de trabajo (1.0.25): grafito con un solo acento ámbar; el rojo queda para errores. */
+  --bg:#14161b; --bg-2:#14161b; --surface:#1b1e25; --surface-2:#22262f; --surface-3:#2b303b;
+  --text:#e7e9ee; --text-2:#aeb4c1; --text-3:#7d8494;
+  --line:#262a33; --line-2:#323845;
 
   /* acentos */
-  --accent:#ff2d55; --accent-2:#ff6b86; --accent-soft:rgba(255,45,85,.14); --accent-glow:rgba(255,45,85,.42);
-  --gold:#ffb020; --gold-soft:rgba(255,176,32,.13);
+  --accent:#f2a33a; --accent-2:#f7bd6a; --accent-soft:rgba(242,163,58,.14); --accent-glow:rgba(242,163,58,.30);
+  --on-accent:#1b1206; --danger:#ff6a5c; --danger-soft:rgba(255,106,92,.14);
+  --gold:#ffd54d; --gold-soft:rgba(255,213,77,.13);
 
   /* dominio */
-  --class-combate:#ff5c5c; --class-detonacion:#ffb020; --class-velocidad:#2dd4ff; --class-universal:#a78bfa;
+  --class-combate:#ff6a5c; --class-detonacion:#ffc247; --class-velocidad:#40c4ff; --class-universal:#b69cff;
   --dmg-fisico:#ff8a5c; --dmg-energia:#5cc8ff; --dmg-pg:#ffe066;
-  --tier-t2:#7a8296; --tier-t3:#4dd0e1; --tier-t4:#ff2d55;
+  --tier-t2:#7d8494; --tier-t3:#4dd0e1; --tier-t4:#ff6a5c;
   --role-dano:#ff5c5c; --role-soporte:#4ade80; --role-control:#a78bfa; --role-tanque:#60a5fa;
   --self:#4ade80; --enemy:#ff7a7a; --allies:#7ab8ff;
 
-  --font-display:'Oswald',ui-sans-serif,system-ui,sans-serif;
-  --font-body:'Inter',ui-sans-serif,system-ui,-apple-system,sans-serif;
-  --font-mono:ui-monospace,'SF Mono',Menlo,monospace;
+  --font-display:'Chakra Petch',ui-sans-serif,system-ui,sans-serif;
+  --font-body:'Instrument Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
 
   --r-lg:16px; --r-md:11px; --r-sm:7px;
   --sh-1:0 1px 2px rgba(0,0,0,.4);
@@ -33,14 +35,11 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.55;
-  background:
-    radial-gradient(1200px 640px at 8% -8%, rgba(255,45,85,.09), transparent 62%),
-    radial-gradient(900px 520px at 102% -4%, rgba(167,139,250,.08), transparent 58%),
-    linear-gradient(180deg,var(--bg-2),var(--bg) 380px);
-  background-attachment:fixed;min-height:100vh;
+  background:var(--bg);min-height:100vh;
 }
-h1,h2,h3,h4{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.03em;margin:0;font-weight:600}
-h1{font-size:30px;letter-spacing:.015em;line-height:1.15}
+h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:.02em;margin:0;font-weight:600}
+h3,h4{text-transform:uppercase}
+h1{font-size:28px;letter-spacing:.01em;line-height:1.15;font-weight:700}
 h2{font-size:21px} h3{font-size:14px;letter-spacing:.07em;color:var(--text-2)} h4{font-size:12px;letter-spacing:.08em}
 p{margin:0}
 a{color:var(--accent);text-decoration:none;transition:color .15s} a:hover{color:var(--gold)}
@@ -70,10 +69,10 @@ select{appearance:none;padding-right:28px;
 }
 .btn:hover{color:var(--text);border-color:var(--text-3);background:rgba(255,255,255,.07)}
 .btn:active{transform:translateY(1px)}
-.btn.primary{background:linear-gradient(135deg,var(--accent),#d81f45);color:#fff;border-color:transparent;box-shadow:0 4px 16px -6px var(--accent-glow)}
-.btn.primary:hover{filter:brightness(1.08);box-shadow:0 8px 22px -6px var(--accent-glow)}
-.btn.danger{border-color:rgba(255,45,85,.4);color:var(--accent-2)}
-.btn.danger:hover{background:var(--accent-soft);border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.danger{border-color:rgba(255,106,92,.4);color:var(--danger)}
+.btn.danger:hover{background:var(--danger-soft);border-color:var(--danger)}
 .btn.sm{padding:5px 10px;font-size:11.5px;border-radius:6px}
 .btn.icon{padding:6px 8px;line-height:1}
 .btn[disabled]{opacity:.35;cursor:not-allowed;box-shadow:none;transform:none}
@@ -84,7 +83,7 @@ select{appearance:none;padding-right:28px;
   white-space:nowrap;transition:all .14s;
 }
 .chip:hover{border-color:var(--line-2);color:var(--text);background:rgba(255,255,255,.05)}
-.chip.on{border-color:transparent;color:#fff;background:linear-gradient(135deg,var(--accent),#c91d40);box-shadow:0 3px 12px -4px var(--accent-glow)}
+.chip.on{border-color:#6b4a1c;color:var(--accent);background:var(--accent-soft)}
 .chip img{width:15px;height:15px;border-radius:3px}
 
 .tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;padding:3px 8px;border-radius:5px;
@@ -99,16 +98,16 @@ select{appearance:none;padding-right:28px;
 nav.topnav{
   display:flex;align-items:center;gap:4px;height:var(--nav-h);padding:0 20px;
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:60;
-  background:rgba(8,10,18,.86);backdrop-filter:blur(16px) saturate(1.4);
+  background:var(--surface);
 }
 .brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:.06em;cursor:pointer;
   margin-right:14px;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.brand .dot{width:7px;height:7px;border-radius:2px;background:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
+.brand .dot{width:7px;height:7px;border-radius:2px;background:var(--accent)}
 .brand:hover{opacity:.85}
 .navlink{font-size:13px;font-weight:500;cursor:pointer;background:none;border:none;color:var(--text-2);
   padding:7px 11px;border-radius:var(--r-sm);transition:all .14s;white-space:nowrap}
 .navlink:hover{color:var(--text);background:rgba(255,255,255,.06)}
-.navlink.on{color:#fff;background:var(--accent-soft);box-shadow:inset 0 0 0 1px rgba(255,45,85,.3)}
+.navlink.on{color:var(--text);background:var(--surface-3)}
 .navspace{margin-left:auto}
 nav.topnav .navtools{display:flex;gap:4px;align-items:center}
 
@@ -129,7 +128,7 @@ main{max-width:1360px;margin:0 auto;padding:22px 20px 80px}
 
 /* ---------- barra de filtros ---------- */
 .toolbar{position:sticky;top:var(--nav-h);z-index:40;margin:-22px -20px 16px;padding:12px 20px;
-  background:rgba(8,10,18,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  background:var(--bg);border-bottom:1px solid var(--line)}
 .toolbar .line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .search{position:relative;flex:1;min-width:200px}
 .search input{width:100%;padding-left:32px}
@@ -141,7 +140,7 @@ main{max-width:1360px;margin:0 auto;padding:22px 20px 80px}
 .seg button{background:none;border:none;padding:7px 12px;color:var(--text-2);cursor:pointer;font-size:12.5px;transition:all .14s}
 .seg button+button{border-left:1px solid var(--line)}
 .seg button:hover{color:var(--text);background:rgba(255,255,255,.05)}
-.seg button.on{background:var(--accent-soft);color:#fff}
+.seg button.on{background:var(--surface-3);color:var(--text)}
 .toolbar.conpanel{position:static}
 .filterpanel{margin-top:10px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);
   display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
@@ -186,14 +185,14 @@ main{max-width:1360px;margin:0 auto;padding:22px 20px 80px}
 .pick{position:absolute;top:7px;right:7px;width:22px;height:22px;border-radius:6px;z-index:4;
   border:1px solid rgba(255,255,255,.3);background:rgba(6,8,14,.65);backdrop-filter:blur(4px);
   display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:transparent}
-.pick.on{background:linear-gradient(135deg,var(--accent),#c91d40);border-color:transparent;color:#fff}
+.pick.on{background:var(--accent);border-color:transparent;color:var(--on-accent)}
 
 /* ---------- tabla ---------- */
 .tablewrap{overflow:auto;max-height:calc(100vh - 190px);border:1px solid var(--line);
   border-radius:var(--r-md);background:var(--surface);overscroll-behavior:contain}
 table.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:760px}
 table.dt th{position:sticky;top:0;z-index:5;text-align:left;font-size:10px;text-transform:uppercase;
-  letter-spacing:.09em;color:var(--text-3);padding:10px 12px;background:#101523;border-bottom:1px solid var(--line-2);
+  letter-spacing:.09em;color:var(--text-3);padding:10px 12px;background:var(--surface);border-bottom:1px solid var(--line-2);
   white-space:nowrap;font-weight:700}
 table.dt th.sortable{cursor:pointer;user-select:none}
 table.dt th.sortable:hover{color:var(--text)}
@@ -209,7 +208,7 @@ table.dt tbody tr:last-child td{border-bottom:none}
 /* Cabecera fija: foto, nombre, uniforme y pestañas quedan a la vista al recorrer la ficha
    (el uniforme cambia casi todo lo de abajo). */
 .fcab{position:sticky;top:var(--nav-h);z-index:30;margin:0 -20px 18px;padding:12px 20px 0;
-  background:rgba(8,10,18,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  background:var(--bg);border-bottom:1px solid var(--line)}
 .fcab-id{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .fcab-face{width:56px;height:56px;flex:none;border-radius:var(--r-md);box-shadow:0 0 0 1px var(--line-2)}
 .fcab-face .ph{font-size:7px;text-align:center}
@@ -226,7 +225,7 @@ table.dt tbody tr:last-child td{border-bottom:none}
 .ftab{flex:none;background:none;border:0;border-bottom:2px solid transparent;color:var(--text-2);font:inherit;
   font-size:13px;font-weight:600;padding:9px 14px;cursor:pointer}
 .ftab:hover{color:var(--text)}
-.ftab.on{color:#fff;border-bottom-color:var(--accent)}
+.ftab.on{color:var(--text);border-bottom-color:var(--accent)}
 /* Resumen: los datos del uniforme puesto. */
 .fid{display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);border-radius:var(--r-lg);
   background:linear-gradient(140deg,var(--surface-2),#0d111c);padding:16px;margin-bottom:24px}
@@ -245,7 +244,7 @@ table.dt tbody tr:last-child td{border-bottom:none}
 /* El líder del equipo: primero, con el aro del color de acento y la pastilla «Líder» sobre el retrato. */
 .eqfoto.lider .shot{box-shadow:0 0 0 2px var(--accent),0 0 12px -2px var(--accent-glow)}
 .pillider{position:absolute;left:50%;bottom:3px;transform:translateX(-50%);z-index:2;padding:1px 5px;border-radius:99px;
-  background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.02em;line-height:1.35;white-space:nowrap;
+  background:var(--accent);color:var(--on-accent);font-size:9px;font-weight:700;letter-spacing:.02em;line-height:1.35;white-space:nowrap;
   box-shadow:0 1px 4px rgba(0,0,0,.5)}
 .eqfoto > span:last-child{font-size:11px;line-height:1.2;text-align:center;color:var(--text-2);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -299,7 +298,7 @@ ul.pqm-lista b{color:var(--text);font-weight:600}
 .pqm-tab .shot{width:36px;height:36px;flex:none;border-radius:8px;box-shadow:0 0 0 1px var(--line-2)}
 .pqm-tab.lider .shot{box-shadow:0 0 0 2px var(--accent)}
 .pqm-tabnom{min-width:0;overflow-wrap:anywhere}
-.pqm-pill{display:inline-block;padding:0 6px;border-radius:99px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;
+.pqm-pill{display:inline-block;padding:0 6px;border-radius:99px;background:var(--accent);color:var(--on-accent);font-size:10px;font-weight:700;
   letter-spacing:.02em;line-height:1.5;vertical-align:1px;white-space:nowrap}
 .pqm-panel{container:pqm / inline-size}
 .pqm-panel:focus{outline:none}
@@ -393,7 +392,7 @@ details.reglas[open] > summary{margin-bottom:8px}
   background:var(--surface-3);color:var(--text-2);white-space:nowrap;text-transform:uppercase;font-weight:600}
 .slotbadge.lead{background:rgba(255,176,32,.16);color:var(--gold)}
 .slotbadge.pass{background:rgba(122,184,255,.14);color:var(--allies)}
-.slotbadge.ult{background:rgba(255,45,85,.16);color:var(--accent-2)}
+.slotbadge.ult{background:var(--accent-soft);color:var(--accent-2)}
 .skill .nm{font-weight:600;font-size:13.5px;flex:1;min-width:120px}
 .skill .body{padding:10px 13px 12px;display:flex;flex-direction:column;gap:5px}
 .fxline{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.5}
@@ -412,12 +411,12 @@ details.reglas[open] > summary{margin-bottom:8px}
   border-radius:var(--r-md);background:var(--surface);overscroll-behavior:contain}
 table.cmpt{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px}
 table.cmpt th,table.cmpt td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
-table.cmpt thead th{background:#101523;position:sticky;top:0;z-index:6;border-bottom:1px solid var(--line-2)}
+table.cmpt thead th{background:var(--surface);position:sticky;top:0;z-index:6;border-bottom:1px solid var(--line-2)}
 table.cmpt tbody th{width:132px;min-width:132px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;
   color:var(--text-3);font-weight:700;background:rgba(255,255,255,.02);position:sticky;left:0;z-index:3}
 table.cmpt td{min-width:220px}
 table.cmpt tr.slotrow th{color:var(--gold)}
-td.same{background:rgba(255,45,85,.055)}
+td.same{background:rgba(242,163,58,.06)}
 .cmphead{display:flex;flex-direction:column;gap:7px;min-width:200px}
 .cmphead img{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--surface-2)}
 
@@ -509,7 +508,7 @@ td.same{background:rgba(255,45,85,.055)}
   background:none;cursor:pointer;padding:0;margin-right:4px;font-family:inherit}
 .langbtn span{padding:5px 9px;font-size:11.5px;font-weight:700;letter-spacing:.05em;color:var(--text-3);
   transition:all .14s}
-.langbtn span.on{background:var(--accent-soft);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,45,85,.3)}
+.langbtn span.on{background:var(--accent-soft);color:var(--accent)}
 .langbtn:hover span:not(.on){color:var(--text)}
 
 /* Original en inglés al lado del nombre traducido de la skill. */
@@ -649,13 +648,13 @@ table.cmpt td.num{font-variant-numeric:tabular-nums;font-weight:600}
 .aviso-app details.notas{margin-top:6px;color:var(--text-2)}
 .aviso-app details.notas summary{cursor:pointer;color:var(--text)}
 /* Servidor de escritorio cerrado con la pestaña abierta: va arriba de cualquier vista. */
-.srvcaido{border:1px solid rgba(255,45,85,.45);border-left:3px solid var(--accent);background:var(--accent-soft);
+.srvcaido{border:1px solid rgba(255,106,92,.45);border-left:3px solid var(--danger);background:var(--danger-soft);
   border-radius:var(--r-sm);padding:10px 14px;margin-bottom:18px;font-size:13px}
-.srvcaido b{color:var(--accent-2)}
+.srvcaido b{color:var(--danger)}
 .srvcaido .btn{margin-left:8px}
 /* Error que corta el arranque: capa ilegible o app abierta sin su servidor. */
-.fatal{max-width:640px;margin:12vh auto 0;padding:22px 24px;border:1px solid rgba(255,45,85,.45);
-  border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:var(--r-md)}
+.fatal{max-width:640px;margin:12vh auto 0;padding:22px 24px;border:1px solid rgba(255,106,92,.45);
+  border-left:3px solid var(--danger);background:var(--danger-soft);border-radius:var(--r-md)}
 .fatal h1{font-family:var(--font-display);font-size:24px;letter-spacing:.02em;margin:0 0 10px}
 .fatal p{margin:0;color:var(--text-2)}
 
@@ -771,7 +770,7 @@ ul.ctprec .ctprec-l > .row{flex-wrap:wrap}
 .isocat .isoset{margin:0 0 3px 10px;font-size:12.5px}
 .sinint{color:var(--gold);border-bottom:1px dotted rgba(255,176,32,.5);cursor:help}
 /* Un dato imposible de la fuente (una probabilidad de striker de más de 100%): tal cual, marcado. */
-.imposible{color:var(--accent-2);border-bottom:1px dotted var(--accent);cursor:help}
+.imposible{color:var(--danger);border-bottom:1px dotted var(--danger);cursor:help}
 /* opciones de uniforme: rango, el uniforme que la habilita y, debajo, el stat que conviene */
 .opuni{display:flex;flex-direction:column}
 .opfila{display:grid;grid-template-columns:78px minmax(0,1fr);column-gap:8px;align-items:center;padding:5px 0;
@@ -824,7 +823,7 @@ table.topes input{width:70px;padding:5px 7px}
 .cert.comprobado{color:var(--role-soporte)}
 .cert.probable{color:var(--gold)}
 .cert.conjetura{color:var(--text-3)}
-.tag.nosirve{background:var(--accent);cursor:help}
+.tag.nosirve{background:var(--danger);cursor:help}
 /* Glosario: el glosario de skills del juego (términos y lo que el inglés traduce mal) y los efectos
    del catálogo, que usan las filas del análisis. Los enlaces internos llevan el destino a la vista
    debajo de la barra de arriba y lo marcan un momento. */
