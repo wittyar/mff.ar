@@ -41,8 +41,9 @@ la lista del roster tal como está filtrado y ordenado (la misma de las flechas 
   marcada en cada integrante (✓ o ✗ según su clase, bando, género o raza con el uniforme puesto).
 - Lo que le llega a cada uno (las casillas de cobertura de las combinaciones, con el líder de la mesa) y los
   bonos de equipo activos. Sin puntajes.
-- Guardarlo en *Equipos de tu cuenta*, con un nombre o sin él (entonces, los integrantes); avisa si alguno ya
-  está en otro equipo tuyo del mismo modo, y si ese mismo equipo ya está guardado con ese modo.
+- Guardarlo en *Equipos de tu cuenta*, con un nombre o sin él (entonces, los integrantes), con el primero de la mesa
+  declarado como líder; avisa si alguno ya está en otro equipo tuyo del mismo modo, y si ese mismo equipo ya está
+  guardado con ese modo y ese líder (los mismos con otro líder son otro equipo).
 - Los elegidos para comparar (hasta 4), con el botón que abre la comparación.
 
 La mesa se guarda en la capa: sigue ahí al cambiar de sección y al volver a abrir la app. En una ventana angosta se
@@ -171,9 +172,13 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
   uniforme, obelisco) para PvE y PvP.
 - **Equipos**: los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
   Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
-  restaurarlos. Se arman en la mesa. Cada equipo se guarda en un orden fijo: el mismo equipo con el
-  mismo modo no se guarda dos veces (se dice cuál es). En cada tarjeta, el líder (el de la sinergia de
-  la app) va primero, marcado, y «Llevar a la mesa» lo carga en la mesa.
+  restaurarlos. Se arman en la mesa. Cada equipo se guarda con sus integrantes en un orden fijo y su
+  **líder declarado** (Ezequiel, 6 de octubre de 2026: «necesita estar declarado como tal para el cálculo
+  de estadísticas»): la sinergia, lo que le llega a cada uno, los C.T.P. y «cómo entraría» otro (si sale
+  el líder, el que entra en su lugar lidera) usan ese. En la tarjeta, el líder va primero, marcado, y se
+  cambia con su selector; «Llevar a la mesa» lo carga en la mesa con el líder primero. Los equipos
+  guardados antes de la 1.0.25 no traían líder: al abrir la app se les declara el que mostraba su
+  tarjeta (el de la sinergia) y Equipos dice cuáles fueron, para revisarlos.
 - **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
   con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
   y qué C.T.P. da cada efecto de la barra de Concentración y de qué opción sale (la fija, que tienen

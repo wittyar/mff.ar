@@ -51,7 +51,7 @@ function blankUser () {
   return {
     charEdits: {},                    // id de data.js -> personaje editado (reemplaza al del seed)
     charNew: [],                      // personajes creados a mano
-    teams: [],                        // equipos de tu cuenta: {id, name, members (claves, en orden canónico), reason, modeId}
+    teams: [],                        // equipos de tu cuenta: {id, name, members (claves, en orden canónico), lider (la clave del líder declarado), reason, modeId}
     favoritos: [],                    // equipos de 3 marcados con ★ en las combinaciones: {id, members, ctx: 'pvp', 'pve' o null}
     descartados: [],                  // equipos de 3 ocultos de las combinaciones: sus tres personajes (ids, en orden), con cualquier uniforme
     lists: [],                        // tier lists propias: {id,name,rows}
@@ -132,6 +132,28 @@ function rebuild () {
   CHARS = CHARS_SEED.map(c => U.charEdits[c.id] || c).concat(U.charNew);
   CHAR_BY_ID = {}; CHARS.forEach(c => { CHAR_BY_ID[c.id] = c; });
   LISTS = TIERLISTS_SEED.concat(U.lists);
+  declararLideres();
+}
+// LÍDER DECLARADO (Ezequiel, 6 de octubre de 2026: «una de las posiciones corresponde al líder y necesita estar declarado
+// como tal para el cálculo de estadísticas»). Cada equipo guardado lleva su líder (lider: la clave de un integrante),
+// y todo lo que se calcula del equipo (la sinergia, lo que le llega a cada uno, los C.T.P., cómo entraría otro) usa ese.
+// Los equipos guardados antes de la 1.0.25 no lo traen: se les declara el que mostraba su tarjeta (el de la sinergia de
+// la app; sin ningún liderazgo que sume, el primero en orden canónico), se guarda y Equipos dice cuáles fueron.
+function declararLideres () {
+  const sin = U.teams.filter(tt => !tt.lider);
+  if (!sin.length) return;
+  for (const tt of sin) {
+    const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean), l = liderDe(vs, null);
+    tt.lider = (l || vs[0]).key;
+  }
+  ui.avisoLideres = sin.map(tt => tt.name);
+  saveUser();
+}
+/** El líder declarado de un equipo guardado, entre sus integrantes (vs). */
+function liderEquipo (tt, vs) {
+  const l = vs.find(x => x.key === tt.lider);
+  if (!l) throw new Error('equipo guardado con un líder que no es de sus integrantes: ' + tt.name);
+  return l;
 }
 function commit () { saveUser(); rebuild(); render(); }
 
@@ -939,7 +961,7 @@ const T = {
   tm_dup:            { es:'{x} ya está en «{e}», del mismo modo.', en:'{x} is already in «{e}», same mode.' },
   tm_favs:           { es:'Favoritos',           en:'Favorites' },
   tm_fav_ctx:        { es:'marcado en {c}',      en:'marked in {c}' },
-  tm_ya_esta:        { es:'Ese equipo ya está guardado con este modo: «{e}».', en:'That team is already saved with this mode: «{e}».' },
+  tm_ya_esta:        { es:'Ese equipo ya está guardado con este modo y este líder: «{e}».', en:'That team is already saved with this mode and this leader: «{e}».' },
   tm_favs_note:      { es:'Los que marcaste con ★ en las combinaciones de cada personaje. Desde acá los armás para tu cuenta.',
                        en:'The ones you starred in each character\'s combinations. Build them for your account from here.' },
   tm_no_leader:      { es:'Ningún liderazgo suma', en:'No leadership adds' },
@@ -1023,6 +1045,8 @@ const T = {
   ms_lista:          { es:'Personajes · {i} de {n}', en:'Characters · {i} of {n}' },
   ms_lista_tab:      { es:'Lista',               en:'List' },
   ms_ver_tab:        { es:'Ver',                 en:'View' },
+  tm_lideres:        { es:'Estos equipos no tenían el líder declarado: quedó el que mostraba su tarjeta (el de la sinergia de la app). Revisalo en cada uno: {e}.',
+                       en:'These teams had no declared leader: they got the one their card showed (the app synergy\'s). Check each one: {e}.' },
   base_word:         { es:'Base',                en:'Base' },
   st_add_mode:       { es:'+ Agregar modo',      en:'+ Add mode' },
   st_new_mode:       { es:'Modo nuevo',          en:'New mode' },
@@ -1435,6 +1459,7 @@ let ui = {
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
   avisoMesa: null,                   // { txt, ok }: por qué la mesa no sumó al último que se puso, o que se guardó (ok)
   movil: 'centro',                   // ventana angosta: qué panel se ve ('lista', 'centro' o 'mesa')
+  avisoLideres: null,                // equipos de antes a los que se les declaró el líder al cargar la capa (declararLideres)
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
@@ -3841,13 +3866,14 @@ function strikersHtml (ch) {
  *  piezas): de lo que se gana quedan afuera lo que le llega a v y lo que da él, que el «Por qué» de
  *  la tarjeta dice aparte. */
 function comoEntra (v, tt) {
-  const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
-  const opciones = vs.map((x, i) => ({ sale: x, vs: vs.map((y, j) => j === i ? v : y) }));
-  if (vs.length < tamModo(tt.modeId)) opciones.push({ sale: null, vs: vs.concat(v) });
-  const validas = opciones.map(o => Object.assign(o, { despues: synergy(o.vs) }))
+  const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean), lider = liderEquipo(tt, vs);
+  // El líder es el declarado; si sale él, el que entra ocupa su lugar y lidera.
+  const opciones = vs.map((x, i) => ({ sale: x, vs: vs.map((y, j) => j === i ? v : y), lider: x === lider ? v : lider }));
+  if (vs.length < tamModo(tt.modeId)) opciones.push({ sale: null, vs: vs.concat(v), lider });
+  const validas = opciones.map(o => Object.assign(o, { despues: synergy(o.vs, { lider: o.lider }) }))
     .filter(o => o.vs.some(x => x !== v && (vinculo(v, x, o.despues.aplicados) || vinculoLider(v, x, o.despues.lider))));
   if (!validas.length) return { tt, sinVinculo: true };
-  const antes = synergy(vs);
+  const antes = synergy(vs, { lider });
   // El mejor lugar: el de más puntos; a igual puntaje, el de más strikers (desempatan).
   const mejor = validas.sort((a, b) => b.despues.score - a.despues.score || cuantosStrikers(b.vs, null) - cuantosStrikers(a.vs, null))[0];
   const modo = modosEquipo().find(m => m.id === tt.modeId);
@@ -5742,18 +5768,21 @@ function modosEquipo () {
 function tamModo (id) { const m = modosEquipo().find(x => x.id === id); return m ? m.tam : 3; }
 /** Un equipo guardado, con su sinergia. En el armador se puede borrar; en la ficha, no. */
 function equipoCard (tt, borrable) {
-  const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean);
-  const sc = synergy(vs), modo = modosEquipo().find(m => m.id === tt.modeId);
+  const vs = tt.members.map(k => variant(...k.split('::'))).filter(Boolean), lider = liderEquipo(tt, vs);
+  const sc = synergy(vs, { lider }), modo = modosEquipo().find(m => m.id === tt.modeId);
   return `<div class="card" style="position:relative">
     ${borrable ? `<button class="btn sm danger" data-a="teamRemove" data-id="${tt.id}" style="position:absolute;top:10px;right:10px">✕</button>` : ''}
     <div style="font-weight:600;padding-right:34px;margin-bottom:8px">${h(tt.name)}</div>
     ${modo ? `<div class="row" style="margin-bottom:6px"><span class="tag dim">${h(modo.name)}</span></div>` : ''}
-    <div class="eqcompacto" style="margin-bottom:8px">${retratosEquipo(vs, null, sc.lider)}</div>
-    <div class="muted">${conLider(vs, sc.lider).map(fullLabel).join(' + ')}</div>
+    <div class="eqcompacto" style="margin-bottom:8px">${retratosEquipo(vs, null, lider)}</div>
+    <div class="muted">${conLider(vs, lider).map(fullLabel).join(' + ')}</div>
     ${tt.reason ? `<p class="muted" style="margin-top:6px">${h(tt.reason)}</p>` : ''}
-    <div class="muted" style="margin-top:6px">${sc.score}${artPts(sc.art)} ${h(t('tm_synergy_pts'))} · ${h(sc.lider ? t('eq_leader').replace('{x}', fullLabel(sc.lider)) : t('tm_no_leader'))}</div>
-    ${ctpsEquipo(conLider(vs, sc.lider), modo ? modo.ctp : null)}
-    ${borrable ? `<div class="row" style="margin-top:8px">${botonArmar(conLider(vs, sc.lider), tt.modeId, tt.name)}</div>` : ''}
+    <div class="muted" style="margin-top:6px">${sc.score}${artPts(sc.art)} ${h(t('tm_synergy_pts'))}</div>
+    ${borrable ? `<label class="row eqlider">${h(t('ms_lider'))}
+      <select data-a="teamLider" data-id="${tt.id}">${vs.map(x => `<option value="${x.key}" ${x === lider ? 'selected' : ''}>${h(fullLabel(x))}</option>`).join('')}</select></label>`
+      : `<div class="muted">${h(t('eq_leader').replace('{x}', fullLabel(lider)))}</div>`}
+    ${ctpsEquipo(conLider(vs, lider), modo ? modo.ctp : null)}
+    ${borrable ? `<div class="row" style="margin-top:8px">${botonArmar(conLider(vs, lider), tt.modeId, tt.name)}</div>` : ''}
   </div>`;
 }
 /** Un favorito: equipo de 3 marcado con ★ en las combinaciones de un personaje (el primero). */
@@ -5775,6 +5804,7 @@ function renderTeams () {
   return `
   <div class="page-head"><div><h1>${h(t('tm_title'))}</h1>
     <div class="sub">${h(t('tm_note'))}</div></div></div>
+  ${ui.avisoLideres ? `<div class="avisoeq">⚠ ${h(t('tm_lideres').replace('{e}', ui.avisoLideres.join(' · ')))}</div>` : ''}
   ${U.descartados.length ? `<div class="section"><details class="usgrupo"><summary>${h(t('tm_desc').replace('{n}', U.descartados.length))}</summary>
     <p class="muted" style="margin:8px 0 10px">${h(t('tm_desc_note'))}</p>
     ${U.descartados.map(d => { const vs = d.map(c => variant(c, null)).filter(Boolean);
@@ -6414,11 +6444,11 @@ document.addEventListener('click', (e) => {
     case 'mesaGuardar': { const m = U.mesa, max = tamModo(m.modeId);
       if (m.members.length < 2) { ui.avisoMesa = { txt: t('ms_pocos') }; render(); break; }
       if (m.members.length > max) break;
-      const members = m.members.slice().sort(), modeId = m.modeId || '';
-      const ya = U.teams.find(x => x.modeId === modeId && x.members.join('|') === members.join('|'));
+      const members = m.members.slice().sort(), modeId = m.modeId || '', lider = m.members[0];
+      const ya = U.teams.find(x => x.modeId === modeId && x.lider === lider && x.members.join('|') === members.join('|'));
       if (ya) { ui.avisoMesa = { txt: t('tm_ya_esta').replace('{e}', ya.name) }; render(); break; }
       const nombre = m.name || mesaVs().map(fullLabel).join(' + ');
-      U.teams.unshift({ id: 'eq-' + Date.now(), name: nombre, members, reason: '', modeId });
+      U.teams.unshift({ id: 'eq-' + Date.now(), name: nombre, members, lider, reason: '', modeId });
       ui.avisoMesa = { txt: t('ms_guardado').replace('{e}', nombre), ok: true }; commit(); break; }
     case 'movil': ui.movil = d.v; render(); window.scrollTo(0, 0); break;
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
@@ -6513,6 +6543,7 @@ document.addEventListener('change', (e) => {
   if (a === 'atributo') { U.prefs.atributo = el.value; ui.page = 0; commit(); return; }
   if (a === 'restr') { U.prefs.restr = el.value; ui.page = 0; commit(); return; }
   // Un modo más chico que el equipo no le saca a nadie: la mesa dice cuántos sobran y no guarda hasta que se quiten.
+  if (a === 'teamLider') { U.teams.find(x => x.id === d.id).lider = el.value; ui.avisoLideres = null; commit(); return; }
   if (a === 'mesaModo') { U.mesa.modeId = el.value; ui.avisoMesa = null; saveUser(); render(); return; }
   if (a === 'mesaDia') { U.mesa.abxDia = parseInt(el.value, 10); U.mesa.abxDif = ''; saveUser(); render(); return; }
   if (a === 'mesaDif') { U.mesa.abxDif = el.value; saveUser(); render(); return; }
