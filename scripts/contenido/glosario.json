@@ -29,7 +29,7 @@
     "en": "\"Type\": per the Korean, the element (속성)"
    },
    "texto": {
-    "es": "속성 es el elemento (fuego, frío, rayo, veneno, mente). El inglés lo traduce a veces como «Type», que en el juego también es la clase (Combate, Detonación, Velocidad, Universal). El daño puro no pasa por las resistencias elementales (el inglés dice «Type Resistance»), Type Amplification sube el ataque de las skills con elemento, y la etiqueta «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. En Recharge Shield, en cambio, el coreano usa 속성 para el tipo de escudo (físico o de energía), y ahí el inglés «Shield type» está bien.",
+    "es": "속성 es el elemento (fuego, frío, rayo, veneno, mente). El inglés lo traduce a veces como «Type», que en el juego también es la clase (Combate, Detonación, Velocidad, Universal). El daño puro no pasa por las resistencias elementales (el inglés dice «Type Resistance»), Amplificación de clase sube el ataque de las skills con elemento, y la etiqueta «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. En Recharge Shield, en cambio, el coreano usa 속성 para el tipo de escudo (físico o de energía), y ahí el inglés «Shield type» está bien.",
     "en": "속성 is the element (fire, cold, lightning, poison, mind). The English sometimes translates it as \"Type\", which in the game is also the class (Combat, Blast, Speed, Universal). Pure damage does not go through elemental resists (the English says \"Type Resistance\"), Type Amplification raises the attack of skills with an element, and the \"TYPE PENETRATION\" skill label goes through an elemental resist. In Recharge Shield, on the other hand, the Korean uses 속성 for the shield type (physical or energy), and there the English \"Shield type\" is right."
    }
   }
@@ -39,7 +39,7 @@
    "id": "guard_break",
    "en": "Guard Break",
    "ko": "가드 브레이크",
-   "es": "Rotura de guardia",
+   "es": "Romper guardia",
    "que": {
     "es": "Corta la skill que está usando el rival y abre un contraataque. La superrotura de guardia atraviesa además la inmunidad a la rotura de guardia.",
     "en": "Cuts the skill the foe is using and opens a counterattack. Super Guard Break also goes through Guard Break immunity."
@@ -54,14 +54,19 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
-   ]
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "nota": {
+    "es": "En español el juego titula el término «Romper guardia» y en los textos lo llama «rotura de guardia» (y «superrotura de guardia»).",
+    "en": "In Spanish the game titles the term «Romper guardia» and calls it «rotura de guardia» in the texts (and «superrotura de guardia»)."
+   }
   },
   {
    "id": "guaranteed_dodge",
    "en": "Guaranteed Dodge Rate",
    "ko": "무조건 회피율",
-   "es": "Evasión garantizada",
+   "es": "Probabilidad de esquiva garantizada",
    "que": {
     "es": "La evasión depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la evasión.",
     "en": "Dodge depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to dodge."
@@ -75,14 +80,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "guaranteed_crit",
    "en": "Guaranteed Critical Rate",
    "ko": "무조건 치명타율",
-   "es": "Crítico garantizado",
+   "es": "Probabilidad de crítico garantizada",
    "que": {
     "es": "La probabilidad de crítico depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la probabilidad de crítico.",
     "en": "Critical rate depends on the level difference with the foe. The guaranteed one skips that calculation: it adds a fixed amount to critical rate."
@@ -96,7 +102,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -118,14 +125,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "team_passive",
    "en": "Team Passive",
    "ko": "팀 패시브",
-   "es": "Pasiva de equipo",
+   "es": "Equipo pasivo",
    "que": {
     "es": "Una pasiva que les llega a todos los del equipo aunque su dueño no sea el líder: las que dicen «Applies to: All Team members». El análisis de la app ya las manda al equipo.",
     "en": "A passive that reaches the whole team even if its owner is not the leader: the ones that say \"Applies to: All Team members\". The app's analysis already sends them to the team."
@@ -133,7 +141,8 @@
    "efectos": [],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -155,7 +164,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -177,7 +187,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -198,7 +209,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -220,7 +232,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -244,7 +257,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -261,7 +275,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -278,14 +293,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "time_freezing",
    "en": "Time Freezing",
    "ko": "타임 프리징",
-   "es": "Congelación del tiempo",
+   "es": "Congelación temporal",
    "que": {
     "es": "Encierra al rival en el tiempo: no se mueve ni ataca. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
     "en": "Locks the foe in time: it cannot move or attack. It also reaches large bosses that debuffs do not apply to, but not targets with an effect that removes all debuffs."
@@ -300,14 +316,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "charm",
    "en": "Charm",
    "ko": "매혹",
-   "es": "Encanto",
+   "es": "Hechizo",
    "que": {
     "es": "El rival no se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.",
     "en": "The foe cannot move or use skills, not even attacks that trigger on their own. It also reaches large bosses that debuffs do not apply to, but not targets with an effect that removes all debuffs."
@@ -323,14 +340,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "ignore_targeting",
    "en": "Ignore Targeting",
    "ko": "타겟팅 무시",
-   "es": "No se deja apuntar",
+   "es": "Ignorar blanco",
    "que": {
     "es": "Queda fuera de la mira del rival: las skills que apuntan a un objetivo lo ignoran y no recibe daño aunque lo ataquen. Usado justo cuando el rival ataca, ignora el ataque entero y deja seguir con el propio.",
     "en": "Stays out of the foe's targeting: skills aimed at a target ignore it and it takes no damage even if attacked. Used right as the foe attacks, it ignores the whole attack and lets you keep attacking."
@@ -338,14 +356,15 @@
    "efectos": [],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "entice",
    "en": "Entice",
    "ko": "유혹",
-   "es": "Seducción",
+   "es": "Persuasión",
    "que": {
     "es": "El rival no se mueve ni usa skills y camina despacio hacia quien lo sedujo. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.",
     "en": "The foe cannot move or use skills and slowly walks toward whoever enticed it. It works on World Bosses and foes that debuffs do not apply to, but not on targets with an effect that removes all debuffs."
@@ -360,7 +379,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -382,14 +402,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "recharge_shield",
    "en": "Recharge Shield",
    "ko": "리차지 쉴드",
-   "es": "Escudo recargable",
+   "es": "Recargar escudo",
    "que": {
     "es": "Un escudo que se recarga solo. Si recibe otro escudo del mismo tipo, lo absorbe y crece; uno del otro tipo (físico o de energía) no lo agranda: cada uno funciona aparte.",
     "en": "A shield that keeps recharging. If it gets another shield of the same type, it absorbs it and grows; one of the other type (physical or energy) does not make it bigger: each works on its own."
@@ -399,7 +420,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -416,7 +438,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -434,14 +457,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "counterattack",
    "en": "Counterattack",
    "ko": "반격기",
-   "es": "Contraataque",
+   "es": "Contrataque",
    "que": {
     "es": "Al recibir un golpe, en vez de la reacción al golpe hace un contraataque. Como necesita esa reacción, no se activa mientras es invencible.",
     "en": "When hit, it counterattacks instead of the hit reaction. Since it needs that reaction, it does not trigger while invincible."
@@ -454,8 +478,13 @@
    "efectos": [],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
-   ]
+    "juego-glosario-ko",
+    "juego-glosario-es"
+   ],
+   "nota": {
+    "es": "En español el juego lo escribe «Contrataque» (sic); en el consejo de «Romper guardia», «contraataque».",
+    "en": "In Spanish the game spells it «Contrataque» (sic); in the «Romper guardia» tip, «contraataque»."
+   }
   },
   {
    "id": "elasticity",
@@ -475,7 +504,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -490,14 +520,15 @@
    "efectos": [],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "additional_pierce",
    "en": "Additional Pierce Damage",
    "ko": "추가 관통 피해",
-   "es": "Daño perforante adicional",
+   "es": "Daño de perforación adicional",
    "que": {
     "es": "Daño extra que ignora del todo la defensa; sale del daño de la skill.",
     "en": "Extra damage that fully ignores defense; it is based on the skill's damage."
@@ -507,14 +538,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "penetration",
    "en": "Penetration",
    "ko": "간파",
-   "es": "Penetration",
+   "es": "Penetración",
    "que": {
     "es": "Cuando lo atacan, tiene una probabilidad de cortar el ataque del rival: sube si su Concentración es mayor que la del rival y baja si es menor. Barra propia que se carga al recibir golpes; después de usarse, no carga por 5 s.",
     "en": "When attacked, it has a chance to cut the foe's attack: higher if its Concentration is above the foe's, lower if below. Its own gauge charges when hit; after use, it does not charge for 5 s."
@@ -535,12 +567,13 @@
     }
    ],
    "nota": {
-    "es": "En Transcendence, la otra opción de reforjado es Beatdown; en Regeneration, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.",
+    "es": "En Transcendence, la otra opción de reforjado es Paliza; en Regeneration, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.",
     "en": "On Transcendence, the other reforge option is Beatdown; on Regeneration, All Basic Attacks and Defenses +20% (+32% at Brilliant). A reforged C.T.P. likely carries only one of the two: the ones seen equipped carry one."
    },
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "juego-ctp",
     "juego-ctp-ko",
     "juego-ficha-ko",
@@ -551,9 +584,9 @@
    "id": "beatdown",
    "en": "Beatdown",
    "ko": "압도",
-   "es": "Beatdown",
+   "es": "Paliza",
    "que": {
-    "es": "Al usar una skill, sube el daño perforante adicional (sin el tope máximo) y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
+    "es": "Al usar una skill, sube el daño de perforación adicional (sin el tope máximo) y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, raises Additional Pierce Damage (ignoring its cap) and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
    },
    "efectos": [],
@@ -568,12 +601,13 @@
     }
    ],
    "nota": {
-    "es": "En Transcendence, la otra opción de reforjado es Penetration; en Energy, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.",
+    "es": "En Transcendence, la otra opción de reforjado es Penetración; en Energy, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.",
     "en": "On Transcendence, the other reforge option is Penetration; on Energy, All Basic Attacks and Defenses +20% (+32% at Brilliant). A reforged C.T.P. likely carries only one of the two: the ones seen equipped carry one."
    },
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "juego-ctp",
     "juego-ctp-ko",
     "juego-ficha-ko",
@@ -584,7 +618,7 @@
    "id": "type_amplification",
    "en": "Type Amplification",
    "ko": "속성 증폭",
-   "es": "Type Amplification",
+   "es": "Amplificación de clase",
    "que": {
     "es": "Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, raises the attack of skills with an element and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
@@ -604,14 +638,19 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
-   ]
+   ],
+   "nota": {
+    "es": "En español el título dice «Amplificación de clase» y el texto, «Amplificación de elemento» (como el inglés: «Type Amplification» y «Element Amplification»).",
+    "en": "In Spanish the title says «Amplificación de clase» and the text «Amplificación de elemento» (like the English: «Type Amplification» and «Element Amplification»)."
+   }
   },
   {
    "id": "steel",
    "en": "Steel",
    "ko": "강철",
-   "es": "Steel",
+   "es": "Acero",
    "que": {
     "es": "Da inmunidad a la rotura y a la superrotura de guardia y baja el daño recibido; la baja crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.",
     "en": "Grants Guard Break and Super Guard Break immunity and lowers damage taken; the reduction grows with Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 6 s."
@@ -626,6 +665,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -643,14 +683,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "strike",
    "en": "Strike",
    "ko": "강타",
-   "es": "Strike",
+   "es": "Golpe",
    "que": {
     "es": "Al usar una skill, ignora la evasión del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.",
     "en": "On skill use, ignores the foe's dodge and raises damage to bosses; the increase grows with Concentration. Its own gauge charges while moving; after use, it does not charge for 7 s."
@@ -669,6 +710,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -676,13 +718,13 @@
    "id": "ambush",
    "en": "Ambush",
    "ko": "맹공",
-   "es": "Ambush",
+   "es": "Emboscada",
    "que": {
     "es": "Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, e ignora una parte de la reducción de daño del rival; esa parte crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.",
     "en": "Grants Guard Break, Super Guard Break and reflected damage immunity, and ignores part of the foe's damage reduction; that part grows with Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 6 s."
    },
    "difiere": {
-    "es": "Según el coreano, además, se activa sola (효과는 자동 발동되며); el inglés no lo dice, y en Clash sí.",
+    "es": "Según el coreano, además, se activa sola (효과는 자동 발동되며); el inglés no lo dice, y en Choque sí.",
     "en": "Per the Korean, it also triggers on its own (효과는 자동 발동되며); the English does not say so, though it does for Clash."
    },
    "efectos": [],
@@ -699,6 +741,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -718,14 +761,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "blade",
    "en": "Blade",
    "ko": "칼날",
-   "es": "Blade",
+   "es": "Cuchilla",
    "que": {
     "es": "Al usar una skill, atraviesa los efectos defensivos del rival y sube el daño; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); se activa sola y después no carga por 7 s.",
     "en": "On skill use, pierces the foe's defensive effects and raises damage; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); it triggers on its own and then does not charge for 7 s."
@@ -740,6 +784,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -747,7 +792,7 @@
    "id": "defend",
    "en": "Defend",
    "ko": "방호",
-   "es": "Defend",
+   "es": "Defender",
    "que": {
     "es": "Da inmunidad a la rotura y a la superrotura de guardia y una barrera que ignora la cancelación y la perforación y frena una cantidad de golpes; además cura según la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.",
     "en": "Grants Guard Break and Super Guard Break immunity and a barrier that ignores Cancel and Pierce and blocks a set number of hits; it also heals based on Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 7 s."
@@ -762,6 +807,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -769,7 +815,7 @@
    "id": "super_hit_shield",
    "en": "Super Hit Shield",
    "ko": "슈퍼 히트 쉴드",
-   "es": "Escudo de supergolpe",
+   "es": "Escudo de superimpacto",
    "que": {
     "es": "Un escudo que se recarga cada vez que su ataque le pega al rival. Si se activan varios escudos a la vez, ignora los demás y queda solo este. No lo quitan los efectos que quitan buffs ni lo atraviesa la perforación.",
     "en": "A shield that recharges every time its attack lands on the foe. If several shields trigger at once, it ignores the others and only this one applies. Buff removal does not remove it and Pierce does not go through it."
@@ -779,14 +825,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "enraged",
    "en": "Enraged",
    "ko": "격노",
-   "es": "Enraged",
+   "es": "Rabioso",
    "que": {
     "es": "Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
     "en": "On skill use, raises critical damage even past its cap and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); after use, it does not charge for 7 s."
@@ -805,6 +852,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -812,7 +860,7 @@
    "id": "vitality",
    "en": "Vitality",
    "ko": "활력",
-   "es": "Vitality",
+   "es": "Vitalidad",
    "que": {
     "es": "Da inmunidad a la rotura y a la superrotura de guardia y cura vida cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.",
     "en": "Grants Guard Break and Super Guard Break immunity and heals HP every second; the heal grows with Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 7 s."
@@ -827,6 +875,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -834,7 +883,7 @@
    "id": "wall",
    "en": "Wall",
    "ko": "방벽",
-   "es": "Wall",
+   "es": "Muro",
    "que": {
     "es": "Una barrera propia que baja el daño recibido; cada golpe le resta reducción hasta un mínimo, que dura hasta que se termina. No se usa junto con la Barrera y no se suma a otras reducciones de daño: va aparte.",
     "en": "Its own barrier that lowers damage taken; each hit lowers the reduction down to a minimum, which lasts until it ends. It cannot be used together with Barrier and does not stack with other damage reductions: it applies separately."
@@ -847,12 +896,13 @@
     }
    ],
    "nota": {
-    "es": "En Conquest se activa con la vida al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»).",
-    "en": "On Conquest it triggers at 50% HP or less, per the Korean card (\"HP가 50% 이하일 때\"; in English, \"below 50%\")."
+    "es": "En Conquest se activa con la vida al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»). En español el título dice «Muro» y el texto lo llama «Barrera» (y dice que no se usa con Barrera).",
+    "en": "On Conquest it triggers at 50% HP or less, per the Korean card (\"HP가 50% 이하일 때\"; in English, \"below 50%\"). In Spanish the title says «Muro» and the text calls it «Barrera» (and says it is not used with Barrera)."
    },
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "juego-ctp",
     "juego-ctp-ko",
     "tv-ctps"
@@ -862,7 +912,7 @@
    "id": "clash",
    "en": "Clash",
    "ko": "격돌",
-   "es": "Clash",
+   "es": "Choque",
    "que": {
     "es": "Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, y sube el daño básico; la suba crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.",
     "en": "Grants Guard Break, Super Guard Break and reflected damage immunity, and raises basic damage; the increase grows with Concentration. Its own gauge charges when hit; it triggers on its own and then does not charge for 6 s."
@@ -877,6 +927,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   },
@@ -894,7 +945,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -912,14 +964,15 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "death_throes",
    "en": "Death Throes",
    "ko": "최후의 발악",
-   "es": "Agonía",
+   "es": "Agonía letal",
    "que": {
     "es": "Por un tiempo la vida no baja de 1 y, al terminar, muere en el acto. Se activa sola cuando la vida baja de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan buffs.",
     "en": "For a while HP cannot drop below 1 and, when it ends, the character dies at once. It triggers on its own when HP drops below a set value; Guard Break affects it, but buff removal cannot remove it."
@@ -933,7 +986,8 @@
    ],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
@@ -948,14 +1002,15 @@
    "efectos": [],
    "fuente": [
     "juego-glosario",
-    "juego-glosario-ko"
+    "juego-glosario-ko",
+    "juego-glosario-es"
    ]
   },
   {
    "id": "fury",
    "en": "Fury",
    "ko": "맹렬",
-   "es": "Fury",
+   "es": "Furia",
    "que": {
     "es": "Al usar una skill, sube todo el daño y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.",
     "en": "On skill use, raises all damage and grants Guard Break immunity; the increase grows with Concentration. Its own gauge charges on skill use (not basic attacks); after use, it does not charge for 7 s."
@@ -974,6 +1029,7 @@
    "fuente": [
     "juego-glosario",
     "juego-glosario-ko",
+    "juego-glosario-es",
     "tv-ctps"
    ]
   }

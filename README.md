@@ -579,6 +579,10 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   o deja afuera, lo que trae de más y lo que no es diferencia.
 - `fuentes/foro/` y `fuentes/cafe/` — las notas de actualización del foro en inglés y sus pares del foro coreano (el
   café oficial de Naver; el coreano es el original), con `scripts/foro.py` y `scripts/cafe.py`.
+- `fuentes/juego-es/` — capturas del juego en español, transcriptas (el glosario de habilidades, los C.T.P. y la ficha
+  del héroe). Con ellas, `scripts/contenido/terminos_es.json` dice qué término del juego lleva cada stat, etiqueta de
+  skill y efecto del catálogo, y `scripts/terminos_es.py` (en el build) corta si el glosario, la guía, las traducciones o
+  el catálogo dicen otra cosa: el español del juego manda sobre las traducciones propias (#32).
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche, pantalla de
   rescate si la app no arranca), `servidor.py` (sirve la app y la API local), `rescate.py` (la pantalla de rescate,
   sin `app.js` ni `data.js`), `actualizador.py` (datos, imágenes, parches y la vuelta al programa anterior, todo

@@ -127,6 +127,15 @@
   "juego-glosario-ko": {
    "nombre": "MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026)"
   },
+  "juego-glosario-es": {
+   "nombre": "MARVEL Future Fight — Glosario de nombre de habilidades (el mismo glosario de skills, en español; dentro del juego, octubre de 2026; transcripto en fuentes/juego-es/glosario.json)"
+  },
+  "juego-ctp-es": {
+   "nombre": "MARVEL Future Fight — C.T.P. (las fichas de los C.T.P., en español; dentro del juego, octubre de 2026; transcripto en fuentes/juego-es/ctps.json)"
+  },
+  "juego-ficha-es": {
+   "nombre": "MARVEL Future Fight — Información del héroe (la ficha de personaje, en español; dentro del juego, octubre de 2026; transcripto en fuentes/juego-es/ficha.json)"
+  },
   "juego-ctp": {
    "nombre": "MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026)"
   },
@@ -233,11 +242,11 @@
  },
  "stats": {
   "patk": {
-   "es": "Ataque físico",
+   "es": "Atq. físico",
    "en": "Physical Attack"
   },
   "eatk": {
-   "es": "Ataque de energía",
+   "es": "Atq. de energía",
    "en": "Energy Attack"
   },
   "allatk": {
@@ -245,15 +254,15 @@
    "en": "All Basic Attacks"
   },
   "aspd": {
-   "es": "Vel. de ataque",
+   "es": "Velocidad atq.",
    "en": "Attack Speed"
   },
   "mspd": {
-   "es": "Vel. de movimiento",
+   "es": "Velocidad de movimiento",
    "en": "Movement Speed"
   },
   "crit": {
-   "es": "Prob. de crítico",
+   "es": "Probab. crítico",
    "en": "Critical Rate"
   },
   "critdmg": {
@@ -261,11 +270,11 @@
    "en": "Critical Damage"
   },
   "igdef": {
-   "es": "Perforación de defensa (Ignore Defense)",
+   "es": "Ignorar defensa",
    "en": "Ignore Defense"
   },
   "igdodge": {
-   "es": "Ignorar evasión",
+   "es": "Ignora esquiva",
    "en": "Ignore Dodge"
   },
   "elem": {
@@ -273,19 +282,19 @@
    "en": "Elemental Damage"
   },
   "hp": {
-   "es": "Vida",
+   "es": "PG",
    "en": "HP"
   },
   "rec": {
-   "es": "Tasa de recuperación",
+   "es": "Índice de recuperación",
    "en": "Recovery Rate"
   },
   "dodge": {
-   "es": "Evasión",
+   "es": "Esquiva",
    "en": "Dodge"
   },
   "cd": {
-   "es": "Recarga de skills (Skill Cooldown)",
+   "es": "Reducir duración de recarga",
    "en": "Skill Cooldown"
   },
   "elemres": {
@@ -293,7 +302,7 @@
    "en": "Elemental Resist"
   },
   "debuff": {
-   "es": "Duración de debuffs",
+   "es": "Reducir duración de merma",
    "en": "Debuff Duration"
   },
   "cc": {
@@ -305,11 +314,11 @@
    "en": "All Basic Defenses"
   },
   "pdef": {
-   "es": "Defensa física",
+   "es": "Def. física",
    "en": "Physical Defense"
   },
   "edef": {
-   "es": "Defensa de energía",
+   "es": "Def. de energía",
    "en": "Energy Defense"
   }
  },

@@ -38,6 +38,8 @@ if _faltan:
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'fuentes.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'catalogo.py')], check=True)
+# Los términos del juego en español mandan sobre las traducciones propias (#32): si no cierran, se corta.
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'terminos_es.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'auditar.py')], check=True)
 exec(open(os.path.join(os.path.dirname(__file__), '_core.py')).read())
 

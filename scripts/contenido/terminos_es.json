@@ -1,0 +1,186 @@
+{
+ "_doc": "Los términos del juego en español (#32): mandan sobre las traducciones propias. Cada uno con su captura (fuentes/juego-es/). Lo valida scripts/terminos_es.py en el build: el glosario (contenido/glosario.json, contra fuentes/juego-es/glosario.json), los stats (contenido/guia.json), las etiquetas de las skills (traducciones/etiquetas.json) y los efectos del catálogo (contenido/catalogo.json) tienen que decir lo que dice esta tabla. La fuente es la captura donde está el término tal cual, o una lista de términos del juego que lo componen (cada uno tiene que estar en alguna captura).",
+ "stats": {
+  "patk": [
+   "Atq. físico",
+   "ficha"
+  ],
+  "eatk": [
+   "Atq. de energía",
+   "ficha"
+  ],
+  "aspd": [
+   "Velocidad atq.",
+   "ficha"
+  ],
+  "mspd": [
+   "Velocidad de movimiento",
+   "ficha"
+  ],
+  "crit": [
+   "Probab. crítico",
+   "ficha"
+  ],
+  "critdmg": [
+   "Daño crítico",
+   "ficha"
+  ],
+  "igdef": [
+   "Ignorar defensa",
+   "ficha"
+  ],
+  "igdodge": [
+   "Ignora esquiva",
+   "ficha"
+  ],
+  "hp": [
+   "PG",
+   "ficha"
+  ],
+  "rec": [
+   "Índice de recuperación",
+   "ficha"
+  ],
+  "dodge": [
+   "Esquiva",
+   "ficha"
+  ],
+  "cd": [
+   "Reducir duración de recarga",
+   "ficha"
+  ],
+  "debuff": [
+   "Reducir duración de merma",
+   "ficha"
+  ],
+  "pdef": [
+   "Def. física",
+   "ficha"
+  ],
+  "edef": [
+   "Def. de energía",
+   "ficha"
+  ]
+ },
+ "etiquetas": {
+  "CHARM": [
+   "HECHIZO",
+   "glosario"
+  ],
+  "TIME FREEZING": [
+   "CONGELACIÓN TEMPORAL",
+   "glosario"
+  ],
+  "SUPER HIT SHIELD": [
+   "ESCUDO DE SUPERIMPACTO",
+   "glosario"
+  ],
+  "GUARD BREAK IMMUNE": [
+   "INMUNIDAD A ROMPER GUARDIA",
+   "ctps"
+  ],
+  "GUARANTEED CRITICAL RATE ↑": [
+   "PROBABILIDAD DE CRÍTICO GARANTIZADA ↑",
+   "glosario"
+  ],
+  "GUARANTEED DODGE RATE ↑": [
+   "PROBABILIDAD DE ESQUIVA GARANTIZADA ↑",
+   "glosario"
+  ],
+  "CRITICAL RATE ↑": [
+   "ÍNDICE CRÍTICO ↑",
+   "ficha"
+  ],
+  "CRITICAL DAMAGE ↑": [
+   "DAÑO CRÍTICO ↑",
+   "ficha"
+  ],
+  "DODGE ↑": [
+   "ESQUIVA ↑",
+   "ficha"
+  ],
+  "RECOVERY RATE ↑": [
+   "ÍNDICE DE RECUPERACIÓN ↑",
+   "ficha"
+  ],
+  "MAX HP ↑": [
+   "PG MÁX. ↑",
+   "ficha"
+  ],
+  "CHAIN HIT DMG DEALT ↑": [
+   "DAÑO INFLIGIDO POR CADENA ↑",
+   "ficha"
+  ],
+  "IGNORE DODGE": [
+   "IGNORAR ESQUIVAR",
+   "ficha"
+  ],
+  "IGNORE DEFENSE": [
+   "IGNORAR DEFENSA",
+   "ficha"
+  ],
+  "ADDITIONAL PIERCE DAMAGE INCREASE": [
+   "AUMENTO DE DAÑO DE PERFORACIÓN ADICIONAL",
+   [
+    "aumento",
+    "daño de perforación adicional"
+   ]
+  ],
+  "ATK PER SUPER HIT SHIELD INCREASE": [
+   "AUMENTO DE ATQ POR ESCUDO DE SUPERIMPACTO",
+   [
+    "atq",
+    "escudo de superimpacto"
+   ]
+  ]
+ },
+ "efectos": {
+  "romper_guardia": [
+   "Romper guardia (cancela la skill del rival)",
+   "glosario"
+  ],
+  "inmune_romper_guardia": [
+   "Inmunidad a Romper guardia",
+   "ctps"
+  ],
+  "evasion_garantizada": [
+   "Probabilidad de esquiva garantizada",
+   "glosario"
+  ],
+  "critico_garantizado": [
+   "Probabilidad de crítico garantizada",
+   "glosario"
+  ],
+  "atrapar": [
+   "Trampa",
+   "glosario"
+  ],
+  "detener_tiempo": [
+   "Congelación temporal",
+   "glosario"
+  ],
+  "encantar": [
+   "Hechizo",
+   "glosario"
+  ],
+  "continuo_encanto": [
+   "Daño mental del hechizo",
+   [
+    "daño mental",
+    "hechizo"
+   ]
+  ],
+  "seducir": [
+   "Persuasión",
+   "glosario"
+  ],
+  "provocar": [
+   "Burla",
+   "glosario"
+  ],
+  "dano_perforacion": [
+   "Daño de perforación adicional",
+   "glosario"
+  ]
+ }
+}

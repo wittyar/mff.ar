@@ -30,7 +30,8 @@ Y la tabla de valor de los equipos (scripts/contenido/valor_equipos.json): cada 
 anti-mermas tiene que estar en el catálogo (con su regla de «le sirve»), y cada modo de juego tiene que tener la
 fila de su tipo. Si no, se corta el build.
 
-También el glosario de skills del juego (scripts/contenido/glosario.json), en inglés y en coreano:
+También el glosario de skills del juego (scripts/contenido/glosario.json), en inglés, en coreano y en español (el nombre
+en español es el del juego: lo valida terminos_es.py):
 cada término con lo que dice, lo que el inglés traduce distinto del coreano y los efectos del
 catálogo a los que corresponde. Un término que nombra un efecto, un error que se repite o un
 C.T.P. que no existen corta el build.
@@ -47,11 +48,11 @@ RUTA = os.path.join(_DIR, 'contenido', 'catalogo.json')
 RUTA_GLOSARIO = os.path.join(_DIR, 'contenido', 'glosario.json')
 RUTA_VALOR = os.path.join(_DIR, 'contenido', 'valor_equipos.json')
 # La fuente de cada idioma del glosario: un término sin la captura de un idioma no la cita.
-CAPTURA = {'en': 'juego-glosario', 'ko': 'juego-glosario-ko'}
-# De qué opción de un C.T.P. sale cada efecto que da (la ficha del C.T.P. en el juego): la opción fija (고정 옵션,
-# «Locked Option»), que tienen el C.T.P. de 6★ y los reforjados (Mighty y Brilliant), o una opción de reforjado (재련
-# 옵션, «Reforge Option»), que solo tienen los reforjados.
-OPCIONES_CTP = {'fija': 'opción fija', 'reforjado': 'opción de reforjado'}
+CAPTURA = {'en': 'juego-glosario', 'ko': 'juego-glosario-ko', 'es': 'juego-glosario-es'}
+# De qué opción de un C.T.P. sale cada efecto que da (la ficha del C.T.P. en el juego): la opción bloqueada (고정 옵션,
+# «Locked Option», «Opción Bloqueada»), que tienen el C.T.P. de 6★ y los refinados (poderoso y brillante; Mighty y
+# Brilliant), o una opción de reforja (재련 옵션, «Reforge Option», «Opción de reforja»), que solo tienen los refinados.
+OPCIONES_CTP = {'fija': 'opción bloqueada', 'reforjado': 'opción de reforja'}   # como las llama el juego en español
 SLOTS_SOPORTE = ('leader', 'leader2', 'passive', 'passive2', 't2', 't22', 'uniform', 'uniform2', 'artifact')
 # Las reglas de «le sirve» que la app sabe evaluar en un liderazgo, un soporte o un bono de equipo: las que
 # miran el perfil de combate de quien lo recibe (app.js, iniciarDatos). Las demás (aplica_debuffs, invoca...)
@@ -279,7 +280,7 @@ def validar_glosario(glos, cat, fuentes, ctps):
             mal.append(f'{donde}: nombra C.T.P.s sin citar tv-ctps')
         falta = x.get('falta')
         if falta is not None and falta not in CAPTURA:
-            mal.append(f'{donde}: falta tiene que ser en o ko')
+            mal.append(f'{donde}: falta tiene que ser ' + ' o '.join(CAPTURA))
         for idioma, f in CAPTURA.items():
             if (falta == idioma) == (f in x['fuente']):
                 mal.append(f'{donde}: ' + (f'sin la captura en {idioma}, no puede citar {f}' if falta == idioma
@@ -505,8 +506,8 @@ def glosario_md(glos, cat, ctps):
          f"El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 사전 en coreano), desde "
          f"`scripts/contenido/glosario.json`: {len(glos['terminos'])} términos, en el orden del juego. El "
          "coreano es el original: donde el inglés no dice lo mismo, se aclara. «Lo da» dice qué C.T.P. da el efecto y de "
-         "qué opción sale: la opción fija (고정 옵션), que tienen el C.T.P. de 6★ y los reforjados, o una opción de "
-         "reforjado (재련 옵션), que solo tienen los reforjados (Mighty y Brilliant).\n",
+         "qué opción sale: la opción bloqueada (고정 옵션), que tienen el C.T.P. de 6★ y los refinados, o una opción de "
+         "reforja (재련 옵션), que solo tienen los refinados (poderoso y brillante).\n",
          '### Errores que se repiten\n']
     for e in glos['errores']:
         ts = ', '.join(x['es'] for x in glos['terminos'] if x.get('error') == e['id'])
