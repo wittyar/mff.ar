@@ -1,0 +1,240 @@
+{
+ "fuente": "Capturas del juego en español de Ezequiel (álbum de Google Fotos, 6 de octubre de 2026): las fichas de los C.T.P. (capturas 3 a 49 del álbum). Transcripción a mano de los títulos, de los rótulos de las opciones y de algunas frases de las opciones.",
+ "album": "https://photos.app.goo.gl/EK155akXC5fjtSV7A",
+ "rotulos": {
+  "opcion_fija": "Opción Bloqueada",
+  "opcion_reforjado": "OPCIÓN DE REFORJA",
+  "reforjar": "refinar",
+  "capturas": [
+   3,
+   4
+  ]
+ },
+ "ctps": [
+  {
+   "id": "competition",
+   "base": "C.T.P. de competición",
+   "poderoso": "C.T.P. poderoso de Competición",
+   "brillante": "C.T.P. brillante de Competición",
+   "capturas": [
+    3,
+    4,
+    6
+   ]
+  },
+  {
+   "id": "transcendence",
+   "base": "C.T.P. de transcendencia",
+   "poderoso": "C.T.P. poderoso de trascendencia",
+   "brillante": "C.T.P. brillante de trascendencia",
+   "capturas": [
+    8,
+    22,
+    36
+   ]
+  },
+  {
+   "id": "authority",
+   "base": "C.T.P. de autoridad",
+   "poderoso": "C.T.P. poderoso de autoridad",
+   "brillante": "C.T.P. brillante de autoridad",
+   "capturas": [
+    9,
+    23,
+    37
+   ]
+  },
+  {
+   "id": "energy",
+   "base": "C.T.P. de energía",
+   "poderoso": "C.T.P. poderoso de energía",
+   "brillante": "C.T.P. brillante de energía",
+   "capturas": [
+    10,
+    24,
+    38
+   ]
+  },
+  {
+   "id": "destruction",
+   "base": "C.T.P. de destrucción",
+   "poderoso": "C.T.P. poderoso de destrucción",
+   "brillante": "C.T.P. brillante de destrucción",
+   "capturas": [
+    11,
+    25,
+    39
+   ]
+  },
+  {
+   "id": "patience",
+   "base": "C.T.P. de paciencia",
+   "poderoso": "C.T.P. poderoso de paciencia",
+   "brillante": "C.T.P. brillante de paciencia",
+   "capturas": [
+    12,
+    26,
+    40
+   ]
+  },
+  {
+   "id": "refinement",
+   "base": "C.T.P. de ajuste",
+   "poderoso": "C.T.P. poderoso de ajuste",
+   "brillante": "C.T.P. brillante de ajuste",
+   "capturas": [
+    13,
+    27,
+    41
+   ]
+  },
+  {
+   "id": "regeneration",
+   "base": "C.T.P. de regeneración",
+   "poderoso": "C.T.P. poderoso de regeneración",
+   "brillante": "C.T.P. brillante de regeneración",
+   "capturas": [
+    14,
+    28,
+    42
+   ]
+  },
+  {
+   "id": "rage",
+   "base": "C.T.P. de ira",
+   "poderoso": "C.T.P. poderoso de furia",
+   "brillante": "C.T.P. brillante de furia",
+   "capturas": [
+    15,
+    29,
+    43
+   ]
+  },
+  {
+   "id": "veteran",
+   "base": "C.T.P. de veterano",
+   "poderoso": "C.T.P. poderoso de veterano",
+   "brillante": "C.T.P. brillante de veterano",
+   "capturas": [
+    16,
+    30,
+    44
+   ]
+  },
+  {
+   "id": "judgement",
+   "base": "C.T.P. de justiciero",
+   "poderoso": "C.T.P. poderoso de juicio",
+   "brillante": "C.T.P. brillante de juicio",
+   "capturas": [
+    17,
+    31,
+    45
+   ]
+  },
+  {
+   "id": "greed",
+   "base": "C.T.P. de codicia",
+   "poderoso": "C.T.P. poderoso de codicia",
+   "brillante": "C.T.P. brillante de codicia",
+   "capturas": [
+    18,
+    32,
+    46
+   ]
+  },
+  {
+   "id": "insight",
+   "base": "C.T.P. de percepción",
+   "poderoso": "C.T.P. poderoso de percepción",
+   "brillante": "C.T.P. brillante de percepción",
+   "capturas": [
+    19,
+    33,
+    47
+   ]
+  },
+  {
+   "id": "conquest",
+   "base": "C.T.P. de conquista",
+   "poderoso": "C.T.P. poderoso de conquista",
+   "brillante": "C.T.P. brillante de conquista",
+   "capturas": [
+    20,
+    34,
+    48
+   ]
+  },
+  {
+   "id": "liberation",
+   "base": "C.T.P. de liberación",
+   "poderoso": "C.T.P. poderoso de liberación",
+   "brillante": "C.T.P. brillante de liberación",
+   "capturas": [
+    21,
+    35,
+    49
+   ]
+  }
+ ],
+ "opciones_reforja": {
+  "competition": [
+   "Furia"
+  ],
+  "transcendence": [
+   "Penetración",
+   "Paliza"
+  ],
+  "authority": [
+   "Acero"
+  ],
+  "energy": [
+   "Paliza"
+  ],
+  "destruction": [
+   "Golpe"
+  ],
+  "patience": [
+   "Defender"
+  ],
+  "refinement": [
+   "Vitalidad"
+  ],
+  "regeneration": [
+   "Penetración"
+  ],
+  "rage": [
+   "Rabioso"
+  ],
+  "veteran": [
+   "Cuchilla"
+  ],
+  "judgement": [
+   "Amplificación de clase"
+  ],
+  "greed": [
+   "Emboscada"
+  ],
+  "conquest": [
+   "Choque"
+  ]
+ },
+ "erratas": [
+  "El C.T.P. base de Judgment se llama «de justiciero» y los reforjados «de juicio»; el de Rage, «de ira» y los reforjados «de furia»; Transcendence es «transcendencia» en el base y «trascendencia» en los reforjados; Competition va con mayúscula en los reforjados."
+ ],
+ "frases": [
+  "Inmunidad a Romper guardia",
+  "Ignorar esquiva",
+  "Aumento de daño crítico",
+  "Aumento del índice de recuperación",
+  "Se aplica a: ti",
+  "Se aplica a: todo el equipo",
+  "Se aplica a: enemigos",
+  "Probabilidad de activación",
+  "Tiempo de recarga",
+  "Se muestra el mejor valor",
+  "Mejora todos los ataques y defensas básicos",
+  "Recupera 10% de PG.",
+  "Los PG máx. aumentan"
+ ]
+}

@@ -1,0 +1,471 @@
+{
+ "fuente": "Capturas del juego en español de Ezequiel (álbum de Google Fotos, 6 de octubre de 2026): «Glosario de nombre de habilidades», capturas 163 a 206 del álbum, en su orden. Transcripción a mano, tal cual (con las erratas del juego).",
+ "album": "https://photos.app.goo.gl/EK155akXC5fjtSV7A",
+ "terminos": [
+  {
+   "id": "guard_break",
+   "captura": 163,
+   "titulo": "ROMPER GUARDIA",
+   "nombre": "Romper guardia",
+   "texto": [
+    "La rotura de guardia es una habilidad que cancela las habilidades de un enemigo.",
+    "La superrotura de guardia ignora la inmunidad de la rotura de guardia y anula la habilidad de un enemigo.",
+    "Consejo: cuando el enemigo use una habilidad, intenta usar una habilidad que pueda romper la guardia. De este modo, no solo bloquearás la habilidad del oponente, sino que también te dará la oportunidad de llevar a cabo un contraataque."
+   ]
+  },
+  {
+   "id": "guaranteed_dodge",
+   "captura": 164,
+   "titulo": "PROBABILIDAD DE ESQUIVA GARANTIZADA",
+   "nombre": "Probabilidad de esquiva garantizada",
+   "texto": [
+    "La esquiva depende de la diferencia de nivel entre el personaje y el oponente.",
+    "La probabilidad de esquiva garantizada ignora estas diferencias y esquiva con una probabilidad determinada."
+   ]
+  },
+  {
+   "id": "guaranteed_crit",
+   "captura": 165,
+   "titulo": "PROBABILIDAD DE CRÍTICO GARANTIZADA",
+   "nombre": "Probabilidad de crítico garantizada",
+   "texto": [
+    "La probabilidad de crítico depende de la diferencia de nivel entre el personaje y el oponente.",
+    "La probabilidad de crítico garantizado ignora estas diferencias y realiza un ataque crítico con una probabilidad determinada."
+   ]
+  },
+  {
+   "id": "pure_damage",
+   "captura": 166,
+   "titulo": "DAÑO PURO",
+   "nombre": "Daño puro",
+   "texto": [
+    "El daño que sufre un personaje es el cálculo de la fuerza de ataque del oponente, el la defensa del personaje y la estadística de resistencia a la clase del personaje.",
+    "El daño puro ignora estos factores e inflige una cantidad de daño específica."
+   ]
+  },
+  {
+   "id": "team_passive",
+   "captura": 167,
+   "titulo": "EQUIPO PASIVO",
+   "nombre": "Equipo pasivo",
+   "texto": [
+    "Equipo pasivo es un efecto pasivo que se comparte con todos los miembros del equipo, incluso aunque no se le designe a un personaje con la habilidad.",
+    "Por ejemplo, esto se aplica si [Se aplica a: todos los miembros del equipo] se incluye en la descripción de la habilidad."
+   ]
+  },
+  {
+   "id": "invincible",
+   "captura": 168,
+   "titulo": "INVENCIBLE",
+   "nombre": "Invencible",
+   "texto": [
+    "Invencible quiere decir que el personaje es inmune a ataques básicos, Romper guardia, daño y mermas."
+   ]
+  },
+  {
+   "id": "super_armor",
+   "captura": 169,
+   "titulo": "SUPERARMADURA",
+   "nombre": "Superarmadura",
+   "texto": [
+    "Superarmadura quiere decir que el personaje es inmune a movimientos de ataque y Romper guardia, No se podrán inutilizar los movimientos del personaje, pero sufrirá daños."
+   ]
+  },
+  {
+   "id": "barrier",
+   "captura": 170,
+   "titulo": "BARRERA",
+   "nombre": "Barrera",
+   "texto": [
+    "Barrera es un efecto que impide el daño durante un tiempo predeterminado. El personaje no sufre daños, pero tampoco puede detener el efecto de Romper guardia."
+   ]
+  },
+  {
+   "id": "shield",
+   "captura": 171,
+   "titulo": "ESCUDO",
+   "nombre": "Escudo",
+   "texto": [
+    "Escudo es un efecto que detiene el daño durante un tiempo predeterminado. El personaje no sufre daños, pero tampoco puede detener movimientos de ataque básicos, Romper guardia y mermas. Hay diferentes tipos de escudos: uno puede bloquear todo tipo de daños; otro puede bloquear solo el daño físico; y otro puede bloquear solo los daños de energía."
+   ]
+  },
+  {
+   "id": "damage_immunity",
+   "captura": 172,
+   "titulo": "INMUNIDAD AL DAÑO",
+   "nombre": "Inmunidad al daño",
+   "texto": [
+    "Inmunidad a daños es un efecto que detiene el daño y las mermas durante un tiempo predeterminado. Puede bloquear daño y mermas, pero no puede detener movimientos de ataque básicos y Romper guardia. Se dividen en: inmunidad a daños que detiene todos los tipos de daños y mermas, inmunidad a daño físico que detiene todos los tipos de daños y mermas físicos e inmunidad a daño de energía que detiene todos los tipos de daños y mermas de energía."
+   ]
+  },
+  {
+   "id": "fear",
+   "captura": 173,
+   "titulo": "MIEDO",
+   "nombre": "Miedo",
+   "texto": [
+    "El Miedo hace que los enemigos entren en pánico durante un período de tiempo específico, y hace que el enemigo huya del personaje que lo utilice.",
+    "Los personajes que sufran el efecto de Miedo no podrán atacar ni utilizar habilidades."
+   ]
+  },
+  {
+   "id": "snare",
+   "captura": 174,
+   "titulo": "TRAMPA",
+   "nombre": "Trampa",
+   "texto": [
+    "La Trampa impide que los enemigos se muevan durante un breve período de tiempo.",
+    "Los objetivos afectados no podrán desplazarse a otra ubicación, atacar ni usar habilidades."
+   ]
+  },
+  {
+   "id": "time_freezing",
+   "captura": 175,
+   "titulo": "CONGELACIÓN TEMPORAL",
+   "nombre": "Congelación temporal",
+   "texto": [
+    "La Congelación temporal bloquea al objetivo durante un breve período e impide que pueda hacer movimientos.",
+    "Los personajes que sufran Congelación temporal no podrán moverse ni atacar.",
+    "Consejo: la Congelación temporal puede atrapar a monstruos épicos sin mermas, pero no es eficaz contra objetivos con habilidades que eliminan todas la mermas."
+   ]
+  },
+  {
+   "id": "charm",
+   "captura": 176,
+   "titulo": "HECHIZO",
+   "nombre": "Hechizo",
+   "texto": [
+    "El Hechizo encantará a los enemigos durante un breve período de tiempo e impide que puedan atacar.",
+    "Los enemigos que sufran Hechizo no podrán moverse ni utilizar habilidades, e incluso evitará que se activen los ataques automáticos.",
+    "Consejo: el Hechizo puede atrapar a monstruos épicos sin mermas, pero no es efectivo contra objetivos con habilidades que eliminan todas la mermas."
+   ]
+  },
+  {
+   "id": "ignore_targeting",
+   "captura": 177,
+   "titulo": "IGNORAR BLANCO",
+   "nombre": "Ignorar blanco",
+   "texto": [
+    "Ignorar blanco es un estado en el que se ignoran todas las habilidades del enemigo centradas en los objetivos. No sufrirás daños aunque te ataquen.",
+    "Consejo: calcula para combinar una habilidad con Ignorar blanco cuando esté atacando un enemigo para así ignorarlo y continuar con tu propia estrategia."
+   ]
+  },
+  {
+   "id": "entice",
+   "captura": 178,
+   "titulo": "PERSUASIÓN",
+   "nombre": "Persuasión",
+   "texto": [
+    "Persuasión seduce a los enemigos durante un breve período e impide que puedan atacar.",
+    "Los enemigos que sufran Persuasión no podrán moverse ni utilizar habilidades, y lentamente caminan hacia el personaje que utilizó esta habilidad.",
+    "Consejo: Persuasión es efectivo contra jefes mundiales o enemigos sin mermas, pero no contra objetivos con habilidades que eliminan todas la mermas."
+   ]
+  },
+  {
+   "id": "mind_control",
+   "captura": 179,
+   "titulo": "CONTROL MENTAL",
+   "nombre": "Control mental",
+   "texto": [
+    "Control mental es una habilidad que convierte a los enemigos en aliados.",
+    "Los enemigos que sufran el efecto de esta habilidad recibirán daño adicional.",
+    "Consejo: Control mental es muy efectivo contra jefes mundiales o enemigos sin mermas, pero no contra objetivos con habilidades que eliminan todas la mermas."
+   ]
+  },
+  {
+   "id": "recharge_shield",
+   "captura": 180,
+   "titulo": "RECARGAR ESCUDO",
+   "nombre": "Recargar escudo",
+   "texto": [
+    "Recargar escudo tiene un efecto que hace que se recargue constantemente.",
+    "Si se obtiene el mismo tipo de escudo, se absorberá el efecto y aumentará el poder del escudo. Si se obtiene un escudo de otro tipo, el poder de este no aumentará, pero tendrás los diferentes efectos de cada escudo.",
+    "Por ejemplo, si ganas los efectos de un escudo físico mientras está activa la recarga de escudo físico, ambos efectos se absorberán y se incrementará el poder defensivo. Si se obtiene otro efecto de escudo de energía, ambos efectos estarán activos."
+   ]
+  },
+  {
+   "id": "fracture",
+   "captura": 181,
+   "titulo": "FRACTURA",
+   "nombre": "Fractura",
+   "texto": [
+    "Fractura reduce todos los ataques básicos (acumulable) de un enemigo.",
+    "Si un enemigo que sufre Fractura recupera PG, se eliminará este efecto, pero se reducirá el de la recuperación.",
+    "No se puede eliminar la fractura con habilidades que eliminan todas las mermas.",
+    "Consejo: si se acumula Fractura, se eliminará una acumulación cada vez que se recuperen PG."
+   ]
+  },
+  {
+   "id": "incapacitation",
+   "captura": 182,
+   "titulo": "INCAPACITACIÓN",
+   "nombre": "Incapacitación",
+   "texto": [
+    "Incapacitación reduce todas las defensas (acumulables) tras eliminar todos los potenciadores beneficiosos del enemigo.",
+    "No se aplica a objetivos con habilidades que eliminan todas la mermas."
+   ]
+  },
+  {
+   "id": "counterattack",
+   "captura": 183,
+   "titulo": "CONTRATAQUE",
+   "nombre": "Contrataque",
+   "texto": [
+    "Al recibir un ataque enemigo, se activa Contrataque en lugar de los movimientos básicos.",
+    "Contrataque puede activarse al recibir un ataque, pero no se activará si está activo el efecto Invencible."
+   ]
+  },
+  {
+   "id": "elasticity",
+   "captura": 184,
+   "titulo": "ELASTICIDAD",
+   "nombre": "Elasticidad",
+   "texto": [
+    "El efecto Elasticidad puede combinarse con Reducción de daño físico.",
+    "Elasticidad no desaparecerá al aplicar los efectos Cancelar o Incapacitación, pero sí con el efecto Sangrado."
+   ]
+  },
+  {
+   "id": "concentration",
+   "captura": 185,
+   "titulo": "CONCENTRACIÓN",
+   "nombre": "Concentración",
+   "texto": [
+    "La concentración es una estadística que afecta a la potencia de las habilidades. Algunas habilidades y efectos del equipo personalizado rinden mucho mejor con una concentración más alta."
+   ]
+  },
+  {
+   "id": "additional_pierce",
+   "captura": 186,
+   "titulo": "DAÑO DE PERFORACIÓN ADICIONAL",
+   "nombre": "Daño de perforación adicional",
+   "texto": [
+    "El daño de perforación adicional es la capacidad de infligir daño adicional que ignora por completo la DEF. El daño de perforación adicional se aplica según el daño de la habilidad."
+   ]
+  },
+  {
+   "id": "penetration",
+   "captura": 187,
+   "titulo": "PENETRACIÓN",
+   "nombre": "Penetración",
+   "texto": [
+    "Penetración es una habilidad con probabilidad de cancelar la habilidad de un enemigo al ser atacado.",
+    "Las posibilidades de éxito aumentan si se tiene mayor Concentración que el rival.",
+    "El medidor exclusivo tiene que estar lleno para usar Penetración, este se llena cuando te atacan los enemigos.",
+    "El medidor para de llenarse durante un tiempo tras usar Penetración.(5 s)"
+   ]
+  },
+  {
+   "id": "beatdown",
+   "captura": 188,
+   "titulo": "PALIZA",
+   "nombre": "Paliza",
+   "texto": [
+    "Paliza proporciona daño de perforación adicional al usar la habilidad y otorga Inmunidad a Romper guardia.",
+    "El daño de perforación adicional que otorga Paliza no se ve limitado por el daño máximo y aumenta cuanto mayor es la Concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Paliza; este se llena cuando te mueves.",
+    "El medidor para de llenarse durante un tiempo tras usar Paliza.(7 s)"
+   ]
+  },
+  {
+   "id": "type_amplification",
+   "captura": 189,
+   "titulo": "AMPLIFICACIÓN DE CLASE",
+   "nombre": "Amplificación de clase",
+   "texto": [
+    "Amplificación de elemento aumenta el ataque del elemento de la habilidad y otorga Inmunidad a Romper guardia.",
+    "El ataque del elemento de la habilidad aumenta cuanto mayor es la Concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Amplificación de elemento; este se llena cuando te mueves.",
+    "El medidor para de llenarse durante un tiempo tras usar Amplificación de elemento.(7 s)"
+   ]
+  },
+  {
+   "id": "steel",
+   "captura": 190,
+   "titulo": "ACERO",
+   "nombre": "Acero",
+   "texto": [
+    "Acero otorga inmunidad a Rotura de guardia y Superrotura de guardia y reduce todo el daño recibido.",
+    "La cantidad de reducción de daño aumenta cuanto mayor es la Concentración.",
+    "El efecto de Acero se puede usar cuando el medidor exclusivo está totalmente lleno, y este se llena cuando recibes ataques de enemigos.",
+    "El efecto se activa automáticamente, y el medidor para de llenarse durante un tiempo determinado tras la activación.(6 s)"
+   ]
+  },
+  {
+   "id": "mockery",
+   "captura": 191,
+   "titulo": "BURLA",
+   "nombre": "Burla",
+   "texto": [
+    "Burla es una merma que fuerza a los enemigos a atacar al personaje que lo ha lanzado. Cuando se aplica el efecto, el ataque del objetivo aumenta, pero hay una probabilidad de que no se aplique un potenciador preestablecido.",
+    "Por ejemplo, si Burla evita que se aplique un efecto de Invencibilidad, este efecto no se puede aplicar hasta que la merma de Burla deje de estar activa."
+   ]
+  },
+  {
+   "id": "strike",
+   "captura": 192,
+   "titulo": "GOLPE",
+   "nombre": "Golpe",
+   "texto": [
+    "Golpe otorga Ignorar esquiva y aumenta el daño que se inflige a los jefes.",
+    "El daño que se inflige a los jefes aumenta cuanto mayor es la Concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Golpe; este se llena cuando te mueves.",
+    "El medidor para de llenarse durante un tiempo tras usar Golpe.(7 s)"
+   ]
+  },
+  {
+   "id": "ambush",
+   "captura": 193,
+   "titulo": "EMBOSCADA",
+   "nombre": "Emboscada",
+   "texto": [
+    "Emboscada otorga inmunidad a romper guardia y superrotura de guardia, inmunidad al daño reflejado de los enemigos e ignora la reducción de daño.",
+    "El efecto de ignorar la reducción de daño aumenta cuanto mayor es la Concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Emboscada, y se llena con cada golpe recibido.",
+    "El medidor para de llenarse durante un tiempo tras usar Emboscada.(6 s)"
+   ]
+  },
+  {
+   "id": "fortitude",
+   "captura": 194,
+   "titulo": "FORTALEZA",
+   "nombre": "Fortaleza",
+   "texto": [
+    "Fortaleza impide que los PG bajen por debajo de 1 durante un tiempo determinado y recupera PG al terminarse el efecto. Fortaleza se activa automáticamente cuando los PG bajan por debajo de un valor determinado y otorga inmunidad a Romper guardia mientras está activo. Cuando está activo, no se puede eliminar el efecto de este potenciador con efectos de eliminación de potenciadores."
+   ]
+  },
+  {
+   "id": "blade",
+   "captura": 195,
+   "titulo": "CUCHILLA",
+   "nombre": "Cuchilla",
+   "texto": [
+    "Al usar la habilidad, Cuchilla perfora los efectos defensivos y aumenta el daño que se inflige a los enemigos.",
+    "El efecto de aumento de daño aumenta cuanto mayor es la concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Cuchilla, y este se llena al usar habilidades (excepto los ataques básicos).",
+    "El efecto se activa de forma automática y el medidor para de llenarse durante un tiempo tras usar Cuchilla.(7 s)"
+   ]
+  },
+  {
+   "id": "defend",
+   "captura": 196,
+   "titulo": "DEFENDER",
+   "nombre": "Defender",
+   "texto": [
+    "Defender otorga inmunidad a la rotura de guardia y a la superrotura de guardia y crea una barrera que ignora los efectos de perforación y de cancelación. La barrera bloquea un cierto número de ataques. Además, recupera PG en proporción a la concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Defender, y este se llena cuando un enemigo te golpea.",
+    "El efecto se activa de forma automática y el medidor para de llenarse durante un tiempo tras usar Defender.(7 s)"
+   ]
+  },
+  {
+   "id": "super_hit_shield",
+   "captura": 197,
+   "titulo": "ESCUDO DE SUPERIMPACTO",
+   "nombre": "Escudo de superimpacto",
+   "texto": [
+    "El Escudo de superimpacto es un efecto de escudo que se recarga cada vez que golpeas a un enemigo.",
+    "Ignora el resto de efectos de escudos pero escudo de superimpacto se activa si hay varios efectos de escudo a la vez.",
+    "Escudo de superimpacto no se puede eliminar con la eliminación de potenciadores ni tampoco se ve afectado por perforación."
+   ]
+  },
+  {
+   "id": "enraged",
+   "captura": 198,
+   "titulo": "RABIOSO",
+   "nombre": "Rabioso",
+   "texto": [
+    "Rabioso aumenta el daño crítico independientemente del límite máximo y otorga inmunidad a Romper guardia.",
+    "El daño crítico aumentado por Rabioso aumenta en proporción a la Concentración.",
+    "El medidor exclusivo debe cargarse del todo para utilizar Rabioso y el medidor se llena al utilizar habilidades (excepto los ataques básicos).",
+    "El medidor deja de cargar durante una tiempo fijo tras utilizar Rabioso.(7 s)"
+   ]
+  },
+  {
+   "id": "vitality",
+   "captura": 199,
+   "titulo": "VITALIDAD",
+   "nombre": "Vitalidad",
+   "texto": [
+    "Vitalidad otorga inmunidad a la rotura y superrotura de guardia y recupera PG cada segundo.",
+    "La cantidad de PG recuperada aumenta en proporción a la Concentración.",
+    "El medidor exclusivo debe estar totalmente cargado para usar Vitalidad y el medidor se carga al recibir ataques enemigos.",
+    "El efecto se activa automáticamente. El medidor deja de cargar durante un tiempo fijo tras utilizar Vitalidad.(7 s)"
+   ]
+  },
+  {
+   "id": "wall",
+   "captura": 200,
+   "titulo": "MURO",
+   "nombre": "Muro",
+   "texto": [
+    "Barrera proporciona una barrera exclusiva que reduce el daño recibido. El efecto de reducción de daño se reduce con cada golpe recibido, pero el efecto seguirá activo durante su duración con el menor valor de reducción de daño. Además, esta habilidad no se puede usar con Barrera. Barrera no se acumula con efectos defensivos como la reducción de daño básico y se aplica por separado."
+   ]
+  },
+  {
+   "id": "clash",
+   "captura": 201,
+   "titulo": "CHOQUE",
+   "nombre": "Choque",
+   "texto": [
+    "Choque otorga inmunidad a rotura de guardia y superrotura de guardia, e inmunidad al efecto de reflejo de daño del enemigo al usarse. El daño básico infligido a los enemigos también aumenta.",
+    "El daño básico infligido a los enemigos aumenta en proporción a la Concentración.",
+    "El medidor exclusivo tiene que estar lleno para usar Choque, este se llena cuando te atacan los enemigos.",
+    "El efecto se activa automáticamente. El medidor para de llenarse durante un tiempo tras usar Choque.(6 s)"
+   ]
+  },
+  {
+   "id": "panic",
+   "captura": 202,
+   "titulo": "PÁNICO",
+   "nombre": "Pánico",
+   "texto": [
+    "Pánico es una habilidad que aplica miedo a los enemigos. Los enemigos que entran en pánico reciben daño adicional.",
+    "Consejo: Pánico puede aplicarse a jefes mundiales que no pueden ser mermados, pero no a aquellos con un efecto que elimine todas las mermas."
+   ]
+  },
+  {
+   "id": "loss",
+   "captura": 203,
+   "titulo": "PÉRDIDA",
+   "nombre": "Pérdida",
+   "texto": [
+    "Pérdida absorbe las habilidades del objetivo e impide que ataque durante un breve período de tiempo.",
+    "Los enemigos afectados por Pérdida no pueden moverse ni usar habilidades, pierden sus potenciadores y reciben daño adicional.",
+    "Consejo: Pérdida no se puede aplicar a quienes tengan un efecto que elimina todas las mermas."
+   ]
+  },
+  {
+   "id": "death_throes",
+   "captura": 204,
+   "titulo": "Agonía letal",
+   "nombre": "Agonía letal",
+   "texto": [
+    "Agonía letal impide que los PG bajen por debajo de 1 durante un tiempo determinado. Al final del efecto, el personaje muere inmediatamente.",
+    "Agonía letal se activa automáticamente cuando los PG bajan por debajo de un valor determinado. El personaje puede seguir viéndose afectado por rotura de guardia mientras Agonía letal está activa, pero el efecto de potenciador de Agonía letal no puede eliminarse."
+   ]
+  },
+  {
+   "id": "mark",
+   "captura": 205,
+   "titulo": "Marca",
+   "nombre": "Marca",
+   "texto": [
+    "Cuando usas Marca, se mostrará una marca sobre el enemigo.",
+    "Aumenta el daño infligido cuando se utilizan habilidad que apliquen un efecto al enemigo marcado.",
+    "Consejo: también se le puede aplicar la marca a los jefes mundiales o a los jefes grandes a los que no les afectan las mermas. Además, también se le aplica a los objetivos que tienen el efecto de eliminar todas las mermas, y no se ve afectado por los aumentos o las reducciones de efectividad de las mermas."
+   ]
+  },
+  {
+   "id": "fury",
+   "captura": 206,
+   "titulo": "Furia",
+   "nombre": "Furia",
+   "texto": [
+    "Furia aumenta todo el daño de un personaje y otorga inmunidad a Romper guardia.",
+    "El daño aumentado por Furia aumenta en proporción a la Concentración.",
+    "El medidor exclusivo debe cargarse del todo para utilizar Furia, y se llena al utilizar habilidades (excepto los ataques básicos).",
+    "El medidor deja de cargarse durante un tiempo tras usar Furia (7 s)."
+   ]
+  }
+ ]
+}

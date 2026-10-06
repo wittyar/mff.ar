@@ -1,0 +1,62 @@
+{
+ "fuente": "Capturas del juego en español de Ezequiel (álbum de Google Fotos, 6 de octubre de 2026): «Información del héroe» de Gorr (captura 210) y los rótulos de las opciones de los C.T.P. (capturas 3 a 49).",
+ "album": "https://photos.app.goo.gl/EK155akXC5fjtSV7A",
+ "ficha": [
+  "ATQ. FÍSICO",
+  "ATQ. DE ENERGÍA",
+  "VELOCIDAD ATQ.",
+  "PROBAB. CRÍTICO",
+  "DAÑO CRÍTICO",
+  "IGNORAR DEFENSA",
+  "IGNORA ESQUIVA",
+  "DAÑO DE FUEGO",
+  "DAÑO DE FRÍO",
+  "DAÑO DE RAYO",
+  "DAÑO DE VENENO",
+  "DAÑO MENTAL",
+  "DAÑO DE PERFORACIÓN ADICIONAL",
+  "CONCENTRACIÓN",
+  "DEF. FÍSICA",
+  "DEF. DE ENERGÍA",
+  "PG",
+  "ÍNDICE DE RECUPERACIÓN",
+  "ESQUIVA",
+  "RESISTENCIA A FUEGO",
+  "RESISTE FRÍO",
+  "RESISTENCIA A RAYO",
+  "RESISTENCIA A VENENO",
+  "RESISTENCIA A MENTAL",
+  "VELOCIDAD DE MOVIMIENTO",
+  "REDUCIR DURACIÓN DE MERMA",
+  "REDUCIR DURACIÓN DE RECARGA"
+ ],
+ "secciones": [
+  "ATAQUE",
+  "DEFENSA",
+  "MERMA"
+ ],
+ "datos": [
+  "CLASE",
+  "RAZA",
+  "GÉNERO",
+  "BANDO",
+  "INSTINTO",
+  "CAPACIDAD",
+  "CATEGORÍA"
+ ],
+ "opciones_ctp": [
+  "ÍNDICE DE RECUPERACIÓN ↑",
+  "ESQUIVA ↑",
+  "IGNORAR ESQUIVAR",
+  "ÍNDICE CRÍTICO ↑",
+  "DAÑO CRÍTICO ↑",
+  "MEJORA LOS ATAQUES BÁSICOS",
+  "MEJORA TODOS LOS ATAQUES Y DEFENSAS BÁSICOS",
+  "MEJORA TODAS LAS DEFENSAS BÁSICAS",
+  "PG MÁX. ↑",
+  "DAÑO INFLIGIDO POR CADENA ↑"
+ ],
+ "erratas": [
+  "La ficha dice «Probab. crítico» y las opciones de los C.T.P. «Índice crítico»; la ficha «Ignora esquiva» y los C.T.P. «Ignorar esquivar» (el glosario: «Ignorar esquiva»); la ficha «Resiste frío» y las demás resistencias «Resistencia a …»."
+ ]
+}
