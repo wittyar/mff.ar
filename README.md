@@ -373,7 +373,7 @@ python scripts/fetch_all.py        # datos, tier lists e imágenes (images/ no s
 python scripts/parse_instinto.py
 python scripts/foro.py             # notas de actualización del foro en inglés (fuentes/foro/)
 python scripts/cafe.py             # sus pares del foro coreano, el café oficial de Naver (fuentes/cafe/)
-python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md, docs/CATALOGO.md, docs/COMPLETITUD.md
+python scripts/build.py            # data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md, docs/CATALOGO.md, docs/COMPLETITUD.md, docs/HISTORICO.md, docs/NOTAS_COREANO.md
 ```
 `datos.json` lleva el sha256 y el tamaño de cada archivo que baja la app y la lista de imágenes con
 su origen (`scripts/imagenes.py`). `.gitattributes` evita que git cambie los finales de línea de
@@ -573,6 +573,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   cada build con `scripts/completitud.py`).
 - `docs/HISTORICO.md` — lo que no cierra entre thanosvibs y las notas del foro en el histórico (se
   regenera en cada build con `scripts/historico.py`).
+- `docs/NOTAS_COREANO.md` — las notas en inglés contra sus pares coreanas: los porcentajes y los segundos que están en
+  una y no en la otra (se regenera en cada build con `scripts/cotejo_ko.py`, o solo: `python scripts/cotejo_ko.py`).
 - `fuentes/foro/` y `fuentes/cafe/` — las notas de actualización del foro en inglés y sus pares del foro coreano (el
   café oficial de Naver; el coreano es el original), con `scripts/foro.py` y `scripts/cafe.py`.
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche, pantalla de

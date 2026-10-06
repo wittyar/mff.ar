@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Reconstruye data.js, datos.json, mff-thanosvibs-import.json, docs/AUDITORIA.md,
-docs/CATALOGO.md, docs/COMPLETITUD.md y docs/HISTORICO.md desde work/ y fuentes/foro/. Correr tras fetch_all.py,
-parse_instinto.py y foro.py.
+docs/CATALOGO.md, docs/COMPLETITUD.md, docs/HISTORICO.md y docs/NOTAS_COREANO.md desde work/, fuentes/foro/ y
+fuentes/cafe/. Correr tras fetch_all.py, parse_instinto.py, foro.py y cafe.py.
 
 Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
 catalogo.py (valida el catálogo de efectos contra los datos; docs/CATALOGO.md),
@@ -100,6 +100,10 @@ HISTORICO, _historico_md = historico.armar(chars, json.load(open('work/updates.j
                                            os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'))
 with open('docs/HISTORICO.md', 'w', encoding='utf-8', newline='\n') as _f:
     _f.write(_historico_md)
+# Las notas en inglés contra sus pares coreanas (#3): docs/NOTAS_COREANO.md.
+import cotejo_ko
+cotejo_ko.escribir(os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'),
+                   os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'cafe'), 'docs/NOTAS_COREANO.md')
 hoy = datetime.date.today()
 gv = ultima(json.load(open('work/updates.json')), hoy)[1]
 # Las habilidades de todas las variantes (un uniforme puede traer otras que su base: Zombi, Guardianes de la
