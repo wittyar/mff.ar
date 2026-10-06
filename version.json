@@ -1,6 +1,6 @@
 {
- "version": "1.0.27",
+ "version": "1.0.28",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "La ficha, ordenada por lo que importa: el Resumen abre con dónde rinde, qué le da al equipo y qué necesita, y después quién es; lo demás que dicen las fuentes queda plegado. Cinco pestañas: Resumen, Skills, Armado (con tu progreso al final), Equipos y Fuentes. Las explicaciones van a un «?» junto a cada título. Los strikers, en una tabla con los dos sentidos por personaje. La pestaña Análisis sale hasta rehacerla."
+ "notas": "Skills: cada etapa de una skill va junta, con su daño y sus efectos (antes el daño iba en una tabla aparte). Armado: los bloques se acomodan en dos columnas, sin el espacio en blanco que quedaba."
 }

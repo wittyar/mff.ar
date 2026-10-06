@@ -77,14 +77,15 @@ variante, en `docs/COMPLETITUD.md`.
 
 ## Estado (6 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.26 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
-  1.0.26 (etiqueta en a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos.
-- Entregada sin publicar: la 1.0.27, primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo
-  y qué necesita arriba; cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las
-  explicaciones a un «?» (`ayudaHtml`); strikers en una tabla con los dos sentidos. Etiqueta sobre «Versión 1.0.27».
-  Ezequiel aprobó seguir con «dale» después de las 8 decisiones de la propuesta de arquitectura; la ficha aplica la 3 y
-  la 8. Sigue: las demás pantallas (Glosario, Histórico, Modos, Tier lists), la barra de 5 secciones, avisos como
-  estado y direcciones estables.
+- Publicadas: de la 1.0.14 a la 1.0.27 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+  1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
+  (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
+  cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
+  (`ayudaHtml`); strikers en una tabla con los dos sentidos.
+- Entregada sin publicar: la 1.0.28 (pedido de Ezequiel sobre la 1.0.27): en Skills, cada etapa junta con su daño y
+  sus efectos; en Armado, los bloques en dos columnas que se reparten la altura. Etiqueta sobre «Versión 1.0.28».
+  Sigue de #24: Glosario, Histórico, Modos, Tier lists, la barra de 5 secciones, avisos como estado y direcciones
+  estables.
 - La 1.0.25 (etiqueta en 676f50a), solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
   (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
   aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
