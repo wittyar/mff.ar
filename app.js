@@ -35,6 +35,7 @@ const GLOSARIO       = window.MFF_GLOSARIO;       // glosario de skills del jueg
 const TB             = window.MFF_TABLAS || {};   // patrones y etiquetas, en los dos idiomas
 const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
 const CTPS           = window.MFF_CTPS || [];     // C.T.P.s (scripts/fuentes.py)
+const DUDAS          = window.MFF_DUDAS;          // lo que un idioma del juego dice distinto de otro (scripts/contenido/dudas.json)
 const ARTES          = window.MFF_ARTEFACTOS || []; // artefactos exclusivos, por retrato base
 const DEFAULT_ROWS   = window.MFF_DEFAULT_TIER_ROWS || [{id:'S',label:'S'},{id:'A',label:'A'},{id:'B',label:'B'},{id:'C',label:'C'},{id:'D',label:'D'}];
 const SLOT_ORDER     = ['Leader Skill','Passive','Tier-2 Passive','Uniform Passive',
@@ -175,7 +176,7 @@ const PLANTILLAS = [
   { id:'rango',    k:'tp_rank',      filas: () => ['S', 'A', 'B', 'C', 'D'] },
   { id:'rangomas', k:'tp_rank_plus', filas: () => ['SS', 'S', 'A', 'B', 'C', 'D'] },
   { id:'uso',      k:'tp_role',      filas: () => [t('tp_r_lead'), t('tp_r_main'), t('tp_r_support'), t('tp_r_striker')] },
-  { id:'ctp',      k:'tp_ctp',       filas: () => CTPS.map(c => c.name) },
+  { id:'ctp',      k:'tp_ctp',       filas: () => CTPS.map(ctpNomCorto) },
   { id:'vacia',    k:'tp_empty',     filas: () => [t('tp_new_row')] },
 ];
 function filasDePlantilla (id) {
@@ -193,7 +194,7 @@ function charDeRetrato (p) { return CHARS.find(c => c.p === p) || null; }
 /** Entradas ubicables en una lista: {key, nom, sub, img} y, si es un personaje, su variante. */
 function itemsDeLista (list) {
   switch (tipoLista(list)) {
-    case 'ctp': return CTPS.map(c => ({ key: 'ctp:' + c.id, nom: 'C.T.P. of ' + c.name, sub: '', img: imgUrl('ctp-' + c.id) }));
+    case 'ctp': return CTPS.map(c => ({ key: 'ctp:' + c.id, nom: ctpNombre(c), sub: '', img: imgUrl('ctp-' + c.id) }));
     case 'artefacto': return ARTES.map(a => { const ch = charDeRetrato(a.p);
       return { key: 'art:' + a.p, nom: a.name, sub: ch ? ch.name : a.p, cid: ch && ch.id,
                img: imgUrl('art-' + a.p) || (ch ? imgUrl('portrait-' + ch.id) : '') }; });
@@ -519,6 +520,12 @@ const T = {
   gl_efectos_nota:   { es:'Todos los efectos del catálogo de la app, por grupo: cómo se lee cada uno en PvE y en PvP, a quién le sirve y cómo aparece en las skills. Si un efecto no trae lectura propia, vale la de su grupo.',
                        en:"Every effect in the app's catalog, by group: how each one reads in PvE and PvP, whom it helps and how it shows up in skills. If an effect has no reading of its own, its group's applies." },
   gl_difiere_tag:    { es:'el inglés difiere', en:'English differs' },
+  du_label:          { es:'Información dudosa: un idioma del juego dice distinto que otro', en:'Doubtful information: one language of the game says something different from another' },
+  du_tag:            { es:'≠ dudoso', en:'≠ doubtful' },
+  du_ko:             { es:'Coreano (original):', en:'Korean (original):' },
+  du_en:             { es:'Inglés:', en:'English:' },
+  du_es:             { es:'Español del juego:', en:'Spanish game:' },
+  du_skill:          { es:'Lo que un idioma del juego dice distinto que otro', en:'What one language of the game says differently from another' },
   gl_en_ko:          { es:'Inglés y coreano:',  en:'English and Korean:' },
   gl_lo_da:          { es:'Lo da:',             en:'Granted by:' },
   gl_op_fija:        { es:'opción bloqueada',   en:'locked option' },
@@ -641,7 +648,7 @@ const T = {
   tt_cuando:         { es:'Cuándo, cuánto, a quién', en:'When, how much, to whom' },
   tt_texto:          { es:'Texto del juego',     en:'Game text' },
   tt_certeza:        { es:'Certeza y fuentes',   en:'Certainty and sources' },
-  tt_coreano:        { es:'Diferencias con el coreano', en:'Differences with the Korean' },
+  tt_coreano:        { es:'Diferencias entre idiomas (el coreano es el original)', en:'Differences between languages (Korean is the original)' },
   tt_vacia:          { es:'La fuente no publica efectos para esta skill.', en:'The source publishes no effects for this skill.' },
   tt_grupo:          { es:'Grupo',               en:'Group' },
   tt_recarga:        { es:'Recarga',             en:'Cooldown' },
@@ -672,7 +679,7 @@ const T = {
   tt_f_lecturas:     { es:'Lecturas de PvE y PvP', en:'PvE and PvP readings' },
   tt_del_grupo:      { es:'(la del grupo {x})',   en:'(the {x} group\'s)' },
   tt_f_glosario:     { es:'Glosario del juego',   en:'Game glossary' },
-  tt_dif_nada:       { es:'Sus términos del glosario del juego dicen lo mismo en inglés y en coreano.', en:'Its game glossary terms say the same in English and in Korean.' },
+  tt_dif_nada:       { es:'Sus términos del glosario del juego dicen lo mismo en coreano, en inglés y en español.', en:'Its game glossary terms say the same in Korean, English and Spanish.' },
   tt_dif_sin:        { es:'No tiene términos del glosario del juego: no hay con qué comparar.', en:'It has no game glossary terms: there is nothing to compare.' },
   el_Physical:       { es:'físico',              en:'physical' },
   el_Energy:         { es:'de energía',          en:'energy' },
@@ -2392,6 +2399,7 @@ function skillCard (sk, v, si) {
   const tgComun = comunEnEtapas(sk, 'tg'), acComun = comunEnEtapas(sk, 'ac');
   const cabecera = [];
   ATRIBUTOS.forEach(a => { if (marcas[a.k]) cabecera.push(`<span class="tag atributo">${h(a[LANG])}</span>`); });
+  if (DUDAS.skill[v.p + '|' + sk.sl]) cabecera.push(dudaHtml('skill', v.p + '|' + sk.sl));
   if (esAjeno(tgComun)) cabecera.push(objetivoTag(tgComun, true));
   if (acComun != null) {
     const st0 = sk.st.find(x => x.ac === acComun) || {};
@@ -2795,6 +2803,20 @@ function renderDetail () {
 function ayudaHtml (texto) {
   return `<details class="ayuda"><summary title="${h(t('ay_label'))}" aria-label="${h(t('ay_label'))}">?</summary><div class="ayudatx">${h(texto)}</div></details>`;
 }
+/** La información dudosa sobre algo (#32, MFF_DUDAS): lo que un idioma del juego dice distinto de otro y lo que quiere
+ *  decir el coreano, en un «≠» como el «?» de ayudaHtml. '' si no hay. Dentro de un <summary> va dudaTag y, en el
+ *  cuerpo, dudaCaja (un «≠» plegable dentro de un summary abriría los dos). */
+function dudaHtml (tipo, id) {
+  const ds = DUDAS[tipo][id];
+  return ds ? `<details class="ayuda duda"><summary title="${h(t('du_label'))}" aria-label="${h(t('du_label'))}">≠</summary><div class="ayudatx">${ds.map(dudaTx).join('')}</div></details>` : '';
+}
+function dudaTag (tipo, id) { return DUDAS[tipo][id] ? `<span class="tag solid dudatag" title="${h(t('du_label'))}">${h(t('du_tag'))}</span>` : ''; }
+function dudaCaja (tipo, id) { const ds = DUDAS[tipo][id]; return ds ? `<div class="dudacaja">${ds.map(dudaTx).join('')}</div>` : ''; }
+function dudaTx (d) {
+  const dice = ['ko', 'en', 'es'].filter(k => d[k]).map(k => `<div><b>${h(t('du_' + k))}</b> <span lang="${k}">${h(d[k])}</span></div>`).join('');
+  return `<div class="dudatx"><p>${h(bi(d.nota))}</p><div class="dudadice">${dice}</div>
+    <div class="muted">${h(bi(CATALOGO.certeza[d.certeza]))} ${fuentesHtml(d.fuente)}</div></div>`;
+}
 /** Abre la ficha de un personaje (con un uniforme) desde el roster o desde las flechas. */
 function abrirFicha (cid, uid) {
   ui.view = 'detail'; ui.charId = cid; ui.uniformId = uid || 'base'; ui.movil = 'centro';
@@ -3187,10 +3209,11 @@ function tipCertezaHtml (v, sk, es, terminos) {
 /** Lo que el inglés traduce distinto del coreano en los términos del glosario de sus efectos, y los errores
  *  del inglés que se repiten, plegados. */
 function tipCoreanoHtml (terminos) {
-  const difieren = terminos.filter(y => y.difiere);
-  if (!difieren.length) return `<p class="muted">${h(t(terminos.length ? 'tt_dif_nada' : 'tt_dif_sin'))}</p>`;
+  const difieren = terminos.filter(y => y.difiere), dudosos = terminos.filter(y => DUDAS.glosario[y.id]);
+  if (!difieren.length && !dudosos.length) return `<p class="muted">${h(t(terminos.length ? 'tt_dif_nada' : 'tt_dif_sin'))}</p>`;
   const errores = GLOSARIO.errores.filter(e => difieren.some(y => y.error === e.id));
-  return `<ul class="tiplista">${difieren.map(y => `<li><b>${h(nombreGl(y))}</b> <span class="muted" lang="ko">${h(y.ko)}</span>: ${h(bi(y.difiere))}</li>`).join('')}</ul>
+  return `<ul class="tiplista">${difieren.map(y => `<li><b>${h(nombreGl(y))}</b> <span class="muted" lang="ko">${h(y.ko)}</span>: ${h(bi(y.difiere))}</li>`).join('')}
+    ${dudosos.map(y => `<li><b>${h(nombreGl(y))}</b> ${h(t('du_es'))} ${DUDAS.glosario[y.id].map(d => h(bi(d.nota))).join(' ')}</li>`).join('')}</ul>
     ${errores.length ? `<div class="tipeh">${h(t('gl_errores'))}</div>${errores.map(e =>
       `<details class="tiperr"><summary>${h(bi(e.titulo))}</summary><p>${h(bi(e.texto))}</p></details>`).join('')}` : ''}`;
 }
@@ -4560,7 +4583,7 @@ function hechoQuien (x) {
 function notaLink (id) {
   const n = HISTORICO.notas[id];
   if (!n) throw new Error('el histórico cita una nota que no está en MFF_HISTORICO.notas: ' + id);
-  return `<a href="${h(n[2])}" target="_blank" rel="noopener">${h(n[0].trim())}</a> <span class="muted">(${h(n[1])}${n[3] ? ', ' + h(t('hi_nota_err')) : ''})</span>`;
+  return `<a href="${h(n[2])}" target="_blank" rel="noopener">${h(n[0].trim())}</a> <span class="muted">(${h(n[1])}${n[3] ? ', ' + h(t('hi_nota_err')) : ''})</span>${dudaHtml('nota', id)}`;
 }
 /** Un hecho dentro de la fila de su personaje: su tipo y, si la nota trae texto sobre él, el texto plegado (la primera
  *  línea a la vista). La nota misma va una vez, en la cabecera de la versión (#24: antes se repetía en cada hecho); acá
@@ -4643,14 +4666,15 @@ function terminoGl (x, errores) {
   return `<details class="glitem" id="gl-${x.id}">
     <summary><span class="glnom"><b>${h(nombreGl(x))}</b><span class="muted">${h(otros)}</span></span>
       <span class="glcorto">${h(bi(x.que))}</span>
-      <span class="glmarcas">${x.difiere ? `<span class="tag solid gldif">${h(t('gl_difiere_tag'))}</span>` : ''}
+      <span class="glmarcas">${x.difiere ? `<span class="tag solid gldif">${h(t('gl_difiere_tag'))}</span>` : ''}${dudaTag('glosario', x.id)}
         ${x.ctp ? `<span class="tag dim">C.T.P.</span>` : ''}
         ${x.falta ? `<span class="tag dim">${h(t('gl_falta_' + x.falta))}</span>` : ''}</span></summary>
     <div class="glcuerpo">
     <p>${h(bi(x.que))}</p>
     ${x.difiere ? `<div class="gldifbox"><b>${h(t('gl_en_ko'))}</b> ${h(bi(x.difiere))}
       ${x.error ? `<div class="row">${enlaceGl('gle-' + x.error, bi(errores[x.error].titulo))}</div>` : ''}</div>` : ''}
-    ${x.ctp ? `<div class="muted">${h(t('gl_lo_da'))} ${x.ctp.map(c => `${h(CTPS.find(k => k.id === c.id).name)} (<span title="${
+    ${dudaCaja('glosario', x.id)}
+    ${x.ctp ? `<div class="muted">${h(t('gl_lo_da'))} ${x.ctp.map(c => `${h(ctpNomCorto(CTPS.find(k => k.id === c.id)))} (<span title="${
       h(t('gl_op_' + c.opcion + '_t'))}">${h(t('gl_op_' + c.opcion))}</span>)`).join(', ')}</div>` : ''}
     ${x.nota ? `<div class="muted">${h(bi(x.nota))}</div>` : ''}
     ${x.efectos.length ? `<div class="row"><span class="muted">${h(t('gl_en_catalogo'))}</span>${
@@ -4675,8 +4699,9 @@ function efectoGl (e) {
   return `<details class="glitem glef" id="ef-${e.id}">
     <summary><span class="glnom"><b>${h(bi(e))}</b>${LANG === 'es' ? `<span class="muted">${h(e.en)}</span>` : ''}</span>
       <span class="glcorto">${h(t('gl_le_sirve'))} ${h(minuscula(bi(CATALOGO.sirve[e.sirve])))}</span>
-      <span class="glmarcas">${resumenAcumula(d)}${d.terminos.map(x => `<span class="tag ghost" title="${h(t('gl_termino'))}">${h(nombreGl(x))}</span>`).join('')}</span></summary>
+      <span class="glmarcas">${dudaTag('efecto', e.id)}${resumenAcumula(d)}${d.terminos.map(x => `<span class="tag ghost" title="${h(t('gl_termino'))}">${h(nombreGl(x))}</span>`).join('')}</span></summary>
     <div class="glcuerpo">
+    ${dudaCaja('efecto', e.id)}
     ${d.terminos.length ? `<div class="row">${d.terminos.map(x => enlaceGl('gl-' + x.id, nombreGl(x) + ' · ' + x.ko, t('gl_termino'))).join('')}</div>` : ''}
     ${lecturasAn(e.pve, e.pvp)}
     ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
@@ -4985,6 +5010,8 @@ function trTxt (en) { return !en ? '' : (LANG === 'en' ? en : (TXT[en] || en)).r
 /** Objeto {es, en} de lo curado a mano. */
 function bi (o) { return o ? (o[LANG] || o.es || '') : ''; }
 function statNom (k) { const s = GUIA.stats[k]; return s ? bi(s) : k; }
+/** El nombre de la stat para mostrar, con su información dudosa si la tiene. */
+function statHtml (k) { return h(statNom(k)) + dudaHtml('stat', k); }
 /** Chips con las fuentes citadas: con su enlace, o sin él si la fuente no tiene dirección (la
  *  guía dentro del juego). */
 function fuentesHtml (claves) {
@@ -5006,11 +5033,15 @@ function miniPj (v, extra, nota) {
   return `<span class="minipj" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}" title="${h((nota ? nota + ' — ' : '') + fullLabel(v))}">
     ${u ? `<img src="${u}" alt="" loading="lazy">` : ''}<span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}${extra || ''}</span>`;
 }
+/** El nombre del C.T.P.: en español, el del juego (el del base: el juego llama distinto a algunos reforjados, #43). */
+function ctpNombre (c) { return LANG === 'es' ? c.es.base : 'C.T.P. of ' + c.name; }
+/** El nombre corto (tablas y etiquetas): en español, el del base sin «C.T.P. de». */
+function ctpNomCorto (c) { if (LANG !== 'es') return c.name; const n = c.es.base.replace(/^C\.T\.P\. de /, ''); return n[0].toUpperCase() + n.slice(1); }
 function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
 /** Un C.T.P. plegable con lo que hace según thanosvibs (normal y reforjado). */
 function ctpDetalle (c, extra) {
-  return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>C.T.P. of ${h(c.name)}</b>${extra || ''}</summary>
-    <p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}</details>`;
+  return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>${h(ctpNombre(c))}</b>${dudaTag('ctp', c.id)}${extra || ''}</summary>
+    ${dudaCaja('ctp', c.id)}<p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}</details>`;
 }
 /** Controles de Alliance Battle que aplican las skills de un retrato, como etiquetas:
  *  "Parálisis: 1/4" = las skills 1 y 4 (6 = la definitiva). */
@@ -5157,7 +5188,7 @@ function usoGuia (ch, v) {
       ${e.textos.map(x => `<p>${trHtml(x)}</p>`).join('')}
       ${e.ctps.length || e.modos.length ? `<div class="row" style="gap:5px">
         ${e.ctps.map(c => { const x = CTPS.find(y => y.id === c);
-          return x ? `<span class="tag dim">${ctpIcono(c)}C.T.P. of ${h(x.name)}</span>` : `<span class="tag dim">${h(c === 'obelisco6' ? t('us_obelisk') : c)}</span>`; }).join('')}
+          return x ? `<span class="tag dim">${ctpIcono(c)}${h(ctpNombre(x))}</span>` : `<span class="tag dim">${h(c === 'obelisco6' ? t('us_obelisk') : c)}</span>`; }).join('')}
         ${e.modos.map(m => `<span class="tag ghost" style="color:var(--allies)" title="${h(t('md_guide_mentions_note'))}">${h(modo(m))}</span>`).join('')}</div>` : ''}
     </div>`).join('') + `<div class="fuentes">${fuentesHtml(['tv-guia-1', 'tv-guia-2'])}</div>`;
 }
@@ -5293,7 +5324,7 @@ function columnasCtp (ctx) {
 function ctpCorto (x) {
   if (!x.c) return sinInterpretar(x.x);
   const c = CTPS.find(y => y.id === x.c);
-  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(c.name)}</span>${x.r ? reforjadoTag() : ''}</span>`;
+  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(ctpNomCorto(c))}</span>${x.r ? reforjadoTag() : ''}</span>`;
 }
 // C.T.P. RECOMENDADO (Ezequiel, 4 de octubre de 2026): una sola respuesta, la misma en la ficha y en todas las
 // tarjetas de equipo (combinaciones, «cómo entraría», tus equipos y favoritos), siempre con su fuente. Desde el 5 de
@@ -5326,7 +5357,7 @@ function ctpRecomendado (v, ctx) {
 /** Una fila de la Ideal CTP List: el C.T.P. que nombra, «Not worth» dicho, u otro rótulo tal cual, marcado. */
 function ctpFilaIdeal (rotulo) {
   const id = slugId(rotulo), c = CTPS.find(x => x.id === id);
-  if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(c.name)}</span></span>`;
+  if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(ctpNomCorto(c))}</span></span>`;
   return id === 'notworth' ? `<span>${h(t('ctp_not_worth'))}</span>` : sinInterpretar(rotulo);
 }
 /** La fuente de una recomendación, como enlace: la guía de armado (con su versión) o la Ideal CTP List. */
@@ -5435,8 +5466,8 @@ function armadoUrus (ta) {
   return `<p><b>${h(t('ar_uru_' + k))}</b></p>
     <p class="muted">${h(bi(G.ataque))}</p>
     <p class="muted">${h(bi(G.prioridad_nota))}</p>
-    <ol class="prio">${G.prioridad.map(x => `<li>${h(statNom(x))}</li>`).join('')}</ol>
-    <p class="muted"><b>${h(t('md_gear4'))}:</b> ${GUIA.gear4.prioridad.map(x => h(statNom(x))).join(' › ')}.</p>
+    <ol class="prio">${G.prioridad.map(x => `<li>${statHtml(x)}</li>`).join('')}</ol>
+    <p class="muted"><b>${h(t('md_gear4'))}:</b> ${GUIA.gear4.prioridad.map(x => statHtml(x)).join(' › ')}.</p>
     ${GUIA.gear4.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
     <div class="fuentes">${fuentesHtml(G.fuente.concat(GUIA.gear4.fuente.filter(x => !G.fuente.includes(x))))}</div>`;
 }
@@ -5473,7 +5504,7 @@ function armadoOpciones (v) {
   return `<p class="muted" style="margin-bottom:6px">${h(t('op_note'))}</p>
     <div class="opuni">${v.op.map((p, i) => { const vv = varDeRetrato(p);
       return `<div class="opfila"><b>${h(G.rangos[i].rango)}</b>${vv ? miniPj(vv) : `<span class="muted">${h(p)}</span>`}
-        <div class="muted opstat">${G.rangos[i].mejor.map(k => k === 'ataque' ? h(t('md_own_attack')) : h(statNom(k))).join(' › ')}</div></div>`; }).join('')}</div>
+        <div class="muted opstat">${G.rangos[i].mejor.map(k => k === 'ataque' ? h(t('md_own_attack')) : statHtml(k)).join(' › ')}</div></div>`; }).join('')}</div>
     <p class="muted" style="margin-top:6px">${h(bi(G.pvp))}</p>
     <div class="fuentes">${fuentesHtml(['tv-uni'].concat(G.fuente))}</div>`;
 }
@@ -5524,7 +5555,7 @@ function armadoTopes (ch) {
   return `<p class="muted">${h(t('cap_note'))}</p>
     <div class="stagewrap"><table class="topes"><thead><tr><th>${h(t('cap_stat'))}</th><th>${h(t('cap_cap'))}</th>
       <th>${h(t('cap_val'))}</th><th>${h(t('cap_buff'))}</th><th>${h(t('cap_state'))}</th></tr></thead><tbody>
-      ${conTope.map(x => `<tr><td>${h(statNom(x.k))}${x.base ? `<div class="muted">${h(t('cap_base').replace('{n}', x.base))}</div>` : ''}</td>
+      ${conTope.map(x => `<tr><td>${statHtml(x.k)}${x.base ? `<div class="muted">${h(t('cap_base').replace('{n}', x.base))}</div>` : ''}</td>
         <td class="num">${x.tope}%</td><td>${num(x.k, 'v')}</td><td>${num(x.k, 'b')}</td>
         <td data-estado="${x.k}">${estadoTope(ch.id, x.k, x.tope)}</td></tr>`).join('')}
     </tbody></table></div>
@@ -5738,17 +5769,17 @@ function armadoHtml (tipo) {
     <h4>${h(t('md_urus'))}</h4>
     <p class="muted">${h(bi(G.urus.ataque))}</p>
     ${pvp ? `<p class="muted">${h(t('md_uru_pvp'))}</p>`
-          : `<ol class="prio">${G.urus.prioridad.map(k => `<li>${h(statNom(k))}</li>`).join('')}</ol>
+          : `<ol class="prio">${G.urus.prioridad.map(k => `<li>${statHtml(k)}</li>`).join('')}</ol>
              <p class="muted">${h(bi(G.urus.prioridad_nota))}</p>${G.urus.reglas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}`}
     <h4>${h(t('md_gear4'))}</h4>
-    <ol class="prio">${G.gear4.prioridad.map(k => `<li>${h(statNom(k))}</li>`).join('')}</ol>
+    <ol class="prio">${G.gear4.prioridad.map(k => `<li>${statHtml(k)}</li>`).join('')}</ol>
     ${G.gear4.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
     <h4>${h(t('md_obelisk'))}</h4>
     ${pvp ? `<p class="muted">${h(bi(G.obelisco.pvp))}</p>` : G.obelisco.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
     <h4>${h(t('md_uni_opts'))}</h4>
     ${pvp ? `<p class="muted">${h(bi(G.opciones_uniforme.pvp))}</p><p class="aviso">${h(bi(G.opciones_uniforme.pvp_inconsistencia))}</p>`
           : `<table class="abx"><tbody>${G.opciones_uniforme.rangos.map(r => `<tr><th>${h(r.rango)}</th>
-              <td>${r.mejor.map(k => k === 'ataque' ? h(t('md_own_attack')) : h(statNom(k))).join(' › ')}</td></tr>`).join('')}</tbody></table>`}
+              <td>${r.mejor.map(k => k === 'ataque' ? h(t('md_own_attack')) : statHtml(k)).join(' › ')}</td></tr>`).join('')}</tbody></table>`}
     <div class="fuentes">${fuentesHtml(['tv-guia-3', 'wiki-iso', 'wiki-uru', 'wiki-gear'])}</div>
   </div>`;
 }
@@ -6297,6 +6328,9 @@ document.addEventListener('click', (e) => {
   const tipAntes = ui.tip && !e.target.closest('#skpop') ? ui.tip : null;
   if (tipAntes) cerrarTip(document.activeElement === document.body);
   const el = e.target.closest('[data-a]'); if (!el) return;
+  // Un «?» o un «≠» (ayudaHtml, dudaHtml) se abre solo: no hace lo de lo que lo contiene (la cabecera de una skill abre
+  // su «Cómo funciona»).
+  const ay = e.target.closest('details.ayuda'); if (ay && !ay.contains(el)) return;
   const a = el.getAttribute('data-a'), d = el.dataset;
   const P = U.prefs;
   if (/^go/.test(a) || a === 'back') ui.movil = 'centro';   // ir a otra sección muestra la sección (ventana angosta)

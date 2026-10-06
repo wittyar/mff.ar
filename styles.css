@@ -386,8 +386,10 @@ details.reglas[open] > summary{margin-bottom:8px}
 .stat .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);font-weight:700}
 .stat .v{font-size:13px;font-weight:600;margin-top:1px;display:flex;align-items:center;gap:5px}
 
-.skill{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);margin-bottom:9px;overflow:hidden}
-.skill .top{display:flex;align-items:center;gap:9px;padding:10px 13px;background:rgba(255,255,255,.02)}
+/* Sin overflow:hidden: el «≠» de la cabecera (dudaHtml) abre su globo por encima de la tarjeta; la cabecera redondea sola. */
+.skill{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);margin-bottom:9px}
+.skill .top{display:flex;align-items:center;gap:9px;padding:10px 13px;background:rgba(255,255,255,.02);border-radius:var(--r-md) var(--r-md) 0 0}
+.skill .top .ayudatx{left:auto;right:0}
 .slotbadge{font-family:var(--font-display);font-size:10.5px;letter-spacing:.07em;padding:3px 8px;border-radius:5px;
   background:var(--surface-3);color:var(--text-2);white-space:nowrap;text-transform:uppercase;font-weight:600}
 .slotbadge.lead{background:rgba(255,176,32,.16);color:var(--gold)}
@@ -826,6 +828,12 @@ table.topes input{width:70px;padding:5px 7px}
 .glerr p{margin:0;font-size:13px}
 .glerr{margin-bottom:10px}
 .tag.gldif{background:var(--gold)}
+.tag.dudatag{background:var(--gold)}
+.dudacaja{border-left:3px solid var(--gold);padding:6px 10px;background:var(--gold-soft);border-radius:4px;font-size:12.5px;margin:6px 0}
+.dudatx + .dudatx{margin-top:8px;padding-top:8px;border-top:1px solid var(--line-2)}
+.dudatx p{margin:0 0 4px}
+.dudadice{font-size:12px;margin-bottom:4px}
+.duda > summary{border-color:var(--gold);color:var(--gold)}
 .gldifbox{border-left:3px solid var(--gold);padding:6px 10px;background:var(--gold-soft);border-radius:4px;font-size:12.5px;
   display:flex;flex-direction:column;gap:6px}
 .glh4{margin:14px 0 6px;color:var(--text-2)}
