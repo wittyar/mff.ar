@@ -1,6 +1,6 @@
 {
- "version": "1.0.30",
+ "version": "1.0.31",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "La app baja los datos del juego de la carpeta de su formato: cuando salga una versión con un formato de datos nuevo, las anteriores siguen andando con sus datos y avisan que hay una versión nueva, en vez de quedar trabadas."
+ "notas": "Pantalla de rescate: si la app no puede arrancar, se abre una pantalla aparte que dice por qué y deja actualizar la app, bajar el instalador, volver a la versión anterior o volver a bajar los datos."
 }

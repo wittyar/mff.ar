@@ -70,8 +70,9 @@ variante, en `docs/COMPLETITUD.md`.
   ventana angosta); desde la 1.0.25 las que usaban el armador viejo de Equipos o la barra de comparar del roster usan la mesa.
   `verif_filas` y `verif_export_viejo` comparan contra versiones viejas (worktrees que ya no están) y no corren solas; las
   que miran retratos (`verif_paginador`, `verif_servidor_caido`) necesitan `images/` en el repo (un enlace a las bajadas
-  sirve: `.gitignore` no tapa un enlace, que no se commitea). `verif_trabada.py` prueba la pantalla de datos
-  cuando lo publicado es de otro formato (más nuevo con y sin versión nueva de la app, más viejo, igual, inglés). Con datos de una versión más
+  sirve: `.gitignore` no tapa un enlace, que no se commitea). `verif_trabada.py` prueba que la app baja los datos de
+  la carpeta de su formato aunque la raíz publique uno más nuevo, y la pantalla de datos sin su carpeta (1.0.30);
+  `verif_rescate.py`, la pantalla de rescate (1.0.31). Con datos de una versión más
   nueva que la publicada, `MFF_DATOS` apunta a datos armados con el build sobre lo bajado ese día (sin `work/` en la
   carpeta de Ezequiel: se baja con `fetch_all.py --no-portraits` en el contenedor). verif_consistencia tarda más de 25
   min y su página llega a unos 5,5 GB: en un contenedor de 8 GB va sola (con otra prueba al lado, el OOM mata la página y
@@ -79,7 +80,7 @@ variante, en `docs/COMPLETITUD.md`.
 
 ## Estado (6 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.29 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.30 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -91,10 +92,14 @@ variante, en `docs/COMPLETITUD.md`.
   y abren los `details` hasta el destino. El Histórico con cada versión plegada (la primera abierta), sus notas una vez
   y una fila por personaje (`.hifila`). Sigue de #24: Modos, Tier lists, la barra de 5 secciones, avisos como estado y
   direcciones estables.
-- Entregada sin publicar: la 1.0.30 (#1, el issue abierto más viejo): la app baja los datos de `datos/<formato>/`, que
-  el build llena con `scripts/carpeta_formato.py`; `datos/10/` va en el commit «Datos: publicarlos también…». Sin
-  formato nuevo: la etiqueta va sobre «Versión 1.0.30», con main ya empujado (publicar.yml verifica `datos/10/` en main).
-  Cerrar #1 cuando la 1.0.30 esté publicada.
+  La 1.0.30 (7281b39, #1): la app baja los datos de `datos/<formato>/`, que el build llena con
+  `scripts/carpeta_formato.py`. #1 se puede cerrar.
+- Entregada sin publicar: la 1.0.31 (#2): la pantalla de rescate (`/rescate`, `desktop/rescate.py`, sin app.js ni
+  data.js). La página avisa el arranque (`POST /api/arranque`); el lanzador abre `/rescate` con un error o sin aviso en
+  `--espera-arranque` s; desde ahí, parche, instalador, volver al programa anterior (`actualizador.volver_al_anterior`)
+  y volver a bajar los datos. Prueba: `verif_rescate.py`. Sin formato nuevo: etiqueta sobre «Versión 1.0.31». Ojo: el
+  reinicio tras el parche a la 1.0.31 lo lanza el lanzador de la 1.0.30 (con `--sin-ventana`), así que ese primer
+  reinicio no abre la ventana de rescate; desde ahí, sí.
 - La 1.0.25 (etiqueta en 676f50a), solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
   (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
   aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
@@ -126,7 +131,7 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
   casos de strikers y Glosario en sus comentarios); después el rediseño visual (#6) y el tooltip de las habilidades
   (#39).
 - Español de la app con los términos del juego en español (#32), con capturas que va a pasar Ezequiel.
-- Robustez: datos por formato (#1) y pantalla de rescate (#2).
+- Robustez: datos por formato (#1, en la 1.0.30) y pantalla de rescate (#2, en la 1.0.31).
 - Apartados nuevos: Cromos de cómic (#35), Espadas (#36), Jarvis (#37, falta el alcance); atributos de las skills
   (#38).
 - Histórico: foro coreano (#3), modos (#4), llegadas sin nota (#5). Preguntas abiertas: #10 a #23. Bugs: #25, #26.
