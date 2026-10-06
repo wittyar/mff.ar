@@ -84,8 +84,9 @@ variante, en `docs/COMPLETITUD.md`.
   tres paneles: la lista del roster a la izquierda en la ficha, la mesa a la derecha en todas las secciones (`U.mesa` en la
   capa). La mesa reemplaza al armador de Equipos. Maquetas: «Arquitectura MFF.ar» (#24) y «MFF.ar · dos direcciones».
   Al publicarla: push de main y la etiqueta `v1.0.25` sobre el commit «Versión 1.0.25», sin correr el workflow de datos.
-  Pendiente de Ezequiel: si la mesa se queda; si el equipo guardado recuerda el líder de la mesa (hoy la tarjeta muestra el
-  de la sinergia); la barra de arriba sigue sin entrar en una ventana angosta (#24).
+  Cada equipo guardado lleva su líder declarado (`lider`, Ezequiel: «necesita estar declarado como tal para el cálculo de
+  estadísticas»); los de antes reciben el de la sinergia al cargar la capa, con aviso en Equipos.
+  Pendiente de Ezequiel: si la mesa se queda; la barra de arriba sigue sin entrar en una ventana angosta (#24).
 - La 1.0.24 (etiqueta en ae17e4e, «Versión 1.0.24», solo programa, datos de formato 10 sin cambio): la pantalla de
   datos ofrece la versión de la app que lee los datos publicados si son de un formato más nuevo, y publicar.yml no
   publica una versión con datos de otro formato. Release con sus tres archivos (instalador, parche y `latest.json`).
