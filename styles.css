@@ -519,17 +519,9 @@ table.cmpt .nm .orig{margin-left:6px;font-weight:400;font-size:11px;color:var(--
 /* Línea de efecto sin traducción cargada: se muestra el inglés, marcado. */
 .fxitems .sintrad{color:var(--gold);border-bottom:1px dotted rgba(255,176,32,.5);cursor:help}
 
-/* ---------- skills: tabla por etapa + efectos ---------- */
+/* ---------- skills: cada etapa junta (daño y efectos) ---------- */
 .slotbadge.stk{background:rgba(167,139,250,.18);color:var(--role-control)}
 .skill .top{flex-wrap:wrap}
-.stagewrap{overflow-x:auto;margin-bottom:10px;border:1px solid var(--line);border-radius:var(--r-sm)}
-table.stages{width:100%;border-collapse:collapse;font-size:12.5px;min-width:340px}
-table.stages th{text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;
-  color:var(--text-3);font-weight:700;padding:6px 10px;background:rgba(255,255,255,.03);
-  border-bottom:1px solid var(--line);white-space:nowrap}
-table.stages td{padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
-table.stages tr:last-child td{border-bottom:none}
-table.stages td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .stnum{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;
   border-radius:5px;background:var(--surface-3);color:var(--text-2);font-size:11px;font-weight:700;flex:none}
 
@@ -557,9 +549,8 @@ table.stages td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .sktit::after{content:'?';flex:none;display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;
   border-radius:50%;border:1px solid var(--line-2);color:var(--text-3);font-size:10.5px;font-weight:700}
 .skill .top[data-a]:hover .sktit::after,.sktit[aria-expanded="true"]::after{border-color:var(--accent);color:var(--accent-2)}
-.fxline[data-a],table.stages tr[data-a]{cursor:pointer}
-.fxline[data-a]:hover{background:rgba(255,255,255,.035);border-radius:5px}
-table.stages tr[data-a]:hover td{background:rgba(255,255,255,.035)}
+.fxline[data-a],.stdano[data-a]{cursor:pointer}
+.fxline[data-a]:hover,.stdano[data-a]:hover{background:rgba(255,255,255,.035);border-radius:5px}
 .skpop{position:absolute;z-index:20;width:min(500px,calc(100vw - 32px));max-height:min(72vh,640px);overflow-y:auto;
   overscroll-behavior:contain;padding:0 14px 12px;background:var(--surface-2);border:1px solid var(--line-2);
   border-radius:var(--r-md);box-shadow:var(--sh-3);font-size:12.5px;line-height:1.5}
@@ -957,3 +948,14 @@ table.topes input{width:70px;padding:5px 7px}
 .sktabla .plfoto{width:28px;height:28px}
 .tablawrap{overflow-x:auto}
 @media (max-width:900px){ .ayudatx{position:fixed;left:16px;right:16px;top:auto;bottom:64px;width:auto;max-height:50vh;overflow-y:auto} }
+
+.stdano{display:flex;gap:9px;align-items:center;flex-wrap:wrap;font-size:13px;padding:3px 0}
+.stdano .num{font-variant-numeric:tabular-nums}
+.fxlabel.dano{width:210px;padding:2px 7px;border-radius:4px;background:rgba(255,106,92,.14);color:var(--danger);margin:0}
+@media (max-width:760px){ .fxlabel.dano{width:auto} }
+.stageblock{border-left:2px solid var(--line-2);padding-left:10px}
+.stageblock{border-left:0;padding-left:0}
+.stageblock.varias{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start}
+.stageblock.varias .stnum{margin-top:3px}
+.stcuerpo{min-width:0}
+.fxlabel.dano{text-align:left}

@@ -78,9 +78,11 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
     su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
     consigue y la nota.
-  - *Skills*: cargas de ult y striker, buffs clave, las **rotaciones** de thanosvibs con la
-    leyenda de la notación, las de la guía de armado (de proc, con su mejor C.T.P. y la skill de
-    proc / frenesí, con su propia notación) y cada skill, con tabla de daño por etapa. Al tocar una
+  - *Skills*: cargas de ult y striker, buffs clave, cada skill y, después, las **rotaciones** de
+    thanosvibs con la leyenda de la notación y las de la guía de armado (de proc, con su mejor C.T.P. y
+    la skill de proc / frenesí, con su propia notación). Cada skill va por etapa, y en cada etapa todo
+    junto: su activación y su objetivo si difieren de la skill, el daño (% del ataque, el fijo y el
+    elemento) y los demás efectos (desde la 1.0.28; antes el daño iba en una tabla aparte). Al tocar una
     skill (la cabecera, con un «?», o uno de sus renglones) se abre **Cómo funciona**: cada efecto
     con su grupo, el término del glosario del juego, a quién le llega y le sirve y cómo se lee en
     PvE y en PvP; cuándo, cuánto y a quién (activación, recarga, carga y objetivo, y por etapa

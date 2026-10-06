@@ -679,6 +679,7 @@ const T = {
   ft_armado:         { es:'Armado',              en:'Build' },
   ft_progreso:       { es:'Tu progreso',         en:'Your progress' },
   ft_fuentes:        { es:'Fuentes',             en:'Sources' },
+  st_dano:           { es:'Daño',                en:'Damage' },
   ay_label:          { es:'Cómo se lee',         en:'How to read it' },
   rs_donde:          { es:'Dónde rinde',         en:'Where it performs' },
   rs_da:             { es:'Qué le da al equipo', en:'What it gives the team' },
@@ -1090,9 +1091,6 @@ const T = {
                        en:'Effects and skill names are translated by pattern, with the original in view. Character and uniform names stay in English on purpose: they are the identifier used to cross-reference the game, the wiki and thanosvibs.' },
 
   st_stage:          { es:'Etapa',               en:'Stage' },
-  st_pct:            { es:'% de ataque',         en:'% of attack' },
-  st_flat:           { es:'Daño extra',          en:'Extra damage' },
-  st_element:        { es:'Elemento',            en:'Element' },
   st_activation:     { es:'Se activa',           en:'Activates' },
   st_target:         { es:'Objetivo',            en:'Target' },
   al_ver:            { es:'Ver qué personajes cumplen este objetivo', en:'See which characters this target covers' },
@@ -2418,32 +2416,25 @@ function skillCard (sk, v, si) {
     cabecera.push(`<span class="tag dim">${h(t('st_activation'))}: ${h(txt('act', acComun, st0.av))}</span>`);
   }
   const varias = etapas.length > 1;
-  const hayObj = etapas.some(st => st.tg != null);
-  const hayAct = etapas.some(st => st.ac != null);
 
-  const tabla = filasDano.length ? `<div class="stagewrap"><table class="stages">
-    <thead><tr>
-      ${varias ? `<th>${h(t('st_stage'))}</th>` : ''}
-      <th>${h(t('st_pct'))}</th><th>${h(t('st_flat'))}</th><th>${h(t('st_element'))}</th>
-    </tr></thead><tbody>
-    ${filasDano.map(r => `<tr data-a="skTip" data-si="${si}" data-st="${r.i}" data-fx="${r.fi}">
-      ${varias ? `<td class="stnum">${r.i + 1}</td>` : ''}
-      <td class="num"><b>${h(r.dn.pct)}%</b> <span class="muted">${h(srcEs(r.dn.src))}</span></td>
-      <td class="num">${r.dn.flat != null ? '+' + h(r.dn.flat) : '<span class="muted">—</span>'}</td>
-      <td>${r.st.el != null ? `<span class="tag dim">${h(txt('elem', r.st.el))}</span>`
-                            : `<span class="muted">${h(elemEs(r.dn.elem))}</span>`}</td>
-    </tr>`).join('')}
-    </tbody></table></div>` : '';
-
+  // Cada etapa, junta (Ezequiel, 6 de octubre de 2026: «lo que ocurre en cada skill en cada etapa tiene que estar
+  // unido»): su activación y su objetivo si difieren de la skill, el daño (% del ataque, el fijo y el elemento) y los
+  // demás efectos, en ese orden. Antes el daño de todas las etapas iba en una tabla y los efectos aparte.
+  const danoLinea = (r) => `<div class="stdano" data-a="skTip" data-si="${si}" data-st="${r.i}" data-fx="${r.fi}">
+      <span class="fxlabel dano">${h(t('st_dano'))}</span>
+      <b class="num">${h(r.dn.pct)}%</b> <span class="muted">${h(srcEs(r.dn.src))}</span>
+      ${r.dn.flat != null ? `<span class="num">+${h(r.dn.flat)}</span>` : ''}
+      ${r.st.el != null ? `<span class="tag dim">${h(txt('elem', r.st.el))}</span>` : `<span class="muted">${h(elemEs(r.dn.elem))}</span>`}</div>`;
   const otros = etapas.map((st, i) => {
+    const danos = filasDano.filter(r => r.i === i).map(danoLinea);
     const fx = (st.fx || []).map((f, fi) => esDano(f) ? '' : efectoLinea(f, si, i, fi)).filter(Boolean);
     const meta = [];
     if (st.ac != null && st.ac !== acComun) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
     if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${objetivoTexto(st.tg)}</span>`);
-    if (!fx.length && !meta.length) return '';
-    return `<div class="stageblock">
-      ${varias || meta.length ? `<div class="stagehead">${varias ? `<span class="stnum">${i + 1}</span>` : ''}${meta.join('')}</div>` : ''}
-      ${fx.join('')}</div>`;
+    if (!danos.length && !fx.length && !meta.length) return '';
+    return `<div class="stageblock${varias ? ' varias' : ''}">
+      ${varias ? `<span class="stnum" title="${h(t('st_stage'))} ${i + 1}">${i + 1}</span>` : ''}
+      <div class="stcuerpo">${meta.length ? `<div class="stagehead">${meta.join('')}</div>` : ''}${danos.join('')}${fx.join('')}</div></div>`;
   }).join('');
 
   const cargas = [recargaHtml(v, sk)];
@@ -2462,7 +2453,7 @@ function skillCard (sk, v, si) {
       ${cabecera.join('')}
       ${cargas.join('')}
     </div>
-    <div class="body">${tabla}${otros}
+    <div class="body">${otros}
       ${ui.marcando ? `<div class="marcador">
         <span class="muted">${h(t('at_mark'))}</span>
         ${ATRIBUTOS.map(a => `<label class="chk"><input type="checkbox" data-a="marca"
