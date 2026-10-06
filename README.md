@@ -575,6 +575,8 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   regenera en cada build con `scripts/historico.py`).
 - `docs/NOTAS_COREANO.md` — las notas en inglés contra sus pares coreanas: los porcentajes y los segundos que están en
   una y no en la otra (se regenera en cada build con `scripts/cotejo_ko.py`, o solo: `python scripts/cotejo_ko.py`).
+- `docs/REVISION_COREANO.md` — la revisión a mano de esas diferencias (6 de octubre de 2026): lo que el inglés traduce mal
+  o deja afuera, lo que trae de más y lo que no es diferencia.
 - `fuentes/foro/` y `fuentes/cafe/` — las notas de actualización del foro en inglés y sus pares del foro coreano (el
   café oficial de Naver; el coreano es el original), con `scripts/foro.py` y `scripts/cafe.py`.
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche, pantalla de
