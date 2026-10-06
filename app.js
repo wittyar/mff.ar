@@ -4586,11 +4586,14 @@ function notaLink (id) {
   if (!n) throw new Error('el histórico cita una nota que no está en MFF_HISTORICO.notas: ' + id);
   return `<a href="${h(n[2])}" target="_blank" rel="noopener">${h(n[0].trim())}</a> <span class="muted">(${h(n[1])}${n[3] ? ', ' + h(t('hi_nota_err')) : ''})</span>`;
 }
-function hechoHtml (x, conQuien) {
-  return `<li class="hihecho"><span class="tag dim">${h(t('hi_t_' + x[1]))}</span> ${conQuien ? hechoQuien(x) : ''}
-    ${x[3] != null ? `<div class="hinota">${notaLink(x[3])}</div>` : (x[1] !== 'balance' ? `<div class="muted">${h(t('hi_sin_nota'))}</div>` : '')}
+/** Un hecho dentro de la fila de su personaje: su tipo y, si la nota trae texto sobre él, el texto plegado (la primera
+ *  línea a la vista). La nota misma va una vez, en la cabecera de la versión (#24: antes se repetía en cada hecho); acá
+ *  solo si la versión tiene más de una, para decir de cuál sale, o si el hecho no tiene ninguna. */
+function hechoHtml (x, variasNotas) {
+  return `<span class="hihecho"><span class="tag dim">${h(t('hi_t_' + x[1]))}</span>
+    ${x[3] != null ? (variasNotas ? `<span class="hinota">${notaLink(x[3])}</span>` : '') : (x[1] !== 'balance' ? `<span class="muted">${h(t('hi_sin_nota'))}</span>` : '')}
     ${x[4].length > 1 ? `<details><summary class="muted">${h(x[4][0])}</summary><ul class="hitexto" lang="en">${x[4].slice(1).map(l => `<li>${h(l)}</li>`).join('')}</ul></details>`
-      : x[4].length ? `<div class="muted hitexto1" lang="en">${h(x[4][0])}</div>` : ''}</li>`;
+      : x[4].length ? `<span class="muted hitexto1" lang="en">${h(x[4][0])}</span>` : ''}</span>`;
 }
 /** Los grupos del histórico, del más nuevo al más viejo: una versión (con sus notas) o una nota sin versión, con sus
  *  hechos filtrados. */
@@ -4605,32 +4608,40 @@ function gruposHistorico (filtro) {
   for (const [id, hs] of sinV) out.push({ fecha: HISTORICO.notas[id][1], nota: id, hechos: hs });
   return out.sort((a, b) => a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0);
 }
-function grupoHistoricoHtml (g, conQuien) {
+/** Una versión (o una nota sin versión), plegada (#24): a la vista su número, su nombre, su fecha y cuántos hechos de
+ *  cada tipo trae; al abrirla, sus notas (una vez) y una fila por personaje con sus hechos. La primera va abierta. */
+function grupoHistoricoHtml (g, conQuien, abierta) {
   const orden = (x) => HI_TIPOS.indexOf(x[1]);
-  const cab = g.v
-    ? `<b>${h(g.v[0])}</b> · ${h(g.v[1])} · <span class="muted">${h(g.v[2])}</span>${g.v[3].length ? '<div class="hinotas">' + g.v[3].map(notaLink).join('<br>') + '</div>' : ''}`
-    : `<span class="muted">${h(t('hi_nota_sin_v').replace('{d}', HISTORICO.ventana))}</span><div class="hinotas">${notaLink(g.nota)}</div>`;
-  return `<div class="hiversion"><div class="hicab">${cab}</div>
-    <ul class="hihechos">${g.hechos.slice().sort((a, b) => orden(a) - orden(b)).map(x => hechoHtml(x, conQuien)).join('')}</ul></div>`;
+  const notas = g.v ? g.v[3] : [g.nota], varias = notas.length > 1;
+  const porQuien = new Map();
+  for (const x of g.hechos.slice().sort((a, b) => orden(a) - orden(b))) { if (!porQuien.has(x[0])) porQuien.set(x[0], []); porQuien.get(x[0]).push(x); }
+  const cuenta = HI_TIPOS.map(k => [k, g.hechos.filter(x => x[1] === k).length]).filter(([, n]) => n);
+  const cab = g.v ? `<b>${h(g.v[0])}</b> · ${h(g.v[1])} · <span class="muted">${h(g.v[2])}</span>`
+    : `<span class="muted">${h(t('hi_nota_sin_v').replace('{d}', HISTORICO.ventana))}</span>`;
+  return `<details class="hiversion"${abierta ? ' open' : ''}><summary class="hicab"><span>${cab}</span>
+      <span class="hicuenta">${cuenta.map(([k, n]) => `<span class="tag dim">${h(t('hi_t_' + k))} ${n}</span>`).join('')}</span></summary>
+    ${notas.length ? `<div class="hinotas">${notas.map(notaLink).join('<br>')}</div>` : ''}
+    <div class="hifilas">${[...porQuien.values()].map(hs => `<div class="hifila">${conQuien ? `<div class="hiquien">${hechoQuien(hs[0])}</div>` : ''}
+      <div class="hihechos">${hs.map(x => hechoHtml(x, varias)).join('')}</div></div>`).join('')}</div></details>`;
 }
 function renderHistorico () {
   const pj = ui.hiPj, tipo = ui.hiTipo;
   const grupos = gruposHistorico(x => (!pj || cidHecho(x) === pj) && (tipo === 'todos' || x[1] === tipo));
   const personajes = CHARS.slice().sort((a, b) => a.name.localeCompare(b.name));
-  return `<div class="page-head"><div><h1>${h(t('hi_title'))}</h1><div class="sub">${h(t('hi_note'))}</div></div></div>
+  return `<div class="page-head"><div><h1>${h(t('hi_title'))} ${ayudaHtml(t('hi_note'))}</h1></div></div>
     <div class="row" style="gap:10px;margin-bottom:12px;flex-wrap:wrap">
       <label>${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}${personajes.map(c => opcionHtml(c.id, c.name, pj)).join('')}</select></label>
       <div class="seg">${['todos'].concat(HI_TIPOS).map(k => `<button class="${tipo === k ? 'on' : ''}" data-a="hiTipo" data-v="${k}">${h(t(k === 'todos' ? 'hi_t_todos' : 'hi_t_' + k))}</button>`).join('')}</div>
     </div>
     <p class="muted">${h(t('hi_cuenta').replace('{n}', grupos.length))}</p>
-    ${grupos.length ? grupos.slice(0, ui.hiN).map(g => grupoHistoricoHtml(g, true)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
+    ${grupos.length ? grupos.slice(0, ui.hiN).map((g, i) => grupoHistoricoHtml(g, true, i === 0)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
     ${grupos.length > ui.hiN ? `<button class="btn" data-a="hiMas">${h(t('hi_mas'))}</button>` : ''}`;
 }
 /** El bloque «Historial» de la ficha: lo del personaje, de lo más nuevo a lo más viejo, con el link al Histórico. */
 function historialFicha (ch) {
   const grupos = gruposHistorico(x => cidHecho(x) === ch.id);
   return `<div class="section" id="historial"><h3>${h(t('hi_ficha'))}</h3>
-    ${grupos.length ? grupos.map(g => grupoHistoricoHtml(g, true)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
+    ${grupos.length ? grupos.map((g, i) => grupoHistoricoHtml(g, true, i === 0)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
     <p><button class="btn sm" data-a="goHistorico" data-cid="${ch.id}">${h(t('hi_ficha_ver'))}</button></p></div>`;
 }
 

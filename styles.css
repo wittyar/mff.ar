@@ -838,11 +838,16 @@ table.topes input{width:70px;padding:5px 7px}
 .glfoco{outline:2px solid var(--accent);outline-offset:3px}
 /* Histórico */
 .hiversion{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}
-.hicab{margin-bottom:6px}
+.hicab{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;cursor:pointer;list-style:none}
+.hicab::-webkit-details-marker{display:none}
+.hiversion[open] > .hicab{margin-bottom:6px}
+.hicuenta{display:flex;gap:4px;flex-wrap:wrap}
 .hinotas{font-size:12px;margin-top:4px}
-.hihechos{list-style:none;margin:0;padding:0}
-.hihecho{padding:6px 0;border-top:1px solid var(--line)}
-.hihecho:first-child{border-top:0}
+.hifilas{display:flex;flex-direction:column}
+.hifila{display:grid;grid-template-columns:minmax(180px,300px) minmax(0,1fr);gap:10px;padding:7px 0;border-top:1px solid var(--line);align-items:start}
+.hihechos{display:flex;flex-direction:column;gap:4px;min-width:0}
+@media (max-width:700px){ .hifila{grid-template-columns:1fr} }
+.hihecho{display:flex;gap:6px;flex-wrap:wrap;align-items:baseline}
 .hinota{font-size:12px;margin-top:2px}
 .hitexto{margin:4px 0 0 16px;font-size:12px;color:var(--text-2)}
 .hihecho details summary{cursor:pointer;font-size:12px;margin-top:2px}

@@ -199,8 +199,10 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
   vieja: el personaje, sus uniformes, su Tier-3, su Potencial Trascendido y su Tier-4 (según
   `/api/updates` de thanosvibs, con el nombre y la fecha de cada versión), y lo que dicen de él las
   notas de actualización del foro oficial en sus secciones de skills y de balance, con el link a cada
-  nota y el texto como lo publica el foro, en inglés. Se filtra por personaje y por tipo. En la
-  ficha, pestaña *Más*, el bloque «Historial» muestra lo del personaje. Lo que no cierra entre las
+  nota y el texto como lo publica el foro, en inglés. Cada versión va plegada (la más nueva,
+  abierta) con cuántos hechos de cada tipo trae; al abrirla, sus notas una vez y una fila por
+  personaje con lo suyo. Se filtra por personaje y por tipo. En la ficha, pestaña *Fuentes*, el
+  bloque «Historial» muestra lo del personaje. Lo que no cierra entre las
   dos fuentes (una llegada que la nota no nombra, una versión sin nota, una nota sin versión) va a
   `docs/HISTORICO.md`. Por ahora solo los personajes; los modos de juego vendrán después.
 
