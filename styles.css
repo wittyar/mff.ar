@@ -801,7 +801,6 @@ table.topes input{width:70px;padding:5px 7px}
 
 /* Análisis de la ficha (etapa 2 del modelo) */
 .anres > div{margin:4px 0}
-.angrupo{margin:12px 0 16px}
 .angh{margin-bottom:4px}
 .anlect{font-size:12px;color:var(--text-2);margin:2px 0;display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .anlect b{color:var(--text);font-weight:600;margin-right:2px}
@@ -815,17 +814,16 @@ table.topes input{width:70px;padding:5px 7px}
 .cert.probable{color:var(--gold)}
 .cert.conjetura{color:var(--text-3)}
 .tag.nosirve{background:var(--danger);cursor:help}
-/* Glosario: el glosario de skills del juego (términos y lo que el inglés traduce mal) y los efectos
-   del catálogo, que usan las filas del análisis. Los enlaces internos llevan el destino a la vista
-   debajo de la barra de arriba y lo marcan un momento. */
+/* Glosario: en dos pestañas, el glosario de skills del juego (términos y lo que el inglés traduce mal)
+   y los efectos del catálogo de la app; cada entrada en una línea, con el detalle plegado (.glitem, más
+   abajo). Los enlaces internos abren el destino, lo llevan a la vista debajo de la barra de arriba y
+   lo marcan un momento. */
 .glbusca{gap:12px;margin-bottom:18px}
 .glbusca .search{flex:0 1 420px}
-.glnota{margin-bottom:10px}
-.glterms{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr));gap:10px}
-.glterm,.glerr{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:11px 13px;
+.glerr{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:11px 13px;
   display:flex;flex-direction:column;gap:6px}
-.glterm .row,.glerr .row{gap:6px}
-.glterm p,.glerr p{margin:0;font-size:13px}
+.glerr .row{gap:6px}
+.glerr p{margin:0;font-size:13px}
 .glerr{margin-bottom:10px}
 .tag.gldif{background:var(--gold)}
 .gldifbox{border-left:3px solid var(--gold);padding:6px 10px;background:var(--gold-soft);border-radius:4px;font-size:12.5px;
@@ -835,8 +833,8 @@ table.topes input{width:70px;padding:5px 7px}
 .glet{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:4px}
 /* Enlaces y etiquetas largos (el título de un error, una etiqueta de skill): en el celular no entran
    en una línea, así que acá cortan como el texto. */
-.glterm .tag,.glerr .tag,.glotra .tag,.glef .tag{white-space:normal}
-.glterm,.glef,.glerr{scroll-margin-top:calc(var(--nav-h) + 12px)}
+.glerr .tag,.glotra .tag,.glitem .tag{white-space:normal}
+.glerr{scroll-margin-top:calc(var(--nav-h) + 12px)}
 .glfoco{outline:2px solid var(--accent);outline-offset:3px}
 /* Histórico */
 .hiversion{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}
@@ -962,3 +960,27 @@ table.topes input{width:70px;padding:5px 7px}
 .stageblock.varias .stnum{margin-top:3px}
 .stcuerpo{min-width:0}
 .fxlabel.dano{text-align:left}
+
+/* ---------- glosario en dos pestañas, una línea por entrada (#24, 1.0.29) ---------- */
+.gltabs button{white-space:nowrap}
+.gllista{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);overflow:clip}
+.glitem{border-top:1px solid var(--line);scroll-margin-top:calc(var(--nav-h) + 12px)}
+.glitem:first-child{border-top:0}
+.glitem > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(180px,260px) minmax(0,1fr) auto;gap:12px;align-items:baseline;padding:9px 12px}
+.glitem > summary::-webkit-details-marker{display:none}
+.glitem > summary:hover{background:var(--surface-2)}
+.glitem[open] > summary{background:var(--surface-2)}
+.glnom{display:flex;flex-direction:column;min-width:0}
+.glnom .muted{font-size:11.5px}
+.glcorto{color:var(--text-2);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.glitem[open] .glcorto{visibility:hidden}
+.glmarcas{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+
+.glcuerpo{padding:4px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.glerrs{margin-bottom:18px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:8px 12px}
+.glerrs > summary{cursor:pointer;color:var(--text-2)}
+.glerrs .glerr{margin-top:10px}
+.glgrupo{margin-bottom:14px}
+.glgrupo .angh{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.glaviso{color:var(--text-2);font-size:13px;margin-bottom:12px;border-left:3px solid var(--accent);padding-left:10px}
+@media (max-width:700px){ .glitem > summary{grid-template-columns:minmax(0,1fr) auto} .glcorto{display:none} }

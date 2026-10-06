@@ -498,14 +498,19 @@ const T = {
   hi_ficha:          { es:'Historial',           en:'History' },
   hi_ficha_ver:      { es:'Ver en el Histórico', en:'See in History' },
   gl_title:          { es:'Glosario',            en:'Glossary' },
-  gl_note:           { es:'Qué hace cada efecto. Arriba, el glosario de skills del juego: el coreano es el original y, donde el inglés no dice lo mismo, se aclara. Abajo, todos los efectos que la app reconoce en las skills y en Leads & Supports, con cómo se leen en PvE y en PvP.',
-                       en:'What each effect does. First, the in-game skill glossary: the Korean is the original and, where the English says something else, it is pointed out. Then, every effect the app recognizes in skills and in Leads & Supports, with how it reads in PvE and PvP.' },
+  gl_note:           { es:'Qué hace cada efecto, en dos pestañas. En la primera, el glosario de skills del juego: el coreano es el original y, donde el inglés no dice lo mismo, se aclara. En la segunda, todos los efectos que la app reconoce en las skills y en Leads & Supports, con cómo se leen en PvE y en PvP.',
+                       en:'What each effect does, in two tabs. In the first, the in-game skill glossary: the Korean is the original and, where the English says something else, it is pointed out. In the second, every effect the app recognizes in skills and in Leads & Supports, with how it reads in PvE and PvP.' },
   gl_busca:          { es:'Buscar en español, inglés o coreano', en:'Search in Spanish, English or Korean' },
-  gl_cuenta:         { es:'{t} términos del juego · {e} efectos', en:'{t} game terms · {e} effects' },
+  gl_una_vez_corto:  { es:'cuenta una vez',      en:'counts once' },
+  gl_tope_corto:     { es:'tope',                en:'cap' },
+  gl_tab_juego:      { es:'Glosario del juego · {n}', en:'Game glossary · {n}' },
+  gl_tab_app:        { es:'Efectos de la app · {n}', en:'App effects · {n}' },
+  gl_app_aviso:      { es:'Los grupos y los efectos de esta pestaña son de la app (su catálogo de efectos), no términos del juego. Cada uno dice a qué término del glosario del juego corresponde, si lo hay.',
+                       en:"The groups and effects in this tab belong to the app (its effects catalog), not to the game's terms. Each one says which in-game glossary term it matches, if any." },
+  gl_errores_sum:    { es:'Lo que el inglés traduce mal: {n} errores que se repiten y {m} diferencias más', en:'What the English gets wrong: {n} repeated mistakes and {m} other differences' },
+  gl_en_otra:        { es:'{n} en la otra pestaña', en:'{n} in the other tab' },
   gl_nada:           { es:'Nada coincide con la búsqueda.', en:'Nothing matches the search.' },
   gl_errores:        { es:'Lo que el inglés traduce mal', en:'What the English gets wrong' },
-  gl_errores_nota:   { es:'Los {n} errores del glosario en inglés que se repiten en varios términos, y las otras diferencias con el coreano.',
-                       en:'The {n} mistakes of the English glossary that repeat across several terms, and the other differences with the Korean.' },
   gl_otras:          { es:'Otras diferencias',   en:'Other differences' },
   gl_terminos:       { es:'Glosario del juego',  en:'Game glossary' },
   gl_terminos_nota:  { es:'Los {n} términos del glosario de skills del juego (Skill Name Glossary · 스킬 용어 사전), en su orden.',
@@ -1479,6 +1484,7 @@ let ui = {
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
+  glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
   hiPj: '', hiTipo: 'todos', hiN: 20, // Histórico: personaje, tipo de hecho y cuántas versiones se ven
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
@@ -4642,15 +4648,18 @@ function otrosNombresGl (x) { return [LANG === 'es' && x.en !== x.es ? x.en : ''
 function enlaceGl (destino, texto, titulo) {
   return `<a href="#${destino}" class="tag ghost" data-a="irGlos" data-v="${destino}"${titulo ? ` title="${h(titulo)}"` : ''}>${h(texto)}</a>`;
 }
-/** Un término del juego: sus nombres (el del idioma de la app primero), qué dice, lo que el inglés
- *  traduce distinto, qué C.T.P. lo da y de qué opción sale (la fija o una de reforjado), y a qué efectos del
- *  catálogo corresponde. */
+/** Un término del juego, plegado (#24): a la vista sus nombres, lo que dice en una línea y sus marcas (el inglés
+ *  difiere, lo da un C.T.P.); al abrirlo, el texto entero, lo que el inglés traduce distinto, qué C.T.P. lo da y de
+ *  qué opción sale, la nota y a qué efectos del catálogo corresponde. */
 function terminoGl (x, errores) {
   const otros = otrosNombresGl(x).join(' · ');
-  return `<div class="glterm" id="gl-${x.id}">
-    <div class="row"><b>${h(nombreGl(x))}</b><span class="muted">${h(otros)}</span>
-      ${x.difiere ? `<span class="tag solid gldif">${h(t('gl_difiere_tag'))}</span>` : ''}
-      ${x.falta ? `<span class="tag dim">${h(t('gl_falta_' + x.falta))}</span>` : ''}</div>
+  return `<details class="glitem" id="gl-${x.id}">
+    <summary><span class="glnom"><b>${h(nombreGl(x))}</b><span class="muted">${h(otros)}</span></span>
+      <span class="glcorto">${h(bi(x.que))}</span>
+      <span class="glmarcas">${x.difiere ? `<span class="tag solid gldif">${h(t('gl_difiere_tag'))}</span>` : ''}
+        ${x.ctp ? `<span class="tag dim">C.T.P.</span>` : ''}
+        ${x.falta ? `<span class="tag dim">${h(t('gl_falta_' + x.falta))}</span>` : ''}</span></summary>
+    <div class="glcuerpo">
     <p>${h(bi(x.que))}</p>
     ${x.difiere ? `<div class="gldifbox"><b>${h(t('gl_en_ko'))}</b> ${h(bi(x.difiere))}
       ${x.error ? `<div class="row">${enlaceGl('gle-' + x.error, bi(errores[x.error].titulo))}</div>` : ''}</div>` : ''}
@@ -4659,36 +4668,51 @@ function terminoGl (x, errores) {
     ${x.nota ? `<div class="muted">${h(bi(x.nota))}</div>` : ''}
     ${x.efectos.length ? `<div class="row"><span class="muted">${h(t('gl_en_catalogo'))}</span>${
       x.efectos.map(id => enlaceGl('ef-' + id, bi(GL_DE[id].e))).join('')}</div>` : ''}
-    <div class="fuentes">${fuentesHtml(x.fuente)}</div>
-  </div>`;
+    <div class="fuentes">${fuentesHtml(x.fuente)}</div></div>
+  </details>`;
 }
-/** Los errores del inglés que se repiten, con sus términos, y las otras diferencias. */
+/** Los errores del inglés que se repiten, con sus términos, y las otras diferencias: plegados, con cuántos son. */
 function erroresGl () {
-  return `<div class="section"><h3>${h(t('gl_errores'))}</h3>
-    <p class="muted glnota">${h(t('gl_errores_nota').replace('{n}', GLOSARIO.errores.length))}</p>
+  const otras = GLOSARIO.terminos.filter(x => x.difiere && !x.error);
+  return `<details class="glerrs"><summary>${h(t('gl_errores_sum').replace('{n}', GLOSARIO.errores.length).replace('{m}', otras.length))}</summary>
     ${GLOSARIO.errores.map(e => `<div class="glerr" id="gle-${e.id}"><b>${h(bi(e.titulo))}</b><p>${h(bi(e.texto))}</p>
       <div class="row">${GLOSARIO.terminos.filter(x => x.error === e.id).map(x => enlaceGl('gl-' + x.id, nombreGl(x))).join('')}</div></div>`).join('')}
     <h4 class="glh4">${h(t('gl_otras'))}</h4>
-    ${GLOSARIO.terminos.filter(x => x.difiere && !x.error).map(x =>
-      `<div class="glotra">${enlaceGl('gl-' + x.id, nombreGl(x))} ${h(bi(x.difiere))}</div>`).join('')}
-  </div>`;
+    ${otras.map(x => `<div class="glotra">${enlaceGl('gl-' + x.id, nombreGl(x))} ${h(bi(x.difiere))}</div>`).join('')}
+  </details>`;
 }
-/** Un efecto del catálogo: su nombre, los términos del juego que le corresponden, sus lecturas de
- *  PvE y de PvP, su nota, a quién le sirve y las etiquetas con que aparece en las skills. */
+/** Un efecto del catálogo, plegado: a la vista su nombre, el inglés y los términos del juego que le corresponden; al
+ *  abrirlo, sus lecturas de PvE y de PvP, su nota, a quién le sirve, si se suma, su tope y con qué etiquetas aparece. */
 function efectoGl (e) {
   const d = GL_DE[e.id];
-  return `<div class="anfila glef" id="ef-${e.id}">
-    <div class="row"><span class="annom">${h(bi(e))}</span>${LANG === 'es' ? `<span class="muted">${h(e.en)}</span>` : ''}
-      ${d.terminos.map(x => enlaceGl('gl-' + x.id, nombreGl(x) + ' · ' + x.ko, t('gl_termino'))).join('')}</div>
+  return `<details class="glitem glef" id="ef-${e.id}">
+    <summary><span class="glnom"><b>${h(bi(e))}</b>${LANG === 'es' ? `<span class="muted">${h(e.en)}</span>` : ''}</span>
+      <span class="glcorto">${h(t('gl_le_sirve'))} ${h(minuscula(bi(CATALOGO.sirve[e.sirve])))}</span>
+      <span class="glmarcas">${resumenAcumula(d)}${d.terminos.map(x => `<span class="tag ghost" title="${h(t('gl_termino'))}">${h(nombreGl(x))}</span>`).join('')}</span></summary>
+    <div class="glcuerpo">
+    ${d.terminos.length ? `<div class="row">${d.terminos.map(x => enlaceGl('gl-' + x.id, nombreGl(x) + ' · ' + x.ko, t('gl_termino'))).join('')}</div>` : ''}
     ${lecturasAn(e.pve, e.pvp)}
     ${e.nota ? `<div class="muted annota">${h(bi(e.nota))}</div>` : ''}
     ${leSirveEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${acumulaEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${topeEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}
     ${d.etiquetas.length ? `<div class="glet"><span class="muted">${h(t('gl_en_skills'))}</span>${
-      d.etiquetas.map(i => `<span class="tag dim">${h(txt('ab', i))}</span>`).join('')}</div>` : ''}
-  </div>`;
+      d.etiquetas.map(i => `<span class="tag dim">${h(txt('ab', i))}</span>`).join('')}</div>` : ''}</div>
+  </details>`;
 }
+/** La marca corta de si se suma o cuenta una vez y del tope, para la línea del efecto; nada si sus stats no coinciden
+ *  (el detalle lo dice uno por uno). */
+function resumenAcumula (d) {
+  const sts = d.stats;
+  if (!sts.length) return '';
+  const a = CATALOGO.soporte[sts[0]].acumula, iguales = sts.every(st => CATALOGO.soporte[st].acumula === a);
+  const topes = sts.flatMap(topesDe);
+  return `${iguales ? `<span class="tag dim">${h(t(a ? 'gl_se_suma' : 'gl_una_vez_corto'))}</span>` : ''}${
+    topes.length ? `<span class="tag dim">${h(t('gl_tope_corto'))} ${h(topeTxt(topes[0], false))}</span>` : ''}`;
+}
+// GLOSARIO EN DOS PESTAÑAS (#24, caso del 6 de octubre de 2026): lo que es del juego (sus 44 términos) separado de lo que es
+// de la app (su catálogo de efectos, por grupo). Cada entrada a la vista en una línea, con el detalle plegado. La
+// búsqueda vale para las dos y dice cuántas hay en la otra.
 function renderGlosario () {
   const q = plano(ui.glBusca.trim());
   const pasa = (...nombres) => !q || nombres.some(n => plano(n).includes(q));
@@ -4696,21 +4720,25 @@ function renderGlosario () {
   const efectos = CATALOGO.efectos.filter(e => { const d = GL_DE[e.id];
     return pasa(e.es, e.en, ...d.terminos.flatMap(x => [x.es, x.en, x.ko]), ...d.etiquetas.flatMap(i => [fila('ab', i).en, txt('ab', i)])); });
   const errores = Object.fromEntries(GLOSARIO.errores.map(e => [e.id, e]));
-  return `<div class="page-head"><div><h1>${h(t('gl_title'))}</h1><div class="sub">${h(t('gl_note'))}</div></div></div>
+  const juego = ui.glTab === 'juego', aca = juego ? terminos.length : efectos.length, otra = juego ? efectos.length : terminos.length;
+  return `<div class="page-head"><div><h1>${h(t('gl_title'))} ${ayudaHtml(t('gl_note'))}</h1></div></div>
     <div class="row glbusca"><div class="search"><input id="q" placeholder="${h(t('gl_busca'))}" value="${h(ui.glBusca)}" data-a="glBusca"></div>
-      <span class="muted">${h(t('gl_cuenta').replace('{t}', terminos.length).replace('{e}', efectos.length))}</span></div>
-    ${!terminos.length && !efectos.length ? `<div class="empty"><div>${h(t('gl_nada'))}</div></div>` : ''}
-    ${q ? '' : erroresGl()}
-    ${terminos.length ? `<div class="section"><h3>${h(t('gl_terminos'))}</h3>
-      <p class="muted glnota">${h(t('gl_terminos_nota').replace('{n}', GLOSARIO.terminos.length))}</p>
-      <div class="glterms">${terminos.map(x => terminoGl(x, errores)).join('')}</div></div>` : ''}
-    ${efectos.length ? `<div class="section"><h3>${h(t('gl_efectos'))}</h3>
-      <p class="muted glnota">${h(t('gl_efectos_nota'))}</p>
-      ${CATALOGO.grupos.filter(g => efectos.some(e => e.grupo === g.id)).map(g => `<div class="angrupo">
-        <div class="angh"><b>${h(bi(g))}</b> <span class="muted">${h(bi(g.que))}</span></div>
-        ${lecturasAn(g.pve, g.pvp)}
-        ${efectos.filter(e => e.grupo === g.id).map(efectoGl).join('')}
-      </div>`).join('')}</div>` : ''}`;
+      <div class="seg gltabs" role="tablist">
+        <button class="${juego ? 'on' : ''}" role="tab" aria-selected="${juego}" data-a="glTab" data-v="juego">${h(t('gl_tab_juego').replace('{n}', terminos.length))}</button>
+        <button class="${juego ? '' : 'on'}" role="tab" aria-selected="${!juego}" data-a="glTab" data-v="app">${h(t('gl_tab_app').replace('{n}', efectos.length))}</button>
+      </div>
+      ${q && otra ? `<span class="muted">${h(t('gl_en_otra').replace('{n}', otra))}</span>` : ''}</div>
+    ${!aca ? `<div class="empty"><div>${h(t('gl_nada'))}</div></div>` : ''}
+    ${juego ? `${q ? '' : erroresGl()}
+      ${terminos.length ? `<div class="section"><h3>${h(t('gl_terminos'))} ${ayudaHtml(t('gl_terminos_nota').replace('{n}', GLOSARIO.terminos.length))}</h3>
+        <div class="gllista">${terminos.map(x => terminoGl(x, errores)).join('')}</div></div>` : ''}`
+    : `<p class="glaviso">${h(t('gl_app_aviso'))}</p>
+      ${efectos.length ? `<div class="section"><h3>${h(t('gl_efectos'))} ${ayudaHtml(t('gl_efectos_nota'))}</h3>
+      ${CATALOGO.grupos.filter(g => efectos.some(e => e.grupo === g.id)).map(g => `<div class="glgrupo">
+        <div class="angh"><b>${h(bi(g))}</b> <span class="muted">${h(bi(g.que))}</span>
+          ${g.pve || g.pvp ? `<details class="ayuda"><summary title="${h(t('ay_label'))}" aria-label="${h(t('ay_label'))}">?</summary><div class="ayudatx">${lecturasAn(g.pve, g.pvp)}</div></details>` : ''}</div>
+        <div class="gllista">${efectos.filter(e => e.grupo === g.id).map(efectoGl).join('')}</div>
+      </div>`).join('')}</div>` : ''}`}`;
 }
 
 // ============================================================================
@@ -6355,8 +6383,11 @@ document.addEventListener('click', (e) => {
       // Si la búsqueda deja afuera el destino, se vacía para que aparezca (sin volver a poner el
       // foco en la búsqueda: en el celular abriría el teclado).
       e.preventDefault();
+      const tab = d.v.startsWith('ef-') ? 'app' : 'juego';
+      if (ui.glTab !== tab) { ui.glTab = tab; render(); }
       if (!document.getElementById(d.v)) { ui.glBusca = ''; ui.focusSearch = false; render(); }
       const destino = document.getElementById(d.v);
+      for (let x = destino; x; x = x.parentElement.closest('details')) if (x.tagName === 'DETAILS') x.open = true;
       destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
       destino.classList.add('glfoco');
       setTimeout(() => destino.classList.remove('glfoco'), 1600);
@@ -6446,6 +6477,7 @@ document.addEventListener('click', (e) => {
       const nombre = m.name || mesaVs().map(fullLabel).join(' + ');
       U.teams.unshift({ id: 'eq-' + Date.now(), name: nombre, members, lider, reason: '', modeId });
       ui.avisoMesa = { txt: t('ms_guardado').replace('{e}', nombre), ok: true }; commit(); break; }
+    case 'glTab': ui.glTab = d.v; render(); break;
     case 'plFiltros': ui.plFiltros = !ui.plFiltros; render(); break;
     case 'movil': ui.movil = d.v; render(); window.scrollTo(0, 0); break;
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;

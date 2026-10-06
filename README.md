@@ -183,13 +183,18 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
   cambia con su selector; «Llevar a la mesa» lo carga en la mesa con el líder primero. Los equipos
   guardados antes de la 1.0.25 no traían líder: al abrir la app se les declara el que mostraba su
   tarjeta (el de la sinergia) y Equipos dice cuáles fueron, para revisarlos.
-- **Glosario**: los 44 términos del glosario de skills del juego, en inglés, coreano y español,
-  con lo que el inglés traduce distinto del coreano (los tres errores que se repiten van aparte)
-  y qué C.T.P. da cada efecto de la barra de Concentración y de qué opción sale (la fija, que tienen
-  todos los grados, o una de reforjado); y los 126 efectos del catálogo por
-  grupo, con sus lecturas de PvE y de PvP, a quién le sirven (en las skills y, si no es lo mismo,
-  como liderazgo, soporte o bono de equipo), si se suman o cuentan una vez cuando a alguien le llegan
-  de dos fuentes, su tope en la guía y con qué etiquetas aparecen en las skills. Se busca en los tres idiomas y los enlaces llevan de un término a sus efectos y al revés.
+- **Glosario**: en dos pestañas, lo que es del juego separado de lo que es de la app. *Glosario del
+  juego*: los 44 términos del glosario de skills del juego, en inglés, coreano y español, con lo que
+  el inglés traduce distinto del coreano (los tres errores que se repiten y las otras diferencias van
+  arriba, plegados) y qué C.T.P. da cada efecto de la barra de Concentración y de qué opción sale (la
+  fija, que tienen todos los grados, o una de reforjado). *Efectos de la app*: los efectos del
+  catálogo de la app por grupo, con sus lecturas de PvE y de PvP, a quién le sirven (en las skills y,
+  si no es lo mismo, como liderazgo, soporte o bono de equipo), si se suman o cuentan una vez cuando a
+  alguien le llegan de dos fuentes, su tope en la guía y con qué etiquetas aparecen en las skills.
+  Cada entrada va en una línea (sus nombres, lo que dice y sus marcas: el inglés difiere, C.T.P., se
+  suma, tope) y el detalle se abre al tocarla. Se busca en los tres idiomas (cada pestaña cuenta lo
+  que encontró) y los enlaces llevan de un término a sus efectos y al revés, cambiando de pestaña y
+  abriendo el destino.
 - **Histórico**: qué llegó de cada personaje en cada versión del juego, de la más nueva a la más
   vieja: el personaje, sus uniformes, su Tier-3, su Potencial Trascendido y su Tier-4 (según
   `/api/updates` de thanosvibs, con el nombre y la fecha de cada versión), y lo que dicen de él las
