@@ -1,6 +1,6 @@
 {
- "version": "1.0.29",
+ "version": "1.0.30",
  "formato_datos": 10,
  "python": "3.14.7",
- "notas": "Glosario: en dos pestañas, lo del juego (sus términos) y lo de la app (su catálogo de efectos); cada término o efecto va en una línea y se abre al tocarlo. Histórico: cada versión va plegada, con cuántas novedades trae; al abrirla, sus notas una vez y una fila por personaje. Al volver de una ficha o recargar, la app vuelve al Histórico si venías de ahí."
+ "notas": "La app baja los datos del juego de la carpeta de su formato: cuando salga una versión con un formato de datos nuevo, las anteriores siguen andando con sus datos y avisan que hay una versión nueva, en vez de quedar trabadas."
 }

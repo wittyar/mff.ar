@@ -79,19 +79,22 @@ variante, en `docs/COMPLETITUD.md`.
 
 ## Estado (6 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.28 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.29 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
   (`ayudaHtml`); strikers en una tabla con los dos sentidos.
   La 1.0.28 (4a0510f, pedido de Ezequiel sobre la 1.0.27): en Skills, cada etapa junta con su daño y sus efectos; en
   Armado, los bloques en dos columnas que se reparten la altura.
-- Entregada sin publicar: la 1.0.29 (#24, Glosario e Histórico): el Glosario en dos pestañas (`ui.glTab`: los términos
-  del juego y los efectos de la app), cada entrada plegada en una línea (`details.glitem`); los enlaces internos cambian
-  de pestaña y abren los `details` hasta el destino. El Histórico con cada versión plegada (la primera abierta), sus
-  notas una vez y una fila por personaje (`.hifila`). Etiqueta sobre «Versión 1.0.29». Sigue de #24: Modos, Tier
-  lists, la barra de 5 secciones, avisos como estado y direcciones estables. También arregla que el botón de volver y
-  la recarga no conocían el Histórico.
+  La 1.0.29 (1f5b904, #24, Glosario e Histórico): el Glosario en dos pestañas (`ui.glTab`: los términos del juego y
+  los efectos de la app), cada entrada plegada en una línea (`details.glitem`); los enlaces internos cambian de pestaña
+  y abren los `details` hasta el destino. El Histórico con cada versión plegada (la primera abierta), sus notas una vez
+  y una fila por personaje (`.hifila`). Sigue de #24: Modos, Tier lists, la barra de 5 secciones, avisos como estado y
+  direcciones estables.
+- Entregada sin publicar: la 1.0.30 (#1, el issue abierto más viejo): la app baja los datos de `datos/<formato>/`, que
+  el build llena con `scripts/carpeta_formato.py`; `datos/10/` va en el commit «Datos: publicarlos también…». Sin
+  formato nuevo: la etiqueta va sobre «Versión 1.0.30», con main ya empujado (publicar.yml verifica `datos/10/` en main).
+  Cerrar #1 cuando la 1.0.30 esté publicada.
 - La 1.0.25 (etiqueta en 676f50a), solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
   (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
   aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
