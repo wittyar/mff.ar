@@ -90,7 +90,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
 ## Estado (6 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.32 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.33 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -112,13 +112,20 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   `scripts/contenido/terminos_es.json` y su validación en el build (`scripts/terminos_es.py`); el glosario, los stats de
   la guía, etiquetas de skills y efectos del catálogo con los términos del juego. #3 (notas del foro coreano) fue sin
   versión. Issues cerrados el 6 de octubre: #1, #2, #3, #24 y #32 (lo que quedó, en #41 a #45).
-- Entregada sin publicar: la 1.0.33 (formato 11, #32 segunda tanda, #43, #44, parte de #45): las capturas en coreano
+- La 1.0.33 (etiqueta en e7811c4, «Datos actualizados 2026-10-07»; formato 11, #32 segunda tanda, #43, #44, parte de #45): las capturas en coreano
   (`fuentes/juego-ko/`) y el resto de las de español; el vocabulario del juego en todos los textos en español (sección
   vocabulario de `terminos_es.json`, que `terminos_es.py` valida contra traducciones, contenido curado y app.js: PG,
   merma, potenciador, esquiva…; los nombres de las skills siguen siendo propios, por decisión de Ezequiel); los C.T.P. y
   los modos con su nombre del juego en español (`MFF_CTPS[].es`, `nombre_es` en modos.json); la información dudosa
   entre coreano, inglés y español en un «≠» (`scripts/contenido/dudas.json`, `scripts/dudas.py`, `MFF_DUDAS`, prueba
-  `verif_dudas.py`). Formato nuevo: push de main, workflow de datos a mano y la etiqueta sobre ese commit de datos.
+  `verif_dudas.py`). La primera etiqueta fue sobre el commit de la versión y publicar.yml cortó (bien): se borró y se
+  puso sobre el de datos.
+- Entregada sin publicar: la 1.0.34 (formato 12, #4): el histórico con los modos de juego. `scripts/historico.py` saca de
+  cada sección de las notas cuyo título nombra un modo de `modos.json` (tabla `MODOS`, expresiones sobre el título en
+  inglés) un hecho «modo» con clave `modo:<id>`; las secciones de otros modos (Danger Room, Villain Siege, Legendary
+  Battle…) van a `docs/HISTORICO.md`. En la app: el filtro «Personaje o modo», el tipo «Modo de juego», el nombre del
+  modo lleva a Modos, y cada modo de Modos tiene su «Historial» (las 5 versiones más recientes y el botón al Histórico).
+  Prueba: `verif_historico.py` (sección 7).
 - La 1.0.25 (etiqueta en 676f50a), solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
   (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
   aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
@@ -156,5 +163,5 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
   (#38).
 - Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
-  modos (#4), llegadas sin nota (#5). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #10 a #23. Bugs: #25, #26.
+  llegadas sin nota (#5); los modos que las notas nombran y `modos.json` no tiene (lista en `docs/HISTORICO.md`). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #10 a #23. Bugs: #25, #26.
   Pruebas en el repo: #31.

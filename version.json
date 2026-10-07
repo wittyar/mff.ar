@@ -1,6 +1,6 @@
 {
- "version": "1.0.33",
- "formato_datos": 11,
+ "version": "1.0.34",
+ "formato_datos": 12,
  "python": "3.14.7",
- "notas": "Los textos en español usan el vocabulario del juego (PG, merma, potenciador, esquiva, índice de recuperación, daño por impacto en cadena, frío, rayo, los nombres de los efectos) y los C.T.P. se llaman como en el juego en español. Lo que el juego dice distinto en coreano, en inglés y en español (C.T.P., stats, efectos, skills, glosario y notas del histórico) se marca con «≠»: al abrirlo, qué dice cada idioma y qué quiere decir el coreano."
+ "notas": "El Histórico suma los modos de juego: lo que dicen las notas de actualización del foro oficial de cada modo (Jefe mundial, Batalla de alianza, Brecha dimensional, Tierra de sombras…), con un filtro por modo y, en Modos, el historial de cada uno con el link a su nota."
 }
