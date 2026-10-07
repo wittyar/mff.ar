@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Notas de actualización del foro oficial de MARVEL Future Fight (Netmarble, tablero 2196), para el histórico.
+"""Notas de actualización del foro oficial de MARVEL Future Fight (Netmarble), para el histórico.
+
+Los tableros (TABLEROS): el de las notas (2196, «Update Details», «Patch Details») y el de avisos (2213), donde están las
+notas de los parches de mitad de mes de 2020 y 2021 («6/10 Patch (Updated)») y algunas viejas («Patch 1.6: Howling
+Commandos», «3.6.0 Patch Notes») que el de notas no tiene (#5); de los avisos se bajan solo esas, no los «Server Patch».
 
 Uso:
   python scripts/foro.py            # la primera página de la lista y las notas nuevas que traiga (el workflow semanal)
@@ -16,14 +20,17 @@ Solo biblioteca estándar."""
 import json, os, re, sys, time, urllib.request
 
 API = 'https://forum.netmarble.com/api/game/mherosgb/official/forum/futurefight_en'
-MENU = 2196
-LISTA = API + '/article/list?rows=15&start={}&viewType=pv&menuSeq=%d&sort=RECENTLY' % MENU
-ARTICULO = API + '/article/{}?menuSeq=%d&viewFlag=true' % MENU
-VER = 'https://forum.netmarble.com/futurefight_en/view/%d/{}' % MENU
+LISTA = API + '/article/list?rows=15&start={}&viewType=pv&menuSeq={}&sort=RECENTLY'
+ARTICULO = API + '/article/{}?menuSeq={}&viewFlag=true'
+VER = 'https://forum.netmarble.com/futurefight_en/view/{}/{}'
 UA = {'User-Agent': 'Mozilla/5.0 (mff-comparador; uso personal)'}
 PAUSA = 6
 ESPERA = 60
-NOTA = re.compile(r'update details|patch details|patch notes|version details', re.I)
+# Qué es una nota en cada tablero, por el título.
+TABLEROS = {
+    2196: re.compile(r'update details|patch details|patch notes|version details', re.I),
+    2213: re.compile(r'^(\d+/\d+ |[\d.]+ )?patch (notes|details|\((updated|completed)\))|^patch \d+\.\d+:', re.I),
+}
 DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'fuentes', 'foro')
 
 
@@ -53,27 +60,30 @@ def main(todo):
     os.makedirs(DIR, exist_ok=True)
     ruta_indice = os.path.join(DIR, 'indice.json')
     indice = {n['id']: n for n in json.load(open(ruta_indice, encoding='utf-8'))} if os.path.exists(ruta_indice) else {}
-    vistas, start, total = {}, 0, None
-    while total is None or (todo and start < total):
-        d = pedir(LISTA.format(start))
-        total = d['totalCount']
-        for a in d['articleList']:
-            vistas[a['id']] = a
-        start += 15
-    nuevas = [a for a in vistas.values() if NOTA.search(a['title']) and a['id'] not in indice]
-    print(f'foro: {len(vistas)} artículos vistos de {total}; {len(nuevas)} notas nuevas', flush=True)
-    for a in sorted(nuevas, key=lambda a: a['regDate']):
-        d = pedir(ARTICULO.format(a['id']), negado_ok=True)
+    nuevas = []
+    for menu, nota in TABLEROS.items():
+        vistas, start, total = {}, 0, None
+        while total is None or (todo and start < total):
+            d = pedir(LISTA.format(start, menu))
+            total = d['totalCount']
+            for a in d['articleList']:
+                vistas[a['id']] = a
+            start += 15
+        nuevas += [(menu, a) for a in vistas.values() if nota.search(a['title']) and a['id'] not in indice]
+        print(f'foro, tablero {menu}: {len(vistas)} artículos vistos de {total}', flush=True)
+    print(f'foro: {len(nuevas)} notas nuevas', flush=True)
+    for menu, a in sorted(nuevas, key=lambda x: x[1]['regDate']):
+        d = pedir(ARTICULO.format(a['id'], menu), negado_ok=True)
         if d is None:
             # Queda en el índice con el motivo, para no volver a pedirla; el build la cuenta como nota sin texto.
-            indice[a['id']] = {'id': a['id'], 'titulo': a['title'], 'fecha': a['regDate'], 'url': VER.format(a['id']),
+            indice[a['id']] = {'id': a['id'], 'titulo': a['title'], 'fecha': a['regDate'], 'url': VER.format(menu, a['id']),
                                'error': 'el foro no deja leerla (51006, NO PERMISSION MEMBER ARTICLE ERROR)'}
             print(f"  AVISO {a['id']} {a['title']}: el foro no deja leerla", flush=True)
             guardar(indice, ruta_indice)
             continue
         x = d['article']
         nota = {'id': x['id'], 'titulo': x['title'], 'fecha': x['regDate'], 'modificada': x.get('modDate'),
-                'url': VER.format(x['id']), 'html': x['content']}
+                'url': VER.format(menu, x['id']), 'html': x['content']}
         json.dump(nota, open(os.path.join(DIR, f"{x['id']}.json"), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         indice[x['id']] = {k: nota[k] for k in ('id', 'titulo', 'fecha', 'url')}
         print(f"  {x['id']} {x['title']}", flush=True)
