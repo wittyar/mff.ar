@@ -2,8 +2,8 @@
 
 Generado por `scripts/cotejo_ko.py` (lo llama `scripts/build.py`). Cada nota del foro en inglés (`fuentes/foro/`) contra su par del café coreano (`fuentes/cafe/`, `scripts/cafe.py`: la de fecha más cercana, del mismo tipo a 3 días o menos o de otro a 12 horas o menos). El coreano es el original. Se comparan los porcentajes y los segundos, sección por sección cuando las dos tienen las mismas secciones (si no, la nota entera): un valor que está en una y no en la otra puede ser un error de traducción, algo que el inglés no trae o algo que una de las dos dice en una imagen. Leerlo y decidir es a mano (#3).
 
-- Pares: 175; con las mismas secciones: 160. Notas en inglés sin par: 14.
-- Pares con diferencias: 28; valores distintos: 63.
+- Pares: 190; con las mismas secciones: 172. Notas en inglés sin par: 15.
+- Pares con diferencias: 30; valores distintos: 65.
 
 ## Diferencias
 
@@ -102,6 +102,14 @@ Generado por `scripts/cotejo_ko.py` (lo llama `scripts/build.py`). Cada nota del
 | 3% | — | +3% increase of Energy Attack<br>+3% increases Fire Damage<br>Dodge Rate increases by +3% |
 | 5% | — | +5% increases Energy Attack |
 
+### 2017-12-01 · [12월 1일(금) 22:30 패치 내용 안내](https://cafe.naver.com/futurefight/1190531) · [12/01 Patch details.](https://forum.netmarble.com/futurefight_en/view/2213/988884)
+
+**(la nota entera: no tienen las mismas secciones)**
+
+| Valor | Coreano | Inglés |
+|---|---|---|
+| 50% | — | Compensation: We will be refunding 50% of the Crystals used to purchase the Ultimate Hero Chest. |
+
 ### 2018-05-29 · [5월 30일(수) 업데이트 상세 공지 (수정)](https://cafe.naver.com/futurefight/1402230) · [4.1 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1158483)
 
 **(la nota entera: no tienen las mismas secciones)**
@@ -175,6 +183,14 @@ Generado por `scripts/cotejo_ko.py` (lo llama `scripts/build.py`). Cada nota del
 | Valor | Coreano | Inglés |
 |---|---|---|
 | 2 s | 로키 액티브 스킬 5번 효과에 마비 (면역 효과 무시) (2초)가 추가되었습니다. | — |
+
+### 2021-02-22 · [2월 23일(화) 패치 안내[2/23 11:51]](https://cafe.naver.com/futurefight/2675482) · [2/22 Patch (Completed)](https://forum.netmarble.com/futurefight_en/view/2213/1688826)
+
+**게임 오류 수정 사항** · **Game Error Fixes**
+
+| Valor | Coreano | Inglés |
+|---|---|---|
+| 100% | — | 5. The increase percentage for Acquire Character / Uniform EXP when using a clear ticket from the VIP Bonus has been fixed to clearly display 100%. |
 
 ### 2021-04-20 · [4월 21일 (수) 업데이트 상세 공지[4/30 14:36]](https://cafe.naver.com/futurefight/2698916) · [4/20 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1700347)
 
@@ -297,6 +313,7 @@ Ninguna nota del café del mismo tipo a 3 días o menos, ni de otro a 12 horas o
 
 - 2015-07-07 · [Update : 1.3.0 Version Details](https://forum.netmarble.com/futurefight_en/view/2196/11386)
 - 2015-10-06 · [1.5.1 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/64651)
+- 2015-10-24 · [Patch 1.6: Howling Commandos (Image Added)](https://forum.netmarble.com/futurefight_en/view/2213/92088)
 - 2016-01-23 · [1.9.1 Update Details [iOS]](https://forum.netmarble.com/futurefight_en/view/2196/246710)
 - 2016-10-25 · [Marvel Future Fight 2.6 Update Details (added detail to 8 New characters)](https://forum.netmarble.com/futurefight_en/view/2196/573376)
 - 2017-05-23 · [5/24 Mid Patch Details](https://forum.netmarble.com/futurefight_en/view/2196/822085)
