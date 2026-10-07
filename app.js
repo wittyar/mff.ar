@@ -477,10 +477,12 @@ const T = {
   nav_settings:      { es:'Ajustes',             en:'Settings' },
   nav_glossary:      { es:'Glosario',            en:'Glossary' },
   nav_history:       { es:'Histórico',           en:'History' },
-  hi_title:          { es:'Histórico de los personajes', en:'Character history' },
-  hi_note:           { es:'Qué llegó en cada versión del juego (personajes, uniformes, Tier-3, Potencial Trascendido y Tier-4, según thanosvibs) y lo que dicen de cada personaje las notas de actualización del foro oficial, con el link a cada nota. El texto de las notas va como lo publica el foro, en inglés.',
-                       en:'What came in each game version (characters, uniforms, Tier-3, Potential Transcendence and Tier-4, per thanosvibs) and what the official forum update notes say about each character, with the link to each note.' },
-  hi_pj:             { es:'Personaje',           en:'Character' },
+  hi_title:          { es:'Histórico', en:'History' },
+  hi_note:           { es:'Qué llegó en cada versión del juego (personajes, uniformes, Tier-3, Potencial Trascendido y Tier-4, según thanosvibs) y lo que dicen de cada personaje y de cada modo de juego las notas de actualización del foro oficial, con el link a cada nota. El texto de las notas va como lo publica el foro, en inglés.',
+                       en:'What came in each game version (characters, uniforms, Tier-3, Potential Transcendence and Tier-4, per thanosvibs) and what the official forum update notes say about each character and each game mode, with the link to each note.' },
+  hi_pj:             { es:'Personaje o modo',    en:'Character or mode' },
+  hi_pj_pjs:         { es:'Personajes',          en:'Characters' },
+  hi_pj_modos:       { es:'Modos de juego',      en:'Game modes' },
   hi_pj_todos:       { es:'Todos',               en:'All' },
   hi_t_todos:        { es:'Todo',                en:'All' },
   hi_t_personaje:    { es:'Personaje nuevo',     en:'New character' },
@@ -489,6 +491,7 @@ const T = {
   hi_t_tp:           { es:'Potencial Trascendido', en:'Potential Transcendence' },
   hi_t_t4:           { es:'Tier-4',              en:'Tier-4' },
   hi_t_balance:      { es:'Skills y balance',    en:'Skills and balance' },
+  hi_t_modo:         { es:'Modo de juego',       en:'Game mode' },
   hi_sin_nota:       { es:'La nota de esta versión no lo nombra (o la versión no tiene nota): ver docs/HISTORICO.md.',
                        en:'This version\'s note does not name it (or the version has no note): see docs/HISTORICO.md.' },
   hi_nota_sin_v:     { es:'Nota sin versión de thanosvibs a {d} días o menos', en:'Note with no thanosvibs version within {d} days' },
@@ -498,6 +501,8 @@ const T = {
   hi_cuenta:         { es:'{n} versiones con algo', en:'{n} versions with something' },
   hi_ficha:          { es:'Historial',           en:'History' },
   hi_ficha_ver:      { es:'Ver en el Histórico', en:'See in History' },
+  hi_modo_ver:       { es:'Ver todo en el Histórico', en:'See all in History' },
+  hi_modo_mas:       { es:'Las {n} más recientes de {t}.', en:'The latest {n} of {t}.' },
   gl_title:          { es:'Glosario',            en:'Glossary' },
   gl_note:           { es:'Qué hace cada efecto, en dos pestañas. En la primera, el glosario de skills del juego: el coreano es el original y, donde el inglés no dice lo mismo, se aclara. En la segunda, todos los efectos que la app reconoce en las skills y en Leads & Supports, con cómo se leen en PvE y en PvP.',
                        en:'What each effect does, in two tabs. In the first, the in-game skill glossary: the Korean is the original and, where the English says something else, it is pointed out. In the second, every effect the app recognizes in skills and in Leads & Supports, with how it reads in PvE and PvP.' },
@@ -4561,19 +4566,26 @@ function irA (id) {
 }
 
 // ============================================================================
-// HISTÓRICO (Ezequiel, 5 de octubre de 2026: «una pestaña de histórico... cada cambio con el link a su nota»; por ahora,
-// solo los personajes). Lo arma scripts/historico.py (MFF_HISTORICO, datos de formato 10): las versiones del juego con su
-// nombre y fecha (thanosvibs), las notas del foro oficial que van a cada una y los hechos: [clave, tipo, versión, nota,
-// líneas de la nota en inglés, fecha si es una nota sin versión]. La clave de una llegada es la de la variante
-// (cid::base o cid::uniforme); la de un hecho de balance, la del personaje (las notas no dicen el uniforme). Lo que no
-// cierra entre las dos fuentes, en docs/HISTORICO.md.
+// HISTÓRICO (Ezequiel, 5 de octubre de 2026: «una pestaña de histórico... cada cambio con el link a su nota»; los
+// personajes primero y los modos de juego desde la 1.0.34, #4). Lo arma scripts/historico.py (MFF_HISTORICO, datos de
+// formato 12): las versiones del juego con su nombre y fecha (thanosvibs), las notas del foro oficial que van a cada una y
+// los hechos: [clave, tipo, versión, nota, líneas de la nota en inglés, fecha]. La clave de una llegada es la de la
+// variante (cid::base o cid::uniforme); la de un hecho de balance, la del personaje (las notas no dicen el uniforme); la
+// de un hecho de modo, «modo:<id de MFF_MODOS>». Lo que no cierra entre las dos fuentes, en docs/HISTORICO.md.
 // ============================================================================
 const HISTORICO = window.MFF_HISTORICO;
-const HI_TIPOS = ['personaje', 'uniforme', 't3', 'tp', 't4', 'balance'];
-/** El personaje de un hecho. */
+const HI_TIPOS = ['personaje', 'uniforme', 't3', 'tp', 't4', 'balance', 'modo'];
+/** El personaje de un hecho, o «modo:<id>» el de un modo (#4, datos de formato 12). */
 function cidHecho (x) { return x[0].split('::')[0]; }
+/** Los hechos de un modo (las secciones de las notas que lo nombran). */
+const MODO_HI = 'modo:';
 /** Para qué variante o personaje es un hecho: su nombre, y el botón que abre su ficha. */
 function hechoQuien (x) {
+  if (x[0].startsWith(MODO_HI)) {
+    const m = MODOS.find(y => 'modo:' + y.id === x[0]);
+    if (!m) throw new Error('el histórico nombra un modo que no está en MFF_MODOS: ' + x[0]);
+    return `<button class="objlink" data-a="verModo" data-id="${m.id}">${h(nombreModo(m))}</button>`;
+  }
   const [cid, uid] = x[0].split('::');
   const v = variant(cid, uid || null);
   if (!v) throw new Error('el histórico nombra una variante que no está en el roster: ' + x[0]);
@@ -4629,12 +4641,23 @@ function renderHistorico () {
   const personajes = CHARS.slice().sort((a, b) => a.name.localeCompare(b.name));
   return `<div class="page-head"><div><h1>${h(t('hi_title'))} ${ayudaHtml(t('hi_note'))}</h1></div></div>
     <div class="row" style="gap:10px;margin-bottom:12px;flex-wrap:wrap">
-      <label>${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}${personajes.map(c => opcionHtml(c.id, c.name, pj)).join('')}</select></label>
+      <label>${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}
+        <optgroup label="${h(t('hi_pj_modos'))}">${MODOS.slice().sort((a, b) => nombreModo(a).localeCompare(nombreModo(b))).map(m => opcionHtml(MODO_HI + m.id, nombreModo(m), pj)).join('')}</optgroup>
+        <optgroup label="${h(t('hi_pj_pjs'))}">${personajes.map(c => opcionHtml(c.id, c.name, pj)).join('')}</optgroup></select></label>
       <div class="seg">${['todos'].concat(HI_TIPOS).map(k => `<button class="${tipo === k ? 'on' : ''}" data-a="hiTipo" data-v="${k}">${h(t(k === 'todos' ? 'hi_t_todos' : 'hi_t_' + k))}</button>`).join('')}</div>
     </div>
     <p class="muted">${h(t('hi_cuenta').replace('{n}', grupos.length))}</p>
     ${grupos.length ? grupos.slice(0, ui.hiN).map((g, i) => grupoHistoricoHtml(g, true, i === 0)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
     ${grupos.length > ui.hiN ? `<button class="btn" data-a="hiMas">${h(t('hi_mas'))}</button>` : ''}`;
+}
+/** El bloque «Historial» de un modo (#4): las versiones más recientes cuyas notas hablan de él, con el link al Histórico. */
+const HI_MODO_N = 5;
+function historialModo (m) {
+  const grupos = gruposHistorico(x => x[0] === MODO_HI + m.id);
+  return `<div class="bloque"><h4>${h(t('hi_ficha'))}</h4>
+    ${grupos.length ? `<p class="muted">${h(t('hi_modo_mas').replace('{n}', Math.min(HI_MODO_N, grupos.length)).replace('{t}', grupos.length))}</p>`
+      + grupos.slice(0, HI_MODO_N).map((g, i) => grupoHistoricoHtml(g, false, i === 0)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
+    <p><button class="btn sm" data-a="goHistorico" data-cid="${MODO_HI + m.id}">${h(t('hi_modo_ver'))}</button></p></div>`;
 }
 /** El bloque «Historial» de la ficha: lo del personaje, de lo más nuevo a lo más viejo, con el link al Histórico. */
 function historialFicha (ch) {
@@ -5656,7 +5679,7 @@ function nombreModo (m) { return LANG === 'es' ? m.nombre_es : m.nombre; }
 function modoCard (m) {
   const abierto = ui.modoAbierto === m.id;
   const eq = m.equipo;
-  return `<div class="modo ${abierto ? 'on' : ''}">
+  return `<div class="modo ${abierto ? 'on' : ''}" id="modo-${m.id}">
     <div class="modohead" data-a="modoAbrir" data-id="${m.id}">
       <span class="tag solid" style="background:${m.tipo === 'pvp' ? 'var(--role-control)' : 'var(--role-soporte)'}">${m.tipo === 'pvp' ? 'PvP' : 'PvE'}</span>
       <span class="modonom">${h(nombreModo(m))}</span>
@@ -5676,6 +5699,7 @@ function modoCard (m) {
       ${panelRecomendados(m)}
       ${m.ctp ? panelCTPs(m.ctp) : ''}
       ${m.ctp ? `<p class="muted"><a href="#armado" data-a="irArmado" data-v="${m.ctp}">${h(t(m.ctp === 'pvp' ? 'md_go_pvp' : 'md_go_pve'))}</a></p>` : ''}
+      ${historialModo(m)}
     </div>` : ''}
   </div>`;
 }
@@ -6397,6 +6421,9 @@ document.addEventListener('click', (e) => {
 
     case 'goTier': ui.view = 'tierlist'; render(); break;
     case 'goModos': ui.view = 'modos'; render(); break;
+    // Desde el Histórico: Modos con ese modo abierto, a la vista.
+    case 'verModo': ui.view = 'modos'; ui.modoAbierto = d.id; ui.movil = 'centro'; render();
+      document.getElementById('modo-' + d.id).scrollIntoView({ block: 'start' }); break;
     case 'goGlosario': ui.view = 'glosario'; ui.focusSearch = false; render(); break;
     case 'goHistorico': ui.view = 'historico'; ui.hiPj = d.cid || ''; ui.hiN = 20; render(); window.scrollTo(0, 0); break;
     case 'hiTipo': ui.hiTipo = d.v; ui.hiN = 20; render(); break;
