@@ -1,6 +1,6 @@
 {
- "version": "1.0.34",
- "formato_datos": 12,
+ "version": "1.0.35",
+ "formato_datos": 13,
  "python": "3.14.7",
- "notas": "El Histórico suma los modos de juego: lo que dicen las notas de actualización del foro oficial de cada modo (Jefe mundial, Batalla de alianza, Brecha dimensional, Tierra de sombras…), con un filtro por modo y, en Modos, el historial de cada uno con el link a su nota."
+ "notas": "La comparativa ahora compara efecto por efecto: para el equipo, contra el rival y para él, con cuánto da cada uno, cuánto dura y de qué skill sale; marca al que más da, junta en una línea lo que es igual en todos y aparte lo que tiene uno solo. La vista de antes sigue en «Ficha»."
 }

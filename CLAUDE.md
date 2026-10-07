@@ -126,6 +126,12 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   Battle…) van a `docs/HISTORICO.md`. En la app: el filtro «Personaje o modo», el tipo «Modo de juego», el nombre del
   modo lleva a Modos, y cada modo de Modos tiene su «Historial» (las 5 versiones más recientes y el botón al Histórico).
   Prueba: `verif_historico.py` (sección 7).
+- La 1.0.35 (formato 13, #6, entregada sin publicar): la comparativa por efecto, a prueba (Ezequiel, 7 de octubre: «probemos a ver
+  como queda»), según la maqueta del canvas «Rediseño MFF.ar» (artboards «Comparativa · por efecto», escritorio y celular). El número de cada efecto en los textos de
+  las skills: `modelo.valores` (sin «#», ninguno; un solo «#%», ese) y los patrones sin una sola respuesta a mano en
+  `catalogo.json` (`valores`); viaja en `MFF_CATALOGO.valor`. En la app, `cmpPorEfecto` (`ui.cmpVista`, por defecto
+  'efecto'; la tabla de antes es «Ficha»). Prueba: `verif_cmp_efecto.py`; verif_mesa, verif_aliados y verif_consistencia
+  usan la vista «Ficha» donde miran la tabla.
 - Entregado sin versión (solo datos, #5): `scripts/foro.py` baja también del tablero de avisos (2213: los parches de mitad
   de mes de 2020 y 2021 y algunas notas viejas); `historico.version_de_nota` asigna cada nota por la versión de su título
   o por las llegadas que nombra (thanosvibs tiene mal algunas fechas: 4.0, 5.5); los nombres se buscan sin tildes, sin
