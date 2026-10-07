@@ -1,6 +1,6 @@
 # Catálogo de efectos
 
-Generado por `scripts/catalogo.py` el 2026-10-06, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
+Generado por `scripts/catalogo.py` el 2026-10-07, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
 
 thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo traen como una etiqueta (`ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (`All Basic Attacks`). Acá los dos apuntan al mismo efecto, y cada efecto dice qué es, a quién le sirve y cómo se lee en PvE y en PvP. Cuándo se activa y a quién le llega no es del efecto sino de cada skill o soporte (su activación, su objetivo, su restricción): eso lo muestra la ficha.
 
@@ -81,7 +81,7 @@ Sube un ataque, el stat del que sale el daño.
   - `Misdirection` (9 retratos) — varía: crece cada vez que recibe un golpe
   - `Camouflage` (8 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate each #% of pure damage accumulated` (7 retratos) — varía: crece con el daño puro acumulado
-  - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según su vida
+  - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según sus PG
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `Attack per Recharge Shield (Consumption) Increase` (5 retratos) — varía: crece con el escudo que gasta
   - `Absorb` (4 retratos) — varía: el ataque crece con cada absorción
@@ -100,7 +100,7 @@ Sube un ataque, el stat del que sale el daño.
 
 Sube el daño que hace, aparte del ataque.
 
-- **PvE:** Sube el daño. Un buff de daño multiplica al de elemento en vez de sumarse (el ejemplo de la guía). [Probable] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** Sube el daño. Un potenciador de daño multiplica al de elemento en vez de sumarse (el ejemplo de la guía). [Probable] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Sube el daño. [Probable]
 
 ### Daño básico
@@ -114,7 +114,7 @@ Sube el daño que hace, aparte del ataque.
   - `Basic Damage Increase (Influence)` (49 retratos) — varía: baja con el tiempo
   - `Evasion Reload` (26 retratos)
   - `Increases a stack of basic damage` (21 retratos) — varía: se acumula
-  - `Increases skill damage relative to HP` (3 retratos) — varía: crece con la vida que gana
+  - `Increases skill damage relative to HP` (3 retratos) — varía: crece con los PG que gana
   - `Damage Increase with Fewer Enemies` (2 retratos) — con pocos enemigos cerca
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
 
@@ -159,7 +159,7 @@ Sube el daño que hace, aparte del ataque.
 `dano_final` · Final damage · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Valor` (10 retratos) — según la vida máxima del rival frente a la suya
+  - `Valor` (10 retratos) — según los PG máx. del rival frente a los suyos
   - `Increases Final Damage` (5 retratos)
 
 ### Daño contra ciertos rivales
@@ -170,11 +170,11 @@ Sube el daño que hace, aparte del ataque.
 - **PvP:** Sube el daño solo contra esos rivales. Contra una facción, es lo que suele aportar el tercero del equipo en Timeline, el «buffer»: según NamuWiki, un personaje con aumentos o bajas de daño entre facciones en su pasiva o su uniforme, como Colossus. [Comprobado] ([NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Skills:**
   - `Increases basic damage based on character's faction` (139 retratos) — contra una facción (cada skill dice cuál)
-  - `Vigor` (28 retratos) — contra rivales con la vida baja
+  - `Vigor` (28 retratos) — contra rivales con los PG bajos
   - `Increases basic damage when attacking boss types` (25 retratos) — contra jefes
-  - `Bravery` (23 retratos) — según la vida máxima del rival frente a la suya
+  - `Bravery` (23 retratos) — según los PG máx. del rival frente a los suyos
   - `Natural Enemy` (16 retratos) — contra rivales con un efecto dado; Nota: La fuente publica el efecto como un código; en Leads & Supports el mismo efecto aparece con nombre («Removes All Debuffs»).
-  - `Strength` (16 retratos) — contra rivales con la vida alta
+  - `Strength` (16 retratos) — contra rivales con los PG altos
   - `Increases basic damage based on character's type` (10 retratos) — contra un tipo (cada skill dice cuál)
   - `Increases basic damage based on character's race` (9 retratos) — contra una raza (cada skill dice cuál)
   - `INCREASES BASIC DAMAGE WHEN ATTACKING CHARACTERS WITH ABILITIES` (7 retratos) — contra quien tiene una habilidad (cada skill dice cuál)
@@ -188,7 +188,7 @@ Sube el daño que hace, aparte del ataque.
   - `Basic Damage Dealt to Boss Types` (44 retratos) — se acumula; contra jefes
   - `Basic Damage Dealt to Heroes` (41 retratos) — se acumula; contra una facción: Superhéroe
   - `Basic Damage Dealt to Males` (6 retratos) — se acumula; contra un género: Masculino
-  - `Basic Damage Dealt to Enemies with 25% HP or Higher` (4 retratos) — se acumula; contra rivales con la vida alta
+  - `Basic Damage Dealt to Enemies with 25% HP or Higher` (4 retratos) — se acumula; contra rivales con los PG altos
   - `Basic Damage Dealt to Universals` (3 retratos) — se acumula; contra un tipo: Universal
   - `Basic Damage Dealt to Enemies except Mutant Characters` (1 retrato) — se acumula; contra todos menos una raza: Mutante
   - `Basic Damage Dealt to Enemies with "Debuff Removal (Instinct)" Effect` (1 retrato) — se acumula; contra rivales con un efecto dado
@@ -220,7 +220,7 @@ Sube el daño que hace, aparte del ataque.
   - `GUARANTEED CRITICAL RATE ↑` (209 retratos)
   - `Precision` (15 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Guaranteed Critical Rate` (10 retratos) — cuenta una vez (la de mayor valor); tope: Probab. crítico 75%; Nota: No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la prob. de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival.
+  - `Guaranteed Critical Rate` (10 retratos) — cuenta una vez (la de mayor valor); tope: Probab. crítico 75%; Nota: No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la probabilidad de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival.
 
 ### Daño crítico
 
@@ -248,11 +248,11 @@ Sube el daño que hace, aparte del ataque.
 - **Leads & Supports y bonos de equipo:**
   - `Ignore Defense` (1 retrato, 217 bonos de equipo) — se acumula; tope: Ignorar defensa 50%
 
-### Daño de golpe en cadena
+### Daño por impacto en cadena
 
 `golpes_encadenados` · Chain hit damage · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Rinde con las skills de golpes en cadena; la fuente no marca cuáles lo son.
+- **Nota:** Rinde con las skills de impacto en cadena; la fuente no marca cuáles lo son.
 - **Skills:**
   - `CHAIN HIT DMG DEALT ↑` (239 retratos)
 - **Leads & Supports y bonos de equipo:**
@@ -292,9 +292,9 @@ Sube el daño que hace, aparte del ataque.
   - `ACCUMULATE TRUE ENERGY DMG` (4 retratos)
   - `ACCUMULATE ENERGY DMG` (2 retratos)
 
-### Efecto de los debuffs
+### Efecto de las mermas
 
-`efecto_debuffs` · Debuff effect · Se aplica a su lado · Le sirve: a quien aplica debuffs.
+`efecto_debuffs` · Debuff effect · Se aplica a su lado · Le sirve: a quien aplica mermas.
 
 - **Nota:** La regla de los liderazgos, soportes y bonos de equipo es de Ezequiel (4 de octubre de 2026).
 - **Skills:**
@@ -302,7 +302,7 @@ Sube el daño que hace, aparte del ataque.
 - **Leads & Supports y bonos de equipo:**
   - `All Debuffs Effect` (12 retratos) — le sirve: a cualquiera del equipo; se acumula
 
-### Efecto de los buffs
+### Efecto de los potenciadores
 
 `efecto_buffs` · Buff effect · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -326,7 +326,7 @@ Sube el daño que hace, aparte del ataque.
 
 Sube el daño de un elemento.
 
-- **PvE:** Solo le sirve a quien tiene ese elemento en sus skills. Los buffs del mismo elemento se suman entre sí, así que rinden menos que un buff de daño, que multiplica. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** Solo le sirve a quien tiene ese elemento en sus skills. Los potenciadores del mismo elemento se suman entre sí, así que rinden menos que un potenciador de daño, que multiplica. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Igual que en PvE. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 
 ### Daño de fuego
@@ -337,7 +337,7 @@ Sube el daño de un elemento.
   - `FLAME DAMAGE ↑` (43 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Fire Damage` (18 retratos) — se acumula
-  - `Fire Damage by % Fire Resist` (2 retratos) — se acumula; varía: según su resistencia al fuego
+  - `Fire Damage by % Fire Resist` (2 retratos) — se acumula; varía: según su resistencia a fuego
 
 ### Daño de frío
 
@@ -401,7 +401,7 @@ Que el golpe entre o atraviese protecciones.
 - **PvE:** Sirve contra rivales que esquivan o se protegen. [Probable]
 - **PvP:** Sirve contra rivales que esquivan o se protegen. [Probable]
 
-### Ignorar evasión
+### Ignorar esquiva
 
 `ignorar_evasion` · Ignore dodge · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -416,7 +416,7 @@ Que el golpe entre o atraviese protecciones.
 
 `perforar` · Pierce · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Atraviesa, con una probabilidad, la invencibilidad, la inmunidad a todo daño, los escudos, las barreras o la superarmadura del rival (cada skill dice cuáles).
+- **Nota:** Atraviesa, con una probabilidad, la invencibilidad, el efecto inmune a todo el daño, los escudos, las barreras o la superarmadura del rival (cada skill dice cuáles).
 - **Skills:**
   - `PIERCE` (663 retratos)
 
@@ -587,9 +587,9 @@ Inmoviliza o domina al rival.
 
 `control_mental` · Mind control · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **Nota:** El glosario en inglés dice «enemies that don't have debuffs» (rivales sin debuffs encima); según el coreano, los rivales a los que no se les aplican debuffs: los inmunes.
+- **PvE:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice «enemies that don't have debuffs» (rivales sin mermas encima); según el coreano, los rivales a los que no se les aplican mermas: los inmunes.
 - **Skills:**
   - `Mind Control` (65 retratos)
 
@@ -597,9 +597,9 @@ Inmoviliza o domina al rival.
 
 `detener_tiempo` · Time freezing · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No puede moverse ni atacar por un rato. Atrapa también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** No puede moverse ni atacar por un rato. Atrapa también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **Nota:** El glosario en inglés dice que atrapa a «epic monsters that have no debuffs» (monstruos sin debuffs encima); según el coreano, a los jefes grandes a los que no se les aplican debuffs: los inmunes.
+- **PvE:** No puede moverse ni atacar por un rato. Atrapa también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** No puede moverse ni atacar por un rato. Atrapa también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice que atrapa a «epic monsters that have no debuffs» (monstruos sin mermas encima); según el coreano, a los jefes grandes a los que no se les aplican mermas: los inmunes.
 - **Skills:**
   - `TIME FREEZING` (26 retratos)
 
@@ -621,8 +621,8 @@ Inmoviliza o domina al rival.
 
 `panico` · Panic · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales a los que no se les aplican debuffs, pero no a quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales a los que no se les aplican debuffs, pero no a quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvE:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales a los que no se les aplican mermas, pero no a quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales a los que no se les aplican mermas, pero no a quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `Panic` (23 retratos)
 
@@ -630,9 +630,9 @@ Inmoviliza o domina al rival.
 
 `seducir` · Entice · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien quita todos los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **Nota:** El glosario en inglés dice «enemies that don't have debuffs» (rivales sin debuffs encima); según el coreano, los rivales a los que no se les aplican debuffs: los inmunes.
+- **PvE:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** No puede moverse ni usar skills y camina despacio hacia quien lo aplicó. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice «enemies that don't have debuffs» (rivales sin mermas encima); según el coreano, los rivales a los que no se les aplican mermas: los inmunes.
 - **Skills:**
   - `Entice` (9 retratos)
 
@@ -642,16 +642,16 @@ Inmoviliza o domina al rival.
 
 - **Nota:** Obliga a los rivales a atacarlo a él: protege al resto del equipo.
 - **Skills:**
-  - `Mockery` (4 retratos) — Nota: Obliga a los rivales a atacarlo a él y «quitar todos los debuffs» no lo saca. Según el glosario del juego, al rival le sube el ataque y puede que no se le apliquen algunos buffs: si anula un Invencible, no se le aplica mientras dure.
+  - `Mockery` (4 retratos) — Nota: Obliga a los rivales a atacarlo a él y «quitar todos los debuffs» no lo saca. Según el glosario del juego, al rival le sube el ataque y puede que no se le apliquen algunos potenciadores: si anula un Invencible, no se le aplica mientras dure.
   - `PROVOKE` (4 retratos)
 
 ### Hechizo
 
 `encantar` · Charm · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvE:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **PvP:** No se mueve ni usa skills, ni siquiera los ataques que se activan solos. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **Nota:** El glosario del juego define el hechizo como un control; thanosvibs publica solo su daño mental continuo («Charm: Deals #% Mind Damage…»). Que sean el mismo efecto es probable: tienen el mismo nombre. Sobre los jefes, el inglés dice «epic monsters that have no debuffs» (monstruos sin debuffs encima); según el coreano, los jefes grandes a los que no se les aplican debuffs: los inmunes.
+- **Nota:** El glosario del juego define el hechizo como un control; thanosvibs publica solo su daño mental continuo («Charm: Deals #% Mind Damage…»). Que sean el mismo efecto es probable: tienen el mismo nombre. Sobre los jefes, el inglés dice «epic monsters that have no debuffs» (monstruos sin mermas encima); según el coreano, los jefes grandes a los que no se les aplican mermas: los inmunes.
 - **Skills:**
   - `CHARM` (24 retratos)
 
@@ -659,15 +659,15 @@ Inmoviliza o domina al rival.
 
 `perdida` · Loss · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. No se le aplica a quien tiene un efecto que quita todos los debuffs. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** No se mueve ni usa skills por un rato, pierde sus buffs y recibe más daño. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **Nota:** El glosario del juego dice que la pérdida frena al rival; thanosvibs publica su daño continuo y que le quita los buffs («Loss: Deals #% Bonus damage every # sec, removes Active Buffs»). Que sean el mismo efecto es probable: tienen el mismo nombre.
+- **PvE:** No se mueve ni usa skills por un rato, pierde sus potenciadores y recibe más daño. No se le aplica a quien tiene un efecto que elimina todas las mermas. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** No se mueve ni usa skills por un rato, pierde sus potenciadores y recibe más daño. [Probable] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario del juego dice que la pérdida frena al rival; thanosvibs publica su daño continuo y que le quita los potenciadores («Loss: Deals #% Bonus damage every # sec, removes Active Buffs»). Que sean el mismo efecto es probable: tienen el mismo nombre.
 - **Skills:**
   - `Loss` (5 retratos)
 
 ## Debilitar
 
-Le baja algo al rival o le quita buffs.
+Le baja algo al rival o le quita potenciadores.
 
 - **PvE:** Contra ese rival, el equipo pega más o recibe menos. [Probable]
 - **PvP:** Contra ese rival, el equipo pega más o recibe menos. [Probable]
@@ -687,7 +687,7 @@ Le baja algo al rival o le quita buffs.
 
 - **Skills:**
   - `Decreases all Basic Defenses (Can stack, ignores immunity)` (544 retratos)
-  - `Incapacitation` (303 retratos) — Nota: La skill dice que le quita los buffs; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien quita todos los debuffs.
+  - `Incapacitation` (303 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
   - `ALL BASIC DEFENSES DECREASE` (58 retratos)
   - `DECREASES ALL BASIC DEFENSES (CAN STACK)` (58 retratos)
   - `PHYSICAL DEFENSE ↓` (17 retratos)
@@ -728,7 +728,7 @@ Le baja algo al rival o le quita buffs.
   - `Mind Control` (65 retratos)
   - `Panic` (23 retratos)
 
-### Baja la resistencia al fuego del rival
+### Baja la resistencia a fuego del rival
 
 `resistencia_rival_fuego` · Lowers the foe's fire resist · Se aplica al rival · Le sirve: a quien hace daño de fuego.
 
@@ -751,14 +751,14 @@ Le baja algo al rival o le quita buffs.
   - `Lightning Resist Decrease (Can stack, ignores immunity)` (23 retratos)
   - `LIGHTNING RESIST ↓` (16 retratos)
 
-### Baja la resistencia al veneno del rival
+### Baja la resistencia a veneno del rival
 
 `resistencia_rival_veneno` · Lowers the foe's poison resist · Se aplica al rival · Le sirve: a quien hace daño de veneno.
 
 - **Skills:**
   - `Poison Resist Decrease (Can stack, ignores immunity)` (1 retrato)
 
-### Baja la resistencia mental del rival
+### Baja la resistencia a mental del rival
 
 `resistencia_rival_mente` · Lowers the foe's mind resist · Se aplica al rival · Le sirve: a quien hace daño mental.
 
@@ -775,25 +775,25 @@ Le baja algo al rival o le quita buffs.
   - `ALL RESISTANCE ↓` (18 retratos)
   - `All Resist Decrease (Can stack, ignores immunity)` (2 retratos)
 
-### Le quita los buffs al rival
+### Le quita los potenciadores al rival
 
 `quitar_buffs` · Strips the foe's buffs · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Incapacitation` (303 retratos) — Nota: La skill dice que le quita los buffs; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien quita todos los debuffs.
+  - `Incapacitation` (303 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
   - `CANCEL` (103 retratos)
-  - `REMOVE` (21 retratos) — Nota: La fuente publica qué quita como un código; la wiki (Spider-Man, «Hero's Responsibility») dice que le quita los buffs activos al rival.
+  - `REMOVE` (21 retratos) — Nota: La fuente publica qué quita como un código; la wiki (Spider-Man, «Hero's Responsibility») dice que le quita los potenciadores activos al rival.
   - `Loss` (5 retratos)
   - `Selective Removal` (1 retrato) — Nota: Le quita al rival un efecto que la fuente publica como código.
 
-### Baja el efecto de los buffs del rival
+### Baja el efecto de los potenciadores del rival
 
 `buffs_rival` · Lowers the effect of the foe's buffs · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
   - `BUFF EFFECT ↓` (9 retratos)
 
-### Baja el efecto de los debuffs del rival
+### Baja el efecto de las mermas del rival
 
 `debuffs_rival` · Lowers the effect of the foe's debuffs · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
@@ -829,7 +829,7 @@ Le baja algo al rival o le quita buffs.
 Sube las defensas.
 
 - **PvE:** La guía la da por casi inútil. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
-- **PvP:** Tampoco es lo que pesa en PvP: la guía pone al frente la reducción de daño, la vida y la evasión. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
+- **PvP:** Tampoco es lo que pesa en PvP: la guía pone al frente la reducción de daño, los PG y la esquiva. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
 
 ### Todas las defensas
 
@@ -842,7 +842,7 @@ Sube las defensas.
   - `Increases all basic stats` (220 retratos)
   - `ALL BASIC DEFENSES INCREASE` (91 retratos)
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
-  - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según su vida
+  - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según sus PG
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `Condensed Power` (1 retrato) — varía: se acumula
 - **Leads & Supports y bonos de equipo:**
@@ -886,18 +886,18 @@ Sube las defensas.
 - **Leads & Supports y bonos de equipo:**
   - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: La superarmadura es una habilidad y no se acumula; las defensas se suman, sin límite (Ezequiel, 5 de octubre de 2026). El número es el de las defensas, así que el stat se suma.
 
-## Vida
+## PG
 
-Vida, curación, escudos y revivir.
+PG, curación, escudos y revivir.
 
 - **PvE:** Lo mantiene vivo. [Probable]
-- **PvP:** La guía pone la vida entre lo que pesa en PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
+- **PvP:** La guía pone los PG entre lo que pesa en PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
 
-### Vida
+### PG
 
 `vida_max` · HP · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Lo mantiene vivo; sube el daño solo de los pocos que escalan con la vida. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** Lo mantiene vivo; sube el daño solo de los pocos que escalan con los PG. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Importante en PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
 - **Skills:**
   - `MAX HP ↑` (167 retratos)
@@ -916,7 +916,7 @@ Vida, curación, escudos y revivir.
   - `FORTITUDE` (6 retratos)
   - `Recovers HP per summoned character.` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Heal` (17 retratos) — se acumula; Nota: Se suma: es una curación de una vez, otra cosa que la tasa de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026).
+  - `Heal` (17 retratos) — se acumula; Nota: Se suma: es una curación de una vez, otra cosa que el índice de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026).
   - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: La inmortalidad no se acumula (Ezequiel, 5 de octubre de 2026), y la curación viene con ella. Solo lo da el artefacto de Franklin Richards (Villains Are Bad).
 
 ### Recuperación
@@ -930,7 +930,7 @@ Vida, curación, escudos y revivir.
 - **Leads & Supports y bonos de equipo:**
   - `Recovery Rate` (9 retratos, 106 bonos de equipo) — se acumula; tope: Índice de recuperación 250% (desde 100%)
 
-### Robo de vida
+### Robo de PG
 
 `robo_vida` · HP steal · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -942,8 +942,8 @@ Vida, curación, escudos y revivir.
 
 `escudo` · Shield · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Frena una cantidad fija de daño (las skills la dan como un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
-- **PvP:** Frena una cantidad fija de daño (las skills la dan como un porcentaje de la vida máxima), pero no frena el movimiento de los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvE:** Frena una cantidad fija de daño (las skills la dan como un porcentaje de los PG máx.), pero no frena el movimiento de los golpes, la rotura de guardia ni las mermas. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvP:** Frena una cantidad fija de daño (las skills la dan como un porcentaje de los PG máx.), pero no frena el movimiento de los golpes, la rotura de guardia ni las mermas. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **Skills:**
   - `Recharge Shield` (14 retratos) — Nota: Se recarga solo. Un escudo del mismo tipo se absorbe y lo hace más fuerte; uno de otro tipo se suma aparte (glosario del juego).
   - `SHIELD` (14 retratos)
@@ -957,8 +957,8 @@ Vida, curación, escudos y revivir.
 
 `barrera` · Barrier · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** No recibe daño por un tiempo y una cantidad de golpes (las skills dicen cuántos: «Barrier # time(s)»), pero no frena la rotura de guardia ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
-- **PvP:** No recibe daño por un tiempo y una cantidad de golpes (las skills dicen cuántos: «Barrier # time(s)»), pero no frena la rotura de guardia ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvE:** No recibe daño por un tiempo y una cantidad de golpes (las skills dicen cuántos: «Barrier # time(s)»), pero no frena la rotura de guardia ni las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
+- **PvP:** No recibe daño por un tiempo y una cantidad de golpes (las skills dicen cuántos: «Barrier # time(s)»), pero no frena la rotura de guardia ni las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **Nota:** El glosario en inglés dice solo «for a set amount of time»; según el coreano, dura un tiempo y una cantidad de golpes, como la cuentan las skills.
 - **Skills:**
   - `BARRIER` (251 retratos)
@@ -992,14 +992,14 @@ Vida, curación, escudos y revivir.
 Recibe menos daño o lo evita.
 
 - **PvE:** Lo mantiene vivo. [Probable]
-- **PvP:** Clave: la guía pone la reducción de daño y la evasión al frente del PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
+- **PvP:** Clave: la guía pone la reducción de daño y la esquiva al frente del PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
 
 ### Invencible
 
 `invencible` · Invincible · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni los debuffs. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni los debuffs. Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
+- **PvE:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni las mermas. Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Nota:** El glosario en inglés dice que es inmune a los «basic attacks»; según el coreano, a la reacción al recibir un golpe (피격 모션). No tiene que ver con el stat de ataque básico.
 - **Skills:**
   - `INVINCIBLE` (817 retratos)
@@ -1009,8 +1009,8 @@ Recibe menos daño o lo evita.
 
 `inmune_todo` · All damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Mientras dura no recibe daño ni debuffs, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvE:** Mientras dura no recibe daño ni mermas, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño ni mermas, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `ALL DAMAGE IMMUNE` (555 retratos)
   - `Parry` (2 retratos)
@@ -1033,8 +1033,8 @@ Recibe menos daño o lo evita.
 - **PvP:** Solo contra esos rivales. Contra una facción, es lo que suele aportar el tercero del equipo en Timeline, el «buffer»: según NamuWiki, un personaje con aumentos o bajas de daño entre facciones en su pasiva o su uniforme, como Colossus. [Comprobado] ([NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Skills:**
   - `Decreases basic damage based on character's faction` (55 retratos) — contra una facción (cada skill dice cuál)
-  - `Bravery` (23 retratos) — según la vida máxima del rival frente a la suya
-  - `Valor` (10 retratos) — según la vida máxima del rival frente a la suya
+  - `Bravery` (23 retratos) — según los PG máx. del rival frente a los suyos
+  - `Valor` (10 retratos) — según los PG máx. del rival frente a los suyos
   - `Decreases basic damage based on character's type` (6 retratos) — contra un tipo (cada skill dice cuál)
   - `Decreases basic damage based on character's race` (3 retratos) — contra una raza (cada skill dice cuál)
   - `DECREASES BASIC DAMAGE WHEN ATTACKED BY CHARACTERS WITH ABILITIES` (2 retratos) — contra quien tiene una habilidad (cada skill dice cuál)
@@ -1063,8 +1063,8 @@ Recibe menos daño o lo evita.
 
 `inmune_fisico` · Physical damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Mientras dura no recibe daño físico ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvE:** Mientras dura no recibe daño físico ni las mermas de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño físico ni las mermas de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `PHYSICAL IMMUNITY` (27 retratos)
 - **Leads & Supports y bonos de equipo:**
@@ -1074,8 +1074,8 @@ Recibe menos daño o lo evita.
 
 `inmune_energia` · Energy damage immunity (chance) · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Mientras dura no recibe daño de energía ni los debuffs de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvE:** Mientras dura no recibe daño de energía ni las mermas de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Mientras dura no recibe daño de energía ni las mermas de ese daño, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
   - `Absorb` (4 retratos) — varía: el ataque crece con cada absorción
   - `ENERGY IMMUNITY` (3 retratos)
@@ -1095,7 +1095,7 @@ Recibe menos daño o lo evita.
   - `Fire Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
   - `Mind Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
 
-### Ignora el daño que pase de un % de su vida
+### Ignora el daño que pase de un % de sus PG
 
 `tope_golpe` · Ignores damage above a % of its HP · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -1112,7 +1112,7 @@ Recibe menos daño o lo evita.
 - **Skills:**
   - `Adaptation` (3 retratos)
 
-### Menos daño de golpes en cadena
+### Menos daño por impacto en cadena
 
 `encadenados_recibidos` · Less chain hit damage taken · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -1149,7 +1149,7 @@ Recibe menos daño o lo evita.
 - **Leads & Supports y bonos de equipo:**
   - `Physical Reflect Damage Received` (9 retratos) — se acumula; Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
 
-### Evasión
+### Esquiva
 
 `evasion` · Dodge · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -1168,15 +1168,15 @@ Recibe menos daño o lo evita.
 
 - **Nota:** Solo lo escribe la wiki, en el bono de equipo Puppet Show; ni Leads & Supports ni el juego (en las capturas) usan ese stat. No se sabe qué sube exactamente. A quién le sirve: a cualquiera (Ezequiel, 5 de octubre de 2026).
 - **Leads & Supports y bonos de equipo:**
-  - `Max Dodge` (1 bono de equipo) — se acumula; tope: Esquiva 75%; Nota: Se suma, con el tope de la evasión (Ezequiel, 5 de octubre de 2026). No se sabe qué sube exactamente (ver el efecto).
+  - `Max Dodge` (1 bono de equipo) — se acumula; tope: Esquiva 75%; Nota: Se suma, con el tope de la esquiva (Ezequiel, 5 de octubre de 2026). No se sabe qué sube exactamente (ver el efecto).
 
 ### Probabilidad de esquiva garantizada
 
 `evasion_garantizada` · Guaranteed dodge · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvE:** Suma un valor fijo a la evasión, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **PvP:** Suma un valor fijo a la evasión, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
-- **Nota:** El glosario en inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la evasión.
+- **PvE:** Suma un valor fijo a la esquiva, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **PvP:** Suma un valor fijo a la esquiva, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
+- **Nota:** El glosario en inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la esquiva.
 - **Skills:**
   - `GUARANTEED DODGE RATE ↑` (273 retratos)
 
@@ -1192,7 +1192,7 @@ Recibe menos daño o lo evita.
 
 `esquivar_golpes` · Dodges a number of hits · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **Nota:** Según la skill, incluso los que ignoran la evasión.
+- **Nota:** Según la skill, incluso los que ignoran la esquiva.
 - **Skills:**
   - `Evasion Reload` (26 retratos)
   - `Dodges certain attacks.` (2 retratos)
@@ -1212,24 +1212,24 @@ Recibe menos daño o lo evita.
   - `COLD RESIST ↑` (3 retratos)
   - `POISON RESIST ↑` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `Mind Resist` (5 retratos, 1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia mental; se acumula; tope: Resistencia elemental 200%
+  - `Mind Resist` (5 retratos, 1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia a mental; se acumula; tope: Resistencia elemental 200%
   - `All Resistances` (5 retratos) — le sirve: a quien tiene una mejora de daño según alguna resistencia (de su artefacto o de su Striker); se acumula; tope: Resistencia elemental 200%
-  - `Fire Resist` (2 retratos, 7 bonos de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al fuego; se acumula; tope: Resistencia elemental 200%
+  - `Fire Resist` (2 retratos, 7 bonos de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia a fuego; se acumula; tope: Resistencia elemental 200%
   - `Cold Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al frío; se acumula; tope: Resistencia elemental 200%
   - `Lightning Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al rayo; se acumula; tope: Resistencia elemental 200%
 
-## Contra debuffs
+## Contra mermas
 
-Le saca los debuffs o lo hace inmune a ellos.
+Le saca las mermas o lo hace inmune a ellas.
 
-- **PvE:** Sirve donde el rival aplica debuffs. [Probable]
-- **PvP:** Clave: la guía dice que la inmunidad a debuffs es crucial en PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
+- **PvE:** Sirve donde el rival aplica mermas. [Probable]
+- **PvP:** Clave: la guía dice que la inmunidad a mermas es crucial en PvP. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
 
-### Le saca todos los debuffs
+### Le saca todas las mermas
 
 `quita_debuffs` · Removes all debuffs · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
-- **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). Cuando dura un tiempo, protege mientras dura: NamuWiki dice que el liderazgo de Malekith le da a todo el equipo 20 s de inmunidad a los estados alterados, y la guía de thanosvibs llama «Debuff Immunity» a la pasiva de Tier-2 de Wasp, que la API publica como «Removes all Debuffs» por 20 s. En los liderazgos y soportes casi siempre dura 12 s desde que recibe un debuff: que esos protejan igual es lo probable, pero ninguna fuente lo dice. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), [NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
+- **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). Cuando dura un tiempo, protege mientras dura: NamuWiki dice que el liderazgo de Malekith le da a todo el equipo 20 s de inmunidad a los estados alterados, y la guía de thanosvibs llama «Debuff Immunity» a la pasiva de Tier-2 de Wasp, que la API publica como «Removes all Debuffs» por 20 s. En los liderazgos y soportes casi siempre dura 12 s desde que recibe una merma: que esos protejan igual es lo probable, pero ninguna fuente lo dice. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), [NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Nota:** La API de skills a veces publica «Give Power» sin decir qué otorga; Leads & Supports trae que es esto (docs/AUDITORIA.md, sección 7).
 - **Skills:**
   - `Removes all Debuffs. ` (409 retratos)
@@ -1237,18 +1237,18 @@ Le saca los debuffs o lo hace inmune a ellos.
 - **Leads & Supports y bonos de equipo:**
   - `Remove All Debuffs` (81 retratos) — cuenta una vez (la de mayor valor)
 
-### Inmunidad a debuffs
+### Inmunidad a mermas
 
 `inmune_debuffs` · Debuff immunity · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **PvP:** Crucial en PvP: si el principal no la tiene, se lleva un líder o un soporte que la dé. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4))
-- **Nota:** La guía de thanosvibs llama «Debuff Immunity» también a «quitar todos los debuffs» con duración (la Tier-2 de Wasp). No son lo mismo: según el glosario del juego, la congelación temporal, el hechizo, la persuasión, el control mental y el pánico alcanzan a los jefes y rivales a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
+- **Nota:** La guía de thanosvibs llama «Debuff Immunity» también a «quitar todos los debuffs» con duración (la Tier-2 de Wasp). No son lo mismo: según el glosario del juego, la congelación temporal, el hechizo, la persuasión, el control mental y el pánico alcanzan a los jefes y rivales a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.
 - **Skills:**
   - `IMMUNE` (13 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Debuff Immunity` (3 retratos) — cuenta una vez (la de mayor valor)
 
-### Inmune a un debuff
+### Inmune a una merma
 
 `inmune_efecto` · Immune to a debuff · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -1272,7 +1272,7 @@ Le saca los debuffs o lo hace inmune a ellos.
 - **Leads & Supports y bonos de equipo:**
   - `Guard Break Immunity` (1 retrato) — cuenta una vez (la de mayor valor)
 
-### Debuffs más cortos
+### Mermas más cortas
 
 `debuffs_cortos` · Shorter debuffs · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
@@ -1302,7 +1302,7 @@ Velocidades, recarga de skills y cargas.
   - `FRENZY` (491 retratos)
   - `Increases all basic stats` (220 retratos)
   - `ALL SPEED ↑` (148 retratos)
-  - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según su vida
+  - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según sus PG
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
   - `ALL SPEED ↑(Can Stack)` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
@@ -1481,7 +1481,7 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Debuff Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Fear Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Fire Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
-| `Guaranteed Critical Rate` | cuenta una vez (la de mayor valor) | Probab. crítico 75% | No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la prob. de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival. |
+| `Guaranteed Critical Rate` | cuenta una vez (la de mayor valor) | Probab. crítico 75% | No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la probabilidad de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival. |
 | `Guard Break Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` | cuenta una vez (la de mayor valor) | — | Cuenta una vez: es el caso único de Molecule Man, y no se apila porque lo da un solo personaje (Ezequiel, 5 de octubre de 2026). |
 | `Immortality + Death` | cuenta una vez (la de mayor valor) | — |  |
@@ -1539,14 +1539,14 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Fire Damage` | se acumula | — |  |
 | `Fire Damage by % Fire Resist` | se acumula | — |  |
 | `Fire Resist` | se acumula | Resistencia elemental 200% |  |
-| `Heal` | se acumula | — | Se suma: es una curación de una vez, otra cosa que la tasa de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026). |
+| `Heal` | se acumula | — | Se suma: es una curación de una vez, otra cosa que el índice de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026). |
 | `HP` | se acumula | — |  |
 | `Ignore Defense` | se acumula | Ignorar defensa 50% |  |
 | `Ignore Dodge` | se acumula | — |  |
 | `Ignore Non-Boss Damage Decrease` | se acumula | — | Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026). |
 | `Lightning Damage` | se acumula | — |  |
 | `Lightning Resist` | se acumula | Resistencia elemental 200% |  |
-| `Max Dodge` | se acumula | Esquiva 75% | Se suma, con el tope de la evasión (Ezequiel, 5 de octubre de 2026). No se sabe qué sube exactamente (ver el efecto). |
+| `Max Dodge` | se acumula | Esquiva 75% | Se suma, con el tope de la esquiva (Ezequiel, 5 de octubre de 2026). No se sabe qué sube exactamente (ver el efecto). |
 | `Mind Damage` | se acumula | — |  |
 | `Mind Resist` | se acumula | Resistencia elemental 200% |  |
 | `Movement Speed` | se acumula | Velocidad de movimiento 130% (desde 100%) |  |
@@ -1567,17 +1567,17 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
 ### Errores que se repiten
 
 - **«Basic attacks»: según el coreano, la reacción al golpe (피격 모션)** (Invencible, Superarmadura, Escudo, Inmunidad al daño, Contrataque). 피격 모션 es la reacción al recibir un golpe: el personaje se frena y se le corta lo que estaba haciendo. El inglés lo traduce como «basic attacks» o «basic attack motions», que no tiene nada que ver con el stat de ataque básico. Con la traducción correcta todo cierra: la rotura de guardia corta la skill forzando esa reacción, la superarmadura es inmune a ella y a la rotura de guardia, y el contraataque reemplaza esa reacción, así que no se activa mientras es invencible.
-- **«That have no debuffs»: según el coreano, los inmunes a los debuffs** (Congelación temporal, Hechizo, Persuasión, Control mental). Según el coreano, estos controles alcanzan también a los jefes y rivales a los que no se les aplican debuffs, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin debuffs encima; en pánico y en la marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by debuffs»). En los cuatro, lo que no los deja entrar es tener un efecto que quita todos los debuffs.
+- **«That have no debuffs»: según el coreano, los inmunes a las mermas** (Congelación temporal, Hechizo, Persuasión, Control mental). Según el coreano, estos controles alcanzan también a los jefes y rivales a los que no se les aplican mermas, es decir, a los inmunes. El inglés dice «that have no debuffs» o «that don't have debuffs», que se lee como rivales sin mermas encima; en pánico y en la marca, la misma frase coreana sale bien en inglés («who cannot be debuffed», «not affected by debuffs»). En los cuatro, lo que no los deja entrar es tener un efecto que elimina todas las mermas.
 - **«Type»: según el coreano, el elemento (속성)** (Daño puro, Amplificación de clase). 속성 es el elemento (fuego, frío, rayo, veneno, mente). El inglés lo traduce a veces como «Type», que en el juego también es la clase (Combate, Detonación, Velocidad, Universal). El daño puro no pasa por las resistencias elementales (el inglés dice «Type Resistance»), Amplificación de clase sube el ataque de las skills con elemento, y la etiqueta «TYPE PENETRATION» de las skills atraviesa una resistencia elemental. En Recharge Shield, en cambio, el coreano usa 속성 para el tipo de escudo (físico o de energía), y ahí el inglés «Shield type» está bien.
 
 ### Términos
 
-- **Romper guardia** (Guard Break) · 가드 브레이크: Corta la skill que está usando el rival y abre un contraataque. La superrotura de guardia atraviesa además la inmunidad a la rotura de guardia.
+- **Romper guardia** (Guard Break) · 가드 브레이크: Corta la skill que está usando el rival y abre un contraataque. La superrotura de guardia atraviesa además la inmunidad a romper guardia.
   - **El inglés y el coreano:** El inglés solo dice que la cancela; según el coreano, la corta forzando la reacción al golpe (피격 모션).
   - **Nota:** En español el juego titula el término «Romper guardia» y en los textos lo llama «rotura de guardia» (y «superrotura de guardia»).
   - **En el catálogo:** Romper guardia (cancela la skill del rival), Inmunidad a Romper guardia.
-- **Probabilidad de esquiva garantizada** (Guaranteed Dodge Rate) · 무조건 회피율: La evasión depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la evasión.
-  - **El inglés y el coreano:** El inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la evasión.
+- **Probabilidad de esquiva garantizada** (Guaranteed Dodge Rate) · 무조건 회피율: La esquiva depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la esquiva.
+  - **El inglés y el coreano:** El inglés dice que esquiva «at a set rate»; según el coreano, le suma un valor fijo a la esquiva.
   - **En el catálogo:** Probabilidad de esquiva garantizada.
 - **Probabilidad de crítico garantizada** (Guaranteed Critical Rate) · 무조건 치명타율: La probabilidad de crítico depende de la diferencia de nivel con el rival. La garantizada no pasa por esa cuenta: le suma un valor fijo a la probabilidad de crítico.
   - **El inglés y el coreano:** El inglés dice que hace crítico «at a set rate»; según el coreano, le suma un valor fijo a la probabilidad de crítico.
@@ -1586,44 +1586,44 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
   - **El inglés y el coreano:** El inglés dice «Character Type Resistance»; según el coreano, son las resistencias elementales (속성 저항).
   - **En el catálogo:** Acumula daño.
 - **Equipo pasivo** (Team Passive) · 팀 패시브: Una pasiva que les llega a todos los del equipo aunque su dueño no sea el líder: las que dicen «Applies to: All Team members». El análisis de la app ya las manda al equipo.
-- **Invencible** (Invincible) · 무적: Inmune a todo lo que lo puede afectar: la reacción a los golpes, la rotura de guardia, el daño y los debuffs.
+- **Invencible** (Invincible) · 무적: Inmune a todo lo que lo puede afectar: la reacción a los golpes, la rotura de guardia, el daño y las mermas.
   - **El inglés y el coreano:** El inglés dice que es inmune a los «basic attacks»; según el coreano, a la reacción al golpe (피격 모션).
   - **En el catálogo:** Invencible.
 - **Superarmadura** (Super Armor) · 슈퍼 아머: Inmune a la reacción a los golpes y a la rotura de guardia: los ataques del rival no le cortan lo que está haciendo, pero recibe el daño.
   - **El inglés y el coreano:** El inglés dice «basic attack motions»; según el coreano, es la reacción al golpe (피격 모션).
   - **En el catálogo:** Superarmadura.
-- **Barrera** (Barrier) · 배리어: Frena el daño por un tiempo y una cantidad de golpes. No frena la rotura de guardia ni los debuffs.
-  - **El inglés y el coreano:** El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; según el coreano, además, dura una cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y tampoco frena los debuffs.
+- **Barrera** (Barrier) · 배리어: Frena el daño por un tiempo y una cantidad de golpes. No frena la rotura de guardia ni las mermas.
+  - **El inglés y el coreano:** El inglés dice solo «for a set amount of time» y que no frena la rotura de guardia; según el coreano, además, dura una cantidad de golpes (como la cuentan las skills: «Barrier # time(s)») y tampoco frena las mermas.
   - **En el catálogo:** Barrera.
-- **Escudo** (Shield) · 쉴드: Frena una cantidad fija de daño por un tiempo. No frena la reacción a los golpes, la rotura de guardia ni los debuffs. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía.
+- **Escudo** (Shield) · 쉴드: Frena una cantidad fija de daño por un tiempo. No frena la reacción a los golpes, la rotura de guardia ni las mermas. Hay escudos contra todo daño, solo contra el físico o solo contra el de energía.
   - **El inglés y el coreano:** Según el coreano, la cantidad de daño que frena es fija; el inglés no lo dice («stops damage for a set amount of time») y llama «basic attack motions» a la reacción al golpe (피격 모션).
   - **En el catálogo:** Escudo.
-- **Inmunidad al daño** (Damage Immunity) · 피해 면역: Frena el daño y los debuffs por un tiempo, pero no la reacción a los golpes ni la rotura de guardia. Puede ser contra todo daño, solo el físico o solo el de energía, con sus debuffs.
+- **Inmunidad al daño** (Damage Immunity) · 피해 면역: Frena el daño y las mermas por un tiempo, pero no la reacción a los golpes ni la rotura de guardia. Puede ser contra todo daño, solo el físico o solo el de energía, con sus mermas.
   - **El inglés y el coreano:** El inglés dice «basic attack motions»; según el coreano, es la reacción al golpe (피격 모션).
   - **En el catálogo:** Inmune a todo daño (probabilidad), Inmune al daño físico (probabilidad), Inmune al daño de energía (probabilidad).
 - **Miedo** (Fear) · 공포: El rival huye de quien se lo aplicó y no puede atacar ni usar skills.
   - **En el catálogo:** Miedo.
 - **Trampa** (Snare) · 속박: Ata al rival a un lugar: no puede moverse, atacar ni usar skills.
   - **En el catálogo:** Trampa.
-- **Congelación temporal** (Time Freezing) · 타임 프리징: Encierra al rival en el tiempo: no se mueve ni ataca. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
-  - **El inglés y el coreano:** El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican debuffs.
+- **Congelación temporal** (Time Freezing) · 타임 프리징: Encierra al rival en el tiempo: no se mueve ni ataca. Alcanza también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.
+  - **El inglés y el coreano:** El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican mermas.
   - **En el catálogo:** Congelación temporal.
-- **Hechizo** (Charm) · 매혹: El rival no se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
-  - **El inglés y el coreano:** El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican debuffs.
+- **Hechizo** (Charm) · 매혹: El rival no se mueve ni usa skills, ni siquiera los ataques que se activan solos. Alcanza también a los jefes grandes a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.
+  - **El inglés y el coreano:** El inglés dice «epic monsters that have no debuffs»; según el coreano, los jefes grandes a los que no se les aplican mermas.
   - **En el catálogo:** Hechizo, Daño mental del hechizo.
 - **Ignorar blanco** (Ignore Targeting) · 타겟팅 무시: Queda fuera de la mira del rival: las skills que apuntan a un objetivo lo ignoran y no recibe daño aunque lo ataquen. Usado justo cuando el rival ataca, ignora el ataque entero y deja seguir con el propio.
-- **Persuasión** (Entice) · 유혹: El rival no se mueve ni usa skills y camina despacio hacia quien lo sedujo. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.
-  - **El inglés y el coreano:** El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican debuffs.
+- **Persuasión** (Entice) · 유혹: El rival no se mueve ni usa skills y camina despacio hacia quien lo sedujo. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien tiene un efecto que elimina todas las mermas.
+  - **El inglés y el coreano:** El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican mermas.
   - **En el catálogo:** Persuasión.
-- **Control mental** (Mind Control) · 정신 지배: El rival pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican debuffs, pero no contra quien tiene un efecto que quita todos los debuffs.
-  - **El inglés y el coreano:** El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican debuffs.
+- **Control mental** (Mind Control) · 정신 지배: El rival pasa a pelear del lado propio y recibe más daño. Sirve contra World Bosses y rivales a los que no se les aplican mermas, pero no contra quien tiene un efecto que elimina todas las mermas.
+  - **El inglés y el coreano:** El inglés dice «enemies that don't have debuffs»; según el coreano, los rivales a los que no se les aplican mermas.
   - **En el catálogo:** Control mental.
 - **Recargar escudo** (Recharge Shield) · 리차지 쉴드: Un escudo que se recarga solo. Si recibe otro escudo del mismo tipo, lo absorbe y crece; uno del otro tipo (físico o de energía) no lo agranda: cada uno funciona aparte.
   - **En el catálogo:** Escudo.
 - **Fractura** (Fracture) · 골절: Le baja todos los ataques básicos al rival y se acumula. Cada curación del rival le saca una carga y lo cura menos. «Quitar todos los debuffs» no la saca.
   - **En el catálogo:** Fractura.
-- **Incapacitación** (Incapacitation) · 무력화: Le saca los buffs al rival y le baja todas las defensas (se acumula). No se le aplica a quien tiene un efecto que quita todos los debuffs.
-  - **En el catálogo:** Le quita los buffs al rival, Baja las defensas del rival.
+- **Incapacitación** (Incapacitation) · 무력화: Le saca los potenciadores al rival y le baja todas las defensas (se acumula). No se le aplica a quien tiene un efecto que elimina todas las mermas.
+  - **En el catálogo:** Le quita los potenciadores al rival, Baja las defensas del rival.
 - **Contrataque** (Counterattack) · 반격기: Al recibir un golpe, en vez de la reacción al golpe hace un contraataque. Como necesita esa reacción, no se activa mientras es invencible.
   - **El inglés y el coreano:** El inglés dice que reemplaza los «basic attack motions» y explica mal por qué no se activa siendo invencible; según el coreano, reemplaza la reacción al golpe (피격 모션), que el invencible no tiene.
   - **Nota:** En español el juego lo escribe «Contrataque» (sic); en el consejo de «Romper guardia», «contraataque».
@@ -1637,51 +1637,51 @@ El glosario de skills del juego (Skill Name Glossary en inglés, 스킬 용어 �
   - **El inglés y el coreano:** 간파 quiere decir ver venir el ataque (leerlo), no perforar: no tiene que ver con la Perforación (Pierce) ni con la etiqueta «TYPE PENETRATION» de las skills. El inglés dice que corta la skill del rival; según el coreano, su ataque, y además la probabilidad baja si su Concentración es menor que la del rival (낮을수록 감소합니다): el inglés solo dice que sube con más.
   - **Lo da:** Regeneration (opción de reforja), Transcendence (opción de reforja).
   - **Nota:** En Transcendence, la otra opción de reforjado es Paliza; en Regeneration, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.
-- **Paliza** (Beatdown) · 압도: Al usar una skill, sube el daño de perforación adicional (sin el tope máximo) y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
+- **Paliza** (Beatdown) · 압도: Al usar una skill, sube el daño de perforación adicional (sin el tope máximo) y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
   - **Lo da:** Energy (opción de reforja), Transcendence (opción de reforja).
   - **Nota:** En Transcendence, la otra opción de reforjado es Penetración; en Energy, todos los ataques y defensas básicos +20% (+32% en Brilliant). Un C.T.P. reforjado lleva probablemente una sola de las dos: los que se ven equipados traen una.
-- **Amplificación de clase** (Type Amplification) · 속성 증폭: Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
+- **Amplificación de clase** (Type Amplification) · 속성 증폭: Al usar una skill, sube el ataque de las skills con elemento y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
   - **El inglés y el coreano:** El menú en inglés dice «Type Amplification» y el texto, «Element Amplification»; según el coreano, es 속성 증폭: amplificación de elemento. El C.T.P. Judgment reforjado dice en inglés «Increases additional type skill damage». Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.
   - **Lo da:** Judgment (opción de reforja).
   - **Nota:** En español el título dice «Amplificación de clase» y el texto, «Amplificación de elemento» (como el inglés: «Type Amplification» y «Element Amplification»).
 - **Acero** (Steel) · 강철: Da inmunidad a la rotura y a la superrotura de guardia y baja el daño recibido; la baja crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
   - **Lo da:** Authority (opción de reforja).
-- **Burla** (Mockery) · 조롱: Un debuff que obliga a los rivales a atacarlo a él. A los afectados les sube el ataque, pero con cierta probabilidad no les entra un buff determinado: si la burla anula la invencibilidad, por ejemplo, no pueden volverse invencibles mientras dure.
+- **Burla** (Mockery) · 조롱: Una merma que obliga a los rivales a atacarlo a él. A los afectados les sube el ataque, pero con cierta probabilidad no les entra un potenciador determinado: si la burla anula la invencibilidad, por ejemplo, no pueden volverse invencibles mientras dure.
   - **En el catálogo:** Burla.
-- **Golpe** (Strike) · 강타: Al usar una skill, ignora la evasión del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
+- **Golpe** (Strike) · 강타: Al usar una skill, ignora la esquiva del rival y sube el daño a los jefes; la suba crece con la Concentración. Barra propia que se carga al moverse; después de usarse, no carga por 7 s.
   - **El inglés y el coreano:** Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.
   - **Lo da:** Destruction (opción de reforja).
 - **Emboscada** (Ambush) · 맹공: Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, e ignora una parte de la reducción de daño del rival; esa parte crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
   - **El inglés y el coreano:** Según el coreano, además, se activa sola (효과는 자동 발동되며); el inglés no lo dice, y en Choque sí.
   - **Lo da:** Greed (opción de reforja).
   - **Nota:** thanosvibs dice que ignora la reducción de defensa del rival; el juego, la reducción de daño (el hallazgo de los C.T.P., en la auditoría).
-- **Fortaleza** (Fortitude) · 불굴: Por un tiempo la vida no baja de 1 y, al terminar, se cura. Se activa sola cuando la vida baja de cierto valor; mientras dura, da inmunidad a la rotura de guardia y no se puede quitar con efectos que quitan buffs.
+- **Fortaleza** (Fortitude) · 불굴: Por un tiempo los PG no bajan de 1 y, al terminar, se cura. Se activa sola cuando los PG bajan de cierto valor; mientras dura, da inmunidad a romper guardia y no se puede quitar con efectos que quitan potenciadores.
   - **En el catálogo:** No muere por un tiempo, Inmunidad a Romper guardia, Curación.
 - **Cuchilla** (Blade) · 칼날: Al usar una skill, atraviesa los efectos defensivos del rival y sube el daño; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); se activa sola y después no carga por 7 s.
   - **Lo da:** Veteran (opción de reforja).
 - **Defender** (Defend) · 방호: Da inmunidad a la rotura y a la superrotura de guardia y una barrera que ignora la cancelación y la perforación y frena una cantidad de golpes; además cura según la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.
   - **Lo da:** Patience (opción de reforja).
-- **Escudo de superimpacto** (Super Hit Shield) · 슈퍼 히트 쉴드: Un escudo que se recarga cada vez que su ataque le pega al rival. Si se activan varios escudos a la vez, ignora los demás y queda solo este. No lo quitan los efectos que quitan buffs ni lo atraviesa la perforación.
+- **Escudo de superimpacto** (Super Hit Shield) · 슈퍼 히트 쉴드: Un escudo que se recarga cada vez que su ataque le pega al rival. Si se activan varios escudos a la vez, ignora los demás y queda solo este. No lo quitan los efectos que quitan potenciadores ni lo atraviesa la perforación.
   - **En el catálogo:** Escudo.
-- **Rabioso** (Enraged) · 격노: Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
+- **Rabioso** (Enraged) · 격노: Al usar una skill, sube el daño crítico aunque pase el tope y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
   - **El inglés y el coreano:** Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.
   - **Lo da:** Rage (opción de reforja).
-- **Vitalidad** (Vitality) · 활력: Da inmunidad a la rotura y a la superrotura de guardia y cura vida cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.
+- **Vitalidad** (Vitality) · 활력: Da inmunidad a la rotura y a la superrotura de guardia y cura PG cada segundo; la cura crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 7 s.
   - **Lo da:** Refinement (opción de reforja).
 - **Muro** (Wall) · 방벽: Una barrera propia que baja el daño recibido; cada golpe le resta reducción hasta un mínimo, que dura hasta que se termina. No se usa junto con la Barrera y no se suma a otras reducciones de daño: va aparte.
   - **Lo da:** Conquest (opción bloqueada).
-  - **Nota:** En Conquest se activa con la vida al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»). En español el título dice «Muro» y el texto lo llama «Barrera» (y dice que no se usa con Barrera).
+  - **Nota:** En Conquest se activa con los PG al 50% o menos, según la ficha en coreano («HP가 50% 이하일 때»; en inglés, «below 50%»). En español el título dice «Muro» y el texto lo llama «Barrera» (y dice que no se usa con Barrera).
 - **Choque** (Clash) · 격돌: Da inmunidad a la rotura y a la superrotura de guardia y al daño reflejado, y sube el daño básico; la suba crece con la Concentración. Barra propia que se carga al recibir golpes; se activa sola y después no carga por 6 s.
   - **Lo da:** Conquest (opción de reforja).
-- **Pánico** (Panic) · 공황: Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales a los que no se les aplican debuffs, pero no a quien tiene un efecto que quita todos los debuffs.
+- **Pánico** (Panic) · 공황: Le aplica miedo al rival y lo hace recibir más daño. Se le puede aplicar a World Bosses y a rivales a los que no se les aplican mermas, pero no a quien tiene un efecto que elimina todas las mermas.
   - **En el catálogo:** Pánico.
-- **Pérdida** (Loss) · 상실: Absorbe las habilidades del rival por un rato: no se mueve ni usa skills, pierde sus buffs y recibe más daño. No se le aplica a quien tiene un efecto que quita todos los debuffs.
+- **Pérdida** (Loss) · 상실: Absorbe las habilidades del rival por un rato: no se mueve ni usa skills, pierde sus potenciadores y recibe más daño. No se le aplica a quien tiene un efecto que elimina todas las mermas.
   - **En el catálogo:** Pérdida, Daño de la pérdida.
-- **Agonía letal** (Death Throes) · 최후의 발악: Por un tiempo la vida no baja de 1 y, al terminar, muere en el acto. Se activa sola cuando la vida baja de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan buffs.
-  - **El inglés y el coreano:** El inglés dice que no se puede quitar («cannot be removed»); según el coreano, no lo quitan los efectos que quitan buffs (버프 제거 효과에 제거되지 않습니다).
+- **Agonía letal** (Death Throes) · 최후의 발악: Por un tiempo los PG no bajan de 1 y, al terminar, muere en el acto. Se activa sola cuando los PG bajan de cierto valor; la rotura de guardia lo afecta, pero no se puede quitar con efectos que quitan potenciadores.
+  - **El inglés y el coreano:** El inglés dice que no se puede quitar («cannot be removed»); según el coreano, no lo quitan los efectos que quitan potenciadores (버프 제거 효과에 제거되지 않습니다).
   - **En el catálogo:** No muere por un tiempo.
-- **Marca** (Mark) · 표식: Le pone una marca al rival: las skills que le aplican efectos al marcado hacen más daño. Alcanza a World Bosses, a jefes grandes a los que no se les aplican debuffs y a quien quita todos los debuffs, y no la cambian los aumentos ni las bajas del efecto de los debuffs.
-- **Furia** (Fury) · 맹렬: Al usar una skill, sube todo el daño y da inmunidad a la rotura de guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
+- **Marca** (Mark) · 표식: Le pone una marca al rival: las skills que le aplican efectos al marcado hacen más daño. Alcanza a World Bosses, a jefes grandes a los que no se les aplican mermas y a quien elimina todas las mermas, y no la cambian los aumentos ni las bajas del efecto de las mermas.
+- **Furia** (Fury) · 맹렬: Al usar una skill, sube todo el daño y da inmunidad a romper guardia; la suba crece con la Concentración. Barra propia que se carga al usar skills (no los ataques básicos); después de usarse, no carga por 7 s.
   - **El inglés y el coreano:** Según el coreano, además, se activa al usar una skill (스킬 사용 시); el inglés no dice cuándo.
   - **Lo da:** Competition (opción de reforja).
 

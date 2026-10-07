@@ -1,6 +1,6 @@
 # Completitud de los datos
 
-Generado por `scripts/completitud.py` sobre `data.js` (juego 12.2.5, datos del 2026-10-06, formato 10) y `datos.json`.
+Generado por `scripts/completitud.py` sobre `data.js` (juego 12.2.5, datos del 2026-10-07, formato 11) y `datos.json`.
 
 Qué le falta a cada variante (un personaje con un uniforme) para tener la información que la app muestra y usa, y de dónde podría salir. Lo que dos fuentes dicen distinto está en `docs/AUDITORIA.md`; esto es lo que no está. Lo que no existe en el juego no es un faltante (un personaje sin artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito va aparte.
 
@@ -476,22 +476,22 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 |---|---|---|
 | Blue Marvel — Classic | Pasiva de uniforme «Classic» le da al equipo «Daño contra ciertos rivales», «Resistencias elementales», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Deadpool (Lady Deadpool, Holiday Party) | Pasiva T2 «Merc With A Mouth» le da al equipo «Recuperación», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| Ghost — Marvel Studios' Thunderbolts* | Pasiva de uniforme «Marvel Studios' Thunderbolts*» le da al equipo «Le saca todos los debuffs», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| Ghost — Marvel Studios' Thunderbolts* | Pasiva de uniforme «Marvel Studios' Thunderbolts*» le da al equipo «Le saca todas las mermas», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Green Goblin — Gold Goblin | Pasiva T2 «OZ Formula» le da al equipo «Daño contra ciertos rivales», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| Hulkbuster (Iron Man Mark 44) — 3099 | Pasiva «Heavy Duty Exo-Frame» le da al equipo «Vida», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| Hulkbuster (Iron Man Mark 44) — 3099 | Pasiva «Heavy Duty Exo-Frame» le da al equipo «PG», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Invisible Woman (base, Future Foundation, Classic) | Pasiva «Invisibility Shift» le da al equipo «Barrera», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Luna Snow | Pasiva «Encore» le da al equipo «Inmune a un elemento (probabilidad)», «Todas las velocidades», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Molecule Man | Pasiva «Unbound Being» le da al equipo «Menos daño reflejado recibido», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Red Skull — The Crimson Fall | Pasiva T2 «Age of Malice» le da al equipo «Daño contra ciertos rivales», «Todos los ataques básicos», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| Rhino — Uncanny Spider-Man | Pasiva de uniforme «Uncanny Spider-Man» le da al equipo «Ignora la reducción de daño del rival (no jefes)», «Menos daño de golpes en cadena», «Vida», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| Sister Grimm — Princess Tsukimi | Pasiva «Healing Sound» le da al equipo «Curación», «Le saca todos los debuffs», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| The Thing — Future Foundation | Pasiva de uniforme «Future Foundation» le da al equipo «Vida», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| The Thing — Classic | Pasiva de uniforme «Classic» le da al equipo «Vida», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| Rhino — Uncanny Spider-Man | Pasiva de uniforme «Uncanny Spider-Man» le da al equipo «Ignora la reducción de daño del rival (no jefes)», «Menos daño por impacto en cadena», «PG», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| Sister Grimm — Princess Tsukimi | Pasiva «Healing Sound» le da al equipo «Curación», «Le saca todas las mermas», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| The Thing — Future Foundation | Pasiva de uniforme «Future Foundation» le da al equipo «PG», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| The Thing — Classic | Pasiva de uniforme «Classic» le da al equipo «PG», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Venom — Anti-Venom | Pasiva de uniforme «Anti-Venom» le da al equipo «Curación», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Venom — War of the Realms | Pasiva de uniforme «War of the Realms» le da al equipo «Curación», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Venom — King in Black | Pasiva de uniforme «King in Black» le da al equipo «Curación», «Daño crítico», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 | Wasp (Nadia Van Dyne) | Pasiva «Winsome Wasp» le da al equipo «Todos los ataques básicos», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
-| Wenwu | Pasiva «Legendary Power» le da al equipo «Vida», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
+| Wenwu | Pasiva «Legendary Power» le da al equipo «PG», y Leads & Supports no lo publica | thanosvibs (Leads & Supports) o a mano desde la skill |
 
 ### Nombre en Leads & Supports distinto del de la skill
 
