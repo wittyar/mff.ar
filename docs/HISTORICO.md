@@ -3,7 +3,7 @@
 Generado por `scripts/historico.py` (lo llama `scripts/build.py`). Las llegadas (personaje, uniforme, Tier-3, Potencial Trascendido, Tier-4) y las versiones con su fecha salen de `/api/updates` de thanosvibs; el texto, de las notas de actualización del foro oficial (`fuentes/foro/`, `scripts/foro.py`). Cada nota va a la versión de fecha más cercana, a 4 días o menos.
 
 - Versiones: 213; con nota: 181. Notas: 191; sin versión: 6.
-- Hechos: personaje 290, uniforme 598, t3 128, tp 156, t4 129, balance 487.
+- Hechos: personaje 290, uniforme 598, t3 128, tp 156, t4 129, balance 487, modo 126.
 
 ## Llegadas cuya nota no nombra al personaje (207)
 
@@ -235,4 +235,66 @@ thanosvibs las pone en esa versión, y la nota de esa versión no lo nombra (o l
 ## Notas que el foro no deja leer (1)
 
 - 2015-07-28: [Update : 1.3.1 Version Details](https://forum.netmarble.com/futurefight_en/view/2196/20772) — el foro no deja leerla (51006, NO PERMISSION MEMBER ARTICLE ERROR)
+
+## Secciones de modos que no están en scripts/contenido/modos.json (57)
+
+Las notas hablan de estos modos y la app no los tiene en Modos: no van al histórico de la app (#4).
+
+- 2015-09-16: [NEWS: 1.4.2 Patch Notes](https://forum.netmarble.com/futurefight_en/view/2196/49346) — Battle World Improvement
+- 2015-12-14: [1.8.0 Update Details: Spiderverse! Minor Edit: see 15.](https://forum.netmarble.com/futurefight_en/view/2196/173001) — Villain Siege Improvement
+- 2016-01-18: [Marvel Future Fight 1.9.0 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/237878) — 3 New Missions in Villain Siege
+- 2016-02-15: [Patch 1.9.5 Update Details!](https://forum.netmarble.com/futurefight_en/view/2196/270283) — Battle World Improvement
+- 2016-04-27: [Update 2.1.0 Update Details!](https://forum.netmarble.com/futurefight_en/view/2196/386885) — Faction Battle
+- 2016-06-14: [2.2.0 Update Details <Updated 00:16 UTC+0>](https://forum.netmarble.com/futurefight_en/view/2196/439196) — Villain Siege Changes
+- 2016-06-14: [2.2.0 Update Details <Updated 00:16 UTC+0>](https://forum.netmarble.com/futurefight_en/view/2196/439196) — Battleworld changes
+- 2016-07-13: [2.3.0 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/464430) — CO-OP Changes
+- 2016-08-16: [Marvel Future Fight 2.4.0 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/495254) — Alliance Tournament
+- 2016-09-19: [2.5 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/530209) — Alliance Tournament Changes
+- 2016-12-06: [2.7 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/620048) — New Content – World Boss Invasion
+- 2017-03-14: [2.9.5 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/748144) — Alliance Tournament Changes
+- 2018-02-06: [3.8 Patch Notes (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1044867) — New Legendary Battle
+- 2018-03-20: [3.9 Patch Notes (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1073972) — New Theme is added for Faction Battle
+- 2018-04-19: [4.0 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1118083) — New Legendary Battle Story Added!
+- 2018-07-02: [v420 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1190992) — New Legendary Battle
+- 2018-07-02: [v420 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1190992) — New Game Mode, Alliance Raid and Alliance Improvements
+- 2018-09-12: [v440 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1263302) — A New Mode: Heroic Quest
+- 2018-11-27: [v460 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1306900) — New Heroic Quest Pack and Improvements to Heroic Quest mode
+- 2019-02-19: [February Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1342647) — New Legendary Battle: Captain Marvel
+- 2019-04-23: [April Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1511795) — New Legendary Battle: [Avengers: Endgame]
+- 2019-04-23: [April Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1511795) — An All-new World Event Mode Added
+- 2019-07-01: [July Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1529108) — Added a New Legendary Battle [Spider-Man: Far From Home]
+- 2019-07-01: [July Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1529108) — Removed Alliance Raid and the Renewal of Alliance Rewards
+- 2019-07-01: [July Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1529108) — Added Battle Training Mode in World Event
+- 2019-08-06: [August Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1538621) — Added New Heroic Quest Pack
+- 2019-09-09: [September Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1545996) — Added Danger Room (Beta Test)
+- 2019-09-09: [September Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1545996) — Danger Room Special Package! Rachel Summer’s Special Training!
+- 2019-10-22: [October Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1554638) — Danger Room improved through user feedback
+- 2019-11-26: [November Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1561402) — A New Special Training Package in Danger Room!
+- 2020-02-11: [February Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1584322) — Danger Room Improvement
+- 2020-03-17: [March Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1590902) — The New Squad Battle!
+- 2020-03-17: [March Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1590902) — Danger Room Reward Special Training Product
+- 2020-04-21: [4/21 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1599295) — New Legendary Battle Theme and Difficulty Balance
+- 2020-04-21: [4/21 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1599295) — Improved Danger Room
+- 2020-04-21: [4/21 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1599295) — Squad Battle Improvements
+- 2020-06-29: [6/29 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1625222) — Danger Room Special Training Product
+- 2020-09-15: [9/15 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1645272) — New Content Danger Room: Extreme Mode
+- 2021-04-20: [4/20 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1700347) — Dispatch Mission
+- 2021-05-25: [5/25 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1707581) — Dispatch Mission Improvements & Item Shop Transfer
+- 2021-06-29: [6/29 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1715581) — Black Widow Legendary Battle Bonus Missions Added
+- 2021-08-03: [8/3 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1723434) — Dispatch Mission: Next Reward
+- 2021-09-07: [9/7 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1728043) — New Legendary Battle Theme: Marvel Studios' Shang-Chi and the Legend of the Ten Rings
+- 2021-09-07: [9/7 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1728043) — New Content: Timeline Survival
+- 2021-10-12: [10/12 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1733144) — Timeline Survival – New Threat Levels & improvements
+- 2021-12-21: [12/21 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1741080) — Dispatch Mission New Sectors 11 & 12
+- 2022-02-02: [2/2 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1745116) — Danger Room Beta Test Over
+- 2022-04-26: [4/26 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1753570) — Multiverse Invasion
+- 2022-07-05: [7/6 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1762601) — Addition of Legendary Battle - Thor: Love and Thunder
+- 2022-07-05: [7/6 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1762601) — Addition of a Ranking System in Multiverse Invasion
+- 2022-11-01: [11/1 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1774043) — Legendary Battle: Wrath of the Sea Released
+- 2023-01-10: [1/10 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1780573) — Dispatch Mission Sector 13 Release
+- 2023-02-14: [2/14 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1783294) — Legendary Battle: Quantum Conquest Release
+- 2023-03-21: [3/21 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1786052) — Co-Op Game Mode Improvements
+- 2023-11-07: [11/7 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1800982) — New Legendary Battle: Masters of Light
+- 2024-12-23: [12/25 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1829080) — Dispatch Mission Sector 14
+- 2026-05-19: [5/19 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1892117) — Dispatch Mission Sector 15
 
