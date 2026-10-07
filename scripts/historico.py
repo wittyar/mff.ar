@@ -7,8 +7,11 @@ Dos fuentes:
 - Las notas de actualización del foro oficial (fuentes/foro/, las baja scripts/foro.py): el texto en inglés, por
   secciones (▣ o ■ al principio de la línea).
 
-Cada nota va a la versión de thanosvibs de fecha más cercana, a VENTANA días o menos (las notas salen casi siempre el
-día anterior). De cada llegada que publica thanosvibs sale un hecho, con el texto de la nota que nombra al personaje
+Cada nota va a una versión de thanosvibs (version_de_nota, #5): la que su título nombra (4.0, v420, 3.1.0) si está a
+VENTANA_TITULO días o menos; si no, de las que están a VENTANA días o menos (las notas salen casi siempre el día anterior),
+la que tiene más llegadas que la nota nombra y, a igual cantidad, la más cercana (thanosvibs pone a veces dos versiones el
+mismo día: la 5.5 y la 5.6); si no hay ninguna tan cerca, la que tiene más llegadas nombradas, al menos MIN_NOMBRADAS, a
+VENTANA_AMPLIA días o menos (thanosvibs se equivoca a veces de fecha: la 4.0 y la 5.5). De cada llegada que publica thanosvibs sale un hecho, con el texto de la nota que nombra al personaje
 (la sección de su tipo, si la hay); y de cada sección de la nota que habla de skills o de balance (BALANCE) y nombra a un
 personaje, un hecho «balance» con esas líneas. De cada sección cuyo título nombra un modo de scripts/contenido/modos.json
 (MODOS: las palabras de su nombre en inglés), un hecho «modo» con su clave «modo:<id>» (#4, Ezequiel, 5 de octubre de
@@ -17,9 +20,12 @@ llegadas cuya nota no nombra al personaje, las versiones sin nota, las notas sin
 están en modos.json.
 
 armar() devuelve MFF_HISTORICO y el texto de docs/HISTORICO.md. Solo biblioteca estándar."""
-import datetime as dt, glob, html, json, os, re
+import datetime as dt, glob, html, json, os, re, unicodedata
 
 VENTANA = 4
+VENTANA_TITULO = 30
+VENTANA_AMPLIA = 45
+MIN_NOMBRADAS = 2
 TIPOS = ('personaje', 'uniforme', 't3', 'tp', 't4', 'balance', 'modo')
 # De qué tipo es una sección, por su título. El orden importa: «Tier-4 and New Uniforms» es de los dos.
 SECCION = [('t4', re.compile(r'tier[- ]?4', re.I)), ('t3', re.compile(r'tier[- ]?3', re.I)),
@@ -66,8 +72,9 @@ def tipo_seccion(titulo):
 
 def alias(nombres):
     """Otros nombres con que las notas escriben a un personaje del roster: sin «The» adelante (The Thing → Thing), Mister
-    y Mr., Doctor y Dr., y sin lo de entre paréntesis (Wasp (Nadia Van Dyne) → Nadia Van Dyne, el de adentro). Uno que
-    choca con otro nombre del roster, o que sale de dos personajes, no se usa. {alias: nombre del roster}."""
+    y Mr., Doctor y Dr., y lo de antes o lo de adentro de un paréntesis (Hulkbuster (Iron Man Mark 44) → Hulkbuster;
+    Wasp (Nadia Van Dyne) → Nadia Van Dyne, porque Wasp es otro). Uno que choca con otro nombre del roster, o que sale
+    de dos personajes, no se usa. {alias: nombre del roster}."""
     cand = {}
     for n in nombres:
         xs = set()
@@ -76,25 +83,39 @@ def alias(nombres):
             if n.startswith(a): xs.add(b + n[len(a):])
             if n.startswith(b): xs.add(a + n[len(b):])
         m = re.fullmatch(r'(.+?) \((.+)\)', n)
-        if m: xs.add(m.group(2))
+        if m: xs |= {m.group(1), m.group(2)}
         for x in xs:
             cand.setdefault(x, set()).add(n)
     return {x: next(iter(ns)) for x, ns in cand.items() if len(ns) == 1 and x not in nombres}
 
 
+def normal(t):
+    """El texto sin tildes y con el apóstrofo recto: las notas escriben «M’Baku» y «Joaquín», el roster «M'Baku» y
+    «Joaquin»."""
+    t = unicodedata.normalize('NFKD', t.replace('’', "'").replace('‘', "'"))
+    return ''.join(c for c in t if not unicodedata.combining(c))
+
+
 def buscador(nombres):
     """Una función que dice qué personajes del roster aparecen en una línea (por su nombre o un alias): con mayúsculas como
     en el roster, o la línea en mayúsculas (las notas viejas escriben ‘QUICKSILVER’); el nombre más largo primero, así
-    «Red Hulk» no cuenta también como «Hulk»."""
-    canon = {n: n for n in nombres} | alias(nombres)
+    «Red Hulk» no cuenta también como «Hulk». Los nombres de más de una palabra, además, sin mirar mayúsculas (las notas
+    escriben «Wasp (Nadia van Dyne)» y «Kraven the Hunter»): los de una palabra no, porque muchos son palabras comunes
+    (Storm, Vision, Wave). Sin tildes ni apóstrofos curvos (normal)."""
+    canon = {normal(n): n for n in nombres} | {normal(a): n for a, n in alias(nombres).items()}
     orden = sorted(canon, key=len, reverse=True)
     rx = re.compile(r'(?<![\w-])(' + '|'.join(re.escape(n) for n in orden) + r')(?![\w-])')
     rx_may = re.compile(r'(?<![\w-])(' + '|'.join(re.escape(n.upper()) for n in orden) + r')(?![\w-])')
+    varias = [n for n in orden if ' ' in n]
+    rx_ci = re.compile(r'(?<![\w-])(' + '|'.join(re.escape(n) for n in varias) + r')(?![\w-])', re.I)
     may = {n.upper(): n for n in orden}
+    ci = {n.casefold(): n for n in varias}
 
     def en(linea):
+        linea = normal(linea)
         hallados = {canon[x] for x in rx.findall(linea)}
         hallados |= {canon[may[x]] for x in rx_may.findall(linea)}
+        hallados |= {canon[ci[x.casefold()]] for x in rx_ci.findall(linea)}
         return hallados
     return en
 
@@ -112,29 +133,35 @@ def modos_de(titulo, rx_modos):
     return [m for m, rx in rx_modos.items() if rx.search(titulo)]
 
 
+def version_titulo(titulo):
+    """La versión que nombra el título de una nota, como la escribe thanosvibs: «4.0 Update Details» → 4.0, «v420» → 4.2,
+    «3.1.0» → 3.1, «1.5.1» → 1.5.1. None si no nombra ninguna."""
+    m = re.search(r'(?<![\d/.])v?(\d{1,2})\.(\d)(?:\.(\d))?(?![\d/])', titulo) or re.search(r'\bv(\d)(\d)(\d)\b', titulo)
+    if not m:
+        return None
+    a, b, c = m.groups()
+    return f'{a}.{b}' + (f'.{c}' if c and c != '0' else '')
+
+
+def version_de_nota(f, titulo, nombrados, versiones, llegadas):
+    """La versión de una nota de fecha f que nombra a los personajes nombrados (ver arriba, en el docstring), o None."""
+    dias = lambda v: abs((f - v[0]).days)
+    vt = version_titulo(titulo)
+    por_titulo = [v for v in versiones if v[1] == vt and dias(v) <= VENTANA_TITULO]
+    if por_titulo:
+        return por_titulo[0][1]
+    puntos = lambda v: len(nombrados & llegadas.get(v[1], set()))
+    cerca = [v for v in versiones if dias(v) <= VENTANA]
+    if cerca:
+        return max(cerca, key=lambda v: (puntos(v), -dias(v), v[1]))[1]
+    lejos = [v for v in versiones if dias(v) <= VENTANA_AMPLIA and puntos(v) >= MIN_NOMBRADAS]
+    return max(lejos, key=lambda v: (puntos(v), -dias(v)))[1] if lejos else None
+
+
 def armar(chars, updates, dir_foro, modos):
     # Las versiones del juego, de thanosvibs (sin las que no tienen fecha).
     versiones = sorted(((dt.datetime.strptime(p['date'], '%B %d, %Y').date(), p['version'], p['name'])
                         for u in updates for p in u.get('potes') or []), key=lambda x: (x[0], x[1]))
-    # Las notas, con su versión.
-    indice = json.load(open(os.path.join(dir_foro, 'indice.json'), encoding='utf-8'))
-    notas, sin_version = {}, []
-    for n in indice:
-        f = fecha_ms(n['fecha'])
-        cerca = [v for v in versiones if abs((f - v[0]).days) <= VENTANA]
-        v = min(cerca, key=lambda v: (abs((f - v[0]).days), v[1]))[1] if cerca else None
-        texto = None
-        if 'error' not in n:
-            texto = secciones(lineas(json.load(open(os.path.join(dir_foro, f"{n['id']}.json"), encoding='utf-8'))['html']))
-        notas[n['id']] = {'id': n['id'], 'titulo': n['titulo'], 'fecha': f, 'url': n['url'], 'v': v, 'texto': texto,
-                          'error': n.get('error')}
-        if v is None:
-            sin_version.append(notas[n['id']])
-    por_version = {}
-    for n in sorted(notas.values(), key=lambda n: n['fecha']):
-        if n['v']:
-            por_version.setdefault(n['v'], []).append(n)
-
     # Los nombres del roster y de qué variante es cada retrato.
     nombre_de = {c['id']: c['name'] for c in chars}
     cid_de_nombre = {c['name']: c['id'] for c in chars}
@@ -144,6 +171,31 @@ def armar(chars, updates, dir_foro, modos):
         for u in c['uniforms']:
             variante[u['p']] = (c['id'], c['id'] + '::' + u['id'])
     en = buscador(list(cid_de_nombre))
+    # Quiénes llegan en cada versión (por nombre), para elegir la versión de cada nota.
+    llegadas = {}
+    for u in updates:
+        for campo in ('characters', 'uniforms', 't3s', 'tps', 't4s'):
+            for x in u.get(campo) or []:
+                if x['portrait'] in variante:
+                    llegadas.setdefault(x['added_in'], set()).add(nombre_de[variante[x['portrait']][0]])
+    # Las notas, con su versión.
+    indice = json.load(open(os.path.join(dir_foro, 'indice.json'), encoding='utf-8'))
+    notas, sin_version = {}, []
+    for n in indice:
+        f = fecha_ms(n['fecha'])
+        texto = None
+        if 'error' not in n:
+            texto = secciones(lineas(json.load(open(os.path.join(dir_foro, f"{n['id']}.json"), encoding='utf-8'))['html']))
+        nombrados = {x for t, ls in texto or [] for l in [t] + ls for x in en(l)}
+        v = version_de_nota(f, n['titulo'], nombrados, versiones, llegadas)
+        notas[n['id']] = {'id': n['id'], 'titulo': n['titulo'], 'fecha': f, 'url': n['url'], 'v': v, 'texto': texto,
+                          'error': n.get('error')}
+        if v is None:
+            sin_version.append(notas[n['id']])
+    por_version = {}
+    for n in sorted(notas.values(), key=lambda n: n['fecha']):
+        if n['v']:
+            por_version.setdefault(n['v'], []).append(n)
 
     ids = {m['id'] for m in modos}
     if ids != set(MODOS):
@@ -220,8 +272,10 @@ def informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin
     s = ['# Histórico: lo que no cierra entre thanosvibs y las notas del foro\n',
          'Generado por `scripts/historico.py` (lo llama `scripts/build.py`). Las llegadas (personaje, uniforme, Tier-3, '
          'Potencial Trascendido, Tier-4) y las versiones con su fecha salen de `/api/updates` de thanosvibs; el texto, de '
-         'las notas de actualización del foro oficial (`fuentes/foro/`, `scripts/foro.py`). Cada nota va a la versión de '
-         f'fecha más cercana, a {VENTANA} días o menos.\n',
+         'las notas de actualización del foro oficial (`fuentes/foro/`, `scripts/foro.py`). Cada nota va a la versión que '
+         f'nombra su título; si no, a la de {VENTANA} días o menos con más llegadas que la nota nombra; si no hay, a la de '
+         f'{VENTANA_AMPLIA} días o menos con más llegadas nombradas (al menos {MIN_NOMBRADAS}): thanosvibs tiene algunas '
+         'fechas mal.\n',
          f"- Versiones: {len(versiones)}; con nota: {len(por_version)}. Notas: {len(notas)}; sin versión: {len(sin_version)}.",
          '- Hechos: ' + ', '.join(f'{t} {cuenta[t]}' for t in TIPOS) + '.\n']
     s.append(f'## Llegadas cuya nota no nombra al personaje ({len(sin_nombrar)})\n')
@@ -232,6 +286,8 @@ def informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin
         s.append(f"| {v} | {tipo} | {key} | {', '.join(link(i) for i in ns) or 'sin nota'} |")
     s.append('')
     s.append(f'## Versiones sin nota ({len(versiones) - len(por_version)})\n')
+    s.append('La 1.0 es el lanzamiento: no tiene nota. Las notas salen de dos tableros del foro: el de notas (2196) y el de '
+             'avisos (2213, los parches de mitad de mes de 2020 y 2021); `scripts/foro.py`.\n')
     s.append(', '.join(f"{v} ({f.isoformat()})" for f, v, _ in versiones if v not in por_version) + '\n')
     s.append(f'## Notas sin versión ({len(sin_version)})\n')
     s += [f"- {n['fecha'].isoformat()}: {link(n['id'])}" for n in sin_version]
