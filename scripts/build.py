@@ -99,7 +99,7 @@ for a in FUENTES['artefactos']:
 from version_juego import ultima
 import historico
 HISTORICO, _historico_md = historico.armar(chars, json.load(open('work/updates.json', encoding='utf-8')),
-                                           os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'))
+                                           os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'foro'), FUENTES['modos'])
 with open('docs/HISTORICO.md', 'w', encoding='utf-8', newline='\n') as _f:
     _f.write(_historico_md)
 # Los nombres de los C.T.P. en el juego en español (#43, fuentes/juego-es/ctps.json): el del base, el poderoso y el
@@ -179,7 +179,9 @@ hoy = hoy.isoformat()
 # 11: cada C.T.P. trae su nombre en el juego en español (MFF_CTPS[].es: base, poderoso y brillante), y la información
 #     dudosa entre el coreano, el inglés y el español (MFF_DUDAS, scripts/dudas.py), que la app de formato 11 muestra en
 #     un «≠» junto a lo que corresponde.
-FORMATO = 11
+# 12: el histórico trae los modos de juego (#4): hechos de tipo «modo» con la clave «modo:<id de MFF_MODOS>», de las
+#     secciones de las notas que nombran un modo. La app de formato 11 no los entiende (busca un personaje con esa clave).
+FORMATO = 12
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

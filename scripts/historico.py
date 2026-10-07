@@ -10,19 +10,34 @@ Dos fuentes:
 Cada nota va a la versión de thanosvibs de fecha más cercana, a VENTANA días o menos (las notas salen casi siempre el
 día anterior). De cada llegada que publica thanosvibs sale un hecho, con el texto de la nota que nombra al personaje
 (la sección de su tipo, si la hay); y de cada sección de la nota que habla de skills o de balance (BALANCE) y nombra a un
-personaje, un hecho «balance» con esas líneas. Lo que no cierra entre las dos fuentes va a docs/HISTORICO.md: las
-llegadas cuya nota no nombra al personaje, las versiones sin nota y las notas sin versión.
+personaje, un hecho «balance» con esas líneas. De cada sección cuyo título nombra un modo de scripts/contenido/modos.json
+(MODOS: las palabras de su nombre en inglés), un hecho «modo» con su clave «modo:<id>» (#4, Ezequiel, 5 de octubre de
+2026: «en el futuro vamos a sumar los modos de juego»). Lo que no cierra entre las dos fuentes va a docs/HISTORICO.md: las
+llegadas cuya nota no nombra al personaje, las versiones sin nota, las notas sin versión y las secciones de modos que no
+están en modos.json.
 
 armar() devuelve MFF_HISTORICO y el texto de docs/HISTORICO.md. Solo biblioteca estándar."""
 import datetime as dt, glob, html, json, os, re
 
 VENTANA = 4
-TIPOS = ('personaje', 'uniforme', 't3', 'tp', 't4', 'balance')
+TIPOS = ('personaje', 'uniforme', 't3', 'tp', 't4', 'balance', 'modo')
 # De qué tipo es una sección, por su título. El orden importa: «Tier-4 and New Uniforms» es de los dos.
 SECCION = [('t4', re.compile(r'tier[- ]?4', re.I)), ('t3', re.compile(r'tier[- ]?3', re.I)),
            ('tp', re.compile(r'transcend', re.I)), ('uniforme', re.compile(r'uniform', re.I)),
            ('personaje', re.compile(r'characters?|heroes|villains', re.I))]
 BALANCE = re.compile(r'balanc|rework|adjust|skill|improve|enhance|change|revamp|buff', re.I)
+# Qué modo de modos.json nombra el título de una sección (en inglés, como lo escriben las notas). Uno que no está en la
+# tabla hace parar el build: cada modo de modos.json tiene que poder encontrarse.
+MODOS = {
+    'world-boss': r'world boss(?! invasion)', 'alliance-battle': r'alliance battle', 'giant-boss-raid': r'giant boss raid',
+    'dimension-rift': r'dimension(al)? rift', 'dimension-missions': r'dimension mission', 'timeline-battle': r'timeline battle',
+    'otherworld-battle': r'otherworld battle', 'team-battle-arena': r'team battle arena', 'alliance-conquest': r'alliance conquest',
+    'multiverse-saga': r'multiverse saga', 'epic-quests': r'epic quest', 'zombie-survival': r'zombie survival',
+    'shadowland': r'shadow ?lands?', 'story-ultimate': r'^(?!.*legendary).*\bstory\b',
+}
+# Modos del juego que las notas nombran y modos.json no tiene: van al informe, no a la app.
+OTROS_MODOS = r'danger room|villain siege|timeline survival|legendary battle|world event|dispatch mission|alliance tournament|' \
+              r'world boss invasion|multiverse invasion|heroic quest|faction battle|squad battle|alliance raid|battle ?world|co-op'
 MAX_LINEAS = 6
 MAX_CHARS = 400
 
@@ -92,7 +107,12 @@ def fecha_ms(ms):
     return dt.datetime.fromtimestamp(ms / 1000, dt.timezone.utc).date()
 
 
-def armar(chars, updates, dir_foro):
+def modos_de(titulo, rx_modos):
+    """Los modos de modos.json que nombra el título de una sección."""
+    return [m for m, rx in rx_modos.items() if rx.search(titulo)]
+
+
+def armar(chars, updates, dir_foro, modos):
     # Las versiones del juego, de thanosvibs (sin las que no tienen fecha).
     versiones = sorted(((dt.datetime.strptime(p['date'], '%B %d, %Y').date(), p['version'], p['name'])
                         for u in updates for p in u.get('potes') or []), key=lambda x: (x[0], x[1]))
@@ -125,7 +145,13 @@ def armar(chars, updates, dir_foro):
             variante[u['p']] = (c['id'], c['id'] + '::' + u['id'])
     en = buscador(list(cid_de_nombre))
 
-    hechos, sin_nombrar, sin_retrato = [], [], []
+    ids = {m['id'] for m in modos}
+    if ids != set(MODOS):
+        raise SystemExit(f'historico.MODOS no tiene los mismos modos que scripts/contenido/modos.json: {sorted(ids ^ set(MODOS))}')
+    rx_modos = {m: re.compile(rx, re.I) for m, rx in MODOS.items()}
+    rx_otros = re.compile(OTROS_MODOS, re.I)
+
+    hechos, sin_nombrar, sin_retrato, otros_modos = [], [], [], []
     # 1. Las llegadas que publica thanosvibs.
     llaves = {'characters': 'personaje', 'uniforms': 'uniforme', 't3s': 't3', 'tps': 'tp', 't4s': 't4'}
     for u in updates:
@@ -163,6 +189,17 @@ def armar(chars, updates, dir_foro):
             for nombre, xs in por_pj.items():
                 hechos.append({'k': cid_de_nombre[nombre], 't': 'balance', 'v': n['v'], 'n': n['id'],
                                'x': [t] + xs[:MAX_LINEAS], 'f': n['fecha'].isoformat()})
+    # 3. Las secciones de las notas sobre un modo de juego (#4).
+    for n in notas.values():
+        for t, ls in n['texto'] or []:
+            if not t:
+                continue
+            ms = modos_de(t, rx_modos)
+            for m in ms:
+                hechos.append({'k': 'modo:' + m, 't': 'modo', 'v': n['v'], 'n': n['id'],
+                               'x': [t] + [corta(l) for l in ls[:MAX_LINEAS]], 'f': n['fecha'].isoformat()})
+            if not ms and rx_otros.search(t):
+                otros_modos.append((n['id'], t))
 
     H = {
         'ventana': VENTANA,
@@ -172,10 +209,10 @@ def armar(chars, updates, dir_foro):
                   for n in notas.values()},
         'hechos': [[h['k'], h['t'], h['v'], h['n'], h['x']] + ([h['f']] if 'f' in h else []) for h in hechos],
     }
-    return H, informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin_retrato, nombre_de)
+    return H, informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin_retrato, nombre_de, otros_modos)
 
 
-def informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin_retrato, nombre_de):
+def informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin_retrato, nombre_de, otros_modos):
     def link(i):
         n = notas[i]
         return f"[{n['titulo'].strip()}]({n['url']})"
@@ -202,6 +239,10 @@ def informe(versiones, notas, por_version, hechos, sin_nombrar, sin_version, sin
     errores = [n for n in notas.values() if n['error']]
     s.append(f'## Notas que el foro no deja leer ({len(errores)})\n')
     s += [f"- {n['fecha'].isoformat()}: {link(n['id'])} — {n['error']}" for n in errores]
+    s.append('')
+    s.append(f'## Secciones de modos que no están en scripts/contenido/modos.json ({len(otros_modos)})\n')
+    s.append('Las notas hablan de estos modos y la app no los tiene en Modos: no van al histórico de la app (#4).\n')
+    s += [f"- {notas[i]['fecha'].isoformat()}: {link(i)} — {t}" for i, t in sorted(otros_modos, key=lambda x: notas[x[0]]['fecha'])]
     s.append('')
     if sin_retrato:
         s.append(f'## Retratos de /api/updates que no están en el roster ({len(sin_retrato)})\n')
