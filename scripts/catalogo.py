@@ -172,6 +172,16 @@ def validar(cat, guia):
             mapeo(x, d, True)
     for stat, x in cat['soporte'].items():
         mapeo(x, f'stat {stat!r}', False)
+    if set(cat['valores']) != {'nota', 'patrones'}:
+        mal.append('valores: lleva nota y patrones')
+    else:
+        texto(cat['valores']['nota'], 'valores (nota)')
+        for pat, m in cat['valores']['patrones'].items():
+            for e, i in m.items():
+                if e not in ids_efecto:
+                    mal.append(f'valores, patrón {pat!r}: efecto desconocido {e!r}')
+                if i is not None and (isinstance(i, bool) or not isinstance(i, int) or not 0 <= i < pat.count('#')):
+                    mal.append(f'valores, patrón {pat!r}, {e}: el índice es el de uno de sus «#» (desde 0) o null, no {i!r}')
     con_stat = {k for x in cat['soporte'].values() if isinstance(x.get('tope'), list) for k in x['tope']}
     mal += [f'tope de contenido/guia.json que ningún stat de soporte nombra: {k}' for k in sorted(con_tope - con_stat)]
     usados = {e for x in cat['skills'].values() for y in (x['por_patron'].values() if 'por_patron' in x else [x])

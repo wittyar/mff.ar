@@ -52,6 +52,9 @@ PERFILES, ANALISIS = b['perfiles'], b['analisis']
 # soporte o bono de equipo (soporte).
 _CAT = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'catalogo.json'), encoding='utf-8'))
 CATALOGO = {k: _CAT[k] for k in ('certeza', 'sirve', 'contra', 'grupos', 'efectos', 'skills', 'soporte')}
+# valor: para cada patrón de texto de las skills (índice en MFF_TABLAS.desc) y cada efecto que el catálogo saca de él,
+# cuál de sus números es el del efecto (índice en los valores del efecto de la skill, v), o null (modelo.valores).
+CATALOGO['valor'] = b['valores']
 # El glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json,
 # validado por catalogo.py): la solapa Glosario de la app.
 GLOSARIO = json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'glosario.json'), encoding='utf-8'))
@@ -181,7 +184,9 @@ hoy = hoy.isoformat()
 #     un «≠» junto a lo que corresponde.
 # 12: el histórico trae los modos de juego (#4): hechos de tipo «modo» con la clave «modo:<id de MFF_MODOS>», de las
 #     secciones de las notas que nombran un modo. La app de formato 11 no los entiende (busca un personaje con esa clave).
-FORMATO = 12
+# 13: el catálogo trae el número de cada efecto en los textos de las skills (MFF_CATALOGO.valor, de los valores de
+#     catalogo.json y modelo.valores), con el que la app de formato 13 compara efecto por efecto (#6).
+FORMATO = 13
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
@@ -214,7 +219,7 @@ parts = [header,
  'window.MFF_ANALISIS = ' + json.dumps(ANALISIS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Catálogo de efectos (scripts/contenido/catalogo.json, docs/CATALOGO.md): grupos, efectos, etiquetas de las\n'
  '// skills (skills) y stats de liderazgo, soporte y bono de equipo (soporte), cada uno con a quién le sirve, si se\n'
- '// acumula y su tope.\n',
+ '// acumula y su tope; y el número de cada efecto en los textos de las skills (valor: patrón → efecto → índice en v).\n',
  'window.MFF_CATALOGO = ' + json.dumps(CATALOGO, ensure_ascii=False) + ';\n',
  '// Glosario de skills del juego, en inglés y en coreano (scripts/contenido/glosario.json): los errores\n'
  '// que se repiten en el inglés y cada término con lo que dice, lo que el inglés traduce distinto y los\n'

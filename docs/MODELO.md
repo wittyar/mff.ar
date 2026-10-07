@@ -483,6 +483,14 @@ El daño de los golpes no va en el análisis: es el perfil de combate de la etap
 muestra en la pestaña *Análisis*: un resumen y, por destino y por grupo de efecto, cada efecto con
 sus fuentes, su condición y sus lecturas de PvE y de PvP.
 
+**El número de cada efecto** (formato 13, para la comparativa por efecto, #6): un texto de skill
+puede subir varias cosas juntas («Increases all Basic Attacks and Defense by #%, all speed by #%, and
+Critical Rate by #%»), y el análisis no dice cuál de sus números es el de cada efecto. `modelo.valores`
+lo resuelve por patrón: sin «#», el efecto no tiene número; con un solo «#%» (sin contar el de
+`$HEROSUBTYPE#`), es ese; los demás patrones (84 con los datos de formato 13) están a mano en
+`catalogo.json` (`valores`), y el build corta si a un efecto le falta su número o si sobra una entrada.
+Viaja en `MFF_CATALOGO.valor`.
+
 ### Roles
 
 No existen en el juego. Dicen qué le aporta la variante al equipo (Ezequiel, 2 de octubre de 2026),

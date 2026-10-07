@@ -39,6 +39,12 @@ for p, sks in SK['skills'].items():
     perfiles[p]['res'] = modelo.segun_resistencia(sks, SK['tablas']['ab'], perfiles[p]['ele'],
                                                   _artefacto.get(_base_de.get(p)))
 analisis = {p: modelo.analisis(sks, SK['tablas'], CAT, perfiles[p]) for p, sks in SK['skills'].items()}
+# El número de cada efecto en los textos de sus skills (la comparativa por efecto, #6; valores de catalogo.json).
+valores, _mal, _avisos = modelo.valores(analisis, SK['skills'], SK['tablas'], CAT)
+for _x in _avisos:
+    print('AVISO: catálogo de efectos:', _x)
+if _mal:
+    raise SystemExit('scripts/contenido/catalogo.json (valores) no cierra con las skills:\n- ' + '\n- '.join(_mal))
 def roles_de(p):
     return modelo.roles(analisis[p], SK['skills'][p], CAT) if p in analisis else modelo.roles({'fx': []}, [], CAT)
 nuevas = sorted({a for r in d for a in r['ability']} - set(ABIL))
@@ -220,7 +226,7 @@ tierlists.sort(key=lambda t: t['published'], reverse=True)
 tierlists.sort(key=lambda t: t['order'])
 json.dump({'characters':characters,'images':images,'assign':assign,'tierlists':tierlists,
            'vocab':VOCAB_EN,'skills':SK['skills'],'tablas':SK['tablas'],'buffs':SK['buffs'],
-           'perfiles':perfiles,'analisis':analisis},
+           'perfiles':perfiles,'analisis':analisis,'valores':valores},
           open('work/build2.json','w'), ensure_ascii=False)
 print('chars:', len(characters), '| imágenes:', len(images),
       '| listas:', len(tierlists), '| ubicaciones:', sum(len(f) for a in assign.values() for f in a.values()),

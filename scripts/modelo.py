@@ -208,6 +208,50 @@ def analisis(skills, tablas, cat, perfil):
     return out
 
 
+# El número de cada efecto (la comparativa por efecto, #6): cuál de los «#» del texto de una skill es el valor de cada
+# efecto que el catálogo saca de él. Un «#» de $HEROSUBTYPE# o $HEROCLASS# es la facción o el tipo, no un valor.
+_MARCADOR = re.compile(r'\$HERO(?:SUBTYPE|CLASS)$')
+
+
+def _numero_unico(patron):
+    """El índice del único «#%» del patrón (sin contar los de los marcadores), o None si no hay uno solo."""
+    pct = [i for i, m in enumerate(re.finditer('#', patron))
+           if patron[m.end():m.end() + 1] == '%' and not _MARCADOR.search(patron[:m.start()])]
+    return pct[0] if len(pct) == 1 else None
+
+
+def valores(analisis, skills, tablas, cat):
+    """({índice del patrón (texto): {efecto: índice del «#» que es su valor, o None}}, problemas, avisos) para cada
+    efecto del análisis y cada patrón de sus fuentes. El valor sale de catalogo.json (valores) o, si el patrón no está
+    ahí, de la regla: sin «#», ninguno; con un solo «#%», ese. Problemas: un efecto sin respuesta y un patrón del
+    catálogo que la regla ya resuelve. Avisos: patrones del catálogo que los datos ya no traen."""
+    desc, ids, cur = tablas['desc'], [e['id'] for e in cat['efectos']], cat['valores']['patrones']
+    out, mal, usados = {}, set(), set()
+    for p, an in analisis.items():
+        for ie, _, _, fuentes in an['fx']:
+            e = ids[ie]
+            for si, ti, fi in fuentes:
+                ip = skills[p][si]['st'][ti]['fx'][fi]['p']
+                patron = desc[ip]['en']
+                if patron in cur:
+                    usados.add(patron)
+                    if e not in cur[patron]:
+                        mal.add(f'valores, patrón {patron!r}: falta el efecto {e}')
+                        continue
+                    i = cur[patron][e]
+                elif '#' not in patron:
+                    i = None
+                else:
+                    i = _numero_unico(patron)
+                    if i is None:
+                        mal.add(f'valores: falta el patrón {patron!r} (efecto {e}: tiene más de un «#» y ninguno o varios «#%»)')
+                        continue
+                out.setdefault(str(ip), {})[e] = i
+    mal |= {f'valores, patrón {x!r}: sobra, la regla lo resuelve (un solo «#%»)' for x in cur if _numero_unico(x) is not None}
+    avisos = sorted(f'valores, patrón {x!r}: los datos ya no lo traen' for x in set(cur) - usados)
+    return out, sorted(mal), avisos
+
+
 # Roles: no existen en el juego. Dicen qué le aporta la variante al equipo (Ezequiel, 2 de
 # octubre de 2026): Soporte, le da algo a sus aliados fuera del liderazgo; Tanque, provoca o le
 # baja al equipo el daño que recibe; Control, le aplica al rival tres o más controles
