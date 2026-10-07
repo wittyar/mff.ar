@@ -1,6 +1,6 @@
 {
- "version": "1.0.32",
- "formato_datos": 10,
+ "version": "1.0.33",
+ "formato_datos": 11,
  "python": "3.14.7",
- "notas": "Español con los términos del juego: el glosario, los stats y las etiquetas de las skills usan los nombres que el juego usa en español (Hechizo, Ignorar blanco, Paliza, Acero, PG, Esquiva, Probab. crítico...), y las opciones de los C.T.P. se llaman como en el juego (opción bloqueada, opción de reforja). Los nombres llegan con la próxima actualización de datos."
+ "notas": "Los textos en español usan el vocabulario del juego (PG, merma, potenciador, esquiva, índice de recuperación, daño por impacto en cadena, frío, rayo, los nombres de los efectos) y los C.T.P. se llaman como en el juego en español. Lo que el juego dice distinto en coreano, en inglés y en español (C.T.P., stats, efectos, skills, glosario y notas del histórico) se marca con «≠»: al abrirlo, qué dice cada idioma y qué quiere decir el coreano."
 }

@@ -90,7 +90,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
 ## Estado (6 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.31 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.32 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -108,12 +108,17 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   data.js). La página avisa el arranque (`POST /api/arranque`); el lanzador abre `/rescate` con un error o sin aviso en
   `--espera-arranque` s; desde ahí, parche, instalador, volver al programa anterior (`actualizador.volver_al_anterior`)
   y volver a bajar los datos. Prueba: `verif_rescate.py`. #1 y #2 se pueden cerrar.
-- Entregadas sin publicar: #3 sin versión (solo datos y documentos: las notas del foro coreano, ver Pendiente) y la
-  1.0.32 (#32, primera tanda): las capturas del juego en español transcriptas en `fuentes/juego-es/`, la tabla
+- La 1.0.32 (cf45353, #32, primera tanda): las capturas del juego en español en `fuentes/juego-es/`, la tabla
   `scripts/contenido/terminos_es.json` y su validación en el build (`scripts/terminos_es.py`); el glosario, los stats de
-  la guía, etiquetas de skills y efectos del catálogo con los términos del juego; «opción bloqueada» y «opción de
-  reforja». Sin formato nuevo: etiqueta sobre «Versión 1.0.32»; los nombres llegan a la app con el build (correr a mano
-  el workflow de datos después del push, o esperar el del lunes).
+  la guía, etiquetas de skills y efectos del catálogo con los términos del juego. #3 (notas del foro coreano) fue sin
+  versión. Issues cerrados el 6 de octubre: #1, #2, #3, #24 y #32 (lo que quedó, en #41 a #45).
+- Entregada sin publicar: la 1.0.33 (formato 11, #32 segunda tanda, #43, #44, parte de #45): las capturas en coreano
+  (`fuentes/juego-ko/`) y el resto de las de español; el vocabulario del juego en todos los textos en español (sección
+  vocabulario de `terminos_es.json`, que `terminos_es.py` valida contra traducciones, contenido curado y app.js: PG,
+  merma, potenciador, esquiva…; los nombres de las skills siguen siendo propios, por decisión de Ezequiel); los C.T.P. y
+  los modos con su nombre del juego en español (`MFF_CTPS[].es`, `nombre_es` en modos.json); la información dudosa
+  entre coreano, inglés y español en un «≠» (`scripts/contenido/dudas.json`, `scripts/dudas.py`, `MFF_DUDAS`, prueba
+  `verif_dudas.py`). Formato nuevo: push de main, workflow de datos a mano y la etiqueta sobre ese commit de datos.
 - La 1.0.25 (etiqueta en 676f50a), solo programa (datos de formato 10, sin cambio), la *mesa de trabajo* a prueba
   (Ezequiel, 6 de octubre: «me gusta... no estoy 100% convencido... lo podemos probar a ver si realmente mejora»): el
   aspecto de la maqueta B (grafito, ámbar, Chakra Petch / Instrument Sans / JetBrains Mono; el rojo, solo para errores) y
@@ -144,15 +149,12 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Antes de cualquier cambio visual, la propuesta de arquitectura de la información y de navegación (#24, con los
   casos de strikers y Glosario en sus comentarios); después el rediseño visual (#6) y el tooltip de las habilidades
   (#39).
-- Español de la app con los términos del juego en español (#32). Álbum de Ezequiel (Google Fotos,
-  https://photos.app.goo.gl/EK155akXC5fjtSV7A, 267 capturas). Hecho: glosario, stats de la ficha, opciones y nombres de
-  los C.T.P. (transcriptos). Falta: los nombres de los C.T.P. en la app (formato de datos nuevo), los textos de las
-  skills (`traducciones/skills.json` y `efectos.json`: «vida» → «PG», «debuff» → «merma», «buff» → «potenciador»), los
-  textos propios de la app, objetos (capturas 116 a 162), modos (90 a 115) y las skills de Gorr (235 a 244).
-- Robustez: datos por formato (#1, en la 1.0.30) y pantalla de rescate (#2, en la 1.0.31).
+- Español del juego (#45, lo que queda): los nombres de objetos donde la app los nombra, «striker» → «pegador»,
+  «Tier-N» → «categoría N» y «skill» → «habilidad» (Ezequiel no lo decidió: los nombres de las skills no importan, las
+  características sí), los textos de los modos (Tier, WBL…). Las capturas: sección «Capturas del juego».
 - Apartados nuevos: Cromos de cómic (#35), Espadas (#36), Jarvis (#37, falta el alcance); atributos de las skills
   (#38).
-- Histórico: foro coreano (#3: las notas coreanas en `fuentes/cafe/` con `scripts/cafe.py`, el cotejo en
-  `docs/NOTAS_COREANO.md` y la revisión a mano en `docs/REVISION_COREANO.md`; falta que Ezequiel decida si el histórico
-  de la app muestra el coreano, que sería formato de datos nuevo), modos (#4), llegadas sin nota (#5). Preguntas abiertas: #10 a #23. Bugs: #25, #26.
+- Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
+  `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
+  modos (#4), llegadas sin nota (#5). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #10 a #23. Bugs: #25, #26.
   Pruebas en el repo: #31.
