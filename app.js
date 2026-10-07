@@ -910,6 +910,30 @@ const T = {
   sk_imposible:      { es:'Dato imposible de la fuente: una probabilidad no puede pasar de 100%. La wiki dice esto y la app lo muestra tal cual, sin corregirlo (docs/AUDITORIA.md, sección 11).',
                        en:'Impossible value from the source: a chance cannot exceed 100%. The wiki says this and the app shows it as is, uncorrected (docs/AUDITORIA.md, section 11).' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
+  cmp_vista:         { es:'Vista',               en:'View' },
+  cmp_v_efecto:      { es:'Por efecto',          en:'By effect' },
+  cmp_v_ficha:       { es:'Ficha',               en:'Sheet' },
+  cmp_ef_nota:       { es:'Efecto por efecto: quién lo tiene, cuánto da, cuánto dura y de qué skill sale.',
+                       en:'Effect by effect: who has it, how much it gives, how long it lasts and which skill it comes from.' },
+  cmp_destino:       { es:'Qué efectos se ven',  en:'Which effects to show' },
+  cmp_todo:          { es:'Todo',                en:'All' },
+  cmp_iguales:       { es:'Lo igual en todos, en una línea', en:'What is the same in all, on one line' },
+  cmp_solos:         { es:'Lo que tiene uno solo, aparte', en:'What only one has, apart' },
+  cmp_ley_valor:     { es:'valor',               en:'value' },
+  cmp_ley_dura:      { es:'cuánto dura',         en:'how long it lasts' },
+  cmp_ley_slot:      { es:'de qué skill sale (LÍD, PAS, T2, UNI, A1–A5, DEF, STR)', en:'which skill it comes from (LDR, PAS, T2, UNI, A1–A5, ULT, STR)' },
+  cmp_mayor:         { es:'MAYOR',               en:'TOP' },
+  cmp_mayor_t:       { es:'el que más da; si dan lo mismo o no tiene número, el que más dura', en:'the one that gives the most; if equal or with no number, the one that lasts longest' },
+  cmp_empate:        { es:'EMPATE',              en:'TIE' },
+  cmp_empate_t:      { es:'Todos los que lo tienen dan lo mismo y duran lo mismo.', en:'All who have it give the same and last the same.' },
+  cmp_igual:         { es:'IGUAL EN TODOS',      en:'SAME IN ALL' },
+  cmp_solo:          { es:'Solo uno lo tiene',   en:'Only one has it' },
+  cmp_no_lo_tiene:   { es:'No lo tiene',         en:'Does not have it' },
+  cmp_ver_tx:        { es:'Ver textos',          en:'Show texts' },
+  cmp_ocultar_tx:    { es:'Ocultar textos',      en:'Hide texts' },
+  cmp_tx_nota:       { es:'Lo que dice cada skill.', en:'What each skill says.' },
+  cmp_ef_pie:        { es:'Cuando el texto de una skill sube varias cosas juntas («Aumenta todos los ataques y defensas básicos en +40%, toda la velocidad…»), cada efecto toma su número; el texto entero se ve con «Ver textos».',
+                       en:'When a skill text raises several things at once ("Increases all Basic Attacks and Defense by 40%, all speed…"), each effect takes its own number; «Show texts» shows the whole text.' },
   cmp_cost:          { es:'Costo',               en:'Cost' },
 
   tl_title:          { es:'Tier lists',          en:'Tier lists' },
@@ -1474,6 +1498,9 @@ let ui = {
   glBusca: '',                       // búsqueda del glosario
   glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
   hiPj: '', hiTipo: 'todos', hiN: 20, // Histórico: personaje, tipo de hecho y cuántas versiones se ven
+  // Comparativa (#6): la vista ('efecto' o 'ficha'), qué destino se ve ('todo', 'q', 'r', 'e' o 'i'), si lo igual en todos
+  // va en una línea, si lo que tiene uno solo va aparte al final de cada sección y las filas con sus textos abiertos
+  cmpVista: 'efecto', cmpDestino: 'todo', cmpIguales: true, cmpSolos: true, cmpTextos: [],
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
@@ -4793,11 +4820,15 @@ function renderCompare () {
   const fxCmp = (f) => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
     marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
+  const efecto = ui.cmpVista === 'efecto';
 
   return `
   <div class="row" style="margin-bottom:14px"><button class="btn sm" data-a="back">${h(t('back_roster'))}</button></div>
   <div class="page-head"><div><h1>${h(t('cmp_title'))}</h1>
-    <div class="sub">${h(t('cmp_note'))}</div></div></div>
+    <div class="sub">${h(t(efecto ? 'cmp_ef_nota' : 'cmp_note'))}</div></div>
+    <div class="seg" role="group" aria-label="${h(t('cmp_vista'))}">${['efecto', 'ficha'].map(k =>
+      `<button class="${ui.cmpVista === k ? 'on' : ''}" aria-pressed="${ui.cmpVista === k}" data-a="cmpVista" data-v="${k}">${h(t('cmp_v_' + k))}</button>`).join('')}</div></div>
+  ${efecto ? cmpPorEfecto(vs) : `
   <div class="cmp"><table class="cmpt">
     <thead><tr><th></th>${vs.map(v => `<th><div class="cmphead">
       ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
@@ -4869,6 +4900,7 @@ function renderCompare () {
       }).join('')}</tr>`).join('')}
     </tbody>
   </table></div>
+`}
   <div class="card" style="margin-top:18px">
     <div class="row" style="justify-content:space-between;margin-bottom:8px">
       <h3 style="margin:0">${h(t('cmp_synergy'))}</h3><span class="muted">${syn.score}${artPts(syn.art)} ${h(t('cmp_pts'))}</span></div>
@@ -4877,6 +4909,154 @@ function renderCompare () {
     ${razones.length ? `<ul style="margin:0;padding-left:18px">${razones.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
       : `<p class="muted">${h(t('cmp_no_synergy'))}</p>`}
     <p class="muted" style="margin-top:10px">${h(t('cmp_heuristic'))}</p>
+  </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// COMPARATIVA POR EFECTO (#6)
+// Cada efecto del análisis (MFF_ANALISIS), por destino y por grupo del catálogo, con lo que tiene cada uno: el número
+// del efecto (MFF_CATALOGO.valor: cuál de los números del texto es el suyo), cuánto dura y de qué skills sale. Marca al
+// que más da (si dan lo mismo, al que más dura); lo igual en todos va en una línea y lo que tiene uno solo, aparte.
+// ---------------------------------------------------------------------------
+const CMP_DESTINOS = ['q', 'r', 'e', 'i'];
+const SLOT_CORTO = { 'Leader Skill': ['LÍD', 'LDR'], 'Passive': ['PAS', 'PAS'], 'Tier-2 Passive': ['T2', 'T2'],
+  'Uniform Passive': ['UNI', 'UNI'], 'Striker Skill': ['STR', 'STR'], 'Active Ult': ['DEF', 'ULT'], 'Active 1': ['A1', 'A1'],
+  'Active 2': ['A2', 'A2'], 'Active 3': ['A3', 'A3'], 'Active 4': ['A4', 'A4'], 'Active 5': ['A5', 'A5'] };
+function slotCorto (sl) {
+  const x = SLOT_CORTO[sl];
+  if (!x) throw new Error('slot sin abreviatura: ' + sl);
+  return x[LANG === 'es' ? 0 : 1];
+}
+/** El número del efecto efId en el efecto de skill f: { n, pct } (pct: va con «%»), o null si no tiene número propio. */
+function valorFx (f, efId) {
+  const m = CATALOGO.valor[f.p];
+  if (!m || !(efId in m)) throw new Error(`MFF_CATALOGO.valor no trae el efecto ${efId} del patrón ${f.p}`);
+  const i = m[efId];
+  if (i === null) return null;
+  const patron = fila('desc', f.p).en;
+  let pos = -1;
+  for (let k = 0; k <= i; k++) pos = patron.indexOf('#', pos + 1);
+  return { n: f.v[i], pct: patron[pos + 1] === '%' };
+}
+function numCmp (x) { return numTxt(x.n) + (x.pct ? '%' : ''); }
+/** Las filas de la comparativa: una por destino y efecto, con lo de cada variante (cel[k]: grupos de fuentes con el mismo
+ *  número, duración y condición, cada uno con sus slots; tx[k]: el texto de cada fuente, sin repetidos). */
+function filasCmp (vs) {
+  const filas = new Map();
+  vs.forEach((v, k) => {
+    for (const [ie, d, objetivo, fuentes] of ANALISIS[v.p].fx) {
+      const e = CATALOGO.efectos[ie], clave = d + '|' + e.id;
+      if (!filas.has(clave)) filas.set(clave, { d, e, ie, clave, cel: vs.map(() => []), tx: vs.map(() => []) });
+      const r = filas.get(clave);
+      const cond = [d === 'q' && grupoDe(objetivo) ? txt('tgt', objetivo) : '', condicionAn(v, fuentes)].filter(Boolean).join(' · ');
+      for (const src of fuentes) {
+        const f = efectoDe(v, src), sl = v.skills[src[0]].sl, val = valorFx(f, e.id), dura = f.d != null ? f.d : null;
+        // Si la etiqueta de la skill da varios efectos (Pánico: pánico y más daño recibido), se dice de cuál sale.
+        const origen = fuenteAn(v, src).m.efectos.filter(x => x !== 'golpe' && x !== 'otorga').length > 1 ? txt('ab', f.a) : '';
+        const firma = JSON.stringify([origen, val, dura, cond]);
+        let g = r.cel[k].find(x => x.firma === firma);
+        if (!g) { g = { firma, origen, val, dura, cond, slots: [] }; r.cel[k].push(g); }
+        if (!g.slots.includes(sl)) g.slots.push(sl);
+        const tx = marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f);
+        if (!r.tx[k].some(x => x.sl === sl && x.tx === tx && x.dura === dura)) r.tx[k].push({ sl, tx, dura });
+      }
+    }
+  });
+  const orden = (r) => [CMP_DESTINOS.indexOf(r.d), CATALOGO.grupos.findIndex(g => g.id === r.e.grupo), r.ie];
+  return [...filas.values()].map(r => Object.assign(r, cmpFila(r))).sort((a, b) => {
+    const x = orden(a), y = orden(b);
+    return x[0] - y[0] || x[1] - y[1] || x[2] - y[2];
+  });
+}
+/** Quién tiene la fila, quién da más (por número y, a igual número, por duración; sin números, por duración), si empatan
+ *  todos los que la tienen y si es igual en todos (los mismos números, duraciones y condiciones). */
+function cmpFila (r) {
+  const tienen = r.cel.map((c, k) => c.length ? k : -1).filter(k => k >= 0);
+  const nums = r.cel.flatMap(c => c.filter(g => g.val).map(g => g.val));
+  const medible = nums.length > 0 && nums.every(x => x.pct === nums[0].pct);
+  const metrica = (c) => {
+    const n = medible ? Math.max(...c.map(g => g.val ? g.val.n : -Infinity)) : null;
+    const dur = Math.max(...c.filter(g => !medible || (g.val && g.val.n === n)).map(g => g.dura == null ? -Infinity : g.dura));
+    return [medible ? n : 0, dur];
+  };
+  const ms = r.cel.map(c => c.length ? metrica(c) : null);
+  const top = tienen.reduce((a, k) => (!a || ms[k][0] > a[0] || (ms[k][0] === a[0] && ms[k][1] > a[1])) ? ms[k] : a, null);
+  const arriba = tienen.filter(k => ms[k][0] === top[0] && ms[k][1] === top[1]);
+  const comparable = top && (top[1] !== -Infinity || medible);
+  const firmas = r.cel.map(c => JSON.stringify(c.map(g => g.firma).sort()));
+  return {
+    tienen,
+    mayor: comparable && tienen.length > 1 && arriba.length < tienen.length ? arriba : [],
+    empate: comparable && tienen.length > 1 && arriba.length === tienen.length,
+    igual: tienen.length === r.cel.length && firmas.every(x => x === firmas[0])
+  };
+}
+/** Un grupo de fuentes de una celda: de qué efecto de la skill sale (si da varios), el número, los slots, la duración y
+ *  la condición. Lo igual en todos va sin los slots, que no son los mismos. */
+function grupoCmp (g, sinSlots) {
+  return `<div class="cpefu">${g.origen ? `<span class="cpeo">${h(g.origen)}</span>` : ''}${g.val ? `<span class="cpev">${h(numCmp(g.val))}</span>` : ''}${
+    sinSlots ? '' : g.slots.map(sl => `<span class="slotbadge ${slotClase(sl)}" title="${h(slotEs(sl))}">${h(slotCorto(sl))}</span>`).join('')}${
+    g.dura != null ? `<span class="cped">${h(numTxt(g.dura))} s</span>` : ''}${g.cond ? `<span class="cpec">${h(g.cond)}</span>` : ''}</div>`;
+}
+/** El «?» de un efecto: sus lecturas de PvE y de PvP y a quién le sirve. */
+function ayudaEfecto (e) {
+  return `<details class="ayuda"><summary title="${h(t('ay_label'))}" aria-label="${h(t('ay_label'))}">?</summary><div class="ayudatx">${
+    lecturasAn(e.pve, e.pvp)}${leSirveEfectoHtml(e, (r, x) => `<div class="muted annota">${r} ${x}</div>`)}</div></details>`;
+}
+/** El nombre de quien va en una celda, que se ve solo en el celular (las columnas pasan a renglones). */
+function quienCmp (v) { return `<span class="cpequien">${h(v.uid ? v.sub : v.name)}</span>`; }
+function filaCmpHtml (r, vs) {
+  const abierta = ui.cmpTextos.includes(r.clave), quien = (k) => quienCmp(vs[k]);
+  return `<div class="cpefila" data-clave="${h(r.clave)}"><div class="cpelab"><span class="cpenom">${h(nombreAnTxt(r.e))}</span>${ayudaEfecto(r.e)}${
+      dudaHtml('efecto', r.e.id)}${r.empate ? `<span class="cpechip" title="${h(t('cmp_empate_t'))}">${h(t('cmp_empate'))}</span>` : ''}
+      <button class="cpetxb" data-a="cmpTextos" data-v="${h(r.clave)}" aria-expanded="${abierta}">${h(t(abierta ? 'cmp_ocultar_tx' : 'cmp_ver_tx'))}</button></div>
+    ${r.cel.map((c, k) => !c.length ? `<div class="cpecel no" aria-label="${h(t('cmp_no_lo_tiene'))}">${quien(k)}—</div>`
+      : `<div class="cpecel${r.mayor.includes(k) ? ' mayor' : ''}">${quien(k)}${r.mayor.includes(k) ? `<span class="cpemayor" title="${h(t('cmp_mayor_t'))}">${h(t('cmp_mayor'))}</span>` : ''}${
+        c.map(g => grupoCmp(g)).join('')}</div>`).join('')}
+    ${abierta ? `<div class="cpetx"><div class="cpelab muted">${h(t('cmp_tx_nota'))}</div>${r.tx.map((ls, k) => `<div class="cpecel">${quien(k)}${
+      ls.map(x => `<div><span class="slotbadge ${slotClase(x.sl)}">${h(slotCorto(x.sl))}</span> ${x.tx}${x.dura != null ? ` <span class="cped">${h(numTxt(x.dura))} s</span>` : ''}</div>`).join('')
+      || '<span class="muted">—</span>'}</div>`).join('')}</div>` : ''}</div>`;
+}
+function cmpPorEfecto (vs) {
+  const filas = filasCmp(vs);
+  const destinos = CMP_DESTINOS.filter(d => filas.some(r => r.d === d) && (ui.cmpDestino === 'todo' || ui.cmpDestino === d));
+  const nombre = (v) => v.uid ? v.sub : v.name;
+  const seccion = (d) => {
+    const fs = filas.filter(r => r.d === d);
+    const iguales = ui.cmpIguales ? fs.filter(r => r.igual) : [];
+    const solos = ui.cmpSolos ? fs.filter(r => r.tienen.length === 1 && !iguales.includes(r)) : [];
+    const resto = fs.filter(r => !iguales.includes(r) && !solos.includes(r));
+    let grupo = null;
+    const cuerpo = resto.map(r => {
+      const g = r.e.grupo !== grupo ? CATALOGO.grupos.find(x => x.id === r.e.grupo) : null;
+      grupo = r.e.grupo;
+      return (g ? `<div class="cpegrupo">${h(bi(g))}</div>` : '') + filaCmpHtml(r, vs);
+    }).join('');
+    return `<section class="cpesec" data-d="${d}"><div class="cpesech"><h3><i class="cpedot ${d}"></i>${h(t('an_' + d))}</h3></div>
+      ${cuerpo}
+      ${iguales.map(r => `<div class="cpeigual"><span class="cpechip">${h(t('cmp_igual'))}</span><b>${h(nombreAnTxt(r.e))}</b>${
+        r.cel[0].map(g => grupoCmp(g, true)).join('')}</div>`).join('')}
+      ${solos.length ? `<div class="cpesolo"><div class="cpelab">${h(t('cmp_solo'))}</div>${vs.map((v, k) => `<ul class="cpecel">${solos.some(r => r.tienen[0] === k) ? `<li class="cpequien">${h(nombre(v))}</li>` : ''}${
+        solos.filter(r => r.tienen[0] === k).map(r => `<li><span class="cpesolon">${h(nombreAnTxt(r.e))}</span>${r.cel[k].map(g => grupoCmp(g)).join('')}</li>`).join('')
+        }</ul>`).join('')}</div>` : ''}
+    </section>`;
+  };
+  return `<div class="cpe" style="--cpe-n:${vs.length}">
+    <div class="row cpectl">
+      <div class="seg" role="group" aria-label="${h(t('cmp_destino'))}">${['todo'].concat(CMP_DESTINOS.filter(d => filas.some(r => r.d === d))).map(d =>
+        `<button class="${ui.cmpDestino === d ? 'on' : ''}" aria-pressed="${ui.cmpDestino === d}" data-a="cmpDestino" data-v="${d}">${
+          d === 'todo' ? '' : `<i class="cpedot ${d}"></i>`}${h(t(d === 'todo' ? 'cmp_todo' : 'an_' + d))}</button>`).join('')}</div>
+      <label class="chk"><input type="checkbox" data-a="cmpIguales"${ui.cmpIguales ? ' checked' : ''}> ${h(t('cmp_iguales'))}</label>
+      <label class="chk"><input type="checkbox" data-a="cmpSolos"${ui.cmpSolos ? ' checked' : ''}> ${h(t('cmp_solos'))}</label>
+    </div>
+    <div class="cpeley muted"><span><span class="cpev">40%</span> ${h(t('cmp_ley_valor'))}</span><span><span class="cped">5 s</span> ${h(t('cmp_ley_dura'))}</span>
+      <span><span class="slotbadge">A3</span> ${h(t('cmp_ley_slot'))}</span><span><span class="cpemayor">${h(t('cmp_mayor'))}</span> ${h(t('cmp_mayor_t'))}</span></div>
+    <div class="cpecab"><div class="cpelab"></div>${vs.map(v => `<div class="cpecel cpepj">
+      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
+      <div class="cpepjn"><b>${h(nombre(v))}</b><span class="muted">${h(v.uid ? v.name : t('base'))}</span></div>
+      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}" aria-label="${h(t('cmp_remove'))} ${h(nombre(v))}">✕</button></div>`).join('')}</div>
+    ${destinos.map(seccion).join('')}
+    <p class="muted cpepie">${h(t('cmp_ef_pie'))}</p>
   </div>`;
 }
 
@@ -6527,6 +6707,9 @@ document.addEventListener('click', (e) => {
       U.teams.unshift({ id: 'eq-' + Date.now(), name: nombre, members, lider, reason: '', modeId });
       ui.avisoMesa = { txt: t('ms_guardado').replace('{e}', nombre), ok: true }; commit(); break; }
     case 'glTab': ui.glTab = d.v; render(); break;
+    case 'cmpVista': ui.cmpVista = d.v; render(); break;
+    case 'cmpDestino': ui.cmpDestino = d.v; render(); break;
+    case 'cmpTextos': ui.cmpTextos = ui.cmpTextos.includes(d.v) ? ui.cmpTextos.filter(x => x !== d.v) : ui.cmpTextos.concat(d.v); render(); break;
     case 'plFiltros': ui.plFiltros = !ui.plFiltros; render(); break;
     case 'movil': ui.movil = d.v; render(); window.scrollTo(0, 0); break;
     case 'teamRemove': U.teams = U.teams.filter(x => x.id !== d.id); commit(); break;
@@ -6615,6 +6798,8 @@ document.addEventListener('change', (e) => {
   if (a === 'eqCobertura') { ui.eqCobertura = COBERTURA.map(g => g.k).filter(k => k === d.g ? el.checked : ui.eqCobertura.includes(k));
     ui.eqPagina = 0; render(); return; }
   if (a === 'eqUltimo') { ui.eqUltimo = el.checked; ui.eqPagina = 0; render(); return; }
+  if (a === 'cmpIguales') { ui.cmpIguales = el.checked; render(); return; }
+  if (a === 'cmpSolos') { ui.cmpSolos = el.checked; render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }
   if (a === 'objetivo') { U.prefs.objetivo = el.value; ui.page = 0; commit(); return; }
