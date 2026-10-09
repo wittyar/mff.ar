@@ -1,0 +1,35 @@
+{
+ "carril": "k6",
+ "rango": [
+  326,
+  386
+ ],
+ "total": 61,
+ "por_tipo": {
+  "personaje": 53,
+  "striker": 8
+ },
+ "items": [
+  "메피스토"
+ ],
+ "pestanas": {
+  "능력치": "326-377",
+  "소개": "378",
+  "스트라이커": "379-386"
+ },
+ "parciales": [
+  378
+ ],
+ "repetidas": [
+  346
+ ],
+ "notas": [
+  "Todo el rango es la ficha 도감 영웅 정보 de 메피스토 (uniforme 모던); no hay guía ni diccionario.",
+  "326-370: pestaña 능력치 con 6 estrellas amarillas, 티어 3, 잠재력 레벨 0 y 레벨 de 17 / 60 a 60 / 60 (346 repite 345).",
+  "371-376: 60 / 60 con las estrellas pasando a rojas de a una (1 a 6 rojas); desde 371 el ícono de 리더 스킬 se ilumina.",
+  "377: 6 rojas, 80 / 80, 티어 4, 잠재력 레벨 12; las insignias del ícono de tipo y del uniforme elegido pasan de III a IV.",
+  "378: pestaña 소개; el 4.º renglón del 배경 queda cortado por el borde del panel.",
+  "379-386: pestaña 스트라이커, 12 retratos por captura salvo 386 (11). La 1.ª fila de 386 repite la 3.ª de 385. No se nombró a nadie.",
+  "Cifras de 326-377 contrastadas con OCR (tesseract): coinciden salvo 4 errores del OCR, revisados a mano con zoom."
+ ]
+}

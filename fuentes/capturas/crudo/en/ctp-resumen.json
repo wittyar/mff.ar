@@ -1,0 +1,1483 @@
+[
+ {
+  "nombre": "C.T.P. of Competition",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Increases Critical Rate and Instinct Critical Rate +34%",
+     "· Increases Instinct Critical Damage 45%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Self",
+     "Ignores Boss’s Damage Decrease by 55%(6 Sec.)",
+     "Increases all damage dealt to boss types equal to 6% of Total Instinct.",
+     "(Increases up to 140%)(6 Sec.)",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   166
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Competition",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Fury",
+     "(Increases all damage by 60% and",
+     "additionally increases all damage by 60% of Concentration)(6 Sec.)",
+     "Cooldown Time 10 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Increases Critical Rate and Instinct Critical Rate +34%",
+     "· Increases Instinct Critical Damage 45%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   167
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Competition",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Fury",
+     "(Increases all damage by 120% and",
+     "additionally increases all damage by 90% of Concentration)(7 Sec.)",
+     "Cooldown Time 9 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Increases Critical Rate and Instinct Critical Rate +39.1%",
+     "· Increases Instinct Critical Damage 51.75%",
+     "· Activation Rate: 20% chance when attacking",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   168
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Transcendence",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· ALL BASIC ATTACKS INCREASE +32%",
+     "· IGNORE DODGE 45%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Decreases damage received from reflected effects by 50%.",
+     "Effect: REFLECT ALL ATTACKS (5 Sec.)",
+     "Invincible (5 Sec.)",
+     "Cooldown Time 10 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Use Hidden Tickets in Dimension Mission to acquire."
+  ],
+  "n": [
+   169
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Authority",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· CRITICAL DAMAGE ↑ +45%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Invincible (5 Sec.)",
+     "Increases all Basic Attacks by +5% per 1% of pure damage received(7 Sec.)",
+     "Accumulates pure damage up to 10% of Max HP(7 Sec.)",
+     "Cooldown Time 10 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   170
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Energy",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· IGNORE DODGE 45%",
+     "· CRITICAL DAMAGE ↑ +45%",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: Self",
+     "Increases Chain Hit damage by 30% when attacking. (5 Sec.)",
+     "Increases basic damage by 200% for 1 attack(s).(5 Sec.)",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired as a Bonus Reward in Legendary Battle."
+  ],
+  "n": [
+   171
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Destruction",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· CRITICAL DAMAGE ↑ +45%",
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: Self",
+     "30% chance to penetrate with SUPER ARMOR, BARRIER, ALL DAMAGE IMMUNE, INVINCIBLE effect. (5 Sec.)",
+     "Increases basic damage by 200% for 1 attack(s).(5 Sec.)",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   172
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Patience",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· DODGE ↑ +32%",
+     "· ALL BASIC ATTACKS INCREASE +32%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Decreases damage received from reflected effects by 50%.",
+     "Effect: REFLECT ALL ATTACKS (5 Sec.)",
+     "Invincible (5 Sec.)",
+     "Cooldown Time 10 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired as an additional reward from Boost Points."
+  ],
+  "n": [
+   173
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Refinement",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +34%",
+     "· RECOVERY RATE ↑ +90%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 20% of HP.",
+     "Barrier 6 time(s)(6 Sec.)",
+     "Cooldown Time 15 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired as a Bonus Reward in Legendary Battle."
+  ],
+  "n": [
+   174
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Regeneration",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +34%",
+     "· Guard Break Immunity, Recovery Rate Increase +90%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 10% of HP.",
+     "Creates a shield equal to 35% of Max HP that ignores Cancel and Pierce effects (Blocks instinct damage)(5 Sec.)",
+     "Cooldown Time 10 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   175
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Rage",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· CRITICAL RATE ↑ +32%",
+     "· DODGE ↑ +32%",
+     "· Activation Rate: 20% rate when dealing critical attack",
+     "Applies to: Self",
+     "Increases 0.9% basic damage per 1% of Dodge Rate and Critical Rate,",
+     "regardless of Guaranteed Dodge Rate and Guaranteed Critical Rate.(5 Sec.)",
+     "Ignores Boss’s Damage Decrease by 60%(5 Sec.)",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   176
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Veteran",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Guard Break Immunity, Ignore Dodge, Critical Damage Increase +32%",
+     "· INCREASES ALL BASIC ATTACKS AND DEFENSES +28%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Self",
+     "Increases Chain Hit damage by 40% when attacking. (5 Sec.)",
+     "Increases basic damage by 150% for 1 attack(s).(5 Sec.)",
+     "Creates a shield equal to 30% of Max HP that ignores Cancel and Pierce effects (Blocks instinct damage)(3 Sec.)",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired as a special reward from the Collector's Hall."
+  ],
+  "n": [
+   177
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Judgment",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· ALL BASIC ATTACKS INCREASE +32%",
+     "· CHAIN HIT DMG DEALT ↑ 20%",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: Enemies",
+     "Decreases All Resistances by -30%. (5 Sec.)",
+     "Applies to: Self",
+     "Increases damage to All element damage by +200%. (5 Sec.)",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   178
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Greed",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Option 1",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Recovers 10% of HP.",
+     "Increases basic damage dealt to COMBAT, BLAST types by 150%.(5 Sec.)",
+     "Increases basic damage dealt to SPEED, UNIVERSAL types by 150%.(5 Sec.)",
+     "Activates Damage Increase effect in turn.",
+     "Effect reactivates in 12 sec after removed",
+     "· Applies to: Self",
+     "Recovers 10% of HP.",
+     "Increases basic damage dealt to SPEED, UNIVERSAL types by 150%.(5 Sec.)",
+     "Increases basic damage dealt to COMBAT, BLAST types by [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   179
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Insight",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +34%",
+     "· ALL BASIC DEFENSES INCREASE +39%",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: All Allies",
+     "Increases basic damage dealt to SUPER VILLAIN faction by 20%.(5 Sec.)",
+     "Increases basic damage dealt to SUPER HERO faction by 20%.(5 Sec.)",
+     "The effect that applies to all team members cannot be applied in duplicate.",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   180
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Conquest",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· RECOVERY RATE ↑ +90%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 10% of HP.",
+     "+20% increase of MAX HP.(6 Sec.)",
+     "Wall",
+     "(Decreases damage received by 80%",
+     "Reduce Damage Decrease by 3% with each hit taken, with a minimum damage decrease of 60%)(6 Sec.)",
+     "Cooldown Time 11 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   181
+  ]
+ },
+ {
+  "nombre": "C.T.P. of Liberation",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Guard Break Immunity, Recovery Rate Increase +90%",
+     "· INCREASES ALL BASIC ATTACKS AND DEFENSES +28%",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: All Allies",
+     "All damage dealt to all Instincts increases by 20%(5 Sec.)",
+     "The effect that applies to all team members cannot be applied in duplicate.",
+     "Cooldown Time 7 second(s)"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "Can be acquired from the Custom Gear Chest."
+  ],
+  "n": [
+   182
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Transcendence",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Penetration",
+     "(Success Rate 50%)",
+     "Cooldown Time 8 second(s)",
+     "· Beatdown",
+     "(Increases additional Pierce damage by 6%,",
+     "Increases additional Pierce damage by 20% of Concentration)(5 Sec.)",
+     "Cooldown Time 10 second(s)"
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· ALL BASIC ATTACKS INCREASE +32%",
+     "· IGNORE DODGE 45%",
+     "· Activation Rate: when HP is below 50%",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   183
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Authority",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Steel",
+     "(Decreases all damage received by 30%,",
+     "and another 20% of Concentration)(5 Sec.)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· CRITICAL DAMAGE ↑ +45%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   184
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Energy",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Beatdown",
+     "(Increases additional Pierce damage by 6%,",
+     "Increases additional Pierce damage by 20% of Concentration)(5 Sec.)",
+     "Cooldown Time 10 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· IGNORE DODGE 45%",
+     "· CRITICAL DAMAGE ↑ +45%",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   185
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Destruction",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Strike",
+     "(Increases damage dealt to boss types by 120%,",
+     "increases additional damage dealt to boss types by 30% of Concentration)(5 Sec.)",
+     "Cooldown Time 10 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· CRITICAL DAMAGE ↑ +45%",
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· Activation Rate: 10% chance when attacking",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   186
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Patience",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Defend",
+     "(Creates a barrier that ignores Cancel and Pierce effects 6 time(s).",
+     "Recovers HP by 60% of Concentration.)(5 Sec.)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· DODGE ↑ +32%",
+     "· ALL BASIC ATTACKS INCREASE +32%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   187
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Refinement",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Vitality",
+     "(Recovers HP by 15% every sec and an additional amount equal to 35% of Concentration)(5 Sec.)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +34%",
+     "· RECOVERY RATE ↑ +90%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 20% of HP.",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   188,
+   190
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Regeneration",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Penetration",
+     "(Success Rate 50%)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +34%",
+     "· Guard Break Immunity, Recovery Rate Increase +90%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 10% of HP.",
+     "Creates a shield equal to 35% of Max HP that ignores Cancel and [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   189
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Rage",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Enraged",
+     "(Increases Critical Damage by 200% regardless of the max limit and an additional amount equal to 40% of Concentration)(6 Sec.)",
+     "Cooldown Time 10 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· CRITICAL RATE ↑ +32%",
+     "· DODGE ↑ +32%",
+     "· Activation Rate: 20% rate when dealing critical attack",
+     "Applies to: Self",
+     "Increases 0.9% basic damage per 1% of Dodge Rate and Critical [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   191
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Veteran",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Blade",
+     "(Increases damage dealt by 40%.",
+     "Additional increase by 50% of Concentration.)(5 Sec.)",
+     "Cooldown Time 10 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Guard Break Immunity, Ignore Dodge, Critical Damage Increase +32%",
+     "· INCREASES ALL BASIC ATTACKS AND DEFENSES +28%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   192
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Judgment",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Type Amplification",
+     "(Increases additional type skill damage by 40%,",
+     "Increases additional type skill damage by 70% of Concentration)(5 Sec.)",
+     "Cooldown Time 10 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· ALL BASIC ATTACKS INCREASE +32%",
+     "· CHAIN HIT DMG DEALT ↑ 20%",
+     "· Activation Rate: 10% chance when attacking",
+     "Applies to: Enemies",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   193
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Greed",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Ambush",
+     "(Ignores enemy's damage decrease by 35%,",
+     "and additional 25% of Concentration)(5 Sec.)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Option 1",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Recovers 10% of HP.",
+     "Increases basic damage dealt to COMBAT, BLAST types by 150%.(5 Sec.)",
+     "Increases basic damage dealt to SPEED, UNIVERSAL types by [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   194
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Insight",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Applies to: All Allies",
+     "Increases basic damage dealt to boss types by 15%.",
+     "The effect that applies to all team members cannot be applied in duplicate.",
+     "· Applies to: All Allies",
+     "Decreases Additional Pierce Damage received by 20%.",
+     "The effect that applies to all team members cannot be applied in duplicate."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +34%",
+     "· ALL BASIC DEFENSES INCREASE +39%",
+     "· Activation Rate: 10% chance when attacking",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   195
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Conquest",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Clash",
+     "(Increases basic damage by 60%.",
+     "and an additional  50% of Concentration based on the number of enemies. (up to 3 enemies)(5 Sec.)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +20%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· RECOVERY RATE ↑ +90%",
+     "· Activation Rate: when HP is below 50%",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   196
+  ]
+ },
+ {
+  "nombre": "Mighty C.T.P. of Liberation",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Applies to: All Allies",
+     "HP increases by +15%.",
+     "Decreases Chain Hit damage by 10% when attacked.",
+     "The effect that applies to all team members cannot be applied in duplicate.",
+     "· Applies to: All Allies",
+     "Increases damage dealt by 20% to the target with a higher Max HP than the character.",
+     "The effect that applies to all team members cannot be applied in duplicate."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Guard Break Immunity, Recovery Rate Increase +90%",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   197
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Transcendence",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Penetration",
+     "(Success Rate 90%)",
+     "Cooldown Time 7 second(s)",
+     "· Beatdown",
+     "(Increases additional Pierce damage by 10%,",
+     "Increases additional Pierce damage by 30% of Concentration)(6 Sec.)",
+     "Cooldown Time 9 second(s)"
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· ALL BASIC ATTACKS INCREASE +36.8%",
+     "· IGNORE DODGE 51.75%",
+     "· Activation Rate: when HP is below 50%",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   198,
+   199
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Authority",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Steel",
+     "(Decreases all damage received by 60%,",
+     "and another 40% of Concentration)(6 Sec.)",
+     "Cooldown Time 7 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· CRITICAL DAMAGE ↑ +51.75%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   200
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Energy",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Beatdown",
+     "(Increases additional Pierce damage by 10%,",
+     "Increases additional Pierce damage by 30% of Concentration)(6 Sec.)",
+     "Cooldown Time 9 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· IGNORE DODGE 51.75%",
+     "· CRITICAL DAMAGE ↑ +51.75%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   201
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Destruction",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Strike",
+     "(Increases damage dealt to boss types by 200%,",
+     "increases additional damage dealt to boss types by 50% of Concentration)(6 Sec.)",
+     "Cooldown Time 9 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· CRITICAL DAMAGE ↑ +51.75%",
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· Activation Rate: 15% chance when attacking",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   202
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Patience",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Defend",
+     "(Creates a barrier that ignores Cancel and Pierce effects 10 time(s).",
+     "Recovers HP by 90% of Concentration.)(6 Sec.)",
+     "Cooldown Time 8 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· DODGE ↑ +36.8%",
+     "· ALL BASIC ATTACKS INCREASE +36.8%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   203
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Refinement",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Vitality",
+     "(Recovers HP by 25% every sec and an additional amount equal to 50% of Concentration)(6 Sec.)",
+     "Cooldown Time 7 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +39.1%",
+     "· RECOVERY RATE ↑ +103.5%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 30% of HP.",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   204
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Regeneration",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Penetration",
+     "(Success Rate 90%)",
+     "Cooldown Time 7 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +39.1%",
+     "· Guard Break Immunity, Recovery Rate Increase +103.5%",
+     "· Activation Rate: when HP is below 50%",
+     "Applies to: Self",
+     "Recovers 15% of HP.",
+     "Creates a shield equal to 40% of Max HP that ignores Cancel and [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   205
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Rage",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Enraged",
+     "(Increases Critical Damage by 300% regardless of the max limit and an additional amount equal to 60% of Concentration)(7 Sec.)",
+     "Cooldown Time 9 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· CRITICAL RATE ↑ +36.8%",
+     "· DODGE ↑ +36.8%",
+     "· Activation Rate: 25% rate when dealing critical attack",
+     "Applies to: Self",
+     "Increases 1.2% basic damage per 1% of Dodge Rate and Critical [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   206
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Veteran",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Blade",
+     "(Increases damage dealt by 70%.",
+     "Additional increase by 80% of Concentration.)(5 Sec.)",
+     "Cooldown Time 9 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Guard Break Immunity, Ignore Dodge, Critical Damage Increase +36.8%",
+     "· INCREASES ALL BASIC ATTACKS AND DEFENSES +32.2%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Self",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   207
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Judgment",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Type Amplification",
+     "(Increases additional type skill damage by 70%,",
+     "Increases additional type skill damage by 100% of Concentration)(5 Sec.)",
+     "Cooldown Time 9 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· ALL BASIC ATTACKS INCREASE +36.8%",
+     "· CHAIN HIT DMG DEALT ↑ 23%",
+     "· Activation Rate: 15% chance when attacking",
+     "Applies to: Enemies",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   208
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Greed",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Ambush",
+     "(Ignores enemy's damage decrease by 70%,",
+     "and additional 30% of Concentration)(6 Sec.)",
+     "Cooldown Time 7 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Option 1",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Recovers 25% of HP.",
+     "Increases basic damage dealt to COMBAT, BLAST types by 220%.(5.5 Sec.)",
+     "Increases basic damage dealt to SPEED, UNIVERSAL types by [cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   209
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Insight",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Applies to: All Allies",
+     "Increases basic damage dealt to boss types by 25%.",
+     "The effect that applies to all team members cannot be applied in duplicate.",
+     "· Applies to: All Allies",
+     "Decreases Additional Pierce Damage received by 30%.",
+     "The effect that applies to all team members cannot be applied in duplicate."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· MAX HP ↑ +39.1%",
+     "· ALL BASIC DEFENSES INCREASE +44.85%",
+     "· Activation Rate: 15% chance when attacking",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   210
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Conquest",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Clash",
+     "(Increases basic damage by 90%.",
+     "and an additional  80% of Concentration based on the number of enemies. (up to 3 enemies)(6 Sec.)",
+     "Cooldown Time 7 second(s)",
+     "· Applies to: Self",
+     "Increases all Basic Attacks and Defenses by +32%."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Applies to: Self",
+     "Guard Break Immunity",
+     "· RECOVERY RATE ↑ +110%",
+     "· Activation Rate: when HP is below 50%",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   211
+  ]
+ },
+ {
+  "nombre": "Brilliant C.T.P. of Liberation",
+  "estrellas": 6,
+  "secciones": [
+   {
+    "titulo": "REFORGE OPTION",
+    "color": "amarillo",
+    "lineas": [
+     "· Applies to: All Allies",
+     "HP increases by +25%.",
+     "Decreases Chain Hit damage by 20% when attacked.",
+     "The effect that applies to all team members cannot be applied in duplicate.",
+     "· Applies to: All Allies",
+     "Increases damage dealt by 30% to the target with a higher Max HP than the character.",
+     "The effect that applies to all team members cannot be applied in duplicate."
+    ]
+   },
+   {
+    "titulo": "Locked Option",
+    "color": "naranja",
+    "lineas": [
+     "· Guard Break Immunity, Recovery Rate Increase +103.5%",
+     "[cortado]"
+    ]
+   }
+  ],
+  "pie": [
+   "Greatest Option Value Displayed",
+   "C.T.P. can be refined and acquired."
+  ],
+  "n": [
+   212
+  ]
+ }
+]

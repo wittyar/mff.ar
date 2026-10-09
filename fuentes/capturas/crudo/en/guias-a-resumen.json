@@ -1,0 +1,615 @@
+[
+ {
+  "pantalla": "TEAM",
+  "item": "RECRUIT",
+  "titulo": "RECRUIT",
+  "texto": "If you have enough Biometrics or X-Genes you can recruit a character.\nCreate a team with recruited characters and participate in various missions. The more characters you recruit, the easier it will be to complete missions.",
+  "n": [
+   1
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "TEAM",
+  "item": "TYPE AFFINITY",
+  "titulo": "TYPE AFFINITY",
+  "texto": "Each character is categorized by their Battle Type: Combat, Blast, Speed and Universal Types.\nWhen attacking, if the damage displays in YELLOW, the Character’s type has an Advantage. If displayed in GRAY, the current type has a disadvantage against that specific type.\n\nA Character’s Battle Type is shown on their icon. The Type Affinity in principle is similar to Rock, Paper, Scissors.",
+  "n": [
+   2
+  ],
+  "completo": true,
+  "notas": "El texto termina cerca del borde inferior del panel (precedido de un renglón vacío o al final de un párrafo largo); no se ve continuación, pero no hay captura desplazada que confirme que no sigue."
+ },
+ {
+  "pantalla": "TEAM",
+  "item": "UNIFORM",
+  "titulo": "UNIFORM",
+  "texto": "Purchase a Uniform from the Uniform List and equip them to your Characters.\n\nWhen a Uniform is equipped:\n▶Stats increase\n▶Design Changes\n\n[cortado]",
+  "n": [
+   3
+  ],
+  "completo": false,
+  "notas": "El final del texto queda cortado por el scroll del panel y no hay otra captura con la continuación."
+ },
+ {
+  "pantalla": "TEAM",
+  "item": "TEAM BONUS",
+  "titulo": "TEAM BONUS",
+  "texto": "When the Characters in your Team have a special relationship, it will activate a Team Bonus.\n\nWhen a Team Bonus is activated:\n▶Increased Stat Bonus\n▶Use Co-op Play in Missions",
+  "n": [
+   4
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "TEAM",
+  "item": "INSTINCT",
+  "titulo": "INSTINCT",
+  "texto": "Each hero has a unique Instinct.\nThere are 4 types of Instincts and they scale up with Character Rank and Levels.\n\nInstincts inflict Instinct Damageto enemies in battle.\nLanding basic attacks allows players to deal more damage based on their characters' Instinct Stats.\nPlayers can defend against Instinct Damage only by using Instinct Abilities.\nInstinct Stats are not affected by buffs or debuffs that affect basic stats.\n\nThe Details page displays Instinct stats based on percentage, such as Critical Rate and Dodge Rate, in relation to other players that have the same Total Instinct Stats as the player.\nPercentage based Instinct Stats are more effective against players with less Total Instinct Stats and less effective against players with more Total Instinct Stats.",
+  "n": [
+   5
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "TEAM",
+  "item": "SIDE",
+  "titulo": "SIDE",
+  "texto": "Characters each belong to certain factions.\nFactions can change based on an equipped uniform, and they are broadly divided into Super Heroes, Super Villains, and Neutral.\nSuper Villains and Villains\nWithin a stage, Super Villains and Villains are considered separate factions.\nSuper Villains are powerful bosses.\n[cortado]",
+  "n": [
+   6
+  ],
+  "completo": false,
+  "notas": "El final del texto queda cortado por el scroll del panel y no hay otra captura con la continuación."
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "GEAR",
+  "titulo": "GEAR",
+  "texto": "Upgrade gear (up to +5) automatically by leveling up your character. Gear can be leveled up to +30 using material collected from missions.\nTap the material icon to start the mission.",
+  "n": [
+   7
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "ENHANCE ISO-8",
+  "titulo": "ENHANCE ISO-8",
+  "texto": "Use additional ISO-8 as enhancement material to enhance the target ISO-8 up to +5 to gain higher stat increase. You can also enhance equipped ISO-8.\nAdditional ISO-8 can be collected from Dimension Mission.",
+  "n": [
+   8
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "COMBINE ISO-8",
+  "titulo": "COMBINE ISO-8",
+  "texto": "If a specific ISO-8 has been enhanced to +5, you may combine 2 of the same type of ISO-8 to increase the ISO-8 rank. You may also combine equipped ISO-8. The highest rank for ISO-8 is 6 stars.",
+  "n": [
+   9
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "ISO-8 SET BONUS",
+  "titulo": "ISO-8 SET BONUS",
+  "texto": "If you equip certain combinations of ISO-8, you will gain a Set Bonus. You may check which set bonus has been applied to your character from the ISO-8 Equip Page. Equipping ISO-8 according to the guide displayed on the page will allow you to gain a Set Bonus.\nIf you want to change to another set bonus, tap Change Set.",
+  "n": [
+   10
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "AWAKEN ISO-8",
+  "titulo": "AWAKEN ISO-8",
+  "texto": "A 6★ ISO-8 enhanced to +5 can be used as material to awaken another 6★ ISO-8. Awakened ISO-8 gets additional stats. They can be awakened up to 6 times. A Set using awakened ISO-8 will have a much stronger Set Bonus.",
+  "n": [
+   11
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "COMIC CARD UPGRADE",
+  "titulo": "COMIC CARD UPGRADE",
+  "texto": "Use 5 Cards of the same Rank as Material to upgrade the target card up to a maximum of Rank 6.\nWhen upgraded, the Rank will increase and the quality and option stats may change.",
+  "n": [
+   12
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "COMIC CARD CRAFTING",
+  "titulo": "COMIC CARD CRAFTING",
+  "texto": "Premium Cards can be crafted with 5 Mythic Cards and Card Crafting Cube as materials. Premium Cards can be crafted up to Level 6, and new stats will be added upon each time they're crafted.\nThe color of the ★ will change to one of the following: Red, Blue, Green. Additional stats will be acquired when the number of a certain color reaches a set number.\nIn addition, you can obtain bonus options by crafting up to a certain number of ★.",
+  "n": [
+   13
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "ENHANCE ARTIFACT",
+  "titulo": "ENHANCE ARTIFACT",
+  "texto": "Use Celestial Essence as materials to enhance Artifacts up to +20.\nArtifact's instinct stat increases when enhanced.\nDismantle artifacts to acquire Celestial Essence.",
+  "n": [
+   14
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "TRANSFER ARTIFACT ENHANCE",
+  "titulo": "TRANSFER ARTIFACT ENHANCE",
+  "texto": "Artifact's enhance level can be transferred.\n\nWhen overwriting an equipped artifact with a new one, the higher level can be transferred to the new artifact if the previous artifact's level is higher than the new artifact.\n\nEnhance level can be transferred regardless of the artifact grade or type.",
+  "n": [
+   15
+  ],
+  "completo": true,
+  "notas": "El texto termina cerca del borde inferior del panel (precedido de un renglón vacío o al final de un párrafo largo); no se ve continuación, pero no hay captura desplazada que confirme que no sigue."
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "DISMANTLE ARTIFACT",
+  "titulo": "DISMANTLE ARTIFACT",
+  "texto": "Celestial Essence is a key ingredient to enhance artifacts. Dismantle owned artifacts to acquire.\nMore Celestial Essence can be acquired when dismantling higher-grade artifacts.",
+  "n": [
+   16
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "ENCHANT SWORD",
+  "titulo": "ENCHANT SWORD",
+  "texto": "Swords can be enchanted up to Lv. 6 using Enchantment Runes. Enchanting a Sword applies 1 of 6 Elements and a powerful effect. Swords that have been enchanted to max level can be Awakened to create Special Swords.",
+  "n": [
+   17
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "DISMANTLING SWORDS",
+  "titulo": "DISMANTLING SWORDS",
+  "texto": "Enchantment Runes are a type of material used to enchant Swords and can be acquired by dismantling the Swords you own. You can obtain more Enchantment Runes the higher the level of the Sword you dismantle.",
+  "n": [
+   18
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "CUSTOM GEAR RANK UP",
+  "titulo": "CUSTOM GEAR RANK UP",
+  "texto": "Obelisks, a type of Custom Gear, can be Enhanced to create better and higher-grade Custom Gears.\nWhen the grade of your Custom Gear goes up as a result of Enhancement, it can get stat increases, option modifications,\nor even new options, depending on the grade.\nEach Custom Gear's first option will not change, but the second option onwards can change, with the outcomes being random.\n[cortado]",
+  "n": [
+   19
+  ],
+  "completo": false,
+  "notas": "El final del texto queda cortado por el scroll del panel y no hay otra captura con la continuación."
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "C.T.P. REFORGING",
+  "titulo": "C.T.P. REFORGING",
+  "texto": "C.T.P. can be reforged using the same C.T.P and a C.T.P. Reforging Core. New stats will be added upon reforging C.T.P.\nC.T.P. with high stats can be acquired upon Reforging Super Success. Additional C.T.P. can be used to increase the super success rate.\n\n*Only certain C.T.P. can be reforged, and more C.T.P. will be able to be reforged in the future.",
+  "n": [
+   20
+  ],
+  "completo": true,
+  "notas": "El texto termina cerca del borde inferior del panel (precedido de un renglón vacío o al final de un párrafo largo); no se ve continuación, pero no hay captura desplazada que confirme que no sigue."
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "URU AMPLIFICATION",
+  "titulo": "URU AMPLIFICATION",
+  "texto": "Uru Amplification can be used to increase the stats of equipped Uru.\nWhen you amplify Uru, all equipped Uru will attempt amplification. Any Uru that is successfully amplified will get bonus stats. Amplification can be attempted an unlimited number of times, as long as you have enough gold. The Uru that gets amplified is random.\n\nAmplified Uru will go through amplification again, and has a chance of losing its amplification.",
+  "n": [
+   21
+  ],
+  "completo": true,
+  "notas": "El texto termina cerca del borde inferior del panel (precedido de un renglón vacío o al final de un párrafo largo); no se ve continuación, pero no hay captura desplazada que confirme que no sigue."
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "URU COMBINATION",
+  "titulo": "URU COMBINATION",
+  "texto": "Use 2 same-grade Uru to combine. Uru of the same grade or a grade higher can be acquired randomly.\nCombining 2 Uru of the same type will produce Uru of the same type.\nThere is a chance to acquire Odin's Blessing upon combining Mythic Enchanted Uru. Odin’s Blessing has higher stats than other Uru.",
+  "n": [
+   22
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "Uru Awakening",
+  "titulo": "Uru Awakening",
+  "texto": "Use Mythic or higher Enchanted Uru and Eternal Flame as material to awaken Odin's Blessing.\nYou can obtain an Engraved Odin's Blessing or Odin's Glory of a higher effect value when awakening Odin's Blessing. If you equip it on a character's equipment, the character can additionally obtain an awakening effect.",
+  "n": [
+   23
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "J.A.R.V.I.S. Enhance",
+  "titulo": "J.A.R.V.I.S. Enhance",
+  "texto": "You can enhance J.A.R.V.I.S. Chips using their exclusive J.A.R.V.I.S. Data\nand J.A.R.V.I.S. Data Shards as materials.\n\nEnhancing a J.A.R.V.I.S. Chip increases its stats.",
+  "n": [
+   24
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "GEAR GROWTH",
+  "item": "Change J.A.R.V.I.S. Option",
+  "titulo": "Change J.A.R.V.I.S. Option",
+  "texto": "You can change the options of a J.A.R.V.I.S. Chip using its exclusive J.A.R.V.I.S. Data as material.\n\nA J.A.R.V.I.S. Chip's enhancement level is retained after its options are changed.\nEX Chips have bonus effects. You can also change the type of an EX Chip's bonus effect by changing options.",
+  "n": [
+   25
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "STORY",
+  "titulo": "STORY",
+  "texto": "Story is a game mode where you can experience the main story of the game.\nThere are two difficulty levels for Story mode: Normal and Ultimate.\n\nNormal difficulty is suitable for all players, including beginners. You can use any character you own.\nUltimate difficulty is for seasoned players. You must use Tier-3 or Potential Transcended characters Lv. 70 or higher.\n\nYou can obtain various items such as Story Fragments, as well as upgrade materials such as Biometrics, Norn Stones, and Type Enhancement Kits.\nGather Story Fragments to craft chests containing special items.",
+  "n": [
+   26
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "EPIC QUEST",
+  "titulo": "EPIC QUEST",
+  "texto": "Epic Quests follow the journeys of several different heroes.\nAs you play through the story-based quests, the protagonist character will get stronger.\n\nWhen you begin an Epic Quest, you will receive the protagonist character.",
+  "n": [
+   27,
+   28
+  ],
+  "completo": true,
+  "notas": "La captura 28 es idéntica a la 27."
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "DIMENSION MISSION",
+  "titulo": "DIMENSION MISSION",
+  "texto": "Battle against enemies from different dimensions every day and acquire rewards in Dimension Mission.\nSelect desired difficulty to start the battle. More rewards are available at a higher difficulty.\n\nSupport Tokens can be acquired in Dimension Mission. A variety of items can be purchased with Support Tokens in the Support Shop.",
+  "n": [
+   29
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "DISPATCH MISSION",
+  "titulo": "DISPATCH MISSION",
+  "texto": "In Dispatch Mission, you clear stages in a specific area and then dispatch characters to that area.\nWhen progressing through a stage, three characters can fight at the same time, and there's no separate cooldown when tagging.\n\nIn areas where characters have been dispatched, supplies can be obtained at regular intervals without engaging in battle.\nYou can obtain more supplies if the total Combat Power of the dispatched characters is high or based on your VIP Level.\nThe more stages you clear in each area, the more characters you can dispatch.\n\nIn Dispatch Mission, you can earn Dispatch EXP by clearing stages to increase your Dispatch Level.\nIncreasing your Dispatch Level allows you to earn more supplies.",
+  "n": [
+   30
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "TIMELINE BATTLE",
+  "titulo": "TIMELINE BATTLE",
+  "texto": "In Timeline Battle, you form teams of 3 and challenge other players.\nYou will be ranked depending on the points you earn, and can be either promoted or demoted.\n\nIn Timeline Battle, you can collect Glory Tokens. Glory Tokens can be used in the Timeline Shop to purchase Character Biometrics and other various rewards.",
+  "n": [
+   31
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "ALLIANCE BATTLE",
+  "titulo": "ALLIANCE BATTLE",
+  "texto": "Alliance Battle is a mode where you can compete against other Alliances with Stage Clear Points.\nOnly players who are in an Alliance can participate.\n\nAlliance Battle consists of Boss Battles and Relay Battles\nWhen Boss Battle is unlocked, Normal, Extreme, and Legend difficulties are made available in that order.\nWhen Relay Battle unlocks, Infinite Challenge mode becomes available.\n\nExtreme mode unlocks when Normal mode is cleared.\nLegend mode unlocks when you clear Extreme mode with 1,000,000 points or higher.\n\nWhen you clear Extreme, Legend, and Infinite Challenge modes, Challenge mode becomes available.\n*You can obtain a reward by reaching a certain score, and you can also set high scores.\n\nAlliance Battle's mode and the day of the week decide the characters who can participate.\nThe daily requirements may ask for a certain character type, faction, race, or gender. Only the characters that meet the requirements of the day can participate.\n*Characters who achieved the highest record in each mode are not allowed to participate in different [cortado]",
+  "n": [
+   32
+  ],
+  "completo": false,
+  "notas": "El final del texto queda cortado por el scroll del panel y no hay otra captura con la continuación."
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "OTHERWORLD BATTLE",
+  "titulo": "OTHERWORLD BATTLE",
+  "texto": "Otherworld Battle is a mode where you can fight against other players.\nYou will form a team of 5 characters to fight an opponent's team.\nBuffs can be applied to each participating character, and characters can be strategically deployed in different locations of your choosing.\n\nArena Points determine the league, and the league and ranking rewards will be available based on your record at the end of a season.\n\nWarrior Mementos are available in Otherworld Battle. Warrior Mementos can be used to purchase battlefield buffs, enhancement items, and growth materials in the Otherworld Shop.\n\nA season in Otherworld Battle lasts 8 weeks, after which it resets. During a season reset, all battlefield buffs you have will be reset as well.",
+  "n": [
+   33
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "WORLD BOSS",
+  "titulo": "WORLD BOSS",
+  "texto": "Fight against powerful bosses in World Boss.\nCreate your own unique team of characters and fight against beings from across the galaxy with the help of your allies.\n\nWorld Boss difficulty is divided into 6 different modes.\nWorld Boss: Beginner is best for players who don't have much experience against World Bosses.\nWorld Boss: Normal is best for players who have somewhat stronger characters and have some experience fighting world bosses.\nWorld Boss: Ultimate is for players who have strengthened their characters to Tier-2 or higher.\nWorld Boss: Legend is for advanced players who have strengthened their characters to Tier-3, Transcend Potential or higher.\nWorld Boss: Legend+ is for advanced players who have strengthened their characters to Tier-4 or higher.\nWorld Boss: Mythic is recommended for elite players who have advanced their Heroes to Tier-4 or higher and have mastered World Boss: Legend+.\n\nGet Tier-2 Advancement Materials, Black Anti-Matter, Norn Stones of Chaos, material to evolve Mutants and Tier-3 Advancement materials like Titan's Record, Cosmic Cube Fragments, Essence of Dimension, Titan Component Packs, material to reforge C.T.P. like C.T.P. Reforging Core, Tier-4 Advancement materials like Carbonadium, and Life Seed, and materials to enhance J.A.R.V.I.S. like J.A.R.V.I.S. Data Shard from World Boss.",
+  "n": [
+   34,
+   35
+  ],
+  "completo": true,
+  "partes": [
+   {
+    "texto": "Fight against powerful bosses in World Boss.\nCreate your own unique team of characters and fight against beings from across the galaxy with the help of your allies.",
+    "completo_en": [
+     34
+    ],
+    "parcial_en": [
+     35
+    ]
+   },
+   {
+    "texto": "World Boss difficulty is divided into 6 different modes.\nWorld Boss: Beginner is best for players who don't have much experience against World Bosses.\nWorld Boss: Normal is best for players who have somewhat stronger characters and have some experience fighting world bosses.\nWorld Boss: Ultimate is for players who have strengthened their characters to Tier-2 or higher.\nWorld Boss: Legend is for advanced players who have strengthened their characters to Tier-3, Transcend Potential or higher.\nWorld Boss: Legend+ is for advanced players who have strengthened their characters to Tier-4 or higher.\nWorld Boss: Mythic is recommended for elite players who have advanced their Heroes to Tier-4 or higher and have mastered World Boss: Legend+.",
+    "completo_en": [
+     34,
+     35
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "Get Tier-2 Advancement Materials, Black Anti-Matter, Norn Stones of Chaos, material to evolve Mutants and Tier-3 Advancement materials like Titan's Record, Cosmic Cube Fragments, Essence of Dimension, Titan Component Packs, material to reforge C.T.P. like C.T.P. Reforging Core, Tier-4 Advancement materials like Carbonadium, and Life Seed, and materials to enhance J.A.R.V.I.S. like J.A.R.V.I.S. Data Shard from World Boss.",
+    "completo_en": [
+     35
+    ],
+    "parcial_en": [
+     34
+    ]
+   }
+  ],
+  "notas": "En la 35 solo se ve el final cortado del primer párrafo; en la 34 el último párrafo se corta después de «Essence of Dimension,»."
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "MULTIVERSE SAGA",
+  "titulo": "MULTIVERSE SAGA",
+  "texto": "Multiverse Saga is story content that allows you to experience to journeys of specific characters.\nYou can enjoy battles by directly controlling the characters without reflecting the player's account and character growth status.\n\nMultiverse Saga consists of Normal Story Pack and Hidden Story Pack.\n\nOnce you complete all the Normal Story Pack, you can proceed to the boss stage.\nThe boss stage consists of several stages, and a Skip function is available for stages that have been cleared.\n\nEach story has its own dedicated characters and you can acquire Biometrics.\n\nYou can acquire Emblem Growth Materials by clearing the Multiverse Saga episodes.",
+  "n": [
+   36
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "SHADOWLAND",
+  "titulo": "SHADOWLAND",
+  "texto": "Daredevil, controlled by the Dark Beast, creates Shadowland - a fortress where his law is the only law - above the remains of Hell’s Kitchen. As Daredevil grows increasingly violent, several Heroes must band together to stop the slaughter.\nIn Shadowland, Heroes must face and clear various battlefields to reach the top floor.",
+  "n": [
+   37
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "ALLIANCE TOURNAMENT",
+  "titulo": "ALLIANCE TOURNAMENT",
+  "texto": "The Alliance Tournament will determine the best Alliance in the Multiverse.\nThe Alliance Battle is a scheduled competition among the Top 16 Alliances.\n\nCheer: Players that are not included in the Tournament will be able to Cheer on an Alliance of their choosing. The Player will get Rewards depending on the final rank of the chosen Alliance. The Alliance will get more rewards if more people cheer them on.",
+  "n": [
+   38
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "LEGENDARY BATTLE",
+  "titulo": "LEGENDARY BATTLE",
+  "texto": "In Legendary Battle, relive famous scenes inspired by the Marvel Cinematic Universe.\nPlayers can enjoy battle scenes from the movies and play in familiar locations with specific characters.\n\nLegendary Battles can only be played with specific characters that fit the theme, and they can be played whether or not you have recruited them.\n\nClear stages and get various rewards. However, players will acquire bonus rewards depending on the Growth Score of the character they own.",
+  "n": [
+   39
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "ALLIANCE CONQUEST",
+  "titulo": "ALLIANCE CONQUEST",
+  "texto": "Alliance Conquest is a game mode where alliances compete against one another.\nThree Alliances fight against one another and proceed in the following order.\n\n1. SELECT REGION\nOnce a Conquest begins, an Alliance can attack a region bordering their starting point.\nEach region will be defended and must be cleared for it to be seized.\nOnce a region has been successfully seized, the Alliance will get Conquest Points.\n\n2. BATTLE\nSelect the Defending Troops to attack a particular region.\nBattles will proceed automatically. Once deployed, a character cannot be used again until the next reset.\nOnce a region is successfully seized, the characters used for the attack will be stationed there for defense.\nCharacters that are defending a region cannot be used to attack other regions.\n\n3. PROTECTED REGIONS\n\nOnce a region has been seized, it becomes a protected region.\nOnce a region is protected, it cannot be attacked or seized by another Alliance until the protection is removed.\n\nTip: Once the protection is removed, regions can be taken by attacking. Alliances can earn additional conquest points according to the region's conquest duration.\n\n4. BATTLE END\nOnce a conquest has ended, ranks will be determined by the number of conquest points an Alliance has.\nRewards are determined by the rank of the Alliance.",
+  "n": [
+   40,
+   41
+  ],
+  "completo": true,
+  "partes": [
+   {
+    "texto": "Alliance Conquest is a game mode where alliances compete against one another.\nThree Alliances fight against one another and proceed in the following order.",
+    "completo_en": [
+     40
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "1. SELECT REGION\nOnce a Conquest begins, an Alliance can attack a region bordering their starting point.\nEach region will be defended and must be cleared for it to be seized.\nOnce a region has been successfully seized, the Alliance will get Conquest Points.",
+    "completo_en": [
+     40
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "2. BATTLE\nSelect the Defending Troops to attack a particular region.\nBattles will proceed automatically. Once deployed, a character cannot be used again until the next reset.\nOnce a region is successfully seized, the characters used for the attack will be stationed there for defense.\nCharacters that are defending a region cannot be used to attack other regions.",
+    "completo_en": [
+     40
+    ],
+    "parcial_en": [
+     41
+    ]
+   },
+   {
+    "texto": "3. PROTECTED REGIONS\n\nOnce a region has been seized, it becomes a protected region.\nOnce a region is protected, it cannot be attacked or seized by another Alliance until the protection is removed.",
+    "completo_en": [
+     41
+    ],
+    "parcial_en": [
+     40
+    ]
+   },
+   {
+    "texto": "Tip: Once the protection is removed, regions can be taken by attacking. Alliances can earn additional conquest points according to the region's conquest duration.",
+    "completo_en": [
+     41
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "4. BATTLE END\nOnce a conquest has ended, ranks will be determined by the number of conquest points an Alliance has.\nRewards are determined by the rank of the Alliance.",
+    "completo_en": [
+     41
+    ],
+    "parcial_en": []
+   }
+  ],
+  "notas": "En la 40 la sección «3. PROTECTED REGIONS» muestra solo el título; en la 41 falta el comienzo (hasta «Select the Defending Troops...», cortado arriba)."
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "GIANT BOSS RAID",
+  "titulo": "GIANT BOSS RAID",
+  "texto": "Team up with characters from different dimensions to defeat the Giant Boss in Giant Boss Raid.\n\n3 players can enter at once, and the battle can proceed with 1 or 2 players as well.\nThe boss's difficulty increases when more players participate, also providing more rewards.\n\nAcquire Type Enhancement Kits, Tier-4 Advancement Materials like the Book of the Vishanti, and Soul of the Faltine in Giant Boss Raid.\nThe bosses change daily, providing different rewards for each.\n\nUse Boost Points in the Lobby to increase the reward count.\nAdditional rewards equivalent to the set reward count can be acquired upon victory.\nStrengthen a randomly selected Bonus Character for each battle to increase your chance to acquire rewards.",
+  "n": [
+   42
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "WORLD EVENT",
+  "titulo": "WORLD EVENT",
+  "texto": "All agents battle against a number of enemies using characters with the same Tier, Rank, Gear, ISO-8, Comic Card settings in the World Event.\n\nThe World Event will be available at a set time every day, and available characters will be selected randomly when the event starts.\n\nAll participants can acquire battle grade and score based on the battle results.\n\nIndividual Reward can be acquired based on your best score during the event period,\nand World Reward can be acquired based on average battle grade of all participants when the event ends.",
+  "n": [
+   43
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "TIMELINE SURVIVAL",
+  "titulo": "TIMELINE SURVIVAL",
+  "texto": "Timeline Survival is content that allows you to enter the timeline to defeat villains and acquire rewards for defeating all bosses in the current timeline.\n\nUp to three characters can enter simultaneously during a stage, and there are no separate cooldowns for tagging.\n\nEach time you enter the timeline, the location where the boss appears will be different. Before going into the boss stage, you can interact with various locations such as Hero Admin Office, Shops, Rewards, and Landmarks to increase the combat power of participating characters.\n\nTimeline Survival can be accessed for the duration of the event. At the end of the event, HP, survival effects, and TVA tokens on characters are reset.",
+  "n": [
+   44
+  ],
+  "completo": true
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "DIMENSION RIFT",
+  "titulo": "DIMENSION RIFT",
+  "texto": "The Dimension Rift is a cooperative mode where you can team up with friends or Alliance members to battle and earn rewards.\n\nTo open higher-tier Dimension Rifts, you must use Dimension Rift Summon Stones obtained from Dimension Rifts.\nThe required summon stone grade depends on the tier of the Dimension Rift being opened, with higher tiers offering greater rewards.\n\nOpened Dimension Rifts can be shared with friends and Alliance members, allowing you to challenge them together.\nSuccessfully clearing a Dimension Rift increases its Completion Progress. Completion Progress also increases when friends or Alliance members successfully clear it.\n\nSuccessfully clearing a Dimension Rift grants Clear Rewards and unlocks higher difficulty levels.\nOnce the Dimension Rift's Completion Progress reaches 100%, participants with at least 1 Completion Progress Point or those who used a participation attempt can earn Completion Rewards by clearing stages.\nThe participant with the highest Completion Progress will be selected as MVP and receive the MVP Reward.",
+  "n": [
+   45,
+   46
+  ],
+  "completo": true,
+  "partes": [
+   {
+    "texto": "The Dimension Rift is a cooperative mode where you can team up with friends or Alliance members to battle and earn rewards.",
+    "completo_en": [
+     45
+    ],
+    "parcial_en": [
+     46
+    ]
+   },
+   {
+    "texto": "To open higher-tier Dimension Rifts, you must use Dimension Rift Summon Stones obtained from Dimension Rifts.\nThe required summon stone grade depends on the tier of the Dimension Rift being opened, with higher tiers offering greater rewards.",
+    "completo_en": [
+     45,
+     46
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "Opened Dimension Rifts can be shared with friends and Alliance members, allowing you to challenge them together.\nSuccessfully clearing a Dimension Rift increases its Completion Progress. Completion Progress also increases when friends or Alliance members successfully clear it.",
+    "completo_en": [
+     45,
+     46
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "Successfully clearing a Dimension Rift grants Clear Rewards and unlocks higher difficulty levels.\nOnce the Dimension Rift's Completion Progress reaches 100%, participants with at least 1 Completion Progress Point or those who used a participation attempt can earn Completion Rewards by clearing stages.\nThe participant with the highest Completion Progress will be selected as MVP and receive the MVP Reward.",
+    "completo_en": [
+     46
+    ],
+    "parcial_en": [
+     45
+    ]
+   }
+  ],
+  "notas": "El último renglón («The participant with the highest Completion Progress...») solo se lee en la 46."
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "ZOMBIE SURVIVAL",
+  "titulo": "ZOMBIE SURVIVAL",
+  "texto": "Zombie Survival is a mode where you have to survive against oncoming zombies for a set amount of time.\n\nIn Zombie Survival, there are skill restrictions, stage hazards, character restrictions and zombie enhancements.\nSkill restrictions prevent you from using the skill in that slot.\nStage hazards apply additional effects to levels.\nCharacter restrictions prevent you from deploying certain character types.\nZombie enhancements increase the zombies' ATK, DEF, and HP as the level increases.\n*Skill restrictions, stage hazards, and character restrictions will change every week.\n\nYou can obtain rewards by completing Zombie Survival Challenges and competing for ranks in Zombie Survival.\n\nYou can obtain Eternal Flames and Zombie Survival Tokens by completing Zombie Survival Challenges, which are exclusive to Zombie Survival.\n\nObtain rewards by competing for ranks against up to 50 players that change each week, and you will receive rewards based on your rank.\nYou will be ranked by the highest score you achieve. Higher levels provide higher scores.\nPoints are awarded for each zombie you eliminate, and players who eliminate more will earn more points and rank higher than other players on the same level.",
+  "n": [
+   47,
+   48
+  ],
+  "completo": true,
+  "partes": [
+   {
+    "texto": "Zombie Survival is a mode where you have to survive against oncoming zombies for a set amount of time.",
+    "completo_en": [
+     47
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "In Zombie Survival, there are skill restrictions, stage hazards, character restrictions and zombie enhancements.\nSkill restrictions prevent you from using the skill in that slot.\nStage hazards apply additional effects to levels.\nCharacter restrictions prevent you from deploying certain character types.\nZombie enhancements increase the zombies' ATK, DEF, and HP as the level increases.\n*Skill restrictions, stage hazards, and character restrictions will change every week.",
+    "completo_en": [
+     47
+    ],
+    "parcial_en": [
+     48
+    ]
+   },
+   {
+    "texto": "You can obtain rewards by completing Zombie Survival Challenges and competing for ranks in Zombie Survival.",
+    "completo_en": [
+     47,
+     48
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "You can obtain Eternal Flames and Zombie Survival Tokens by completing Zombie Survival Challenges, which are exclusive to Zombie Survival.",
+    "completo_en": [
+     47,
+     48
+    ],
+    "parcial_en": []
+   },
+   {
+    "texto": "Obtain rewards by competing for ranks against up to 50 players that change each week, and you will receive rewards based on your rank.\nYou will be ranked by the highest score you achieve. Higher levels provide higher scores.\nPoints are awarded for each zombie you eliminate, and players who eliminate more will earn more points and rank higher than other players on the same level.",
+    "completo_en": [
+     48
+    ],
+    "parcial_en": [
+     47
+    ]
+   }
+  ],
+  "notas": "Los dos últimos renglones («You will be ranked...» y «Points are awarded...») solo están en la 48."
+ },
+ {
+  "pantalla": "CONTENT GLOSSARY",
+  "item": "TEAM BATTLE ARENA",
+  "titulo": "TEAM BATTLE ARENA",
+  "texto": "Team Battle Arena is a game mode in which you engage in tactical combat with other players.\n\nYou can build up to 5 teams, each made of 3 characters, using Hero Cost, and use them to battle against other players' teams.\n\nYour league is determined based on the amount of Arena Points you earn, and at the end of the season, you'll receive various rewards based on your league and final rank.\n\nAdditionally, you can obtain Arena Tokens in Team Battle Arena. You can exchange Arena Tokens in the Arena Shop for various rewards such as enhancement items and growth materials.",
+  "n": [
+   49
+  ],
+  "completo": true
+ }
+]

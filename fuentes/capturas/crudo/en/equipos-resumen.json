@@ -1,0 +1,751 @@
+{
+ "bonos": [
+  {
+   "nombre": "Afflicted Lovers",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.24%",
+    "MAX HP ↑ +4.97%"
+   ],
+   "n": [
+    232
+   ],
+   "vistas": [
+    "ACTIVATED"
+   ],
+   "retratos": 2,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican.",
+   "nota": "Visto en la pestaña ACTIVATED con la ranura 4 de MY TEAM."
+  },
+  {
+   "nombre": "6★ Characters X 3",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +3.12%",
+    "ALL BASIC DEFENSES INCREASE +3.12%",
+    "MAX HP ↑ +3.12%"
+   ],
+   "n": [
+    232
+   ],
+   "vistas": [
+    "ACTIVATED"
+   ],
+   "retratos": 3,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican.",
+   "nota": "Los tres integrantes son íconos genéricos con 6 estrellas. Visto en la pestaña ACTIVATED con la ranura 4 de MY TEAM."
+  },
+  {
+   "nombre": "God Squad #4",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.3%",
+    "CRITICAL RATE ↑ +4.73%",
+    "COOLDOWN DURATION ↓ 4.94%"
+   ],
+   "n": [
+    234,
+    297,
+    301
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "God Squad #3",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.3%",
+    "CRITICAL RATE ↑ +4.73%",
+    "MAX HP ↑ +5.24%"
+   ],
+   "n": [
+    234,
+    297,
+    301
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Invasion of the Devourer #2",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.41%",
+    "CRITICAL DAMAGE ↑ +4.78%",
+    "CROWD CONTROL TIME ↓ 4.83%"
+   ],
+   "n": [
+    234,
+    297,
+    301
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Invasion of the Devourer #1",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.41%",
+    "COOLDOWN DURATION ↓ 5.08%",
+    "DODGE ↑ +4.78%"
+   ],
+   "n": [
+    234,
+    297,
+    301
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "The Devourer and the Sky-Father",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.24%",
+    "MOVEMENT SPEED ↑ +4.88%",
+    "DODGE ↑ +4.83%"
+   ],
+   "n": [
+    298,
+    302
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Rescuing Galactus",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.3%",
+    "IGNORE DEFENSE 4.73%",
+    "ATTACK SPEED ↑ +4.68%"
+   ],
+   "n": [
+    298,
+    302
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Heralds of Galactus #2",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.35%",
+    "CRITICAL DAMAGE ↑ +4.78%",
+    "MAX HP ↑ +5.08%"
+   ],
+   "n": [
+    298,
+    302
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Heralds of Galactus #1",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.41%",
+    "CRITICAL RATE ↑ +4.94%",
+    "ENERGY DEFENSE ↑ +5.08%"
+   ],
+   "n": [
+    298,
+    299,
+    303
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Annihilation - Scourge",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.41%",
+    "MOVEMENT SPEED ↑ +4.78%",
+    "IGNORE DEFENSE 4.78%"
+   ],
+   "n": [
+    299
+   ],
+   "vistas": [
+    "ALL"
+   ],
+   "retratos": 3,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican."
+  },
+  {
+   "nombre": "Broken Alliance",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.3%",
+    "CRITICAL RATE ↑ +4.73%",
+    "CROWD CONTROL TIME ↓ 4.94%"
+   ],
+   "n": [
+    299
+   ],
+   "vistas": [
+    "ALL"
+   ],
+   "retratos": 3,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican."
+  },
+  {
+   "nombre": "Invasion of Asgard",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.13%",
+    "ATTACK SPEED ↑ +4.81%",
+    "COOLDOWN DURATION ↓ 4.83%"
+   ],
+   "n": [
+    299,
+    300
+   ],
+   "vistas": [
+    "ALL"
+   ],
+   "retratos": 3,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican."
+  },
+  {
+   "nombre": "Battle for the Cosmic Control Rod #2",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.24%",
+    "MAX HP ↑ +5.19%",
+    "MAX HP ↑ +5.13%"
+   ],
+   "n": [
+    300
+   ],
+   "vistas": [
+    "ALL"
+   ],
+   "retratos": 3,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican.",
+   "nota": "Repite 'MAX HP ↑' en dos renglones con valores distintos, tal como se ve (posible errata del juego)."
+  },
+  {
+   "nombre": "Battle for the Cosmic Control Rod #1",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.35%",
+    "MOVEMENT SPEED ↑ +4.94%",
+    "RECOVERY RATE ↑ +4.68%"
+   ],
+   "n": [
+    300
+   ],
+   "vistas": [
+    "ALL"
+   ],
+   "retratos": 3,
+   "integrantes": [],
+   "fuente_integrantes": "Integrantes solo por retrato; no se identifican."
+  },
+  {
+   "nombre": "Galactus Abducted",
+   "lineas": [
+    "ALL BASIC ATTACKS INCREASE +5.35%",
+    "CRITICAL RATE ↑ +4.78%",
+    "ATTACK SPEED ↑ +4.78%"
+   ],
+   "n": [
+    300,
+    303
+   ],
+   "vistas": [
+    "ALL",
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 3,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "God Squad #5",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.3%",
+    "CRITICAL RATE ↑ +4.73%"
+   ],
+   "n": [
+    303,
+    304
+   ],
+   "vistas": [
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 2,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Enemy of the Homeworld",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.3%",
+    "CRITICAL RATE ↑ +4.73%"
+   ],
+   "n": [
+    303,
+    304
+   ],
+   "vistas": [
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 2,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Galactuses",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.35%",
+    "DODGE ↑ +4.94%"
+   ],
+   "n": [
+    304
+   ],
+   "vistas": [
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 2,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica."
+  },
+  {
+   "nombre": "Heralds of Galactus #3",
+   "lineas": [
+    "ENERGY ATTACK ↑ +5.35%",
+    "[cortado]"
+   ],
+   "n": [
+    304
+   ],
+   "vistas": [
+    "TEAM BONUS PER CHARACTER > GALACTUS"
+   ],
+   "retratos": 2,
+   "integrantes": [
+    "GALACTUS"
+   ],
+   "fuente_integrantes": "Aparece en la lista de la barra 'GALACTUS' de TEAM BONUS PER CHARACTER ('Select a character to check all Team Bonuses related to that character.'); el resto de los integrantes solo se ve por retrato y no se identifica.",
+   "nota": "Incompleto: el resto quedó cortado por el scroll."
+  }
+ ],
+ "ventanas": [
+  {
+   "titulo": "SET STRIKER",
+   "lineas": [
+    "SILVER SURFER (SHALLA-BAL)",
+    "INSTINCT BONUS",
+    "DESTRUCTION +Lv. 2",
+    "Power and Hatred",
+    "STRIKER SKILL Lv.6",
+    "Applies to: Enemies",
+    "· Panic, increases basic damage received by +50%(5 Sec.)",
+    "Applies to: Self",
+    "· Increases all Basic Attacks by +40%.(7 Sec.)",
+    "· +50% increase of MAX HP.(7 Sec.)",
+    "· Increases basic damage dealt to enemies with 60% HP or lower by +80%.(7 Sec.)",
+    "[cortado]",
+    "Cosmic Board Dash",
+    "ACTIVE",
+    "Only 6★ or higher characters can be set as Strikers. Buff effectiveness increases as a character's tier gets higher."
+   ],
+   "n": [
+    217
+   ],
+   "nota": "Sobre la pestaña SKILL de TEAM. Un renglón de la descripción queda tapado ('[cortado]')."
+  },
+  {
+   "titulo": "TEAM BONUS PER CHARACTER",
+   "lineas": [
+    "Select a character to check all Team Bonuses related to that character.",
+    "Current Leader",
+    "New",
+    "New",
+    "New Uniform",
+    "New Uniform",
+    "New Uniform",
+    "New Uniform"
+   ],
+   "n": [
+    233
+   ],
+   "nota": "Pestaña de la ventana de bonos de equipo (ACTIVATED / TEAM BONUS PER CHARACTER / ALL): grilla de retratos sin nombre; las etiquetas son de la primera fila."
+  },
+  {
+   "titulo": "Team Passive",
+   "lineas": [
+    "SISTER GRIMM",
+    "RED SKULL"
+   ],
+   "n": [
+    226
+   ],
+   "nota": "Equipo de la ranura 5. Mismo título que el siguiente con contenido distinto (depende del equipo)."
+  },
+  {
+   "titulo": "Team Passive",
+   "lineas": [
+    "CYCLOPS",
+    "JEFF THE LAND SHARK"
+   ],
+   "n": [
+    227,
+    228,
+    229,
+    230
+   ],
+   "nota": "Equipo de la ranura 4; en n=228-230 queda parcialmente debajo de los cuadros de descripción. Mismo título que el anterior con contenido distinto."
+  },
+  {
+   "titulo": "Leader of X-Men",
+   "lineas": [
+    "Applies to: All Allies",
+    "+40% increase of Energy Attack.",
+    "Increases basic damage dealt to SUPER VILLAIN faction by 30%."
+   ],
+   "n": [
+    228
+   ],
+   "nota": "Cuadro abierto encima del renglón 'CYCLOPS' del globo Team Passive."
+  },
+  {
+   "titulo": "Guardian of the Deep",
+   "lineas": [
+    "Applies to: Super Hero Allies",
+    "Increases basic damage dealt to SUPER VILLAIN faction by 45%.",
+    "Decreases basic damage received from SUPER VILLAIN faction by 40%.",
+    "Excluding bosses, ignores enemy's damage decrease by 10%."
+   ],
+   "n": [
+    229
+   ],
+   "nota": "Cuadro abierto encima del renglón 'JEFF THE LAND SHARK' del globo Team Passive."
+  },
+  {
+   "titulo": "Jeff's Cuddle Buddy",
+   "lineas": [
+    "Activation Rate: when debuffed",
+    "Applies to: Super Hero Allies",
+    "Removes all Debuffs. (12 Sec.)",
+    "Cooldown Time 20 second(s)"
+   ],
+   "n": [
+    230
+   ],
+   "nota": "Cuadro abierto encima del renglón 'JEFF THE LAND SHARK' (tapa su primer ícono). Enfriamiento en verde."
+  },
+  {
+   "titulo": "Team Gear",
+   "lineas": [
+    "CYCLOPS",
+    "JEFF THE LAND SHARK"
+   ],
+   "n": [
+    231
+   ],
+   "nota": "CYCLOPS: 1 objeto; JEFF THE LAND SHARK: 2 objetos (solo íconos, sin nombres)."
+  },
+  {
+   "titulo": "All Effects",
+   "lineas": [
+    "Applies to: All Allies",
+    "Increases all Basic Attacks by +58.36%",
+    "Increases all Basic Defenses by +33.12%.",
+    "+40% increase of Energy Attack.",
+    "Increases basic damage dealt to SUPER VILLAIN faction by 30%.",
+    "HP increases by +15%.",
+    "Decreases Chain Hit damage by 10% when attacked.",
+    "+8.09% increase of HP.",
+    "Applies to: Super Hero Allies",
+    "Excluding bosses, ignores enemy's damage decrease by 10%.",
+    "Increases basic damage dealt to SUPER VILLAIN faction by 45%.",
+    "Decreases basic damage received from SUPER VILLAIN faction by 40%.",
+    "Increases max HP by 12% and an additional 0.2% of Total Instinct. (Up to 200%)",
+    "Increases all Basic Attacks by 10% and an additional 0.3% of Total Instinct. (Up to 200%)",
+    "Activation Rate: when debuffed",
+    "Applies to: Super Hero Allies",
+    "Removes all Debuffs. (12 Sec.)",
+    "Cooldown Time 20 second(s)",
+    "Applies to: All Allies",
+    "Increases basic damage dealt to boss types by 20%.",
+    "Activation Rate: 15% chance when attacking",
+    "Applies to: All Allies",
+    "Increases basic damage dealt to SUPER VILLAIN faction by 20%.(5 Sec.)",
+    "Increases basic damage dealt to SUPER HERO faction by 20%.(5 Sec.)",
+    "Cooldown Time 7 second(s)",
+    "Activation Rate: 10% chance when attacking",
+    "Applies to: All Allies",
+    "All damage dealt to all Instincts increases by 20%(5 Sec.)",
+    "Cooldown Time 7 second(s)"
+   ],
+   "n": [
+    235,
+    236,
+    237,
+    238
+   ],
+   "nota": "Globo con scroll en MY TEAM (ranura 4), unido por solapamiento de n=235-238: el renglón cortado arriba de n=236 coincide en forma con el final de n=235; n=237 repite los 4 últimos renglones de n=236 y n=238 los renglones 7-9 de n=237. Cuerpo en celeste claro con los números en verde; los 'Cooldown Time' no van en verde en este globo."
+  },
+  {
+   "titulo": "Planet Devourer",
+   "lineas": [
+    "Ultimate Skill Lv.1",
+    "Applies to: Enemies",
+    "· Snare(3 Sec.)",
+    "· Panic, increases basic damage received by +15%(5 Sec.)",
+    "Applies to: Self",
+    "· Ignores target’s Dodge Rate by 100%. (8 Sec.)",
+    "· 80% chance to penetrate with SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE effect. (8 Sec.)",
+    "· Invincible (8 Sec.)",
+    "· Energy Damage 100% of Energy Attack",
+    "Additional 36 Energy Damage"
+   ],
+   "n": [
+    282
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Herald My Rage!",
+   "lineas": [
+    "PASSIVE Lv.1",
+    "Applies to: Self",
+    "· Increases Chain Hit damage by 20% when attacking.",
+    "· Increases Additional Pierce Damage by 5%",
+    "· Increases Skill damage by 50%, increases Bonus Damage by 50%."
+   ],
+   "n": [
+    283
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Gesture of Ruin",
+   "lineas": [
+    "ACTIVE Lv.10",
+    "Applies to: Enemies",
+    "· Stun (3 Sec.)",
+    "· Energy Damage 60% of Energy Attack",
+    "Additional 403 Energy Damage",
+    "Cooldown Time 8 second(s)"
+   ],
+   "n": [
+    284
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Power Cosmic Bomb",
+   "lineas": [
+    "ACTIVE Lv.10",
+    "Enables attacking enemies who have activated the “Ignore Targeting” effect.",
+    "Applies to: Enemies",
+    "· Burn: Deals additional 30% Flame Damage every 1 sec.(3 Sec.)",
+    "· Incapacitation (Removes ACTIVE BUFF from target)(3 Sec.)",
+    "· Panic, increases basic damage received by +30%(3 Sec.)",
+    "Applies to: Self",
+    "· Recovers 25% of HP.(1 Sec.)",
+    "· 80% chance to penetrate with SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE effect. (6 Sec.)",
+    "· Invincible (4 Sec.)",
+    "· Removes all Debuffs. (4 Sec.)",
+    "· Excluding bosses, ignores enemy's damage decrease by 20%.(6 Sec.)",
+    "· Energy Damage 120% of Energy Attack",
+    "Additional 126 Energy Damage",
+    "Cooldown Time 8 second(s)"
+   ],
+   "n": [
+    285
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Power Cosmic Blast",
+   "lineas": [
+    "ACTIVE Lv.10",
+    "Applies to: Enemies",
+    "· Stun (3 Sec.)",
+    "· Incapacitation (Removes ACTIVE BUFF from target)(3 Sec.)",
+    "· Decreases all Basic Defenses by -10%. (Stacks up to -70%, ignores immunity)(5 Sec.)",
+    "Applies to: Self",
+    "· Recovers 25% of HP.(1 Sec.)",
+    "· Accumulates 10% of pure damage when attacking (Max 100%)(7 Sec.)",
+    "· +1% Increase of ALL BASIC ATTACKS each 1% of pure damage accumulated(7 Sec.)",
+    "· Energy Damage 50% of Energy Attack",
+    "Additional 504 Energy Damage",
+    "Cooldown Time 15 second(s)"
+   ],
+   "n": [
+    286
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Black Hole Crush",
+   "lineas": [
+    "ACTIVE Lv.10",
+    "Applies to: Enemies",
+    "· Fear(3 Sec.)",
+    "· Silence(3 Sec.)",
+    "Applies to: Self",
+    "· Increases all Basic Attacks by +50%, all Basic Defenses by +50%, and all Speeds by +1%.(7 Sec.)",
+    "· Energy Damage 90% of Energy Attack",
+    "Additional 119 Energy Damage",
+    "Cooldown Time 15 second(s)"
+   ],
+   "n": [
+    287
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Galactic Wrath",
+   "lineas": [
+    "ACTIVE Lv.10",
+    "Applies to: Enemies",
+    "· Incapacitation (Removes ACTIVE BUFF from target)(3 Sec.)",
+    "· Panic, increases basic damage received by +30%(3 Sec.)",
+    "Applies to: Self",
+    "· Increases all Basic Attacks and Defense by +50%, all speed by +1%, and Critical Rate by +30%, removes Incapacitation(7 Sec.)",
+    "· 100% chance to grant All Damage Immunity(5 Sec.)",
+    "· Energy Damage 55% of Energy Attack",
+    "Additional 168 Energy Damage",
+    "Cooldown Time 15 second(s)"
+   ],
+   "n": [
+    288
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Siphon of Realms",
+   "lineas": [
+    "PASSIVE Lv.1",
+    "Applies to: Self",
+    "· Super Armor, increases all Basic Defenses by +50%.",
+    "· Decreases basic damage received by 45%.",
+    "Activation Rate: when dead",
+    "Applies to: Self",
+    "· Revive with 100% of Max HP",
+    "Cooldown Time 300 second(s)"
+   ],
+   "n": [
+    289
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": "Great Devourer",
+   "lineas": [
+    "LEADER Lv.6",
+    "Applies to: All Allies",
+    "Activation Rate: when debuffed",
+    "· Removes all Debuffs. (12 Sec.)",
+    "Cooldown Time 20 second(s)"
+   ],
+   "n": [
+    290
+   ],
+   "nota": "Ventana de habilidad en la pestaña SKILL de TEAM (personaje sin nombre visible como texto)."
+  },
+  {
+   "titulo": null,
+   "lineas": [
+    "Energy Damage",
+    "Super Guard Break",
+    "Ignore Targeting"
+   ],
+   "n": [
+    291
+   ],
+   "nota": "Leyenda de íconos sin título, junto a la habilidad 'Galactic Wrath'."
+  },
+  {
+   "titulo": null,
+   "lineas": [
+    "Energy Damage",
+    "Guard Break"
+   ],
+   "n": [
+    292,
+    296
+   ],
+   "nota": "Leyenda de íconos sin título, junto a 'Black Hole Crush' (n=292) y 'Gesture of Ruin' (n=296)."
+  },
+  {
+   "titulo": null,
+   "lineas": [
+    "Energy Damage",
+    "Super Guard Break",
+    "Ignore All Targeting"
+   ],
+   "n": [
+    293,
+    294
+   ],
+   "nota": "Leyenda de íconos sin título, junto a 'Power Cosmic Blast' (n=293) y 'Power Cosmic Bomb' (n=294). El ícono de 'Ignore All Targeting' (mira con X roja) difiere del de 'Ignore Targeting' (n=291, un solo trazo)."
+  }
+ ]
+}

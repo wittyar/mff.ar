@@ -1,0 +1,1192 @@
+{
+ "lista_completa": [
+  "GUARD BREAK",
+  "GUARANTEED DODGE RATE",
+  "GUARANTEED CRITICAL RATE",
+  "PURE DAMAGE",
+  "TEAM PASSIVE",
+  "INVINCIBLE",
+  "SUPER ARMOR",
+  "BARRIER",
+  "SHIELD",
+  "DAMAGE IMMUNITY",
+  "FEAR",
+  "SNARE",
+  "TIME FREEZING",
+  "CHARM",
+  "IGNORE TARGETING",
+  "ENTICE",
+  "MIND CONTROL",
+  "RECHARGE SHIELD",
+  "FRACTURE",
+  "INCAPACITATION",
+  "COUNTERATTACK",
+  "ELASTICITY",
+  "CONCENTRATION",
+  "ADDITIONAL PIERCE DAMAGE",
+  "PENETRATION",
+  "BEATDOWN",
+  "TYPE AMPLIFICATION",
+  "STEEL",
+  "MOCKERY",
+  "STRIKE",
+  "AMBUSH",
+  "FORTITUDE",
+  "BLADE",
+  "DEFEND",
+  "SUPER HIT SHIELD",
+  "ENRAGED",
+  "VITALITY",
+  "WALL",
+  "CLASH",
+  "PANIC",
+  "Loss",
+  "Death Throes",
+  "Mark",
+  "Fury"
+ ],
+ "terminos": [
+  {
+   "termino": "GUARD BREAK",
+   "texto": "Guard Break is a skill that cancels out an enemy’s skills.\nSuper Guard Break ignores Guard Break Immunity and cancels the opponent's skill.\n\nTip: When the enemy uses a Skill, try using a Skill that has the Guard Break ability. This will not only block the opponent's skill but will also give you the opportunity to perform a counter attack.",
+   "insignia": "BATTLE GUIDE",
+   "resaltados": [
+    {
+     "texto": "Guard Break",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Super Guard Break",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    119
+   ]
+  },
+  {
+   "termino": "GUARANTEED DODGE RATE",
+   "texto": "Dodge depends on the level difference between the character and the Opponent.\nGuaranteed Dodge Rate ignores these differences and dodges at a set rate no matter what.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Guaranteed Dodge Rate",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    120
+   ]
+  },
+  {
+   "termino": "GUARANTEED CRITICAL RATE",
+   "texto": "Critical Rate depends on the level difference between the character and the Opponent.\nGuaranteed Critical Rate ignores these differences and performs a critical at a set rate no matter what.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Guaranteed Critical Rate",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    121
+   ]
+  },
+  {
+   "termino": "PURE DAMAGE",
+   "texto": "The damage a character receives is the difference of the opponent's Attack Strength, the Character's Defense, and the Character Type Resistance stat.\nPURE Damage ignores these factors and causes the specified amount of damage.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "PURE Damage",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    122
+   ]
+  },
+  {
+   "termino": "TEAM PASSIVE",
+   "texto": "Team Passive is a passive effect that is shared with all team members even if a particular character is not designated as the Leader.\nThis includes skills that say [Applies to: All Team members].",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Team Passive",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "[Applies to: All Team members]",
+     "color": "blanco",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    123,
+    124
+   ]
+  },
+  {
+   "termino": "INVINCIBLE",
+   "texto": "Invincible refers to the fact the character is immune to basic attacks, Guard Breaks, Damages, and Debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Invincible",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Breaks",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    125
+   ]
+  },
+  {
+   "termino": "SUPER ARMOR",
+   "texto": "Super Armor refers to the fact that the character is immune to basic attack motions and Guard Breaks.\nThe character's moves cannot be canceled out, but they will receive damage.",
+   "insignia": "BATTLE GUIDE",
+   "resaltados": [
+    {
+     "texto": "Super Armor",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Breaks",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    126
+   ]
+  },
+  {
+   "termino": "BARRIER",
+   "texto": "Barrier is an effect that prevents damage for a set amount of time. The Character does not take Damage but cannot stop the Guard Break effect.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Barrier",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    127
+   ]
+  },
+  {
+   "termino": "SHIELD",
+   "texto": "Shield is an effect that stops damage for a set amount of time. The Character does not receive damage but cannot stop basic attack motions, Guard Break, and Debuffs. There are different types of shields such as a shield that can block all types of damage, a shield that can block only physical damage, and a shield that can block only energy damage.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Shield",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    128
+   ]
+  },
+  {
+   "termino": "DAMAGE IMMUNITY",
+   "texto": "Damage Immunity is an effect that can stop damage and debuffs for a set amount of time. It can block Damage and Debuffs but cannot stop basic attack motions, Guard Breaks. They are divided into Damage Immunity that stops all types of damage and debuffs, Physical Damage Immunity that stops all physical types of damage and debuffs, and Energy Damage Immunity that stops all energy types of damage and debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Damage Immunity",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Breaks",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    129
+   ]
+  },
+  {
+   "termino": "FEAR",
+   "texto": "Fear puts enemies in fear for a duration of time, causing the affected target to run away from the character that cast Fear.\nCharacters affected by Fear cannot attack or use skills.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Fear",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    130
+   ]
+  },
+  {
+   "termino": "SNARE",
+   "texto": "Snare prevents enemies from moving for a short duration.\nBound targets will be unable to move to another location, attack or use skills.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Snare",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    131
+   ]
+  },
+  {
+   "termino": "TIME FREEZING",
+   "texto": "Time Freezing locks the target in time for a short duration, preventing any movement.\nCharacters caught in Time Freezing will not be able to move or attack.\n\nTip: Time Freezing is able to trap epic monsters that have no debuffs but is not effective against targets who have skills that remove all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Time Freezing",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    132
+   ]
+  },
+  {
+   "termino": "CHARM",
+   "texto": "Charm will charm enemies for a short duration preventing them from attacking.\nCharmed enemies are unable to move or use skills, even preventing automatically activated attacks from activating.\n\nTip: Charm is able to trap epic monsters that have no debuffs but is not effective against targets who have skills that remove all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Charm",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    133
+   ]
+  },
+  {
+   "termino": "IGNORE TARGETING",
+   "texto": "Ignore Targeting is a status where any targeted skills made by the enemy are ignored. No damage is taken even if attacked.\n\nTip: Time a Skill with Ignore Targeting when an enemy is attacking to ignore the enemy’s attack entirely and continue with your own attack.",
+   "insignia": "BATTLE GUIDE",
+   "resaltados": [
+    {
+     "texto": "Ignore Targeting",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    134
+   ]
+  },
+  {
+   "termino": "ENTICE",
+   "texto": "Entice charms enemies for a short duration, preventing them from attacking.\nEnticed enemies are unable to move or use skills and slowly walks towards the character who has cast Entice.\n\nTip: Entice is effective against World Bosses or enemies that don’t have debuffs, but is not effective against targets who have skills that remove all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Entice",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    135
+   ]
+  },
+  {
+   "termino": "MIND CONTROL",
+   "texto": "Mind Control is an ability that turns enemies into allies.\nEnemies under Mind Control receive additional damage.\n\nTip: Mind Control is effective against World Bosses or enemies that don’t have debuffs, but is not effective against targets who have skills that remove all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Mind Control",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    136
+   ]
+  },
+  {
+   "termino": "RECHARGE SHIELD",
+   "texto": "Recharge Shield’s effect continuously recharges.\nIf the same type of Shield is gained, the effect is absorbed and Shield power increases. If another Shield type is gained, the Shield power does not increase and each of the separate effects are gained.\nFor example, gaining Physical Shield effects while the Physical Recharge Shield is active would mean that the effects are absorbed and the defensive power is increased. If another Energy Shield effect is gained, the separate effects would apply.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Recharge Shield",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    137
+   ]
+  },
+  {
+   "termino": "FRACTURE",
+   "texto": "Fracture decreases all Basic Attacks(stackable) for an enemy.\nIf a Fractured enemy recovers HP, then Fracture is removed, but the recovery effect is decreased.\nFracture cannot be removed by skills that removes all debuffs.\n\nTip: If Fracture is stacked, then each stack is removed whenever HP is healed.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Fracture",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    138
+   ]
+  },
+  {
+   "termino": "INCAPACITATION",
+   "texto": "Incapacitation decreases all DEF (stackable) after removing enemy’s all beneficial buffs.\nThis does not apply to targets with skills that removes all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Incapacitation",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    139
+   ]
+  },
+  {
+   "termino": "COUNTERATTACK",
+   "texto": "When hit by an enemy, Counterattack activates instead of basic attack motions.\nBecause Counterattack can activate when attacked, it will not activate when Invincible is in effect.",
+   "insignia": "BATTLE GUIDE",
+   "resaltados": [
+    {
+     "texto": "Counterattack",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Invincible",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    140
+   ]
+  },
+  {
+   "termino": "ELASTICITY",
+   "texto": "Elasticity effect can be stacked with Physical Damage Decrease.\nElasticity will not be removed even when Cancel effect or Incapacitation are applied, but will be removed with Bleed effect.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Elasticity",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Incapacitation",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    141
+   ]
+  },
+  {
+   "termino": "CONCENTRATION",
+   "texto": "Concentration is a stat that affects the potential of skills. Some skills and effects of Custom Gear perform much better with higher Concentration.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Concentration",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    142
+   ]
+  },
+  {
+   "termino": "ADDITIONAL PIERCE DAMAGE",
+   "texto": "Additional Pierce Damage is an ability to deal additional damage that ignores DEF completely. Additional Pierce Damage applies based on the skill's damage.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Additional Pierce Damage",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    143
+   ]
+  },
+  {
+   "termino": "PENETRATION",
+   "texto": "Penetration is a skill that has a set chance to cancel an enemy's skill when attacked.\nThe success rate increases with higher Concentration than the opponent.\nThe exclusive gauge must be fully charged to use Penetration, and the gauge charges up when attacked by enemies.\nThe gauge stops charging for a set duration after Penetration was used.(5 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Penetration",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Penetration was used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    144
+   ]
+  },
+  {
+   "termino": "BEATDOWN",
+   "texto": "Beatdown increases additional Pierce damage upon using skill and grants Guard Break Immunity.\nThe additional Pierce damage increased by Beatdown is not affected by the max damage, and it increases with higher Concentration.\nThe exclusive gauge must be fully charged to use Beatdown, and the gauge charges up when moving.\nThe gauge stops charging for a set duration after Beatdown is used. (7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Beatdown",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "additional Pierce damage",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Beatdown is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    145
+   ]
+  },
+  {
+   "termino": "TYPE AMPLIFICATION",
+   "texto": "Element Amplification increases the element skill's ATK and grants Guard Break Immunity.\nThe element skill's ATK increases with higher Concentration.\nThe exclusive gauge must be fully charged to use Element Amplification, and the gauge charges up when moving.\nThe gauge stops charging for a set duration after Element Amplification is used. (7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Element Amplification",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "increases the element skill's ATK",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Element Amplification is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    146
+   ]
+  },
+  {
+   "termino": "STEEL",
+   "texto": "Steel grants immunity to Guard Break and Super Guard Break and decreases all damage received.\nThe damage decrease amount becomes greater with higher Concentration.\nThe Steel effect can be used when the exclusive gauge is fully charged, and the gauge charges when attacked by enemies.\nThe effect activates automatically, and the gauge does not charge for a set duration after it's activated.(6 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Steel",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "immunity to Guard Break and Super Guard Break",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "gauge does not charge for a set duration after it's activated.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    147
+   ]
+  },
+  {
+   "termino": "MOCKERY",
+   "texto": "Mockery is a debuff that forces enemies to attack the caster. When the effect is applied, the target's ATK increases, but there is a chance that a preset buff will not apply.\nFor example, if Mockery nullifies an Invincible effect from being applied, the Invincible effect cannot be applied until Mockery is no longer active.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Mockery",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "forces enemies to attack the caster",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "ATK increases, but there is a chance that a preset buff will not apply.",
+     "color": "amarillo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    148
+   ]
+  },
+  {
+   "termino": "STRIKE",
+   "texto": "Strike grants Dodge Ignore and increases damage dealt to boss types.\nDamage dealt to boss types increases with higher Concentration.\nThe exclusive gauge must be fully charged to use Strike, and the gauge charges up when moving.\nThe gauge stops charging for a set duration after Strike is used.(7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Strike",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "grants Dodge Ignore and increases damage dealt to boss types",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Strike is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    149
+   ]
+  },
+  {
+   "termino": "AMBUSH",
+   "texto": "Ambush grants immunity to Guard Break and Super Guard Break, immunity to damage reflected by enemies, and Damage Decrease Ignore.\nThe Damage Decrease Ignore effect increases more with higher Concentration.\nThe exclusive gauge must be fully charged to use Ambush, and the gauge charges with each hit received.\nThe gauge stops charging for a set duration after Ambush was used.(6 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Ambush",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "immunity to Guard Break and Super Guard Break",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "immunity to damage reflected by enemies",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Damage Decrease Ignore",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Ambush was used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    150
+   ]
+  },
+  {
+   "termino": "FORTITUDE",
+   "texto": "Fortitude prevents HP from dropping below 1 for a certain amount of time and recovers HP at the end of its effect. Fortitude activates automatically when HP drops below a certain value and grants Guard Break Immunity while active. While it's active, this buff effect cannot be removed by buff removal effects.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Fortitude",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "HP from dropping below 1",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "recovers HP",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "HP drops below a certain value",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "cannot be removed by buff removal effects",
+     "color": "amarillo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    151
+   ]
+  },
+  {
+   "termino": "BLADE",
+   "texto": "On skill use, Blade pierces defense effects and increases damage dealt to enemies.\nThe damage increase effect scales up with higher Concentration.\nThe exclusive gauge must be fully charged to use Blade, and the gauge charges up when using skills (excluding basic attacks).\nThe effect activates automatically and the gauge stops charging for a set duration after Blade is used.(7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Blade",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "pierces defense effects",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "increases damage dealt to enemies",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "the gauge stops charging for a set duration after Blade is used",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    152
+   ]
+  },
+  {
+   "termino": "DEFEND",
+   "texto": "Defend grants guard break and super guard break immunity and creates a barrier that ignores pierce and Cancel effects. The barrier blocks a certain number of attacks.\nIn addition, recovers HP in proportion to Concentration.\nThe exclusive gauge must be fully charged to use Defend, and the gauge charges up when hit by an enemy.\nThe effect activates automatically and the gauge stops charging for a set duration after Defend is used.(7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Defend",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "guard break and super guard break immunity",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "creates a barrier that ignores pierce and Cancel effects",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "blocks a certain number of attacks",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "recovers HP",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "the gauge stops charging for a set duration after Defend is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    153
+   ]
+  },
+  {
+   "termino": "SUPER HIT SHIELD",
+   "texto": "Super Hit Shield is a shield effect that recharges the shielded amount every time your attack lands on enemies.\nIt ignores other shield effects but activates Super Hit Shield if multiple shield effects are triggered at the same time.\nSuper Hit Shield can't be removed by Buff Removal, and is not affected by Pierce.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Super Hit Shield",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "can't be removed by Buff Removal, and is not affected by Pierce.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    154
+   ]
+  },
+  {
+   "termino": "ENRAGED",
+   "texto": "Enraged increases Critical Damage regardless of max limit, and grants Guard Break Immunity.\nThe Critical Damage increased by Enraged scales up with higher Concentration.\nThe exclusive gauge must be fully charged to use Enraged, and the gauge charges up when using skills (excluding basic attacks).\nThe gauge stops charging for a set duration after Enraged is used. (7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Enraged",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "increases Critical Damage",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Enraged is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    155,
+    156
+   ]
+  },
+  {
+   "termino": "VITALITY",
+   "texto": "Vitality grants guard break and super guard break immunity and recovers HP every sec.\nThe amount of HP recovered increases in proportion to Concentration.\nThe exclusive gauge must be fully charged to use Vitality, and the gauge charges up when attacked by enemies.\nThe effect is activated automatically. The gauge stops charging for a set duration after Vitality is used.(7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Vitality",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "guard break and super guard break immunity",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "recovers HP every sec",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Vitality is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    157
+   ]
+  },
+  {
+   "termino": "WALL",
+   "texto": "Wall provides an exclusive Barrier which decreases damage received. The damage decrease effect is reduced with each hit taken, but the effect will remain for its duration with the lowest damage reduction value. Also, this ability cannot be used in conjunction with a Barrier. Wall doesn't stack with defensive effects such as basic damage decrease and is applied separately.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Wall",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "exclusive Barrier which decreases damage received",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The damage decrease effect is reduced with each hit taken, but the effect will remain for its duration with the lowest damage reduction value.",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Barrier",
+     "color": "celeste",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    158
+   ]
+  },
+  {
+   "termino": "CLASH",
+   "texto": "Clash grants guard break and super guard break immunity and enemy reflect damage effect immunity when used. Basic damage dealt to enemies also increases.\nThe basic damage dealt to enemies increases in proportion to Concentration.\nThe exclusive gauge must be fully charged to use Clash, and the gauge charges up when attacked by enemies.\nThe effect is activated automatically. The gauge stops charging for a set duration after Clash is used.(6 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Clash",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "guard break and super guard break immunity",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "enemy reflect damage effect immunity",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Basic damage dealt to enemies also increases.",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Clash is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    159
+   ]
+  },
+  {
+   "termino": "PANIC",
+   "texto": "Panic is an ability that applies fear on enemies. Panicked enemies take additional damage.\n\nTip: Panic can be applied on World Bosses and enemies who cannot be debuffed, but not on those with an effect that removes all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Panic",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "fear",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    160
+   ]
+  },
+  {
+   "termino": "Loss",
+   "texto": "Loss absorbs the target's abilities and prevents them from attacking for a short duration.\nEnemies affected by Loss cannot move or use skills, have their buffs removed, and take additional damage.\n\nTip: Loss cannot be applied to those with an effect that removes all debuffs.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Loss",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    161
+   ]
+  },
+  {
+   "termino": "Death Throes",
+   "texto": "Death Throes prevents HP from dropping below 1 for a certain amount of time. At the end of the effect, the character immediately dies.\nDeath Throes activates automatically when HP drops below a certain value. The character can still be affected by Guard Break while Death Throes is active, but the Death Throes buff effect cannot be removed.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Death Throes",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "HP from dropping below 1",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "HP drops below a certain value",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "cannot be removed",
+     "color": "amarillo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    162
+   ]
+  },
+  {
+   "termino": "Mark",
+   "texto": "When you use Mark, a mark will be shown on the enemy.\nIncreases damage dealt when using skills that apply an effect to the marked enemy.\n\nTip: The mark can also be applied to World Bosses or large bosses that are not affected by debuffs. In addition, it also applies to targets who have the effect of removing all debuffs, and it is not affected by increased or decreased debuff effectiveness.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Mark",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Increases damage dealt",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    163
+   ]
+  },
+  {
+   "termino": "Fury",
+   "texto": "Fury increases all of the character's damage, and grants Guard Break Immunity.\nAll damage increased by Fury scales up with higher Concentration\nThe exclusive gauge must be fully charged to use Fury, and the gauge charges up when using skills (excluding basic attacks).\nThe gauge stops charging for a set duration after Fury is used. (7 sec)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "Fury",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "increases all of the character's damage",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Guard Break",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "Concentration",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "exclusive gauge",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "The gauge stops charging for a set duration after Fury is used.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    164
+   ]
+  }
+ ]
+}

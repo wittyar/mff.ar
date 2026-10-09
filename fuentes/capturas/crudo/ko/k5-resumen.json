@@ -1,0 +1,131 @@
+{
+ "carril": "k5",
+ "rango": [
+  261,
+  325
+ ],
+ "capturas": 65,
+ "por_tipo": {
+  "personaje": 59,
+  "ctp": 2,
+  "equipo": 1,
+  "bonos": 3
+ },
+ "por_pantalla": {
+  "영웅 정보": 27,
+  "유니폼 룸": 15,
+  "엘리트 장비": 1,
+  "도감 영웅 정보": 22
+ },
+ "items_cubiertos": [
+  "스킬",
+  "헬로드 펀치",
+  "지옥 불",
+  "지옥의 폭풍",
+  "여기에 온 자, 모든 희망을 버려라",
+  "계약의 대가",
+  "불타는 부활",
+  "지옥 군주",
+  "타입",
+  "ISO-8",
+  "아티팩트",
+  "특수 장비",
+  "유니폼",
+  "기본 정보",
+  "메피스토",
+  "상태이상 지속시간 감소",
+  "유니폼 옵션",
+  "에너지 공격력 상승",
+  "회복률 상승",
+  "모든 일반 방어력 상승",
+  "치명타 피해율 상승",
+  "유니폼 효과",
+  "변경 스킬",
+  "분노의 구덩이",
+  "영웅 장비",
+  "서펀트 크라운",
+  "정보",
+  "아마겟돈",
+  "막을 수 없는 종말",
+  "뮤턴트의 제왕",
+  "전체",
+  "영웅 상세 정보",
+  "능력치",
+  "거짓말의 달인"
+ ],
+ "otros_nombres": {
+  "personajes_por_texto": [
+   "메피스토",
+   "영 아포칼립스",
+   "센트리 (solo por «센트리 엘리트 장비», n 293)"
+  ],
+  "uniformes": [
+   "마스터 오브 헬",
+   "모던",
+   "엑스맨 '97"
+  ],
+  "ctp": [
+   "강력한 극복의 C.T.P. (PVP, n 274)",
+   "강력한 경쟁의 C.T.P. (PVE, n 275)"
+  ],
+  "artefacto": [
+   "거짓말의 달인 (skill 죄의 무게)"
+  ],
+  "equipo_elite": [
+   "서펀트 크라운"
+  ],
+  "iso8_set": [
+   "분노한 헐크의 힘"
+  ],
+  "tipo": [
+   "유니버셜 강화 5단계"
+  ],
+  "opciones_de_uniforme_fichas": [
+   "시스터 그림 / 런어웨이즈",
+   "토르 / 올-파더 리본",
+   "윈터 솔져 / 레볼루션",
+   "콜로서스 / 헬파이어 갈라",
+   "센트리 / 어둠의 결합"
+  ],
+  "skills_solo_en_listas": [
+   "거대한 재앙",
+   "이집트 창술",
+   "자칼 폭풍",
+   "사막의 정복자",
+   "파라오의 손길",
+   "종말의 날",
+   "죄의 무게"
+  ],
+  "globos": [
+   "화염 피해",
+   "가드 브레이크",
+   "슈퍼 가드 브레이크",
+   "부분 타겟팅 무시",
+   "전체 타겟팅 무시",
+   "발동 조건: 메피스토",
+   "내구력",
+   "사악",
+   "고속 이동",
+   "태생 티어-3 영웅",
+   "뮤턴트 (lista de retratos)"
+  ]
+ },
+ "legibilidad_parcial": [
+  274,
+  275,
+  301,
+  302
+ ],
+ "motivos_parcial": {
+  "274": "texto del C.T.P. con scroll: último renglón cortado por la mitad",
+  "275": "texto del C.T.P. con scroll: último renglón cortado por la mitad",
+  "301": "un globo tapa tres rótulos de la ficha",
+  "302": "un globo tapa dos rótulos de la ficha"
+ },
+ "notas": [
+  "n 312: franja superior tapada por una notificación del teléfono (contenido no transcripto); lo de debajo se lee.",
+  "n 313 igual a la 312 sin la notificación.",
+  "n 292-293: ficha de otro personaje, sin nombre escrito en la 292; en la 293 el equipo dice «센트리 엘리트 장비». n 294-303: ficha de 영 아포칼립스 (nombre escrito en 294 y 301-303).",
+  "n 298-300: ventana «뮤턴트» con 20 retratos por captura, sin nombres; solo se contaron."
+ ]
+}

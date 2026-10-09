@@ -1,0 +1,445 @@
+[
+ {
+  "item": "BIOMETRICS",
+  "texto": "Info about each character's physical attributes, battle patterns, and so forth are stored in Data.\nJocasta has come from the future to recruit characters to prevent the destruction of the world.\n\nBiometrics is used to Recruit a new character, or upgrade them using Rank Up.",
+  "obtencion": [
+   "Story",
+   "Dimension Mission"
+  ],
+  "n": [
+   77
+  ]
+ },
+ {
+  "item": "ISO-8",
+  "texto": "ISO-8 is a strange item that first appeared on Earth after some peculiar events.\nThere are no specific details about the origin of ISO-8 but after much research it was discovered that it enhanced any objects it was combined with.\nWhen ISO-8 is equipped on a character, they receive increased stats.",
+  "obtencion": [
+   "Dimension Mission",
+   "dispatch mission"
+  ],
+  "n": [
+   78
+  ]
+ },
+ {
+  "item": "NORN STONE",
+  "texto": "Norn Stones are stones with magical properties.\nThey have the power to satisfy the desires of its user and was often used for Loki's conspiracies.\nUse Norn Stones to Increase Character Masteries and make your characters more powerful.",
+  "obtencion": [
+   "Dimension Mission",
+   "Alliance Battle"
+  ],
+  "n": [
+   79
+  ]
+ },
+ {
+  "item": "GEAR UP KIT",
+  "texto": "Gear Up Kit developed by Tony Stark.\nTony Stark created a kit that could easily upgrade gear during missions.\nUse Gear Up Kits to upgrade character gear.",
+  "obtencion": [
+   "Dimension Mission"
+  ],
+  "n": [
+   80
+  ]
+ },
+ {
+  "item": "DIMENSION DEBRIS",
+  "texto": null,
+  "obtencion": null,
+  "n": []
+ },
+ {
+  "item": "EXP CHIP",
+  "texto": null,
+  "obtencion": null,
+  "n": []
+ },
+ {
+  "item": "COMPONENT PACK",
+  "texto": "This is a Component Pack used by Stark Industries.\nIt contains various tools and blueprints used by Tony Stark.\nUse the Component Pack to upgrade components in the S.H.I.E.L.D Lab.",
+  "obtencion": [
+   "Dimension Mission"
+  ],
+  "n": [
+   81
+  ]
+ },
+ {
+  "item": "STARK-BRANDED BLUEPRINT",
+  "texto": "Blueprints contain top secret designs created by Stark Industries.\nUse Stark-branded Blueprints to upgrade components in the S.H.I.E.L.D. Lab.",
+  "obtencion": [
+   "Dimension Mission"
+  ],
+  "n": [
+   82
+  ]
+ },
+ {
+  "item": "COMIC CARDS",
+  "texto": "Comic Cards are curious cards found in the possession of those from other dimensions.\nInterestingly, there are pictures of various characters on the cards along with incomprehensible writings.\nWhen Comic Cards are equipped, the bonus stats associated with each card will be added to all characters.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   83
+  ]
+ },
+ {
+  "item": "ARTIFACT",
+  "texto": "Artifacts can amplify characters' instinct.\nSome artifacts grant passive skills to specific characters when equipped.\nEnhance artifacts to amplify instinct, or dismantle to acquire enhance materials.",
+  "obtencion": [
+   "Story",
+   "Timeline Survival"
+  ],
+  "n": [
+   84
+  ]
+ },
+ {
+  "item": "CELESTIAL ESSENCE",
+  "texto": "Artifacts' powers are condensed into Celestial Essence.\nDismantle artifacts to acquire Celestial Essence, and use it to enhance artifacts.",
+  "obtencion": [
+   "Dismantle Artifacts"
+  ],
+  "n": [
+   85
+  ]
+ },
+ {
+  "item": "SWORD",
+  "texto": "Swords are equipment which contain the power of legendary heroes.\nEquipping a Sword applies its effect on all characters.\n\nThere are 7 different types of swords: the Sword of the Unknown and 6 Special Swords.\nThe Sword of the Unknown possesses a mysterious power and can be enchanted with various magical effects.",
+  "obtencion": null,
+  "n": [
+   86
+  ]
+ },
+ {
+  "item": "ENCHANTMENT RUNE",
+  "texto": "Enchantment Runes are stones containing the magical power of the Otherworld.\nEnchantment Runes are used as Sword enchantment materials, and there are special Enchantment Runes which increase the chances of applying a specific element.",
+  "obtencion": [
+   "Otherworld Battle"
+  ],
+  "n": [
+   87
+  ]
+ },
+ {
+  "item": "CUSTOM GEAR",
+  "texto": "Custom Gears are pieces of equipment purpose-built to amplify or defend against a certain power.\nWhen equipped to a character, they can increase stats or grant them a special skill.\n\nThere are two types of Custom Gears: Obelisks and C.T.P.s.\nObelisks are Custom Gears with moderate capabilities and are split into six grades from Normal to Mythic.\n[cortado]",
+  "obtencion": null,
+  "n": [
+   88
+  ]
+ },
+ {
+  "item": "NORN STONE OF CHAOS",
+  "texto": "Norn Stones of Chaos are unique Norn Stones discovered in space.\nThe power of the Norn Stones was distorted by Thanos's cosmic power, transforming them into Norn Stones of Chaos.\nNorn Stones of Chaos are used as materials to advance a fully leveled Tier-1 character to Tier-2, or to rank up characters recruited at Tier-2.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   89
+  ]
+ },
+ {
+  "item": "BLACK ANTI-MATTER",
+  "texto": "Black Anti-Matter is a unique substance created through Thanos's research.\nBy further developing anti-matter, Thanos produced Black Anti-Matter, which contains even greater energy.\nBlack Anti-Matter is used as a material to advance a fully leveled Tier-1 character to Tier-2, or to rank up characters recruited at Tier-2.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   90
+  ]
+ },
+ {
+  "item": "ENCHANTED URU",
+  "texto": "Uru enchanted by the magical power of Odin.\nEnchanted Uru can be equipped when character’s gear reaches a set level.\nUse Enchanted Uru on a character’s Gear to get bonus stats.",
+  "obtencion": [
+   "Dimension Mission",
+   "dispatch mission"
+  ],
+  "n": [
+   91
+  ]
+ },
+ {
+  "item": "M'KRAAN SHARD",
+  "texto": "The M'kraan Crystal is a massive pink crystal so ancient that its origin is unknown.\nIt's said that if the M'kraan Crystal were to shatter, an immense gravitational energy would burst throughout the universe, pulling everything into a black hole and causing the collapse of the universe.\nEven the fragments that broke off when the M'kraan Crystal was destroyed long ago still contain tremendous power.\nUse M'kraan Shards to awaken Mutant characters.",
+  "obtencion": null,
+  "n": [
+   92
+  ]
+ },
+ {
+  "item": "M'KRAAN CRYSTAL",
+  "texto": "The M'kraan Crystal is a massive pink crystal so ancient that its origin is unknown.\nIt's said that if the M'kraan Crystal were to shatter, an immense gravitational energy would burst throughout the universe, pulling everything into a black hole and causing the collapse of the universe.\nThe power contained within the M'kraan Crystal can restore the lost abilities of Mutants.\nUse the M'kraan Crystal and Phoenix Feathers to advance Mutant characters to Tier-2.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   93
+  ]
+ },
+ {
+  "item": "PHOENIX FEATHER",
+  "texto": "The Phoenix is a cosmic entity said to bring about the destruction of all things.\nThrough the power of the Phoenix, Mutants gain tremendous power and abilities.\nAlthough Phoenix Feathers contain very little of the Phoenix's power, even that is enough to grant immense amount of cosmic energy.\nUse M'kraan Crystal and Phoenix Feathers to advance Mutant characters to Tier-2.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   94
+  ]
+ },
+ {
+  "item": "X-GENE",
+  "texto": "This gene leads (via transcription and translation) to an exotic protein.\nThis protein produces chemical signals inducing mutations on other genes, ending up with mutant organisms, variously empowered.\nX-Gene is used to Recruit a new Mutant Character, or upgrade them using Rank Up.",
+  "obtencion": [],
+  "n": [
+   95
+  ]
+ },
+ {
+  "item": "COSMIC CUBE FRAGMENT",
+  "texto": "Cosmic Cube is a cosmic artifact that possesses mysterious power capable of granting immense power to its user.\nAfter a major incident that nearly altered the fate of the universe, the cube was destroyed and its fragments were scattered across the world. Even the shattered fragments are said to still contain tremendous power.\nCosmic Cube Fragments are materials used to enhance characters and can be used for Potential [cortado]",
+  "obtencion": null,
+  "n": [
+   96
+  ]
+ },
+ {
+  "item": "ESSENCE OF DIMENSION",
+  "texto": "Essence of Dimension is a mysterious concentration of power emitted from dimensional rifts.\nResearch on this unknown substance, which contains the mixed energies of various dimensions, is still in its early stages.\nEssence of Dimension is used as a material for Gear Upgrade beyond Lv. 20 and Tier-3 Advancement",
+  "obtencion": [
+   "World Boss",
+   "Timeline Battle",
+   "Shadowland",
+   "Otherworld Battle",
+   "Zombie Survival"
+  ],
+  "n": [
+   97
+  ]
+ },
+ {
+  "item": "TITAN COMPONENT PACK",
+  "texto": "Titan Component Pack is a tool that incorporates the advanced technology of the Titan race.\nThese devices, discovered aboard Thanos's ship, were improved through joint research Iron Man and Blue Marvel into technologies capable of enhancing characters.\nTitan Component Packs are used as materials for Gear Upgrade beyond Lv. 20 and Tier-3 Advancement.",
+  "obtencion": [
+   "World Boss",
+   "Timeline Battle",
+   "Otherworld Battle",
+   "Zombie Survival"
+  ],
+  "n": [
+   98
+  ]
+ },
+ {
+  "item": "TITAN'S RECORD",
+  "texto": "The Titan’s Record is an important document that contains records of Thanos’s various research.\nThanos conducted numerous experiments to enhance his own body, and has recorded the information.\nTitan’s Record is used as material for Tier-3 Advancement.",
+  "obtencion": [
+   "World Boss"
+  ],
+  "n": [
+   99
+  ]
+ },
+ {
+  "item": "TYPE ENHANCEMENT KIT",
+  "texto": "Type Enhancement Kit is created by processing Carbonite, which is a substance that amplifies energy.\nTony Stark created this kit with Howard Stark from another dimension so characters with different types can benefit from the power of Carbonite.\nType Enhancement Kit can be used to enhance character type.",
+  "obtencion": [
+   "Giant Boss Raid"
+  ],
+  "n": [
+   100,
+   101
+  ]
+ },
+ {
+  "item": "AWAKENING CRYSTAL",
+  "texto": "Awakening Crystal is a red crystal formed from powerful energy.\nThis crystal possesses a special power, but how it was created and what kind of power it truly holds remain largely unknown. When its power is activated, red energy bursts forth, awakening the character's Potential and granting new power.\nUse the Awakening Crystal to awaken the Potential of certain characters.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   102
+  ]
+ },
+ {
+  "item": "MANDALAY GEM FRAGMENT",
+  "texto": "The Mandalay Gem is composed of one of the most powerful minerals in the universe.\nWhile many have fought to claim the Mandalay Gem, it was shattered in a clash with a powerful energy source and its fragments scattered all over the universe. The Mandalay Gem Fragments still emit powerful energy and grants its user special powers.\nUse the Mandalay Gem Fragments to awaken the Potential of certain characters.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   103
+  ]
+ },
+ {
+  "item": "STORY FRAGMENT",
+  "texto": "Story Fragments are the crystalized essence of mysterious dimensional powers.\nThese fragment contain the stories of the heroes that fight to protect the world.\nCollect all Story Fragments to Craft Chests to obtain special rewards.",
+  "obtencion": [
+   "Story"
+  ],
+  "n": [
+   104
+  ]
+ },
+ {
+  "item": "C.T.P. REFORGING CORE",
+  "texto": "C.T.P. Reforging Core is a component that strengthens special gear, C.T.P.\nThe C.T.P. Reforging Core is made of Vibranium and amplifies the hidden powers within C.T.P. and makes it emanate greater power.\nThe C.T.P. Reforging Core is used as material to reforge C.T.P.",
+  "obtencion": [
+   "Dimension Rift"
+  ],
+  "n": [
+   105
+  ]
+ },
+ {
+  "item": "CARD CRAFTING CUBE",
+  "texto": "Card Crafting Cube is a metal component that unleashes the card's special power.\nThe Comic Card's new powers have been discovered after many experiments and studies, and its immense powers were unleashed through the Card Crafting Cube.\nCard Crafting Cubes can be used as material to craft Comic Cards.",
+  "obtencion": [
+   "Dimension Rift"
+  ],
+  "n": [
+   106
+  ]
+ },
+ {
+  "item": "DIMENSION RIFT SUMMON STONE",
+  "texto": "Dimension Rift Summon Stones are used to open the gate that teleports you to another spacetime.\nSummon Stones can be acquired in Story, and are used for opening Dimension Rifts.",
+  "obtencion": [
+   "Story"
+  ],
+  "n": [
+   107
+  ]
+ },
+ {
+  "item": "BOOK OF THE VISHANTI",
+  "texto": "The Book of the Vishantiis a spellbook written by the Vishanti, the group of all-powerful mystic beings who govern magic.\nIt contains powerful white magic spells and defensive spells that can counter the evils of the Darkhold and other black magic.\nThe Book of the Vishanti can be used as Tier-4 Advancement material.",
+  "obtencion": [
+   "[cortado]"
+  ],
+  "n": [
+   108
+  ]
+ },
+ {
+  "item": "LIFE SEED",
+  "texto": "The Life Seed is one of the mysterious artifacts created by the Celestials.\nPlanted on a dead planet to give birth to new life, it has the power to kickstart creation and evolution.\nThe Life Seed enhances a hero and can be used for 2nd Potential Enhancement, Tier-4 Advancement, or as level up material for skills Lv. 7 or higher.",
+  "obtencion": [
+   "World Boss",
+   "Timeline Battle",
+   "Otherworld Battle",
+   "Zombie Survival",
+   "Team Battle Arena"
+  ],
+  "n": [
+   109
+  ]
+ },
+ {
+  "item": "CARBONADIUM",
+  "texto": "Carbonadium is a substance created in an attempt to replicate Adamantium.\nIt's stronger than steel and remarkably flexible.\nCarbonadium is used as a material for Gear Upgrade beyond Lv. 26 and for Tier-4 Advancement.",
+  "obtencion": [
+   "World Boss",
+   "Timeline Battle",
+   "Otherworld Battle",
+   "Shadowland",
+   "Zombie Survival",
+   "Team Battle Arena"
+  ],
+  "n": [
+   110
+  ]
+ },
+ {
+  "item": "SOUL OF THE FALTINE",
+  "texto": "Soul of the Faltine is a substance from the Dark Dimension, where the Faltine, beings born from pure magic, exist.\nIt carries the flame of the Faltine and possesses immense magical power.\nSoul of the Faltine is used as a material for Gear Upgrade beyond Lv. 26 and for Tier-4 Advancement.",
+  "obtencion": [
+   "Giant Boss Raid",
+   "Timeline Battle",
+   "Otherworld Battle",
+   "Shadowland",
+   "Zombie Survival",
+   "[cortado]"
+  ],
+  "n": [
+   111
+  ]
+ },
+ {
+  "item": "Eternal Flame",
+  "texto": "Eternal Flame is a flame that makes Odin's Blessing even more powerful.\nEternal Flame is used as material during Uru Awakening.",
+  "obtencion": [
+   "Zombie Survival"
+  ],
+  "n": [
+   112
+  ]
+ },
+ {
+  "item": "POWER OF DEMIURGE",
+  "texto": "Power of Demiurge is a powerful material used to level up a Tier-4 character's Elite Gear.",
+  "obtencion": [
+   "World Boss: Legend",
+   "Timeline Battle",
+   "Team Battle Arena"
+  ],
+  "n": [
+   113
+  ]
+ },
+ {
+  "item": "GODSTONE",
+  "texto": "Godstone is a material required to unlock and level limit break a Tier-4 character's Elite Gear.",
+  "obtencion": [
+   "World Boss: Legend",
+   "Timeline Battle",
+   "Team Battle Arena"
+  ],
+  "n": [
+   114
+  ]
+ },
+ {
+  "item": "EMBLEM DATA",
+  "texto": "Emblem Data is divided into the rarities Normal/Luxury/Rare/Heroic/Legendary/Mythic, and is used to level up emblems of the same rarity.",
+  "obtencion": [
+   "Multiverse Saga"
+  ],
+  "n": [
+   115
+  ]
+ },
+ {
+  "item": "EMBLEM ENHANCEMENT KIT",
+  "texto": "Emblem Enhancement Kits are a level-up material required at specific level ranges when leveling up emblems.",
+  "obtencion": [
+   "Multiverse Saga"
+  ],
+  "n": [
+   116
+  ]
+ },
+ {
+  "item": "J.A.R.V.I.S. Data",
+  "texto": "J.A.R.V.I.S. Data is obtained when you acquire a duplicate J.A.R.V.I.S. Chip. The duplicate Chip is automatically converted into exclusive Data.\nData is used to enhance Chips and to change options.",
+  "obtencion": [
+   "World Boss"
+  ],
+  "n": [
+   117
+  ]
+ },
+ {
+  "item": "J.A.R.V.I.S. Data Shard",
+  "texto": "J.A.R.V.I.S. Data Shards can be obtained by dismantling J.A.R.V.I.S. Data.\nData Shards are used to enhance J.A.R.V.I.S. Chips.",
+  "obtencion": [
+   "World Boss"
+  ],
+  "n": [
+   118
+  ]
+ }
+]

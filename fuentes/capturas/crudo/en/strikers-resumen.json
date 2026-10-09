@@ -1,0 +1,581 @@
+[
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "THOR",
+  "texto": "10% Chance to appear when attacking.",
+  "n": [
+   263
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "DESTROYER",
+  "texto": "13% Chance to appear when attacking.",
+  "n": [
+   264
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "DRAX",
+  "texto": "14% Chance to appear when attacking.",
+  "n": [
+   265
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "THANOS",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   266
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "DORMAMMU",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   267
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "ANTI-MAN",
+  "texto": "18% Chance to appear when attacked.",
+  "n": [
+   268
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "DEADPOOL",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   269
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "MISTER FANTASTIC",
+  "texto": "20% Chance to appear when attacked.",
+  "n": [
+   270
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "INVISIBLE WOMAN",
+  "texto": "16% Chance to appear when attacked.",
+  "n": [
+   271
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "HUMAN TORCH",
+  "texto": "18% Chance to appear when attacking.",
+  "n": [
+   272
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "THE THING",
+  "texto": "16% Chance to appear when attacked.",
+  "n": [
+   273
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "SILVER SURFER",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   274
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "NOVA (RICHARD RIDER)",
+  "texto": "16% Chance to appear when attacking.",
+  "n": [
+   275
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "FRANKLIN RICHARDS",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   276
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "SILVER SURFER (SHALLA-BAL)",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   277
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": "ANNIHILUS",
+  "texto": "19% Chance to appear when attacking.",
+  "n": [
+   278
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "GHOST RIDER",
+  "texto": "12% Chance to appear when attacking.",
+  "n": [
+   344
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "BLADE",
+  "texto": "14% Chance to appear when attacking.",
+  "n": [
+   345
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "BLACK CAT",
+  "texto": "17% Chance to appear when attacking.",
+  "n": [
+   346
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "SPIDER-MAN",
+  "texto": "13% Chance to appear when attacking.",
+  "n": [
+   347
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "ULTRON",
+  "texto": "12% Chance to appear when attacked.",
+  "n": [
+   348
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "LOKI",
+  "texto": "16% Chance to appear when attacking.",
+  "n": [
+   349
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "RED SKULL",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   350
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "DAREDEVIL",
+  "texto": "16% Chance to appear when attacked.",
+  "n": [
+   351
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "DOCTOR OCTOPUS",
+  "texto": "19% Chance to appear when attacked.",
+  "n": [
+   352
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "M.O.D.O.K.",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   353
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "MALEKITH",
+  "texto": "20% Chance to appear when attacked.",
+  "n": [
+   354
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "DESTROYER",
+  "texto": "20% Chance to appear when attacked.",
+  "n": [
+   355
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "PUNISHER",
+  "texto": "12% Chance to appear when attacking.",
+  "n": [
+   356
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "BULLSEYE",
+  "texto": "19% Chance to appear when attacking.",
+  "n": [
+   357
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "YONDU",
+  "texto": "20% Chance to appear when attacked.",
+  "n": [
+   358
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "NEBULA",
+  "texto": "12% Chance to appear when attacked.",
+  "n": [
+   359
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "RONAN",
+  "texto": "10% Chance to appear when attacking.",
+  "n": [
+   360
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "YELLOWJACKET",
+  "texto": "18% Chance to appear when attacked.",
+  "n": [
+   361
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "DEATHLOK",
+  "texto": "17% Chance to appear when attacking.",
+  "n": [
+   362
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "LASH",
+  "texto": "16% Chance to appear when attacked.",
+  "n": [
+   363
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "JESSICA JONES",
+  "texto": "19% Chance to appear when attacked.",
+  "n": [
+   364
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "SILK",
+  "texto": "18% Chance to appear when attacking.",
+  "n": [
+   365
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "CARNAGE",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   366
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "PROXIMA MIDNIGHT",
+  "texto": "21% Chance to appear when attacking.",
+  "n": [
+   367
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "BLACK DWARF",
+  "texto": "20% Chance to appear when attacked.",
+  "n": [
+   368
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "CORVUS GLAIVE",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   369
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "THANOS",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   370
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "CROSSBONES",
+  "texto": "22% Chance to appear when attacked.",
+  "n": [
+   371
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "MOON KNIGHT",
+  "texto": "18% Chance to appear when attacked.",
+  "n": [
+   372
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "SIN",
+  "texto": "19% Chance to appear when attacked.",
+  "n": [
+   373
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "MYSTERIO",
+  "texto": "18% Chance to appear when attacking.",
+  "n": [
+   374
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "ULYSSES KLAUE",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   375
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "SENTINEL",
+  "texto": "18% Chance to appear when attacked.",
+  "n": [
+   376
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "DOCTOR DOOM",
+  "texto": "18% Chance to appear when attacked.",
+  "n": [
+   377
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "JUGGERNAUT",
+  "texto": "16% Chance to appear when attacking.",
+  "n": [
+   378
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "WAR TIGER",
+  "texto": "16% Chance to appear when attacked.",
+  "n": [
+   379
+  ]
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MARVEL TELEVISION’S DAREDEVIL: BORN AGAIN",
+  "striker": "BARON ZEMO",
+  "texto": "20% Chance to appear when attacking.",
+  "n": [
+   380
+  ]
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": null,
+  "pestana": "STATS",
+  "texto": "RANK ★\nLEVEL 1 / 40\nTIER 3\nPOTENTIAL LV. 0\nENERGY ATK 82\nPHYSICAL DEF 56\nENERGY DEF 62\nHP 430\n\nRANK\nLEVEL\nMASTERY\nTIER\nPOTENTIAL\n\nLEADER\nUltimate Skill\nPASSIVE\nSTRIKER SKILL\nACTIVE",
+  "pares": {
+   "RANK": "★",
+   "LEVEL": "1 / 40",
+   "TIER": "3",
+   "POTENTIAL LV.": "0",
+   "ENERGY ATK": "82",
+   "PHYSICAL DEF": "56",
+   "ENERGY DEF": "62",
+   "HP": "430"
+  },
+  "n": [
+   279
+  ],
+  "controles": {
+   "RANK": [
+    "−",
+    "+"
+   ],
+   "LEVEL": [
+    "−",
+    "+"
+   ],
+   "MASTERY": [
+    "−",
+    "+"
+   ],
+   "TIER": [
+    "−",
+    "+"
+   ],
+   "POTENTIAL": [
+    "−",
+    "+"
+   ]
+  },
+  "habilidades": {
+   "LEADER": "1 ícono",
+   "Ultimate Skill": "1 ícono con insignia III",
+   "PASSIVE": "2 íconos; el segundo con insignia II",
+   "STRIKER SKILL": "1 ícono con insignia IV",
+   "ACTIVE": "5 íconos numerados 1, 2, 3, 4, 5"
+  },
+  "dudas": "RANK no tiene texto: se ve un solo ícono de estrella (anotado ★). Los botones − se ven apagados y los + encendidos. Las habilidades son íconos sin texto; solo se transcriben sus rótulos e insignias."
+ },
+ {
+  "personaje": "GALACTUS",
+  "uniforme": "MODERN",
+  "striker": null,
+  "pestana": "INFO",
+  "texto": "Real Name Galan\nHeight 28′ 9″ (8.76 m) / Variable\nWeight 36400 lbs (16.51 ton) / Variable\nSIDE SUPER VILLAIN\nALLIES ALIEN\nGENDER MALE\nINSTINCT DESTRUCTION\nABILITY\nRecommended Position BOSS BATTLE\nARENA\n\nBio\nGalactus is a cosmic entity who devours the life energy of entire worlds. Functioning as both a force of universal balance and a living calamity, he traditionally dispatches a herald to announce incoming destruction. Though once virtually unstoppable, he [cortado]",
+  "pares": {
+   "Real Name": "Galan",
+   "Height": "28′ 9″ (8.76 m) / Variable",
+   "Weight": "36400 lbs (16.51 ton) / Variable",
+   "SIDE": "SUPER VILLAIN",
+   "ALLIES": "ALIEN",
+   "GENDER": "MALE",
+   "INSTINCT": "DESTRUCTION",
+   "ABILITY": "2 íconos sin texto (uno rojo, uno violeta)",
+   "Recommended Position": {
+    "BOSS BATTLE": "1 ícono rojo",
+    "ARENA": "2 íconos (uno amarillo, uno rojo)"
+   },
+   "Bio": "Galactus is a cosmic entity who devours the life energy of entire worlds. Functioning as both a force of universal balance and a living calamity, he traditionally dispatches a herald to announce incoming destruction. Though once virtually unstoppable, he [cortado]"
+  },
+  "n": [
+   280
+  ],
+  "dudas": "La Bio sigue debajo (scroll): del último renglón visible solo se ve la mitad de arriba de las letras; se lee «incoming destruction. Though once virtually unstoppable, he» y lo que sigue queda cortado. En Height, las marcas de pies y pulgadas se ven como ′ y ″ con un espacio después de ′; el glifo exacto puede diferir. El rótulo «Recommended Position» está en dos renglones por ancho."
+ },
+ {
+  "personaje": "KINGPIN",
+  "uniforme": "MODERN",
+  "striker": null,
+  "pestana": "INFO",
+  "texto": "Real Name Wilson Grant Fisk\nHeight 6’7” (200.7 cm)\nWeight 450 lbs (204.1 kg)\nSIDE SUPER VILLAIN\nALLIES HUMAN\nGENDER MALE\nINSTINCT CRUELTY\nABILITY\nRecommended Position BOSS BATTLE\nARENA\n\nBio\nWilson Fisk, New York's kingpin of crime, is as cunning as he is brutal. One of the Marvel Universe's most powerful and feared crime lords, he will stop at nothing until the city is under his thumb [cortado]",
+  "pares": {
+   "Real Name": "Wilson Grant Fisk",
+   "Height": "6’7” (200.7 cm)",
+   "Weight": "450 lbs (204.1 kg)",
+   "SIDE": "SUPER VILLAIN",
+   "ALLIES": "HUMAN",
+   "GENDER": "MALE",
+   "INSTINCT": "CRUELTY",
+   "ABILITY": "2 íconos sin texto (ambos rojos)",
+   "Recommended Position": {
+    "BOSS BATTLE": "1 ícono amarillo",
+    "ARENA": "1 ícono amarillo"
+   },
+   "Bio": "Wilson Fisk, New York's kingpin of crime, is as cunning as he is brutal. One of the Marvel Universe's most powerful and feared crime lords, he will stop at nothing until the city is under his thumb [cortado]"
+  },
+  "n": [
+   281
+  ],
+  "dudas": "La Bio sigue debajo (scroll): del último renglón solo se ve la mitad de arriba de «thumb»; lo que sigue (puntuación incluida) queda cortado. A la izquierda, columna UNIFORM con 4 miniaturas sin texto (la 4.ª resaltada). En Height las comillas se ven tipográficas (’ ”), distintas de las de GALACTUS en 280."
+ }
+]

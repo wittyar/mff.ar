@@ -1,0 +1,424 @@
+[
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "CHARACTER LEVEL",
+  "titulo": "CHARACTER LEVEL",
+  "texto": "Joining a Battle with Characters on a team means that the Characters will acquire EXP.\nCharacters will level up when their EXP gauge reaches 100%.\n\nAcquired upon Level Up:\n▶Additional stats\n▶Increased Max Skill Level\n▶[cortado]",
+  "n": [
+   50
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "RANK UP",
+  "titulo": "RANK UP",
+  "texto": "Collect biometrics and rank up to 6.\nMutants can rank up using X-Genes.\n\nAcquired after Rank Up:\n▶Bonus Stats\n▶Max Level\n▶[cortado]",
+  "n": [
+   51
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "MASTERY",
+  "titulo": "MASTERY",
+  "texto": "Use Norn Stones to increase mastery up to 6.\nMutants can increase mastery using M’kraan Crystal Shards.\n\nAcquired after increasing mastery:\n▶Bonus Stats\n▶Leader Skill",
+  "n": [
+   52
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "TIER-2 ADVANCEMENT",
+  "titulo": "TIER-2 ADVANCEMENT",
+  "texto": "Use Norn Stones of Chaos, Black Anti-matter, Norn Stones, and Biometrics to advance a character with max mastery, max gear upgrades, level 60, Tier-1 to Tier-2.\nMutants can use M’kraan Crystals and Phoenix Feathers to advance to Tier-2.\n\nAcquired after advancing:\n▶Bonus Stats\n▶[cortado]",
+  "n": [
+   53
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "SKILLS",
+  "titulo": "SKILLS",
+  "texto": "As your character levels up also upgrade your character’s skills. The Max Level of a character’s skill increases when the character’s level increases. (Up to level 10.)",
+  "n": [
+   54
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "EQUIP ISO-8",
+  "titulo": "EQUIP ISO-8",
+  "texto": "Equipping an ISO-8 to owned characters will apply the ISO-8’s stats to the character.\nA total of 8 ISO-8s can be equipped per character.\n\nFurther strengthen ISO-8s by Enhancing, Combining, and Awakening.\nEquipping certain combinations of ISO-8s will also grant a ISO-8 Set Bonus.",
+  "n": [
+   55
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "EQUIP CUSTOM GEAR",
+  "titulo": "EQUIP CUSTOM GEAR",
+  "texto": "A character can equip Custom Gear once they reach Lv. 30.\nEquipping Custom Gear applies special effects to the character.\nA max of 1 Custom Gear can be equipped per character.\n\nUse Custom Gear Upgrade to further strengthen Custom Gear.",
+  "n": [
+   56
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "EQUIP COMIC CARD",
+  "titulo": "EQUIP COMIC CARD",
+  "texto": "Comic Cards are equippable on card slots.\nEquipping a Comic Card applies its stats to all characters.\nA max of 5 cards can be equipped.\n※Only one of a card type can be equipped at a time.\n\nFurther strengthen a Comic Card through Comic Card Upgrades.",
+  "n": [
+   57
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "EQUIP ENCHANTED URU",
+  "titulo": "EQUIP ENCHANTED URU",
+  "texto": "Once your character’s gear reaches a certain level, Enchanted Uru can be equipped.\nWhen Enchanted Uru is equipped, character’s stats increase by Uru’s stats.\nSlots for Uru will be unlocked at specific gear levels, and each gear can equip up to 5 Uru.\nUp to 2 Uru with the same Option can be equipped per gear.\nUp to 1 Odin’s Blessing can be equipped.",
+  "n": [
+   58
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "UNIFORM UPGRADE",
+  "titulo": "UNIFORM UPGRADE",
+  "texto": "Collect experience by fighting in various stages, then use materials to upgrade the stats of a character’s Uniform.\nWhen a uniform is upgraded, it will get bonus stats depending on the Uniform Rank. It can be boosted up to Mythic.\nYou must have a Specific Uniform of another character to do this.",
+  "n": [
+   59
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "POTENTIAL",
+  "titulo": "POTENTIAL",
+  "texto": "Characters that have advanced to Tier-2 can search for their hidden Potential.\nIf World Boss content is cleared with the target character after searching for Potential, you gain Potential Points.\nOnce Potential Points are obtained, you can realize a character's Potential.\nRealized Potential can be enhanced using materials such as Cosmic Cube Fragments. Potential can be enhanced up to 6 times after the 1st Potential unlock, and up to 12 times after the 2nd Potential unlock.\nMax level increases each time Potential is realized.",
+  "n": [
+   60,
+   61
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "POTENTIAL AWAKENING",
+  "titulo": "POTENTIAL AWAKENING",
+  "texto": "Some characters that have realized their potential can awaken their potential upon reaching level 70.\nAwakening Crystals and other materials are required to awaken potential. Awakened Skills can be used when potential is awakened.\n\n*Only some characters can awaken their potential currently. More characters will be able to awaken their potential in the future.",
+  "n": [
+   62
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "TRANSCEND POTENTIAL",
+  "titulo": "TRANSCEND POTENTIAL",
+  "texto": "Characters that leveled up their awakened skill to max can Awaken their Potential. Awakening Crystals and Mandalay Gems are required to awaken a character's potential, which results in increased character stats.\n\n※Characters must awaken their potential to transcend their potential, and more characters will be able to awaken and transcend their potentials in time.",
+  "n": [
+   63
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "TIER-3 ADVANCEMENT",
+  "titulo": "TIER-3 ADVANCEMENT",
+  "texto": "Characters that are Level 70 with all of their gear enhanced to +25 can be advanced to Tier-3.\nRequired materials for advancement are Titan’s Records that fit the character’s Type, Cosmic Cube Fragments, Essence of Dimension, and Titan Component Packs.\n\nAcquired upon Advancement:\n▶Additional Stats\n▶[cortado]",
+  "n": [
+   64
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "TIER-4 ADVANCEMENT",
+  "titulo": "TIER-4 ADVANCEMENT",
+  "texto": "Tier-3 or Potential Transcended Characters that are Level 80 with all of their gear enhanced to +30 and all skills at Lv. 10 can be advanced to Tier-4.\nRequired materials for advancement are Book of the Vishanti that fit the character's Type, Life Seed, Carbonadium, and Soul of the Faltine.\n\nAcquired upon Advancement:\n▶[cortado]",
+  "n": [
+   65
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "RAID LEVEL",
+  "titulo": "RAID LEVEL",
+  "texto": "Raid Level increases with Raid EXP gained from clearing World Boss.\nWhen Raid Level increases, certain stats are increased. The increased stats are only applicable within World Boss content.\n\nStats gained upon Level Up:\n▶All ATK ↑\n▶[cortado]",
+  "n": [
+   66
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "TYPE ENHANCEMENT",
+  "titulo": "TYPE ENHANCEMENT",
+  "texto": "Characters that have reached level 60 and realized their potential can upgrade their type.\nType Enhancement Kit in accordance with character type can be used as materials.\n\nType Enhancement Effects:\n▶Increased damage based on enemy type\n▶Decreased damage received based on enemy type",
+  "n": [
+   67
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "AGENT LEVEL",
+  "titulo": "AGENT LEVEL",
+  "texto": "Agent Level automatically increases when increasing the tiers of Hero Badge and Agent Badge.\n\nRank up, advance, transcend potential of your characters to increase Hero Badge tier.\nAgent Badge can be enhanced using 6★ or higher character upgrade items, Agent Kits, or Agent Tokens.\n\nBonus Points are acquired according to Agent Level, and they can be used to strengthen various stats.\nStats strengthened by Bonus Points apply to all characters.",
+  "n": [
+   68,
+   69
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "S.H.I.E.L.D. ARCHIVE",
+  "titulo": "S.H.I.E.L.D. ARCHIVE",
+  "texto": "S.H.I.E.L.D. Archive is where data is stored from various contents\n\nThis data is collected by playing content or combining data.\nData combination is a system that acquires data using items stored in the inventory.\n\nWhen a certain amount of data is obtained, Growth items and Instinct stats are granted as a reward.\n[cortado]",
+  "n": [
+   70
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "TEAM-UP COLLECTION",
+  "titulo": "TEAM-UP COLLECTION",
+  "texto": "Team-Up Collection is content where your aim is to increase character stats corresponding to a specific theme.\n\nTeam-Up Options are unlocked by completing challenges related to character growth and uniform upgrade. You can select and apply your picks from the unlocked team-up options.\n\nTeam-up options can be leveled up using Gold, and Collection Tokens can be acquired as rewards at specific levels.\n\nYou can enhance Collection Options with the Collection Tokens you've acquired, and enhancing a collection option will increase character stats corresponding to the specific theme.",
+  "n": [
+   71
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "EMBLEM COLLECTION",
+  "titulo": "EMBLEM COLLECTION",
+  "texto": "Emblems have special effects that apply only to certain content.\nLeveling up an emblem using the same rarity of Emblem Data and Emblem Enhancement Kit will enhance the effects even further.",
+  "n": [
+   72
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "Elite Gear",
+  "titulo": "Elite Gear",
+  "texto": "Only Tier-4 characters with Character Level +80, and gear upgrade +30 or higher can unlock Elite Gear.\n\nYou can level up Elite Gears by consuming level up materials.\nWhen leveling up, you obtain Gear Points.\nYou can use Gear Points to upgrade gear stats of your choice.\n\nTo level up past a certain level, you must perform a level limit break.\nWhen you successfully perform a level limit break, you can obtain Specialization Points.\nYou can use Specialization Points to upgrade specialization stats of your choice.\n\n*Elite Gear may be applied differently depending on the hero.",
+  "n": [
+   73,
+   74
+  ]
+ },
+ {
+  "pantalla": "CHARACTER GROWTH",
+  "item": "J.A.R.V.I.S.",
+  "titulo": "J.A.R.V.I.S.",
+  "texto": "You can equip a J.A.R.V.I.S. Preset to your team, consisting of an Attack Chip, Defense Chip, and Special Chip.\nTeams equipped with a J.A.R.V.I.S. Preset receive the stat increase effects of the equipped J.A.R.V.I.S. Chips.\n\nJ.A.R.V.I.S. Chips can be enhanced to increase their stats or have their stats changed by changing their options.\n\n* A single J.A.R.V.I.S. Chip can be equipped to multiple Presets at the same time.",
+  "n": [
+   75,
+   76
+  ]
+ },
+ {
+  "pantalla": "AGENT LEVEL",
+  "item": "AGENT LEVEL",
+  "titulo": "AGENT LEVEL",
+  "texto": "AGENT LEVEL\nLv.819\nLevel 314\nLevel 505\n\nAGENT BONUS\nAgent Bonus will be applied to all owned characters.\nALL BASIC ATTACKS INCREASE + 5.00%\nALL BASIC DEFENSES INCREASE + 21.54%\nMAX HP ↑ + 0.00%\nINCREASES GOLD ACQUISITION + 0.00%\nINCREASES CHARACTER EXP ACQUISITION + 0.00%\nINCREASES ITEM ACQUISITION CHANCE + 30.00%\n\nHERO BADGE\nLevel 314\nAGENT BADGE\nLevel 505\n\nYour Rank\nBonus Agent Effect will be applied when reaching higher Agent Level.\n\nAGENT GRADE\nELITE AGENT\nAgent Level Rank Top 2500\nSECRET AGENT\nAgent Level Rank Top 500\nOFFICER\nAgent Level Rank Top 50\nCAPT[cortado]\nAgent Level R[cortado]",
+  "n": [
+   239
+  ]
+ },
+ {
+  "pantalla": "EMBLEM COLLECTION",
+  "item": "Emblems",
+  "titulo": "Emblems",
+  "texto": "Emblems\nEmblem Collection\nCollection Reward Slot\n\nApplied Effects\nALL\nLEVEL\nEnter an emblem name.\n\nS.H.I.E.L.D. Lv.57 ★★★★★\nThe AMAZING SPIDER-MAN Lv.54 ★★★★★\nTHE INCREDIBLE HULKS Lv.35 ★★★\nIRON MAN Lv.10 ★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★\nThe AMAZING SPIDER-MAN Lv.60 ★★★★★★",
+  "n": [
+   240,
+   241
+  ]
+ },
+ {
+  "pantalla": "EMBLEM COLLECTION",
+  "item": "Emblem Collection",
+  "titulo": "Emblem Collection",
+  "texto": "Emblems\nEmblem Collection\nCollection Reward Slot\n\nApplied Effects\nEnter an emblem name.\n\nThe AMAZING SPIDER-MAN\n23/23 ★ 132/138\nView All\n\nIRON MAN\n18/18 ★ 98/108\nView All\n\nS.H.I.E.L.D.\n17/17 ★ 71/102\nView All\n\n[cortado]",
+  "n": [
+   242
+  ]
+ },
+ {
+  "pantalla": "TEAM-UP COLLECTION",
+  "item": "TEAM-UP COLLECTION",
+  "titulo": "TEAM-UP COLLECTION",
+  "texto": "Lv. 16\nMIDNIGHT SUNS\n10 / 10\n\nLv. 15\nSINISTER SIX\n10 / 10\n\nLv. 16\nX-FORCE\n10 / 10\n\nLv. 15\nGUARDIANS OF THE GALA[cortado]\n10 / 10\n\nApplied Effects",
+  "n": [
+   243
+  ]
+ },
+ {
+  "pantalla": "MIDNIGHT SUNS",
+  "item": "MIDNIGHT SUNS",
+  "titulo": "MIDNIGHT SUNS",
+  "texto": "Lv. 16\n· Increases all Basic Attacks by +31%\n· Increases Additional Pierce Damage by 5%\n7% Upgrade Success Rate\n\n1 Rise of the Suns\nApplies to: MIDNIGHT SUNS\n· +7.5% increase of Physical Defense.\nLv. 10\n\n2 Rough Ones\nApplies to: MIDNIGHT SUNS\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 Demon Hunters\nApplies to: Human Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 Reclaim the Night\n[cortado]",
+  "n": [
+   244
+  ]
+ },
+ {
+  "pantalla": "SINISTER SIX",
+  "item": "SINISTER SIX",
+  "titulo": "SINISTER SIX",
+  "texto": "Lv. 15\n· Increases all Basic Attacks by +30%\n· Increases Additional Pierce Damage by 5%\n10% Upgrade Success Rate\n\n1 Spider-Man Hunters\nApplies to: SINISTER SIX\n· +7.5% increase of Energy Defense.\nLv. 10\n\n2 Villains United\nApplies to: SINISTER SIX\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 The First Sinister Six\nApplies to: Super Villain Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 Anti-Heroes\n[cortado]",
+  "n": [
+   245
+  ]
+ },
+ {
+  "pantalla": "X-FORCE",
+  "item": "X-FORCE",
+  "titulo": "X-FORCE",
+  "texto": "Lv. 16\n· Increases all Basic Attacks by +31%\n· Increases Additional Pierce Damage by 5%\n7% Upgrade Success Rate\n\n1 New Mutant\nApplies to: X-FORCE\n· +7.5% increase of Physical Defense.\nLv. 10\n\n2 Secret Mission\nApplies to: X-FORCE\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 Wolverine's Clones\nApplies to: Mutant Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 X-Men's Aid\n[cortado]",
+  "n": [
+   246
+  ]
+ },
+ {
+  "pantalla": "GUARDIANS OF THE GALAXY",
+  "item": "GUARDIANS OF THE GALAXY",
+  "titulo": "GUARDIANS OF THE GALAXY",
+  "texto": "Lv. 15\n· Increases all Basic Attacks by +30%\n· Increases Additional Pierce Damage by 5%\n10% Upgrade Success Rate\n\n1 We Are Groot\nApplies to: GUARDIANS OF THE GALAXY\n· +7.5% increase of Physical Defense.\nLv. 10\n\n2 Galactic Family\nApplies to: GUARDIANS OF THE GALAXY\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 Counter-Earth\nApplies to: Alien Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 With the Heart, Not the Head\n[cortado]",
+  "n": [
+   247
+  ]
+ },
+ {
+  "pantalla": "AVENGERS PART 1",
+  "item": "AVENGERS PART 1",
+  "titulo": "AVENGERS PART 1",
+  "texto": "Lv. 15\n· Increases all Basic Attacks by +30%\n· Increases Additional Pierce Damage by 5%\n10% Upgrade Success Rate\n\n1 Avengers, Assemble!\nApplies to: AVENGERS PART 1\n· +7.5% increase of Energy Defense.\nLv. 10\n\n2 Earth's Mightiest Heroes!\nApplies to: AVENGERS PART 1\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 Endgame\nApplies to: Human Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 Once an Avenger, Always an Avenger\n[cortado]",
+  "n": [
+   248
+  ]
+ },
+ {
+  "pantalla": "SYMBIOTE",
+  "item": "SYMBIOTE",
+  "titulo": "SYMBIOTE",
+  "texto": "Lv. 15\n· Increases all Basic Attacks by +30%\n· Increases Additional Pierce Damage by 5%\n10% Upgrade Success Rate\n\n1 We are Venom\nApplies to: SYMBIOTE\n· +7.5% increase of Energy Defense.\nLv. 10\n\n2 Eyes, Lungs, Pancreas\nApplies to: SYMBIOTE\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 The Symbiote Power\nApplies to: Human Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 Parasite? Apologize!\n[cortado]",
+  "n": [
+   249
+  ]
+ },
+ {
+  "pantalla": "THE DEFENDERS",
+  "item": "THE DEFENDERS",
+  "titulo": "THE DEFENDERS",
+  "texto": "Lv. 13\n· Increases all Basic Attacks by +23%\n· Increases Additional Pierce Damage by 3%\n20% Upgrade Success Rate\n\n1 Manhattan Defenders\nApplies to: THE DEFENDERS\n· +7.5% increase of Physical Defense.\nLv. 10\n\n2 Non-Team\nApplies to: THE DEFENDERS\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 First Generation Defenders\nApplies to: Human Allies\n· Increases Cold Resist by +5%.\nLv. 10\n\n4 Fearless Defenders\n[cortado]",
+  "n": [
+   250
+  ]
+ },
+ {
+  "pantalla": "FANTASTIC FOUR",
+  "item": "FANTASTIC FOUR",
+  "titulo": "FANTASTIC FOUR",
+  "texto": "Lv. 9\n· Increases all Basic Attacks by +15%\n· Increases Additional Pierce Damage by 2%\n55% Upgrade Success Rate\n\n1 Meet the Inhumans\nApplies to: FANTASTIC FOUR\n· +7.5% increase of Energy Defense.\nLv. 10\n\n2 Cosmic Radiation Accident\nApplies to: FANTASTIC FOUR\n· Ignores target’s Dodge Rate by 7.5%.\nLv. 10\n\n3 The Trial of Black Panther\nApplies to: Human Allies\n· Increases Flame Resist by +5%.\nLv. 10\n\n4 The First Super Hero Team\n[cortado]",
+  "n": [
+   251
+  ]
+ },
+ {
+  "pantalla": "UNIFORM",
+  "item": "UNIFORM",
+  "titulo": "UNIFORM",
+  "texto": "RECOMMENDED UNIFORMS\nCheck out the new Uniforms\nand discounted Uniforms.\n\nDISCOUNT\nALL UNIFORMS\nCheck out all Uniforms\nand upgrade them!\n\nUNIFORM COLLECTION\nCollect Uniforms and upgrade them\nto acquire Collection Reward!",
+  "n": [
+   252
+  ]
+ },
+ {
+  "pantalla": "RECOMMENDED UNIFORMS",
+  "item": "RECOMMENDED",
+  "titulo": "RECOMMENDED",
+  "texto": "NEW\nTHANOS\nANNIHILATION\n\nRECOMMENDED\nNEW THANOS ANNIHILATION OWNED\nNEW DRAX ANNIHILATION OWNED\nSEASON MORGAN LE FAY FALLEN SOUL OWNED\nSEASON SIN RAGE RETURNED OWNED\nSEASON SISTER GRIMM [cortado]\n\nALL UNIFORMS",
+  "n": [
+   253
+  ]
+ },
+ {
+  "pantalla": "UNIFORM",
+  "item": "(todos los uniformes)",
+  "titulo": "UNIFORM",
+  "texto": "LEGENDARY SISTER GRIMM\nMYTHIC MEDUSA\nMYTHIC MORGAN LE FAY\nMYTHIC SIN\nMYTHIC WEAPON HEX\nLEGENDARY RED SKULL\nMYTHIC ABOMINATION\nMYTHIC BLACK BOLT\nMYTHIC GHOST RIDER\nMYTHIC SPIDER-MAN (MILES MORALES)\nMYTHIC BLACK WIDOW\nMYTHIC ABSORBING MAN\nMYTHIC ADAM WARLOCK\nMYTHIC ADAM WARLOCK\nMYTHIC AERO\nMYTHIC AGENT 13\nMYTHIC AGENT VENOM\nMYTHIC AGENT VENOM\nMYTHIC AGENT VENOM\nMYTHIC AMADEUS CHO\nMYTHIC AMERICA CHAVEZ\nMYTHIC AMERICA CHAVEZ\nMYTHIC AMERICA CHAVEZ\nMYTHIC ANCIENT ONE\n\nOWNED\nRANK ▲\nALL ELEMENTS\nALL ABILITIES\nPURCHASE ALL",
+  "n": [
+   254
+  ]
+ },
+ {
+  "pantalla": "UNIFORM COLLECTION",
+  "item": "ANNIHILATION",
+  "titulo": "ANNIHILATION",
+  "texto": "ANNIHILATION 100%\nMARVEL STUDIOS’ SPIDER-MAN: BRAND NEW DAY 100%\nMARVEL ANIMATION’S X-MEN ’97 SEASON 2 100%\nGODS AND THE GOD BUTCHER 100%\nMARVEL RIVALS 100%\nUNCANNY X-MEN 100%\nMIGHTY MACHINES 100%\nYOUNG AVENGERS [cortado]\n\nANNIHILATION\nAnnihilus, ruler of the Negative Zone and the living embodiment of death, has launched a massive invasion. While some unite against this cosmic threat, others exploit the chaos or even join his ranks. Witness the fate of a universe teetering on the brink of destruction.",
+  "n": [
+   255
+  ]
+ },
+ {
+  "pantalla": "COMIC CARDS",
+  "item": "EQUIPPED CARD",
+  "titulo": "EQUIPPED CARD",
+  "texto": "EQUIPPED CARD\nOWNED CARD\nCARD COLLECTION\n\nCard Deck 1\nCard Deck 2\nThe sub-stats for the equipped cards will apply to all Characters.\nFor each Card Deck, you can select the content that will be affected.\n\nEDIT APPLIED CONTENT\nSTORY\nDIMENSION MISSION\nDISPATCH MISSION\nEPIC QUEST\nLEGENDARY BATTLE\n[cortado]\n\nUPGRADE ALL\nVIEW CARD EFFECTS\nGET COMIC CARDS",
+  "n": [
+   256
+  ]
+ },
+ {
+  "pantalla": "COMIC CARDS",
+  "item": "OWNED CARD",
+  "titulo": "OWNED CARD",
+  "texto": "EQUIPPED CARD\nOWNED CARD\nCARD COLLECTION\n\nRANK\nQUALITY\nOwned Cards: 14\nUncollected Cards\nUPGRADE ALL",
+  "n": [
+   257
+  ]
+ },
+ {
+  "pantalla": "X OF SWORDS",
+  "item": "ELEMENT MASTERY",
+  "titulo": "ELEMENT MASTERY",
+  "texto": "ELEMENT MASTERY\n36\nMASTERY EFFECT\nALL BASIC ATTACKS INCREASE\n+50%\n\nELEMENT LEVEL\nSTRENGTH 6\nINTELLIGENCE 6\nJUDGEMENT 6\nPSIONIC 6\nSTAMINA 6\nDEXTERITY 6\n\nVIEW ALL EFFECTS\nMANAGE SWORDS",
+  "n": [
+   258,
+   259,
+   260,
+   261
+  ]
+ },
+ {
+  "pantalla": "X OF SWORDS",
+  "item": "STRENGTH",
+  "titulo": "ELEMENT INFO",
+  "texto": "ELEMENT INFO\nSTRENGTH 6\n1 2 3\n4 5 6\n\nElement Effect\nLv. 1 PHYSICAL ATTACK ↑ +3%\nLv. 2 PHYSICAL ATTACK ↑ +5%\nLv. 3 PHYSICAL ATTACK ↑ +6%\nLv. 4 PHYSICAL ATTACK ↑ +9%\nLv. 5 PHYSICAL ATTACK ↑ +12%\nLv. 6 PHYSICAL ATTACK ↑ +15%",
+  "n": [
+   259
+  ]
+ },
+ {
+  "pantalla": "X OF SWORDS",
+  "item": "(ayuda de ELEMENT MASTERY)",
+  "titulo": null,
+  "texto": "Element mastery is the sum of all element levels. Mastery effects apply to all characters based on mastery value.\n\nELEMENT MASTERY 36\nMASTERY EFFECT ALL BASIC ATTACKS INCREASE +50%",
+  "n": [
+   260
+  ]
+ },
+ {
+  "pantalla": "X OF SWORDS",
+  "item": "VIEW ALL EFFECTS",
+  "titulo": "VIEW ALL EFFECTS",
+  "texto": "VIEW ALL EFFECTS\n\nMASTERY AND ELEMENT EFFECT\n· ALL BASIC ATTACKS INCREASE +50%\n· PHYSICAL ATTACK ↑ +15%\n· ENERGY DAMAGE ↓ 9%\n· Additional Pierce Damage Decrease 12%\n· ENERGY ATTACK ↑ +15%\n· PHYSICAL DAMAGE ↓ 9%\n· INSTINCT ATTACK INCREASE +2400\n\nSWORD EFFECTS\n· INSTINCT DEFENSE INCREASE +412\n· FLAME DAMAGE ↑ +8.39%\n· CONCENTRATION INCREASE 8.96%\n· INSTINCT ATTACK INCREASE +326\n· COLD DAMAGE ↑ +2.16%\n· MIND DAMAGE ↑ +1.86%\n· Decreases basic damage received from enemies with DURABILITY ability by 10%.\n[cortado]\n\nValues from the same effects will display a cumulative value.\n*Effects that apply to certain targets will not be summed and will be displayed individually.",
+  "n": [
+   261
+  ]
+ },
+ {
+  "pantalla": "RANKING",
+  "item": "RANKING",
+  "titulo": "RANKING",
+  "texto": "AGENT LEVEL\nRANK PER CHARACTER\nPOPULAR CHARACTER\nWORLD BOSS\nUNIFORM\nCOMIC CARDS\nC.T.P.\nISO-8 SET BONUS",
+  "n": [
+   262
+  ]
+ }
+]

@@ -1,0 +1,155 @@
+{
+ "carril": "k4",
+ "rango": [
+  196,
+  260
+ ],
+ "total": 65,
+ "por_tipo": {
+  "ctp": 12,
+  "otro": 16,
+  "glosario": 1,
+  "personaje": 36
+ },
+ "items": [
+  "찬란한 인내의 C.T.P.",
+  "찬란한 제련된 C.T.P.",
+  "찬란한 재생의 C.T.P.",
+  "찬란한 분노의 C.T.P.",
+  "찬란한 역전의 C.T.P.",
+  "찬란한 심판의 C.T.P.",
+  "찬란한 탐욕의 C.T.P.",
+  "찬란한 통찰의 C.T.P.",
+  "찬란한 극복의 C.T.P.",
+  "찬란한 해방의 C.T.P.",
+  "캡틴 하이드라",
+  "네거티브 존의 지배자",
+  "행성 포식자",
+  "연합 점령전",
+  "정비 단계",
+  "연합 점령전 월드맵",
+  "점령전 보상 목록: 챌린저",
+  "연합 효과 정보",
+  "정보",
+  "영웅 상세 정보",
+  "영웅 장비",
+  "스킬"
+ ],
+ "legibilidad_parcial": [
+  198
+ ],
+ "extra": {
+  "bloques": {
+   "196-207": "ventanas de C.T.P. del 특수 장비 도감 (tipo ctp)",
+   "208-213": "ventanas de artefactos del 아티팩트 도감 (tipo otro, datos con forma de ctp; 209, 211 y 213 con globo de 발동 조건)",
+   "214-224": "modo 연합 점령전 y ventanas asociadas (tipo otro) más una entrada del 콘텐츠 사전 en 217 (tipo glosario)",
+   "225-260": "ficha 영웅 정보 de 메피스토 (tipo personaje): 정보, 영웅 상세 정보 (226-251), 영웅 요약 con globos (252-256), 영웅 장비 (257-258), 스킬 (259-260)"
+  },
+  "efectos_ctp_con_nombre": [
+   "방호",
+   "활력",
+   "간파",
+   "격노",
+   "칼날",
+   "속성 증폭",
+   "맹공",
+   "격돌"
+  ],
+  "영웅_상세_정보_pestanas": [
+   "전체 / 일반",
+   "전체 / 천성",
+   "장비 / 천성",
+   "장비 / 일반",
+   "ISO-8 / 일반",
+   "ISO-8 / 천성",
+   "엘리트 장비 / 일반",
+   "엘리트 장비 / 천성",
+   "카드 / 천성",
+   "카드 / 일반",
+   "소드 / 일반",
+   "소드 / 천성",
+   "팀업 컬렉션 / 천성",
+   "팀업 컬렉션 / 일반",
+   "쉴드 아카이브 / 일반",
+   "쉴드 아카이브 / 천성",
+   "에이전트 / 천성",
+   "에이전트 / 일반",
+   "엠블럼 / 일반",
+   "엠블럼 / 천성"
+  ],
+  "globos": [
+   "발동 조건: 레드 스컬",
+   "발동 조건: 어나일러스",
+   "발동 조건: 갤럭투스",
+   "사악",
+   "마법",
+   "지옥불",
+   "지옥 군주",
+   "불타는 부활",
+   "분노의 구덩이",
+   "유니폼 효과",
+   "화염 피해 / 가드 브레이크 / 부분 타겟팅 무시"
+  ],
+  "skills_en_lista": [
+   "타락의 화염",
+   "최후의 영혼",
+   "분노의 구덩이",
+   "헬로드 펀치",
+   "지옥 불",
+   "지옥의 폭풍"
+  ],
+  "equipo": [
+   "악마의 불꽃",
+   "악마의 정장",
+   "악마의 구두",
+   "지옥의 왕좌",
+   "뼈의 검"
+  ],
+  "n_con_cortado": [
+   196,
+   197,
+   198,
+   199,
+   200,
+   201,
+   202,
+   204,
+   206,
+   207,
+   209,
+   211,
+   213,
+   214,
+   218,
+   219,
+   221,
+   222,
+   223,
+   224,
+   250,
+   252,
+   253,
+   255,
+   256,
+   257,
+   258,
+   259,
+   260
+  ],
+  "n_con_dudas_de_silaba": [
+   198
+  ],
+  "n_con_omisiones_por_privacidad": [
+   214,
+   216,
+   218
+  ],
+  "n_repetidas": {
+   "201": "igual a 200",
+   "205": "igual a 203",
+   "232": "valores iguales a 227 (cambia la página del mazo)",
+   "236": "todo en 0, igual a 231 salvo la pestaña"
+  },
+  "convenciones": "Valor alineado a la derecha separado con tabulación (\\t) en texto; viñeta «·» como «· »; en 영웅 상세 정보, datos.ficha (columna izquierda) y datos.secciones[].pares (공격/방어/상태 이상 o 천성); los globos van en datos.globo o datos.ventana. Colores: dorado = tono ámbar entre amarillo y naranja; celeste pálido = texto de los globos."
+ }
+}

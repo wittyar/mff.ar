@@ -1,0 +1,1095 @@
+{
+ "lista_completa": [
+  "가드 브레이크",
+  "무조건 회피율",
+  "무조건 치명타율",
+  "순수 피해량",
+  "팀 패시브",
+  "무적",
+  "슈퍼 아머",
+  "배리어",
+  "쉴드",
+  "피해 면역",
+  "공포",
+  "속박",
+  "타임 프리징",
+  "매혹",
+  "타겟팅 무시",
+  "유혹",
+  "정신 지배",
+  "리차지 쉴드",
+  "골절",
+  "무력화",
+  "반격기",
+  "탄성",
+  "집중",
+  "추가 관통 피해",
+  "간파",
+  "압도",
+  "속성 증폭",
+  "강철",
+  "조롱",
+  "강타",
+  "맹공",
+  "불굴",
+  "칼날",
+  "방호",
+  "슈퍼 히트 쉴드",
+  "격노",
+  "활력",
+  "방벽",
+  "격돌",
+  "공황",
+  "상실",
+  "최후의 발악",
+  "표식",
+  "맹렬"
+ ],
+ "terminos": [
+  {
+   "termino": "가드 브레이크",
+   "texto": "가드 브레이크란 상대방이 스킬을 사용할 때 강제로 피격 모션을 취하게 만들어 상대의 스킬을 취소시키는 효과를 말합니다.\n슈퍼 가드 브레이크는 가드 브레이크 면역을 무시하고 상대의 스킬을 취소시킬 수 있습니다.\n\nTip: 상대가 스킬을 사용할 때 가드 브레이크 효과가 있는 스킬을 사용해 보세요. 상대방의 스킬을 막아내는 동시에 반격의 기회를 잡을 수 있습니다.",
+   "insignia": "전투 가이드",
+   "resaltados": [
+    {
+     "texto": "가드 브레이크",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "슈퍼 가드 브레이크",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    305
+   ]
+  },
+  {
+   "termino": "무조건 회피율",
+   "texto": "회피율은 내 영웅과 상대방의 레벨 차이에 따라 다르게 적용됩니다.\n무조건 회피율이란 이런 계산을 거치지 않고 영웅의 회피율을 고정값만큼 무조건 올려주는 효과를 말합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "무조건 회피율",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    306
+   ]
+  },
+  {
+   "termino": "무조건 치명타율",
+   "texto": "치명타율은 내 영웅과 상대방의 레벨 차이에 따라 다르게 적용됩니다.\n무조건 치명타율이란 이런 계산을 거치지 않고 영웅의 치명타율을 고정값만큼 무조건 올려주는 효과를 말합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "무조건 치명타율",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    307
+   ]
+  },
+  {
+   "termino": "순수 피해량",
+   "texto": "영웅이 받는 피해량은 상대방의 공격력에서 내 영웅의 방어력과 속성 저항값을 계산하여 일정량 감소된 후 결정됩니다.\n순수 피해량이란 영웅의 방어도와 속성 저항값과 무관한 피해량을 말합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "순수 피해량",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    308
+   ]
+  },
+  {
+   "termino": "팀 패시브",
+   "texto": "팀 패시브란 해당 능력을 가진 영웅을 리더로 지정하지 않아도 팀에 참가하기만 하면 모든 팀원에게 효과를 주는 패시브를 말합니다.\n스킬 설명 중 [적용 대상: 모든 팀원]으로 되어 있는 경우가 이에 해당합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "팀 패시브",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "[적용 대상: 모든 팀원]",
+     "color": "blanco",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    309
+   ]
+  },
+  {
+   "termino": "무적",
+   "texto": "무적이란 피격모션, 가드 브레이크, 대미지, 디버프 등 영웅이 받을 수 있는 모든 피해에 면역이 된 상태를 말합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "무적",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    310
+   ]
+  },
+  {
+   "termino": "슈퍼 아머",
+   "texto": "슈퍼 아머란 피격 모션, 가드 브레이크에 면역된 상태입니다. 적의 공격으로 인해 공격이 취소되지 않지만 대미지는 받을 수 있습니다.",
+   "insignia": "전투 가이드",
+   "resaltados": [
+    {
+     "texto": "슈퍼 아머",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    311
+   ]
+  },
+  {
+   "termino": "배리어",
+   "texto": "배리어는 일정 시간동안 지정된 횟수만큼 대미지를 차단하는 효과입니다. 대미지는 입지 않지만 가드 브레이크, 디버프는 막지 못합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "배리어",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    312
+   ]
+  },
+  {
+   "termino": "쉴드",
+   "texto": "쉴드는 일정 시간 동안 정해진 대미지를 차단하는 효과입니다. 대미지는 입지 않지만 피격 모션, 가드 브레이크, 디버프는 막지 못합니다.\n모든 타입의 피해를 막아낼 수 있는 쉴드, 물리 타입 피해만 막을 수 있는 물리 쉴드, 에너지 타입 피해만 막을 수 있는 에너지 쉴드로 나뉩니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "쉴드",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    313
+   ]
+  },
+  {
+   "termino": "피해 면역",
+   "texto": "피해 면역은 일정 시간 동안 대미지와 디버프를 차단하는 효과입니다. 대미지와 디버프는 막아내지만 피격 모션, 가드 브레이크 효과는 막을 수 없습니다.\n모든 타입의 피해와 디버프를 막아낼 수 있는 모든 피해 면역, 물리 타입의 피해와 디버프만을 막아 주는 물리 피해 면역, 에너지 타입의 피해와 디버프만을 막아주는 에너지 피해 면역으로 나뉩니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "피해 면역",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    314
+   ]
+  },
+  {
+   "termino": "공포",
+   "texto": "공포는 일정 시간 동안 상대를 겁에 질리게 하여, 공포를 시전한 대상으로부터 도망치도록 만드는 효과입니다.\n공포에 걸린 상대는 공격이나 스킬을 사용하지 못하는 상태가 됩니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "공포",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    315
+   ]
+  },
+  {
+   "termino": "속박",
+   "texto": "속박은 일정 시간 동안 상대를 한 곳에 묶어두는 효과입니다.\n속박 걸린 상대는 다른 곳으로 이동할 수 없을 뿐 아니라, 기본 공격이나 스킬 또한 사용하지 못합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "속박",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    316
+   ]
+  },
+  {
+   "termino": "타임 프리징",
+   "texto": "타임 프리징은 일정 시간 동안 상대를 시간 속에 가두어 움직임을 봉쇄하는 효과입니다.\n타임 프리징에 걸린 상대는 이동하거나, 공격할 수 없습니다.\n\nTip: 타임 프리징은 디버프가 적용되지 않는 대형 보스도 시간 속에 가둘 수 있지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "타임 프리징",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    317
+   ]
+  },
+  {
+   "termino": "매혹",
+   "texto": "매혹은 일정 시간 동안 상대를 매료시켜 공격할 수 없게 만드는 효과입니다.\n매혹에 걸린 적은 이동 및 스킬을 사용할 수 없으며, 자동 발동형 공격까지 발동되지 않는 상태가 됩니다.\n\nTip: 매혹은 디버프가 적용되지 않는 대형 보스도 매료시킬 수 있지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "매혹",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    318
+   ]
+  },
+  {
+   "termino": "타겟팅 무시",
+   "texto": "타겟팅 무시 효과는 공격 대상을 지정하는 적의 타겟팅으로부터 벗어난 상태를 말합니다. 이 상태에서는 공격을 받아도 피해를 입지 않습니다.\n\nTip: 상대의 공격이 진행 중일 때 타이밍에 맞춰 타겟팅 무시 효과를 지닌 스킬을 사용하면, 상대의 공격을 완전히 무시하고 내 공격을 이어갈 수 있습니다.",
+   "insignia": "전투 가이드",
+   "resaltados": [
+    {
+     "texto": "타겟팅 무시",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    319
+   ]
+  },
+  {
+   "termino": "유혹",
+   "texto": "유혹은 일정 시간 동안 상대를 유혹하여 공격할 수 없게 만드는 효과입니다.\n유혹에 걸린 적은 이동 및 스킬을 사용할 수 없으며, 유혹을 사용한 대상에게 천천히 다가가게 됩니다.\n\nTip: 유혹은 월드 보스 또는 디버프가 적용되지 않는 상대에게도 적용되지만, 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "유혹",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    320
+   ]
+  },
+  {
+   "termino": "반격기",
+   "texto": "반격기는 적에게 공격당했을 때, 피격 모션 대신 반격 모션이 발동하여 적에게 반격을 가하는 기술입니다.\n피격 모션이 발생해야만 반격기가 발동할 수 있으므로, 무적 상태에서는 반격기가 발동되지 않습니다.",
+   "insignia": "전투 가이드",
+   "resaltados": [
+    {
+     "texto": "반격기",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "무적",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    321
+   ]
+  },
+  {
+   "termino": "탄성",
+   "texto": "탄성은 물리 피해량 감소 효과를 중첩해서 얻을 수 있는 효과입니다.\n탄성은 디버프 해제 효과나 디버프 무력화 효과에도 제거되지 않으며, 디버프 출혈 효과로 제거할 수 있습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "탄성",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "무력화",
+     "color": "azul",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    322
+   ]
+  },
+  {
+   "termino": "집중",
+   "texto": "집중은 스킬의 잠재된 성능에 영향을 주는 능력입니다. 일부 스킬과 특수 장비의 효과들은 집중이 높아질수록 더욱 뛰어난 성능을 발휘합니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "집중",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    323
+   ]
+  },
+  {
+   "termino": "추가 관통 피해",
+   "texto": "추가 관통 피해는 공격 시, 방어력을 완전히 무시하는 대미지를 추가로 입히는 능력입니다. 추가 관통 피해량은 스킬이 가진 공격력을 기반으로 적용됩니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "추가 관통 피해",
+     "color": "naranja",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    324
+   ]
+  },
+  {
+   "termino": "간파",
+   "texto": "간파는 적에게 공격당했을 때, 일정 확률로 적의 공격을 취소시키는 기술입니다.\n상대방보다 집중 수치가 높을수록 성공 확률이 증가하며 낮을수록 감소합니다.\n간파를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다.\n간파 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(5초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "간파",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "간파 발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    325
+   ]
+  },
+  {
+   "termino": "압도",
+   "texto": "압도는 스킬 사용 시, 추가 관통 피해를 증가시키고 가드 브레이크 면역 상태로 만들어 줍니다.\n압도로 증가하는 추가 관통 피해는 최대 제한값에 영향을 받지 않으며 집중 수치가 높을수록 상승합니다.\n압도를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 이동할 때마다 충전됩니다.\n압도 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "압도",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "추가 관통 피해",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "압도 발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    326
+   ]
+  },
+  {
+   "termino": "속성 증폭",
+   "texto": "속성 증폭은 스킬 사용 시, 속성 스킬의 공격력을 증가시키고 가드 브레이크 면역 상태로 만들어 줍니다.\n속성 증폭으로 증가하는 속성 스킬 공격력은 집중 수치가 높을수록 상승합니다.\n속성 증폭을 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 이동할 때마다 충전됩니다.\n속성 증폭 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "속성 증폭",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "속성 스킬의 공격력을 증가",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "속성 증폭 발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    327
+   ]
+  },
+  {
+   "termino": "강철",
+   "texto": "강철은 가드 브레이크 및 슈퍼 가드 브레이크에 면역 상태로 만들어 주고 받는 피해를 일정량 감소시켜 줍니다.\n피해 감소량은 집중 수치가 높을수록 상승합니다.\n강철 효과를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다.\n효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(6초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "강철",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크 및 슈퍼 가드 브레이크에 면역",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    328
+   ]
+  },
+  {
+   "termino": "조롱",
+   "texto": "조롱은 적을 도발하여 자신을 강제 공격하게 만드는 상태이상 효과입니다. 조롱에 걸린 대상은 공격력이 증가하지만 일정 확률로 지정된 버프 효과를  적용받지 못합니다.\n예를 들어 적에게 무적 효과를 무효화시키는 조롱을 걸었다면 조롱이 사라지기 전까지 무적 효과가 적용되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "조롱",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "자신을 강제 공격하게 만드는 상태이상 효과",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "공격력이 증가하지만 일정 확률로 지정된 버프 효과를  적용받지 못합니다.",
+     "color": "amarillo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    329
+   ]
+  },
+  {
+   "termino": "강타",
+   "texto": "강타는 스킬 사용 시, 적의 회피를 무시하고 보스 타입에게 주는 피해를 상승시킵니다.\n보스 타입에게 주는 피해량은 집중 수치가 높을수록 상승합니다.\n강타를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 이동할 때마다 충전됩니다.\n강타 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "강타",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "적의 회피를 무시하고 보스 타입에게 주는 피해를 상승시킵니다.",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "강타 발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    330
+   ]
+  },
+  {
+   "termino": "맹공",
+   "texto": "맹공은 사용 시, 가드 브레이크 및 슈퍼 가드 브레이크에 면역 상태로 만들어 주고 적의 피해 반사 효과에 면역 상태가 됩니다. 또한, 적의 피해 감소 효과를 일정 비율 무시할 수 있습니다.\n적의 피해 감소를 무시하는 효과는 집중 수치가 높을수록 상승합니다.\n맹공을 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다.\n효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(6초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "맹공",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크 및 슈퍼 가드 브레이크에 면역",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "적의 피해 반사 효과에 면역 상태",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "적의 피해 감소 효과를 일정 비율 무시할 수 있습니다.",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    331
+   ]
+  },
+  {
+   "termino": "불굴",
+   "texto": "불굴은 일정 시간 동안 생명력이 1 이하로 떨어지지 않으며, 일정 시간이 지난 후 생명력을 회복할 수 있는 효과입니다. 불굴 효과는 HP가 일정 수치 이하로 떨어졌을 때 자동 발동되며, 발동되는 동안 가드 브레이크 면역 상태로 만들어 줍니다. 또한, 효과 발동 시 버프 제거 효과에 제거되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "불굴",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "생명력이 1 이하로 떨어지지 않으며,",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "생명력을 회복",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "HP가 일정 수치 이하로 떨어졌을 때",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "제거되지 않습니다.",
+     "color": "amarillo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    332
+   ]
+  },
+  {
+   "termino": "칼날",
+   "texto": "칼날은 스킬 사용 시, 적의 방어 효과 관통과 함께 적에게 주는 피해를 증가시켜 줍니다.\n피해 증가 효과는 집중 수치가 높을수록 상승합니다.\n칼날을 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 스킬(기본 공격 제외)을 사용할 때마다 충전됩니다.\n효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "칼날",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "적의 방어 효과 관통",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "적에게 주는 피해를 증가",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    333
+   ]
+  },
+  {
+   "termino": "방호",
+   "texto": "방호는 사용 시, 가드 브레이크 및 슈퍼 가드 브레이크에 면역 상태로 만들어 주고 해제와 관통 효과를 무시하는 배리어를 생성합니다. 배리어는 지정된 횟수만큼 적의 공격을 방어합니다.\n추가로 집중 수치의 일정 비율만큼 생명력을 회복합니다.\n방호를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다.\n효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "방호",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크 및 슈퍼 가드 브레이크에 면역",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "해제와 관통 효과를 무시하는 배리어",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "지정된 횟수만큼 적의 공격을 방어",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "생명력을 회복",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    334
+   ]
+  },
+  {
+   "termino": "슈퍼 히트 쉴드",
+   "texto": "슈퍼 히트 쉴드는 적을 공격할 때마다 피해 방어량이 충전되는 쉴드 효과 입니다.\n다른 쉴드 효과가 중첩으로 발동할 경우 모두 무시하고, 슈퍼 히트 쉴드만 적용됩니다.\n슈퍼 히트 쉴드는 버프 제거 효과에 제거되지 않고, 관통에 영향을 받지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "슈퍼 히트 쉴드",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "버프 제거 효과에 제거되지 않고, 관통에 영향을 받지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    335
+   ]
+  },
+  {
+   "termino": "격노",
+   "texto": "격노는 스킬 사용 시, 치명타 피해율 최대 제한 수치에 관계없이 치명타 피해율을 증가시키고 가드 브레이크 면역 상태로 만들어 줍니다.\n격노로 증가하는 치명타 피해율은 집중 수치가 높을수록 상승합니다.\n격노를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 스킬(기본 공격 제외)을 사용할 때마다 충전됩니다.\n격노 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "격노",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "치명타 피해율을 증가",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "격노 발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    336
+   ]
+  },
+  {
+   "termino": "활력",
+   "texto": "활력은 가드 브레이크 및 슈퍼 가드 브레이크에 면역 상태로 만들어 주고 매 초마다 생명력을 회복시켜 줍니다.\n생명력 회복량은 집중 수치가 높을수록 상승합니다.\n활력 효과를 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다.\n효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "활력",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크 및 슈퍼 가드 브레이크에 면역",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "매 초마다 생명력을 회복",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    337
+   ]
+  },
+  {
+   "termino": "방벽",
+   "texto": "방벽은 사용 시, 피해를 감소 시켜주는 전용 배리어를 얻게 됩니다. 피격시마다 피해 감소 효과는 줄어들고 최소 피해 감소율로 유지시간 동안 효과가 지속 됩니다. 또한, 배리어 효과와 같이 사용할 수 없습니다. 방벽은 일반 피해량 감소와 같은 방어 효과들과는 중첩되서 사용되지 않고 개별 적용됩니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "방벽",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "피해를 감소 시켜주는 전용 배리어",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "피격시마다 피해 감소 효과는 줄어들고 최소 피해 감소율로 유지시간 동안 효과가 지속",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "배리어",
+     "color": "celeste",
+     "subrayado": true
+    }
+   ],
+   "n": [
+    338
+   ]
+  },
+  {
+   "termino": "격돌",
+   "texto": "격돌은 사용 시, 가드 브레이크 및 슈퍼 가드 브레이크에 면역 상태로 만들어 주고 적의 피해 반사 효과에 면역 상태가 됩니다. 또한, 적에게 주는 일반 피해량이 증가합니다.\n적에게 주는 일반 피해량 효과는 집중 수치가 높을수록 상승합니다.\n격돌을 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 적에게 피격 당할 때마다 충전됩니다.\n효과는 자동 발동되며 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(6초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "격돌",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크 및 슈퍼 가드 브레이크에 면역",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "적의 피해 반사 효과에 면역 상태",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "적에게 주는 일반 피해량이 증가합니다.",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    339
+   ]
+  },
+  {
+   "termino": "상실",
+   "texto": "상실은 일정 시간 동안 상대의 능력을 흡수하여 공격할 수 없게 만드는 효과입니다.\n상실에 걸린 적은 이동 및 스킬을 사용할 수 없고 적의 이로운 버프를 제거하며, 추가 대미지를 받습니다.\n\nTip: 상실은 모든 상태 이상 제거 효과를 지닌 상대에게는 적용되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "상실",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    340
+   ]
+  },
+  {
+   "termino": "최후의 발악",
+   "texto": "최후의 발악은 일정 시간 동안 생명력이 1 이하로 떨어지지 않으며, 시간 종료 후 즉시 사망합니다.\n최후의 발악 효과는 HP가 일정 수치 이하로 떨어졌을 때 자동 발동되며, 효과 발동 시에는 가드 브레이크에 영향을 받지만 버프 제거 효과에 제거되지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "최후의 발악",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "생명력이 1 이하로 떨어지지 않으며,",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "HP가 일정 수치 이하로 떨어졌을 때",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "제거되지 않습니다.",
+     "color": "amarillo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    341
+   ]
+  },
+  {
+   "termino": "표식",
+   "texto": "표식은 사용 시, 적에게 표식 마크를 생성합니다.\n표식에 걸린 적을 대상으로 효과를 부여하는 스킬 사용 시, 주는 피해를 증가시킵니다.\n\nTip: 표식은 월드보스 또는 디버프가 적용되지 않는 대형 보스에게도 적용됩니다. 또한, 모든 상태 이상 제거 효과를 지닌 상대에게도 적용되며 디버프 효과 효율 증가 및 디버프 효과 효율 감소의 영향을 받지 않습니다.",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "표식",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "주는 피해를 증가",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "Tip:",
+     "color": "rojo",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    342
+   ]
+  },
+  {
+   "termino": "맹렬",
+   "texto": "맹렬은 스킬 사용 시, 캐릭터의 모든 대미지의 피해량을 증가시키고 가드 브레이크 면역 상태로 만들어 줍니다.\n맹렬로 증가하는 모든 대미지 피해량은 집중 수치가 높을수록 상승합니다.\n맹렬을 사용하기 위해서는 전용 게이지가 가득 차 있어야 하며 게이지는 스킬(기본 공격 제외)을 사용할 때마다 충전됩니다.\n맹렬 발동 후에는 일정 시간 게이지가 충전되지 않습니다.(7초)",
+   "insignia": null,
+   "resaltados": [
+    {
+     "texto": "맹렬",
+     "color": "naranja",
+     "subrayado": false
+    },
+    {
+     "texto": "모든 대미지의 피해량을 증가",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "가드 브레이크",
+     "color": "azul",
+     "subrayado": true
+    },
+    {
+     "texto": "집중",
+     "color": "celeste",
+     "subrayado": true
+    },
+    {
+     "texto": "전용 게이지",
+     "color": "amarillo",
+     "subrayado": false
+    },
+    {
+     "texto": "맹렬 발동 후에는 일정 시간 게이지가 충전되지 않습니다.",
+     "color": "verde",
+     "subrayado": false
+    }
+   ],
+   "n": [
+    343
+   ]
+  }
+ ]
+}
