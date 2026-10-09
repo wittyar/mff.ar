@@ -5,6 +5,8 @@ transcriptas a mano. Una fila por captura; `capturas` es el número de la foto e
 
 - `mephisto.csv`: Mephisto (Modern), nativo T3, Detonación. Del álbum coreano (capturas 304 a 377), material del 5 de
   octubre de 2026.
+- `gorr.csv`: Gorr (El Carnicero de Dioses), nativo T3. Del álbum en español (capturas 50 y 54 a 62, 6 de octubre de
+  2026): nivel 1 de 1★ a 6★, niveles 2, 3 y 5 con 6★, y el máximo (nivel 80, T4, potencial 12). Ataque físico.
 - `galactus.csv`: Galactus (Modern), nativo T3, Universal. Álbum https://photos.app.goo.gl/Q5hQWtXeubx9k85EA (84
   capturas, 9 de octubre de 2026). Las estrellas rojas son la maestría. Las capturas 47 y 59 repiten el nivel 43 y el 55; falta el 45.
 
