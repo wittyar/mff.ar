@@ -26,7 +26,7 @@ Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvi
 
 Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; todos clasificados.
 
-Liderazgos: el build deriva de la Leader Skill de la API el de 443 variantes que Leads & Supports no publica; 35 slots no se pudieron derivar (sección 12).
+Liderazgos: el build deriva de la Leader Skill de la API el de 467 variantes que Leads & Supports no publica; 11 slots no se pudieron derivar (sección 12).
 
 ## 1. Skills: daño y recarga
 
@@ -644,7 +644,7 @@ Más de 100%: un error de la wiki. No se corrige ni se topea: la app la muestra 
 
 Leads & Supports de thanosvibs no publica el liderazgo de todas las variantes. Los que no publica los deriva el build de la Leader Skill de la API de skills (Ezequiel, 4 de octubre de 2026; scripts/liderazgos.py, explicado en docs/MODELO.md) y van en los datos con `"src": "api"`: la app dice «según la skill del juego». La Leader Skill se parte en los dos slots de liderazgo de Leads & Supports, y cada efecto, cada activación y la condición de cada efecto pasan a lo que publica Leads & Supports según las variantes que tienen las dos cosas (la correspondencia aprendida, abajo) o, lo que Leads & Supports no publica en ningún liderazgo, según scripts/contenido/liderazgos_api.json (la correspondencia a mano: un stat del catálogo para cada efecto, y la activación con el texto de la API). Todo o nada por slot: si algo no cierra, ese slot no se deriva y va abajo con su motivo. Lo derivado no lleva «Notable», que es una marca de thanosvibs que la API no tiene.
 
-411 variantes tienen liderazgo de Leads & Supports y 477 no. El build deriva el de 443 (461 slots); 35 slots, de 35 variantes, no se pudieron derivar.
+411 variantes tienen liderazgo de Leads & Supports y 477 no. El build deriva el de 467 (485 slots); 11 slots, de 11 variantes, no se pudieron derivar.
 
 ### Correspondencia aprendida
 
@@ -699,11 +699,18 @@ De scripts/contenido/liderazgos_api.json: lo que Leads & Supports no publica en 
 
 | Efecto de la API | Stat | Variantes |
 |---|---|---|
+| «#% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE) | All Damage Immunity +n1 | 2 |
 | «Attack Speed increases by #%.» (ATTACK SPEED ↑) | Attack Speed +n1 | 8 |
+| «#% chance to become immune to Cold Damage.» (COLD IMMUNITY) | Cold Immunity Chance +n1 | 6 |
+| «Creates an energy Shield equal to #% of Max HP» (ENERGY SHIELD) | Energy Shield +n1 | 11 |
 | «Increases Flame Resist by #%.» (FLAME RESIST ↑) | Fire Resist +n1 | 14 |
 | «#% Ignore Defense» (IGNORE DEFENSE) | Ignore Defense +n1 | 2 |
 | «Increases Lightning Resist by #%.» (LIGHTNING RESIST ↑) | Lightning Resist +n1 | 13 |
 | «#% increase of Physical Defense.» (PHYSICAL DEFENSE ↑) | Physical Defense +n1 | 24 |
+| «Creates a physical Shield equal to #% of Max HP» (PHYSICAL SHIELD) | Physical Shield +n1 | 3 |
+| «Increases Poison Resist by #%.» (POISON RESIST ↑) | Poison Resist +n1 | 1 |
+| «Immunity to BLEED Effect.» (RESIST) | Bleed Immunity +n1 | 1 |
+| «Immunity to Fracture Effect.» (RESIST) | Fracture Immunity +n1 | 1 |
 | «Super Armor, increases all Basic Defenses by #%.» (SUPER ARMOR) | Super Armor, All Basic Defenses +n1 | 3 |
 
 Activaciones: «#% chance when attacking» (12 variantes); «#% rate when dodging» (5 variantes); «#% rate when hit» (27 variantes); «When enemies are below #% HP,» (1 variante); «when dealing Critical Attack» (15 variantes); «when dodging» (4 variantes); «when HP is below #%» (3 variantes); «when tagging» (15 variantes).
@@ -768,31 +775,21 @@ Solo en Leads & Supports:
 - Invisible Woman — Classic (`invisiblewoman2`), `leader2`.
 - Mephisto (`mephisto`), `leader2`.
 
-### Sin derivar (35 slots en 35 variantes)
+### Sin derivar (11 slots en 11 variantes)
 
 Variantes sin liderazgo de Leads & Supports con un slot de su Leader Skill que no se pudo derivar, con todos sus motivos. En docs/COMPLETITUD.md son el faltante «Liderazgo sin completar».
 
-Por motivo (un slot puede tener más de uno): efecto sin stat, 35; «Give Power», 1. Van juntas las variantes de un personaje con los mismos motivos.
+Por motivo (un slot puede tener más de uno): efecto sin stat, 10; «Give Power», 1. Van juntas las variantes de un personaje con los mismos motivos.
 
-Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «30% chance to become immune to Cold Damage.» (COLD IMMUNITY), 6; «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Creates an energy Shield equal to 20% of Max HP» (ENERGY SHIELD), 4; «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD), 3; «Creates an energy Shield equal to 50% of Max HP» (ENERGY SHIELD), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «100% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE), 2; «Creates an energy Shield equal to 30% of Max HP» (ENERGY SHIELD), 2; «Creates an energy Shield equal to 60% of Max HP» (ENERGY SHIELD), 2; «Paralyze» (PARALYZE), 2; «Immunity to BLEED Effect.» (RESIST), 1; «Immunity to Fracture Effect.» (RESIST), 1; «Increases Poison Resist by 50%.» (POISON RESIST ↑), 1.
+Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Paralyze» (PARALYZE), 2.
 
 - Blade (`blade`, `blade1`, `blade2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL).
-- Captain America (Sharon Rogers) (`sharonrogers`, `sharonrogers2`, `sharonrogers1`, `sharonrogers3`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 20% of Max HP» (ENERGY SHIELD).
-- Captain America (Sharon Rogers) (`sharonrogers6`, `sharonrogers4`, `sharonrogers5`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 50% of Max HP» (ENERGY SHIELD).
-- Daisy Johnson (`daisyjohnson`, `daisyjohnson2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD).
-- Green Goblin (`greengoblin`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Poison Resist by 50%.» (POISON RESIST ↑).
-- Hydro-Man (`hydroman`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to BLEED Effect.» (RESIST); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to Fracture Effect.» (RESIST).
-- Luna Snow (`lunasnow`, `lunasnow1`, `lunasnow2`, `lunasnow3`, `lunasnow5`, `lunasnow4`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «30% chance to become immune to Cold Damage.» (COLD IMMUNITY).
-- Quake — Modern (`daisyjohnson1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD).
 - Sentry — Marvel Studios' Thunderbolts* (`sentry2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
 - Silk (`silk`, `silk2`, `silk1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
-- Sister Grimm (`sistergrimm`, `sistergrimm1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 30% of Max HP» (ENERGY SHIELD).
-- Sister Grimm (`sistergrimm3`, `sistergrimm2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 60% of Max HP» (ENERGY SHIELD).
 - White Tiger (`whitetiger`, `whitetiger1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
-- Wong (`wong2`, `wong3`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «100% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE).
 - Yellowjacket (`yellowjacket`, `yellowjacket1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Paralyze» (PARALYZE).
 
-### Derivados (443 variantes)
+### Derivados (467 variantes)
 
 Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 
@@ -818,6 +815,8 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Captain America (`captainamerica`, `captainamerica10`, `captainamerica1`, `captainamerica12`, `captainamerica11`, `captainamerica5`, `captainamerica9`, `captainamerica6`, `captainamerica4`, `captainamerica3`, `captainamerica2`, `captainamerica8`): `leader` HP +30%.
 - Captain America — Galactic Talon (`captainamerica15`): `leader` HP +45%.
 - Captain America (Sam Wilson) (`falcon6`, `falcon4`): `leader` Dodge +15%.
+- Captain America (Sharon Rogers) (`sharonrogers`, `sharonrogers2`, `sharonrogers1`, `sharonrogers3`): `leader` Energy Shield +20% (12 s) — 25% rate when hit, recarga 40 s.
+- Captain America (Sharon Rogers) (`sharonrogers6`, `sharonrogers4`, `sharonrogers5`): `leader` Energy Shield +50% (12 s) — 25% rate when hit, recarga 40 s.
 - Captain Britain — Hellfire Gala (`psylocke3`): `leader` Mind Resist +50%.
 - Carnage (`carnage`, `carnage1`): `leader` Critical Rate +6%, Critical Damage +18%.
 - Carnage (`carnage2`, `carnage3`): `leader` Remove All Debuffs (12 s), All Basic Defenses +30% (12 s) — para Ability: Simbionte, When Debuffed, recarga 20 s.
@@ -827,6 +826,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Colossus (`colossus`, `colossus3`, `colossus2`, `colossus1`): `leader` Physical Immunity Chance +100% (11 s) — 25% rate when hit, recarga 40 s.
 - Corvus Glaive (`corvusglaive`, `corvusglaive2`, `corvusglaive1`): `leader` Skill Cooldown −24%.
 - Cull Obsidian — Marvel Studios' Avengers: Infinity War (`blackdwarf1`): `leader` Physical Immunity Chance +100% (8 s) — 30% rate when hit, recarga 15 s.
+- Daisy Johnson (`daisyjohnson`, `daisyjohnson2`): `leader` Physical Shield +30% (20 s) — 10% chance when attacking, recarga 30 s.
 - Daken (`daken`, `daken1`): `leader` Debuff Duration −30%.
 - Daredevil (`daredevil`, `daredevil2`, `daredevil1`, `daredevil3`, `daredevil4`): `leader` Critical Rate +12% (18 s), Critical Damage +12% (18 s) — 30% rate when dodging, recarga 30 s.
 - Darkhawk (`darkhawk`): `leader` All Speeds +6%.
@@ -848,6 +848,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Ghost Rider (`ghostrider`, `ghostrider1`, `ghostrider2`, `ghostrider3`, `ghostrider4`, `ghostrider5`): `leader` Fire Resist +50%.
 - Gilgamesh (`gilgamesh`, `gilgamesh1`): `leader` All Basic Defenses +50%.
 - Gorilla-Man (`gorillaman`): `leader` All Speeds +6%.
+- Green Goblin (`greengoblin`): `leader` Poison Resist +50%.
 - Green Goblin — Gold Goblin (`greengoblin5`): `leader` All Basic Attacks +40%, Ignore Dodge +40%.
 - Green Goblin — Ultimate (`greengoblin1`): `leader` Fire Resist +50%.
 - Groot (`groot`, `groot3`, `groot5`, `groot6`): `leader` Physical Defense +45% — para Type: Combate.
@@ -864,6 +865,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Hulk (Amadeus Cho) (`amadeuscho`, `amadeuscho2`, `amadeuscho1`): `leader` Critical Rate +6%, Critical Damage +6%.
 - Hulkling (`hulkling`): `leader` Physical Defense +30%.
 - Human Torch (`humantorch2`, `humantorch4`, `humantorch3`): `leader` Fire Resist +50%.
+- Hydro-Man (`hydroman`): `leader` Bleed Immunity, Fracture Immunity, Physical Defense +20%.
 - Iceman (`iceman`, `iceman2`, `iceman1`): `leader` Skill Cooldown −24%.
 - Ikon (`ikon`): `leader` Critical Rate +8%.
 - Inferno (`inferno`, `inferno1`): `leader` Fire Resist +50%.
@@ -885,6 +887,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Loki (`loki`, `loki4`, `loki3`, `loki1`, `loki7`, `loki6`, `loki5`, `loki2`, `loki8`): `leader` Mind Resist +50%.
 - Luke Cage (`lukecage`): `leader` Physical Immunity Chance +100% (11 s) — 25% rate when hit, recarga 50 s.
 - Luke Cage (`lukecage1`, `lukecage2`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 40 s.
+- Luna Snow (`lunasnow`, `lunasnow1`, `lunasnow2`, `lunasnow3`, `lunasnow5`, `lunasnow4`): `leader` All Speeds +6%, Cold Immunity Chance +30%.
 - Magik (`magik`, `magik1`): `leader` Critical Rate +13%.
 - Makkari (`makkari`, `makkari1`): `leader` All Speeds +6%.
 - Mantis (`mantis`, `mantis1`): `leader` Debuff Duration −24%.
@@ -913,6 +916,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Phil Coulson (`philcoulson`, `philcoulson1`, `philcoulson2`): `leader` Skill Cooldown −30% (10 s) — para Side: Superhéroe, when dealing Critical Attack, recarga 15 s.
 - Phyla-Vell (`phylavell`, `phylavell1`): `leader` Energy Defense +50%.
 - Psylocke (`psylocke`, `psylocke2`, `psylocke4`): `leader` Mind Resist +50%.
+- Quake — Modern (`daisyjohnson1`): `leader` Physical Shield +30% (20 s) — 10% chance when attacking, recarga 30 s.
 - Quasar (Avril Kincaid) (`quasar`, `quasar1`): `leader` Skill Cooldown −24%.
 - Quicksilver (`quicksilver`, `quicksilver1`, `quicksilver4`, `quicksilver3`, `quicksilver2`): `leader` All Speeds +6%, Dodge +6%.
 - Rachel Summers (`rachelsummers`): `leader` Mind Resist +40%.
@@ -934,6 +938,8 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Shang-Chi — Marvel Animation's Marvel Zombies (`shangchi2`): `leader` All Basic Attacks +24%.
 - Shuri (`shuri`, `shuri2`, `shuri1`): `leader` All Speeds +6%.
 - Silver Surfer (Shalla-Bal) (`shallabal`): `leader` Debuff Duration −24%.
+- Sister Grimm (`sistergrimm`, `sistergrimm1`): `leader` Energy Shield +30% (20 s) — 10% rate when hit, recarga 30 s.
+- Sister Grimm (`sistergrimm3`, `sistergrimm2`): `leader` Energy Shield +60% (20 s) — 30% rate when hit, recarga 30 s.
 - Skurge (`skurge`): `leader` Critical Rate +9%, Attack Speed +9%.
 - Slapstick (`slapstick`): `leader` Lightning Resist +50%.
 - Songbird (`songbird`): `leader` All Speeds +9%.
@@ -968,6 +974,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): `leader` Physical Attack +45%.
 - Wolverine (`wolverine`, `wolverine1`, `wolverine2`, `wolverine5`, `wolverine4`, `wolverine7`, `wolverine6`, `wolverine3`): `leader` Debuff Duration −30%.
 - Wong (`wong`, `wong1`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 60 s.
+- Wong (`wong2`, `wong3`): `leader` All Damage Immunity +100% (12 s) — para Ability: Magia, 25% rate when hit, recarga 60 s.
 - X-23 (`x-23`, `x-232`, `x-233`, `x-231`): `leader` Debuff Duration −24%.
 - Yelena Belova (`yelenabelova`, `yelenabelova1`, `yelenabelova2`, `yelenabelova3`): `leader` All Speeds +6%.
 - Yondu (`yondu`, `yondu1`, `yondu2`, `yondu3`): `leader` Critical Rate +7.8%.

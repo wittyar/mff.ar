@@ -16,7 +16,7 @@ thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo 
 - **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.
 - **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos los dan, si se acumulan y su tope (ver *Qué se acumula y los topes*, al final).
 
-16 grupos, 131 efectos, 228 etiquetas de skills y 83 stats de Leads & Supports y de bonos de equipo. Todo lo que traen los datos está clasificado.
+16 grupos, 131 efectos, 228 etiquetas de skills y 90 stats de Leads & Supports y de bonos de equipo. Todo lo que traen los datos está clasificado.
 
 ## Golpe
 
@@ -952,6 +952,8 @@ PG, curación, escudos y revivir.
   - `PHYSICAL SHIELD` (4 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Max HP Shield` (2 retratos) — cuenta una vez (la de mayor valor)
+  - `Energy Shield` (0 retratos) — cuenta una vez (la de mayor valor)
+  - `Physical Shield` (0 retratos) — cuenta una vez (la de mayor valor)
 
 ### Barrera
 
@@ -1014,6 +1016,8 @@ Recibe menos daño o lo evita.
 - **Skills:**
   - `ALL DAMAGE IMMUNE` (555 retratos)
   - `Parry` (2 retratos)
+- **Leads & Supports y bonos de equipo:**
+  - `All Damage Immunity` (0 retratos) — cuenta una vez (la de mayor valor)
 
 ### Menos daño recibido
 
@@ -1094,6 +1098,7 @@ Recibe menos daño o lo evita.
   - `Lightning Immunity Chance` (2 retratos) — cuenta una vez (la de mayor valor)
   - `Fire Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
   - `Mind Immunity Chance` (1 retrato) — cuenta una vez (la de mayor valor)
+  - `Cold Immunity Chance` (0 retratos) — cuenta una vez (la de mayor valor)
 
 ### Ignora el daño que pase de un % de sus PG
 
@@ -1217,6 +1222,7 @@ Recibe menos daño o lo evita.
   - `Fire Resist` (2 retratos, 7 bonos de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia a fuego; se acumula; tope: Resistencia elemental 200%
   - `Cold Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al frío; se acumula; tope: Resistencia elemental 200%
   - `Lightning Resist` (1 bono de equipo) — le sirve: a quien tiene una mejora de daño según su resistencia al rayo; se acumula; tope: Resistencia elemental 200%
+  - `Poison Resist` (0 retratos) — le sirve: a quien tiene una mejora de daño según su resistencia a veneno; se acumula; tope: Resistencia elemental 200%
 
 ## Contra mermas
 
@@ -1259,6 +1265,8 @@ Le saca las mermas o lo hace inmune a ellas.
   - `Incapacitation Immunity` (2 retratos) — cuenta una vez (la de mayor valor)
   - `Fear Immunity` (1 retrato) — cuenta una vez (la de mayor valor)
   - `Stun Immunity` (1 retrato) — cuenta una vez (la de mayor valor)
+  - `Bleed Immunity` (0 retratos) — cuenta una vez (la de mayor valor)
+  - `Fracture Immunity` (0 retratos) — cuenta una vez (la de mayor valor)
 
 ### Inmunidad a Romper guardia
 
@@ -1472,15 +1480,20 @@ Mecánicas propias de un personaje.
 
 Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (Ezequiel, 5 de octubre de 2026): las estadísticas se suman; las habilidades (los anti-mermas, las inmunidades, la barrera, los escudos, revivir, invocar, la inmortalidad) cuentan una vez, la de mayor valor y, a igual valor, la primera en este orden: la propia, la del liderazgo del líder y la de los soportes de los demás (docs/MODELO.md, *Efectos iguales*). El tope es el de la guía ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3)): con lo que suman los buffs, la app avisa si pasa lo que queda hasta el tope.
 
-64 stats se acumulan y 19 cuentan una vez; 16 tienen tope.
+65 stats se acumulan y 25 cuentan una vez; 17 tienen tope.
 
 | Stat | Si llega de dos fuentes | Tope | Nota |
 |---|---|---|---|
+| `All Damage Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Barrier` | cuenta una vez (la de mayor valor) | — |  |
+| `Bleed Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Burn Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Cold Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
 | `Debuff Immunity` | cuenta una vez (la de mayor valor) | — |  |
+| `Energy Shield` | cuenta una vez (la de mayor valor) | — |  |
 | `Fear Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Fire Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Fracture Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Guaranteed Critical Rate` | cuenta una vez (la de mayor valor) | Probab. crítico 75% | No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la probabilidad de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival. |
 | `Guard Break Immunity` | cuenta una vez (la de mayor valor) | — |  |
 | `Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction` | cuenta una vez (la de mayor valor) | — | Cuenta una vez: es el caso único de Molecule Man, y no se apila porque lo da un solo personaje (Ezequiel, 5 de octubre de 2026). |
@@ -1491,6 +1504,7 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Max HP Shield` | cuenta una vez (la de mayor valor) | — |  |
 | `Mind Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
 | `Physical Immunity Chance` | cuenta una vez (la de mayor valor) | — |  |
+| `Physical Shield` | cuenta una vez (la de mayor valor) | — |  |
 | `Remove All Debuffs` | cuenta una vez (la de mayor valor) | — |  |
 | `Revive with % HP` | cuenta una vez (la de mayor valor) | — |  |
 | `Stun Immunity` | cuenta una vez (la de mayor valor) | — |  |
@@ -1555,6 +1569,7 @@ Cuando a un integrante del equipo le llega el mismo stat de dos o más fuentes (
 | `Physical Defense` | se acumula | — |  |
 | `Physical Reflect Damage Received` | se acumula | — | Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce. |
 | `Poison Damage` | se acumula | — |  |
+| `Poison Resist` | se acumula | Resistencia elemental 200% |  |
 | `Recovery Rate` | se acumula | Índice de recuperación 250% (desde 100%) |  |
 | `Skill Cooldown` | se acumula | Reducir duración de recarga 50% |  |
 | `Skill Damage` | se acumula | — |  |

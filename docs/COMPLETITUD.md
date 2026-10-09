@@ -27,7 +27,7 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 ## Resumen
 
-177 de 888 variantes completas (20%); 34 de 290 personajes con todas sus variantes completas.
+185 de 888 variantes completas (21%); 35 de 290 personajes con todas sus variantes completas.
 
 Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo que falta en el personaje cuenta en todas sus variantes):
 
@@ -42,7 +42,6 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [«Give Power» sin lo que otorga](#give-power-sin-lo-que-otorga) | 68 | 27 | 79 | thanosvibs (Leads & Supports), la wiki o foros |
 | [Instinto desconocido](#instinto-desconocido) | 50 | 15 | 15 | la wiki (infobox o categoría de la página), el juego o foros |
 | [Skill sin efectos](#skill-sin-efectos) | 48 | 31 | 48 | la wiki (en la pasiva de uniforme, el «Bonus» del uniforme) o foros |
-| [Liderazgo sin completar](#liderazgo-sin-completar) | 35 | 12 | 35 | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | [Bonos de equipo que faltan](#bonos-de-equipo-que-faltan) | 33 | 32 | 32 | la wiki (sección Team Bonus), capturas del juego o foros |
 | [Sin el C.T.P. de su contexto en la guía de armado](#sin-el-ctp-de-su-contexto-en-la-guía-de-armado) | 29 | 27 | 31 | la guía de armado o foros |
 | [ISO-8 u obelisco sin dato en la guía de armado](#iso-8-u-obelisco-sin-dato-en-la-guía-de-armado) | 23 | 6 | 6 | la guía de armado o foros |
@@ -50,6 +49,7 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [Nombre en Leads & Supports distinto del de la skill](#nombre-en-leads--supports-distinto-del-de-la-skill) | 16 | 15 | 17 | el juego o foros |
 | [Objetivo sin nombre (Target ID)](#objetivo-sin-nombre-target-id) | 16 | 12 | 16 | thanosvibs (Leads & Supports) o foros |
 | [Valores del artefacto incompletos](#valores-del-artefacto-incompletos) | 12 | 5 | 5 | la wiki (página Artifact) o el juego |
+| [Liderazgo sin completar](#liderazgo-sin-completar) | 11 | 5 | 11 | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | [Skill que falta](#skill-que-falta) | 7 | 3 | 11 | thanosvibs (API de skills), la wiki o foros |
 | [Activa sin recarga](#activa-sin-recarga) | 4 | 2 | 4 | la wiki o el juego |
 | [Bono de equipo sin nombre](#bono-de-equipo-sin-nombre) | 4 | 2 | 2 | capturas del juego o foros |
@@ -61,7 +61,7 @@ Sin casos: Dato de identidad vacío; Stats; Efecto que el catálogo no clasifica
 ### Lo que ya se sabía que no cierra
 
 - **Marcadores sin resolver:** 96 efectos en 70 variantes. docs/AUDITORIA.md (sección 8) los cuenta por id de la API, que se repite en los uniformes que comparten la skill.
-- **Liderazgos:** Leads & Supports publica el de 411 variantes, y el build deriva el de 443 más de su Leader Skill (461 slots, con "src": "api"; docs/AUDITORIA.md, sección 12). 35 slots de 35 variantes no se pudieron derivar (efecto sin stat, 35; «Give Power», 1; un slot puede tener más de un motivo).
+- **Liderazgos:** Leads & Supports publica el de 411 variantes, y el build deriva el de 467 más de su Leader Skill (485 slots, con "src": "api"; docs/AUDITORIA.md, sección 12). 11 slots de 11 variantes no se pudieron derivar (efecto sin stat, 10; «Give Power», 1; un slot puede tener más de un motivo).
 - **Strikers:** 119 personajes sin la pestaña Striker en la wiki y 3 con la pestaña sin filas que se puedan leer.
 - **Bonos de equipo por confirmar:** los que se vieron en capturas del juego y esperan confirmación no están en data.js, así que este informe no los ve. Sí ve 30 personajes sin ningún bono y 2 solo con los del juego (Annihilus y Galactus). Los 49 bonos con versiones empatadas entre páginas de la wiki son diferencias entre fuentes (docs/AUDITORIA.md, sección 10): van en «Lo que no cuenta».
 - **Nombres de Leads & Supports que no son los de la API de skills:** 17 en 16 variantes; 6 con el nombre de otra skill de la variante, entre ellos Jeff the Land Shark y Polaris — Uncanny X-Men.
@@ -449,23 +449,14 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Liderazgo sin completar
 
-35 casos en 12 personajes y 35 variantes. Leads & Supports no publica el liderazgo de la variante y el build no pudo derivar ese slot de su Leader Skill (docs/AUDITORIA.md, sección 12, con el mismo motivo): un efecto sin stat o una activación sin correspondencia (ni de Leads & Supports ni a mano), un valor que la API no publica, un «Give Power» o una contradicción de Leads & Supports. La sinergia y los órdenes PvP y PvE no ven ese slot.
+11 casos en 5 personajes y 11 variantes. Leads & Supports no publica el liderazgo de la variante y el build no pudo derivar ese slot de su Leader Skill (docs/AUDITORIA.md, sección 12, con el mismo motivo): un efecto sin stat o una activación sin correspondencia (ni de Leads & Supports ni a mano), un valor que la API no publica, un «Give Power» o una contradicción de Leads & Supports. La sinergia y los órdenes PvP y PvE no ven ese slot.
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
 | Blade (base, 70's Classic, Avengers) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Captain America (Sharon Rogers) (base, Star Light Armor, Dark Star Armor, Star Night Armor) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 20% of Max HP» (ENERGY SHIELD) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Captain America (Sharon Rogers) (Light Sirius Armor, Poseidon Armor, Arctic Warrior) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 50% of Max HP» (ENERGY SHIELD) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Daisy Johnson (sus 3 variantes) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates a physical Shield equal to 30% of Max HP» (PHYSICAL SHIELD) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Green Goblin | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Poison Resist by 50%.» (POISON RESIST ↑) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Hydro-Man | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to BLEED Effect.» (RESIST); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to Fracture Effect.» (RESIST) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Luna Snow (sus 6 variantes) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «30% chance to become immune to Cold Damage.» (COLD IMMUNITY) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | Sentry — Marvel Studios' Thunderbolts* | Liderazgo (secundario): no se pudo derivar de la Leader Skill: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | Silk (sus 3 variantes) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Sister Grimm (base, All-New, All-Different) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 30% of Max HP» (ENERGY SHIELD) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Sister Grimm (Runaways, Princess Tsukimi) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Creates an energy Shield equal to 60% of Max HP» (ENERGY SHIELD) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | White Tiger (sus 2 variantes) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| Wong (Marvel Studios' Doctor Strange 2, What If... Zombies?!) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «100% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | Yellowjacket (sus 2 variantes) | Liderazgo: no se pudo derivar de la Leader Skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Paralyze» (PARALYZE) | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 
 ### Soporte que Leads & Supports no publica
@@ -1157,15 +1148,15 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Captain America (Sharon Rogers): 15 faltantes, 7 de 7 variantes incompletas</summary>
+<details><summary>Captain America (Sharon Rogers): 8 faltantes, 7 de 7 variantes incompletas</summary>
 
-- **Base:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo; rotación
-- **Star Light Armor:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo
-- **Dark Star Armor:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo
-- **Star Night Armor:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo
-- **Light Sirius Armor:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo
-- **Poseidon Armor:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo
-- **Arctic Warrior:** «Give Power» vacío: Striker; liderazgo sin completar: Liderazgo
+- **Base:** «Give Power» vacío: Striker; rotación
+- **Star Light Armor:** «Give Power» vacío: Striker
+- **Dark Star Armor:** «Give Power» vacío: Striker
+- **Star Night Armor:** «Give Power» vacío: Striker
+- **Light Sirius Armor:** «Give Power» vacío: Striker
+- **Poseidon Armor:** «Give Power» vacío: Striker
+- **Arctic Warrior:** «Give Power» vacío: Striker
 
 </details>
 
@@ -1223,11 +1214,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Daisy Johnson: 4 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Daisy Johnson: 1 faltante, 1 de 3 variantes incompletas</summary>
 
-- **Base:** liderazgo sin completar: Liderazgo
-- **Modern (Quake):** liderazgo sin completar: Liderazgo
-- **Marvel Studios' Agents of S.H.I.E.L.D. (Quake):** skill sin efectos: Pasiva de uniforme; liderazgo sin completar: Liderazgo
+- **Marvel Studios' Agents of S.H.I.E.L.D. (Quake):** skill sin efectos: Pasiva de uniforme
 
 </details>
 
@@ -1524,10 +1513,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Green Goblin: 6 faltantes, 6 de 6 variantes incompletas</summary>
+<details><summary>Green Goblin: 5 faltantes, 6 de 6 variantes incompletas</summary>
 
 - **Personaje:** strikers
-- **Base:** liderazgo sin completar: Liderazgo
 - **Ultimate:** rotación
 - **Gold Goblin:** marcador sin resolver: Pasiva T2 (2); soporte sin Leads & Supports: Pasiva T2
 
@@ -1661,12 +1649,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 - **Classic:** «Give Power» vacío: Striker
 - **The Fall of the Fantastic Four:** «Give Power» vacío: Striker
 - **Marvel Studios' The Fantastic Four: First Steps:** «Give Power» vacío: Striker; rotación
-
-</details>
-
-<details><summary>Hydro-Man: 1 faltante, 1 de 1 variante incompleta</summary>
-
-- **Base:** liderazgo sin completar: Liderazgo
 
 </details>
 
@@ -1905,14 +1887,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Luna Snow: 7 faltantes, 6 de 6 variantes incompletas</summary>
+<details><summary>Luna Snow: 1 faltante, 1 de 6 variantes incompletas</summary>
 
-- **Base:** liderazgo sin completar: Liderazgo; soporte sin Leads & Supports: Pasiva
-- **Andromeda Suit:** liderazgo sin completar: Liderazgo
-- **Lifestyle Series 1:** liderazgo sin completar: Liderazgo
-- **Light Sirius Armor:** liderazgo sin completar: Liderazgo
-- **Summer Lilac:** liderazgo sin completar: Liderazgo
-- **Mirae 2099:** liderazgo sin completar: Liderazgo
+- **Base:** soporte sin Leads & Supports: Pasiva
 
 </details>
 
@@ -2409,12 +2386,12 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Sister Grimm: 10 faltantes, 4 de 4 variantes incompletas</summary>
+<details><summary>Sister Grimm: 6 faltantes, 4 de 4 variantes incompletas</summary>
 
-- **Base:** falta la skill: Striker; liderazgo sin completar: Liderazgo
-- **All-New, All-Different:** falta la skill: Striker; skill sin efectos: Pasiva de uniforme; liderazgo sin completar: Liderazgo
-- **Runaways:** falta la skill: Striker; liderazgo sin completar: Liderazgo
-- **Princess Tsukimi:** liderazgo sin completar: Liderazgo; soporte sin Leads & Supports: Pasiva; rotación
+- **Base:** falta la skill: Striker
+- **All-New, All-Different:** falta la skill: Striker; skill sin efectos: Pasiva de uniforme
+- **Runaways:** falta la skill: Striker
+- **Princess Tsukimi:** soporte sin Leads & Supports: Pasiva; rotación
 
 </details>
 
@@ -2812,12 +2789,12 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Wong: 9 faltantes, 4 de 4 variantes incompletas</summary>
+<details><summary>Wong: 7 faltantes, 4 de 4 variantes incompletas</summary>
 
 - **Base:** código sin nombre: Striker; rotación
 - **Marvel Studios' Doctor Strange:** código sin nombre: Striker; rotación
-- **Marvel Studios' Doctor Strange 2:** código sin nombre: Striker; liderazgo sin completar: Liderazgo
-- **What If... Zombies?!:** código sin nombre: Striker; liderazgo sin completar: Liderazgo; C.T.P. de su contexto: PvE
+- **Marvel Studios' Doctor Strange 2:** código sin nombre: Striker
+- **What If... Zombies?!:** código sin nombre: Striker; C.T.P. de su contexto: PvE
 
 </details>
 
