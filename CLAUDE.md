@@ -88,9 +88,9 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (6 de octubre de 2026)
+## Estado (9 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.34 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.35 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -126,12 +126,20 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   Battle…) van a `docs/HISTORICO.md`. En la app: el filtro «Personaje o modo», el tipo «Modo de juego», el nombre del
   modo lleva a Modos, y cada modo de Modos tiene su «Historial» (las 5 versiones más recientes y el botón al Histórico).
   Prueba: `verif_historico.py` (sección 7).
-- La 1.0.35 (formato 13, #6, entregada sin publicar): la comparativa por efecto, a prueba (Ezequiel, 7 de octubre: «probemos a ver
+- La 1.0.35 (etiqueta en 4ebcc49, formato 13, #6, cerrado): la comparativa por efecto, a prueba (Ezequiel, 7 de octubre: «probemos a ver
   como queda»), según la maqueta del canvas «Rediseño MFF.ar» (artboards «Comparativa · por efecto», escritorio y celular). El número de cada efecto en los textos de
   las skills: `modelo.valores` (sin «#», ninguno; un solo «#%», ese) y los patrones sin una sola respuesta a mano en
   `catalogo.json` (`valores`); viaja en `MFF_CATALOGO.valor`. En la app, `cmpPorEfecto` (`ui.cmpVista`, por defecto
   'efecto'; la tabla de antes es «Ficha»). Prueba: `verif_cmp_efecto.py`; verif_mesa, verif_aliados y verif_consistencia
   usan la vista «Ficha» donde miran la tabla.
+- La 1.0.36 (formato 14, #33 con #7, entregada sin publicar): «Qué hace con sus skills». Ezequiel, 8 y 9 de octubre:
+  #7 va dentro de #33; con números; medir todo (tiempo activo, daño de cada skill, PvE/PvP, rareza); en el Resumen y en
+  cada skill; cortes raro ≤ 15% del roster y alto ≥ percentil 90 (con 20 o más para comparar). Lo que más vale en PvP
+  (supervivencia y lo que la atraviesa) en `catalogo.json` (`pvp`), `MFF_CATALOGO.pvp`. En la app, `filasAn`,
+  `analisisResumenHtml` (el bloque del Resumen) y `lecturaSkillHtml` (la línea de cada skill). «Solo en PvE/PvP»: el
+  efecto tiene lectura de un modo y no del otro. Prueba: `verif_que_hace.py`. Maqueta: canvas «Rediseño MFF.ar»,
+  artboards «Análisis (#33)». Sin mapear de lo que dijo Ezequiel: «penetración» y «daño que aumenta según el daño
+  recibido» (no hay un efecto del catálogo que sea solo eso).
 - Entregado sin versión (solo datos, #5): `scripts/foro.py` baja también del tablero de avisos (2213: los parches de mitad
   de mes de 2020 y 2021 y algunas notas viejas); `historico.version_de_nota` asigna cada nota por la versión de su título
   o por las llegadas que nombra (thanosvibs tiene mal algunas fechas: 4.0, 5.5); los nombres se buscan sin tildes, sin
@@ -163,7 +171,7 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
   pasos y sin puntajes calculados que no se ven. Reemplaza la sinergia, la tabla de valor y las listas actuales (el
   liderazgo de Hulk — Amadeus Cho sale primero en varias listas). Los issues de las reglas actuales (#9, #12, #21,
   #22, #27, #29, #30) se revisan contra eso.
-- Análisis (#33): no sirve como está; falta revisar el «sin números» del 1 de octubre.
+- Análisis (#33): la primera parte va en la 1.0.36; falta completar las lecturas de PvE y PvP del catálogo (46 y 47 de 131 efectos).
 - Antes de cualquier cambio visual, la propuesta de arquitectura de la información y de navegación (#24, con los
   casos de strikers y Glosario en sus comentarios); después el rediseño visual (#6) y el tooltip de las habilidades
   (#39).

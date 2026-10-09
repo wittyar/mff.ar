@@ -1,6 +1,6 @@
 {
- "version": "1.0.35",
- "formato_datos": 13,
+ "version": "1.0.36",
+ "formato_datos": 14,
  "python": "3.14.7",
- "notas": "La comparativa ahora compara efecto por efecto: para el equipo, contra el rival y para él, con cuánto da cada uno, cuánto dura y de qué skill sale; marca al que más da, junta en una línea lo que es igual en todos y aparte lo que tiene uno solo. La vista de antes sigue en «Ficha»."
+ "notas": "La ficha dice qué hace cada personaje con sus skills: en el Resumen, lo que lo distingue del resto del roster, lo que le da al equipo, lo que le aplica al rival y lo que se da a sí mismo, con cuánto, cuánto dura y cuánto tiempo está activo, el daño de cada skill y lo que vale solo en PvE o en PvP; en Skills, una línea de lectura en cada una. Lo que más vale en PvP va marcado."
 }
