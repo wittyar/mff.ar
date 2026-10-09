@@ -1,11 +1,16 @@
 {
  "nota": "Correspondencias a mano para los liderazgos que el build deriva de la Leader Skill de la API (scripts/liderazgos.py): lo que Leads & Supports no publica en ningún liderazgo, así que no se aprende (5 de octubre de 2026). efectos: cada uno, con su etiqueta (ab) y su texto (desc) tal como los publica la API de skills (MFF_TABLAS, con '#' en el número), da un stat (stat) con el número del texto de valor y la duración del efecto, si la publica. El stat tiene que estar en el catálogo (catalogo.json, soporte: el vocabulario de los liderazgos, los soportes y los bonos de equipo, con su «le sirve») y el catálogo tiene que clasificar igual a los dos. activaciones: textos de la API (act de MFF_TABLAS) que van como activación del liderazgo (ac) con el texto de la API. otorga: lo que otorga el «Give Power» de una Leader Skill (p, el retrato; skill, el nombre de la Leader Skill en la API) cuando lo dice el juego, que la API no publica: sus efectos (fx: un stat del catálogo, con valor v o duración d), su activación (ac: un texto de la API, que pasa a Leads & Supports como las demás) y su recarga (cd), con la fuente y lo que dice el juego (juego); la restricción es la del objetivo de la API, y el slot derivado lleva la fuente (otorga). Lo que publica Leads & Supports manda: si dice otra cosa, el build para; si dice lo mismo, lo de acá sobra (aviso). Un efecto sin stat en el catálogo no va: su slot no se deriva y la sección 12 de docs/AUDITORIA.md lo lista.",
  "efectos": [
+  {"ab": "ALL DAMAGE IMMUNE", "desc": "#% chance to grant All Damage Immunity", "stat": "All Damage Immunity"},
   {"ab": "ATTACK SPEED ↑", "desc": "Attack Speed increases by #%.", "stat": "Attack Speed"},
+  {"ab": "COLD IMMUNITY", "desc": "#% chance to become immune to Cold Damage.", "stat": "Cold Immunity Chance"},
+  {"ab": "ENERGY SHIELD", "desc": "Creates an energy Shield equal to #% of Max HP", "stat": "Energy Shield"},
   {"ab": "FLAME RESIST ↑", "desc": "Increases Flame Resist by #%.", "stat": "Fire Resist"},
   {"ab": "IGNORE DEFENSE", "desc": "#% Ignore Defense", "stat": "Ignore Defense"},
   {"ab": "LIGHTNING RESIST ↑", "desc": "Increases Lightning Resist by #%.", "stat": "Lightning Resist"},
   {"ab": "PHYSICAL DEFENSE ↑", "desc": "#% increase of Physical Defense.", "stat": "Physical Defense"},
+  {"ab": "PHYSICAL SHIELD", "desc": "Creates a physical Shield equal to #% of Max HP", "stat": "Physical Shield"},
+  {"ab": "POISON RESIST ↑", "desc": "Increases Poison Resist by #%.", "stat": "Poison Resist"},
   {"ab": "SUPER ARMOR", "desc": "Super Armor, increases all Basic Defenses by #%.", "stat": "Super Armor, All Basic Defenses"}
  ],
  "activaciones": [
