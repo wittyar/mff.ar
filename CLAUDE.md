@@ -84,6 +84,8 @@ Ezequiel sacó capturas de todo el juego en dos idiomas (álbumes de Google Foto
 álbum, desde 0). No volver a pedírselas:
 - Español (267): https://photos.app.goo.gl/EK155akXC5fjtSV7A — transcriptas en `fuentes/juego-es/`.
 - Coreano (386): https://photos.app.goo.gl/iuuBUAvSZc3qHzx96 — transcriptas en `fuentes/juego-ko/`.
+- Progresión de Galactus (84, del nivel 1 con 1★ al 80 con T4): https://photos.app.goo.gl/Q5hQWtXeubx9k85EA —
+  transcriptas en `fuentes/progresion/galactus.csv` (#8). La de Mephisto, en `fuentes/progresion/mephisto.csv`.
 Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["https://lh3…",ancho,alto`); el resto, con el
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
