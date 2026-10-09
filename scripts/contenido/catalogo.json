@@ -603,5 +603,10 @@
    "Stores Ultimate Skill Gauge beyond #% up to #%When using an Ultimate Skill, the stored gauge is returned to recharge the Ultimate Skill Gauge": {"carga_definitiva": null},
    "Summons a creature with #% Attack/Defense and #% HP of the summoner (Changes the creature's abilities to the character's abilities)(All abilities including stats, buffs, and types)": {"invocar": null}
   }
+ },
+ "pvp": {
+  "nota": {"es": "Lo que más vale en PvP (Ezequiel, 9 de octubre de 2026): por sobre el resto, los stats de supervivencia y los que la atraviesan. Para él (prioridad): perforación (también ignora los i-frames: perfora la invencibilidad), inmunidad a todo el daño, anti-mermas, curarse, inmunidad a romper guardia, superarmadura, reducción del daño recibido e ignorar la reducción de daño del rival. De soporte (soporte), lo que le da al equipo: la reducción del daño recibido y la del daño por impacto en cadena. La app los marca en el análisis de cada personaje.", "en": "What matters most in PvP (Ezequiel, October 9, 2026): above everything else, survival stats and the ones that get through them. For itself (prioridad): pierce (it also ignores i-frames: it pierces invincibility), all damage immunity, debuff removal, healing, guard break immunity, super armor, damage taken reduction and ignoring the foe's damage reduction. As support (soporte), what it gives the team: damage taken reduction and chain hit damage taken reduction. The app marks them in each character's analysis."},
+  "prioridad": ["perforar", "dano_perforacion", "inmune_todo", "quita_debuffs", "inmune_debuffs", "inmune_efecto", "debuffs_cortos", "curacion", "robo_vida", "inmune_romper_guardia", "superarmadura", "dano_recibido", "dano_recibido_de", "dano_fisico_recibido", "dano_energia_recibido", "ignorar_reduccion"],
+  "soporte": ["dano_recibido", "dano_recibido_de", "encadenados_recibidos"]
  }
 }

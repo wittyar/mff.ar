@@ -491,6 +491,12 @@ lo resuelve por patrón: sin «#», el efecto no tiene número; con un solo «#%
 `catalogo.json` (`valores`), y el build corta si a un efecto le falta su número o si sobra una entrada.
 Viaja en `MFF_CATALOGO.valor`.
 
+**Lo que más vale en PvP** (formato 14, #33; Ezequiel, 9 de octubre de 2026): la supervivencia y lo que la atraviesa,
+por sobre el resto. `catalogo.json` (`pvp`) lista los efectos que son prioridad para él (perforación, que también ignora
+los i-frames; inmunidad a todo el daño; anti-mermas; curarse; inmunidad a romper guardia; superarmadura; reducción del
+daño recibido; ignorar la reducción de daño del rival) y los de soporte (reducción del daño recibido y del daño por
+impacto en cadena). Viaja en `MFF_CATALOGO.pvp`.
+
 ### Roles
 
 No existen en el juego. Dicen qué le aporta la variante al equipo (Ezequiel, 2 de octubre de 2026),

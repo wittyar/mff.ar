@@ -172,6 +172,16 @@ def validar(cat, guia):
             mapeo(x, d, True)
     for stat, x in cat['soporte'].items():
         mapeo(x, f'stat {stat!r}', False)
+    if set(cat['pvp']) != {'nota', 'prioridad', 'soporte'}:
+        mal.append('pvp: lleva nota, prioridad y soporte')
+    else:
+        texto(cat['pvp']['nota'], 'pvp (nota)')
+        for k in ('prioridad', 'soporte'):
+            ids = cat['pvp'][k]
+            if not ids:
+                mal.append(f'pvp, {k}: vacía')
+            mal += [f'pvp, {k}: efecto desconocido {e!r}' for e in ids if e not in ids_efecto]
+            mal += [f'pvp, {k}: repetido {e!r}' for e, n in collections.Counter(ids).items() if n > 1]
     if set(cat['valores']) != {'nota', 'patrones'}:
         mal.append('valores: lleva nota y patrones')
     else:
