@@ -28,7 +28,7 @@ MFF_SOPORTES con "src": "api", y lo demás a la sección 12 de docs/AUDITORIA.md
    diferencia que lista la verificación, no otra condición). Si dos variantes dicen distinto para lo mismo, no se
    usa: es una contradicción y se lista.
    Lo que Leads & Supports no publica en ningún liderazgo va a mano en scripts/contenido/liderazgos_api.json
-   (validar()): un efecto de la API da un stat del catálogo con el número de su texto, y una activación de la API va
+   (validar()): un efecto de la API da un stat del catálogo con el número de su texto (sin número, sin valor), y una activación de la API va
    con su texto. Y lo que otorga el «Give Power» de una Leader Skill, si lo dice el juego (otorga: Ezequiel, 5 de
    octubre de 2026): sus efectos (stats del catálogo), su activación (un texto de la API, que pasa como las demás) y
    su recarga, con la fuente y lo que dice el juego; la restricción es la del objetivo de la API, y el slot lleva la
@@ -282,7 +282,8 @@ def _tabla(obs):
 def validar(manual, T, cat):
     """Lista de problemas de las correspondencias a mano (A_MANO; vacía si está bien): cada efecto, con su etiqueta y
     su texto como los publica la API y un solo número (el valor), da un stat del catálogo (soporte) que el catálogo
-    clasifica con los mismos efectos que a él; cada activación es un texto de la API; nada se repite. T: las tablas
+    clasifica con los mismos efectos que a él (con un número, el valor; sin número, un stat sin valor, como las
+    inmunidades); cada activación es un texto de la API; nada se repite. T: las tablas
     de la API (MFF_TABLAS); cat: el catálogo de efectos (contenido/catalogo.json)."""
     if set(manual) != {'nota', 'efectos', 'activaciones', 'otorga'}:
         return ['lleva nota, efectos, activaciones y otorga']
@@ -301,8 +302,8 @@ def validar(manual, T, cat):
             mal.append(f'{d}: la API no tiene esa etiqueta')
         if e['desc'] not in textos:
             mal.append(f'{d}: la API no tiene ese texto')
-        if e['desc'].count('#') != 1 or MARCADOR.search(e['desc']):
-            mal.append(f'{d}: el texto tiene que traer un solo número, el valor, y ningún marcador')
+        if e['desc'].count('#') > 1 or MARCADOR.search(e['desc']):
+            mal.append(f'{d}: el texto tiene que traer a lo sumo un número, el valor, y ningún marcador')
         m = _mapeo(cat, e['ab'], e['desc'])
         if e['stat'] not in cat['soporte']:
             mal.append(f"{d}: «{e['stat']}» no es un stat del catálogo (soporte)")
@@ -345,12 +346,12 @@ def _a_mano(manual, C, P, T, skill_de):
     plantilla}, 'activaciones': {texto de la API}, 'otorga': {retrato: lo que otorga su «Give Power»}}, {'efectos':
     [[etiqueta, texto, stat, variantes]], 'activaciones': [[texto, variantes]], 'otorga': [[retrato, skill, fuente,
     juego]], 'avisos': [...]}), con las variantes que lo tienen en la Leader Skill. Un efecto da su stat con el número
-    de su texto (el único). Lo que publica Leads & Supports manda: si da otra cosa para un efecto de acá, o se
+    de su texto (el único), o sin valor si no trae número. Lo que publica Leads & Supports manda: si da otra cosa para un efecto de acá, o se
     contradice, el build para; si da lo mismo, lo de acá sobra (aviso), como lo que ninguna Leader Skill tiene. Lo que
     otorga un «Give Power» vale para el retrato cuya Leader Skill tiene ese nombre y una parte «Give Power»; si no, sobra
     (aviso). skill_de: el nombre de la Leader Skill de cada retrato."""
     tabla, contra = C['efectos']
-    efectos = {(e['ab'], e['desc'], None): ((e['stat'], (0, 1)),) for e in manual['efectos']}
+    efectos = {(e['ab'], e['desc'], None): ((e['stat'], (0, 1) if '#' in e['desc'] else None),) for e in manual['efectos']}
     usan_fx, usan_ac = collections.defaultdict(set), collections.defaultdict(set)
     for p, (ps, _) in P.items():
         for x in ps or []:
