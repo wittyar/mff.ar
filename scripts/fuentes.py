@@ -572,6 +572,10 @@ def main():
         print(f'AVISO: scripts/contenido/liderazgos_api.json: {a}')
     for p, slots in liderazgos['derivados'].items():
         sop[p] = {**sop.get(p, {}), **slots}
+        # Sus stats, a MFF_TXT como los de Leads & Supports: hay stats que solo nombra un liderazgo derivado (#10).
+        for x in slots.values():
+            for g in x['fx']:
+                TX(g['s'])
     # Las activaciones que van con el texto de la API, con su traducción de la API (o sin traducir, y se lista).
     for en, es in liderazgos['textos'].items():
         if es is None:
