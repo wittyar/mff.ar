@@ -626,6 +626,29 @@ const T = {
   an_q:              { es:'Para el equipo',      en:'For the team' },
   an_r:              { es:'Contra el rival',     en:'Against the foe' },
   an_i:              { es:'Para sus invocaciones', en:'For its summons' },
+  an_titulo:         { es:'Qué hace con sus skills', en:'What its skills do' },
+  an_nota:           { es:'Cada efecto de sus skills con su mayor número, de qué skills sale, cuánto dura y cada cuánto; lo que lo distingue del resto del roster; el daño de cada skill; y lo que el catálogo lee distinto en PvE y en PvP.',
+                       en:'Each effect of its skills with its highest number, which skills it comes from, how long it lasts and how often; what sets it apart from the rest of the roster; each skill\'s damage; and what the catalog reads differently in PvE and PvP.' },
+  an_alto:           { es:'TANTO O MÁS QUE EL {n}%', en:'AT LEAST {n}%' },
+  an_alto_t:         { es:'Su número es tanto o más que el de ese % de las variantes que tienen el efecto.', en:'Its number is as high as or higher than that % of the variants with the effect.' },
+  an_raro:           { es:'LO TIENE EL {n}%',    en:'{n}% HAVE IT' },
+  an_raro_t:         { es:'Ese % de las variantes del roster tiene este efecto.', en:'That % of the roster\'s variants has this effect.' },
+  an_tienen:         { es:'lo tiene el {n}%',    en:'{n}% have it' },
+  an_nada_distingue: { es:'Nada de lo que hace es raro ni tiene un número alto contra el roster.', en:'Nothing it does is rare or has a high number against the roster.' },
+  an_siempre:        { es:'Siempre activo',      en:'Always active' },
+  an_por_carga:      { es:'Con la definitiva o el striker: van por carga.', en:'With the ultimate or the striker: they charge up.' },
+  an_uso:            { es:'{n}% del tiempo ({d} s cada {c} s)', en:'{n}% of the time ({d} s every {c} s)' },
+  an_dano_skill:     { es:'Daño por skill',      en:'Damage per skill' },
+  an_dano_nota:      { es:'% del ataque, sumando sus golpes, y su parte del total ({n}%).', en:'% of attack, adding up its hits, and its share of the total ({n}%).' },
+  an_solo_pve:       { es:'Solo en PvE',         en:'PvE only' },
+  an_solo_pvp:       { es:'Solo en PvP',         en:'PvP only' },
+  an_pie:            { es:'«Tiempo activo» es una estimación: duración ÷ recarga, sin animaciones ni rotación. «Lo tiene el N%»: de todas las variantes (raro: {r}% o menos). «Tanto o más que el N%»: contra las que tienen el efecto, por su mayor número (alto: {a}% o más). «PvP»: lo que más vale en PvP según Ezequiel. Las lecturas de PvE y PvP son las del catálogo de efectos (Glosario).',
+                       en:'«Time active» is an estimate: duration ÷ cooldown, without animations or rotation. «N% have it»: of all variants (rare: {r}% or less). «At least N%»: against those with the effect, by its highest number (high: {a}% or more). «PvP»: what matters most in PvP according to Ezequiel. The PvE and PvP readings are those of the effect catalog (Glossary).' },
+  an_k_dano:         { es:'Daño',                en:'Damage' },
+  an_del_total:      { es:'{n}% del total',      en:'{n}% of the total' },
+  an_k_distingue:    { es:'Lo distingue',        en:'Sets it apart' },
+  an_k_activo:       { es:'Tiempo activo',       en:'Time active' },
+  an_k_solo_pve:     { es:'Solo en PvE',         en:'PvE only' },
   an_nada:           { es:'Nada.',               en:'Nothing.' },
   an_pve_pvp:        { es:'PvE y PvP',           en:'PvE and PvP' },
   an_lider:          { es:'como líder',          en:'as leader' },
@@ -2475,6 +2498,7 @@ function skillCard (sk, v, si) {
       ${cabecera.join('')}
       ${cargas.join('')}
     </div>
+    ${lecturaSkillHtml(v, si)}
     <div class="body">${otros}
       ${ui.marcando ? `<div class="marcador">
         <span class="muted">${h(t('at_mark'))}</span>
@@ -2901,6 +2925,7 @@ function fichaResumen (ch, v) {
       <section class="bloque"><h4>${h(t('rs_da'))}</h4>${queDaHtml(v)}</section>
       <section class="bloque"><h4>${h(t('rs_necesita'))}</h4>${queNecesitaHtml(ch, v)}</section>
     </div>
+    ${analisisResumenHtml(v)}
     <div class="section fid"><h3>${h(t('rs_quien'))}</h3>
     <div class="row">
       <span class="tag dim">${h(dom(v.f))}</span>${insTag(v.ins)}
@@ -5058,6 +5083,182 @@ function cmpPorEfecto (vs) {
     ${destinos.map(seccion).join('')}
     <p class="muted cpepie">${h(t('cmp_ef_pie'))}</p>
   </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// QUÉ HACE CON SUS SKILLS (#33, con #7)
+// El análisis de cada variante con números: de MFF_ANALISIS, cada efecto con su mayor número (MFF_CATALOGO.valor), de qué
+// skills sale, cuánto dura y cada cuánto (tiempo activo: duración ÷ recarga, una estimación); qué tan raro es en el roster
+// y qué tan alto es su número entre los que lo tienen; el daño de cada skill; lo que el catálogo lee distinto en PvE y en
+// PvP; y lo que más vale en PvP (MFF_CATALOGO.pvp, Ezequiel, 9 de octubre de 2026). Lo usan el Resumen (el bloque) y
+// la pestaña Skills (la lectura de cada una).
+// ---------------------------------------------------------------------------
+const SLOTS_PASIVOS = new Set(['Leader Skill', 'Passive', 'Tier-2 Passive', 'Uniform Passive']);
+const AN_RARO = 15;        // lo tiene a lo sumo este % de las variantes
+const AN_ALTO = 90;        // su número es tanto o más que el de este % de las que lo tienen
+const AN_ALTO_MIN = 20;    // con menos variantes para comparar, no se dice «alto»
+const AN_N = 6;            // filas a la vista en cada panel; el resto, plegado
+/** De cada destino y efecto, en todo el roster: cuántas variantes lo tienen y el mayor número de cada una. */
+let _RAREZA = null;
+function rarezaAn () {
+  if (_RAREZA) return _RAREZA;
+  const m = new Map(), ps = Object.keys(ANALISIS);
+  for (const p of ps) {
+    const vista = new Map();
+    for (const [ie, d, , fuentes] of ANALISIS[p].fx) {
+      const e = CATALOGO.efectos[ie], k = d + '|' + e.id;
+      let mx = vista.has(k) ? vista.get(k) : null;
+      for (const [si, ti, fi] of fuentes) {
+        const val = valorFx(SKILLS[p][si].st[ti].fx[fi], e.id);
+        if (val && (!mx || val.n > mx.n)) mx = val;
+      }
+      vista.set(k, mx);
+    }
+    for (const [k, mx] of vista) {
+      if (!m.has(k)) m.set(k, { n: 0, vals: [] });
+      const r = m.get(k); r.n++;
+      if (mx) r.vals.push(mx);
+    }
+  }
+  _RAREZA = { total: ps.length, m };
+  return _RAREZA;
+}
+/** Lo que distingue a una fila: { tienen: % de las variantes que la tienen, raro, percentil (o null), alto }. */
+function distincionAn (f) {
+  const R = rarezaAn(), r = R.m.get(f.d + '|' + f.e.id);
+  const tienen = Math.round(100 * r.n / R.total);
+  let percentil = null;
+  if (f.val) {
+    const comp = r.vals.filter(x => x.pct === f.val.pct);
+    if (comp.length >= AN_ALTO_MIN) percentil = Math.floor(100 * comp.filter(x => x.n <= f.val.n).length / comp.length);
+  }
+  return { tienen, raro: tienen <= AN_RARO, percentil, alto: percentil !== null && percentil >= AN_ALTO };
+}
+/** Las filas del análisis de v: una por destino y efecto, con sus fuentes (skill, slot, número, duración y tiempo activo),
+ *  el mayor número, si sale solo de pasivas (siempre activo), su mayor tiempo activo y a qué aliados va. */
+function filasAn (v) {
+  const filas = new Map();
+  for (const [ie, d, objetivo, fuentes] of ANALISIS[v.p].fx) {
+    const e = CATALOGO.efectos[ie], clave = d + '|' + e.id;
+    if (!filas.has(clave)) filas.set(clave, { d, e, ie, clave, fuentes: [], objetivos: [] });
+    const r = filas.get(clave);
+    if (d === 'q' && objetivo != null && !r.objetivos.includes(objetivo)) r.objetivos.push(objetivo);
+    for (const [si, ti, fi] of fuentes) {
+      const sk = v.skills[si], f = sk.st[ti].fx[fi], val = valorFx(f, e.id), dura = f.d != null ? f.d : null;
+      // Tiempo activo: de las skills con recarga y con duración; la curación no (la fuente le pone 1 s).
+      const uso = !SLOTS_PASIVOS.has(sk.sl) && sk.cd > 0 && dura != null && e.id !== 'curacion' ? Math.min(1, dura / sk.cd) : null;
+      r.fuentes.push({ si, sl: sk.sl, val, dura, uso, cd: sk.cd });
+    }
+  }
+  return [...filas.values()].map(r => {
+    const vals = r.fuentes.map(x => x.val).filter(Boolean), usos = r.fuentes.map(x => x.uso).filter(x => x !== null);
+    const val = vals.length ? vals.reduce((a, b) => b.n > a.n ? b : a) : null;
+    return Object.assign(r, { val, pasiva: r.fuentes.every(x => SLOTS_PASIVOS.has(x.sl)),
+      uso: usos.length ? Math.max(...usos) : null, pvp: (r.d === 'e' || r.d === 'i') ? CATALOGO.pvp.prioridad.includes(r.e.id)
+        : r.d === 'q' && CATALOGO.pvp.soporte.includes(r.e.id) });
+  }).map(r => Object.assign(r, { dist: distincionAn(r) }));
+}
+/** El daño de cada skill (la suma de sus golpes, en % del ataque) y su parte del total. */
+function danoSkillsAn (v) {
+  const xs = v.skills.map((sk, si) => ({ si, sl: sk.sl, n: (sk.st || []).reduce((a, st) => a + (st.fx || []).reduce((b, f) => { const d = dano(f); return b + (d ? d.pct : 0); }, 0), 0) }));
+  const total = xs.reduce((a, x) => a + x.n, 0);
+  return { total, xs: xs.filter(x => x.n > 0).map(x => Object.assign(x, { parte: Math.round(100 * x.n / total) })) };
+}
+/** Los slots de una fila, sin repetidos y en el orden de la skill. */
+function slotsAn (fuentes) { return [...new Set(fuentes.map(x => x.sl))].map(sl => `<span class="slotbadge ${slotClase(sl)}" title="${h(slotEs(sl))}">${h(slotCorto(sl))}</span>`).join(''); }
+function duraAn (fuentes) {
+  const ds = [...new Set(fuentes.map(x => x.dura).filter(x => x != null))].sort((a, b) => a - b);
+  return ds.length ? `<span class="cped">${h(ds.length > 1 ? numTxt(ds[0]) + '–' + numTxt(ds[ds.length - 1]) : numTxt(ds[0]))} s</span>` : '';
+}
+/** La marca de lo que distingue a una fila: «más que el N%» o «lo tiene el N%»; '' si nada. */
+function marcaAn (dist) {
+  if (dist.alto) return `<span class="qhmarca alto" title="${h(t('an_alto_t'))}">${h(t('an_alto').replace('{n}', dist.percentil))}</span>`;
+  if (dist.raro) return `<span class="qhmarca raro" title="${h(t('an_raro_t'))}">${h(t('an_raro').replace('{n}', dist.tienen))}</span>`;
+  return '';
+}
+function pvpAn () { return `<span class="qhmarca pvp" title="${h(bi(CATALOGO.pvp.nota))}">PvP</span>`; }
+/** Cuándo está: siempre (pasivas), su tiempo activo (con la duración y la recarga de la que más dura) o con la definitiva
+ *  o el striker, que van por carga. */
+function cuandoAn (r) {
+  const aliados = r.objetivos.filter(o => grupoDe(o)).map(o => txt('tgt', o));
+  if (r.pasiva) return `<span class="qhsiempre">${h(t('an_siempre'))}${aliados.length ? ' · ' + h(aliados.join(', ')) : ''}</span>`;
+  if (r.uso === null) return `<span class="muted qhuso">${h(t('an_por_carga'))}</span>`;
+  const x = r.fuentes.filter(f => f.uso === r.uso)[0];
+  return `<div class="qhuso"><div class="qhbarra ${r.d}"><i style="width:${Math.round(100 * r.uso)}%"></i></div><span>${
+    h(t('an_uso').replace('{n}', Math.round(100 * r.uso)).replace('{d}', numTxt(x.dura)).replace('{c}', numTxt(x.cd)))}</span></div>`;
+}
+function filaAnHtml (r) {
+  return `<div class="qhfila"><div class="qhfu"><span class="annom">${h(nombreAnTxt(r.e))}</span>${r.val ? `<span class="cpev">${h(numCmp(r.val))}</span>` : ''}${
+    slotsAn(r.fuentes)}${duraAn(r.fuentes)}${r.pvp ? pvpAn() : ''}${marcaAn(r.dist)}</div>${cuandoAn(r)}</div>`;
+}
+/** Orden dentro de un panel: lo que vale en PvP, lo que distingue y lo que más tiempo está activo. */
+function ordenAn (a, b) {
+  const k = (r) => [r.pvp ? 1 : 0, r.dist.alto || r.dist.raro ? 1 : 0, r.pasiva ? 1 : r.uso === null ? 0.5 : r.uso];
+  const x = k(a), y = k(b);
+  return y[0] - x[0] || y[1] - x[1] || y[2] - x[2];
+}
+/** Las lecturas que el catálogo da para un solo modo (la de PvE de un efecto sin lectura de PvP, y al revés),
+ *  agrupadas por texto, cada una con los efectos y slots que la tienen. */
+function soloModoAn (filas, modo, otro) {
+  const g = new Map();
+  for (const r of filas) {
+    const L = r.e[modo], O = r.e[otro];
+    if (!L || O) continue;
+    const k = bi(L);
+    if (!g.has(k)) g.set(k, []);
+    g.get(k).push(r);
+  }
+  return [...g.entries()].map(([texto, rs]) => `<div class="qhlee"><span>${h(texto)}</span><div class="qhfu">${rs.map(r =>
+    `<span class="annom">${h(nombreAnTxt(r.e))}</span>${slotsAn(r.fuentes)}`).join('<span class="muted">·</span>')}</div></div>`).join('');
+}
+/** El bloque del Resumen: lo que lo distingue, un panel por destino y el daño de cada skill, lo que vale en un solo modo y
+ *  cómo se calcula. */
+function analisisResumenHtml (v) {
+  const filas = filasAn(v), dn = danoSkillsAn(v);
+  const distingue = filas.filter(r => r.dist.alto || r.dist.raro).sort((a, b) =>
+    (b.dist.alto ? b.dist.percentil : 0) - (a.dist.alto ? a.dist.percentil : 0) || a.dist.tienen - b.dist.tienen);
+  const panel = (d) => {
+    const rs = filas.filter(r => r.d === d).sort(ordenAn);
+    if (!rs.length) return '';
+    return `<div class="qhpanel"><h4><i class="cpedot ${d}"></i>${h(t('an_' + d))}</h4>${rs.slice(0, AN_N).map(filaAnHtml).join('')}${
+      rs.length > AN_N ? `<details class="qhmas"><summary>${h(t(rs.length - AN_N === 1 ? 'cmp_mas_1' : 'cmp_mas').replace('{n}', rs.length - AN_N))}</summary>${
+        rs.slice(AN_N).map(filaAnHtml).join('')}</details>` : ''}</div>`;
+  };
+  const max = Math.max(...dn.xs.map(x => x.n));
+  const pve = soloModoAn(filas, 'pve', 'pvp'), pvp = soloModoAn(filas, 'pvp', 'pve');
+  return `<div class="section qhres" id="analisis"><h3>${h(t('an_titulo'))} ${ayudaHtml(t('an_nota'))}</h3>
+    ${distingue.length ? `<div class="qhdist">${distingue.slice(0, AN_N).map(r => `<div class="qhdchip">${marcaAn(r.dist)}<div class="qhfu"><span class="annom">${
+      h(nombreAnTxt(r.e))}</span>${r.val ? `<span class="cpev">${h(numCmp(r.val))}</span>` : ''}${slotsAn(r.fuentes)}</div><span class="muted">${
+      h(t('an_' + r.d))} · ${h(t('an_tienen').replace('{n}', r.dist.tienen))}</span></div>`).join('')}</div>`
+      : `<p class="muted">${h(t('an_nada_distingue'))}</p>`}
+    <div class="qhpaneles">${CMP_DESTINOS.map(panel).join('')}
+      ${dn.xs.length ? `<div class="qhpanel"><h4><i class="cpedot dano"></i>${h(t('an_dano_skill'))}</h4><div class="qhdano">${dn.xs.map(x =>
+        `<div class="qhdanof">${slotsAn([x])}<div class="qhbarra dano"><i style="width:${Math.round(100 * x.n / max)}%"></i></div><span class="cpev">${
+          h(numTxt(x.n))}% · ${h(x.parte)}%</span></div>`).join('')}</div><span class="muted qhpie">${h(t('an_dano_nota').replace('{n}', numTxt(dn.total)))}</span></div>` : ''}
+    </div>
+    ${pve || pvp ? `<div class="qhmodos">${pve ? `<div><h4>${h(t('an_solo_pve'))}</h4>${pve}</div>` : ''}${pvp ? `<div><h4>${h(t('an_solo_pvp'))}</h4>${pvp}</div>` : ''}</div>` : ''}
+    <p class="muted qhpie">${h(t('an_pie').replace('{r}', AN_RARO).replace('{a}', AN_ALTO))}</p>
+  </div>`;
+}
+/** La lectura de una skill (pestaña Skills): su daño y su parte del total, lo que la distingue, lo que vale en PvP, el
+ *  tiempo activo de lo que dura y lo que el catálogo lee solo en PvE o en PvP. '' si no tiene nada que decir. */
+function lecturaSkillHtml (v, si) {
+  const filas = filasAn(v).map(r => Object.assign({}, r, { fuentes: r.fuentes.filter(x => x.si === si) })).filter(r => r.fuentes.length)
+    .map(r => { const vals = r.fuentes.map(x => x.val).filter(Boolean), usos = r.fuentes.map(x => x.uso).filter(x => x !== null);
+      const val = vals.length ? vals.reduce((a, b) => b.n > a.n ? b : a) : null;
+      return Object.assign(r, { val, uso: usos.length ? Math.max(...usos) : null, dist: distincionAn(Object.assign({}, r, { val })) }); });
+  const dn = danoSkillsAn(v), mio = dn.xs.find(x => x.si === si);
+  const partes = [];
+  if (mio) partes.push(`<span><span class="qhk">${h(t('an_k_dano'))}</span><b>${h(numTxt(mio.n))}%</b> · ${h(t('an_del_total').replace('{n}', mio.parte))}</span>`);
+  const dist = filas.filter(r => r.dist.alto || r.dist.raro);
+  if (dist.length) partes.push(`<span><span class="qhk">${h(t('an_k_distingue'))}</span>${dist.map(r => `<b>${h(nombreAnTxt(r.e))}${r.val ? ' ' + h(numCmp(r.val)) : ''}</b>${marcaAn(r.dist)}`).join(' ')}</span>`);
+  const pvp = filas.filter(r => r.pvp);
+  if (pvp.length) partes.push(`<span>${pvpAn()}${pvp.map(r => h(nombreAnTxt(r.e))).join(', ')}</span>`);
+  const usos = filas.filter(r => r.uso !== null);
+  if (usos.length) partes.push(`<span><span class="qhk">${h(t('an_k_activo'))}</span>${usos.map(r => `${h(nombreAnTxt(r.e))} <b>${Math.round(100 * r.uso)}%</b>`).join(' · ')}</span>`);
+  const soloPve = filas.filter(r => r.e.pve && !r.e.pvp);
+  if (soloPve.length) partes.push(`<span><span class="qhk">${h(t('an_k_solo_pve'))}</span>${soloPve.map(r => `<span title="${h(bi(r.e.pve))}">${h(nombreAnTxt(r.e))}</span>`).join(', ')}</span>`);
+  return partes.length ? `<div class="sklect">${partes.join('')}</div>` : '';
 }
 
 // ============================================================================
