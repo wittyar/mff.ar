@@ -92,7 +92,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
 ## Estado (9 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.35 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.36 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -134,7 +134,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   `catalogo.json` (`valores`); viaja en `MFF_CATALOGO.valor`. En la app, `cmpPorEfecto` (`ui.cmpVista`, por defecto
   'efecto'; la tabla de antes es «Ficha»). Prueba: `verif_cmp_efecto.py`; verif_mesa, verif_aliados y verif_consistencia
   usan la vista «Ficha» donde miran la tabla.
-- La 1.0.36 (formato 14, #33 con #7, entregada sin publicar): «Qué hace con sus skills». Ezequiel, 8 y 9 de octubre:
+- La 1.0.36 (etiqueta en 02c808e, formato 14, #33 con #7): «Qué hace con sus skills». Ezequiel, 8 y 9 de octubre:
   #7 va dentro de #33; con números; medir todo (tiempo activo, daño de cada skill, PvE/PvP, rareza); en el Resumen y en
   cada skill; cortes raro ≤ 15% del roster y alto ≥ percentil 90 (con 20 o más para comparar). Lo que más vale en PvP
   (supervivencia y lo que la atraviesa) en `catalogo.json` (`pvp`), `MFF_CATALOGO.pvp`. En la app, `filasAn`,
@@ -142,6 +142,12 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   efecto tiene lectura de un modo y no del otro. Prueba: `verif_que_hace.py`. Maqueta: canvas «Rediseño MFF.ar»,
   artboards «Análisis (#33)». Sin mapear de lo que dijo Ezequiel: «penetración» y «daño que aumenta según el daño
   recibido» (no hay un efecto del catálogo que sea solo eso).
+- Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
+  (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
+  los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
+  inmunidades a frío, a todo el daño, a sangrado y a fractura, resistencia a veneno) con su correspondencia en
+  `liderazgos_api.json`, que ahora acepta textos sin número (stat sin valor); quedan el sangrado y la parálisis (van al
+  rival) y el robo de PG (dos números).
 - Entregado sin versión (solo datos, #5): `scripts/foro.py` baja también del tablero de avisos (2213: los parches de mitad
   de mes de 2020 y 2021 y algunas notas viejas); `historico.version_de_nota` asigna cada nota por la versión de su título
   o por las llegadas que nombra (thanosvibs tiene mal algunas fechas: 4.0, 5.5); los nombres se buscan sin tildes, sin
@@ -172,7 +178,7 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Equipos (#34): la construcción se rehace completa como consulta sobre tags curados por personaje, armada en
   pasos y sin puntajes calculados que no se ven. Reemplaza la sinergia, la tabla de valor y las listas actuales (el
   liderazgo de Hulk — Amadeus Cho sale primero en varias listas). Los issues de las reglas actuales (#9, #12, #21,
-  #22, #27, #29, #30) se revisan contra eso.
+  #22, #27, #29, #30) se cerraron el 9 de octubre (lo que puede servir está en un comentario de #34).
 - Análisis (#33): la primera parte va en la 1.0.36; falta completar las lecturas de PvE y PvP del catálogo (46 y 47 de 131 efectos).
 - Antes de cualquier cambio visual, la propuesta de arquitectura de la información y de navegación (#24, con los
   casos de strikers y Glosario en sus comentarios); después el rediseño visual (#6) y el tooltip de las habilidades
@@ -185,5 +191,5 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
   las llegadas que siguen sin su nota (lista en `docs/HISTORICO.md`: de 2015, notas con imágenes y parches); los modos
-  que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #10 a #23. Bugs: #25, #26.
+  que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #11 a #20 y #23. Bugs: #25, #26.
   Pruebas en el repo: #31.
