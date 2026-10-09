@@ -341,9 +341,10 @@ def usos(sp, su, bonos):
             'bono': dict(bono)}
 
 
-def cobertura(cat, U):
+def cobertura(cat, U, a_mano):
     """Lo de los datos que el catálogo no clasifica, y lo del catálogo que los datos ya no traen. Los stats son los
-    de Leads & Supports y los de los bonos de equipo."""
+    de Leads & Supports y los de los bonos de equipo; a_mano, los que nombran los liderazgos que el build deriva de
+    la Leader Skill (contenido/liderazgos_api.json), que no faltan pero tampoco sobran."""
     S, SO = cat['skills'], cat['soporte']
     stats = set(U['stat']) | set(U['bono'])
     falta = {'etiquetas': sorted(l for l in U['etiqueta'] if l not in S),
@@ -353,7 +354,7 @@ def cobertura(cat, U):
     sobra = {'etiquetas': sorted(l for l in S if l not in U['etiqueta']),
              'patrones': sorted((l, p) for l, x in S.items() if 'por_patron' in x and l in U['patron']
                                 for p in x['por_patron'] if p not in U['patron'][l]),
-             'stats': sorted(s for s in SO if s not in stats)}
+             'stats': sorted(s for s in SO if s not in stats | a_mano)}
     return falta, sobra
 
 
@@ -566,7 +567,9 @@ def main():
     if mal:
         raise SystemExit('scripts/contenido/valor_equipos.json tiene errores:\n  ' + '\n  '.join(mal))
     U = usos(cargar('work/skills_parsed.json'), cargar('work/supports.json'), fu['bonos'])
-    falta, sobra = cobertura(cat, U)
+    lid = cargar(os.path.join(_DIR, 'contenido', 'liderazgos_api.json'))
+    a_mano = {e['stat'] for e in lid['efectos']} | {g['s'] for o in lid['otorga'] for g in o['fx']}
+    falta, sobra = cobertura(cat, U, a_mano)
     for k, v in falta.items():
         if v:
             print(f'AVISO: catálogo de efectos: {k} de los datos sin clasificar (docs/AUDITORIA.md, sección 9): {v}')
