@@ -69746,17 +69746,17 @@
    "nameEn": "General",
    "source": "THANO$VIB$ General Tier List",
    "author": "Gummy Steve 2129",
-   "gameVersion": "12.2",
-   "published": "2026-09-04",
+   "gameVersion": "12.2.5",
+   "published": "2026-10-08",
    "description": "General character rankings",
-   "notes": "Initial placements of 12.2 characters",
+   "notes": "Sister Grimm meta, Red Skull T4/B, Invisible Woman demoted",
    "tags": [
     "General",
     "PvE",
     "PvP"
    ],
    "rating": 5,
-   "ratings": 25,
+   "ratings": 26,
    "rows": [
     {
      "id": "tier-s",
@@ -69932,10 +69932,10 @@
    "nameEn": "Supports",
    "source": "THANO$VIB$ Supports Tier List",
    "author": "Gummy Steve 2129",
-   "gameVersion": "12.1.5",
-   "published": "2026-08-19",
+   "gameVersion": "12.2.5",
+   "published": "2026-10-09",
    "description": "Support character rankings",
-   "notes": "Rhino and Goblin rankings not finalised",
+   "notes": "Red Skull - PvE / S Tier\nRhino - PvP / A Tier\nGold Goblin - PvE / A Tier",
    "tags": [
     "Other",
     "PvP",
@@ -70563,7 +70563,7 @@
    "name": "Official War Machine Tier List",
    "nameEn": "Official War Machine Tier List",
    "source": "Official War Machine Tier List",
-   "author": "warmachine68",
+   "author": "hi",
    "gameVersion": "12.1.5",
    "published": "2026-08-26",
    "description": "As the meta evolved to its final state, we realized war machine rocks the game like no other character! Its insane how every single uniform is viable even after all the powercreep. Even stable picks like the new moonstone and the great odin couldn’t contest his spot. So lets compare all of his uniforms!",
@@ -70708,7 +70708,7 @@
    "name": "The New Meta Official Tier List",
    "nameEn": "The New Meta Official Tier List",
    "source": "The New Meta Official Tier List",
-   "author": "warmachine68",
+   "author": "hi",
    "gameVersion": "12.1.5",
    "published": "2026-08-20",
    "description": "After years of updates, the game finally approached equilibrium, it’s unlikely the meta will change ever again. Therefore, we shall examine the so called “forever meta” and rank all characters.",
@@ -70751,7 +70751,7 @@
    "name": "Danny Zingodude Koo",
    "nameEn": "Danny Zingodude Koo",
    "source": "Danny Zingodude Koo",
-   "author": "warmachine68",
+   "author": "hi",
    "gameVersion": "12.1.5",
    "published": "2026-08-20",
    "description": "koo",
@@ -71301,16 +71301,19 @@
    "luna-snow::luna-snow-10500153": [
     "tier-s"
    ],
-   "bullseye::bullseye-10300044": [
+   "green-goblin::green-goblin-10500018": [
     "tier-s"
    ],
-   "green-goblin::green-goblin-10500018": [
+   "bullseye::bullseye-10300044": [
     "tier-s"
    ],
    "storm::storm-10400126": [
     "tier-s"
    ],
    "magneto::magneto-10400129": [
+    "tier-s"
+   ],
+   "sister-grimm::sister-grimm-10300053": [
     "tier-s"
    ],
    "doctor-strange::doctor-strange-10600028": [
@@ -71364,16 +71367,19 @@
    "wiccan::base": [
     "tier-1786666818513"
    ],
-   "psylocke::psylocke-10300167": [
+   "adam-warlock::adam-warlock-10200152": [
     "tier-c"
    ],
-   "kid-omega::kid-omega-10100203": [
+   "psylocke::psylocke-10300167": [
     "tier-c"
    ],
    "ebony-maw::ebony-maw-10300077": [
     "tier-c"
    ],
    "star-lord::star-lord-10600036": [
+    "tier-c"
+   ],
+   "invisible-woman::invisible-woman-10400180": [
     "tier-c"
    ],
    "cyclops::cyclops-10500123": [
@@ -71391,7 +71397,7 @@
    "madelyne-pryor::madelyne-pryor-10100267": [
     "tier-b"
    ],
-   "adam-warlock::adam-warlock-10200152": [
+   "kid-omega::kid-omega-10100203": [
     "tier-b"
    ],
    "stryfe::stryfe-10200168": [
@@ -71419,6 +71425,9 @@
     "tier-d"
    ],
    "magik::magik-10300157": [
+    "tier-d"
+   ],
+   "red-skull::red-skull-10300015": [
     "tier-d"
    ],
    "bishop::bishop-10100193": [
@@ -71454,9 +71463,6 @@
    "silver-surfer-shalla-bal::base": [
     "tier-c"
    ],
-   "loki::loki-10800014": [
-    "tier-b"
-   ],
    "galactus::base": [
     "tier-b"
    ],
@@ -71475,14 +71481,8 @@
    "ghost-rider::ghost-rider-10500004": [
     "tier-b"
    ],
-   "thanos::thanos-10600075": [
-    "tier-b"
-   ],
    "silver-surfer::silver-surfer-10200199": [
     "tier-b"
-   ],
-   "green-goblin::green-goblin-10400018": [
-    "tier-1786666916600"
    ],
    "black-swan::base": [
     "tier-1786666916600"
@@ -71583,6 +71583,12 @@
    "ms-marvel-kamala-khan::ms-marvel-kamala-khan-10500070": [
     "tier-a"
    ],
+   "gamora::gamora-10500012": [
+    "tier-a"
+   ],
+   "carnage::carnage-10300072": [
+    "tier-c"
+   ],
    "kingpin::kingpin-10300043": [
     "tier-c"
    ],
@@ -71602,9 +71608,6 @@
     "tier-b"
    ],
    "venom::venom-10600042": [
-    "tier-b"
-   ],
-   "carnage::carnage-10300072": [
     "tier-b"
    ],
    "captain-america::captain-america-11400001": [
@@ -71649,7 +71652,13 @@
    "black-panther::black-panther-10400037": [
     "tier-d"
    ],
+   "drax::drax-10300022": [
+    "tier-d"
+   ],
    "shang-chi::shang-chi-10200089": [
+    "tier-d"
+   ],
+   "america-chavez::america-chavez-10300147": [
     "tier-d"
    ],
    "red-guardian::red-guardian-10200220": [
@@ -71946,13 +71955,7 @@
    "crystal::crystal-10300114": [
     "tier-a"
    ],
-   "invisible-woman::invisible-woman-10400180": [
-    "tier-a"
-   ],
    "toxin::base": [
-    "tier-1786667217191"
-   ],
-   "drax::drax-10300022": [
     "tier-1786667217191"
    ],
    "morph::base": [
@@ -72001,9 +72004,6 @@
     "tier-1786667217191"
    ],
    "u-s-agent::base": [
-    "tier-1786667217191"
-   ],
-   "america-chavez::america-chavez-10300147": [
     "tier-1786667217191"
    ],
    "black-dwarf::black-dwarf-10200073": [
@@ -72117,8 +72117,8 @@
    "hades-pluto::base": [
     "tier-a"
    ],
-   "gamora::gamora-10500012": [
-    "tier-c"
+   "loki::loki-10800014": [
+    "tier-a"
    ],
    "deadpool::deadpool-10800164": [
     "tier-c"
@@ -82590,6 +82590,9 @@
    "dazzler::dazzler-10100229": [
     "tier-s"
    ],
+   "red-skull::red-skull-10300015": [
+    "tier-s"
+   ],
    "mysterio::mysterio-10200134": [
     "tier-s"
    ],
@@ -82668,6 +82671,9 @@
    "green-goblin::green-goblin-10400018": [
     "tier-a"
    ],
+   "green-goblin::green-goblin-10500018": [
+    "tier-a"
+   ],
    "valkyrie::base": [
     "tier-b"
    ],
@@ -82699,6 +82705,9 @@
     "tier-1786673834879"
    ],
    "silver-samurai::base": [
+    "tier-1786673838714"
+   ],
+   "rhino::rhino-10100133": [
     "tier-1786673838714"
    ],
    "black-knight::base": [
