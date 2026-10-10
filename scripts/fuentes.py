@@ -211,6 +211,9 @@ _RESTR_SOPORTE = {
 # La fuente clasifica mal dos restricciones: "Zombie" no es una clase ni "Fantastic Four"
 # una raza; las dos son habilidades. Se corrigen con aviso y la app muestra la original.
 _RESTR_CORREGIDA = {('Type', 'Zombie'): 'Ability', ('Allies', 'Fantastic Four'): 'Ability'}
+# Slots en que la fuente pone una skill que es de otro: la Tier-2 Passive de Falcon (Joaquin Torres),
+# «Captain's Wingman», va en 'passive' (#26). Se mueve con aviso.
+_SLOT_CORREGIDO = {('joaquintorres', 'passive'): 't2'}
 # Nombres de personaje que la fuente abrevia en las restricciones -> nombre en el roster
 # (en el de Annihilus, del 10 de octubre de 2026, pone el retrato en vez del nombre).
 _ALIAS_PJ = {'Kang': 'Kang the Conqueror', 'annihilus': 'Annihilus'}
@@ -311,7 +314,13 @@ def soportes(retratos, nombres):
                                      'duration', 'requirement', 'effect', 'effect3', 'effect4', 'effect5', 'effect6'}
             if desconocidos:
                 raise SystemExit(f'soporte {donde}: campos que la app no conoce: {sorted(desconocidos)}')
-            e[tipo] = x
+            destino = _SLOT_CORREGIDO.get((s['portrait'], tipo), tipo)
+            if destino != tipo:
+                if s[destino]:
+                    raise SystemExit(f"soporte {donde}: va a {destino}, que la fuente ya trae")
+                avisos.append(f"soporte {donde}: la fuente pone en {tipo} la skill «{v.get('name')}», que es de {destino}; "
+                              f"se usa {destino}")
+            e[destino] = x
         for p in [s['portrait']] + s['sameas']:
             if p not in retratos:
                 avisos.append(f"soporte de {s['portrait']} para un retrato que no está en el roster: {p}")
