@@ -63,7 +63,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (9 de octubre de 2026)
+## Estado (10 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.36 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -115,6 +115,15 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   efecto tiene lectura de un modo y no del otro. Prueba: `verif_que_hace.py`. Maqueta: canvas «Rediseño MFF.ar»,
   artboards «Análisis (#33)». Sin mapear de lo que dijo Ezequiel: «penetración» y «daño que aumenta según el daño
   recibido» (no hay un efecto del catálogo que sea solo eso).
+- La 1.0.37 (sin formato nuevo, 14; a etiquetar sobre el commit de la versión), 10 de octubre: los soportes que Leads &
+  Supports no publica se derivan de la pasiva, la Tier-2 y la de uniforme de la API con la regla de los liderazgos
+  (`liderazgos.partes_soporte`; Ezequiel: el caso fue la reducción del daño reflejado de Molecule Man): 13 derivados, 8
+  sin derivar con su motivo; la correspondencia se aprende solo de los liderazgos, y lo de a mano acepta `signo` -1. Los
+  155 «Give Power» sin tiempo publicado van sin tiempo (`skills_api.SIN_TIEMPO`; Ezequiel: «son constantes... ponelas
+  sin tiempo»): las fichas de las notas del foro nunca dicen ese tiempo (110 casos leídos). Mismo día, sin versión:
+  #26 (marcadores: el mismo par en otro orden no difiere, la Tier-2 de Joaquin Torres a t2, la plantilla saca las filas
+  vacías resueltas, los avisos de soportes una vez) y el build con los cambios de Leads & Supports del 10 de octubre
+  (restricción "None", Annihilus por su retrato). #11 queda para el issue de los equipos de la cuenta (Ezequiel).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
