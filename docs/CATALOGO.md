@@ -1,6 +1,6 @@
 # Catálogo de efectos
 
-Generado por `scripts/catalogo.py` el 2026-10-09, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
+Generado por `scripts/catalogo.py` el 2026-10-10, sobre los datos del juego 12.2.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
 
 thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo traen como una etiqueta (`ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (`All Basic Attacks`). Acá los dos apuntan al mismo efecto, y cada efecto dice qué es, a quién le sirve y cómo se lee en PvE y en PvP. Cuándo se activa y a quién le llega no es del efecto sino de cada skill o soporte (su activación, su objetivo, su restricción): eso lo muestra la ficha.
 
@@ -93,7 +93,7 @@ Sube un ataque, el stat del que sale el daño.
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
-  - `All Basic Attacks` (180 retratos, 556 bonos de equipo) — se acumula
+  - `All Basic Attacks` (182 retratos, 556 bonos de equipo) — se acumula
   - `All Basic Attacks (Stackable)` (5 retratos) — se acumula; varía: se acumula
 
 ## Daño
@@ -184,9 +184,9 @@ Sube el daño que hace, aparte del ataque.
   - `All Basic Damage Increased Except Specific Species` (1 retrato) — contra todos menos una raza (cada skill dice cuál)
   - `Luck` (1 retrato) — contra todos menos los jefes
 - **Leads & Supports y bonos de equipo:**
-  - `Basic Damage Dealt to Villains` (85 retratos) — se acumula; contra una facción: Supervillano
+  - `Basic Damage Dealt to Villains` (87 retratos) — se acumula; contra una facción: Supervillano
   - `Basic Damage Dealt to Boss Types` (44 retratos) — se acumula; contra jefes
-  - `Basic Damage Dealt to Heroes` (41 retratos) — se acumula; contra una facción: Superhéroe
+  - `Basic Damage Dealt to Heroes` (43 retratos) — se acumula; contra una facción: Superhéroe
   - `Basic Damage Dealt to Males` (6 retratos) — se acumula; contra un género: Masculino
   - `Basic Damage Dealt to Enemies with 25% HP or Higher` (4 retratos) — se acumula; contra rivales con los PG altos
   - `Basic Damage Dealt to Universals` (3 retratos) — se acumula; contra un tipo: Universal
@@ -246,7 +246,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `IGNORE DEFENSE` (139 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Defense` (1 retrato, 217 bonos de equipo) — se acumula; tope: Ignorar defensa 50%
+  - `Ignore Defense` (2 retratos, 217 bonos de equipo) — se acumula; tope: Ignorar defensa 50%
 
 ### Daño por impacto en cadena
 
@@ -267,7 +267,7 @@ Sube el daño que hace, aparte del ataque.
 - **Skills:**
   - `Excluding bosses, ignores enemy's damage decrease` (24 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Non-Boss Damage Decrease` (3 retratos) — se acumula; Nota: Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026).
+  - `Ignore Non-Boss Damage Decrease` (4 retratos) — se acumula; Nota: Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026).
 
 ### Ignora los aumentos y reducciones entre facciones
 
@@ -364,7 +364,7 @@ Sube el daño de un elemento.
 - **Skills:**
   - `POISON DAMAGE ↑` (8 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Poison Damage` (1 retrato) — se acumula
+  - `Poison Damage` (2 retratos) — se acumula
 
 ### Daño mental
 
@@ -410,7 +410,7 @@ Que el golpe entre o atraviese protecciones.
 - **Skills:**
   - `IGNORE DODGE` (631 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Dodge` (92 retratos) — se acumula
+  - `Ignore Dodge` (93 retratos) — se acumula
 
 ### Perforación
 
@@ -903,20 +903,20 @@ PG, curación, escudos y revivir.
   - `MAX HP ↑` (167 retratos)
   - `Demonization (Darkchylde)` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `HP` (62 retratos, 342 bonos de equipo) — se acumula
+  - `HP` (63 retratos, 342 bonos de equipo) — se acumula
 
 ### Curación
 
 `curacion` · Healing · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `HP RECOVERY` (553 retratos)
+  - `HP RECOVERY` (554 retratos)
   - `Misdirection` (9 retratos) — varía: crece cada vez que recibe un golpe
   - `Accumulate Damage HP Recovery` (7 retratos)
   - `FORTITUDE` (6 retratos)
   - `Recovers HP per summoned character.` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Heal` (17 retratos) — se acumula; Nota: Se suma: es una curación de una vez, otra cosa que el índice de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026).
+  - `Heal` (19 retratos) — se acumula; Nota: Se suma: es una curación de una vez, otra cosa que el índice de recuperación, y no tiene tope (Ezequiel, 5 de octubre de 2026).
   - `Immortality + Heal` (1 retrato) — cuenta una vez (la de mayor valor); Nota: La inmortalidad no se acumula (Ezequiel, 5 de octubre de 2026), y la curación viene con ella. Solo lo da el artefacto de Franklin Richards (Villains Are Bad).
 
 ### Recuperación
@@ -1024,7 +1024,7 @@ Recibe menos daño o lo evita.
 `dano_recibido` · Less damage taken · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Decreases all basic damage` (378 retratos)
+  - `Decreases all basic damage` (379 retratos)
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
 - **Leads & Supports y bonos de equipo:**
   - `Basic Damage Received` (15 retratos) — se acumula
@@ -1124,7 +1124,7 @@ Recibe menos daño o lo evita.
 - **Skills:**
   - `CHAIN HIT DMG RECEIVED ↓` (23 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Chain Hit Damage Received` (10 retratos) — se acumula
+  - `Chain Hit Damage Received` (11 retratos) — se acumula
 
 ### Menos daño de perforación recibido
 
@@ -1241,7 +1241,7 @@ Le saca las mermas o lo hace inmune a ellas.
   - `Removes all Debuffs. ` (409 retratos)
   - `Parry` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Remove All Debuffs` (81 retratos) — cuenta una vez (la de mayor valor)
+  - `Remove All Debuffs` (82 retratos) — cuenta una vez (la de mayor valor)
 
 ### Inmunidad a mermas
 
@@ -1314,7 +1314,7 @@ Velocidades, recarga de skills y cargas.
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
   - `ALL SPEED ↑(Can Stack)` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `All Speeds` (25 retratos, 2 bonos de equipo) — le sirve: a nadie; se acumula; tope: Velocidad atq. 130% (desde 100%), Velocidad de movimiento 130% (desde 100%)
+  - `All Speeds` (26 retratos, 2 bonos de equipo) — le sirve: a nadie; se acumula; tope: Velocidad atq. 130% (desde 100%), Velocidad de movimiento 130% (desde 100%)
 
 ### Velocidad de ataque
 

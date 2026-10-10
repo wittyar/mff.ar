@@ -69112,7 +69112,6 @@
    "f": "Superhéroe",
    "r": [
     "Soporte",
-    "Tanque",
     "Daño"
    ],
    "ins": "Justicia",
@@ -69941,8 +69940,8 @@
     "PvP",
     "PvE"
    ],
-   "rating": 4.9,
-   "ratings": 11,
+   "rating": 4.8,
+   "ratings": 12,
    "rows": [
     {
      "id": "tier-s",
@@ -69967,6 +69966,105 @@
     {
      "id": "tier-1786673838714",
      "label": "pvp / a tier"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1788336451651-fgeiq",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
+   "nameEn": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
+   "source": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
+   "author": "KnightSeeks",
+   "gameVersion": "12.2.5",
+   "published": "2026-10-10",
+   "description": "Special Thanks to Gummy Steve 2129!\n\nThis list is integrated tier list like the old THANO$VIB$ Tier list that includes not only general characters but also supports into a single tier list.\n\nI've also integrated the PVP and PVE supports into the list from the Gummy Steve's Support List.",
+   "notes": "According to Gummy Steve 2129, Sister Grimm Meta, Red Skull Tier 4/B, Invisible Woman demoted to Tier 4/A",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP",
+    "Other"
+   ],
+   "rating": 4.7,
+   "ratings": 18,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "Meta"
+    },
+    {
+     "id": "tier-a",
+     "label": "Niche mEta"
+    },
+    {
+     "id": "tier-1788337377732",
+     "label": "-"
+    },
+    {
+     "id": "tier-b",
+     "label": "Tier 4 | S"
+    },
+    {
+     "id": "tier-1788337991134",
+     "label": "S | PVE SUPPORT"
+    },
+    {
+     "id": "tier-1788338573809",
+     "label": "S | PVP SUPPORT"
+    },
+    {
+     "id": "tier-1789112838319",
+     "label": "-"
+    },
+    {
+     "id": "tier-c",
+     "label": "Tier 4 | A"
+    },
+    {
+     "id": "tier-1788336807559",
+     "label": "Tier 3 | A"
+    },
+    {
+     "id": "tier-1788338022487",
+     "label": "A | PVE SUPPORT"
+    },
+    {
+     "id": "tier-1788338640527",
+     "label": "A | PVP SUPPORT"
+    },
+    {
+     "id": "tier-1789112861559",
+     "label": "-"
+    },
+    {
+     "id": "tier-d",
+     "label": "Tier 4 | B"
+    },
+    {
+     "id": "tier-1788337314928",
+     "label": "Tier 3 | B"
+    },
+    {
+     "id": "tier-1788338037919",
+     "label": "B | PVE SUPPORT"
+    },
+    {
+     "id": "tier-1789112895865",
+     "label": "-"
+    },
+    {
+     "id": "tier-1788337320904",
+     "label": "shit"
+    },
+    {
+     "id": "tier-1788338650316",
+     "label": "new Player Support Picks"
+    },
+    {
+     "id": "tier-1789112904075",
+     "label": "Landing"
     }
    ]
   },
@@ -70165,105 +70263,6 @@
    ]
   },
   {
-   "id": "tv-proj-1788336451651-fgeiq",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
-   "nameEn": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
-   "source": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
-   "author": "KnightSeeks",
-   "gameVersion": "12.2.5",
-   "published": "2026-09-28",
-   "description": "Special Thanks to Gummy Steve 2129!\n\nThis list is integrated tier list like the old THANO$VIB$ Tier list that includes not only general characters but also supports into a single tier list.\n\nI've also integrated the PVP and PVE supports into the list from the Gummy Steve's Support List.",
-   "notes": "Added Sister Grimm and Red Skull uniforms to landing.",
-   "tags": [
-    "General",
-    "PvE",
-    "PvP",
-    "Other"
-   ],
-   "rating": 4.7,
-   "ratings": 18,
-   "rows": [
-    {
-     "id": "tier-s",
-     "label": "Meta"
-    },
-    {
-     "id": "tier-a",
-     "label": "Niche mEta"
-    },
-    {
-     "id": "tier-1788337377732",
-     "label": "-"
-    },
-    {
-     "id": "tier-b",
-     "label": "Tier 4 | S"
-    },
-    {
-     "id": "tier-1788337991134",
-     "label": "S | PVE SUPPORT"
-    },
-    {
-     "id": "tier-1788338573809",
-     "label": "S | PVP SUPPORT"
-    },
-    {
-     "id": "tier-1789112838319",
-     "label": "-"
-    },
-    {
-     "id": "tier-c",
-     "label": "Tier 4 | A"
-    },
-    {
-     "id": "tier-1788336807559",
-     "label": "Tier 3 | A"
-    },
-    {
-     "id": "tier-1788338022487",
-     "label": "A | PVE SUPPORT"
-    },
-    {
-     "id": "tier-1788338640527",
-     "label": "A | PVP SUPPORT"
-    },
-    {
-     "id": "tier-1789112861559",
-     "label": "-"
-    },
-    {
-     "id": "tier-d",
-     "label": "Tier 4 | B"
-    },
-    {
-     "id": "tier-1788337314928",
-     "label": "Tier 3 | B"
-    },
-    {
-     "id": "tier-1788338037919",
-     "label": "B | PVE SUPPORT"
-    },
-    {
-     "id": "tier-1789112895865",
-     "label": "-"
-    },
-    {
-     "id": "tier-1788337320904",
-     "label": "shit"
-    },
-    {
-     "id": "tier-1788338650316",
-     "label": "new Player Support Picks"
-    },
-    {
-     "id": "tier-1789112904075",
-     "label": "Landing"
-    }
-   ]
-  },
-  {
    "id": "tv-proj-1787634809961-ohych",
    "order": 100,
    "group": "comunidad",
@@ -70280,8 +70279,8 @@
     "PvE",
     "PvP"
    ],
-   "rating": 3.8,
-   "ratings": 13,
+   "rating": 3.9,
+   "ratings": 14,
    "rows": [
     {
      "id": "tier-s",
@@ -79017,6 +79016,9 @@
    "magneto::magneto-10400129": [
     "tier-s"
    ],
+   "sister-grimm::sister-grimm-10300053": [
+    "tier-s"
+   ],
    "doctor-strange::doctor-strange-10600028": [
     "tier-s"
    ],
@@ -79066,9 +79068,6 @@
     "tier-a"
    ],
    "crystal::crystal-10300114": [
-    "tier-a"
-   ],
-   "invisible-woman::invisible-woman-10400180": [
     "tier-a"
    ],
    "spider-man-miles-morales::spider-man-miles-morales-10500065": [
@@ -79122,6 +79121,9 @@
     "tier-c"
    ],
    "star-lord::star-lord-10600036": [
+    "tier-c"
+   ],
+   "invisible-woman::invisible-woman-10400180": [
     "tier-c"
    ],
    "cyclops::cyclops-10500123": [
@@ -79273,6 +79275,9 @@
     "tier-d"
    ],
    "magik::magik-10300157": [
+    "tier-d"
+   ],
+   "red-skull::red-skull-10300015": [
     "tier-d"
    ],
    "bishop::bishop-10100193": [
@@ -79964,12 +79969,6 @@
    ],
    "singularity::base": [
     "tier-1788337320904"
-   ],
-   "sister-grimm::sister-grimm-10300053": [
-    "tier-1789112904075"
-   ],
-   "red-skull::red-skull-10300015": [
-    "tier-1789112904075"
    ]
   },
   "tv-proj-1789070562693-y3vb7": {

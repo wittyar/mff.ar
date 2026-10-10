@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-10-09, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-10-10, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
@@ -26,7 +26,7 @@ Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvi
 
 Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; todos clasificados.
 
-Liderazgos: el build deriva de la Leader Skill de la API el de 467 variantes que Leads & Supports no publica; 11 slots no se pudieron derivar (sección 12).
+Liderazgos y soportes: el build deriva de las skills de la API el liderazgo de 464 variantes y 12 soportes que Leads & Supports no publica; 17 slots no se pudieron derivar (sección 12).
 
 ## 1. Skills: daño y recarga
 
@@ -236,7 +236,7 @@ thanosvibs no publica el instinto: la app lo toma del infobox de la wiki. Acá, 
 
 - Retratos marcados Tier-4 sin Striker Skill en sus skills: 6: Red Skull (Captain America: The First Avenger); Red Skull (Hydra Armor); Red Skull (Secret Wars: Red Skull); Sister Grimm (All-New, All-Different); Sister Grimm (Runaways); Sister Grimm (Secret Wars: A-Force)
 - Retratos con skill 6 (Tier-3 o Trascendido) sin Definitiva en sus skills: 1: Black Swan (Modern, Tier-3)
-- Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 320 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
+- Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 225 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
 
 ## 5. Lo que el build corrige de thanosvibs
 
@@ -251,6 +251,7 @@ La fuente las clasifica mal; la ficha muestra la original.
 - `weaponhex1` (uniform2): la fuente dice Type "Zombie"; se usa Ability "Zombi".
 - `kang` (leader): la fuente dice Character "Kang"; se usa Character "Kang the Conqueror".
 - `kang1` (leader): la fuente dice Character "Kang"; se usa Character "Kang the Conqueror".
+- `annihilus` (leader2): la fuente dice Character "annihilus"; se usa Character "Annihilus".
 
 ### Nombres de C.T.P.
 
@@ -309,7 +310,7 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 - **Tabla de efectos del artefacto en el sitio de thanosvibs** — En la sección Leads & Supports, el sitio muestra el tercer número de cada efecto de artefacto como duración ("0.2s"), con la columna "Instinct" corrida. Por la página Artifact de la wiki (Robbie Reyes, She-Hulk) ese número es el % adicional del instinto total, la duración va al final y, si el efecto acumula, el tope va antes de la duración. La app los muestra con ese significado. ([THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Artifacts](https://thanosvibs.money/artifacts))
 - **Leads & Supports: reducciones de daño con signo positivo** — En 17 soportes, Leads & Supports publica la reducción de daño recibido con valor positivo: 16 «Basic Damage Received from Villains» y un «Physical Reflect Damage Received» (Black Dwarf, Dwarf Charge). La skill del mismo personaje dice siempre que reduce (Shuri, Panther God's Protection: +40 en Leads & Supports; «Decreases basic damage received from … faction by 40%» en la skill), y en otros soportes el mismo stat viene negativo. El catálogo de efectos los lee siempre como reducción. ([THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters))
 - **API de skills: «Give Power» sin lo que otorga** — En 27 retratos, la skill trae «Give Power» («Acquires the following effect for … sec.») sin el efecto que sigue, y Leads & Supports dice cuál es: casi siempre «Remove All Debuffs» (Deadpool en Marvel's Savior, Odin, Thanos, Sentry, Blue Dragon, Gorr, Kang, entre otros), y también inmunidad a mermas (Invisible Woman, First Steps), curación y reducción de daño (Jessica Jones, Jewel), curación (Groot, Bloom) o ataque físico (Toxin). La ficha muestra la skill como viene y el soporte con su efecto. ([THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports))
-- **API de skills: códigos en lugar de nombres** — Algunas descripciones traen un número donde va el nombre de un efecto o de un elemento, y la app los muestra como vienen: «Natural Enemy» («Increases damage dealt to targets with 206 effect by 50%»), «DURATION INCREASE», «ELEMENT CONVERSION», «Accumulate All True Element Damage Dealt», «REMOVE», «Selective Removal», «DEBUFF EFFECT ↓», «Counter Reflect» y «SET SKILL CD». Los de tres cifras son el id de una habilidad de la misma API (abilityId): 206 es «Removes all Debuffs», 401 «Mockery», 108 «SHOCK», 205 «WEB», 204 «SNARE» y 120 «PIERCE». 407 y 577 no son el id de ninguna habilidad de las skills; Leads & Supports nombra 407 «Debuff Removal (Instinct)» en el soporte de Kahhori (Hero's Decree). Los de cifras sueltas («1234 skill», «pure 23 damage») parecen listas de ranuras o de elementos. La wiki nombra otro: el «REMOVE» del Striker de Spider-Man le quita al rival sus potenciadores activos. Es probable que 407 sea el efecto de cinco artefactos, los de Aero, Punisher, Scarlet Spider, Domino y Yelena Belova («[P1]% chance to ignore all debuffs received, and an additional [P2]% of total Instinct»): es lo único de los datos que deja de lado las mermas según el instinto. 577, del Striker de Winter Soldier, no tiene nombre en ninguna fuente que se pudo leer. ([THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Artifacts](https://thanosvibs.money/artifacts))
+- **API de skills: códigos en lugar de nombres** — Algunas descripciones traen un número donde va el nombre de un efecto, de un elemento o de unas ranuras: «Natural Enemy» («Increases damage dealt to targets with 206 effect by 50%»), «DURATION INCREASE», «ELEMENT CONVERSION», «Accumulate All True Element Damage Dealt», «REMOVE», «Selective Removal», «DEBUFF EFFECT ↓», «Counter Reflect» y «SET SKILL CD». Desde el 10 de octubre de 2026 la app los nombra (scripts/codigos.py). Los de tres cifras son el id de una habilidad de la misma API (abilityId), con su etiqueta: 206 es «Removes all Debuffs», 401 «Mockery», 108 «SHOCK», 205 «WEB», 204 «SNARE» y 120 «PIERCE»; las fichas de las notas de los foros oficiales lo confirman para 108, 204, 205, 206 y 401. Los demás salen de esas fichas (scripts/contenido/codigos.json): 407 es «Debuff Removal (Instinct)» (Thanos — Space Throne y Kahhori; Leads & Supports lo llama igual), 577 «Mark» (Winter Soldier), 1 en «REMOVE» los potenciadores activos, 0 todas las mermas o todos los potenciadores según el texto, 2 en «Counter Reflect» «Reflect All Attacks», 1 el fuego, 23 el rayo y el frío, 12345 los cinco elementos, y en «SET SKILL CD» las ranuras de las activas (2 es la Activa 2 en la ficha de Kingo; 12345, «all basic skills» en la de Doctor Octopus). ([THANO$VIB$ — Characters (skills de cada personaje)](https://thanosvibs.money/characters), [THANO$VIB$ — Leads & Supports](https://thanosvibs.money/supports), [THANO$VIB$ — Artifacts](https://thanosvibs.money/artifacts))
 - **C.T.P.: thanosvibs contra el juego** — En el juego (la ficha de cada C.T.P., en inglés y en coreano), los números de los 15 C.T.P. coinciden con los de thanosvibs en 6★ y en los reforjados Mighty y Brilliant, en lo que se ve de cada ficha, salvo donde thanosvibs escribe un número fijo en vez de uno por rango, que en Brilliant cambia: Steel (Authority) dura 6 s, no 5; Beatdown dura 6 s, no 5 (Energy), y se recarga en 9 s, no en 10 (Energy y Transcendence); Penetration se recarga en 7 s, no en 8 (Regeneration y Transcendence). En Transcendence, thanosvibs no da la duración de Beatdown (5 s en Mighty, 6 s en Brilliant). thanosvibs redondea además 51,75% a 51,8% (Authority, Destruction, Energy y Transcendence) y 44,85% a 44,9% (Insight). La ficha en coreano deja ver más de la opción fija de los Brilliant, y coincide: Competition ignora el 65% de la reducción de daño de los jefes, Energy y Veteran suben 50% el daño por impacto en cadena, Patience baja 90% el daño recibido por reflejo, Judgment baja 50% las resistencias, Insight sube 30% el daño básico del equipo a los Supervillanos, y Liberation da +32,2% a los ataques y defensas básicos y se activa con 15% al atacar. El texto difiere: los escudos de Regeneration y Veteran también bloquean el daño de instinto ("Blocks instinct damage"), que thanosvibs no dice; en Judgment, thanosvibs dice en los tres grados que la baja de resistencias ignora la inmunidad, y el juego no lo dice en 6★ ni en Mighty, y en Brilliant sí, donde agrega que se acumula hasta −50% (la línea se lee por su mitad de arriba); donde el juego dice "basic damage" (Energy, Destruction, Veteran, Rage, Greed e Insight), thanosvibs dice "damage"; Ambush (Greed) ignora la reducción de daño del rival ("damage decrease", como dice también el glosario de skills del juego), y thanosvibs dice reducción de defensa; Greed tiene en el juego dos opciones, que cambian qué par de clases recibe primero el aumento de daño, y thanosvibs muestra una; Greed vuelve a activarse 12 s después de que se termina su efecto ("Effect reactivates in 12 sec after removed"), y thanosvibs lo pone como una recarga de 12 s; Liberation sube el daño contra todos los instintos ("All damage dealt to all Instincts"), y thanosvibs lo parte en dos pares de instintos. Dentro del juego, el reforjado de Judgment se llama "Type Amplification" y dice subir el daño de las skills "de tipo", pero el glosario lo describe como "Element Amplification", que sube el ataque de las skills con elemento, y en coreano la ficha y el glosario dicen 속성 증폭 y 속성 스킬 (elemento): es un problema de traducción del inglés (Judgment es un C.T.P. de elemento). La app muestra el texto de thanosvibs. (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 특수 장비 도감 (los C.T.P. dentro del juego, en coreano, octubre de 2026), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps))
 - **C.T.P. reforjados: una de las dos opciones de reforjado (probable), y valores por debajo de los de la ficha** — La ficha de cada C.T.P. reforjado (Mighty y Brilliant) lista dos opciones de reforjado: un efecto con barra propia (Fury, Steel, Clash…) y, en la mayoría, +20% (Mighty) o +32% (Brilliant) a todos los ataques y defensas básicos; en Transcendence, Penetration y Beatdown, y en Insight y Liberation, dos efectos para todo el equipo. thanosvibs las publica como "special" y "generic". Los tres reforjados que se ven equipados traen una sola, seguida de la opción fija: Mephisto lleva un Conquest Mighty con Clash y un Competition Mighty con Fury, y Gorr, un Conquest Brilliant con Clash; y las notas del 4 de octubre de 2023 hablan de dos C.T.P. of Insight "with different reforge options". Es probable que cada C.T.P. reforjado lleve una de las dos. Las fichas aclaran además que muestran el valor más alto que se puede obtener ("Greatest Option Value Displayed"), y los equipados pueden tener menos, también en la opción fija: el Competition Mighty de Mephisto tiene Fury 40% y 40% (la ficha dice 60% y 60%), crítico y crítico de instinto +20,55% (34%) y daño crítico de instinto 31,63% (45%); el Conquest Brilliant de Gorr, Clash 70% y 60% con recarga de 8 s (90%, 80% y 7 s). La app muestra el texto de thanosvibs, sin números. (MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 특수 장비 도감 (los C.T.P. dentro del juego, en coreano, octubre de 2026), MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026), [Foro oficial de MARVEL Future Fight — 10/4 Update Details (notas del 4 de octubre de 2023)](https://forum.netmarble.com/futurefight_en/view/2196/1799063), [THANO$VIB$ — C.T.P.s](https://thanosvibs.money/ctps))
 - **C.T.P. por contenido: la guía del juego dice uno por personaje, y la ficha tiene una ranura para PvP y otra para PvE** — La guía del juego dice que cada personaje puede equipar como máximo un C.T.P. ("A max of 1 Custom Gear can be equipped per character"; en coreano, lo mismo). La ficha del personaje tiene ranuras numeradas, y cada una dice en qué contenido se aplica su C.T.P. ("Applied Content", 적용 콘텐츠): Gorr, con una sola ranura y un "+" al lado, lleva su Conquest Brilliant en PVE y en PVP; Mephisto, con dos, lleva un Conquest Mighty en PVP y un Competition Mighty en PVE, y el detalle de sus stats se ve por ranura. Al lado del contenido hay un botón para editarlo: es probable que el contenido de cada ranura lo elija el jugador. Las fichas de los C.T.P. no nombran contenidos, así que no es un dato del C.T.P. Qué modos cuentan como PVP y cuáles como PVE no se ve. La app recomienda un C.T.P. para PvP y otro para PvE y, en cada modo, usa el del tipo del modo (modos.json). (MARVEL Future Fight — guía dentro del juego (contenidos, crecimiento e ítems, octubre de 2026), MARVEL Future Fight — 가이드, 콘텐츠 사전 y 아이템 사전 (la guía dentro del juego, en coreano: contenidos, crecimiento e ítems; octubre de 2026), MARVEL Future Fight — C.T.P. (Custom Gear, dentro del juego, octubre de 2026), MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026))
@@ -332,11 +333,9 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 
 ## 8. Facción, tipo o raza que la fuente no publica
 
-thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: `uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en el orden en que aparecen. En la ficha, el valor completado va subrayado y dice de dónde salió.
+thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: `uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en el orden en que aparecen (qué valor va a cuál de esos efectos no se sabe: dos fuentes que dan los mismos valores en otro orden no difieren). En la ficha, el valor completado va subrayado y dice de dónde salió.
 
-De los 249: 4 a mano, 131 de Leads & Supports, 38 de la wiki y 76 sin resolver (la app los muestra "sin especificar").
-
-- **Valores de Leads & Supports distintos de la wiki (gana Leads & Supports):** 1022870012, 1022870013
+De los 249: 45 a mano, 134 de Leads & Supports, 38 de la wiki y 32 sin resolver (la app los muestra "sin especificar").
 
 Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el juego. `python3 scripts/marcadores.py` agrega las filas que falten.
 
@@ -344,69 +343,28 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 |---|---|---|---|
 | Agent Venom — Agent Anti-Venom | Agent Anti-Venom | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1012150011 |
 | Angela — Secret Wars: 1602 Witch Hunter Angela | Secret Wars: 1602 Witch Hunter Angela | `Increases basic damage dealt to $HEROCLASS1 types by 20%.` | 1003950011 |
-| Captain America (Sam Wilson) — Marvel Studios' Captain America: Brave New World | New Captain America | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1203012012 |
-| Captain Marvel — Marvel Animation's Marvel Zombies | Marvel Animation's Marvel Zombies | `Increases basic damage by 55% when attacking characters without $HEROSUBTYPE1 Ability.` | 1202629012 |
 | Captain Marvel — Marvel Studios' Avengers: Endgame | Marvel Studios' Avengers: Endgame | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1002654012 |
 | Captain Marvel — Marvel Studios' Avengers: Endgame | Marvel Studios' Avengers: Endgame | `Decreases basic damage received from $HEROSUBTYPE1 faction by 10%.` | 1002654013 |
-| Captain Marvel — Marvel Studios' The Marvels | Marvel Studios' The Marvels | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1202608012 |
-| Captain Marvel — Marvel Studios' The Marvels | Marvel Studios' The Marvels | `Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.` | 1202608013 |
 | Deathlok / Deathlok — Modern | Centipede Serum | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804011 |
 | Deathlok / Deathlok — Modern | Centipede Serum | `Decreases basic damage received from enemies with $HEROSUBTYPE1 ability by 50%.` | 1005804012 |
-| Drax — Annihilation | Annihilation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 60%.` | 1002239012 |
-| Drax — Annihilation | Annihilation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 60%.` | 1002239013 |
-| Ebony Maw — Dark Obsidian Armor | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007771012 |
-| Ebony Maw — Dark Obsidian Armor | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1007771013 |
-| Ebony Maw — General's Hand | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007760012 |
-| Ebony Maw — General's Hand | Evil Persuasion | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1007760013 |
-| Electro — Spider-Man: No Way Home | Electric Battlefield | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1019733011 |
-| Electro — Spider-Man: No Way Home | Electric Battlefield | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1019733012 |
-| Falcon / Falcon — All-New Captain America / Falcon — Marvel Studios' Captain America: Civil War / Falcon — Marvel Legacy / Captain America (Sam Wilson) — Marvel Studios' The Falcon and the Winter Soldier / Falcon — What If... Zombies?! / Captain America (Sam Wilson) — Marvel Studios' Captain America: Brave New World | Hero's Rise | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 70%.` | 1003080013 |
-| Falcon (Joaquin Torres) | Captain's Wingman | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1027770011 |
-| Gamora — Requiem / Gamora — Marvel Studios' Guardians of the Galaxy 3 | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001247012 |
-| Gamora — Requiem / Gamora — Marvel Studios' Guardians of the Galaxy 3 | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001247013 |
-| Gamora — Wastelanders | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001297012 |
-| Gamora — Wastelanders | Cosmic Enforcer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1001297013 |
 | Ghost Rider / Ghost Rider — 70's Classic / Ghost Rider — Inhumans: Attilan Rising | Repentance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000470011 |
-| Ghost Rider (Robbie Reyes) — Lord of Vengeance | Lord of Vengeance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.` | 1011750012 |
-| Ghost Rider (Robbie Reyes) — Lord of Vengeance | Lord of Vengeance | `Decreases basic damage received from $HEROSUBTYPE1 faction by 70%.` | 1011750013 |
 | Ghost Rider — King of Hell | Repentance | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000471011 |
-| Ghost Rider — Rage Returned / Ghost Rider — Savage Avengers | Hell's Wrath | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1000443011 |
 | Gorgon | War Cry | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.` | 1011203062 |
-| Green Goblin — Gold Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1201811011 |
-| Green Goblin — Gold Goblin | OZ Formula | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.` | 1201811012 |
-| Infinity Ultron — Marvel Studios' What If...? | Marvel Studios' What If...? | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001331012 |
 | Iron Man — Marvel Studios' Avengers: Endgame / Iron Man — Team Suit | Overdrive Beam | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1000372102 |
 | Magneto — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 45%.` | 1012950011 |
 | Malekith / Malekith — All-New, All-Different | Malicious Manipulation | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002008011 |
 | Malekith / Malekith — All-New, All-Different | Malicious Manipulation | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1002008012 |
-| Malekith — War of the Realms | Dark Blessing | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1002036011 |
 | Maximus | Mad Scientist | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 50%.` | 1011504012 |
 | Mephisto | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024470012 |
 | Mephisto — Master of Hell | Rage of the Pit | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%. Effect cannot be removed.` | 1024493012 |
 | Molten Man | Fire Eater | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 30%.` | 1019504012 |
-| Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243012 |
-| Punisher — Cosmic Ghost Rider | Cosmic Ghost Rider | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003243013 |
-| Punisher — Fist of the Beast | Fist of the Beast | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1003288011 |
-| Punisher — Marvel Television's Daredevil: Born Again | Marvel Television's Daredevil: Born Again | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.` | 1203209011 |
 | Red Skull / Red Skull — Secret Wars: Red Skull | Hero Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1001506011 |
 | Red Skull / Red Skull — Secret Wars: Red Skull | Hero Hunter | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1001506012 |
 | Red Skull — Hydra Armor | Hero Hunter | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1001571011 |
 | Red Skull — Hydra Armor | Hero Hunter | `Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.` | 1001571012 |
-| Red Skull — The Crimson Fall | Age of Malice | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1001545011 |
-| Red Skull — The Crimson Fall | Age of Malice | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.` | 1001545012 |
 | Ronan — Marvel Studios' Captain Marvel | Marvel Studios' Captain Marvel | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1004851011 |
-| Sentinel — Stark Sentinels Mk II | Mutant Suppressor | `Increases basic damage dealt to $HEROSUBTYPE1 characters by 100%.` | 1017563012 |
-| Sentinel — Stark Sentinels Mk II | Mutant Suppressor | `Decreases basic damage received from $HEROSUBTYPE1 characters by 60%.` | 1017563013 |
 | Spider-Man (Miles Morales) / Spider-Man (Miles Morales) — Into the Spider-Verse | Ultimate Spider-Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1006570011 |
 | Spider-Man (Miles Morales) — Absolute Carnage | Ultimate Spider-Man | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 120%.` | 1006571011 |
-| Spider-Man (Miles Morales) — Ancient Curse | Ancient Curse | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1206529011 |
-| Spider-Man (Miles Morales) — Spider-Man: Across the Spider-Verse | Spider-Man: Across the Spider-Verse | `Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.` | 1206502011 |
-| Spider-Man 2099 — All-New, All-Different | All-New, All-Different | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 10%.` | 1013635011 |
-| Thanos — Obsidian King | Mad Titan | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1007590011 |
-| Thanos — Thanos Wins / Thanos — Annihilation | Hero Slayer | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1207527011 |
-| Thanos — Wise Harvester | True Peace | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1207502011 |
-| Thanos — Wise Harvester | True Peace | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 20%.` | 1207502012 |
-| Thor (Jane Foster) — Marvel Studios' Thor: Love and Thunder | Marvel Studios' Thor: Love and Thunder | `Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.` | 1007150012 |
 | Ulik | Troll's Roar | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.` | 1009803062 |
 | Ultron Mark 1 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001351011 |
 | Ultron Mark 1 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001351012 |
@@ -414,10 +372,7 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 | Ultron Mark 3 — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001352012 |
 | Ultron Prime — Avengers: Age of Ultron | Avengers: Age of Ultron | `Decreases basic damage received from $HEROCLASS1 types by 10%.` | 1001350011 |
 | Ultron Prime — Avengers: Age of Ultron | Avengers: Age of Ultron | `Increases basic damage dealt to $HEROCLASS1 types by 10%.` | 1001350012 |
-| Ultron — All-Father Ultron | All-Father Ultron | `Increases basic damage by 40% when attacking characters without $HEROSUBTYPE1 Ability.` | 1001363012 |
-| Vulture — Spider-Man: Homecoming | Spider-Man: Homecoming | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1013550011 |
 | Whiplash | Mechanical Engineering | `Increases basic damage dealt to enemies with $HEROSUBTYPE1 ability by 80%.` | 1012204011 |
-| Yellowjacket — Marvel NOW! | Marvel NOW! | `Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.` | 1005250011 |
 
 ## 9. Efectos que el catálogo no clasifica
 
@@ -640,52 +595,55 @@ Más de 100%: un error de la wiki. No se corrige ni se topea: la app la muestra 
 - Daken: Doctor Octopus, 219% cuando lo atacan
 - Molecule Man: Morgan le Fay, 120% cuando él ataca
 
-## 12. Liderazgos que Leads & Supports no publica
+## 12. Liderazgos y soportes que Leads & Supports no publica
 
 Leads & Supports de thanosvibs no publica el liderazgo de todas las variantes. Los que no publica los deriva el build de la Leader Skill de la API de skills (Ezequiel, 4 de octubre de 2026; scripts/liderazgos.py, explicado en docs/MODELO.md) y van en los datos con `"src": "api"`: la app dice «según la skill del juego». La Leader Skill se parte en los dos slots de liderazgo de Leads & Supports, y cada efecto, cada activación y la condición de cada efecto pasan a lo que publica Leads & Supports según las variantes que tienen las dos cosas (la correspondencia aprendida, abajo) o, lo que Leads & Supports no publica en ningún liderazgo, según scripts/contenido/liderazgos_api.json (la correspondencia a mano: un stat del catálogo para cada efecto, y la activación con el texto de la API). Todo o nada por slot: si algo no cierra, ese slot no se deriva y va abajo con su motivo. Lo derivado no lleva «Notable», que es una marca de thanosvibs que la API no tiene.
 
-411 variantes tienen liderazgo de Leads & Supports y 477 no. El build deriva el de 467 (485 slots); 11 slots, de 11 variantes, no se pudieron derivar.
+Los soportes (pasiva, pasiva de Tier-2 y pasiva de uniforme: lo que le dan a un grupo de aliados) siguen la misma regla desde el 10 de octubre de 2026 (Ezequiel), con la correspondencia que se aprende de los liderazgos y la de a mano. De cada una de esas skills va lo de sus etapas con objetivo de aliados (no las de «Self»), y un «Give Power» otorga lo de la etapa que lo sigue, por su tiempo (si la API no lo publica, es constante), a los aliados de una de las dos. Un slot de soporte se deriva solo si Leads & Supports no publica ninguno de esa skill.
+
+414 variantes tienen liderazgo de Leads & Supports y 474 no. El build deriva el liderazgo de 464 (482 slots) y 12 slots de soporte; 17 slots, de 17 variantes, no se pudieron derivar.
 
 ### Correspondencia aprendida
 
-De las variantes con liderazgo de Leads & Supports, efecto por efecto: lo que da cada uno de los 34 efectos de la API (el número del texto, con su signo) y en cuántas variantes se ve.
+De las variantes con liderazgo de Leads & Supports, efecto por efecto: lo que da cada uno de los 35 efectos de la API (el número del texto, con su signo) y en cuántas variantes se ve.
 
 | Efecto de la API | Leads & Supports | Variantes |
 |---|---|---|
-| «Increases all Basic Attacks by #%» (ALL BASIC ATTACKS INCREASE) | All Basic Attacks +n1 | 117 |
-| «#% increase of Energy Attack.» (ENERGY ATTACK ↑) | Energy Attack +n1 | 70 |
+| «Increases all Basic Attacks by #%» (ALL BASIC ATTACKS INCREASE) | All Basic Attacks +n1 | 127 |
+| «#% increase of Energy Attack.» (ENERGY ATTACK ↑) | Energy Attack +n1 | 71 |
 | «#% increase of Physical Attack.» (PHYSICAL ATTACK ↑) | Physical Attack +n1 | 57 |
-| «Ignores target's Dodge Rate by #%.» (IGNORE DODGE) | Ignore Dodge +n1 | 39 |
+| «Ignores target's Dodge Rate by #%.» (IGNORE DODGE) | Ignore Dodge +n1 | 40 |
 | «Removes all Debuffs.» (Removes all Debuffs. ) | Remove All Debuffs | 37 |
 | «#% increase of HP.» (MAX HP ↑) | HP +n1 | 36 |
 | «Increases all Basic Defenses by #%.» (ALL BASIC DEFENSES INCREASE) | All Basic Defenses +n1 | 27 |
-| «Increases all Basic Attacks by #%, all Basic Defenses by #%, and all Speeds by #%.» (Increases all basic stats) | All Basic Attacks +n1, All Basic Defenses +n2, All Speeds +n3 | 16 |
+| «Increases all Basic Attacks by #%, all Basic Defenses by #%, and all Speeds by #%.» (Increases all basic stats) | All Basic Attacks +n1, All Basic Defenses +n2, All Speeds +n3 | 17 |
 | «Increases Flame Damage by #%.» (FLAME DAMAGE ↑) | Fire Damage +n1 | 14 |
 | «Increases All Debuffs effect by #%.» (DEBUFF EFFECT ↑) | All Debuffs Effect +n1 | 10 |
 | «Decreases Debuff Duration by #%.» (CROWD CONTROL TIME ↓) | Debuff Duration −n1 | 9 |
+| «Critical Rate increases by #%.» (CRITICAL RATE ↑) | Critical Rate +n1 | 7 |
+| «Increases All Speeds by #%.» (ALL SPEED ↑) | All Speeds +n1 | 7 |
 | «Increases all Basic Attacks by #%.» (Increases all Basic Attacks) | All Basic Attacks +n1 | 7 |
 | «Critical Damage increases by #%.» (CRITICAL DAMAGE ↑) | Critical Damage +n1 | 6 |
-| «Critical Rate increases by #%.» (CRITICAL RATE ↑) | Critical Rate +n1 | 6 |
 | «Increases Lightning Damage by #%.» (LIGHTNING DAMAGE ↑) | Lightning Damage +n1 | 6 |
 | «#% increase of Energy Defense.» (ENERGY DEFENSE ↑) | Energy Defense +n1 | 5 |
 | «Dodge Rate increases by #%.» (DODGE ↑) | Dodge +n1 | 5 |
-| «Increases All Speeds by #%.» (ALL SPEED ↑) | All Speeds +n1 | 5 |
 | «Increases basic damage dealt to $HEROSUBTYPE# types by #%.» (INCREASES BASIC DAMAGE BASED ON CHARACTER'S GENDER), con Masculino | Basic Damage Dealt to Males +n2 | 5 |
 | «Immunity to BURN Effect.» (RESIST) | Burn Immunity | 4 |
 | «Increases Mind Resist by #%.» (MIND RESIST ↑) | Mind Resist +n1 | 4 |
 | «Creates a Shield equal to #% of Max HP» (SHIELD) | Max HP Shield +n1 | 2 |
 | «Increases All Resistances by #%.» (ALL RESISTANCE ↑) | All Resistances +n1 | 2 |
 | «Increases Mind Damage by #%.» (MIND DAMAGE ↑) | Mind Damage +n1 | 2 |
+| «Increases Poison Damage by #%.» (POISON DAMAGE ↑) | Poison Damage +n1 | 2 |
+| «Increases basic damage dealt to boss types by #%.» (Increases basic damage when attacking boss types) | Basic Damage Dealt to Boss Types +n1 | 2 |
 | «Recovers #% of HP.» (HP RECOVERY) | Heal +n1 | 2 |
+| «#% Ignore Defense» (IGNORE DEFENSE) | Ignore Defense +n1 | 1 |
 | «#% chance to become immune to Physical Damage.» (PHYSICAL IMMUNITY) | Physical Immunity Chance +n1 | 1 |
 | «#% increase of Recovery Rate.» (RECOVERY RATE ↑) | Recovery Rate +n1 | 1 |
 | «Decreases Chain Hit damage by #% when attacked.» (CHAIN HIT DMG RECEIVED ↓) | Chain Hit Damage Received −n1 | 1 |
 | «Decreases Skill Cooldown by #%.» (COOLDOWN DURATION ↓) | Skill Cooldown −n1 | 1 |
 | «Ignores Damage Increase/Decrease effect between self and opposing faction» (Ignores Damage Increase effect between factions) | Ignores Damage Increase/Decrease Effect Between Self and Opposing Faction | 1 |
 | «Increases Cold Damage by #%.» (COLD DAMAGE ↑) | Cold Damage +n1 | 1 |
-| «Increases Poison Damage by #%.» (POISON DAMAGE ↑) | Poison Damage +n1 | 1 |
 | «Increases basic damage dealt to $HEROSUBTYPE# faction by #%.» (Increases basic damage based on character's faction), con Superhéroe | Basic Damage Dealt to Heroes +n2 | 1 |
-| «Increases basic damage dealt to boss types by #%.» (Increases basic damage when attacking boss types) | Basic Damage Dealt to Boss Types +n1 | 1 |
 
 `n1`, `n2`...: el primer número del texto, el segundo... La duración es la del efecto, si la publica.
 
@@ -695,103 +653,244 @@ Condición de cada efecto: «All Allies\nActivates when: Combat Type Ally enters
 
 ### Correspondencia a mano
 
-De scripts/contenido/liderazgos_api.json: lo que Leads & Supports no publica en ningún liderazgo. Cada efecto, con su texto de la API, da un stat del catálogo con el número del texto, y cada activación va con el texto de la API. Variantes: las que lo tienen en la Leader Skill.
+De scripts/contenido/liderazgos_api.json: lo que Leads & Supports no publica en ningún liderazgo. Cada efecto, con su texto de la API, da un stat del catálogo con el número del texto (en negativo, si lleva signo −1), y cada activación va con el texto de la API. Variantes: las que lo tienen en una skill.
 
 | Efecto de la API | Stat | Variantes |
 |---|---|---|
 | «#% chance to grant All Damage Immunity» (ALL DAMAGE IMMUNE) | All Damage Immunity +n1 | 2 |
 | «Attack Speed increases by #%.» (ATTACK SPEED ↑) | Attack Speed +n1 | 8 |
 | «#% chance to become immune to Cold Damage.» (COLD IMMUNITY) | Cold Immunity Chance +n1 | 6 |
+| «Decreases damage received from reflected effects by #%.Effect: Physical Reflect» (Counter Reflect) | Physical Reflect Damage Received −n1 | 8 |
+| «Decreases damage received from reflected effects by #%.Effect: Reflect All Attacks» (Counter Reflect) | All Reflect Damage Received −n1 | 7 |
 | «Creates an energy Shield equal to #% of Max HP» (ENERGY SHIELD) | Energy Shield +n1 | 11 |
-| «Increases Flame Resist by #%.» (FLAME RESIST ↑) | Fire Resist +n1 | 14 |
-| «#% Ignore Defense» (IGNORE DEFENSE) | Ignore Defense +n1 | 2 |
+| «Increases Flame Resist by #%.» (FLAME RESIST ↑) | Fire Resist +n1 | 16 |
 | «Increases Lightning Resist by #%.» (LIGHTNING RESIST ↑) | Lightning Resist +n1 | 13 |
+| «#% increase of MAX HP.» (MAX HP ↑) | HP +n1 | 5 |
 | «#% increase of Physical Defense.» (PHYSICAL DEFENSE ↑) | Physical Defense +n1 | 24 |
 | «Creates a physical Shield equal to #% of Max HP» (PHYSICAL SHIELD) | Physical Shield +n1 | 3 |
 | «Increases Poison Resist by #%.» (POISON RESIST ↑) | Poison Resist +n1 | 1 |
-| «Immunity to BLEED Effect.» (RESIST) | Bleed Immunity +n1 | 1 |
-| «Immunity to Fracture Effect.» (RESIST) | Fracture Immunity +n1 | 1 |
-| «Super Armor, increases all Basic Defenses by #%.» (SUPER ARMOR) | Super Armor, All Basic Defenses +n1 | 3 |
+| «Immunity to BLEED Effect.» (RESIST) | Bleed Immunity | 1 |
+| «Immunity to Fracture Effect.» (RESIST) | Fracture Immunity | 1 |
+| «Super Armor, increases all Basic Defenses by #%.» (SUPER ARMOR) | Super Armor, All Basic Defenses +n1 | 12 |
 
-Activaciones: «#% chance when attacking» (12 variantes); «#% rate when dodging» (5 variantes); «#% rate when hit» (27 variantes); «When enemies are below #% HP,» (1 variante); «when dealing Critical Attack» (15 variantes); «when dodging» (4 variantes); «when HP is below #%» (3 variantes); «when tagging» (15 variantes).
+Activaciones: «#% chance when attacking» (12 variantes); «#% rate when dodging» (5 variantes); «#% rate when hit» (34 variantes); «When enemies are below #% HP,» (1 variante); «when dealing Critical Attack» (15 variantes); «when dodging» (4 variantes); «when HP is below #%» (5 variantes); «when tagging» (15 variantes); «When attacking an enemy with MINIATURIZE effect applied» (1 variante); «#% rate when Dancing Sensation skill is used» (1 variante); «by default and reactivates # sec. after removed» (4 variantes).
 
 «Give Power» que dice el juego: la API no publica qué otorga la Leader Skill, y la ficha del juego sí. El slot lleva la restricción del objetivo de la API y, de lo que dice el juego, los efectos, la activación y la recarga; la app cita su fuente.
 
 - Mephisto — Master of Hell (`mephisto1`), Lord of Hell: `leader2` Remove All Debuffs (12 s) — para Side: Supervillano, When Debuffed, recarga 20 s. MARVEL Future Fight — 영웅 정보 (la ficha de personaje dentro del juego, en coreano: skills, uniforme, C.T.P., artefacto y strikers; octubre de 2026): La ficha de Mephisto con el uniforme Master of Hell, 지옥 군주 (리더 스킬 Lv.6), renglón por renglón: «적용 대상: 빌런 진영인 팀원만 / · 화염 피해량 +30% 상승 / 발동 확률: 상태 이상에 걸렸을 때 / 적용 대상: 빌런 진영인 팀원만 / · 모든 상태 이상 제거(12 초) / 재사용 대기시간 20초» (traducción de Claude: para los integrantes del bando Villano, daño de fuego +30%; y, al recibir un debuff, para los mismos, quitar todos los debuffs por 12 s, con recarga de 20 s). Capturas 253, 269 y 286 del 4 de octubre de 2026.
+- Sentry — Marvel Studios' Thunderbolts* (`sentry2`), Shining Hero: `leader2` Remove All Debuffs (12 s) — When Debuffed, recarga 20 s. [Foro oficial coreano de MARVEL Future Fight (café de Naver) — 4월 29일(화) 업데이트 상세 공지 (notas del 29 de abril de 2025: Sentry — Marvel Studios' Thunderbolts*)](https://cafe.naver.com/futurefight/3126257): La ficha del uniforme Marvel Studios' Thunderbolts* de Sentry en la nota del foro coreano (V1090_유니폼3_센트리.png), liderazgo «Shining Hero»: «발동 확률: 상태 이상에 걸렸을 때 / 적용 대상: 모든 팀원 / 모든 상태 이상 제거(12초) / 재사용 대기시간 20초» (traducción de Claude: al recibir un debuff, a todos los aliados, quitar todos los debuffs (12 s), recarga de 20 s). La ficha en inglés de Sentry — Merged (nota del foro 1814157) dice lo mismo: «Activation Rate: when debuffed / Applies to: All Allies / · Removes all Debuffs. (12 Sec.) / Cooldown Time 20 second(s)».
+
+Requisitos que dice el juego: la API publica la skill del Tier más alto, y estos soportes derivados piden ese Tier (el slot lo lleva como Leads & Supports, con la fuente).
+
+- Molecule Man (`moleculeman`), Unbound Being: Tier-3. [Foro oficial de MARVEL Future Fight — 12/16 Patch (Completed) (notas del 16 de diciembre de 2020: el Tier-3 de Molecule Man)](https://forum.netmarble.com/futurefight_en/view/2213/1666651): La ficha «Molecule Man T-3 Ultimate Skill» de la nota del 16 de diciembre de 2020, columna Passive «Unbound Being»: «[Tier-2] Applies to: Self / Decreases the effect of Reflect by 50%. / Reflect Effect(s): PHYSICAL REFLECT / [Tier-3] Applies to: All Allies / Decreases the effect of Reflect by 50%. / Reflect Effect(s): PHYSICAL REFLECT, ENERGY REFLECT». La API publica la de Tier-3 (para todos los aliados). Ezequiel, 10 de octubre de 2026: «solo da el bono a todo el equipo si está en T3... Sino solo aplica a sí mismo».
 
 ### Verificación contra Leads & Supports
 
-Cada slot de liderazgo de Leads & Supports contra el que la misma regla deriva de su Leader Skill, en stats, valores, duración, condición, restricción, activación y recarga (no en el nombre ni en «Notable»): de 448 slots, 394 iguales, 5 distintos, 47 que no se pueden derivar, 2 que la Leader Skill no da aparte.
+Cada slot de liderazgo o de soporte de Leads & Supports contra el que la misma regla deriva de su skill, en stats, valores, duración, condición, restricción, activación y recarga (no en el nombre ni en «Notable»): de 685 slots, 481 iguales, 29 distintos, 164 que no se pueden derivar, 8 que la skill de la API no da aparte, 3 que Leads & Supports no publica.
 
 Distintos (lo derivado / Leads & Supports):
 
+- Angel — All-New X-Men (`angel2`), `uniform`: efectos: Recovery Rate +50%, Dodge +30% / Dodge +30%, Recovery Rate +50%.
 - Black Swan (`blackswan`), `leader`: recarga: 25 s / 20 s.
+- Dazzler (`dazzler`), `t2`: efectos: Basic Damage Dealt to Boss Types +65%, Ignore Dodge +70% / Ignore Dodge +70%, Basic Damage Dealt to Boss Types +65%.
+- Dazzler — X-Song (`dazzler1`), `t2`: efectos: Basic Damage Dealt to Boss Types +65%, Ignore Dodge +70%, All Basic Attacks +25% / All Basic Attacks +25%, Ignore Dodge +70%, Basic Damage Dealt to Boss Types +65%.
 - Drax (`drax3`, `drax2`), `leader`: efectos: HP +45% (when 1 Combat), HP +55% (when 2 Combats), HP +65% (when 3 Combats) / HP +45%, HP +55%, HP +65%.
+- Franklin Richards (`franklinrichards`), `passive`: activación: when HP is below 40% / When HP is below 40%.
+- Gilgamesh — Marvel Studios' Eternals (`gilgamesh1`), `uniform`: efectos: All Basic Defenses +35%, Physical Reflect Damage Received −80%, Chain Hit Damage Received −15% / All Basic Defenses +35%, Chain Hit Damage Received −15%, Physical Reflect Damage Received −80%.
+- Groot (`groot`, `groot2`, `groot3`, `groot1`, `groot4`), `t2`: activación: 25% rate when hit / 25% chance when hit.
+- Ironheart — Marvel Television's Ironheart (`ironheart2`), `uniform`: efectos: Basic Damage Dealt to Boss Types +45%, Ignore Dodge +25% / Ignore Dodge +25%, Basic Damage Dealt to Boss Types +45%.
+- Katy (`katy`), `passive`: efectos: Ignore Dodge +30%, Critical Damage +30% / Critical Damage +30%, Ignore Dodge +30%.
+- Mantis (`mantis`), `t2`: efectos: Ignore Defense +15%, Critical Damage +20% / Critical Damage +20%, Ignore Defense +15%.
 - Mephisto (`mephisto`), `leader`: activación: When Debuffed / ninguna; recarga: 20 s / ninguna; efectos: Remove All Debuffs (11 s), Fire Damage +30% (15 s) / Fire Damage +30%.
+- Mysterio — Summer Mystery (`mysterio2`), `uniform`: efectos: Basic Damage Dealt to Boss Types +40%, All Basic Attacks +30% / All Basic Attacks +30%, Basic Damage Dealt to Boss Types +40%.
+- Rescue — Invincible Iron Man (`rescue2`), `uniform`: efectos: Recovery Rate +25%, HP +25% / HP +25%, Recovery Rate +25%.
+- Riri Williams — Black Panther: Wakanda Forever (`ironheart1`), `uniform`: efectos: Basic Damage Dealt to Boss Types +35%, Ignore Dodge +25% / Ignore Dodge +25%, Basic Damage Dealt to Boss Types +35%.
+- Ronan — Marvel Studios' Captain Marvel (`ronan2`), `t2`: activación: by default and reactivates 10 sec. after removed / ninguna; recarga: 10 s / ninguna.
+- Sandman — Beach Fortress (`sandman1`), `uniform`: efectos: Basic Damage Dealt to Boss Types +40%, Ignore Dodge +20% / Ignore Dodge +20%, Basic Damage Dealt to Boss Types +40%.
+- Spider-Woman — Spider-Man: Across the Spider-Verse (`spiderwoman1`), `uniform`: efectos: Ignore Dodge +25%, Chain Hit Damage Received −30%, Basic Damage Dealt to Boss Types +35% / Chain Hit Damage Received −30%, Ignore Dodge +25%, Basic Damage Dealt to Boss Types +35%.
 - The Hood (`thehood`), `leader`: restricción: Side: Supervillano / ninguna.
+- The Thing (`thing`, `thing1`), `t2`: efectos: Super Armor, All Basic Defenses +5%, All Basic Attacks +40%, Physical Reflect Damage Received −50% / All Basic Attacks +40%, Physical Reflect Damage Received −50%, Super Armor, All Basic Defenses +5%.
+- The Thing — Classic (`thing2`), `t2`: efectos: Super Armor, All Basic Defenses +25%, All Basic Attacks +40%, All Reflect Damage Received −50%, Basic Damage Dealt to Boss Types +25% / All Basic Attacks +40%, Physical Reflect Damage Received −50%, Super Armor, All Basic Defenses +25%, Basic Damage Dealt to Boss Types +25%.
+- The Thing — The Fall of the Fantastic Four (`thing3`), `t2`: efectos: Super Armor, All Basic Defenses +25%, All Basic Attacks +45%, All Reflect Damage Received −50%, Basic Damage Dealt to Boss Types +35% / All Basic Attacks +45%, All Reflect Damage Received −50%, Super Armor, All Basic Defenses +25%, Basic Damage Dealt to Boss Types +35%.
+- Thor (Jane Foster) — Marvel Studios' Thor: Love and Thunder (`janefoster1`), `passive`: efectos: Lightning Damage +40%, Ignore Dodge +30% / Ignore Dodge +30%, Lightning Damage +40%.
 
 No se pueden derivar:
 
+- Abomination (`abomination`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Chain Hit damage by 20% when attacking.» (CHAIN HIT DMG DEALT ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
+- Abomination — Infected Bioweapon (`abomination1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction).
+- Agent Venom (`agentvenom2`, `agentvenom3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Chain Hit damage by 20% when attacking.» (CHAIN HIT DMG DEALT ↑).
+- Amadeus Cho — Heroic Age (`amadeuscho3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Ancient One (`ancientone`, `ancientone1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 25%.» (ALL ELEMENT DAMAGE ↑).
+- Ancient One — The Monk of Kamar-Taj (`ancientone3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 45%.» (ALL ELEMENT DAMAGE ↑).
+- Ancient One — Unleashed Mystic (`ancientone2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 40%.» (ALL ELEMENT DAMAGE ↑).
+- Angela — Asgard's Assassin (`angela3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
 - Arachknight — Arachknight 2099 (`arachknight1`), `leader`: la API no dice a quiénes llega («Infinity Warps Allies\nActivates when: Infinity Warps type Ally enters»).
+- Athena (`athena`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
+- Beast (`beast`, `beast1`, `beast2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 15%.» (Decreases all basic damage); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Guaranteed Critical Rate by 8%» (GUARANTEED CRITICAL RATE ↑).
+- Beta Ray Bill — Beta Ray Bill (`betaraybill1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction).
+- Black Dwarf — Dark Obsidian Armor (`blackdwarf2`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Guard Break Immunity» (GUARD BREAK IMMUNE); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to STUN Effect.» (RESIST).
+- Black Panther — Marvel Studios' Black Panther: Wakanda Forever (`shuri3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction).
 - Blue Dragon (`bluedragon`, `bluedragon1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Deadpool — April Pools (`deadpool6`), `leader`: la API no dice a quiénes llega («Target ID: 88»).
-- Deadpool — April Pools (`deadpool6`), `leader2`: la API no dice a quiénes llega («Target ID: 88»).
+- Cassie Lang (`cassielang`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 15%.» (Increases basic damage based on character's faction).
+- Chasm — Dark Web (`scarletspider1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 35%, increases Bonus Damage by 35%.» (SKILL AND BONUS DAMAGE ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Colossus (`colossus`, `colossus1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.» (Decreases basic damage based on character's faction).
+- Colossus (`colossus3`, `colossus2`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 50%.» (Decreases basic damage based on character's faction).
+- Cyclops — Marvel Animation's X-Men '97 (`cyclops5`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.» (Increases basic damage based on character's faction).
 - Deadpool — Marvel Studios' Deadpool & Wolverine (`deadpool8`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Doctor Voodoo — Savage Avengers (`doctorvoodoo2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.» (Decreases basic damage based on character's faction).
+- Ebony Maw — Dark Obsidian Armor (`ebonymaw2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROCLASS1 types by 35%.» (Increases basic damage based on character's type); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROCLASS1 types by 35%.» (Decreases basic damage based on character's type).
+- Ebony Maw — General's Hand (`ebonymaw3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROCLASS1 types by 40%.» (Increases basic damage based on character's type); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROCLASS1 types by 35%.» (Decreases basic damage based on character's type).
+- Ebony Maw — Marvel Studios' Avengers: Infinity War (`ebonymaw1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROCLASS1 types by 25%.» (Increases basic damage based on character's type); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROCLASS1 types by 25%.» (Decreases basic damage based on character's type).
+- Echo (`echo`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 15%.» (ALL ELEMENT DAMAGE ↑).
+- Falcon — What If... Zombies?! (`falcon5`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction).
+- Falcon (Joaquin Torres) (`joaquintorres`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction).
+- Ghost Panther (`ghostpanther`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.» (Decreases basic damage based on character's faction).
+- Ghost Rider (Robbie Reyes) — Lord of Vengeance (`robbiereyes1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «80% chance to become immune to Flame Damage.» (FLAME IMMUNITY).
 - Gorr (`gorr1`, `gorr2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Hope Summers (`hopesummers`), `leader`: la API no dice a quiénes llega («Target ID: 142»).
-- Hope Summers (`hopesummers`), `leader2`: la API no dice a quiénes llega («Target ID: 142»).
-- Hulkbuster — Celestial Hulkbuster (`hulkbuster4`), `leader`: la API no dice a quiénes llega («Target ID: 3»).
-- Hulkbuster — Celestial Hulkbuster (`hulkbuster4`), `leader2`: la API no dice a quiénes llega («Target ID: 3»).
-- Hulkbuster (Iron Man Mark 44) — 3099 (`hulkbuster3`), `leader`: la API no dice a quiénes llega («Target ID: 3»).
-- Hulkbuster (Iron Man Mark 44) — 3099 (`hulkbuster3`), `leader2`: la API no dice a quiénes llega («Target ID: 3»).
+- Green Goblin — Dark Avengers (`greengoblin2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Green Goblin (`greengoblin5`, `greengoblin4`, `greengoblin3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
+- Groot (`groot5`, `groot6`), `t2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Groot (`groot5`, `groot6`), `t22`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Gwenpool — April Pools (`gwenpool3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Additional Pierce Damage by 4%» (ADDITIONAL PIERCE DAMAGE INCREASE).
+- Hela (`hela2`, `hela3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
+- Hela — Marvel Studios' Thor: Ragnarok (`hela1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.» (Decreases basic damage based on character's faction).
 - Invisible Woman — Classic (`invisiblewoman2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to all Debuffs.» (IMMUNE).
+- Invisible Woman (`invisiblewoman4`, `invisiblewoman3`), `passive`: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when hit»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Barrier 1 time(s)» (BARRIER).
+- Invisible Woman — Marvel Studios' The Fantastic Four: First Steps (`invisiblewoman4`), `uniform`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Invisible Woman — The Fall of the Fantastic Four (`invisiblewoman3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to all Debuffs.» (IMMUNE).
+- Jeff the Land Shark (`jeffthelandshark`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 10%.» (Excluding bosses, ignores enemy's damage decrease); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction).
+- Jessica Jones — Jewel (`jessicajones1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «100% chance to become immune to Mind Damage.» (MIND IMMUNITY).
+- Jessica Jones — Jewel (`jessicajones1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 95%.» (Decreases all basic damage).
+- Jubilee — Marvel Animation's X-Men '97 (`jubilee1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.» (Decreases basic damage based on character's faction).
+- Jubilee — Marvel Animation's X-Men '97 (`jubilee1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease).
+- Kahhori (`kahhori`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 206 effect by 50%» (Natural Enemy); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 407 effect by 50%» (Natural Enemy).
 - Kang the Conqueror (`kang`, `kang1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Katy (`katy`), `leader`: la API no dice a quiénes llega («Target ID: 89»).
-- Katy (`katy`), `leader2`: la API no dice a quiénes llega («Target ID: 89»).
+- Kraven The Hunter — Interdimensional Hunter (`kraventhehunter1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 30%, increases Bonus Damage by 30%.» (SKILL AND BONUS DAMAGE ↑).
+- Leader (`leader`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.» (Increases basic damage based on character's faction).
+- Loki — Young Avengers (`loki8`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- M'Baku (`mbaku1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.» (Decreases basic damage based on character's faction).
+- Mantis — Marvel Studios' Guardians of the Galaxy 3 (`mantis1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
 - Maya Lopez — Marvel Studios' Hawkeye (`echo1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
 - Maya Lopez (Echo) — Marvel Studios' Echo (`echo2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Medusa — Inhumans vs X-Men (`medusa2`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
+- Medusa — Ancient Curse (`medusa3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
 - Molecule Man (`moleculeman`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Morgan le Fay — Fallen Soul (`morganlefay1`), `uniform`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Morgan le Fay — Fallen Soul (`morganlefay1`), `uniform2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Morph (`morph`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.» (INCREASES BASIC DAMAGE BASED ON CHARACTER'S GENDER).
+- Mystique (`mystique`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Mystique — Hellfire Gala (`mystique1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
+- Nick Fury (`nickfury1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction).
+- Nick Fury (`nickfury2`, `nickfury3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to Incapacitation Effect.» (RESIST).
+- Nick Fury — Secret Avengers (`nickfury4`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to Incapacitation Effect.» (RESIST).
+- Nova (Richard Rider) (`nova`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Nova (Richard Rider) — Marvel Cosmic Invasion (`nova1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction).
 - Odin (`odin2`, `odin3`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Phil Coulson (`philcoulson`, `philcoulson1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Guaranteed Critical Rate by 20%» (GUARANTEED CRITICAL RATE ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.» (Decreases basic damage based on character's faction).
+- Phil Coulson — Winter Ops (`philcoulson2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Guaranteed Critical Rate by 20%» (GUARANTEED CRITICAL RATE ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.» (Decreases basic damage based on character's faction).
+- Phil Coulson — Winter Ops (`philcoulson2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 20%.» (Decreases all basic damage).
+- Phyla-Vell (`phylavell`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 25%, increases Bonus Damage by 15%.» (SKILL AND BONUS DAMAGE ↑).
+- Polaris (`polaris`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.» (Decreases basic damage based on character's faction).
+- Polaris — Uncanny X-Men (`polaris1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases all basic damage dealt to enemies except $HEROSUBTYPE1 characters by 55%» (All Basic Damage Increased Except Specific Species).
+- Proxima Midnight — Dark Obsidian Armor (`proximamidnight2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction).
 - Quasar (Wendell Vaughn) (`wendellvaughn`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
 - Rachel Summers — X-Men: Days of Future Past (`rachelsummers1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Red Hulk — Marvel Studios' Captain America: Brave New World (`redhulk3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.» (Increases basic damage based on character's faction).
+- Red She-Hulk (`redshehulk`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 10%.» (Decreases all basic damage).
+- Red Skull — The Crimson Fall (`redskull3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.» (Increases basic damage based on character's faction).
+- Rhino — Uncanny Spider-Man (`rhino1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 10%.» (Excluding bosses, ignores enemy's damage decrease).
+- Ronan — Annihilators (`ronan3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Satana — Ascended One (`satana2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 35%.» (ALL ELEMENT DAMAGE ↑).
+- Scarlet Spider (`scarletspider`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 25%, increases Bonus Damage by 20%.» (SKILL AND BONUS DAMAGE ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Scarlet Spider — Gift Deliverer (`scarletspider2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction).
 - Sentry — Merged (`sentry1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Sleeper (`sleeper`), `leader`: la API no dice a quiénes llega («Target ID: 42»).
-- Sleeper (`sleeper`), `leader2`: la API no dice a quiénes llega («Target ID: 42»).
+- Sersi — Marvel Studios' Eternals (`sersi1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
+- Shadow Shell (`shadowshell`, `shadowshell1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 25%.» (Decreases all basic damage).
+- Shuri (`shuri`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.» (Decreases basic damage based on character's faction).
+- Shuri — Black Panther: Wakanda Forever (`shuri2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction).
+- Shuri — Marvel Studios' Black Panther (`shuri1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.» (Decreases basic damage based on character's faction).
+- Silver Samurai (`silversamurai`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%.» (Increases basic damage based on character's faction).
+- Sleeper (`sleeper`), `passive`: la API no dice a quiénes llega («Symbiote Allies y Symbiote Allies: a quiénes otorga el «Give Power»»).
+- Sleeper (`sleeper`), `passive2`: la API no dice a quiénes llega («Symbiote Allies y Symbiote Allies: a quiénes otorga el «Give Power»»).
 - Spider-Man (Miles Morales) — Absolute Carnage (`milesmorales2`), `leader`: la API no dice a quiénes llega («Target ID: 72»).
-- Spider-Man (Miles Morales) — Anniversary Special (`milesmorales3`), `leader`: la API no dice a quiénes llega («Target ID: 10»).
 - Spider-Man (Miles Morales) — Absolute Carnage (`milesmorales2`), `leader2`: la API no dice a quiénes llega («Target ID: 72»).
-- Spider-Man (Miles Morales) — Anniversary Special (`milesmorales3`), `leader2`: la API no dice a quiénes llega («Target ID: 10»).
 - Spider-Woman — Spider-Man: Across the Spider-Verse (`spiderwoman1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Storm (`storm`, `storm1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «50% chance to become immune to Lightning Damage.» (LIGHTNING IMMUNITY).
+- Storm — Inhumans vs X-Men (`storm3`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 35%.» (ALL ELEMENT DAMAGE ↑).
+- Storm (`storm4`, `storm5`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 55%.» (ALL ELEMENT DAMAGE ↑).
+- Stryfe — The Tyrant of Spring (`stryfe2`), `uniform`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Sun Bird (`sunbird`), `passive`: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when dead»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Revive with 50% of Max HP» (REVIVE).
+- Sun Bird — Moon Temple Defenders (`sunbird1`), `passive`: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when dead»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Revive with 60% of Max HP» (REVIVE).
+- Taskmaster (`taskmaster`, `taskmaster1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 25%, increases Bonus Damage by 20%.» (SKILL AND BONUS DAMAGE ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Guaranteed Critical Rate by 20%» (GUARANTEED CRITICAL RATE ↑).
+- Taskmaster — Marvel Studios' Thunderbolts* (`taskmaster2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Guaranteed Critical Rate by 20%» (GUARANTEED CRITICAL RATE ↑).
+- Taskmaster — Marvel Studios' Black Widow (`taskmaster1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Taskmaster — Marvel Studios' Thunderbolts* (`taskmaster2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
 - Thanos (`thanos7`, `thanos6`, `thanos5`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Victorious (`victorious`, `victorious1`), `leader`: la API no dice a quiénes llega («Target ID: 183»).
-- Victorious (`victorious`, `victorious1`), `leader2`: la API no dice a quiénes llega («Target ID: 183»).
-- Vision — Marvel Studios' WandaVision (`vision3`), `leader`: la API no dice a quiénes llega («Target ID: 140»).
-- Vision — Marvel Studios' WandaVision (`vision3`), `leader2`: la API no dice a quiénes llega («Target ID: 140»).
-- Wave (`wave`, `wave1`), `leader`: la API no dice a quiénes llega («Target ID: 198»).
-- Wave (`wave`, `wave1`), `leader2`: la API no dice a quiénes llega («Target ID: 198»).
+- The Thing — Marvel Studios' The Fantastic Four: First Steps (`thing4`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction).
+- Valkyrie (`valkyrie`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.» (Decreases basic damage based on character's faction).
+- Valkyrie — Asgardians of the Galaxy (`valkyrie3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.» (Decreases basic damage based on character's faction).
+- Valkyrie — Fearless Defenders (`valkyrie1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.» (Decreases basic damage based on character's faction).
+- Valkyrie — Marvel Studios' Thor: Love and Thunder (`valkyrie2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 25%.» (Decreases basic damage based on character's faction).
+- Venus (Aphrodite) (`venus`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 35%.» (Decreases basic damage based on character's faction).
+- Victorious (`victorious`), `leader`: la API no dice a quiénes llega («Target ID: 183»).
+- Victorious (`victorious`), `leader2`: la API no dice a quiénes llega («Target ID: 183»).
+- Volstagg (`volstagg`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 20%.» (Decreases all basic damage).
+- War Machine — Invincible Iron Man (`warmachine8`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 20%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
+- Warwolf (`warwolf`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Guaranteed Critical Rate by 20%» (GUARANTEED CRITICAL RATE ↑).
+- Wave (`wave`), `leader`: la API no dice a quiénes llega («Target ID: 198»).
+- Wave (`wave`), `leader2`: la API no dice a quiénes llega («Target ID: 198»).
+- Wave (`wave`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.» (Decreases basic damage based on character's faction).
+- Wave — Classic (`wave1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 15%.» (Decreases basic damage based on character's faction).
+- Weapon Hex (`weaponhex`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Summon an illusion with 50% of the summoner's stats.» (SUMMON).
+- Weapon Hex — Infected Bioweapon (`weaponhex1`), `passive`: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when HP is below {0}%»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «HP does not drop below 1 for $TIME secImmediately dies when the effect ends» (Death Throes).
+- Weapon Hex — Infected Bioweapon (`weaponhex1`), `uniform`: la API no dice a quiénes llega («Zombie Allies y Zombie Allies: a quiénes otorga el «Give Power»»).
+- Weapon Hex — Infected Bioweapon (`weaponhex1`), `uniform2`: la API no dice a quiénes llega («Zombie Allies y Zombie Allies: a quiénes otorga el «Give Power»»).
+- White Fox (`whitefox`, `whitefox1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction).
+- White Fox (`whitefox3`, `whitefox2`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 65%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
+- White Fox (`whitefox3`, `whitefox2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Chain Hit damage by 10% when attacking.» (CHAIN HIT DMG DEALT ↑).
+- White Fox — Lifestyle Series 1 (`whitefox1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to FEAR Effect.» (RESIST).
+- Wiccan (`wiccan`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «1s increase to the duration of 120.» (DURATION INCREASE); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «1s increase to the duration of 204.» (DURATION INCREASE).
+- Wong (`wong2`, `wong3`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 53%.» (Increases basic damage based on character's faction).
+- Yondu — Summer Vacation (`yondu3`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 50%.» (Increases basic damage based on character's faction).
 
 Solo en Leads & Supports:
 
+- Destroyer — The Mighty Thor (`destroyer2`), `passive`.
+- Ghost — Marvel Studios' Ant-Man and the Wasp (`ghost1`), `uniform`.
 - Invisible Woman — Classic (`invisiblewoman2`), `leader2`.
+- Jeff the Land Shark (`jeffthelandshark`), `passive2`.
 - Mephisto (`mephisto`), `leader2`.
+- The Thing (`thing4`, `thing3`), `uniform`.
+- Vision — Ultimate Vision (`vision4`), `t2`.
 
-### Sin derivar (11 slots en 11 variantes)
+Solo en la skill de la API:
 
-Variantes sin liderazgo de Leads & Supports con un slot de su Leader Skill que no se pudo derivar, con todos sus motivos. En docs/COMPLETITUD.md son el faltante «Liderazgo sin completar».
+- Electro (`electro`), `passive2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «70% chance to become immune to Lightning Damage.» (LIGHTNING IMMUNITY).
+- Electro — Spider-Man: No Way Home (`electro1`), `passive2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
+- Weapon Hex (`weaponhex`), `passive2`.
 
-Por motivo (un slot puede tener más de uno): efecto sin stat, 10; «Give Power», 1. Van juntas las variantes de un personaje con los mismos motivos.
+### Sin derivar (17 slots en 17 variantes)
 
-Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Paralyze» (PARALYZE), 2.
+Variantes sin liderazgo (o sin el soporte de una skill) de Leads & Supports con un slot que no se pudo derivar, con todos sus motivos. En docs/COMPLETITUD.md son los faltantes «Liderazgo sin completar» y «Soporte que Leads & Supports no publica».
+
+Por motivo (un slot puede tener más de uno): efecto sin stat, 15; objetivo sin nombre, 3; activación sin correspondencia, 3. Van juntas las variantes de un personaje con los mismos motivos.
+
+Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Barrier 1 time(s)» (BARRIER), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Paralyze» (PARALYZE), 2; «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy), 1; «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy), 1.
+
+Activaciones sin correspondencia, con los slots que dejan sin derivar: «when hit», 3.
 
 - Blade (`blade`, `blade1`, `blade2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL).
-- Sentry — Marvel Studios' Thunderbolts* (`sentry2`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
+- Blue Marvel — Classic (`bluemarvel1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy).
+- Crescent (`crescent`, `crescent1`), `t2`: la API no dice a quiénes llega («Summoned Character»).
+- Invisible Woman (`invisiblewoman`, `invisiblewoman2`, `invisiblewoman1`), `passive`: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when hit»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Barrier 1 time(s)» (BARRIER).
 - Silk (`silk`, `silk2`, `silk1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
+- Venom — King in Black (`venom4`), `uniform`: la API no dice a quiénes llega («All Allies y All Allies: a quiénes otorga el «Give Power»»).
 - White Tiger (`whitetiger`, `whitetiger1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
 - Yellowjacket (`yellowjacket`, `yellowjacket1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Paralyze» (PARALYZE).
 
 ### Derivados (467 variantes)
 
-Van juntas las variantes de un personaje con el mismo liderazgo derivado.
+Van juntas las variantes de un personaje con lo mismo derivado.
 
 - Absorbing Man (`absorbingman`, `absorbingman1`): `leader` Physical Defense +45%.
 - Adam Warlock (`adamwarlock`, `adamwarlock1`, `adamwarlock2`): `leader` Energy Defense +60%.
@@ -799,7 +898,6 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Agent 13 (`sharoncarter`, `sharoncarter1`): `leader` Skill Cooldown −24%.
 - Amadeus Cho — Heroic Age (`amadeuscho3`): `leader` Critical Rate +6%, Critical Damage +6%.
 - Angela (`angela`, `angela2`, `angela3`, `angela1`): `leader` Physical Defense +30%.
-- Annihilus (`annihilus`): `leader` All Speeds +6%; `leader2` Poison Damage +60% — para Character: Annihilus.
 - Ant-Man (`antman`, `antman6`, `antman1`, `antman3`, `antman4`, `antman2`, `antman5`): `leader` All Speeds +9%.
 - Arachknight (`arachknight`): `leader` Dodge +6%, Debuff Duration −24%.
 - Athena (`athena`): `leader` All Basic Defenses +24%.
@@ -831,7 +929,8 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Daredevil (`daredevil`, `daredevil2`, `daredevil1`, `daredevil3`, `daredevil4`): `leader` Critical Rate +12% (18 s), Critical Damage +12% (18 s) — 30% rate when dodging, recarga 30 s.
 - Darkhawk (`darkhawk`): `leader` All Speeds +6%.
 - Dazzler (`dazzler`, `dazzler1`): `leader` Critical Rate +6%.
-- Deadpool (`deadpool`, `deadpool4`, `deadpool5`, `deadpool3`, `deadpool2`, `deadpool1`): `leader` Recovery Rate +6%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Deadpool.
+- Deadpool (`deadpool`, `deadpool4`, `deadpool5`, `deadpool1`): `leader` Recovery Rate +6%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Deadpool.
+- Deadpool (`deadpool3`, `deadpool2`): `leader` Recovery Rate +6%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Deadpool; `t2` Recovery Rate +1% — by default and reactivates 1 sec. after removed, recarga 1 s.
 - Destroyer (`destroyer`, `destroyer1`, `destroyer2`): `leader` Energy Defense +30%.
 - Dormammu (`dormammu`): `leader` All Basic Defenses +24%.
 - Elektra (`elektra`, `elektra3`, `elektra1`, `elektra2`): `leader` All Speeds +6%.
@@ -844,12 +943,11 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Fantomex (`fantomex`): `leader` All Speeds +6%.
 - Franklin Richards (`franklinrichards`): `leader` Debuff Duration −24%.
 - Gamora (`gamora`, `gamora1`, `gamora2`): `leader` Attack Speed +13.5% — para Type: Velocidad.
-- Ghost — Marvel Studios' Thunderbolts* (`ghost2`): `leader` All Basic Attacks +50% — para Ability: Máquina.
+- Ghost — Marvel Studios' Thunderbolts* (`ghost2`): `leader` All Basic Attacks +50% — para Ability: Máquina; `uniform` Remove All Debuffs (12 s) — para Ability: Thunderbolts, When Debuffed, recarga 20 s.
 - Ghost Rider (`ghostrider`, `ghostrider1`, `ghostrider2`, `ghostrider3`, `ghostrider4`, `ghostrider5`): `leader` Fire Resist +50%.
 - Gilgamesh (`gilgamesh`, `gilgamesh1`): `leader` All Basic Defenses +50%.
 - Gorilla-Man (`gorillaman`): `leader` All Speeds +6%.
 - Green Goblin (`greengoblin`): `leader` Poison Resist +50%.
-- Green Goblin — Gold Goblin (`greengoblin5`): `leader` All Basic Attacks +40%, Ignore Dodge +40%.
 - Green Goblin — Ultimate (`greengoblin1`): `leader` Fire Resist +50%.
 - Groot (`groot`, `groot3`, `groot5`, `groot6`): `leader` Physical Defense +45% — para Type: Combate.
 - Groot (`groot2`, `groot4`): `leader` Physical Defense +45% — para Type: Velocidad.
@@ -863,6 +961,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Hulk (`hulk7`, `hulk6`): `leader` All Basic Defenses +24%.
 - Hulk (`hulk9`, `hulk8`): `leader` All Basic Defenses +24%; `leader2` HP +30% — para Character: Hulk.
 - Hulk (Amadeus Cho) (`amadeuscho`, `amadeuscho2`, `amadeuscho1`): `leader` Critical Rate +6%, Critical Damage +6%.
+- Hulkbuster (Iron Man Mark 44) — 3099 (`hulkbuster3`): `passive` HP +35% — para Ability: Máquina.
 - Hulkling (`hulkling`): `leader` Physical Defense +30%.
 - Human Torch (`humantorch2`, `humantorch4`, `humantorch3`): `leader` Fire Resist +50%.
 - Hydro-Man (`hydroman`): `leader` Bleed Immunity, Fracture Immunity, Physical Defense +20%.
@@ -887,7 +986,8 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Loki (`loki`, `loki4`, `loki3`, `loki1`, `loki7`, `loki6`, `loki5`, `loki2`, `loki8`): `leader` Mind Resist +50%.
 - Luke Cage (`lukecage`): `leader` Physical Immunity Chance +100% (11 s) — 25% rate when hit, recarga 50 s.
 - Luke Cage (`lukecage1`, `lukecage2`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 40 s.
-- Luna Snow (`lunasnow`, `lunasnow1`, `lunasnow2`, `lunasnow3`, `lunasnow5`, `lunasnow4`): `leader` All Speeds +6%, Cold Immunity Chance +30%.
+- Luna Snow (`lunasnow`): `leader` All Speeds +6%, Cold Immunity Chance +30%; `passive` All Speeds +1% (3 s), Cold Immunity Chance +5% (3 s) — 30% rate when Dancing Sensation skill is used, recarga 5 s.
+- Luna Snow (`lunasnow1`, `lunasnow2`, `lunasnow3`, `lunasnow5`, `lunasnow4`): `leader` All Speeds +6%, Cold Immunity Chance +30%.
 - Magik (`magik`, `magik1`): `leader` Critical Rate +13%.
 - Makkari (`makkari`, `makkari1`): `leader` All Speeds +6%.
 - Mantis (`mantis`, `mantis1`): `leader` Debuff Duration −24%.
@@ -896,6 +996,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Minn-Erva (`minn-erva`, `minn-erva1`): `leader` Debuff Duration −24%.
 - Mister Sinister (`mistersinister`, `mistersinister1`): `leader` Mind Resist +50%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Mister Sinister.
 - Mockingbird (`mockingbird`, `mockingbird2`): `leader` Dodge +6%.
+- Molecule Man (`moleculeman`): `passive` All Reflect Damage Received −50%.
 - Molten Man (`moltenman`): `leader` All Basic Defenses +45%.
 - Moon Girl — Monsters Unleashed! (MFF Variant) (`moongirl1`): `leader` All Basic Attacks +36%.
 - Moon Knight (`moonknight`, `moonknight1`, `moonknight4`, `moonknight3`, `moonknight2`): `leader` Debuff Duration −24%.
@@ -922,7 +1023,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Rachel Summers (`rachelsummers`): `leader` Mind Resist +40%.
 - Red Skull (`redskull`, `redskull2`, `redskull1`, `redskull3`): `leader` All Basic Defenses +24%.
 - Rescue (`rescue`): `leader` Max HP Shield +20% (10 s) — when HP is below 30%, recarga 10 s.
-- Rhino (`rhino`, `rhino1`): `leader` Ignore Defense +20%.
+- Rhino (`rhino`): `leader` Ignore Defense +20%.
 - Rocket Raccoon (`rocketraccoon`, `rocketraccoon1`, `rocketraccoon2`, `rocketraccoon4`, `rocketraccoon3`, `rocketraccoon6`, `rocketraccoon5`): `leader` Skill Cooldown −30% (10 s) — when dealing Critical Attack, recarga 10 s.
 - Rogue (`rogue`, `rogue1`, `rogue3`, `rogue2`, `rogue4`): `leader` All Basic Defenses +36%.
 - Ronin — Marvel Studios' Avengers: Endgame (`hawkeye4`): `leader` Critical Damage +12%.
@@ -932,7 +1033,7 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Scorpion (`scorpion`, `scorpion1`): `leader` All Basic Defenses +50%.
 - Scream (`scream`, `scream1`): `leader` Critical Rate +12%.
 - Sentinel — Stark Sentinels Mk II (`sentinel2`): `leader` Remove All Debuffs (12 s) — When Debuffed, recarga 20 s.
-- Sentry — Marvel Studios' Thunderbolts* (`sentry2`): `leader` All Basic Attacks +30%.
+- Sentry — Marvel Studios' Thunderbolts* (`sentry2`): `leader` All Basic Attacks +30%; `leader2` Remove All Debuffs (12 s) — When Debuffed, recarga 20 s.
 - Sersi (`sersi`, `sersi1`): `leader` All Speeds +6%.
 - Shadow Shell (`shadowshell`, `shadowshell1`): `leader` Debuff Duration −24%.
 - Shang-Chi — Marvel Animation's Marvel Zombies (`shangchi2`): `leader` All Basic Attacks +24%.
@@ -956,20 +1057,24 @@ Van juntas las variantes de un personaje con el mismo liderazgo derivado.
 - Sylvie (`sylvie`): `leader` Mind Resist +50%.
 - Taskmaster (`taskmaster`, `taskmaster1`, `taskmaster2`): `leader` Dodge +6%; `leader2` All Basic Attacks +35%, All Basic Defenses +35%, All Speeds +10% — para Character: Taskmaster.
 - Thane — Phoenix Force (`thane1`): `leader` Remove All Debuffs (12 s), All Basic Attacks +25% (12 s) — When Debuffed, recarga 20 s.
-- The Thing (`thing`, `thing2`, `thing1`, `thing4`, `thing3`): `leader` All Basic Defenses +50%.
+- The Thing (`thing`, `thing4`, `thing3`): `leader` All Basic Defenses +50%.
+- The Thing (`thing2`, `thing1`): `leader` All Basic Defenses +50%; `uniform` HP +15%.
 - Thor (`thor`, `thor10`, `thor7`, `thor8`, `thor5`, `thor4`, `thor9`, `thor3`, `thor6`, `thor2`): `leader` Lightning Resist +50%.
 - Thor (Jane Foster) (`janefoster`, `janefoster1`): `leader` Lightning Resist +50%, Critical Damage +6%.
 - Ulysses Klaue (`ulyssesklaue`): `leader` Critical Rate +13%.
 - Valkyrie (`valkyrie`, `valkyrie3`, `valkyrie1`, `valkyrie2`): `leader` Dodge +11%.
-- Venom (`venom`, `venom2`, `venom4`, `venom1`, `venom6`, `venom3`, `venom5`): `leader` Debuff Duration −24%.
+- Venom (`venom`, `venom4`, `venom1`, `venom6`, `venom5`): `leader` Debuff Duration −24%.
+- Venom — Anti-Venom (`venom2`): `leader` Debuff Duration −24%; `uniform` Heal +15% — 30% rate when hit, recarga 20 s.
+- Venom — War of the Realms (`venom3`): `leader` Debuff Duration −24%; `uniform` Heal +20% — 30% rate when hit, recarga 20 s.
 - Vision (`vision`, `vision1`, `vision2`): `leader` Super Armor, All Basic Defenses +30% (10 s) — when tagging, recarga 30 s.
 - Volstagg (`volstagg`): `leader` All Basic Defenses +24%.
 - Vulture (`vulture`, `vulture1`): `leader` Dodge +6%, Critical Rate +9%.
 - War Tiger (`wartiger`, `wartiger1`): `leader` Skill Cooldown −24%.
 - Warpath (`warpath`): `leader` All Speeds +6%.
 - Warwolf (`warwolf`): `leader` Critical Rate +18% (5 s), Critical Damage +18% (5 s) — When enemies are below 30% HP,, recarga 1 s.
-- Wasp (Nadia Van Dyne) (`nadiavandyne`): `leader` Dodge +11%.
+- Wasp (Nadia Van Dyne) (`nadiavandyne`): `leader` Dodge +11%; `passive` All Basic Attacks +15% (3 s) — When attacking an enemy with MINIATURIZE effect applied, recarga 1 s.
 - Weapon Hex (`weaponhex`, `weaponhex1`): `leader` Dodge +6%, Debuff Duration −24%.
+- Wenwu (`wenwu`): `passive` HP +25% — para Side: Supervillano.
 - Whiplash (`whiplash`): `leader` Skill Cooldown −24%.
 - Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): `leader` Physical Attack +45%.
 - Wolverine (`wolverine`, `wolverine1`, `wolverine2`, `wolverine5`, `wolverine4`, `wolverine7`, `wolverine6`, `wolverine3`): `leader` Debuff Duration −30%.
