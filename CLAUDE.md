@@ -17,7 +17,12 @@ variante, en `docs/COMPLETITUD.md`.
   commitea en un clon y se entrega un `git bundle` (`origin/main..main`, después de `git fetch`) con
   un nombre nuevo cada vez (fecha y hora UTC) en la carpeta del repo, con el comando de pull. El push
   y las etiquetas los hace Ezequiel. No se reescribe historia ya entregada. En su carpeta, solo git
-  de lectura.
+  de lectura. Los pasos de cada entrega van con esta sintaxis (Ezequiel, 10 de octubre de 2026), en PowerShell:
+  «1. Código» (`cd C:\Users\ezequ\dev\MFF.ar`, `git pull --ff-only`, `git pull --ff-only .\<bundle> main`, `git push`);
+  «2. Build de datos» (Actions → «Actualizar datos MFF» → Run workflow sobre main, o `gh workflow run actualizar.yml` y
+  `gh run watch`; termina con un commit «Datos actualizados» nuevo en main); «3. Etiqueta», cuando termina bien
+  (`git pull --ff-only`, `git tag vX.Y.Z`, `git push origin vX.Y.Z`). Sin versión nueva, sin el paso 3; sin formato
+  nuevo, la etiqueta va sobre el commit de la versión y no espera al de datos.
 - Versiones: `version.json` (versión, notas para el usuario, formato de datos). El formato sube
   cuando la app nueva necesita algo que los datos viejos no traen (`FORMATO` en `scripts/build.py`,
   con la historia de cada uno). Los datos publicados salen de main. Con un formato nuevo, primero va el
@@ -115,7 +120,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   efecto tiene lectura de un modo y no del otro. Prueba: `verif_que_hace.py`. Maqueta: canvas «Rediseño MFF.ar»,
   artboards «Análisis (#33)». Sin mapear de lo que dijo Ezequiel: «penetración» y «daño que aumenta según el daño
   recibido» (no hay un efecto del catálogo que sea solo eso).
-- La 1.0.37 (sin formato nuevo, 14; a etiquetar sobre «Versión 1.0.37: notas con el Tier-3 de Molecule Man»), 10 de octubre: los soportes que Leads &
+- La 1.0.37 (sin formato nuevo, 14; a etiquetar sobre «Versión 1.0.37: notas con lo de los foros»), 10 de octubre: los soportes que Leads &
   Supports no publica se derivan de la pasiva, la Tier-2 y la de uniforme de la API con la regla de los liderazgos
   (`liderazgos.partes_soporte`; Ezequiel: el caso fue la reducción del daño reflejado de Molecule Man): 13 derivados, 8
   sin derivar con su motivo; la correspondencia se aprende solo de los liderazgos, y lo de a mano acepta `signo` -1 y
@@ -125,6 +130,12 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   #26 (marcadores: el mismo par en otro orden no difiere, la Tier-2 de Joaquin Torres a t2, la plantilla saca las filas
   vacías resueltas, los avisos de soportes una vez) y el build con los cambios de Leads & Supports del 10 de octubre
   (restricción "None", Annihilus por su retrato). #11 queda para el issue de los equipos de la cuenta (Ezequiel).
+  Mismo día, con las fichas de skills de las notas de los dos foros (inglés y café coreano; Ezequiel: «Lo que puedas
+  completar con esa información, completalo»): 41 marcadores a `marcadores.csv` (ahora con `fuente`), los códigos en
+  lugar de nombres (`scripts/codigos.py`, `contenido/codigos.json`, el efecto lleva `cn`), los «Target ID»
+  (`contenido/objetivos_juego.json`), el «Give Power» de Sentry — Thunderbolts* (`otorga`) y la pasiva de uniforme de
+  Jewel (`contenido/skills_juego.json`, la skill lleva `j`, la app la marca «según el juego»). Lo que quedó, con lo que
+  dicen las fichas, en la planilla `mff-faltantes-20261010.xlsx` de la carpeta de Ezequiel (fuera del repo).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
