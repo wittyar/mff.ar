@@ -250,8 +250,10 @@ def _efecto_artefacto(e, donde):
 def soportes(retratos, nombres):
     """Lo que un personaje le da al equipo, por retrato: liderazgo, pasiva de 4★, pasiva
     de Tier-2, efecto de uniforme y habilidad exclusiva del artefacto, con a quién se
-    aplica. Cada entrada de la fuente vale también para los retratos de 'sameas'."""
-    out, origen = {}, {}
+    aplica. Cada entrada de la fuente vale también para los retratos de 'sameas'.
+    Devuelve (soportes por retrato, avisos): los avisos los imprime main(), una vez por build
+    (marcadores.py, que corre antes en skills_api.py, también la llama)."""
+    out, origen, avisos = {}, {}, []
     for s in cargar('work/supports.json'):
         e = {}
         if s['new_player_pick']:
@@ -275,12 +277,12 @@ def soportes(retratos, nombres):
                 cat, val = r
                 if (cat, val) in _RESTR_CORREGIDA:
                     nueva = _RESTR_CORREGIDA[(cat, val)]
-                    print(f'AVISO: soporte {donde}: la fuente restringe por {cat} "{val}", que es {nueva}; se usa {nueva}')
+                    avisos.append(f'soporte {donde}: la fuente restringe por {cat} "{val}", que es {nueva}; se usa {nueva}')
                     x['rc'] = [cat, val]
                     cat = nueva
                 if cat == 'Character':
                     if val in _ALIAS_PJ:
-                        print(f'AVISO: soporte {donde}: la fuente restringe al personaje "{val}"; en el roster es "{_ALIAS_PJ[val]}"')
+                        avisos.append(f'soporte {donde}: la fuente restringe al personaje "{val}"; en el roster es "{_ALIAS_PJ[val]}"')
                         x['rc'] = [cat, val]
                         val = _ALIAS_PJ[val]
                     if val not in nombres:
@@ -312,12 +314,12 @@ def soportes(retratos, nombres):
             e[tipo] = x
         for p in [s['portrait']] + s['sameas']:
             if p not in retratos:
-                print(f"AVISO: soporte de {s['portrait']} para un retrato que no está en el roster: {p}")
+                avisos.append(f"soporte de {s['portrait']} para un retrato que no está en el roster: {p}")
                 continue
             if p in out and out[p] is not e:
                 raise SystemExit(f"soporte: el retrato {p} tiene dos entradas ({origen[p]} y {s['portrait']})")
             out[p], origen[p] = e, s['portrait']
-    return out
+    return out, avisos
 
 
 def nombres_pj(chars):
@@ -563,7 +565,9 @@ def main():
             for x in tipos:
                 TX(x)
     skills = cargar('work/skills_parsed.json')
-    sop = soportes(retratos, {r['character'] for r in chars})
+    sop, avisos_sop = soportes(retratos, {r['character'] for r in chars})
+    for a in avisos_sop:
+        print(f'AVISO: {a}')
     # Los liderazgos que Leads & Supports no publica, desde la Leader Skill de la API (Ezequiel, 4 de octubre de
     # 2026), con "src": "api". Van en una entrada nueva: la de Leads & Supports puede ser de varios retratos.
     a_mano = cargar(os.path.join(_DIR, 'contenido', 'liderazgos_api.json'))

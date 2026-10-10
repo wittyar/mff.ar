@@ -275,7 +275,8 @@ def resolver():
     # build corre después) y su mismo roster. Los liderazgos que fuentes.py deriva de la Leader Skill de
     # la API (scripts/liderazgos.py) no entran: salen de las mismas skills que se completan acá.
     retratos = {r['portrait'] for r in chars} | {r['base_portrait'] for r in chars}
-    ls, conflictos_ls = de_soportes(efs, soportes(retratos, {r['character'] for r in chars}))
+    # Sus avisos los imprime fuentes.py.
+    ls, conflictos_ls = de_soportes(efs, soportes(retratos, {r['character'] for r in chars})[0])
     clase_de = {e['id']: e['clase'] for e in efs}
     manual, huerfanos = tabla_manual(clase_de)
     out = {i: (v, 'w') for i, v in wiki.items()}

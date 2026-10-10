@@ -339,7 +339,7 @@ chequeo('C2 skills_api.py corre sobre el fixture', r.returncode == 0, (r.stdout 
 crudo = json.load(open(os.path.join(FIX, 'work', 'skills_parsed.json'), encoding='utf-8'))
 aqui = os.getcwd(); os.chdir(FIX)
 retratos = {r['portrait'] for r in chars} | {r['base_portrait'] for r in chars}
-sop = fuentes.soportes(retratos, {r['character'] for r in chars})
+sop = fuentes.soportes(retratos, {r['character'] for r in chars})[0]
 os.chdir(aqui)
 sop.update(json.load(open(os.path.join(FIX, 'soportes_de_datajs.json'), encoding='utf-8')))
 RF = L.derivar(sop, crudo['skills'], crudo['tablas'], fuentes.nombres_pj(chars), MANUAL)
