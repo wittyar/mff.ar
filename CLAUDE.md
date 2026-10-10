@@ -38,45 +38,13 @@ variante, en `docs/COMPLETITUD.md`.
   tabla de valor de los equipos) y `fuentes.validar_contenido`;
   `scripts/contenido/liderazgos_api.json` lo valida `liderazgos.validar` contra las tablas de la API
   (sin `work/`, con el `MFF_TABLAS` de data.js: `liderazgos_api/prueba.py`).
-- Pruebas: no están en el repo. Son scripts de Playwright contra la app servida por
-  `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`. La
-  copia más reciente va en un zip junto al último bundle (`pruebas-mff-*.zip`); su `LEEME.txt` dice
-  qué rutas adaptar. `images/` y `work/` no están en el repo: las imágenes se bajan con
-  `bajar_imagenes.py`, y sin `work/` no corren verif_guia_ficha, verif_marcadores ni verif_opciones.
-  Las que leen el contenido curado del repo (verif_glosario) fallan contra un data.js viejo:
-  `armar_datos_contenido.py` arma datos de prueba con el contenido nuevo, y `armar_datos_build.py`, con
-  lo que el próximo build cambia en data.js (hoy, el formato 8: el catálogo con la regla de cada stat,
-  si se acumula y su tope, la tabla de valor `MFF_VALOR`, `SEED.SKILL_TAGS` y el análisis recalculado
-  con `scripts/modelo.py`).
-  `armar_datos_build.py` recalcula también los roles. `armar_datos_lideres.py` les suma los liderazgos
-  que el build deriva de la Leader Skill (`scripts/liderazgos.py`, con las correspondencias a mano de
-  `scripts/contenido/liderazgos_api.json`, sus traducciones en `MFF_TXT` y la sección 12 de
-  `docs/AUDITORIA.md` y `docs/COMPLETITUD.md` rehechas), y `liderazgos_api/prueba.py` prueba esa función
-  y `liderazgos.validar` sin `work/`. `verif_otorga.py` prueba el aviso del «Give Power» que ninguna
-  fuente publica, y que no va donde lo dice el juego. `armar_datos_cierre.py` les suma lo que el build
-  corrige de thanosvibs con el juego (`fuentes.nombre_ctp` y `fuentes.linea_artefacto`, con la sección 5
-  de `docs/AUDITORIA.md`), y `verif_cierre.py` lo prueba en la app.
-  `verif_consistencia.py` compara, para las 888 variantes, lo que contesta cada pantalla a la misma
-  pregunta (formato de los soportes, verificación, recarga, filas de las listas, habilidades del
-  filtro, efectos de la comparativa, strikers; y, con las reglas del 4 de octubre, el C.T.P.
-  recomendado, el líder del trío, los strikers que desempatan, «le sirve», lo propio y los
-  anti-mermas, y la fuente de cada liderazgo; con las del 5 de octubre, el filtro «Solo el último
-  uniforme», la habilidad que cuenta una vez y si cada stat se acumula y su tope) y lista como
-  pendiente la de los recomendados de Modos. `verif_ultimo_uniforme.py`, `verif_solapado.py` y
-  `verif_acumula.py` prueban esas cosas en pantalla y contra modelos aparte, y `medir_solapado.py`
-  mide, contra otro app.js, cuánto cambian las listas. `verif_historico.py` prueba el histórico (datos, la pestaña, los
-  filtros, la ficha, los links, inglés y celular) contra un modelo con `MFF_HISTORICO`. `verif_mesa.py` prueba la mesa de trabajo (1.0.25: tres
-  paneles, poner y quitar, líder, restricción de Alliance Battle contra un modelo, bonos activos, guardar, la capa, comparar,
-  ventana angosta); desde la 1.0.25 las que usaban el armador viejo de Equipos o la barra de comparar del roster usan la mesa.
-  `verif_filas` y `verif_export_viejo` comparan contra versiones viejas (worktrees que ya no están) y no corren solas; las
-  que miran retratos (`verif_paginador`, `verif_servidor_caido`) necesitan `images/` en el repo (un enlace a las bajadas
-  sirve: `.gitignore` no tapa un enlace, que no se commitea). `verif_trabada.py` prueba que la app baja los datos de
-  la carpeta de su formato aunque la raíz publique uno más nuevo, y la pantalla de datos sin su carpeta (1.0.30);
-  `verif_rescate.py`, la pantalla de rescate (1.0.31). Con datos de una versión más
-  nueva que la publicada, `MFF_DATOS` apunta a datos armados con el build sobre lo bajado ese día (sin `work/` en la
-  carpeta de Ezequiel: se baja con `fetch_all.py --no-portraits` en el contenedor). verif_consistencia tarda más de 25
-  min y su página llega a unos 5,5 GB: en un contenedor de 8 GB va sola (con otra prueba al lado, el OOM mata la página y
-  la prueba queda colgada).
+- Pruebas: en `pruebas/` desde el 9 de octubre de 2026 (#31); cómo correrlas y cuáles no corren solas, en
+  `pruebas/LEEME.md` (`./pruebas/correr.sh`, `MFF_DATOS` para datos armados con el build). Son scripts de Playwright
+  contra la app servida por `desktop/lanzador.py`, con modelos de la sinergia y del puntaje escritos aparte de `app.js`.
+  Lo que escriben va a `pruebas/salida/`, que git no sigue. `verif_consistencia.py` compara, para las 888 variantes, lo
+  que contesta cada pantalla a la misma pregunta; tarda más de 25 min y su página llega a unos 5,5 GB: en un contenedor
+  de 8 GB va sola. Las pruebas viejas que armaban datos de prueba a mano (`armar_datos_*.py`) quedaron de antes de que
+  el build corriera en el contenedor: hoy se arma una carpeta con el build sobre `work/`.
 
 ## Capturas del juego
 
@@ -197,4 +165,3 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
   las llegadas que siguen sin su nota (lista en `docs/HISTORICO.md`: de 2015, notas con imágenes y parches); los modos
   que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #11 a #20 y #23. Bugs: #25, #26.
-  Pruebas en el repo: #31.
