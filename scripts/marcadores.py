@@ -20,7 +20,8 @@ este orden (Ezequiel, 3 de octubre de 2026):
    "ability"...).
 En Leads & Supports y en la wiki, si la skill tiene varios efectos así (el mismo daño contra
 héroes y contra villanos), la fuente tiene que dar la misma cantidad de valores distintos, y
-se asignan en el orden en que aparecen; si no coincide, esa fuente no los resuelve. Un efecto
+se asignan en el orden en que aparecen (qué valor va a cuál de esos efectos no se sabe: dos fuentes
+que dan los mismos valores en otro orden no difieren); si no coincide, esa fuente no los resuelve. Un efecto
 al que una fuente le da valores distintos en dos skills tampoco sale de ella.
 Lo que no se completa queda sin resolver: la app lo marca "sin especificar" y
 docs/AUDITORIA.md lo lista para cargarlo a mano, junto con los efectos en que dos fuentes no
@@ -225,9 +226,27 @@ def de_soportes(efs, sop):
     return {i: v for i, v in val.items() if i not in conflictos}, sorted(conflictos)
 
 
-def _distintos(a, b):
-    """Los ids a los que dos fuentes ({id: valor}) les dan valores distintos."""
-    return sorted(i for i in a if i in b and a[i] != b[i])
+def iguales(efs):
+    """{id: los ids de los efectos que no se distinguen de él}: en la misma skill, la misma clase, el
+    mismo porcentaje y el mismo sentido (Abomination, «Fists of the World Ravager»: el mismo texto
+    para héroes y para villanos). Entre ellos, qué valor va a cuál es el orden en que los da la
+    fuente."""
+    por = {}
+    for e in efs:
+        por.setdefault((e['p'], e['skill'], e['clase'], e['pct'], e['sentido']), set()).add(e['id'])
+    out = {}
+    for ids in por.values():
+        for i in ids:
+            out.setdefault(i, set()).update(ids)
+    return out
+
+
+def _distintos(a, b, grupo):
+    """Los ids a los que dos fuentes ({id: valor}) les dan valores distintos. Si a los efectos que no se
+    distinguen (grupo, de iguales()) les dan los mismos valores en otro orden, no es una diferencia."""
+    def valores(f, i):
+        return sorted(f.get(j, '') for j in grupo[i])
+    return sorted(i for i in a if i in b and a[i] != b[i] and valores(a, i) != valores(b, i))
 
 
 def resolver():
@@ -282,9 +301,10 @@ def resolver():
     out = {i: (v, 'w') for i, v in wiki.items()}
     out.update({i: (v, 'l') for i, v in ls.items()})
     out.update({i: (v, 'm') for i, v in manual.items()})
+    grupo = iguales(efs)
     return out, efs, {'conflictos': sorted(conflictos), 'conflictos_soportes': conflictos_ls,
-                      'huerfanos': sorted(huerfanos), 'mano_soportes': _distintos(manual, ls),
-                      'mano_wiki': _distintos(manual, wiki), 'soportes_wiki': _distintos(ls, wiki)}
+                      'huerfanos': sorted(huerfanos), 'mano_soportes': _distintos(manual, ls, grupo),
+                      'mano_wiki': _distintos(manual, wiki, grupo), 'soportes_wiki': _distintos(ls, wiki, grupo)}
 
 
 def personaje(p, fila):

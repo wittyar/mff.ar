@@ -590,7 +590,8 @@ def marcadores_seccion(M):
              'el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la '
              'misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el '
              'mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en '
-             'el orden en que aparecen. En la ficha, el valor completado va subrayado y dice de dónde salió.\n')
+             'el orden en que aparecen (qué valor va a cuál de esos efectos no se sabe: dos fuentes que dan los mismos '
+             'valores en otro orden no difieren). En la ficha, el valor completado va subrayado y dice de dónde salió.\n')
     s.append(f"De los {M['ids']}: {M['manual']} a mano, {M['soportes']} de Leads & Supports, {M['wiki']} de la wiki y "
              f"{M['sin_resolver']} sin resolver (la app los muestra \"sin especificar\").\n")
     avisos = [(k, texto) for k, texto in _AVISOS_MARCADORES if M[k]]
