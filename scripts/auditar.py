@@ -774,6 +774,12 @@ def liderazgos_seccion(L, chars, fuentes):
             der = next((f"`{k}` {slot_txt(x)}" for k, x in L['derivados'].get(p, {}).items() if 'otorga' in x), 'no se derivó')
             s.append(f"- {pj(p)}, {skill}: {der}. {', '.join(fuente_md(fuentes[k]) for k in fs)}: {juego}")
         s.append('')
+    if M['requisitos']:
+        s.append('Requisitos que dice el juego: la API publica la skill del Tier más alto, y estos soportes derivados '
+                 'piden ese Tier (el slot lo lleva como Leads & Supports, con la fuente).\n')
+        for p, skill, req, fs, juego in M['requisitos']:
+            s.append(f"- {pj(p)}, {skill}: {req}. {', '.join(fuente_md(fuentes[k]) for k in fs)}: {juego}")
+        s.append('')
     if M['avisos']:
         s.append('Avisos: ' + '; '.join(M['avisos']) + '.\n')
     s.append('### Verificación contra Leads & Supports\n')

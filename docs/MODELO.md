@@ -338,6 +338,13 @@ de uniforme, en sus slots (`passive`/`passive2`, `t2`/`t22`, `uniform`/`uniform2
   correspondencias contradictorias y dejaba 44 liderazgos sin derivar [Comprobado, 10 de octubre].
   Para los soportes se agregaron a mano la reducción del daño reflejado (las dos, con signo −1, como
   las publica Leads & Supports) y «#% increase of MAX HP.».
+- La API publica cada skill como es en el Tier más alto. Si el soporte depende del Tier, el requisito va
+  a mano (`requisitos` en `liderazgos_api.json`, con su fuente) y el slot lo lleva como los de Leads &
+  Supports («Requiere Tier-3»). Hoy, Molecule Man: su pasiva «Unbound Being» es para él con Tier-2
+  (reflejo físico) y para todos los aliados con Tier-3 (físico y de energía), según la ficha de su Tier-3
+  en la nota del 16 de diciembre de 2020 y Ezequiel (10 de octubre de 2026: «solo da el bono a todo el
+  equipo si está en T3... Sino solo aplica a sí mismo»). La ficha de la app muestra la skill de la API,
+  la de Tier-3.
 - Un slot de soporte se deriva solo si Leads & Supports no publica ninguno de esa skill de la
   variante. Los que publica se verifican igual (sección 12 de `docs/AUDITORIA.md`); muchos dan
   distinto solo en el orden de los efectos.

@@ -583,6 +583,8 @@ def main():
     mal = validar_liderazgos(a_mano, skills['tablas'], cargar(os.path.join(_DIR, 'contenido', 'catalogo.json')))
     mal = mal or [f'el «Give Power» de {o["p"]}: fuente sin definir en contenido/guia.json: {k}'
                   for o in a_mano['otorga'] for k in o['fuente'] if k not in guia['fuentes']]
+    mal = mal or [f'el requisito de {o["p"]}, {o["skill"]}: fuente sin definir en contenido/guia.json: {k}'
+                  for o in a_mano['requisitos'] for k in o['fuente'] if k not in guia['fuentes']]
     if mal:
         raise SystemExit('scripts/contenido/liderazgos_api.json tiene errores:\n  ' + '\n  '.join(mal))
     liderazgos = derivar_liderazgos(sop, skills['skills'], skills['tablas'], nombres_pj(chars), a_mano)
@@ -594,6 +596,8 @@ def main():
         for x in slots.values():
             for g in x['fx']:
                 TX(g['s'])
+            if 'req' in x:
+                TX(x['req'])
     # Las activaciones que van con el texto de la API, con su traducción de la API (o sin traducir, y se lista).
     for en, es in liderazgos['textos'].items():
         if es is None:

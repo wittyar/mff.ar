@@ -50,6 +50,9 @@ publica» de docs/COMPLETITUD.md).
    correspondencia es la que se aprende de los liderazgos, más la de a mano: los soportes de Leads & Supports no
    enseñan (_aprender), pero se verifican igual. Un slot de soporte se deriva solo si Leads & Supports no publica
    ninguno de esa skill de la variante.
+   La API publica la skill del Tier más alto; si el soporte depende del Tier (la pasiva de Molecule Man es para él en
+   Tier-2 y para todos en Tier-3), el requisito va a mano (A_MANO, requisitos: retrato, skill, req, fuente y lo que
+   dice el juego) y el slot derivado lo lleva como Leads & Supports (req), con su fuente (reqf).
 """
 import collections, re
 from modelo import _mapeo
@@ -57,6 +60,8 @@ from modelo import _mapeo
 LIDERAZGOS = ('leader', 'leader2')
 # Los slots de Leads & Supports de cada skill de la API. La Leader Skill da liderazgos; las otras tres, soportes (lo que
 # le dan a un grupo de aliados): pasiva, pasiva de Tier-2 y pasiva de uniforme (Ezequiel, 10 de octubre de 2026).
+# Lo que un soporte puede requerir (req, como lo publica Leads & Supports: «Tier-2» en 24 pasivas).
+REQUISITOS = ('Tier-2', 'Tier-3')
 GRUPOS = {'Leader Skill': LIDERAZGOS, 'Passive': ('passive', 'passive2'), 'Tier-2 Passive': ('t2', 't22'),
           'Uniform Passive': ('uniform', 'uniform2')}
 A_MANO = 'scripts/contenido/liderazgos_api.json'
@@ -381,8 +386,8 @@ def validar(manual, T, cat):
     clasifica con los mismos efectos que a él (con un número, el valor; sin número, un stat sin valor, como las
     inmunidades); cada activación es un texto de la API; nada se repite. T: las tablas
     de la API (MFF_TABLAS); cat: el catálogo de efectos (contenido/catalogo.json)."""
-    if set(manual) != {'nota', 'efectos', 'activaciones', 'otorga'}:
-        return ['lleva nota, efectos, activaciones y otorga']
+    if set(manual) != {'nota', 'efectos', 'activaciones', 'otorga', 'requisitos'}:
+        return ['lleva nota, efectos, activaciones, otorga y requisitos']
     mal = [] if isinstance(manual['nota'], str) and manual['nota'] else ['la nota es un texto']
     etiquetas, textos, activaciones = ({f['en'] for f in T[k]} for k in ('ab', 'desc', 'act'))
     vistos = set()
@@ -437,6 +442,19 @@ def validar(manual, T, cat):
                 mal.append(f"{d}: «{g['s']}» no es un stat del catálogo (soporte)")
     mal += [f'el «Give Power» de {p}: repetido' for p, n in collections.Counter(o.get('p') for o in manual['otorga']).items()
             if n > 1]
+    for o in manual['requisitos']:
+        d = f"el requisito de {o.get('p')}, {o.get('skill')}"
+        if set(o) != {'p', 'skill', 'req', 'fuente', 'juego'}:
+            mal.append(f'{d}: lleva p, skill, req, fuente y juego')
+            continue
+        if not all(isinstance(o[k], str) and o[k] for k in ('p', 'skill', 'juego')):
+            mal.append(f'{d}: p, skill y juego son textos')
+        if o['req'] not in REQUISITOS:
+            mal.append(f"{d}: req es uno de {', '.join(REQUISITOS)}")
+        if not (isinstance(o['fuente'], list) and o['fuente'] and all(isinstance(k, str) for k in o['fuente'])):
+            mal.append(f'{d}: fuente es una lista de fuentes (contenido/guia.json)')
+    mal += [f'el requisito de {p}, {sk}: repetido' for (p, sk), n in
+            collections.Counter((o.get('p'), o.get('skill')) for o in manual['requisitos']).items() if n > 1]
     return mal
 
 
@@ -489,12 +507,15 @@ def _a_mano(manual, C, P, T, skill_de):
             avisos.append(f'{d}: su Leader Skill no tiene una parte «Give Power» que se pueda derivar, sobra')
         else:
             otorga[o['p']] = o
+    requisitos = {(o['p'], o['skill']): o for o in manual['requisitos']}
     informe = {'efectos': [[k[0], k[1], pl[0][0], pl[0][1][1] if pl[0][1] else None, len(usan_fx[k])]
                            for k, pl in efectos.items()],
                'activaciones': [[a, len({p for p, _ in usan_ac[a]})] for a in manual['activaciones']],
                'otorga': [[o['p'], o['skill'], o['fuente'], o['juego']] for o in otorga.values()],
+               'requisitos': [[o['p'], o['skill'], o['req'], o['fuente'], o['juego']] for o in manual['requisitos']],
                'avisos': avisos}
-    return {'efectos': efectos, 'activaciones': set(manual['activaciones']), 'otorga': otorga}, informe
+    return ({'efectos': efectos, 'activaciones': set(manual['activaciones']), 'otorga': otorga, 'requisitos': requisitos},
+            informe)
 
 
 def _activacion(texto, patron, C, M):
@@ -632,7 +653,7 @@ def derivar(sop, skills, T, nombres, manual):
     obs = _aprender({k: v for k, v in P.items() if k[1] == 'Leader Skill'}, sop, T)
     C = {k: _tabla(v) for k, v in obs.items()}
     M, a_mano = _a_mano(manual, C, P, T, {p: skill_de[(p, 'Leader Skill')] for p in nombres})
-    derivados, sin_derivar, verificacion, textos, mal_ls = {}, [], [], {}, []
+    derivados, sin_derivar, verificacion, textos, mal_ls, usados_req = {}, [], [], {}, [], set()
     for (p, sl) in sorted(P):
         ps, problema = P[(p, sl)]
         e = sop.get(p) or {}
@@ -667,6 +688,10 @@ def derivar(sop, skills, T, nombres, manual):
                 if der is None:
                     sin_derivar.append({'p': p, 'slot': k, 'motivos': [list(x) for x in mal]})
                 else:
+                    o = M['requisitos'].get((p, nombre_skill)) if not lider else None
+                    if o is not None:
+                        der = dict(der, req=o['req'], reqf=list(o['fuente']))
+                        usados_req.add((p, nombre_skill))
                     derivados.setdefault(p, {})[k] = der
                     if 'ac' in der:
                         texto = R['ac'] if R is not None else ps[i]['ac']
@@ -686,6 +711,8 @@ def derivar(sop, skills, T, nombres, manual):
                                     {'p': p, 'slot': k, 'estado': 'igual'})
     if mal_ls:
         raise SystemExit(f'{A_MANO} no coincide con Leads & Supports:\n  ' + '\n  '.join(mal_ls))
+    a_mano['avisos'] += [f'el requisito de {p}, {sk}: no es de un soporte que se derive, sobra'
+                         for (p, sk) in M['requisitos'] if (p, sk) not in usados_req]
     def variantes(k, c):
         return len({p for p, _, _ in obs[k][c]})
     correspondencia = {

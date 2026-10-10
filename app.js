@@ -1628,10 +1628,10 @@ function srcHtml (x) {
   return esDeApi(x) ? ` <span class="tag dim srcapi" title="${h(t(x.otorga ? 'sp_src_otorga_t' : 'sp_src_api_t'))}">${h(t('sp_src_api'))}</span>` : '';
 }
 /** Las fuentes de unos liderazgos y soportes: Leads & Supports y, si alguno sale de la API, sus skills, más las de lo
- *  que otorga un «Give Power» según el juego. */
+ *  que otorga un «Give Power» según el juego y las del Tier que pide un soporte derivado (reqf). */
 function fuentesSop (xs) {
   const base = xs.some(esDeApi) ? (xs.every(esDeApi) ? ['tv-pj'] : ['tv-sup', 'tv-pj']) : ['tv-sup'];
-  return [...new Set([...base, ...xs.flatMap(x => x.otorga || [])])];
+  return [...new Set([...base, ...xs.flatMap(x => [...(x.otorga || []), ...(x.reqf || [])])])];
 }
 /** ¿Un efecto de líder o de soporte (MFF_SOPORTES) alcanza a la variante b? */
 function aplicaA (x, b) {
