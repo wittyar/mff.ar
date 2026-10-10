@@ -51,7 +51,7 @@ try:
 
         # 3. Skills
         pestana(pg, 'skills')
-        n_sk = pg.locator('.skill').count()
+        n_sk = pg.locator('.skill:not(#sk-artefacto)').count()   # la pasiva del artefacto la prueba verif_artefacto
         ok('3 Skills: cargas, buffs clave, rotaciones y las 11 skills', n_sk == 11 and pg.locator('.chargebar').count() == 1
            and pg.locator('.keybuffs').count() == 1 and pg.locator('.rots, .section h3:has-text("Rotaciones")').count() >= 1, n_sk)
         pg.locator('.skill', has_text='Avance místico').locator('button.tag.objetivo').click()

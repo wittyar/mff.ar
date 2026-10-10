@@ -378,6 +378,7 @@ const T = {
   ar_uru_ninguno:    { es:'Sus skills activas no hacen daño: la regla de urus de ataque no aplica.',
                        en:'Its active skills deal no damage: the attack Uru rule does not apply.' },
   ar_art:            { es:'Artefacto',           en:'Artifact' },
+  sk_artefacto:      { es:'Pasiva de artefacto', en:'Artifact passive' },
   ar_art_none:       { es:'thanosvibs no le lista artefacto exclusivo.', en:'thanosvibs lists no exclusive artifact for it.' },
   ar_score_t:        { es:'Puntaje de thanosvibs, de 0 a 3', en:'thanosvibs score, 0 to 3' },
   ar_since:          { es:'desde la',            en:'since' },
@@ -3016,7 +3017,16 @@ function fichaSkills (ch, v) {
          <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x))}</span>`).join('')}</span></div>`).join('')}
     </div>` : ''}
     ${v.skills.map((sk, si) => skillCard(sk, v, si)).join('')}
+    ${skillArtefacto(ch)}
     ${panelRotaciones(ch, v)}`;
+}
+/** La pasiva del artefacto exclusivo del personaje, si tiene, como una skill más (Ezequiel, 10 de octubre de 2026: «Ponelo en
+ *  Skills, y no lo quites de armado»): lo mismo que en Armado, con el selector de estrellas. */
+function skillArtefacto (ch) {
+  if (!ARTES.some(x => x.p === ch.p)) return '';
+  return `<div class="skill" id="sk-artefacto">
+    <div class="top"><span class="sktit"><span class="slotbadge pass">${h(t('sk_artefacto'))}</span></span></div>
+    <div class="body">${armadoArtefacto(ch)}</div></div>`;
 }
 // ---------------------------------------------------------------------------
 // ANÁLISIS (docs/MODELO.md, etapa 2): lo que hace la variante con sus skills según el catálogo de efectos (MFF_ANALISIS).
