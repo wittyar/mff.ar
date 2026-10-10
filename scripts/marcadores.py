@@ -31,8 +31,9 @@ Lo usa skills_api.py: cada efecto resuelto lleva el valor en español (g) y de d
 (gs: 'm' a mano, 'l' Leads & Supports, 'w' wiki).
 
 Corrido solo (python3 scripts/marcadores.py, con work/ bajado), agrega a la tabla a mano
-una fila con el valor vacío por cada marcador sin resolver que todavía no esté. No toca
-las filas que ya tiene."""
+una fila con el valor vacío por cada marcador sin resolver que todavía no esté y saca las
+filas vacías de los que ya no están sin resolver (los resuelve Leads & Supports o la wiki, o
+la API ya no los trae). Las filas con valor no las toca."""
 import csv, glob, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from auditar import anclas, limpiar, norm, wslug
@@ -313,14 +314,17 @@ def personaje(p, fila):
 
 
 def plantilla():
-    """Agrega a la tabla a mano las filas vacías de los marcadores sin resolver que no tiene."""
+    """Deja en la tabla a mano una fila vacía por cada marcador sin resolver: agrega las que faltan y saca
+    las vacías de los que ya no lo están."""
     out, efs, _ = resolver()
     fila = {r['portrait']: r for r in json.load(open('work/characters.json'))}
-    filas = leer_tabla()
+    sin_resolver = {e['id'] for e in efs if e['id'] not in out}
+    todas_antes = leer_tabla()
+    filas = [f for f in todas_antes if (f['valor'] or '').strip() or int(f['id']) in sin_resolver]
     ya = {int(f['id']) for f in filas}
     nuevas = {}
     for e in efs:
-        if e['id'] in out or e['id'] in ya:
+        if e['id'] not in sin_resolver or e['id'] in ya:
             continue
         n = nuevas.setdefault(e['id'], {'id': e['id'], 'valor': '', 'personaje': [], 'skill': e['skill'], 'efecto': e['texto']})
         if personaje(e['p'], fila) not in n['personaje']:
@@ -332,7 +336,8 @@ def plantilla():
         w = csv.DictWriter(f, fieldnames=COLUMNAS, lineterminator='\n')
         w.writeheader()
         w.writerows(todas)
-    print(f'contenido/marcadores.csv: {len(filas)} filas que ya tenía, {len(nuevas)} nuevas sin valor')
+    print(f'contenido/marcadores.csv: {len(filas)} filas que ya tenía, {len(todas_antes) - len(filas)} vacías sacadas '
+          f'(ya resueltas o que la API no trae), {len(nuevas)} nuevas sin valor')
 
 
 if __name__ == '__main__':
