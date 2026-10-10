@@ -188,7 +188,9 @@ hoy = hoy.isoformat()
 #     catalogo.json y modelo.valores), con el que la app de formato 13 compara efecto por efecto (#6).
 # 14: el catálogo trae lo que más vale en PvP (MFF_CATALOGO.pvp: los efectos que son prioridad para él y los de soporte, de
 #     Ezequiel), que la app de formato 14 marca en el análisis de cada personaje (#33).
-FORMATO = 14
+# 15: cada artefacto trae los stats que da (MFF_ARTEFACTOS[].st, de contenido/artefactos_stats.json), con los que la app de
+#     formato 15 filtra el roster por «Su artefacto da» (Ezequiel, 10 de octubre de 2026).
+FORMATO = 15
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
