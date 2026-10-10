@@ -1,0 +1,13 @@
+{
+ "_doc": "Capturas del juego en inglés que mandó Ezequiel el 10 de octubre de 2026 (Jessica Jones — Jewel, cuenta de Ezequiel), transcriptas renglón por renglón. Las imágenes quedaron en la conversación, no en el repo.",
+ "capturas": [
+  {"pantalla": "TEAM > SKILL, Formidable (LEADER Lv.6)",
+   "texto": ["Applies to: All Allies", "Activation Rate: 25% rate when hit", "· 100% chance to become immune to Physical Damage.(10 Sec.)", "Cooldown Time 45 second(s)"]},
+  {"pantalla": "TEAM > SKILL, Telepathic Resistance (PASSIVE Lv.1)",
+   "texto": ["Applies to: Defenders Allies", "· Increases all Basic Attacks by +50%", "· 100% chance to become immune to Mind Damage."]},
+  {"pantalla": "UNIFORM LIST > Jessica Jones Jewel > UNIFORM EFFECT, UNIFORM BONUS",
+   "texto": ["Changes effects of skill, Telepathic Resistance", "Changes effects of skill, Power Woman", "Applies to: Defenders Allies", "", "Activation Rate: when HP is below 35%", "Applies to: Self", "· Recovers 25% of HP.(1 Sec.)", "· Decreases basic damage received by 95%.(10 Sec.)", "Cooldown Time 100 second(s)"]},
+  {"pantalla": "TEAM > SKILL, Power Woman (PASSIVE Lv.1, Tier-2)",
+   "texto": ["Enhances effects of skill, Telepathic Resistance", "Applies to: Self", "· Super Armor, increases all Basic Defenses by +30%.", "· Reflects 70% of Physical Damage received. (Up to 100% of Max Attack).", "· Increases Skill damage by 30%, increases Bonus Damage by 30%."]}
+ ]
+}

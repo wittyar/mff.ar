@@ -38,6 +38,8 @@ BOLD = re.compile(r'</?b>')
 # la pasiva de uniforme de Jessica Jones — Jewel (Ezequiel, 10 de octubre de 2026: «Hay muchas habilidades que no
 # tienen tiempo y son constantes... Ponelas sin tiempo»). Su texto va sin el tiempo. Otro texto con $TIME sin duración
 # sigue con el marcador («sin especificar» en la app) y se avisa.
+# Skills que el juego muestra distinto de la API: scripts/contenido/skills_juego.json (se usa lo del juego, con aviso).
+JUEGO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'contenido', 'skills_juego.json')
 SIN_TIEMPO = {'Acquires the following effect for $TIME sec.': 'Acquires the following effect.'}
 NUM = re.compile(r'\d+(?:\.\d+)?')
 
@@ -102,6 +104,8 @@ def main():
     desconocidas = {}
     n_sk = n_st = n_fx = n_barra = 0
     grupos, con_marcador, avisos = marcadores.resolver()
+    juego = {(c['p'], c['slot']): c for c in json.load(open(JUEGO, encoding='utf-8'))['correcciones']}
+    usadas_juego = set()
     n_sin_tiempo, time_sin_duracion = [0], set()
 
     def efecto(a):
@@ -147,12 +151,26 @@ def main():
         lista = []
         for tipo in [t for t in ORDEN if t in sk]:
             s = sk[tipo]
+            c = juego.get((p, tipo))
+            if c is not None:
+                usadas_juego.add((p, tipo))
+                api = [[(a.get('ability'), a.get('description'), a.get('duration')) for a in st.get('abils', [])]
+                       + [st.get('target'), st.get('activation')] for st in s.get('stages', [])]
+                nueva = [[(a['ability'], a['description'], a.get('duration')) for a in st['abils']]
+                         + [st.get('target'), st.get('activation')] for st in c['stages']]
+                if api == nueva and s.get('cooldown') == c['cooldown']:
+                    print(f'AVISO: skills_juego.json: {p} {tipo}: la API ya publica lo mismo, sobra')
+                else:
+                    print(f'AVISO: skill {p} {tipo} ({s.get("name")}): la API publica otra cosa; se usa lo del juego '
+                          f'({", ".join(c["fuente"])})')
+                s = dict(s, cooldown=c['cooldown'], stages=c['stages'])
             cd = s.get('cooldown')
             if tipo in CON_BARRA and cd is not None and cd <= 1:
                 cd = None
                 n_barra += 1
             out = {'sl': tipo, 'n': T['name'].id(s.get('name')), 'cd': cd,
                    'st': [etapa(x) for x in s.get('stages', [])]}
+            if c is not None: out['j'] = list(c['fuente'])
             if s.get('ult_charge') is not None: out['ult'] = s['ult_charge']
             if s.get('striker_charge') is not None: out['stk'] = s['striker_charge']
             lista.append(out)
@@ -162,6 +180,9 @@ def main():
         if d.get('key_abilities'):
             buffs[p] = {k: v.get('skills', []) for k, v in d['key_abilities'].items()}
 
+    sin_skill = sorted(set(juego) - usadas_juego)
+    if sin_skill:
+        raise SystemExit(f'skills_juego.json: la API no tiene esas skills: {sin_skill}')
     if desconocidas:
         raise SystemExit('claves de skills desconocidas en la API: ' +
                          '; '.join(f'{k} (en {len(v)} retratos, p.ej. {v[0]})' for k, v in desconocidas.items()) +

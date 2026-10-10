@@ -339,6 +339,9 @@ const T = {
   sp_notable_t:      { es:'thanosvibs lo marca como notable', en:'thanosvibs marks it as notable' },
   sp_est:            { es:'a {n}★',              en:'at {n}★' },
   sp_src_api:        { es:'según la skill del juego', en:'per the game skill' },
+  sk_juego:          { es:'según el juego',      en:'per the game' },
+  sk_juego_t:        { es:'La API de thanosvibs publica otra cosa para esta skill: va lo que muestra el juego. Fuente: {f}.',
+                       en:'The thanosvibs API publishes something else for this skill: this is what the game shows. Source: {f}.' },
   sp_src_api_t:      { es:'Leads & Supports no publica este liderazgo o soporte: sale de la skill de la API de skills de thanosvibs.',
                        en:'Leads & Supports does not publish this leadership or support: it comes from the skill in the thanosvibs skills API.' },
   sp_src_otorga_t:   { es:'Leads & Supports no publica este liderazgo: sale de la Leader Skill de la API de skills de thanosvibs, que no dice qué otorga su «Give Power»; eso lo dice la ficha del juego.',
@@ -2456,6 +2459,9 @@ function skillCard (sk, v, si) {
   const cabecera = [];
   ATRIBUTOS.forEach(a => { if (marcas[a.k]) cabecera.push(`<span class="tag atributo">${h(a[LANG])}</span>`); });
   if (DUDAS.skill[v.p + '|' + sk.sl]) cabecera.push(dudaHtml('skill', v.p + '|' + sk.sl));
+  // Una skill que el build corrige con el juego (scripts/contenido/skills_juego.json) lo dice, con su fuente.
+  if (sk.j) cabecera.push(`<span class="tag dim skjuego" title="${h(t('sk_juego_t').replace('{f}', sk.j.map(k => {
+    const f = GUIA.fuentes[k]; if (!f) throw new Error('fuente desconocida: ' + k); return f.nombre; }).join('; ')))}">${h(t('sk_juego'))}</span>`);
   if (esAjeno(tgComun)) cabecera.push(objetivoTag(tgComun, true));
   if (acComun != null) {
     const st0 = sk.st.find(x => x.ac === acComun) || {};

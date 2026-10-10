@@ -133,6 +133,9 @@
   "juego-ctp-es": {
    "nombre": "MARVEL Future Fight — C.T.P. (las fichas de los C.T.P., en español; dentro del juego, octubre de 2026; transcripto en fuentes/juego-es/ctps.json)"
   },
+  "juego-capturas-en": {
+   "nombre": "MARVEL Future Fight — capturas del juego en inglés que mandó Ezequiel (10 de octubre de 2026; transcriptas en fuentes/juego-en/)"
+  },
   "juego-ficha-es": {
    "nombre": "MARVEL Future Fight — Información del héroe (la ficha de personaje, en español; dentro del juego, octubre de 2026; transcripto en fuentes/juego-es/ficha.json)"
   },

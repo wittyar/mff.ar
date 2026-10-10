@@ -1,0 +1,40 @@
+{
+ "nota": "Skills de la API de thanosvibs que el juego muestra distinto: el build (scripts/skills_api.py) usa lo del juego en lugar de lo que publica la API, con aviso, y la app la marca «según el juego» con la fuente. Cada corrección: p (retrato) y slot (como en la API), cooldown y stages en el formato de la API (target, activation, abils con ability, description y duration, con el texto y la etiqueta como los escribe la API para el mismo efecto en otras skills), la fuente (claves de contenido/guia.json) y lo que dice el juego (juego). Si la API ya publica lo mismo, la corrección sobra (aviso).",
+ "correcciones": [
+  {
+   "p": "jessicajones1",
+   "slot": "Uniform Passive",
+   "cooldown": 100,
+   "stages": [
+    {
+     "target": "Defenders Allies",
+     "abils": [
+      {
+       "ability": "Give Power",
+       "description": "Acquires the following effect for $TIME sec."
+      }
+     ]
+    },
+    {
+     "activation": "when HP is below <b>35</b>%",
+     "abils": [
+      {
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>25%</b> of HP.",
+       "duration": 1
+      },
+      {
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>95%</b>.",
+       "duration": 10
+      }
+     ]
+    }
+   ],
+   "fuente": [
+    "juego-capturas-en"
+   ],
+   "juego": "UNIFORM BONUS de Jessica Jones — Jewel: «Changes effects of skill, Telepathic Resistance / Changes effects of skill, Power Woman / Applies to: Defenders Allies / Activation Rate: when HP is below 35% / Applies to: Self / · Recovers 25% of HP.(1 Sec.) / · Decreases basic damage received by 95%.(10 Sec.) / Cooldown Time 100 second(s)». La API publica en su lugar el reflejo 70%, el daño de skill +30% y la superarmadura +30%, que el juego muestra en «Power Woman» (Tier-2), para ella. Lo mismo dicen Leads & Supports y la ficha de la nota del 16 de marzo de 2021 (con la curación que agregó la del 20 de abril)."
+  }
+ ]
+}

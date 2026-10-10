@@ -359,6 +359,19 @@ invocado), Invisible Woman y dos uniformes (la barrera se cuenta en golpes, y Le
 Supports la publica como texto), Red Skull — The Crimson Fall (facción sin resolver) y Venom — King in
 Black (las dos etapas de aliados: no se sabe a cuál otorga el «Give Power»).
 
+### Skills que el juego muestra distinto de la API
+
+Cuando el juego muestra una skill distinta de lo que publica la API de thanosvibs, va lo del juego
+(Ezequiel, 10 de octubre de 2026, sobre Jessica Jones — Jewel: «Corregir con el juego»):
+`scripts/contenido/skills_juego.json` trae la skill en el formato de la API (con los textos y las
+etiquetas que la API usa para esos efectos en otras skills), su fuente y lo que dice el juego.
+`scripts/skills_api.py` la usa en lugar de la de la API, con aviso, y la app la marca «según el juego»
+con la fuente; si la API ya publica lo mismo, la corrección sobra (aviso). Hoy, la pasiva de uniforme de
+Jessica Jones — Jewel: la API pone el reflejo 70%, el daño de skill +30% y la superarmadura +30%, que el
+juego muestra en «Power Woman» (Tier-2, para ella); el juego, Leads & Supports y la ficha de la nota del
+16 de marzo de 2021 dicen que, con PG por debajo del 35%, recupera 25% de PG (1 s) y baja 95% el daño
+básico recibido (10 s), con recarga de 100 s (capturas en inglés de Ezequiel, `fuentes/juego-en/`).
+
 ### «Give Power» sin tiempo
 
 La API publica 155 «Give Power» («Acquires the following effect for $TIME sec.», en 134 skills) sin su

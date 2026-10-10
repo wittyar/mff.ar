@@ -585,6 +585,9 @@ def main():
                   for o in a_mano['otorga'] for k in o['fuente'] if k not in guia['fuentes']]
     mal = mal or [f'el requisito de {o["p"]}, {o["skill"]}: fuente sin definir en contenido/guia.json: {k}'
                   for o in a_mano['requisitos'] for k in o['fuente'] if k not in guia['fuentes']]
+    mal = mal or [f'skills_juego.json, {c["p"]} {c["slot"]}: fuente sin definir en contenido/guia.json: {k}'
+                  for c in cargar(os.path.join(_DIR, 'contenido', 'skills_juego.json'))['correcciones']
+                  for k in c['fuente'] if k not in guia['fuentes']]
     if mal:
         raise SystemExit('scripts/contenido/liderazgos_api.json tiene errores:\n  ' + '\n  '.join(mal))
     liderazgos = derivar_liderazgos(sop, skills['skills'], skills['tablas'], nombres_pj(chars), a_mano)
