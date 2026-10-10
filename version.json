@@ -1,6 +1,6 @@
 {
- "version": "1.0.36",
+ "version": "1.0.37",
  "formato_datos": 14,
  "python": "3.14.7",
- "notas": "La ficha dice qué hace cada personaje con sus skills: en el Resumen, lo que lo distingue del resto del roster, lo que le da al equipo, lo que le aplica al rival y lo que se da a sí mismo, con cuánto, cuánto dura y cuánto tiempo está activo, el daño de cada skill y lo que vale solo en PvE o en PvP; en Skills, una línea de lectura en cada una. Lo que más vale en PvP va marcado."
+ "notas": "Los soportes que Leads & Supports no publica salen de la skill del juego, como los liderazgos: por ejemplo, la reducción del daño reflejado que la pasiva de Molecule Man les da a todos los aliados. Van marcados «según la skill del juego». Y las skills que otorgan un efecto sin decir por cuánto tiempo ya no dicen «sin especificar»: ese efecto es constante (como el del uniforme Jewel de Jessica Jones)."
 }

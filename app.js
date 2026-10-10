@@ -339,8 +339,8 @@ const T = {
   sp_notable_t:      { es:'thanosvibs lo marca como notable', en:'thanosvibs marks it as notable' },
   sp_est:            { es:'a {n}★',              en:'at {n}★' },
   sp_src_api:        { es:'según la skill del juego', en:'per the game skill' },
-  sp_src_api_t:      { es:'Leads & Supports no publica este liderazgo: sale de la Leader Skill de la API de skills de thanosvibs.',
-                       en:'Leads & Supports does not publish this leadership: it comes from the Leader Skill in the thanosvibs skills API.' },
+  sp_src_api_t:      { es:'Leads & Supports no publica este liderazgo o soporte: sale de la skill de la API de skills de thanosvibs.',
+                       en:'Leads & Supports does not publish this leadership or support: it comes from the skill in the thanosvibs skills API.' },
   sp_src_otorga_t:   { es:'Leads & Supports no publica este liderazgo: sale de la Leader Skill de la API de skills de thanosvibs, que no dice qué otorga su «Give Power»; eso lo dice la ficha del juego.',
                        en:'Leads & Supports does not publish this leadership: it comes from the Leader Skill in the thanosvibs skills API, which does not say what its "Give Power" grants; the in-game profile does.' },
   sp_np:             { es:'Buena elección para empezar (thanosvibs)', en:'New player pick (thanosvibs)' },
@@ -1614,11 +1614,12 @@ function allVariants () {
 }
 function fullLabel (v) { return v.uid ? v.name + ' — ' + v.sub : v.name; }
 
-// FUENTE DE UN LIDERAZGO. Los de MFF_SOPORTES son de Leads & Supports, salvo los que el build completa con la
-// Leader Skill de la API de skills cuando Leads & Supports no los publica (src: 'api'). Donde la app muestra un
+// FUENTE DE UN LIDERAZGO O SOPORTE. Los de MFF_SOPORTES son de Leads & Supports, salvo los que el build completa con
+// la skill de la API de skills cuando Leads & Supports no los publica (src: 'api'): la Leader Skill y, desde la 1.0.37, la
+// pasiva, la pasiva de Tier-2 y la de uniforme. Donde la app muestra un
 // liderazgo, dice cuáles no son de Leads & Supports: «según la skill del juego». Si la API no dice qué otorga el
 // «Give Power» de la Leader Skill y lo dice el juego, el slot trae esa fuente (otorga: scripts/liderazgos.py).
-/** ¿Sale de la Leader Skill de la API (src 'api') y no de Leads & Supports? */
+/** ¿Sale de una skill de la API (src 'api') y no de Leads & Supports? */
 function esDeApi (x) { return x.src === 'api'; }
 /** « (según la skill del juego)» para un liderazgo que no es de Leads & Supports, o nada. */
 function srcTxt (x) { return esDeApi(x) ? ' (' + t('sp_src_api') + ')' : ''; }
