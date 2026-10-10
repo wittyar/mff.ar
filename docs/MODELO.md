@@ -311,11 +311,13 @@ no se pudo correr) [Comprobado]:
     HP Shield» diría más que la skill; inmunidad al frío (6); sangrado (5) y parálisis (2), que son
     para el rival; robo de vida (3); inmunidad a todo daño (2); resistencia al veneno (1); inmunidad al
     sangrado y a la fractura (Hydro-Man).
-  - 1 por el «Give Power» de Sentry — Thunderbolts*, que tiene derivado el otro slot y del que ninguna
-    fuente dice qué otorga.
+  - 1 por el «Give Power» de Sentry — Thunderbolts*, que tiene derivado el otro slot. Desde el 10 de
+    octubre de 2026 lo dice el juego: la ficha del uniforme en la nota del foro coreano del 29 de abril
+    de 2025 (al recibir un debuff, a todos los aliados, quitar todos los debuffs, 12 s, recarga 20 s)
+    va a mano (`otorga`), como el de Mephisto — Master of Hell.
 
 La app avisa, donde muestra el liderazgo, que la Leader Skill da un poder que ninguna fuente publica:
-en Sentry — Thunderbolts* y en los 19 pares con Leads & Supports. En los pares no se deduce de lo que
+en los 19 pares con Leads & Supports (Sentry — Thunderbolts* lo tuvo hasta el 10 de octubre). En los pares no se deduce de lo que
 publica Leads & Supports (decisión del 5 de octubre).
 
 ### Soportes que Leads & Supports no publica
