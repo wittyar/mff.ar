@@ -2,5 +2,5 @@
  "version": "1.0.37",
  "formato_datos": 14,
  "python": "3.14.7",
- "notas": "Los soportes que Leads & Supports no publica salen de la skill del juego, como los liderazgos: por ejemplo, la reducción del daño reflejado que la pasiva de Molecule Man les da a todos los aliados. Van marcados «según la skill del juego». Y las skills que otorgan un efecto sin decir por cuánto tiempo ya no dicen «sin especificar»: ese efecto es constante (como el del uniforme Jewel de Jessica Jones)."
+ "notas": "Los soportes que Leads & Supports no publica salen de la skill del juego, como los liderazgos: por ejemplo, la reducción del daño reflejado que la pasiva de Molecule Man les da a todos los aliados con Tier-3. Van marcados «según la skill del juego», con el Tier que piden si lo dice el juego. Y las skills que otorgan un efecto sin decir por cuánto tiempo ya no dicen «sin especificar»: ese efecto es constante (como el del uniforme Jewel de Jessica Jones)."
 }

@@ -115,10 +115,11 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   efecto tiene lectura de un modo y no del otro. Prueba: `verif_que_hace.py`. Maqueta: canvas «Rediseño MFF.ar»,
   artboards «Análisis (#33)». Sin mapear de lo que dijo Ezequiel: «penetración» y «daño que aumenta según el daño
   recibido» (no hay un efecto del catálogo que sea solo eso).
-- La 1.0.37 (sin formato nuevo, 14; a etiquetar sobre el commit de la versión), 10 de octubre: los soportes que Leads &
+- La 1.0.37 (sin formato nuevo, 14; a etiquetar sobre «Versión 1.0.37: notas con el Tier-3 de Molecule Man»), 10 de octubre: los soportes que Leads &
   Supports no publica se derivan de la pasiva, la Tier-2 y la de uniforme de la API con la regla de los liderazgos
   (`liderazgos.partes_soporte`; Ezequiel: el caso fue la reducción del daño reflejado de Molecule Man): 13 derivados, 8
-  sin derivar con su motivo; la correspondencia se aprende solo de los liderazgos, y lo de a mano acepta `signo` -1. Los
+  sin derivar con su motivo; la correspondencia se aprende solo de los liderazgos, y lo de a mano acepta `signo` -1 y
+  `requisitos` (el Tier que pide un soporte: Molecule Man, Tier-3, por la ficha del foro y Ezequiel). Los
   155 «Give Power» sin tiempo publicado van sin tiempo (`skills_api.SIN_TIEMPO`; Ezequiel: «son constantes... ponelas
   sin tiempo»): las fichas de las notas del foro nunca dicen ese tiempo (110 casos leídos). Mismo día, sin versión:
   #26 (marcadores: el mismo par en otro orden no difiere, la Tier-2 de Joaquin Torres a t2, la plantilla saca las filas
