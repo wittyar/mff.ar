@@ -317,6 +317,40 @@ La app avisa, donde muestra el liderazgo, que la Leader Skill da un poder que ni
 en Sentry — Thunderbolts* y en los 19 pares con Leads & Supports. En los pares no se deduce de lo que
 publica Leads & Supports (decisión del 5 de octubre).
 
+### Soportes que Leads & Supports no publica
+
+Leads & Supports tampoco publica todo lo que las pasivas les dan al equipo: Molecule Man, por ejemplo, les
+baja 50% el daño reflejado a todos los aliados con su pasiva «Unbound Being», y Leads & Supports no tiene
+su pasiva. Desde el 10 de octubre de 2026 (Ezequiel: derivarlos de la API, como los liderazgos), el build
+deriva con la misma regla (`scripts/liderazgos.py`, punto 5) la pasiva, la pasiva de Tier-2 y la pasiva
+de uniforme, en sus slots (`passive`/`passive2`, `t2`/`t22`, `uniform`/`uniform2`), con `"src": "api"`:
+
+- De cada una de esas skills va lo de sus etapas con objetivo de aliados; las de «Self» y las que no
+  tienen objetivo son de él. De «All Allies for the first effect, Self for the second effect», el
+  primer efecto.
+- Un «Give Power» otorga lo de la etapa que lo sigue, por su tiempo, a los aliados de una de las dos:
+  la suya, si la que sigue no tiene objetivo (Jessica Jones — Jewel), o la que sigue, si la suya no es
+  de aliados (Luna Snow). Lleva la activación de la etapa del «Give Power». Si la API no publica su
+  tiempo ($TIME), no se deriva.
+- La correspondencia es la de los liderazgos más la de a mano. Los soportes de Leads & Supports no
+  enseñan: no siempre siguen el orden de las etapas de la API, y aprender de ellos daba 8
+  correspondencias contradictorias y dejaba 44 liderazgos sin derivar [Comprobado, 10 de octubre].
+  Para los soportes se agregaron a mano la reducción del daño reflejado (las dos, con signo −1, como
+  las publica Leads & Supports) y «#% increase of MAX HP.».
+- Un slot de soporte se deriva solo si Leads & Supports no publica ninguno de esa skill de la
+  variante. Los que publica se verifican igual (sección 12 de `docs/AUDITORIA.md`); muchos dan
+  distinto solo en el orden de los efectos.
+
+Con los datos del 10 de octubre [Comprobado]: de los 21 slots en que la API da algo al equipo y Leads &
+Supports no publica nada de esa skill, se derivan 11: las pasivas de Molecule Man, Luna Snow (lo que
+otorga su «Give Power», 3 s), Wasp (Nadia Van Dyne), Wenwu, Hulkbuster — 3099 y Sister Grimm — Princess
+Tsukimi, y las de uniforme de Ghost — Thunderbolts*, The Thing — Future Foundation y Classic y Venom —
+Anti-Venom y War of the Realms. No se derivan 10: Blue Marvel — Classic (códigos en lugar del efecto),
+Crescent y su uniforme (para el personaje invocado), Deadpool — Lady Deadpool y Holiday Party (el
+«Give Power» sin su tiempo), Invisible Woman y dos uniformes (la barrera se cuenta en golpes, y Leads &
+Supports la publica como texto), Red Skull — The Crimson Fall (facción sin resolver) y Venom — King in
+Black (las dos etapas de aliados: no se sabe a cuál otorga el «Give Power»).
+
 ### Lo que corrigió el glosario del juego
 
 El juego trae un glosario de skills (Skill Name Glossary; capturas de Ezequiel, octubre de 2026).

@@ -30,7 +30,7 @@ from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
 import guia_armado as GA
 from bonos import bonos as bonos_de_equipo
 from strikers import strikers as strikers_de
-from liderazgos import derivar as derivar_liderazgos, validar as validar_liderazgos
+from liderazgos import LIDERAZGOS, derivar as derivar_liderazgos, validar as validar_liderazgos
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -620,8 +620,10 @@ def main():
     json.dump(sorted(TX.faltan), open('work/sin_traducir_fuentes.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     print(f"fuentes: {len(salida['ctps'])} C.T.P.s | {len(salida['artefactos'])} artefactos | "
           f"ABX {len(salida['abx']['restricciones'])} restricciones, {len(salida['abx']['equipos'])} equipos | "
-          f"soportes de {len(salida['soportes'])} retratos (liderazgo de la Leader Skill de la API: "
-          f"{len(liderazgos['derivados'])} retratos, {len(liderazgos['sin_derivar'])} slots sin derivar) | "
+          f"soportes de {len(salida['soportes'])} retratos (de las skills de la API: liderazgo de "
+          f"{sum(1 for x in liderazgos['derivados'].values() if any(k in x for k in LIDERAZGOS))} retratos y "
+          f"{sum(1 for x in liderazgos['derivados'].values() for k in x if k not in LIDERAZGOS)} soportes, "
+          f"{len(liderazgos['sin_derivar'])} slots sin derivar) | "
           f"rotaciones de {len(salida['rotaciones'])} retratos | "
           f"guía: {len(salida['guia_pj'])} personajes mencionados | guía de armado {salida['armado']['version']}: "
           f"{len(salida['armado']['pj'])} personajes | bonos de equipo {len(salida['bonos'])} | "

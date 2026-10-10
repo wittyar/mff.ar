@@ -170,9 +170,11 @@ TIPOS = collections.OrderedDict([
                    'un «Give Power» o una contradicción de Leads & Supports. La sinergia y los órdenes PvP y PvE no ven '
                    'ese slot.')),
     ('soporte', ('lideres', 'Soporte que Leads & Supports no publica', 'variante',
-                 'thanosvibs (Leads & Supports) o a mano desde la skill', 'soporte sin Leads & Supports',
-                 'Según el análisis, la pasiva le da algo al equipo, y Leads & Supports no publica ese soporte (ni en '
-                 'su slot ni con el nombre de la skill): la sinergia no lo cuenta.')),
+                 'thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json)',
+                 'soporte sin Leads & Supports',
+                 'Según el análisis, la pasiva le da algo al equipo, Leads & Supports no publica ese soporte (ni en '
+                 'su slot ni con el nombre de la skill) y el build no lo pudo derivar de la skill de la API '
+                 '(docs/AUDITORIA.md, sección 12, con el mismo motivo): la sinergia no lo cuenta.')),
     ('nombre_ls', ('lideres', 'Nombre en Leads & Supports distinto del de la skill', 'variante', 'el juego o foros',
                    'nombre en Leads & Supports',
                    'Leads & Supports nombra el soporte o el liderazgo con el nombre de otra skill de la variante o con '
@@ -610,12 +612,13 @@ def chequear_lideres(X, v, sks, out):
     e = X.SO.get(p, {})
     # Liderazgo: el de Leads & Supports o, si no lo publica, el que el build deriva de la Leader Skill de la API
     # (scripts/liderazgos.py). Falta cada slot que no se pudo derivar, con sus motivos (docs/AUDITORIA.md, sección 12).
-    for x in X.sin_derivar.get(p, []):
+    for x in [x for x in X.sin_derivar.get(p, []) if x['slot'] in LIDERAZGOS]:
         falta(out, 'liderazgo', f"{SLOT_LS[x['slot']]}: no se pudo derivar de la Leader Skill: "
               + '; '.join(motivo_txt(m, d) for m, d in x['motivos']),
               slot_ls=x['slot'], motivos=[m for m, _ in x['motivos']])
     # Soportes: lo que sus pasivas le dan al equipo (según el análisis) tiene que estar en Leads & Supports, en el
-    # slot de la skill o con su nombre en otro slot (eso último lo marca el chequeo de nombres).
+    # slot de la skill o con su nombre en otro slot (eso último lo marca el chequeo de nombres), o derivado de la skill
+    # de la API (scripts/liderazgos.py); si no se pudo derivar, se dice por qué.
     dan = collections.defaultdict(set)
     for ie, d, obj, fuentes in X.AN.get(p, {'fx': []})['fx']:
         if d == 'q':
@@ -623,13 +626,17 @@ def chequear_lideres(X, v, sks, out):
                 if sks[si]['sl'] in PASIVAS:
                     dan[sks[si]['sl']].add(X.CAT['efectos'][ie]['es'])
     nombres_ls = [x['n'] for k, x in e.items() if k not in LIDERAZGOS and isinstance(x, dict) and x.get('n')]
+    der = X.derivados.get(p, {})
     for sk in sks:
         sl = sk['sl']
-        if sl in dan and not any(k in e for k in SLOTS_DE_SKILL[sl]) \
+        if sl in dan and not any(k in e or k in der for k in SLOTS_DE_SKILL[sl]) \
                 and not any(_nombre_igual(n, X.nombre_skill(sk)) for n in nombres_ls):
+            motivos = [m for x in X.sin_derivar.get(p, []) if x['slot'] in SLOTS_DE_SKILL[sl] for m in x['motivos']]
             falta(out, 'soporte', f"{SLOT_ES[sl]} «{X.nombre_skill(sk)}» le da al equipo "
-                  + ', '.join(f'«{x}»' for x in sorted(dan[sl])) + ', y Leads & Supports no lo publica',
-                  slot=sl, skill=X.nombre_skill(sk), da=sorted(dan[sl]))
+                  + ', '.join(f'«{x}»' for x in sorted(dan[sl])) + ', Leads & Supports no lo publica'
+                  + (' y no se pudo derivar de la skill: ' + '; '.join(motivo_txt(m, d) for m, d in motivos) if motivos
+                     else ''),
+                  slot=sl, skill=X.nombre_skill(sk), da=sorted(dan[sl]), motivos=[m for m, _ in motivos])
     # Nombres: cada slot de Leads & Supports con nombre tiene que llevar el de la skill de su tipo.
     for k in [k for k in SLOT_LS if k in e]:
         x = e[k]
@@ -834,9 +841,11 @@ def conocidos(X, res, R):
     s.append(f"- **Marcadores sin resolver:** {len(marc)} efectos en {R['por_tipo']['marcador']['variantes']} variantes. "
              'docs/AUDITORIA.md (sección 8) los cuenta por id de la API, que se repite en los uniformes que comparten '
              'la skill.')
+    lid_d = [[k for k in x if k in LIDERAZGOS] for x in X.derivados.values()]
+    sop_d = sum(1 for x in X.derivados.values() for k in x if k not in LIDERAZGOS)
     s.append(f"- **Liderazgos:** Leads & Supports publica el de {len(X.con_lid)} variantes, y el build deriva el de "
-             f"{len(X.derivados)} más de su Leader Skill ({sum(len(x) for x in X.derivados.values())} slots, con "
-             '"src": "api"; docs/AUDITORIA.md, sección 12). '
+             f"{sum(1 for x in lid_d if x)} más de su Leader Skill ({sum(len(x) for x in lid_d)} slots, con "
+             f'"src": "api"; docs/AUDITORIA.md, sección 12) y {sop_d} soportes de las pasivas. '
              + (f"{len(lid)} slots de {R['por_tipo']['liderazgo']['variantes']} variantes no se pudieron derivar ("
                 + '; '.join(f'{ROTULOS[m]}, {n}' for m, n in sorted(motivos.items(), key=lambda x: (-x[1], x[0])))
                 + '; un slot puede tener más de un motivo).' if lid else 'Ninguno quedó sin derivar.'))
