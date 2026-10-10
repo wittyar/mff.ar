@@ -724,8 +724,8 @@ def liderazgos_seccion(L, chars, fuentes):
     s.append('Los soportes (pasiva, pasiva de Tier-2 y pasiva de uniforme: lo que le dan a un grupo de aliados) siguen la misma '
              'regla desde el 10 de octubre de 2026 (Ezequiel), con la correspondencia que se aprende de los liderazgos y la '
              'de a mano. De cada una de esas skills va lo de sus etapas con objetivo de aliados (no las de «Self»), y un '
-             '«Give Power» otorga lo de la etapa que lo sigue, por su tiempo, a los aliados de una de las dos: si la API no '
-             'publica ese tiempo ($TIME), no se deriva. Un slot de soporte se deriva solo si Leads & Supports no publica '
+             '«Give Power» otorga lo de la etapa que lo sigue, por su tiempo (si la API no lo publica, es constante), a los '
+             'aliados de una de las dos. Un slot de soporte se deriva solo si Leads & Supports no publica '
              'ninguno de esa skill.\n')
     s.append(f"{len(con_ls)} variantes tienen liderazgo de Leads & Supports y {len(nombre) - len(con_ls)} no. El build "
              f"deriva el liderazgo de {len(lid_d)} ({sum(len(x) for x in lid_d.values())} slots) y {len(sop_d)} slots de "

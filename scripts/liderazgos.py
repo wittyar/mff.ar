@@ -221,8 +221,8 @@ def partes_soporte(sk, T, nombre):
     following effect for $TIME sec.») otorga lo de la etapa que lo sigue, por su tiempo, a los aliados de una de las
     dos: la suya (y la que sigue no tiene objetivo: Jessica Jones — Jewel) o la que sigue (y la suya no es de aliados:
     Luna Snow). Eso es una parte aparte, con la activación de la etapa del «Give Power» (o, si no tiene, la de la que
-    sigue) y la duración del «Give Power» en cada efecto que no trae la suya (gp: esa duración, o None si la API no la
-    publica: entonces no se deriva)."""
+    sigue) y la duración del «Give Power» en cada efecto que no trae la suya. Si la API no publica esa duración, lo que
+    otorga es constante y va sin duración (skills_api.py, SIN_TIEMPO)."""
     def objetivo(st):
         return T['tgt'][st['tg']]['en'] if st.get('tg') is not None else None
 
@@ -281,7 +281,7 @@ def partes_soporte(sk, T, nombre):
             if base['ac'] is None:
                 base['ac'], base['act'], base['av'] = activacion(sig)
             efs = [(n, f if 'd' in f or gp is None else dict(f, d=gp)) for n, f in efs]
-            ps.append(dict(base, efectos=efs, r=r, al_entrar=al_entrar, otorga=False, gp=gp))
+            ps.append(dict(base, efectos=efs, r=r, al_entrar=al_entrar, otorga=False))
             i += 2
     except ValueError as e:
         return None, ('objetivo', str(e))
@@ -539,7 +539,7 @@ def _slot(x, nombre_skill, T, C, M, R=None):
         return _otorgado(x, nombre_skill, R, C, M) if R is not None else (None, [('otorga', '')])
     tabla = {k: C[k][0] for k in C}
     contra = {k: C[k][1] for k in C}
-    mal = [('valor', '$TIME en el «Give Power» que lo otorga')] if 'gp' in x and x['gp'] is None else []
+    mal = []
     ac = None
     if x['ac'] is not None:
         # El texto de Leads & Supports; si va a mano, el de la API.

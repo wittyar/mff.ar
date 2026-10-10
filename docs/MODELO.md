@@ -331,7 +331,7 @@ de uniforme, en sus slots (`passive`/`passive2`, `t2`/`t22`, `uniform`/`uniform2
 - Un «Give Power» otorga lo de la etapa que lo sigue, por su tiempo, a los aliados de una de las dos:
   la suya, si la que sigue no tiene objetivo (Jessica Jones — Jewel), o la que sigue, si la suya no es
   de aliados (Luna Snow). Lleva la activación de la etapa del «Give Power». Si la API no publica su
-  tiempo ($TIME), no se deriva.
+  tiempo, lo que otorga es constante (abajo, *«Give Power» sin tiempo*).
 - La correspondencia es la de los liderazgos más la de a mano. Los soportes de Leads & Supports no
   enseñan: no siempre siguen el orden de las etapas de la API, y aprender de ellos daba 8
   correspondencias contradictorias y dejaba 44 liderazgos sin derivar [Comprobado, 10 de octubre].
@@ -342,14 +342,26 @@ de uniforme, en sus slots (`passive`/`passive2`, `t2`/`t22`, `uniform`/`uniform2
   distinto solo en el orden de los efectos.
 
 Con los datos del 10 de octubre [Comprobado]: de los 21 slots en que la API da algo al equipo y Leads &
-Supports no publica nada de esa skill, se derivan 11: las pasivas de Molecule Man, Luna Snow (lo que
+Supports no publica nada de esa skill, se derivan 13: las pasivas de Molecule Man, Luna Snow (lo que
 otorga su «Give Power», 3 s), Wasp (Nadia Van Dyne), Wenwu, Hulkbuster — 3099 y Sister Grimm — Princess
-Tsukimi, y las de uniforme de Ghost — Thunderbolts*, The Thing — Future Foundation y Classic y Venom —
-Anti-Venom y War of the Realms. No se derivan 10: Blue Marvel — Classic (códigos en lugar del efecto),
-Crescent y su uniforme (para el personaje invocado), Deadpool — Lady Deadpool y Holiday Party (el
-«Give Power» sin su tiempo), Invisible Woman y dos uniformes (la barrera se cuenta en golpes, y Leads &
+Tsukimi, las Tier-2 de Deadpool — Lady Deadpool y Holiday Party, y las de uniforme de Ghost —
+Thunderbolts*, The Thing — Future Foundation y Classic y Venom — Anti-Venom y War of the Realms. No se
+derivan 8: Blue Marvel — Classic (códigos en lugar del efecto), Crescent y su uniforme (para el personaje
+invocado), Invisible Woman y dos uniformes (la barrera se cuenta en golpes, y Leads &
 Supports la publica como texto), Red Skull — The Crimson Fall (facción sin resolver) y Venom — King in
 Black (las dos etapas de aliados: no se sabe a cuál otorga el «Give Power»).
+
+### «Give Power» sin tiempo
+
+La API publica 155 «Give Power» («Acquires the following effect for $TIME sec.», en 134 skills) sin su
+tiempo. Las fichas de las notas del foro de Netmarble no lo dicen nunca: muestran cada efecto otorgado
+con su propia duración, la misma que trae la API, o sin duración [Comprobado, 10 de octubre de 2026:
+las fichas de 110 de esos casos, en 361 imágenes]. Decisión de Ezequiel (10 de octubre): «Hay muchas
+habilidades que no tienen tiempo y son constantes. Por ejemplo la que me refiero de jewel es
+permanente.. Ponelas sin tiempo». El build (`scripts/skills_api.py`, `SIN_TIEMPO`) les pone el texto
+sin el tiempo, «Acquires the following effect.» («Obtiene el siguiente efecto.»), y lo que otorgan va
+con la duración propia de cada efecto o sin duración. Otro texto con $TIME sin duración sigue con el
+marcador («sin especificar») y el build avisa: hoy no hay ninguno.
 
 ### Lo que corrigió el glosario del juego
 

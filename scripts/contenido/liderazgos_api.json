@@ -28,7 +28,8 @@
   "when HP is below #%",
   "when tagging",
   "When attacking an enemy with MINIATURIZE effect applied",
-  "#% rate when Dancing Sensation skill is used"
+  "#% rate when Dancing Sensation skill is used",
+  "by default and reactivates # sec. after removed"
  ],
  "otorga": [
   {"p": "mephisto1", "skill": "Lord of Hell", "ac": "when debuffed", "cd": 20, "fx": [{"s": "Remove All Debuffs", "d": 12}], "fuente": ["juego-ficha-ko"], "juego": "La ficha de Mephisto con el uniforme Master of Hell, 지옥 군주 (리더 스킬 Lv.6), renglón por renglón: «적용 대상: 빌런 진영인 팀원만 / · 화염 피해량 +30% 상승 / 발동 확률: 상태 이상에 걸렸을 때 / 적용 대상: 빌런 진영인 팀원만 / · 모든 상태 이상 제거(12 초) / 재사용 대기시간 20초» (traducción de Claude: para los integrantes del bando Villano, daño de fuego +30%; y, al recibir un debuff, para los mismos, quitar todos los debuffs por 12 s, con recarga de 20 s). Capturas 253, 269 y 286 del 4 de octubre de 2026."}

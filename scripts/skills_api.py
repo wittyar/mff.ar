@@ -34,6 +34,11 @@ import marcadores
 from dominio import OBJETIVO_GRUPO, OBJETIVO_SIN_GRUPO, OBJETIVO_SIN_NOMBRE
 
 BOLD = re.compile(r'</?b>')
+# Un «Give Power» cuyo tiempo la API no publica ($TIME sin duración) no tiene tiempo: lo que otorga es constante, como
+# la pasiva de uniforme de Jessica Jones — Jewel (Ezequiel, 10 de octubre de 2026: «Hay muchas habilidades que no
+# tienen tiempo y son constantes... Ponelas sin tiempo»). Su texto va sin el tiempo. Otro texto con $TIME sin duración
+# sigue con el marcador («sin especificar» en la app) y se avisa.
+SIN_TIEMPO = {'Acquires the following effect for $TIME sec.': 'Acquires the following effect.'}
 NUM = re.compile(r'\d+(?:\.\d+)?')
 
 # Los patrones de daño tienen todos la misma forma: elemento, porcentaje sobre un
@@ -97,9 +102,16 @@ def main():
     desconocidas = {}
     n_sk = n_st = n_fx = n_barra = 0
     grupos, con_marcador, avisos = marcadores.resolver()
+    n_sin_tiempo, time_sin_duracion = [0], set()
 
     def efecto(a):
         d = limpio(a.get('description'))
+        if '$TIME' in d and a.get('duration') is None:
+            if d in SIN_TIEMPO:
+                d = SIN_TIEMPO[d]
+                n_sin_tiempo[0] += 1
+            else:
+                time_sin_duracion.add(d)
         f = {'a': T['ab'].id(a.get('ability')), 'p': T['desc'].id(d)}
         v = [float(x) if '.' in x else int(x) for x in NUM.findall(d)]
         if v: f['v'] = v
@@ -186,6 +198,8 @@ def main():
           f' | con cancels: {len(cancels)} | de barra, sin recarga: {n_barra}')
     print('tablas: ' + ' | '.join(f'{k} {len(t.filas)}' for k, t in T.items())
           + f" | objetivos de grupo {sum('r' in f for f in T['tgt'].filas)}")
+    print(f'«Give Power» sin tiempo publicado, sin tiempo: {n_sin_tiempo[0]} efectos'
+          + ''.join(f' | AVISO $TIME sin duración: «{x}»' for x in sorted(time_sin_duracion)))
     faltan = {k: len(t.faltan) for k, t in T.items() if t.faltan}
     print('sin traducir:', faltan or 'nada')
 
