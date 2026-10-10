@@ -250,9 +250,10 @@ Cómo se derivan:
    2026; `scripts/contenido/liderazgos_api.json`):
    - un efecto, con su texto de la API citado literal, da un stat que ya está en el catálogo (con su
      «le sirve»), con el número del texto. Son defensa física, resistencia al fuego y eléctrica,
-     velocidad de ataque, superarmadura y perforación de defensa. Tres de ellos Leads & Supports los
-     publica igual en pasivas: Fire Resist en Robbie Reyes — Hellfire Charge, Ignore Defense en Mantis,
-     Super Armor en Nick Fury — Director of S.H.I.E.L.D.;
+     velocidad de ataque y superarmadura, entre otros. Dos de ellos Leads & Supports los publica igual
+     en pasivas: Fire Resist en Robbie Reyes — Hellfire Charge y Super Armor en Nick Fury — Director
+     of S.H.I.E.L.D. (la perforación de defensa iba a mano hasta el 10 de octubre de 2026, cuando
+     Leads & Supports la publicó en el liderazgo de Rhino — Uncanny Spider-Man);
    - una activación («25% rate when hit», «when tagging», «when dealing Critical Attack»…) va con el
      texto de la API y su traducción;
    - lo que otorga un «Give Power», si lo dice el juego (decisión del 5 de octubre): sus efectos, su

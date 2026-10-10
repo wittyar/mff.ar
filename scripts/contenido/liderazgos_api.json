@@ -8,7 +8,6 @@
   {"ab": "Counter Reflect", "desc": "Decreases damage received from reflected effects by #%.Effect: Reflect All Attacks", "stat": "All Reflect Damage Received", "signo": -1},
   {"ab": "ENERGY SHIELD", "desc": "Creates an energy Shield equal to #% of Max HP", "stat": "Energy Shield"},
   {"ab": "FLAME RESIST ↑", "desc": "Increases Flame Resist by #%.", "stat": "Fire Resist"},
-  {"ab": "IGNORE DEFENSE", "desc": "#% Ignore Defense", "stat": "Ignore Defense"},
   {"ab": "LIGHTNING RESIST ↑", "desc": "Increases Lightning Resist by #%.", "stat": "Lightning Resist"},
   {"ab": "MAX HP ↑", "desc": "#% increase of MAX HP.", "stat": "HP"},
   {"ab": "PHYSICAL DEFENSE ↑", "desc": "#% increase of Physical Defense.", "stat": "Physical Defense"},
