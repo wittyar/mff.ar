@@ -2312,6 +2312,17 @@ function marcadores (texto, f, lang) {
     .replace(/\$TICK/g, () => (f && f.t != null) ? f.t + ' s' : chip('tpl_unspec', 'tpl_title'))
     .replace(/\$HERO(?:SUBTYPE|CLASS)\d*/g, grupo);
 }
+/** Los números de un efecto para su texto, con el nombre en lugar de cada código que el build nombró (f.cn:
+ *  [lugar, inglés, español, origen], scripts/codigos.py): «targets with 206 effect» → «with Removes all Debuffs effect». */
+function numerosFx (f, lang = LANG) {
+  if (!f.cn) return f.v;
+  const v = f.v.slice();
+  for (const [i, en, es, o] of f.cn) {
+    if (o !== 'a' && o !== 'm') throw new Error('origen de código desconocido: ' + o);
+    v[i] = lang === 'en' ? en : es;
+  }
+  return v;
+}
 /** Reemplaza cada '#' del patrón por el número que le toca, en orden. */
 function rellenar (patron, nums) {
   let i = 0;
@@ -2413,7 +2424,7 @@ function slotClase (sl) {
 /** El texto de un efecto en renglones (la fuente los separa con <br>), en HTML y con los marcadores
  *  resueltos, en el idioma activo o en el pedido. sinTraducir: falta la traducción y va el inglés. */
 function renglonesEfecto (f, lang) {
-  const r = texto('desc', f.p, f.v, lang);
+  const r = texto('desc', f.p, numerosFx(f, lang), lang);
   return { renglones: r.txt.split(/<br\s*\/?>/i).map(x => x.trim()).filter(Boolean).map(x => marcadores(h(x), f, lang)), sinTraducir: r.sinTraducir };
 }
 /** Lo que la fuente dice de un efecto aparte del texto: cada cuánto, cuánto dura y si lo marca persistente
@@ -4850,7 +4861,7 @@ function renderCompare () {
   const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
   // Los efectos de una skill: los primeros CMP_FX a la vista y el resto plegado, con cuántos son.
   const fxCmp = (f) => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
-    marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
+    marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
   const efecto = ui.cmpVista === 'efecto';
 
@@ -4989,7 +5000,7 @@ function filasCmp (vs) {
         let g = r.cel[k].find(x => x.firma === firma);
         if (!g) { g = { firma, origen, val, dura, cond, slots: [] }; r.cel[k].push(g); }
         if (!g.slots.includes(sl)) g.slots.push(sl);
-        const tx = marcadores(h(txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' ')), f);
+        const tx = marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f);
         if (!r.tx[k].some(x => x.sl === sl && x.tx === tx && x.dura === dura)) r.tx[k].push({ sl, tx, dura });
       }
     }
@@ -7100,7 +7111,7 @@ function exportCsv () {
       const d = dano(f);
       rows.push(base.concat([sk.sl, txt('name', sk.n), sk.cd, sk.ult != null ? sk.ult : '',
         sk.stk != null ? sk.stk : '', i + 1, txt('ab', f.a),
-        txt('desc', f.p, f.v).replace(/<br\s*\/?>/gi, ' '),
+        txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' '),
         d ? d.pct : '', d && d.flat != null ? d.flat : '',
         st.el != null ? txt('elem', st.el) : '', f.d != null ? f.d : ''])); })));
   });

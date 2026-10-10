@@ -19,6 +19,7 @@ la fecha es la de los datos, no la del día."""
 import argparse, collections, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from codigos import CODIGOS
 from liderazgos import ROTULOS, derivar, motivo_txt
 
 _RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -147,9 +148,9 @@ TIPOS = collections.OrderedDict([
                   'también: que sea la misma no está comprobado.')),
     ('codigo', ('skills', 'Código en lugar de un nombre', 'variante', 'thanosvibs (ids de la API de skills), la wiki o foros',
                 'código sin nombre',
-                'El texto trae un número donde va el nombre de un efecto, de un elemento o de unas ranuras, y la app '
-                'lo muestra como viene (docs/AUDITORIA.md, sección 7). Los de tres cifras son ids de habilidades de la '
-                'API; los de cifras sueltas parecen ranuras o elementos.')),
+                'El texto trae un número donde va el nombre de un efecto, de un elemento o de unas ranuras, y el build '
+                'no lo pudo nombrar (scripts/codigos.py: ni es un id de habilidad de la API ni está en '
+                'scripts/contenido/codigos.json): la app lo muestra como viene.')),
     ('objetivo', ('skills', 'Objetivo sin nombre (Target ID)', 'variante', 'thanosvibs (Leads & Supports) o foros',
                   'objetivo sin nombre',
                   'La etapa se aplica a un grupo de aliados que la API no nombra («Target ID: 72»): la app no puede '
@@ -258,20 +259,8 @@ NO_VALE = 'Not worth'
 # Lo que la guía de armado pone como ISO-8 de quien no vale la pena armar (scripts/guia_armado.py, ISO_TOKENS).
 NO_INVERTIR = 'dont waste gold'
 
-# Descripciones de la API con un número donde va un nombre (docs/AUDITORIA.md, sección 7: «códigos en
-# lugar de nombres»), con la posición de cada código entre los números del texto. Si thanosvibs deja de
-# usar una, el informe lo avisa: este chequeo ya no la encontraría.
-CODIGOS = {
-    'Increases damage dealt to targets with # effect by #%': (0,),
-    '#s increase to the duration of #.': (1,),
-    'Increases # damage by #% of # Resistance (up to #%)': (0, 2),
-    'Accumulates #% of pure # damage when attacking (Max #%)': (1,),
-    'Removes # from target (Includes all debuffs)': (0,),
-    'Removes the effect # from #.': (0, 1),
-    'Decreases # effect used by the Character by #%.': (0,),
-    'Decreases damage received from reflected effects by #%.Effect: #': (1,),
-    'Sets the Cooldown time of # skill to # sec': (0,),
-}
+# Las descripciones de la API con un número donde va un nombre (CODIGOS, en scripts/codigos.py): falta el
+# código que el build no pudo nombrar (el efecto no trae 'cn'). Si thanosvibs deja de usar una, el informe lo avisa.
 # De qué fuentes podría salir cada faltante, como lista (en el JSON), según el texto de su fuente.
 CANALES = (('thanosvibs', r'thanosvibs'), ('wiki', r'la wiki'), ('guia_armado', r'guía de armado'),
            ('juego', r'el juego|capturas del juego'), ('foros', r'foros'), ('a_mano', r'a mano'))
@@ -599,7 +588,7 @@ def chequear_skills(X, v, sks, out):
                                   if ls_d else f"thanosvibs (lo que otorga dura {_y(_num(x) + ' s' for x in otorga_d)}, que "
                                   'podría ser la misma), la wiki o foros' if otorga_d else 'la wiki o foros'),
                           slot=sk['sl'], skill=nombre, texto=texto)
-                if patron in CODIGOS:
+                if patron in CODIGOS and 'cn' not in f:
                     cods = [f['v'][i] for i in CODIGOS[patron]]
                     falta(out, 'codigo', f"{SLOT_ES[sk['sl']]} «{nombre}», {TB['ab'][f['a']]['en']}: «{texto}»",
                           fuente=('thanosvibs (es el id de una habilidad de la API de skills)'

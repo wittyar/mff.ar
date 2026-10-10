@@ -1,0 +1,103 @@
+{
+ "nota": "Los números que la API de thanosvibs publica en el texto de algunos efectos en lugar de un nombre (docs/AUDITORIA.md, sección 7), con el nombre que dan las fichas de las notas de los foros oficiales (en inglés y coreano), revisadas el 10 de octubre de 2026 (Ezequiel: «Lo que puedas completar con esa información, completalo»). Los de tres cifras que son el id de una habilidad de la API (abilityId: 206 es «Removes all Debuffs», 204 «SNARE»…) no van acá: el build los nombra con la etiqueta de la API (scripts/codigos.py). Cada entrada: el patrón de la API, el código, el nombre en inglés y en español (como va en el texto del patrón en cada idioma) y de dónde sale.",
+ "codigos": [
+  {
+   "patron": "Decreases damage received from reflected effects by #%.Effect: #",
+   "codigo": 2,
+   "en": "Reflect All Attacks",
+   "es": "refleja todos los ataques",
+   "fuente": "fichas del Striker de Adam Warlock y de Angel en las notas del foro (lo nombran «REFLECT ALL ATTACKS»); el mismo texto con el nombre está en la API («Effect: Reflect All Attacks»)"
+  },
+  {
+   "patron": "Removes # from target (Includes all debuffs)",
+   "codigo": 1,
+   "en": "Active Buff",
+   "es": "potenciadores activos",
+   "fuente": "fichas de Spider-Man, Wong, Kang the Conqueror y Knull en las notas del foro («Removes Active Buff from target»)"
+  },
+  {
+   "patron": "Decreases # effect used by the Character by #%.",
+   "codigo": 0,
+   "en": "all Debuffs",
+   "es": "de las mermas",
+   "fuente": "fichas de Hela y Satana en las notas del foro («All Debuffs»)"
+  },
+  {
+   "patron": "Removes the effect # from #.",
+   "codigo": 0,
+   "en": "all buffs",
+   "es": "todos los potenciadores",
+   "fuente": "ficha coreana de Ghost — Marvel Studios' Thunderbolts* («모든 버프», todos los potenciadores)"
+  },
+  {
+   "patron": "Increases # damage by #% of # Resistance (up to #%)",
+   "codigo": 1,
+   "en": "Flame",
+   "es": "fuego",
+   "fuente": "fichas de Ghost Rider y Hades en las notas del foro («Flame damage», «Flame Resistance»)"
+  },
+  {
+   "patron": "Accumulates #% of pure # damage when attacking (Max #%)",
+   "codigo": 23,
+   "en": "Lightning, Chill",
+   "es": "de rayo y de frío",
+   "fuente": "ficha de Storm en las notas del foro («Lightning, Chill»)"
+  },
+  {
+   "patron": "Accumulates #% of pure # damage when attacking (Max #%)",
+   "codigo": 12345,
+   "en": "Mind, Poison, Lightning, Chill, Flame",
+   "es": "mental, de veneno, de rayo, de frío y de fuego",
+   "fuente": "fichas de Beta Ray Bill y Hellstorm en las notas del foro («Mind, Poison, Lightning, Chill, Flame»)"
+  },
+  {
+   "patron": "Increases damage dealt to targets with # effect by #%",
+   "codigo": 407,
+   "en": "Debuff Removal (Instinct)",
+   "es": "Eliminación de mermas (Instinto)",
+   "fuente": "fichas de Thanos (Space Throne) y Kahhori en las notas del foro («Debuff Removal (Instinct)»); Leads & Supports llama así al 407"
+  },
+  {
+   "patron": "Increases damage dealt to targets with # effect by #%",
+   "codigo": 577,
+   "en": "Mark",
+   "es": "Marca",
+   "fuente": "ficha de Winter Soldier en las notas del foro («Mark»)"
+  },
+  {
+   "patron": "Sets the Cooldown time of # skill to # sec",
+   "codigo": 1,
+   "en": "Active 1",
+   "es": "Activa 1",
+   "fuente": "las ranuras de las activas: la ficha de Kingo en las notas del foro llama «ACTIVE 2» al 2, y la de Doctor Octopus, «all basic skills» al 12345"
+  },
+  {
+   "patron": "Sets the Cooldown time of # skill to # sec",
+   "codigo": 2,
+   "en": "Active 2",
+   "es": "Activa 2",
+   "fuente": "ficha de Kingo en las notas del foro («ACTIVE 2», Eternal Burst)"
+  },
+  {
+   "patron": "Sets the Cooldown time of # skill to # sec",
+   "codigo": 12,
+   "en": "Active 1 and 2",
+   "es": "Activa 1 y 2",
+   "fuente": "las ranuras de las activas (como el 2 de Kingo y el 12345 de Doctor Octopus)"
+  },
+  {
+   "patron": "Sets the Cooldown time of # skill to # sec",
+   "codigo": 1234,
+   "en": "Active 1, 2, 3 and 4",
+   "es": "Activa 1, 2, 3 y 4",
+   "fuente": "ficha de Doctor Strange en las notas del foro («all skills except Sorcerer Supreme», la quinta)"
+  },
+  {
+   "patron": "Sets the Cooldown time of # skill to # sec",
+   "codigo": 12345,
+   "en": "Active 1, 2, 3, 4 and 5",
+   "es": "Activa 1, 2, 3, 4 y 5",
+   "fuente": "ficha de Doctor Octopus en las notas del foro («all basic skills»)"
+  }
+ ]
+}

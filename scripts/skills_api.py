@@ -31,6 +31,7 @@ import json, glob, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import traducir
 import marcadores
+import codigos
 from dominio import OBJETIVO_GRUPO, OBJETIVO_SIN_GRUPO, OBJETIVO_SIN_NOMBRE
 
 BOLD = re.compile(r'</?b>')
@@ -107,6 +108,22 @@ def main():
     juego = {(c['p'], c['slot']): c for c in json.load(open(JUEGO, encoding='utf-8'))['correcciones']}
     usadas_juego = set()
     n_sin_tiempo, time_sin_duracion = [0], set()
+    # Los ids de habilidad de la API con su etiqueta, para nombrar los que el texto publica como número (codigos.py).
+    etiquetas = {}
+    for fn in sorted(glob.glob('work/skills_api/*.json')):
+        for s_ in (json.load(open(fn, encoding='utf-8')).get('skills') or {}).values():
+            for st in (s_.get('stages') or []) if isinstance(s_, dict) else []:
+                for a in st.get('abils') or []:
+                    if a.get('abilityId') is not None:
+                        etiquetas.setdefault(a['abilityId'], set()).add(a['ability'])
+    etiqueta_de = {}
+    for i, labs in etiquetas.items():
+        if len(labs) == 1:
+            en = next(iter(labs))
+            es = traducir.traducir_etiqueta(en)
+            if es is not None:
+                etiqueta_de[i] = (en.strip().rstrip('.'), es.strip().rstrip('.'))
+    codigos_a_mano = codigos.a_mano()
 
     def efecto(a):
         d = limpio(a.get('description'))
@@ -124,6 +141,8 @@ def main():
         if a.get('persistent'): f['m'] = 1
         if a.get('team_buff'): f['b'] = 1
         if a.get('id') in grupos: f['g'], f['gs'] = grupos[a['id']]
+        cn = codigos.nombres(traducir.patron(d), v, etiqueta_de, codigos_a_mano) if v else None
+        if cn: f['cn'] = cn
         return f
 
     def etapa(st):
