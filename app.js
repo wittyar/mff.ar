@@ -65,7 +65,7 @@ function blankUser () {
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
     prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
-             filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[] },
+             filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
   };
 }
@@ -1207,6 +1207,7 @@ const T = {
   ct_mermas:         { es:'Anti-mermas',         en:'Debuff removal' },
   f_lid:             { es:'Su liderazgo da',      en:'Its leadership gives' },
   f_sop:             { es:'Su soporte da',        en:'Its support gives' },
+  f_art:             { es:'Su artefacto da',      en:'Its artifact gives' },
   f_para:            { es:'Que le llegue y le sirva a', en:'Reaching and useful to' },
   f_para_how:        { es:'Se elige desde la ficha de un personaje: Resumen › «Líderes que se lo dan».',
                        en:'Chosen from a character sheet: Summary › "Leaders that give it".' },
@@ -1215,6 +1216,7 @@ const T = {
   f_restr:           { es:'Liderazgo o soporte solo para', en:'Leadership or support only for' },
   cd_lid:            { es:'Liderazgo',            en:'Leadership' },
   cd_sop:            { es:'Soporte',              en:'Support' },
+  cd_art:            { es:'Artefacto',            en:'Artifact' },
   ls_title:          { es:'Le sirve de un liderazgo o un soporte:', en:'Useful to it from a leadership or support:' },
   ls_note:           { es:'El ataque, según el daño de sus skills activas: con qué ataque escala y qué elementos lleva.',
                        en:'Attack, by the damage of its active skills: which attack it scales with and which elements it carries.' },
@@ -2599,6 +2601,14 @@ function rankLabel (key) { const list = listById(U.prefs.refList); return list ?
 /** Rótulo de la mejor fila, con "+N" si la entrada está en más filas. */
 function rankTexto (rank) { return rank.label + (rank.todas.length > 1 ? ' +' + (rank.todas.length - 1) : ''); }
 
+/** Las categorías del índice que da la pasiva del artefacto exclusivo de v (sus stats, `st`, que saca el build de
+ *  contenido/artefactos_stats.json), entre `cats`, en el orden de CATEGORIAS; [] si no tiene artefacto o no da
+ *  ninguna (Ezequiel, 10 de octubre de 2026: el filtro del roster tiene que poder incluir personajes por su artefacto). */
+function artefactoDa (v, cats) {
+  const a = ARTES.find(x => x.p === v.ch.p); if (!a) return [];
+  const ks = new Set(a.st.map(s => CAT_DE[s]).filter(k => k && cats.includes(k)));
+  return CATEGORIAS.filter(c => ks.has(c.k)).map(c => c.k);
+}
 /** El filtro del índice (lo que da su liderazgo o su soporte) con su personaje de destino, o
  *  null si no se está usando. para.falta: el personaje elegido ya no está en los datos. */
 function filtroIndice () {
@@ -2628,6 +2638,7 @@ function rosterData () {
     if (P.objetivo !== '' && !objetivosDe(v.skills).has(Number(P.objetivo))) return false;
     if (P.atributo !== '' && !atributosDe(v.p, v.skills).has(P.atributo)) return false;
     if (FI && !indiceDe(v, FI.F, FI.para, FI.restr)) return false;
+    if (F.art.length && !artefactoDa(v, F.art).length) return false;
     return true;
   });
   const s = SORTS[U.prefs.sort] || SORTS.name;
@@ -2660,6 +2671,7 @@ function filtrosIndice () {
     data-cat="${cat}" data-v="${c.k}">${h(t('ct_' + c.k))}</button>`).join('');
   return `<div class="filtergroup ancho"><div class="lbl">${h(t('f_lid'))}</div><div class="row">${chips('lid')}</div></div>
     <div class="filtergroup ancho"><div class="lbl">${h(t('f_sop'))}</div><div class="row">${chips('sop')}</div></div>
+    <div class="filtergroup ancho"><div class="lbl">${h(t('f_art'))}</div><div class="row">${chips('art')}</div></div>
     <div class="filtergroup"><div class="lbl">${h(t('f_para'))}</div>
       ${P.para ? `<button class="tag dim eqfuera" data-a="paraQuitar" title="${h(t('f_para_rm'))}">${
         h(FI.falta ? t('f_para_gone') : fullLabel(FI.para))} ✕</button>`
@@ -2673,11 +2685,18 @@ function filtrosIndice () {
 }
 /** En el roster, con el filtro del índice: lo que encontró en el liderazgo y el soporte. */
 function indiceLinea (v) {
-  const FI = filtroIndice(); if (!FI) return '';
-  const x = indiceDe(v, FI.F, FI.para, FI.restr); if (!x) return '';
+  const FI = filtroIndice(), art = U.prefs.filters.art;
   const parte = (k, cats, extra) => cats.length ? `<div><span class="muted">${h(t(k))}:</span> ${cats.map(c => h(t('ct_' + c))).join(' · ')}${extra || ''}</div>` : '';
-  const s = SOPORTES[v.p], api = LIDERAZGOS.some(k => s[k] && esDeApi(s[k]) && slotPasa(s[k], FI.F.lid, FI.para, FI.restr));
-  return `<div class="indlinea">${parte('cd_lid', x.lid, api ? srcHtml({ src: 'api' }) : '')}${parte('cd_sop', x.sop)}</div>`;
+  let ind = '';
+  if (FI) {
+    const x = indiceDe(v, FI.F, FI.para, FI.restr);
+    if (x) {
+      const s = SOPORTES[v.p], api = LIDERAZGOS.some(k => s[k] && esDeApi(s[k]) && slotPasa(s[k], FI.F.lid, FI.para, FI.restr));
+      ind = parte('cd_lid', x.lid, api ? srcHtml({ src: 'api' }) : '') + parte('cd_sop', x.sop);
+    }
+  }
+  const a = art.length ? parte('cd_art', artefactoDa(v, art)) : '';
+  return ind || a ? `<div class="indlinea">${ind}${a}</div>` : '';
 }
 /** Cuántos filtros del roster están puestos (los mismos para el roster y la lista de la izquierda). */
 function filtrosActivos () {
@@ -6777,7 +6796,7 @@ document.addEventListener('click', (e) => {
     case 'atras': history.back(); break;
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
-    case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[] };
+    case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] };
       P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = ''; P.atributo = '';
       P.para = ''; P.restr = '';
       ui.search = ''; ui.page = 0; commit(); break;
