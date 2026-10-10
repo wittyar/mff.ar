@@ -158,12 +158,31 @@ def linea_artefacto(artefacto, texto):
     return juego, {'tv': texto, 'f': [f]}
 
 
+def stats_artefacto(lineas, reglas, soporte, nombre):
+    """Los stats que da la pasiva de un artefacto (contenido/artefactos_stats.json), en el orden en que aparecen: los de
+    la primera regla que reconoce cada renglón. Un renglón sin regla, o un stat que no es del catálogo, corta el build."""
+    out = []
+    for ln in lineas:
+        t = re.sub(r'\d+(?:\.\d+)?', '#', re.sub(r'\[P\d+\]', '#', ln))
+        r = next((r for r in reglas if re.search(r['texto'], t)), None)
+        if r is None:
+            raise SystemExit(f'artefacto {nombre}: ninguna regla de contenido/artefactos_stats.json reconoce el renglón {ln!r}')
+        for st in r['stats']:
+            if st not in soporte:
+                raise SystemExit(f'contenido/artefactos_stats.json: «{st}» no es un stat del catálogo (soporte)')
+            if st not in out:
+                out.append(st)
+    return out
+
+
 def artefactos(retratos_base):
     """Artefacto exclusivo de cada personaje (por retrato base). El texto viene en líneas
     con marcadores [P1]..[Pn] que se llenan con los valores de cada nivel de estrellas
     (3 a 6); la sangría es la jerarquía del texto del juego (efectos dentro de una
-    condición) y viaja como nivel, no como HTML."""
+    condición) y viaja como nivel, no como HTML. st: los stats que da (stats_artefacto), para el filtro del roster."""
     out, corregidas = [], set()
+    reglas = cargar(os.path.join(_DIR, 'contenido', 'artefactos_stats.json'))['reglas']
+    soporte = cargar(os.path.join(_DIR, 'contenido', 'catalogo.json'))['soporte']
     for a in cargar('work/artifacts.json'):
         if a['portrait'] not in retratos_base:
             raise SystemExit(f"artefacto {a['artifact_name']} de un retrato que no está en el roster: {a['portrait']}")
@@ -187,7 +206,8 @@ def artefactos(retratos_base):
             print(f"AVISO: artefacto {a['artifact_name']} ({a['character']}): la fuente no trae todos los valores en {', '.join(cortos)}")
         out.append({'p': a['portrait'], 'name': a['artifact_name'], 'pasiva': a['passive_name'],
                     'pve': a['pve_score'], 'pvp': a['pvp_score'], 'desde': a['update'],
-                    'lineas': lineas, 'valores': a['values'], 'obtencion': [TXP(x) for x in a['acquisition']]})
+                    'lineas': lineas, 'valores': a['values'], 'obtencion': [TXP(x) for x in a['acquisition']],
+                    'st': stats_artefacto([ln['t'] for ln in lineas], reglas, soporte, a['artifact_name'])})
     sobran = sorted(set(_ARTEFACTO_LINEA_JUEGO) - corregidas)
     if sobran:
         print(f'AVISO: /api/artifacts ya no publica {sobran}: sobra su línea del juego en fuentes.py (_ARTEFACTO_LINEA_JUEGO)')

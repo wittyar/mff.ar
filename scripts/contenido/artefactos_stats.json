@@ -1,0 +1,269 @@
+{
+ "nota": "Los stats que da cada renglón del texto de la pasiva de un artefacto (MFF_ARTEFACTOS, lineas), para el filtro del roster «Qué da su artefacto» (Ezequiel, 10 de octubre de 2026: «en el filtro del roster el artefacto debería poder también incluir a personajes por sus artefactos»). Cada regla es una expresión regular (texto) sobre el renglón en inglés, con '#' en cada número; vale la primera que coincide. stats son stats del catálogo (catalogo.json, soporte), el mismo vocabulario de los liderazgos y soportes; vacío, el renglón no da un stat de ese vocabulario (a quién se aplica, la activación, la recarga, o un efecto sin stat, como el daño contra una raza). Un renglón que ninguna regla reconoce corta el build.",
+ "reglas": [
+  {
+   "texto": "^Applies to: ",
+   "stats": []
+  },
+  {
+   "texto": "^Activation Rate: ",
+   "stats": []
+  },
+  {
+   "texto": "^Cooldown Time ",
+   "stats": []
+  },
+  {
+   "texto": "chance to activate:$",
+   "stats": []
+  },
+  {
+   "texto": "^Cannot exceed a ",
+   "stats": []
+  },
+  {
+   "texto": "^Can restore up to ",
+   "stats": []
+  },
+  {
+   "texto": "^Additional increase by .* of Total Instinct",
+   "stats": []
+  },
+  {
+   "texto": "^Recovers by an additional .* of Total Instinct",
+   "stats": [
+    "Heal"
+   ]
+  },
+  {
+   "texto": "^Increases All Basic Attacks by .*Stacks up to",
+   "stats": [
+    "All Basic Attacks (Stackable)"
+   ]
+  },
+  {
+   "texto": "^Increases All Basic Attacks by ",
+   "stats": [
+    "All Basic Attacks"
+   ]
+  },
+  {
+   "texto": "^Increases All Element Damage by ",
+   "stats": [
+    "All Element Damage"
+   ]
+  },
+  {
+   "texto": "^Increases Fire Damage by .* of Fire Resist",
+   "stats": [
+    "Fire Damage by % Fire Resist"
+   ]
+  },
+  {
+   "texto": "^Increases Fire Damage by ",
+   "stats": [
+    "Fire Damage"
+   ]
+  },
+  {
+   "texto": "^Increases Cold Damage by ",
+   "stats": [
+    "Cold Damage"
+   ]
+  },
+  {
+   "texto": "^Increases Lightning Damage by ",
+   "stats": [
+    "Lightning Damage"
+   ]
+  },
+  {
+   "texto": "^Increases Mind Damage by ",
+   "stats": [
+    "Mind Damage"
+   ]
+  },
+  {
+   "texto": "^Increases Basic Damage Dealt to SUPER VILLAIN faction",
+   "stats": [
+    "Basic Damage Dealt to Villains"
+   ]
+  },
+  {
+   "texto": "^Increases Basic Damage Dealt to SUPER HERO faction",
+   "stats": [
+    "Basic Damage Dealt to Heroes"
+   ]
+  },
+  {
+   "texto": "^Increases Basic Damage Dealt to bosses",
+   "stats": [
+    "Basic Damage Dealt to Boss Types"
+   ]
+  },
+  {
+   "texto": "^Increases Basic Damage Dealt to enemies with .*HP or higher",
+   "stats": [
+    "Basic Damage Dealt to Enemies with 25% HP or Higher"
+   ]
+  },
+  {
+   "texto": "^Increases Basic Damage Dealt to enemies with .*HP or below",
+   "stats": []
+  },
+  {
+   "texto": "^Increases Basic Damage Dealt to (ALIEN|CREATURE) Characters",
+   "stats": []
+  },
+  {
+   "texto": "^Increases Basic Damage (by .* for each instance|by .* per .* of Critical Rate|by .* for every .* of Critical Rate|by Total Instinct)",
+   "stats": []
+  },
+  {
+   "texto": "^Basic Damage increases up to",
+   "stats": []
+  },
+  {
+   "texto": "^Increases Instinct Critical Rate",
+   "stats": [
+    "Critical Rate"
+   ]
+  },
+  {
+   "texto": "^Increases Instinct Critical Damage",
+   "stats": [
+    "Critical Damage"
+   ]
+  },
+  {
+   "texto": "chance to increase Basic Critical Damage",
+   "stats": [
+    "Critical Damage"
+   ]
+  },
+  {
+   "texto": "^Ignores target's Dodge Rate",
+   "stats": [
+    "Ignore Dodge"
+   ]
+  },
+  {
+   "texto": "^Ignores Non-Boss enemy Damage Decrease",
+   "stats": [
+    "Ignore Non-Boss Damage Decrease"
+   ]
+  },
+  {
+   "texto": "^Can attack enemies with Ignore Targeting",
+   "stats": []
+  },
+  {
+   "texto": "^Increases (Max )?HP by ",
+   "stats": [
+    "HP"
+   ]
+  },
+  {
+   "texto": "^Recovers HP by ",
+   "stats": [
+    "Heal"
+   ]
+  },
+  {
+   "texto": "^Restores HP equal to .* of Reflect Damage",
+   "stats": [
+    "Heal"
+   ]
+  },
+  {
+   "texto": "^Decreases Basic Damage Received from SUPER VILLAIN faction",
+   "stats": [
+    "Basic Damage Received from Villains"
+   ]
+  },
+  {
+   "texto": "^Decreases Basic Damage Received from SUPER HERO faction",
+   "stats": [
+    "Basic Damage Received from Heroes"
+   ]
+  },
+  {
+   "texto": "^Decreases Basic Damage Received from bosses",
+   "stats": []
+  },
+  {
+   "texto": "^Decreases Basic Damage Received by ",
+   "stats": [
+    "Basic Damage Received"
+   ]
+  },
+  {
+   "texto": "^Decreases All Damage Received by .* for each instance",
+   "stats": [
+    "Basic Damage Received"
+   ]
+  },
+  {
+   "texto": "^Ignores Basic Damage for ",
+   "stats": []
+  },
+  {
+   "texto": "chance to [Dd]odge ALL [Aa]ttacks",
+   "stats": [
+    "Dodge"
+   ]
+  },
+  {
+   "texto": "^HP does not drop to ",
+   "stats": [
+    "Immortality + Heal"
+   ]
+  },
+  {
+   "texto": "^Revives with ",
+   "stats": [
+    "Revive with % HP"
+   ]
+  },
+  {
+   "texto": "^Guard Break Immunity",
+   "stats": [
+    "Guard Break Immunity"
+   ]
+  },
+  {
+   "texto": "^Immunity to Incapacitation",
+   "stats": [
+    "Incapacitation Immunity"
+   ]
+  },
+  {
+   "texto": "chance to ignore all debuffs received",
+   "stats": [
+    "Debuff Immunity"
+   ]
+  },
+  {
+   "texto": "^Increases All Resistances by ",
+   "stats": [
+    "All Resistances"
+   ]
+  },
+  {
+   "texto": "^Reflects .* of basic damage received",
+   "stats": []
+  },
+  {
+   "texto": "^Summons a clone",
+   "stats": [
+    "Summon"
+   ]
+  },
+  {
+   "texto": "^Decreases Skill Cooldown by ",
+   "stats": [
+    "Skill Cooldown"
+   ]
+  }
+ ]
+}
