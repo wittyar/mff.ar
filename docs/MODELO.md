@@ -372,6 +372,17 @@ juego muestra en «Power Woman» (Tier-2, para ella); el juego, Leads & Supports
 16 de marzo de 2021 dicen que, con PG por debajo del 35%, recupera 25% de PG (1 s) y baja 95% el daño
 básico recibido (10 s), con recarga de 100 s (capturas en inglés de Ezequiel, `fuentes/juego-en/`).
 
+### Objetivos «Target ID»
+
+La API publica algunos objetivos como un número («Target ID: 88»). Las fichas de las notas de los foros
+oficiales dicen qué es (revisadas el 10 de octubre de 2026): en las 12 que se encontraron, la etapa
+tiene dos objetivos, uno por efecto, como «Applies to: All Allies» para el primero y «Applies to:
+GWENPOOL» para el segundo. `scripts/contenido/objetivos_juego.json` lo dice por retrato y
+`scripts/skills_api.py` parte la etapa en una por objetivo; un personaje como objetivo restringe a ese
+personaje. Con eso, la Leader Skill de esas variantes tiene dos etapas, y la regla de los liderazgos
+toma cada una como una parte: los 20 slots de liderazgo de esas 10 variantes, que Leads & Supports
+publica, dan iguales derivados [Comprobado, 10 de octubre].
+
 ### «Give Power» sin tiempo
 
 La API publica 155 «Give Power» («Acquires the following effect for $TIME sec.», en 134 skills) sin su

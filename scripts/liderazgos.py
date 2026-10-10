@@ -185,6 +185,18 @@ def partes(sk, T, nombre):
     'ac', 'act', 'av', 'cd', 'otorga', 'al_entrar'}], None), o (None, (motivo, detalle)) si no se puede partir. i es
     el lugar del efecto en la etapa; ac, el texto de la activación, que es la fila act de T['act'] con los números
     av; al_entrar, el objetivo «Activates when», si lo es."""
+    if len(sk['st']) == 2 and all(x.get('tg') is not None and x.get('ac') == sk['st'][0].get('ac') and x['fx']
+                                  for x in sk['st']):
+        # Dos etapas con objetivo y la misma activación: un «Target ID» que el build parte con lo que dicen las fichas
+        # del juego (scripts/contenido/objetivos_juego.json): cada etapa es una parte.
+        grupos = []
+        for k, x in enumerate(sk['st']):
+            ok, r = _restriccion(T['tgt'][x['tg']]['en'], T, nombre)
+            if not ok:
+                return None, ('objetivo', T['tgt'][x['tg']]['en'])
+            grupos.append(([(100 * k + n, f) for n, f in enumerate(x['fx'])], r))
+        st, al_entrar = sk['st'][0], None
+        return _partes_de(grupos, st, sk, T, al_entrar)
     if len(sk['st']) != 1:
         return None, ('etapas', str(len(sk['st'])))
     st = sk['st'][0]
@@ -202,6 +214,11 @@ def partes(sk, T, nombre):
         if not ok:
             return None, ('objetivo', tg or 'sin objetivo')
         grupos, al_entrar = [(fx, r)], (tg if m else None)
+    return _partes_de(grupos, st, sk, T, al_entrar)
+
+
+def _partes_de(grupos, st, sk, T, al_entrar):
+    """Las partes de una Leader Skill a partir de sus grupos de efectos con su restricción (partes())."""
     antes, otorgan = [], []
     for efs, r in grupos:
         i = next((j for j, (_, f) in enumerate(efs) if T['ab'][f['a']]['en'] == OTORGA), len(efs))

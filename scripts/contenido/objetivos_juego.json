@@ -1,0 +1,153 @@
+{
+ "nota": "Objetivos que la API de thanosvibs publica como «Target ID: N» (un número), con lo que dicen las fichas de skills de las notas de los foros oficiales (revisadas el 10 de octubre de 2026; Ezequiel: «Lo que puedas completar con esa información, completalo»): a quién va cada efecto de la etapa, en orden. El build (scripts/skills_api.py) parte la etapa en una por objetivo. Un objetivo es «All Allies», «Self», un grupo de aliados como lo escribe la API («Mutant Allies») o el nombre de un personaje del roster. Cada entrada: los retratos, el objetivo de la API, el de cada efecto, la nota (fuente) y lo que dice la ficha (juego).",
+ "objetivos": [
+  {
+   "retratos": [
+    "deadpool6"
+   ],
+   "objetivo": "Target ID: 88",
+   "efectos": [
+    "All Allies",
+    "Gwenpool"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1750779",
+   "juego": "Head Honcho (Leader) / Applies to: All Allies / • Increases all Basic Attacks by +40%, all Basic Defenses by +40%, and all Speeds by +15%. / Applies to: GWENPOOL / • Increases basic damage dealt to boss types by 60%."
+  },
+  {
+   "retratos": [
+    "joaquintorres"
+   ],
+   "objetivo": "Target ID: 30",
+   "efectos": [
+    "Falcon",
+    "Self",
+    "Self"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1830668",
+   "juego": "Captain's Wingman (Tier-2 PASSIVE) / Applies to: FALCON / · Increases basic damage dealt to SUPER VILLAIN faction by 60%. / Applies to: Self / · Increases Guaranteed Dodge Rate by +20% / · Increases Skill damage by 45% and increases Bonus Damage by 40%."
+  },
+  {
+   "retratos": [
+    "gwenpool3"
+   ],
+   "objetivo": "Target ID: 164",
+   "efectos": [
+    "Deadpool",
+    "Self",
+    "Self"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1750779",
+   "juego": "Applies to: DEADPOOL / • Increases Additional Pierce Damage by 4% / Applies to: Self / • Increases Chain Hit damage by 25% when attacking. / • Increases Additional Pierce Damage by 4%"
+  },
+  {
+   "retratos": [
+    "hopesummers"
+   ],
+   "objetivo": "Target ID: 142",
+   "efectos": [
+    "Mutant Allies",
+    "Cable"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1805999",
+   "juego": "Applies to: Mutant Allies / • Increases all Basic Attacks by +30% / Applies to: CABLE / • Increases all Basic Attacks by +70%"
+  },
+  {
+   "retratos": [
+    "hulkbuster3",
+    "hulkbuster4"
+   ],
+   "objetivo": "Target ID: 3",
+   "efectos": [
+    "All Allies",
+    "Iron Man"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1723434",
+   "juego": "Iron Armada (Leader) / Applies to: All Allies / • +35% increase of All Attacks. / Applies to: IRON MAN / • +70% increase of All Attacks."
+  },
+  {
+   "retratos": [
+    "katy"
+   ],
+   "objetivo": "Target ID: 89",
+   "efectos": [
+    "All Allies",
+    "Shang-Chi"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1728043",
+   "juego": "Katy <Marvel Studios' Shang-Chi and the Legend of the Ten Rings> / Perfect Teamwork (LEADER) / Applies to: All Allies / • Critical Rate increases by +18%. / Applies to: Shang-Chi / • +60% increase of All Attacks."
+  },
+  {
+   "retratos": [
+    "sleeper"
+   ],
+   "objetivo": "Target ID: 42",
+   "efectos": [
+    "All Allies",
+    "Venom"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1827362",
+   "juego": "Applies to: All Allies / · Increases all Basic Attacks by +20% / Applies to: Venom / · Increases all Basic Attacks by +60%"
+  },
+  {
+   "retratos": [
+    "milesmorales3"
+   ],
+   "objetivo": "Target ID: 10",
+   "efectos": [
+    "All Allies",
+    "Spider-Man"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1780573",
+   "juego": "Applies to: All Allies / • Increases All Speeds by +6%. / Applies to: SPIDER-MAN / • Increases all Basic Attacks by +70%."
+  },
+  {
+   "retratos": [
+    "squirrelgirl2"
+   ],
+   "objetivo": "Target ID: 75",
+   "efectos": [
+    "Thanos",
+    "Self",
+    "Self"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1786912",
+   "juego": "Changes effects of skill, Cosmic Defender / Changes effects of skill, Unbeatable / Applies to: THANOS / • Increases basic damage dealt to boss types by 60%. / Applies to: Self / • Decreases basic damage received by 20%. / Activation Rate: when HP is below 30% / Applies to: Self / • Recovers 70% of HP. (1 Sec.) / Cooldown Time 120 second(s)"
+  },
+  {
+   "retratos": [
+    "victorious1"
+   ],
+   "objetivo": "Target ID: 183",
+   "efectos": [
+    "All Allies",
+    "Doctor Doom"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1819186",
+   "juego": "Applies to: All Allies / · Increases all Basic Attacks by +35% / Applies to: DOCTOR DOOM / · +65% increase of Energy Attack."
+  },
+  {
+   "retratos": [
+    "vision3"
+   ],
+   "objetivo": "Target ID: 140",
+   "efectos": [
+    "All Allies",
+    "Scarlet Witch"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1703322",
+   "juego": "Applies to: All Allies / • +20% increase of All Attacks / Applies to: SCARLET WITCH / • +50% increase of All Attacks."
+  },
+  {
+   "retratos": [
+    "wave1"
+   ],
+   "objetivo": "Target ID: 198",
+   "efectos": [
+    "All Allies",
+    "Namor"
+   ],
+   "fuente": "https://forum.netmarble.com/futurefight_en/view/2196/1728043",
+   "juego": "Ride the Current (Leader) / Applies to: All Allies / • Increases all Basic Attacks by +25%. / Applies to:Namor / • Increases all Basic Attacks by +60%."
+  }
+ ]
+}

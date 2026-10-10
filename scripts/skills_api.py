@@ -41,6 +41,8 @@ BOLD = re.compile(r'</?b>')
 # sigue con el marcador («sin especificar» en la app) y se avisa.
 # Skills que el juego muestra distinto de la API: scripts/contenido/skills_juego.json (se usa lo del juego, con aviso).
 JUEGO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'contenido', 'skills_juego.json')
+# Objetivos «Target ID: N» con lo que dicen las fichas de los foros: scripts/contenido/objetivos_juego.json.
+OBJETIVOS_JUEGO = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'contenido', 'objetivos_juego.json')
 SIN_TIEMPO = {'Acquires the following effect for $TIME sec.': 'Acquires the following effect.'}
 NUM = re.compile(r'\d+(?:\.\d+)?')
 
@@ -107,6 +109,35 @@ def main():
     grupos, con_marcador, avisos = marcadores.resolver()
     juego = {(c['p'], c['slot']): c for c in json.load(open(JUEGO, encoding='utf-8'))['correcciones']}
     usadas_juego = set()
+    nombres_pj = {r['character'] for r in json.load(open('work/characters.json', encoding='utf-8'))}
+    objetivos_juego, pj_objetivo = {}, set()
+    for o in json.load(open(OBJETIVOS_JUEGO, encoding='utf-8'))['objetivos']:
+        for x in o['efectos']:
+            if x not in ('All Allies', 'Self') and x not in OBJETIVO_GRUPO:
+                if x not in nombres_pj:
+                    raise SystemExit(f"objetivos_juego.json: «{x}» no es un objetivo de la API ni un personaje del roster")
+                pj_objetivo.add(x)
+        for p_ in o['retratos']:
+            objetivos_juego[(p_, o['objetivo'])] = o
+    usados_obj = set()
+
+    def partir(p, st):
+        """Las etapas de una etapa con un objetivo «Target ID: N» que objetivos_juego.json resuelve: una por objetivo,
+        con los efectos que van a él, en orden; o [st]."""
+        o = objetivos_juego.get((p, st.get('target')))
+        if o is None:
+            return [st]
+        if len(o['efectos']) != len(st.get('abils', [])):
+            raise SystemExit(f"objetivos_juego.json: {p} «{st.get('target')}» da {len(o['efectos'])} objetivos y la etapa "
+                             f"tiene {len(st.get('abils', []))} efectos")
+        usados_obj.add((p, st.get('target')))
+        out = []
+        for a, tg in zip(st['abils'], o['efectos']):
+            if out and out[-1]['target'] == tg:
+                out[-1]['abils'].append(a)
+            else:
+                out.append(dict(st, target=tg, abils=[a]))
+        return out
     n_sin_tiempo, time_sin_duracion = [0], set()
     # Los ids de habilidad de la API con su etiqueta, para nombrar los que el texto publica como número (codigos.py).
     etiquetas = {}
@@ -188,7 +219,7 @@ def main():
                 cd = None
                 n_barra += 1
             out = {'sl': tipo, 'n': T['name'].id(s.get('name')), 'cd': cd,
-                   'st': [etapa(x) for x in s.get('stages', [])]}
+                   'st': [etapa(y) for x in s.get('stages', []) for y in partir(p, x)]}
             if c is not None: out['j'] = list(c['fuente'])
             if s.get('ult_charge') is not None: out['ult'] = s['ult_charge']
             if s.get('striker_charge') is not None: out['stk'] = s['striker_charge']
@@ -199,6 +230,9 @@ def main():
         if d.get('key_abilities'):
             buffs[p] = {k: v.get('skills', []) for k, v in d['key_abilities'].items()}
 
+    sobran_obj = sorted(set(objetivos_juego) - usados_obj)
+    if sobran_obj:
+        print(f'AVISO: objetivos_juego.json: la API ya no tiene esos objetivos, sobran: {sobran_obj}')
     sin_skill = sorted(set(juego) - usadas_juego)
     if sin_skill:
         raise SystemExit(f'skills_juego.json: la API no tiene esas skills: {sin_skill}')
@@ -213,6 +247,8 @@ def main():
     for fila in T['tgt'].filas:
         if fila['en'] in OBJETIVO_GRUPO:
             fila['r'] = list(OBJETIVO_GRUPO[fila['en']])
+        elif fila['en'] in pj_objetivo:
+            fila['r'] = ['Character', fila['en']]
         elif fila['en'] not in OBJETIVO_SIN_GRUPO and not OBJETIVO_SIN_NOMBRE.match(fila['en']):
             sin_clasificar.append(fila['en'])
     if sin_clasificar:
