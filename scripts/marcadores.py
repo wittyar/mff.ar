@@ -4,8 +4,9 @@ tipo, raza o habilidad se refiere ("Increases basic damage dealt to $HEROSUBTYPE
 by 30%"). El valor no viene en ningún campo de la API de skills, así que se completa, en
 este orden (Ezequiel, 3 de octubre de 2026):
 
-1. scripts/contenido/marcadores.csv, a mano: el id del efecto en la API y el valor (como
-   lo muestra la app, o en inglés como lo nombra el juego). Gana sobre las otras dos.
+1. scripts/contenido/marcadores.csv, a mano: el id del efecto en la API, el valor (como
+   lo muestra la app, o en inglés como lo nombra el juego) y de dónde sale (fuente: la nota del
+   foro o la captura). Gana sobre las otras dos. Un valor sin fuente corta el build.
 2. Leads & Supports (/api/supports, por retrato como lo arma fuentes.soportes()): en los
    slots de la misma skill (Leader Skill: leader y leader2; Passive: passive y passive2;
    Tier-2 Passive: t2 y t22; Uniform Passive: uniform y uniform2), "Basic Damage Dealt to
@@ -42,7 +43,7 @@ from fuentes import soportes
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 TABLA = os.path.join(_DIR, 'contenido', 'marcadores.csv')
-COLUMNAS = ['id', 'valor', 'personaje', 'skill', 'efecto']
+COLUMNAS = ['id', 'valor', 'personaje', 'skill', 'efecto', 'fuente']
 MARCADOR = re.compile(r'\$HERO(?:SUBTYPE|CLASS)\d*')
 
 
@@ -164,6 +165,8 @@ def tabla_manual(clase_de):
         if not (fila['valor'] or '').strip():
             continue
         ide = int(fila['id'])
+        if not (fila['fuente'] or '').strip():
+            raise SystemExit(f'contenido/marcadores.csv, fila {i}: el valor «{fila["valor"]}» no dice de dónde sale (fuente)')
         if ide not in clase_de:
             huerfanos.append(ide)
             continue
@@ -326,7 +329,8 @@ def plantilla():
     for e in efs:
         if e['id'] not in sin_resolver or e['id'] in ya:
             continue
-        n = nuevas.setdefault(e['id'], {'id': e['id'], 'valor': '', 'personaje': [], 'skill': e['skill'], 'efecto': e['texto']})
+        n = nuevas.setdefault(e['id'], {'id': e['id'], 'valor': '', 'personaje': [], 'skill': e['skill'], 'efecto': e['texto'],
+                                        'fuente': ''})
         if personaje(e['p'], fila) not in n['personaje']:
             n['personaje'].append(personaje(e['p'], fila))
     for n in nuevas.values():
