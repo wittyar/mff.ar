@@ -211,8 +211,9 @@ _RESTR_SOPORTE = {
 # La fuente clasifica mal dos restricciones: "Zombie" no es una clase ni "Fantastic Four"
 # una raza; las dos son habilidades. Se corrigen con aviso y la app muestra la original.
 _RESTR_CORREGIDA = {('Type', 'Zombie'): 'Ability', ('Allies', 'Fantastic Four'): 'Ability'}
-# Nombres de personaje que la fuente abrevia en las restricciones -> nombre en el roster.
-_ALIAS_PJ = {'Kang': 'Kang the Conqueror'}
+# Nombres de personaje que la fuente abrevia en las restricciones -> nombre en el roster
+# (en el de Annihilus, del 10 de octubre de 2026, pone el retrato en vez del nombre).
+_ALIAS_PJ = {'Kang': 'Kang the Conqueror', 'annihilus': 'Annihilus'}
 
 
 def _efecto_soporte(e, donde):
@@ -265,7 +266,11 @@ def soportes(retratos, nombres):
                 x['n'] = v['name']
             if v.get('significant'):
                 x['sig'] = 1
+            # Sin restricción, la fuente publica [] o, desde el 10 de octubre de 2026 en algunos
+            # liderazgos (galactus, rhino1, greengoblin5, annihilus), el texto "None".
             r = v.get('restrictions') or []
+            if r == 'None':
+                r = []
             if r:
                 cat, val = r
                 if (cat, val) in _RESTR_CORREGIDA:
