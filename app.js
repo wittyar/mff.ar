@@ -1520,7 +1520,7 @@ let ui = {
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
-  aliados: null,                     // objetivo de grupo cuya lista de personajes está abierta
+  aliados: null,                     // grupo cuya lista de personajes está abierta: { r, tg } (aliadosModal)
   tip: null,                         // «Cómo funciona» abierto: { key de la variante, si: skill, ti y fi: el efecto tocado o null }
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
@@ -2027,10 +2027,13 @@ function alcanzados (r) {
     return si.length ? { vs, si } : null;
   }).filter(Boolean).sort((a, b) => a.vs[0].name.localeCompare(b.vs[0].name));
 }
-/** Ventana con los personajes que cumplen un objetivo de grupo. Uno por personaje con su
- *  retrato base, salvo que la base no lo cumpla: ahí va cada uniforme que sí. */
+/** El nombre de un grupo de aliados (una restricción [tipo, valor]) sin un objetivo de grupo de las skills que lo
+ *  nombre: «Habilidad: Llama». */
+function grupoTitulo (r) { const n = t('sp_r_' + r[0]); return n[0].toUpperCase() + n.slice(1) + ': ' + (r[0] === 'Character' ? r[1] : dom(r[1])); }
+/** Ventana con los personajes que cumplen un grupo (ui.aliados: { r, tg }, tg el objetivo de grupo de las skills que lo
+ *  nombra, o null). Uno por personaje con su retrato base, salvo que la base no lo cumpla: ahí va cada uniforme que sí. */
 function aliadosModal () {
-  const i = ui.aliados, r = grupoDe(i), grupos = alcanzados(r);
+  const { r, tg } = ui.aliados, grupos = alcanzados(r);
   const tile = (v, nota) => `<button class="altile" data-a="open" data-cid="${v.cid}" data-uid="${v.uid || ''}"
       title="${h(v.name + (nota ? ' — ' + nota : ''))}">
       <span class="shot">${shot(v.id)}</span><span class="alnm">${h(v.name)}</span>
@@ -2044,7 +2047,7 @@ function aliadosModal () {
   const porUniforme = grupos.some(g => g.si.length !== g.vs.length);
   return `<div class="backdrop" data-a="aliadosCerrar"><div class="modal ancho" data-a="aliadosModal">
     <div class="row alcab">
-      <div><div class="altitulo">${h(txt('tgt', i))}</div>
+      <div><div class="altitulo">${h(tg != null ? txt('tgt', tg) : grupoTitulo(r))}</div>
         <div>${restrHtml({ r })} <span class="muted">· ${h(t('al_count').replace('{n}', grupos.length))}</span></div></div>
       <button class="btn sm" data-a="aliadosCerrar">${h(t('al_close'))}</button>
     </div>
@@ -6844,7 +6847,8 @@ document.addEventListener('click', (e) => {
     case 'pqAbrir': abrirPq({ id: d.pq, charId: ui.charId, uid: ui.uniformId, tab: null, y: 0 }); break;
     case 'pqTab': elegirTabPq(+d.i); break;
     case 'pqCerrar': cerrarPq(true); break;
-    case 'verAliados': ui.aliados = parseInt(d.tg, 10); render(); break;
+    case 'verAliados': { const tg = parseInt(d.tg, 10); ui.aliados = { r: grupoDe(tg), tg }; render(); break; }
+    case 'verGrupo': ui.aliados = { r: d.r.split('|'), tg: null }; render(); break;
     case 'aliadosCerrar': ui.aliados = null; render(); break;
 
     case 'goTier': ui.view = 'tierlist'; render(); break;
