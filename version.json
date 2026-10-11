@@ -1,6 +1,6 @@
 {
- "version": "1.0.38",
+ "version": "1.0.39",
  "formato_datos": 16,
  "python": "3.14.7",
- "notas": "La pasiva del artefacto exclusivo ahora también está en la pestaña Skills de la ficha, como una skill más (con su selector de estrellas), y sigue en Armado. Y el roster tiene un filtro nuevo, «Su artefacto da», con las mismas categorías que el liderazgo y el soporte: por ejemplo, los personajes cuyo artefacto ignora la esquiva o sube todos los ataques."
+ "notas": "Comparar tiene una vista nueva, «Por potenciador»: cada potenciador (todos los ataques, daño de frío, ignorar esquiva…) en una fila y, al lado, lo que tiene de él cada personaje, de sus skills, su liderazgo, su soporte y su artefacto. Pasando el mouse (o tocando) cada fuente se ve de dónde sale, con el texto del juego. Si más de una fuente da lo mismo, debajo va la suma (lo que no se acumula, como las inmunidades, cuenta una vez: la mayor), y al pie, a quiénes les llega: tocando un grupo se ve la lista de personajes."
 }

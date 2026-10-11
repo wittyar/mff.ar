@@ -70,7 +70,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
 ## Estado (10 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.37 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.38 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -136,12 +136,21 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   (`contenido/objetivos_juego.json`), el «Give Power» de Sentry — Thunderbolts* (`otorga`) y la pasiva de uniforme de
   Jewel (`contenido/skills_juego.json`, la skill lleva `j`, la app la marca «según el juego»). Lo que quedó, con lo que
   dicen las fichas, en la planilla `mff-faltantes-20261010.xlsx` de la carpeta de Ezequiel (fuera del repo).
-- La 1.0.38 (formato 15; la etiqueta va sobre el commit de datos), 10 de octubre: la pasiva del artefacto exclusivo
+- La 1.0.38 (formato 15; etiqueta en 85ec867, «Datos actualizados 2026-10-10»), 10 de octubre: la pasiva del artefacto exclusivo
   también en Skills (`skillArtefacto`; Ezequiel: «Ponelo en Skills, y no lo quites de armado») y el filtro del roster «Su
   artefacto da» (`filters.art`, `artefactoDa`) con las categorías del índice sobre los stats de cada artefacto
-  (`MFF_ARTEFACTOS[].st`: `contenido/artefactos_stats.json`, una regla por forma de línea; `fuentes.stats_artefacto`
-  para el build si una línea no tiene regla). Las categorías no cubren varios stats de artefactos (daño a villanos,
+  (desde la 1.0.39, `MFF_ARTEFACTOS[].fx`: `contenido/artefactos_stats.json`, una regla por forma de línea;
+  `fuentes.efectos_artefacto` para el build si una línea no tiene regla). Las categorías no cubren varios stats de artefactos (daño a villanos,
   héroes y jefes, crítico, esquiva, curación…): no se pueden filtrar todavía. Prueba: `verif_artefacto.py`.
+- La 1.0.39 (formato 16; la etiqueta va sobre el commit de datos), 11 de octubre: la vista «Por potenciador» de Comparar
+  (`cmpPorPotenciador`, `ui.cmpVista` 'pot'; Ezequiel: emparejar el tipo de potenciador, de dónde sale en un tooltip, la
+  suma si más de una fuente da lo mismo y al pie a quiénes les llega; decidió: tercera vista, las cuatro fuentes, la suma
+  con la regla del catálogo y el pie con los personajes del roster). Las fuentes: el análisis de las skills (lo que va
+  al equipo desde la Leader Skill es el liderazgo y desde una pasiva el soporte; no se suman además los de Leads &
+  Supports, que son lo mismo) y el artefacto (`MFF_ARTEFACTOS[].fx` con el marcador de su número y `.a`, a quién se
+  aplica). `acumula` en cada efecto del catálogo a favor: de los stats donde ya estaba y 29 nuevos con la regla de
+  Ezequiel (estadísticas se suman, habilidades una vez), sin confirmar uno por uno. La ventana de aliados acepta un grupo
+  sin objetivo de las skills (`ui.aliados` = { r, tg }, `verGrupo`). Prueba: `verif_cmp_pot.py`.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
