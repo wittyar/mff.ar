@@ -940,6 +940,35 @@ const T = {
   cmp_vista:         { es:'Vista',               en:'View' },
   cmp_v_efecto:      { es:'Por efecto',          en:'By effect' },
   cmp_v_ficha:       { es:'Ficha',               en:'Sheet' },
+  cmp_v_pot:         { es:'Por potenciador',     en:'By buff' },
+  cmp_pot_nota:      { es:'Potenciador por potenciador: lo que tiene cada uno de sus skills, su liderazgo, su soporte y su artefacto, la suma y a quiénes les llega.',
+                       en:'Buff by buff: what each one has from its skills, leadership, support and artifact, the sum and whom it reaches.' },
+  pb_propio:         { es:'Él',                  en:'Self' },
+  pb_el:             { es:'Él',                  en:'Self' },
+  pb_todos:          { es:'Todos los aliados',   en:'All allies' },
+  pb_todos_roster:   { es:'Todos los aliados (todo el roster: {n} personajes)', en:'All allies (the whole roster: {n} characters)' },
+  pb_t_skill:        { es:'Skill',               en:'Skill' },
+  pb_t_lid:          { es:'Liderazgo',           en:'Leadership' },
+  pb_t_sop:          { es:'Soporte',             en:'Support' },
+  pb_t_art:          { es:'Artefacto',           en:'Artifact' },
+  pb_sop_corto:      { es:'SOP',                 en:'SUP' },
+  pb_art_corto:      { es:'ART',                 en:'ART' },
+  pb_nota_lid:       { es:'Solo si lidera el equipo.', en:'Only when it leads the team.' },
+  pb_nota_nosuma:    { es:'Este número no entra en la suma: es de un stat que da más de un efecto.', en:'This number is not added up: it belongs to a stat that gives more than one effect.' },
+  pb_nota_sinvalor:  { es:'La fuente no trae el número con estas estrellas.', en:'The source does not give the number at these stars.' },
+  pb_nota_sinnum:    { es:'Sin número que se sume: el del renglón es de otra cosa (la resistencia, el instinto o cada golpe).', en:'No number to add up: the line’s number is of something else (resistance, Instinct or each hit).' },
+  pb_dura:           { es:'Dura {s} s',          en:'Lasts {s} s' },
+  pb_llega:          { es:'Le llega a',          en:'Reaches' },
+  pb_pie:            { es:'Les llega a',         en:'Reaches' },
+  pb_acumula:        { es:'SE SUMA',             en:'STACKS' },
+  pb_acumula_t:      { es:'Si llega de varias fuentes, se suma (catálogo de efectos).', en:'From several sources, it adds up (effect catalog).' },
+  pb_noacumula:      { es:'UNA VEZ',             en:'ONCE' },
+  pb_noacumula_t:    { es:'Si llega de varias fuentes, cuenta una sola: la mayor (catálogo de efectos).', en:'From several sources, only one counts: the highest (effect catalog).' },
+  pb_suma:           { es:'Suma',                en:'Sum' },
+  pb_mayor:          { es:'Cuenta la mayor',     en:'Highest counts' },
+  pb_ley_tip:        { es:'Pasá el mouse o tocá una fuente para ver de dónde sale.', en:'Hover or tap a source to see where it comes from.' },
+  pb_nota_pie:       { es:'La suma supone todo activo a la vez: cada fuente dice cuánto dura y cuándo se activa. El liderazgo cuenta solo si lidera. En los artefactos, lo que se suma según el instinto no entra en el número.',
+                       en:'The sum assumes everything active at once: each source says how long it lasts and when it activates. Leadership counts only when leading. In artifacts, what is added by Instinct is not in the number.' },
   cmp_ef_nota:       { es:'Efecto por efecto: quién lo tiene, cuánto da, cuánto dura y de qué skill sale.',
                        en:'Effect by effect: who has it, how much it gives, how long it lasts and which skill it comes from.' },
   cmp_destino:       { es:'Qué efectos se ven',  en:'Which effects to show' },
@@ -4895,15 +4924,15 @@ function renderCompare () {
   const fxCmp = (f) => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
     marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
-  const efecto = ui.cmpVista === 'efecto';
+  const efecto = ui.cmpVista === 'efecto', pot = ui.cmpVista === 'pot';
 
   return `
   <div class="row" style="margin-bottom:14px"><button class="btn sm" data-a="back">${h(t('back_roster'))}</button></div>
   <div class="page-head"><div><h1>${h(t('cmp_title'))}</h1>
-    <div class="sub">${h(t(efecto ? 'cmp_ef_nota' : 'cmp_note'))}</div></div>
-    <div class="seg" role="group" aria-label="${h(t('cmp_vista'))}">${['efecto', 'ficha'].map(k =>
+    <div class="sub">${h(t(efecto ? 'cmp_ef_nota' : pot ? 'cmp_pot_nota' : 'cmp_note'))}</div></div>
+    <div class="seg" role="group" aria-label="${h(t('cmp_vista'))}">${['efecto', 'pot', 'ficha'].map(k =>
       `<button class="${ui.cmpVista === k ? 'on' : ''}" aria-pressed="${ui.cmpVista === k}" data-a="cmpVista" data-v="${k}">${h(t('cmp_v_' + k))}</button>`).join('')}</div></div>
-  ${efecto ? cmpPorEfecto(vs) : `
+  ${efecto ? cmpPorEfecto(vs) : pot ? cmpPorPotenciador(vs) : `
   <div class="cmp"><table class="cmpt">
     <thead><tr><th></th>${vs.map(v => `<th><div class="cmphead">
       ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
@@ -5132,6 +5161,154 @@ function cmpPorEfecto (vs) {
       <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}" aria-label="${h(t('cmp_remove'))} ${h(nombre(v))}">✕</button></div>`).join('')}</div>
     ${destinos.map(seccion).join('')}
     <p class="muted cpepie">${h(t('cmp_ef_pie'))}</p>
+  </div>`;
+}
+
+// ---------------------------------------------------------------------------
+// COMPARATIVA POR POTENCIADOR (Ezequiel, 11 de octubre de 2026)
+// Cada potenciador (un efecto del catálogo que alguien puede tener a su favor) en una fila y, al lado, lo que tiene de él
+// cada personaje comparado: de sus skills (para él, el equipo o sus invocaciones; las que van al equipo desde el
+// liderazgo o una pasiva son su liderazgo y su soporte) y de su artefacto. Cada fuente dice de dónde sale en un
+// tooltip; si hay más de una con número, debajo va la suma (lo que se acumula se suma, lo que no cuenta una vez, la
+// mayor: catálogo, acumula), por cada grupo de a quiénes llega; y al pie, a quiénes del roster les llega.
+// ---------------------------------------------------------------------------
+const SLOTS_SOPORTE_SKILL = new Set(['Passive', 'Tier-2 Passive', 'Uniform Passive']);
+/** A quién llega una fuente, como clave: 'propio', 'inv' (sus invocaciones), 'todos' (todos los aliados) o la
+ *  restricción «tipo|valor». */
+function destinoPot (r) { return r ? r.join('|') : 'todos'; }
+function destinoPotTxt (k) {
+  if (k === 'propio') return t('pb_propio');
+  if (k === 'inv') return t('an_i');
+  if (k === 'todos') return t('pb_todos');
+  const i = (TB.tgt || []).findIndex(x => x.r && x.r.join('|') === k);
+  return i >= 0 ? txt('tgt', i) : grupoTitulo(k.split('|'));
+}
+/** ¿Le llega a v una fuente con destino k? */
+function llegaPot (k, v) { return k === 'propio' || k === 'todos' || (k !== 'inv' && aplicaA({ r: k.split('|') }, v)); }
+/** El nombre de una skill, en texto. */
+function nombreSkillTxt (sk) { const f = fila('name', sk.n); return f ? (LANG === 'es' && f.es != null ? f.es : f.en) : ''; }
+/** Un renglón de la pasiva de un artefacto en texto, con los valores de est estrellas («?» donde la fuente no los trae). */
+function lineaArtefactoTxt (a, ln, est) {
+  const vals = a.valores[est] || [], es = LANG === 'en' ? ln.t : TXT[ln.t];
+  return (es == null ? ln.t : es).replace(/\[P(\d+)\]/g, (_, n) => vals[n - 1] != null ? vals[n - 1] : '?');
+}
+/** Las filas: una por potenciador, con las fuentes de cada personaje (cel[k]). Cada fuente: { tipo ('skill', 'lid',
+ *  'sop' o 'art'), sl, nombre, val ({ n, pct } o null), sumable (su número es el de este potenciador), dura, cond,
+ *  dest, tx (HTML) }. */
+function filasPot (vs) {
+  const filas = new Map(), est = ui.artEst;
+  const fila_ = (ie) => {
+    const e = CATALOGO.efectos[ie];
+    if (!filas.has(e.id)) filas.set(e.id, { e, ie, cel: vs.map(() => []) });
+    return filas.get(e.id);
+  };
+  vs.forEach((v, k) => {
+    for (const [ie, d, objetivo, fuentes] of ANALISIS[v.p].fx) {
+      const e = CATALOGO.efectos[ie];
+      if (d === 'r' || e.grupo === 'golpe' || e.id === 'otorga') continue;
+      if (typeof e.acumula !== 'boolean') throw new Error('efecto a favor sin acumula en el catálogo: ' + e.id);
+      const dest = d === 'e' ? 'propio' : d === 'i' ? 'inv' : destinoPot(grupoDe(objetivo)), cond = condicionAn(v, fuentes);
+      for (const src of fuentes) {
+        const f = efectoDe(v, src), sk = v.skills[src[0]], st = sk.st[src[1]];
+        const tipo = d !== 'q' ? 'skill' : sk.sl === 'Leader Skill' ? 'lid' : SLOTS_SOPORTE_SKILL.has(sk.sl) ? 'sop' : 'skill';
+        const val = valorFx(f, e.id);
+        const r = fila_(ie);
+        const tx = marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f);
+        if (r.cel[k].some(x => x.sl === sk.sl && x.tx === tx && x.dest === dest)) continue;
+        r.cel[k].push({ tipo, sl: sk.sl, nombre: nombreSkillTxt(sk), val, sumable: !!val, dura: f.d != null ? f.d : null,
+          cond, act: st.ac != null ? txt('act', st.ac, st.av) : '', dest, tx });
+      }
+    }
+    const a = ARTES.find(x => x.p === v.ch.p);
+    if (!a) return;
+    const dest = a.a === 'propio' ? 'propio' : destinoPot(a.a);
+    for (const f of a.fx) {
+      const efs = CATALOGO.soporte[f.s].efectos, ln = a.lineas[f.l];
+      const n = f.p != null ? (a.valores[est] || [])[f.p - 1] : null;
+      const val = n != null ? { n: parseFloat(n), pct: ln.t.includes(`[P${f.p}]%`) } : null;
+      for (const id of efs) {
+        const ie = CATALOGO.efectos.findIndex(x => x.id === id), e = CATALOGO.efectos[ie];
+        if (typeof e.acumula !== 'boolean') throw new Error('efecto a favor sin acumula en el catálogo: ' + e.id);
+        fila_(ie).cel[k].push({ tipo: 'art', sl: null, nombre: a.name + ' ' + est + '★', val, sumable: !!val && efs.length === 1,
+          dura: null, cond: '', act: '', dest, tx: h(lineaArtefactoTxt(a, ln, est)), sinValor: f.p != null && n == null });
+      }
+    }
+  });
+  const orden = (r) => [CATALOGO.grupos.findIndex(g => g.id === r.e.grupo), r.ie];
+  return [...filas.values()].sort((a, b) => { const x = orden(a), y = orden(b); return x[0] - y[0] || x[1] - y[1]; });
+}
+/** La suma de unas fuentes, por unidad (con «%» y sin): lo que se acumula se suma; lo que no, la mayor. «+60% · +200». */
+function sumaPot (fs, acumula) {
+  const por = new Map();
+  for (const x of fs) { const u = x.val.pct; por.set(u, acumula ? (por.get(u) || 0) + x.val.n : Math.max(por.has(u) ? por.get(u) : -Infinity, x.val.n)); }
+  return [...por].map(([pct, n]) => numCmp({ n, pct })).join(' · ');
+}
+/** Las sumas de una celda: una por cada grupo de a quiénes llega (él, todos los aliados, cada grupo, sus invocaciones),
+ *  con las fuentes con número que le llegan a ese grupo; solo si hay al menos dos fuentes con número. */
+function sumasPot (v, c, acumula) {
+  const nums = c.filter(x => x.sumable);
+  if (nums.length < 2) return [];
+  const out = [], ds = [...new Set(c.map(x => x.dest))];
+  const linea = (k, fs) => { if (fs.length) out.push({ k, fs, txt: sumaPot(fs, acumula) }); };
+  linea('propio', nums.filter(x => llegaPot(x.dest, v)));
+  if (ds.includes('todos')) linea('todos', nums.filter(x => x.dest === 'todos'));
+  for (const d of ds) if (d !== 'propio' && d !== 'todos' && d !== 'inv') linea(d, nums.filter(x => x.dest === 'todos' || x.dest === d));
+  if (ds.includes('inv')) linea('inv', nums.filter(x => x.dest === 'inv'));
+  // Una línea igual a la de él (las mismas fuentes) no dice nada nuevo.
+  return out.filter((l, i) => i === 0 || l.fs.length !== out[0].fs.length || l.fs.some(x => !out[0].fs.includes(x)));
+}
+const TIPO_POT = { skill: 'pb_t_skill', lid: 'pb_t_lid', sop: 'pb_t_sop', art: 'pb_t_art' };
+/** Una fuente: de dónde sale, su número, cuánto dura y a quién llega; el tooltip dice todo eso con el texto del juego. */
+function fuentePotHtml (x) {
+  const badge = x.tipo === 'art' ? `<span class="slotbadge art">${h(t('pb_art_corto'))}</span>`
+    : `${x.tipo === 'sop' ? `<span class="slotbadge sop">${h(t('pb_sop_corto'))}</span>` : ''}<span class="slotbadge ${slotClase(x.sl)}">${h(slotCorto(x.sl))}</span>`;
+  const origen = x.tipo === 'art' ? x.nombre : slotEs(x.sl) + (x.nombre ? ' · ' + x.nombre : '');
+  const notas = [x.tipo === 'lid' ? t('pb_nota_lid') : '', x.val && !x.sumable ? t('pb_nota_nosuma') : '',
+    x.sinValor ? t('pb_nota_sinvalor') : '', x.tipo === 'art' && !x.val && !x.sinValor ? t('pb_nota_sinnum') : ''].filter(Boolean);
+  return `<span class="cpbfu" tabindex="0">${badge}${x.val ? `<span class="cpev${x.sumable ? '' : ' nosuma'}">${h(numCmp(x.val))}</span>` : ''}${
+      x.dura != null ? `<span class="cped">${h(numTxt(x.dura))} s</span>` : ''}${x.dest !== 'propio' ? `<span class="cpbdest">→ ${h(destinoPotTxt(x.dest))}</span>` : ''}
+    <span class="cpbtip" role="tooltip"><span><b>${h(t(TIPO_POT[x.tipo]))}</b> · ${h(origen)}</span>
+      <span class="cpbtx">${x.tx}</span>
+      ${x.act ? `<span>${h(t('st_activation'))}: ${h(x.act)}</span>` : ''}${x.cond ? `<span>${h(x.cond)}</span>` : ''}
+      ${x.dura != null ? `<span>${h(t('pb_dura').replace('{s}', numTxt(x.dura)))}</span>` : ''}
+      <span>${h(t('pb_llega'))}: ${h(destinoPotTxt(x.dest))}</span>
+      ${notas.map(n => `<span class="muted">${h(n)}</span>`).join('')}</span></span>`;
+}
+/** El pie de una celda: a quiénes del roster les llega lo que tiene. Un grupo se toca y abre la lista. */
+function piePot (v, c) {
+  const ds = [...new Set(c.map(x => x.dest))];
+  return `<div class="cpbpie"><span class="muted">${h(t('pb_pie'))}:</span> ${ds.map(d => d === 'propio' ? `<span class="tag dim">${h(v.uid ? v.sub : v.name)}</span>`
+    : d === 'inv' ? `<span class="tag dim">${h(t('an_i'))}</span>`
+    : d === 'todos' ? `<span class="tag dim">${h(t('pb_todos_roster').replace('{n}', CHARS.length))}</span>`
+    : `<button class="tag objetivo grupo" data-a="verGrupo" data-r="${h(d)}" title="${h(t('al_ver'))}">${h(destinoPotTxt(d))} · ${
+        h(t('al_count').replace('{n}', alcanzados(d.split('|')).length))}</button>`).join(' ')}</div>`;
+}
+function cmpPorPotenciador (vs) {
+  const filas = filasPot(vs), nombre = (v) => v.uid ? v.sub : v.name;
+  let grupo = null;
+  const cuerpo = filas.map(r => {
+    const g = r.e.grupo !== grupo ? CATALOGO.grupos.find(x => x.id === r.e.grupo) : null;
+    grupo = r.e.grupo;
+    return (g ? `<div class="cpegrupo">${h(bi(g))}</div>` : '') + `<div class="cpefila" data-e="${h(r.e.id)}">
+      <div class="cpelab"><span class="cpenom">${h(nombreAnTxt(r.e))}</span>${ayudaEfecto(r.e)}${dudaHtml('efecto', r.e.id)}
+        <span class="cpechip" title="${h(t(r.e.acumula ? 'pb_acumula_t' : 'pb_noacumula_t'))}">${h(t(r.e.acumula ? 'pb_acumula' : 'pb_noacumula'))}</span></div>
+      ${r.cel.map((c, k) => !c.length ? `<div class="cpecel no" aria-label="${h(t('cmp_no_lo_tiene'))}">${quienCmp(vs[k])}—</div>`
+        : `<div class="cpecel">${quienCmp(vs[k])}${c.map(fuentePotHtml).join('')}${(() => {
+            const s = sumasPot(vs[k], c, r.e.acumula);
+            return s.length ? `<div class="cpbsuma"><span class="muted">${h(t(r.e.acumula ? 'pb_suma' : 'pb_mayor'))}</span>${
+              s.map(l => `<span><span class="muted">${h(l.k === 'propio' ? t('pb_el') : destinoPotTxt(l.k))}:</span> <span class="cpev">${h(l.txt)}</span></span>`).join('')}</div>` : '';
+          })()}${piePot(vs[k], c)}</div>`).join('')}</div>`;
+  }).join('');
+  return `<div class="cpe cpb" style="--cpe-n:${vs.length}">
+    <div class="cpeley muted"><span><span class="slotbadge">A3</span> ${h(t('cmp_ley_slot'))}</span><span><span class="slotbadge sop">${h(t('pb_sop_corto'))}</span> ${h(t('pb_t_sop'))}</span>
+      <span><span class="slotbadge art">${h(t('pb_art_corto'))}</span> ${h(t('pb_t_art'))} <span class="seg cpbest" role="group" aria-label="${h(t('pb_t_art'))}">${['3', '4', '5', '6'].map(e =>
+        `<button class="${e === ui.artEst ? 'on' : ''}" aria-pressed="${e === ui.artEst}" data-a="artEst" data-v="${e}">${e}★</button>`).join('')}</span></span><span>${h(t('pb_ley_tip'))}</span></div>
+    <div class="cpecab"><div class="cpelab"></div>${vs.map(v => `<div class="cpecel cpepj">
+      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
+      <div class="cpepjn"><b>${h(nombre(v))}</b><span class="muted">${h(v.uid ? v.name : t('base'))}</span></div>
+      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}" aria-label="${h(t('cmp_remove'))} ${h(nombre(v))}">✕</button></div>`).join('')}</div>
+    <section class="cpesec">${cuerpo}</section>
+    <p class="muted cpepie">${h(t('pb_nota_pie'))}</p>
   </div>`;
 }
 
