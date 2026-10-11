@@ -1,6 +1,6 @@
 {
  "version": "1.0.38",
- "formato_datos": 15,
+ "formato_datos": 16,
  "python": "3.14.7",
  "notas": "La pasiva del artefacto exclusivo ahora también está en la pestaña Skills de la ficha, como una skill más (con su selector de estrellas), y sigue en Armado. Y el roster tiene un filtro nuevo, «Su artefacto da», con las mismas categorías que el liderazgo y el soporte: por ejemplo, los personajes cuyo artefacto ignora la esquiva o sube todos los ataques."
 }

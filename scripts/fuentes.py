@@ -158,28 +158,48 @@ def linea_artefacto(artefacto, texto):
     return juego, {'tv': texto, 'f': [f]}
 
 
-def stats_artefacto(lineas, reglas, soporte, nombre):
-    """Los stats que da la pasiva de un artefacto (contenido/artefactos_stats.json), en el orden en que aparecen: los de
-    la primera regla que reconoce cada renglón. Un renglón sin regla, o un stat que no es del catálogo, corta el build."""
+def efectos_artefacto(lineas, reglas, soporte, nombre):
+    """Lo que da la pasiva de un artefacto (contenido/artefactos_stats.json), en el orden del texto: por cada stat de la
+    primera regla que reconoce cada renglón, {s: stat, l: el renglón, p: el número del marcador [P#] con su valor, o null
+    si el renglón no trae el número del stat}. El número es el del primer marcador del renglón o, si la regla lo dice
+    (p), el de esa posición (1 el primero; 0, ninguno). Un renglón sin regla, un stat que no es del catálogo o una
+    posición que el renglón no tiene cortan el build."""
     out = []
-    for ln in lineas:
+    for i, ln in enumerate(lineas):
         t = re.sub(r'\d+(?:\.\d+)?', '#', re.sub(r'\[P\d+\]', '#', ln))
         r = next((r for r in reglas if re.search(r['texto'], t)), None)
         if r is None:
             raise SystemExit(f'artefacto {nombre}: ninguna regla de contenido/artefactos_stats.json reconoce el renglón {ln!r}')
+        marcas = [int(x) for x in re.findall(r'\[P(\d+)\]', ln)]
+        pos = r.get('p', 1 if marcas else 0)
+        if pos > len(marcas):
+            raise SystemExit(f'contenido/artefactos_stats.json: la regla {r["texto"]!r} pide el número {pos} del renglón '
+                             f'{ln!r} ({nombre}), que trae {len(marcas)}')
         for st in r['stats']:
             if st not in soporte:
                 raise SystemExit(f'contenido/artefactos_stats.json: «{st}» no es un stat del catálogo (soporte)')
-            if st not in out:
-                out.append(st)
+            out.append({'s': st, 'l': i, 'p': marcas[pos - 1] if pos else None})
     return out
+
+
+_APLICA = re.compile(r'^Applies to: (.+)$')
+
+
+def aplica_artefacto(lineas, nombre):
+    """A quién se aplica la pasiva de un artefacto: el texto en inglés de su renglón «Applies to:» (lo resuelve build.py
+    con las tablas del juego). Cada artefacto trae uno; si no, corta el build."""
+    hay = [m.group(1) for m in map(_APLICA.match, lineas) if m]
+    if len(hay) != 1:
+        raise SystemExit(f'artefacto {nombre}: {len(hay)} renglones «Applies to:» (se espera uno)')
+    return hay[0]
 
 
 def artefactos(retratos_base):
     """Artefacto exclusivo de cada personaje (por retrato base). El texto viene en líneas
     con marcadores [P1]..[Pn] que se llenan con los valores de cada nivel de estrellas
     (3 a 6); la sangría es la jerarquía del texto del juego (efectos dentro de una
-    condición) y viaja como nivel, no como HTML. st: los stats que da (stats_artefacto), para el filtro del roster."""
+    condición) y viaja como nivel, no como HTML. fx: lo que da (efectos_artefacto), para el filtro del roster y la
+    comparativa por potenciador; a: a quién se aplica (aplica_artefacto)."""
     out, corregidas = [], set()
     reglas = cargar(os.path.join(_DIR, 'contenido', 'artefactos_stats.json'))['reglas']
     soporte = cargar(os.path.join(_DIR, 'contenido', 'catalogo.json'))['soporte']
@@ -207,7 +227,8 @@ def artefactos(retratos_base):
         out.append({'p': a['portrait'], 'name': a['artifact_name'], 'pasiva': a['passive_name'],
                     'pve': a['pve_score'], 'pvp': a['pvp_score'], 'desde': a['update'],
                     'lineas': lineas, 'valores': a['values'], 'obtencion': [TXP(x) for x in a['acquisition']],
-                    'st': stats_artefacto([ln['t'] for ln in lineas], reglas, soporte, a['artifact_name'])})
+                    'fx': efectos_artefacto([ln['t'] for ln in lineas], reglas, soporte, a['artifact_name']),
+                    'a': aplica_artefacto([ln['t'] for ln in lineas], a['artifact_name'])})
     sobran = sorted(set(_ARTEFACTO_LINEA_JUEGO) - corregidas)
     if sobran:
         print(f'AVISO: /api/artifacts ya no publica {sobran}: sobra su línea del juego en fuentes.py (_ARTEFACTO_LINEA_JUEGO)')

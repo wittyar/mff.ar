@@ -154,6 +154,8 @@ def validar(cat, guia):
             mal.append(f"{d}: grupo desconocido {e['grupo']!r}")
         if e['sirve'] not in cat['sirve']:
             mal.append(f"{d}: sirve desconocido {e['sirve']!r}")
+        if 'acumula' in e and not isinstance(e['acumula'], bool):
+            mal.append(f'{d}: acumula es true (se suma) o false (cuenta una vez, la de mayor valor)')
         for k in ('pve', 'pvp'):
             if k in e:
                 lectura(e[k], f'{d} ({k})')

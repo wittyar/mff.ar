@@ -17,7 +17,7 @@ su origen. Se publica en la raíz y, con los archivos que lista, en datos/<forma
 (carpeta_formato.py), que es de donde los baja la app desde la 1.0.30. Por eso data.js y el informe se escriben en UTF-8 con finales de línea \n
 en cualquier sistema, y .gitattributes impide que git los convierta: el hash publicado
 tiene que ser el de lo que se descarga."""
-import hashlib, json, os, datetime
+import hashlib, json, os, re, datetime
 import subprocess, sys
 # Los módulos del pipeline (dominio, version_juego) viven al lado de este script.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -99,6 +99,43 @@ for c in FUENTES['ctps']:
     images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
 for a in FUENTES['artefactos']:
     images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
+
+
+def _aplica_artefacto(en):
+    """A quién se aplica la pasiva de un artefacto, del texto de su «Applies to:»: 'propio' (Self), None (All Allies) o la
+    restricción [tipo, valor] con los valores del roster, como los objetivos de grupo de las skills (MFF_TABLAS.tgt): la
+    fila de la tabla con ese texto o, si no está, el valor del roster cuyo nombre en inglés es el del texto («Allies with
+    FLAME Ability», «Universal Allies»). Lo que no se resuelve corta el build."""
+    if en == 'Self':
+        return 'propio'
+    if en == 'All Allies':
+        return None
+    fila = next((x for x in TABLAS['tgt'] if x['en'].strip().lower() == en.lower() and x.get('r')), None)
+    if fila:
+        return fila['r']
+    m = re.match(r'^Allies with (.+) Ability$', en) or re.match(r'^(.+) Allies$', en)
+    es = [k for k, v in vocab.items() if m and v.lower() == m.group(1).lower()]
+    valores = {'Type': set(), 'Allies': set(), 'Side': set(), 'Ability': set()}
+    for c in chars:
+        for x in [c] + c['uniforms']:
+            valores['Type'].add(x.get('c', c['c'])); valores['Side'].add(x.get('f', c['f']))
+            valores['Allies'].add(x.get('race', c['race'])); valores['Ability'].update(x.get('ab', c['abilities']))
+    hay = [[tipo, v] for v in es for tipo, vs in valores.items() if v in vs]
+    if len(hay) != 1:
+        raise SystemExit(f'artefacto: no se resuelve a quién se aplica «Applies to: {en}» ({hay or "nada en el roster"})')
+    return hay[0]
+
+
+for a in FUENTES['artefactos']:
+    a['a'] = _aplica_artefacto(a['a'])
+# Cada efecto que alguien puede tener a su favor (de sus skills, para él, el equipo o sus invocaciones, o de su
+# artefacto) dice si se acumula: la comparativa por potenciador lo suma o toma el mayor.
+_sin_acumula = sorted({CATALOGO['efectos'][ie]['id'] for an in ANALISIS.values() for ie, d, *_ in an['fx'] if d != 'r'
+                       if 'acumula' not in CATALOGO['efectos'][ie]}
+                      | {e for a in FUENTES['artefactos'] for f in a['fx'] for e in CATALOGO['soporte'][f['s']]['efectos']
+                         if 'acumula' not in next(x for x in CATALOGO['efectos'] if x['id'] == e)})
+if _sin_acumula:
+    raise SystemExit('scripts/contenido/catalogo.json: efectos a favor sin acumula: ' + ', '.join(_sin_acumula))
 from version_juego import ultima
 import historico
 HISTORICO, _historico_md = historico.armar(chars, json.load(open('work/updates.json', encoding='utf-8')),
@@ -190,7 +227,10 @@ hoy = hoy.isoformat()
 #     Ezequiel), que la app de formato 14 marca en el análisis de cada personaje (#33).
 # 15: cada artefacto trae los stats que da (MFF_ARTEFACTOS[].st, de contenido/artefactos_stats.json), con los que la app de
 #     formato 15 filtra el roster por «Su artefacto da» (Ezequiel, 10 de octubre de 2026).
-FORMATO = 15
+# 16: cada artefacto trae, en lugar de st, lo que da con su número (MFF_ARTEFACTOS[].fx: stat, renglón y marcador) y a quién
+#     se aplica (a); cada efecto del catálogo que alguien puede tener a su favor dice si se acumula (MFF_CATALOGO.efectos[].
+#     acumula). Con eso la app de formato 16 compara por potenciador (Ezequiel, 11 de octubre de 2026).
+FORMATO = 16
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

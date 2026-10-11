@@ -2601,12 +2601,12 @@ function rankLabel (key) { const list = listById(U.prefs.refList); return list ?
 /** Rótulo de la mejor fila, con "+N" si la entrada está en más filas. */
 function rankTexto (rank) { return rank.label + (rank.todas.length > 1 ? ' +' + (rank.todas.length - 1) : ''); }
 
-/** Las categorías del índice que da la pasiva del artefacto exclusivo de v (sus stats, `st`, que saca el build de
+/** Las categorías del índice que da la pasiva del artefacto exclusivo de v (los stats de su `fx`, que saca el build de
  *  contenido/artefactos_stats.json), entre `cats`, en el orden de CATEGORIAS; [] si no tiene artefacto o no da
  *  ninguna (Ezequiel, 10 de octubre de 2026: el filtro del roster tiene que poder incluir personajes por su artefacto). */
 function artefactoDa (v, cats) {
   const a = ARTES.find(x => x.p === v.ch.p); if (!a) return [];
-  const ks = new Set(a.st.map(s => CAT_DE[s]).filter(k => k && cats.includes(k)));
+  const ks = new Set(a.fx.map(f => CAT_DE[f.s]).filter(k => k && cats.includes(k)));
   return CATEGORIAS.filter(c => ks.has(c.k)).map(c => c.k);
 }
 /** El filtro del índice (lo que da su liderazgo o su soporte) con su personaje de destino, o

@@ -1,5 +1,5 @@
 {
- "nota": "Los stats que da cada renglón del texto de la pasiva de un artefacto (MFF_ARTEFACTOS, lineas), para el filtro del roster «Qué da su artefacto» (Ezequiel, 10 de octubre de 2026: «en el filtro del roster el artefacto debería poder también incluir a personajes por sus artefactos»). Cada regla es una expresión regular (texto) sobre el renglón en inglés, con '#' en cada número; vale la primera que coincide. stats son stats del catálogo (catalogo.json, soporte), el mismo vocabulario de los liderazgos y soportes; vacío, el renglón no da un stat de ese vocabulario (a quién se aplica, la activación, la recarga, o un efecto sin stat, como el daño contra una raza). Un renglón que ninguna regla reconoce corta el build.",
+ "nota": "Los stats que da cada renglón del texto de la pasiva de un artefacto (MFF_ARTEFACTOS, lineas), para el filtro del roster «Qué da su artefacto» (Ezequiel, 10 de octubre de 2026: «en el filtro del roster el artefacto debería poder también incluir a personajes por sus artefactos»). Cada regla es una expresión regular (texto) sobre el renglón en inglés, con '#' en cada número; vale la primera que coincide. stats son stats del catálogo (catalogo.json, soporte), el mismo vocabulario de los liderazgos y soportes; vacío, el renglón no da un stat de ese vocabulario (a quién se aplica, la activación, la recarga, o un efecto sin stat, como el daño contra una raza). Un renglón que ninguna regla reconoce corta el build. p: la posición del número del stat entre los marcadores del renglón (1 el primero, que es lo que se toma si la regla no la dice; 0, el renglón no trae un número que se pueda sumar con el del stat: solo la parte del instinto, un porcentaje de la resistencia o del daño reflejado, o un número por cada golpe), para la comparativa por potenciador.",
  "reglas": [
   {
    "texto": "^Applies to: ",
@@ -33,7 +33,8 @@
    "texto": "^Recovers by an additional .* of Total Instinct",
    "stats": [
     "Heal"
-   ]
+   ],
+   "p": 0
   },
   {
    "texto": "^Increases All Basic Attacks by .*Stacks up to",
@@ -69,19 +70,22 @@
    "texto": "^Increases Cold Damage by ",
    "stats": [
     "Cold Damage"
-   ]
+   ],
+   "p": 0
   },
   {
    "texto": "^Increases Lightning Damage by ",
    "stats": [
     "Lightning Damage"
-   ]
+   ],
+   "p": 0
   },
   {
    "texto": "^Increases Mind Damage by ",
    "stats": [
     "Mind Damage"
-   ]
+   ],
+   "p": 0
   },
   {
    "texto": "^Increases Basic Damage Dealt to SUPER VILLAIN faction",
@@ -139,7 +143,8 @@
    "texto": "chance to increase Basic Critical Damage",
    "stats": [
     "Critical Damage"
-   ]
+   ],
+   "p": 2
   },
   {
    "texto": "^Ignores target's Dodge Rate",
@@ -173,7 +178,8 @@
    "texto": "^Restores HP equal to .* of Reflect Damage",
    "stats": [
     "Heal"
-   ]
+   ],
+   "p": 0
   },
   {
    "texto": "^Decreases Basic Damage Received from SUPER VILLAIN faction",
@@ -201,7 +207,8 @@
    "texto": "^Decreases All Damage Received by .* for each instance",
    "stats": [
     "Basic Damage Received"
-   ]
+   ],
+   "p": 0
   },
   {
    "texto": "^Ignores Basic Damage for ",

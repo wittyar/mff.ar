@@ -1,6 +1,6 @@
 """La pasiva del artefacto exclusivo (Ezequiel, 10 de octubre de 2026): en Skills como una skill más, sin sacarla de
 Armado, y en el filtro del roster «Su artefacto da» con las categorías del índice. Los personajes que tiene que dejar
-el filtro se cuentan acá, con los stats del artefacto (`st`) y las categorías escritas aparte de app.js."""
+el filtro se cuentan acá, con los stats del artefacto (los de `fx`) y las categorías escritas aparte de app.js."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import SALIDA  # noqa: E401
 from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
 from playwright.sync_api import sync_playwright
@@ -18,7 +18,7 @@ CATS = {'atk': {'All Basic Attacks', 'All Basic Attacks (Stackable)'}, 'evasion'
 
 def esperado(cats):
     stats = set().union(*(CATS[c] for c in cats))
-    return {c['id'] for c in C if c['p'] in ART and stats & set(ART[c['p']]['st'])}
+    return {c['id'] for c in C if c['p'] in ART and stats & {f['s'] for f in ART[c['p']]['fx']}}
 
 
 def resultados(pg):
