@@ -1,0 +1,71 @@
+{
+ "nota": {
+  "es": "Artefactos exclusivos propios (como /api/artifacts de thanosvibs): el de Agatha Harkness, nuevo, y el de Morgan Le Fay, que la actualización del 14 de octubre de 2026 cambia (antes: daño a enemigos con 50% de PG o menos, para ella; después: daño a supervillanos y a superhéroes, para los aliados Universales). La nota da los valores de Lv.4 (6★); los demás niveles no están.",
+  "en": "Own exclusive artifacts."
+ },
+ "artefactos": [
+  {
+   "id": 9001,
+   "portrait": "agathaharkness",
+   "character": "Agatha Harkness",
+   "artifact_name": "The Vishanti's Sorcerer Supreme",
+   "passive_name": "Mother of Magic",
+   "update": "12.3",
+   "pve_score": null,
+   "pvp_score": null,
+   "text": [
+    "Applies to: Magic Allies",
+    "• Ignores target's Dodge Rate by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)",
+    "• Increases All Basic Attacks by [P3]%, and an additional [P4]% of total Instinct. (Up to 200%)"
+   ],
+   "values": {
+    "6": [
+     "15",
+     "0.5",
+     "20",
+     "0.5"
+    ]
+   },
+   "acquisition": [],
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "sin_confirmar": [
+    "update",
+    "values"
+   ]
+  },
+  {
+   "id": 83,
+   "portrait": "morganlefay",
+   "character": "Morgan le Fay",
+   "artifact_name": "Dark Knowledge",
+   "passive_name": "Medieval Mystic",
+   "update": "8.4.5b",
+   "pve_score": null,
+   "pvp_score": null,
+   "text": [
+    "Applies to: Universal Type Allies",
+    "• Increases Basic Damage Dealt to SUPER VILLAIN faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)",
+    "• Increases Basic Damage Dealt to SUPER HERO faction by [P3]%, and an additional [P4]% of total Instinct. (Up to 200%)"
+   ],
+   "values": {
+    "6": [
+     "15",
+     "0.5",
+     "15",
+     "0.5"
+    ]
+   },
+   "acquisition": [],
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "sin_confirmar": [
+    "values"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,351 @@
+{
+ "portrait": "agathaharkness",
+ "desde": null,
+ "fuente": [
+  "foro-1896956",
+  "cafe-3187937"
+ ],
+ "notas": [
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.",
+  "La Tier-3 (definitiva) no trae su recarga en la ficha: va sin recarga.",
+  "Striker de Tier-4: la ficha dice además «Can be activated again after 0.3 sec (7 Sec.)» (la recuperación por daño vuelve a activarse a los 0,3 s); el patrón de la API para el robo de PG no lo tiene y no va.",
+  "Rune Magic: el juego, desde esta actualización, dice «ignores enemy's basic damage decrease» (la nota cambia ese texto en todas las skills); va con el texto de la API, que todavía dice «damage decrease»."
+ ],
+ "slots": {
+  "Leader Skill": {
+   "type": "Leader Skill",
+   "name": "Witch's Blessing",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 28,
+       "ability": "ENERGY DEFENSE ↑",
+       "description": "<b>50%</b> increase of Energy Defense."
+      }
+     ],
+     "target": "All Allies"
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Magic Energy Absorption",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 208,
+       "ability": "SUPER ARMOR",
+       "description": "Super Armor, increases all Basic Defenses by <b>40%</b>."
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>40%</b>, increases Bonus Damage by <b>40%</b>."
+      },
+      {
+       "abilityId": 506,
+       "ability": "Absorb",
+       "description": "<b>20%</b> chance to Absorb Energy Damage, upon absorption all Basic Attacks increased by <b>5%</b> (Max <b>20%</b>)"
+      }
+     ]
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Rune Magic",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "id": 990900405,
+       "abilityId": 300,
+       "ability": "Decreases basic damage based on character's faction",
+       "description": "Decreases basic damage received from $HEROSUBTYPE1 faction by <b>40%</b>."
+      },
+      {
+       "id": 990900406,
+       "abilityId": 300,
+       "ability": "Decreases basic damage based on character's faction",
+       "description": "Decreases basic damage received from $HEROSUBTYPE1 faction by <b>40%</b>."
+      },
+      {
+       "abilityId": 433,
+       "ability": "Excluding bosses, ignores enemy's damage decrease",
+       "description": "Excluding bosses, ignores enemy's damage decrease by <b>15%</b>."
+      }
+     ],
+     "target": "Magic Allies"
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Orb Explosion",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Mind Damage: <b>70%</b> of Energy Attack <br>Additional <b>124</b> Energy Mind Damage."
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Mind"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Magic Absorption",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Mind Damage: <b>75%</b> of Energy Attack <br>Additional <b>116</b> Energy Mind Damage."
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Mind"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Daggers of Vishanti",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>30%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>50%</b>, all speed by <b>1%</b>, and Critical Rate by <b>25%</b>, removes Incapacitation",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Mind Damage: <b>80%</b> of Energy Attack <br>Additional <b>162</b> Energy Mind Damage."
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      },
+      {
+       "abilityId": 231,
+       "ability": "Mind Control",
+       "description": "Mind Control^, increases basic damage received by <b>10%</b>.",
+       "duration": 3
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Mind"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Immolation",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 263,
+       "ability": "Increases all basic stats",
+       "description": "Increases all Basic Attacks by <b>50%</b>, all Basic Defenses by <b>50%</b>, and all Speeds by <b>1%</b>.",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Mind Damage: <b>85%</b> of Energy Attack <br>Additional <b>95</b> Energy Mind Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>30%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Mind"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Witch Duel",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 5
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Mind Damage: <b>100%</b> of Energy Attack <br>Additional <b>116</b> Energy Mind Damage."
+      },
+      {
+       "abilityId": 30086,
+       "ability": "Mind Resist Decrease (Can stack, ignores immunity)",
+       "description": "Decreases Mind Resist by <b>20%</b> (Stacks up to <b>80%</b>, ignores immunity)",
+       "duration": 7
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Mind"
+    }
+   ]
+  },
+  "Active Ult": {
+   "type": "Active Ult",
+   "name": "Witches' Road",
+   "cooldown": null,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 112,
+       "ability": "IGNORE DODGE",
+       "description": "Ignores target's Dodge Rate by <b>100%</b>.",
+       "duration": 8
+      },
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>80%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 8
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Mind Damage: <b>150%</b> of Energy Attack <br>Additional <b>4</b> Energy Mind Damage."
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      },
+      {
+       "abilityId": 231,
+       "ability": "Mind Control",
+       "description": "Mind Control^, increases basic damage received by <b>10%</b>.",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Mind"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Good Witch, Bad Witch",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>100%</b>.",
+       "duration": 7
+      },
+      {
+       "abilityId": 488,
+       "ability": "HP Steal",
+       "description": "Recovers HP equal to <b>10%</b> of Damage dealt.<br>Up to <b>10%</b> of Max HP at once",
+       "duration": 7
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}

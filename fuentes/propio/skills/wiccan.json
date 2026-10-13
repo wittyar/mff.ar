@@ -1,0 +1,37 @@
+{
+ "portrait": "wiccan",
+ "desde": "wiccan",
+ "fuente": [
+  "foro-1896956",
+  "cafe-3187937"
+ ],
+ "notas": [
+  "La Tier-4 es del personaje: el striker va en todos sus retratos."
+ ],
+ "slots": {
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Demiurge's Potential",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>80%</b>.",
+       "duration": 7
+      },
+      {
+       "abilityId": 566,
+       "ability": "Vigor",
+       "description": "Increases basic damage dealt to enemies with <b>60%</b> HP or lower by <b>50%</b>.",
+       "duration": 7
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}

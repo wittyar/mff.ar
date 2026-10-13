@@ -1,0 +1,319 @@
+{
+ "portrait": "wiccan1",
+ "desde": "wiccan",
+ "fuente": [
+  "foro-1896956",
+  "cafe-3187937"
+ ],
+ "notas": [
+  "Liderazgo y definitiva: los de Wiccan (la ficha del uniforme no los cambia).",
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga."
+ ],
+ "slots": {
+  "Uniform Passive": {
+   "type": "Uniform Passive",
+   "name": "Young Avengers",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>35%</b>, increases Bonus Damage by <b>35%</b>."
+      },
+      {
+       "abilityId": 314,
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>25%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Wiccan's Healing",
+   "cooldown": 20,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 206,
+       "ability": "Removes all Debuffs. ",
+       "description": "Removes all Debuffs.",
+       "duration": 12
+      }
+     ],
+     "target": "Magic Allies",
+     "activation": "when debuffed"
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Reality Recreation",
+   "cooldown": 300,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 253,
+       "ability": "REVIVE",
+       "description": "Revive with <b>80%</b> of Max HP"
+      }
+     ],
+     "activation": "when dead"
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Staff Smash",
+   "cooldown": 7,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>70%</b> of Energy Attack <br>Additional <b>307</b> Energy Damage."
+      },
+      {
+       "abilityId": 108,
+       "ability": "SHOCK",
+       "description": "Shock: Deals additional <b>20%</b> Lightning Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Thunder Wave",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>115%</b> of Energy Attack <br>Additional <b>1531</b> Energy Damage."
+      },
+      {
+       "abilityId": 108,
+       "ability": "SHOCK",
+       "description": "Shock: Deals additional <b>30%</b> Lightning Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Demiurge Bomb",
+   "cooldown": 14,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 215,
+       "ability": "BARRIER",
+       "description": "Barrier <b>15</b> time(s)",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>63%</b> of Energy Attack <br>Additional <b>110</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>25%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      },
+      {
+       "abilityId": 531,
+       "ability": "Panic",
+       "description": "Panic, increases basic damage received by <b>50%</b>",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Sorcerer's Trace",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>25%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>70%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 6
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 7
+      },
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 6
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>1%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 6
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>80%</b> of Energy Attack <br>Additional <b>1531</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>30%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 2
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Thunder Splash",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>45%</b>, all speed by <b>10%</b>, and Critical Rate by <b>10%</b>, removes Incapacitation",
+       "duration": 7
+      },
+      {
+       "abilityId": 258,
+       "ability": "ALL DAMAGE IMMUNE",
+       "description": "<b>100%</b> chance to grant All Damage Immunity",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>55%</b> of Energy Attack <br>Additional <b>1531</b> Energy Damage."
+      },
+      {
+       "abilityId": 108,
+       "ability": "SHOCK",
+       "description": "Shock: Deals additional <b>30%</b> Lightning Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Demiurge's Potential",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>80%</b>.",
+       "duration": 7
+      },
+      {
+       "abilityId": 566,
+       "ability": "Vigor",
+       "description": "Increases basic damage dealt to enemies with <b>60%</b> HP or lower by <b>50%</b>.",
+       "duration": 7
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}

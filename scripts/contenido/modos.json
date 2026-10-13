@@ -152,8 +152,8 @@
   },
   {
    "id": "giant-boss-raid",
-   "nombre": "Giant Boss Raid (Galactus / Dormammu)",
-   "nombre_es": "Incursión de jefe gigante (Galactus / Dormammu)",
+   "nombre": "Giant Boss Raid (Galactus / Dormammu / Onslaught)",
+   "nombre_es": "Incursión de jefe gigante (Galactus / Dormammu / Onslaught)",
    "tipo": "pve",
    "frecuencia": "diario",
    "que": [
@@ -172,12 +172,22 @@
     {
      "es": "Entran hasta 3 jugadores (se puede con 1 o 2): con más jugadores, el jefe es más difícil y da más recompensas. Los jefes cambian cada día, y en cada batalla hay un personaje bonus elegido al azar: fortalecerlo sube la chance de recompensa. En la sala de espera, los Boost Points suben la cantidad de recompensas: al ganar se cobran tantas extra como las que se fijaron.",
      "en": "Up to 3 players enter (1 or 2 also works): with more players the boss is harder and gives more rewards. Bosses change daily, and each battle has a randomly selected Bonus Character: strengthening it raises the chance of rewards. In the lobby, Boost Points raise the reward count: on a win you get as many extra rewards as the count you set."
+    },
+    {
+     "es": "Onslaught (desde el 14 de octubre de 2026): da Souls of the Faltine y Book of the Vishanti. Para entrar hacen falta al menos 3 héroes con Tier-4, 6★ de rango, 6★ de maestría y nivel 80; un héroe que ya participó no se puede volver a usar en ninguna dificultad hasta el reinicio. Cada recompensa extra cuesta 40 Boost Points (como Dormammu), y el bonus por personaje es para héroes de Tier-4, al azar, y cambia al pasar la etapa.",
+     "en": "Onslaught (from October 14, 2026): drops Soul of the Faltine and Book of the Vishanti. Entry needs at least 3 heroes at Tier-4, 6★ Rank, 6★ Mastery and Lv.80; a hero that participated cannot be used again in any difficulty until the reset. Each additional reward costs 40 Boost Points (as with Dormammu), and the Owned Character Bonus goes to Tier-4 heroes at random and changes on clearing the stage."
+    },
+    {
+     "es": "En Onslaught cada potenciador le llega solo a quien lo tiene: el liderazgo, las pasivas y la pasiva Tier-2, los efectos de uniforme, el C.T.P. y los artefactos no les llegan a los compañeros (el liderazgo de Cyclops — X-Men '97 que da «a todos los aliados» pasa a darle solo a él). Siguen igual los de las skills activas (el «a todos los aliados» de la Activa 5 de Nick Fury — Secret Avengers), los de la cuenta (cartas de cómic, emblemas, colecciones, X of Swords, bonus de agente), los bonos de equipo y J.A.R.V.I.S.",
+     "en": "In Onslaught every buff applies to the self only: leadership, passives and Tier-2 passive, uniform effects, the C.T.P. and artifacts do not reach teammates (Cyclops — X-Men '97's «All Allies» leadership only buffs himself). Unchanged: buffs from active skills (Nick Fury — Secret Avengers' Active 5 «All Allies»), account effects (Comic Cards, Emblems, collections, X of Swords, Agent Bonus), team bonuses and J.A.R.V.I.S."
     }
    ],
    "fuente": [
     "tv-guia-4",
     "juego-guia",
-    "juego-guia-ko"
+    "juego-guia-ko",
+    "foro-1896956",
+    "cafe-3187937"
    ],
    "corrobora": {
     "es": "La wiki confirma que los materiales de Tier-4 salen de Giant Boss Raid: Dormammu y de World Boss Legend.",
@@ -194,7 +204,8 @@
     "Giant Boss Raid",
     "GBR",
     "Galactus",
-    "Dormammu"
+    "Dormammu",
+    "Onslaught"
    ]
   },
   {

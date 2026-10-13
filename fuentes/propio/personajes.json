@@ -1,0 +1,231 @@
+{
+ "nota": {
+  "es": "Contenido propio (Ezequiel, 13 de octubre de 2026: «me gustaría poder empezar a generar mi propio contenido y luego apoyarme en thanosvibs como confirmación»): personajes, uniformes, skills, artefactos y C.T.P.s que se cargan de las fuentes del juego (las notas de los foros oficiales en inglés y en coreano) antes de que thanosvibs los publique, y lo que el juego cambia de los que ya están. scripts/propio.py lo pone sobre lo bajado de thanosvibs en work/ antes del build (lo propio manda) y, cuando thanosvibs publica lo mismo, compara: lo que coincide queda confirmado y lo que difiere va a docs/AUDITORIA.md. Cada fila lleva sus fuentes (contenido/guia.json) y, en sin_confirmar, los campos que las fuentes no dicen y van con lo más probable hasta que thanosvibs los confirme.",
+  "en": "Own content (Ezequiel, October 13, 2026): characters, uniforms, skills, artifacts and C.T.P.s loaded from game sources (the official forum notes in English and Korean) before thanosvibs publishes them, and what the game changes in existing ones. scripts/propio.py puts it on top of the thanosvibs download in work/ before the build (own content wins) and, when thanosvibs publishes the same, compares: what matches is confirmed and what differs goes to docs/AUDITORIA.md. Each row carries its sources (contenido/guia.json) and, in sin_confirmar, the fields the sources do not state, set to the most likely value until thanosvibs confirms them."
+ },
+ "versiones": [
+  {
+   "version": "12.3",
+   "subtitle": "Darkness and Magic",
+   "fecha": "October 14, 2026",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "sin_confirmar": [
+    "version"
+   ],
+   "characters": [
+    "agathaharkness"
+   ],
+   "uniforms": [
+    "wiccan1",
+    "morganlefay2"
+   ],
+   "t3s": [
+    "agathaharkness"
+   ],
+   "t4s": [
+    "agathaharkness",
+    "wiccan",
+    "wiccan1",
+    "morganlefay",
+    "morganlefay1",
+    "morganlefay2"
+   ]
+  }
+ ],
+ "filas": [
+  {
+   "character": "Agatha Harkness",
+   "uniform": "Modern",
+   "uniformed": "False",
+   "portrait": "agathaharkness",
+   "type": "Blast",
+   "allies": "Human",
+   "gender": "Female",
+   "side": "Neutral",
+   "instinct": "Destruction",
+   "native": "Tier-1",
+   "ability": [
+    "Magic",
+    "Mind"
+   ],
+   "original": "Comic",
+   "skill6": "Tier-3",
+   "tier-4": "True",
+   "new": "True",
+   "id": "9001",
+   "striker_skill": null,
+   "world_boss_ability": "Magic",
+   "stats": {},
+   "tuc": [],
+   "base_portrait": "agathaharkness",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "sin_confirmar": [
+    "native",
+    "original",
+    "world_boss_ability",
+    "striker_skill",
+    "id"
+   ]
+  },
+  {
+   "character": "Wiccan",
+   "uniform": "Young Avengers",
+   "uniformed": "True",
+   "portrait": "wiccan1",
+   "type": "Blast",
+   "allies": "Human",
+   "gender": "Male",
+   "side": "Super Hero",
+   "instinct": "Justice",
+   "native": "Tier-1",
+   "ability": [
+    "Fast Movement",
+    "Energy Projection",
+    "Magic"
+   ],
+   "original": "Comic",
+   "skill6": "Transcended",
+   "tier-4": "True",
+   "new": "True",
+   "id": "84",
+   "striker_skill": 5,
+   "world_boss_ability": "Energy Projection",
+   "stats": {
+    "recovery_rate": "1.00",
+    "fire_resist": "0.00",
+    "cold_resist": "0.00",
+    "lightning_resist": "0.00",
+    "poison_resist": "0.00",
+    "mind_resist": "0.00"
+   },
+   "tuc": [],
+   "base_portrait": "wiccan",
+   "uniform_id": "10100084",
+   "uniform_cost": "1750 Crystals",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "sin_confirmar": [
+    "uniform_id",
+    "striker_skill",
+    "world_boss_ability",
+    "stats"
+   ]
+  },
+  {
+   "character": "Morgan le Fay",
+   "uniform": "Classic",
+   "uniformed": "True",
+   "portrait": "morganlefay2",
+   "type": "Universal",
+   "allies": "Human",
+   "gender": "Female",
+   "side": "Super Villain",
+   "instinct": "Cruelty",
+   "native": "Tier-1",
+   "ability": [
+    "Magic",
+    "Pure Evil"
+   ],
+   "original": "Original",
+   "skill6": "Tier-3",
+   "tier-4": "True",
+   "new": "True",
+   "id": "177",
+   "striker_skill": 2,
+   "world_boss_ability": "Magic",
+   "stats": {},
+   "tuc": [],
+   "base_portrait": "morganlefay",
+   "uniform_id": "10200177",
+   "uniform_cost": "1750 Crystals",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "sin_confirmar": [
+    "uniform_id",
+    "striker_skill",
+    "world_boss_ability",
+    "stats"
+   ]
+  }
+ ],
+ "cambios": [
+  {
+   "portrait": "wiccan",
+   "campos": {
+    "tier-4": "True",
+    "new": "True"
+   },
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
+  },
+  {
+   "portrait": "morganlefay",
+   "campos": {
+    "tier-4": "True",
+    "new": "True"
+   },
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
+  },
+  {
+   "portrait": "morganlefay1",
+   "campos": {
+    "tier-4": "True",
+    "new": "True"
+   },
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
+  }
+ ],
+ "uniformes": {
+  "wiccan1": {
+   "cost": "1750 Crystals",
+   "update": "12.3",
+   "flags": [
+    "Crystal1750"
+   ],
+   "opciones_normal": "All Basic Attacks Increase +15% / All Basic Defenses Increase +15%",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
+  },
+  "morganlefay2": {
+   "cost": "1750 Crystals",
+   "update": "12.3",
+   "flags": [
+    "Crystal1750"
+   ],
+   "opciones_normal": "All Basic Attacks Increase +15% / All Basic Defenses Increase +15%",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
+  }
+ },
+ "instintos": {
+  "Agatha Harkness": {
+   "instinct": "Destruction",
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
+  }
+ }
+}

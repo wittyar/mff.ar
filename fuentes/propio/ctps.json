@@ -1,0 +1,78 @@
+{
+ "nota": {
+  "es": "C.T.P.s propios (como /api/ctps de thanosvibs). El de Ascenso (도약의 C.T.P.), nuevo el 14 de octubre de 2026: la nota da los valores de cada nivel y las dos opciones de reforja (sale una de las dos, con una probabilidad). La descripción es la de la nota, no una opinión como las de thanosvibs. es: el nombre en el juego en español (base, poderoso y brillante, como fuentes/juego-es/ctps.json); null hasta tener la captura del juego: la app muestra el nombre en inglés.",
+  "en": "Own C.T.P.s."
+ },
+ "ctps": [
+  {
+   "id": 9001,
+   "name": "Ascent",
+   "description": "New in the October 2026 update: maximizes Instinct Attack (for all allies, when attacking) and, reforged, ignores damage decrease or raises Instinct damage to bosses.",
+   "description_reforged": "One of two reforge options, by a set chance: Instinct damage dealt to boss types, or (excluding bosses) ignoring enemy's all damage decrease. Neither applies in duplicate across the team.",
+   "stats_normal": [
+    "Applies to: Self<br>Guard Break Immunity",
+    "All Basic Attacks, HP Increase +[P1]%",
+    "Activation Rate: [P2]% chance when attacking<br>Applies to: All Allies<br>Increases Instinct Attack by +[P3]% (5 sec.)<br>(The effect that applies to all team members cannot be applied in duplicate.)<br>Cooldown Time 7 seconds"
+   ],
+   "stats_reforge": {
+    "special": "Applies to: All Allies<br>Increases Instinct damage dealt to boss types by [P1]%<br>(The effect that applies to all team members cannot be applied in duplicate.)",
+    "generic": "Applies to: All Allies<br>Excluding bosses, ignores enemy's all damage decrease by [P1]%.<br>(The effect that applies to all team members cannot be applied in duplicate.)"
+   },
+   "regular": {
+    "acquisition": [
+     "Store - Dimension Chest - Custom Gear Chest",
+     "New C.T.P. Release Celebration! Secret Shop Event"
+    ],
+    "stats_normal": [
+     "28",
+     "15",
+     "20"
+    ]
+   },
+   "mighty": {
+    "acquisition": [
+     "C.T.P. Reforging Normal Success"
+    ],
+    "stats_normal": [
+     "28",
+     "15",
+     "20"
+    ],
+    "stats_reforge": {
+     "special": [
+      "20"
+     ],
+     "generic": [
+      "15"
+     ]
+    }
+   },
+   "brilliant": {
+    "acquisition": [
+     "C.T.P. Reforging Super Success"
+    ],
+    "stats_normal": [
+     "32.2",
+     "20",
+     "30"
+    ],
+    "stats_reforge": {
+     "special": [
+      "30"
+     ],
+     "generic": [
+      "25"
+     ]
+    }
+   },
+   "fuente": [
+    "foro-1896956",
+    "cafe-3187937"
+   ],
+   "es": null,
+   "sin_confirmar": [
+    "es"
+   ]
+  }
+ ]
+}

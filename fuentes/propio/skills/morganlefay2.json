@@ -1,0 +1,313 @@
+{
+ "portrait": "morganlefay2",
+ "desde": "morganlefay",
+ "fuente": [
+  "foro-1896956",
+  "cafe-3187937"
+ ],
+ "notas": [
+  "Liderazgo y definitiva: los de Morgan Le Fay (la ficha del uniforme no los cambia).",
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga."
+ ],
+ "slots": {
+  "Uniform Passive": {
+   "type": "Uniform Passive",
+   "name": "Classic",
+   "cooldown": 18,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 9,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>40%</b>"
+      },
+      {
+       "abilityId": 377,
+       "ability": "Increases basic damage when attacking boss types",
+       "description": "Increases basic damage dealt to boss types by <b>50%</b>."
+      }
+     ],
+     "target": "Universal Type Allies"
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 206,
+       "ability": "Removes all Debuffs. ",
+       "description": "Removes all Debuffs.",
+       "duration": 10
+      }
+     ],
+     "target": "Universal Type Allies",
+     "activation": "when debuffed"
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Witch's Curse",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 41,
+       "ability": "CHAIN HIT DMG DEALT ↑",
+       "description": "Increases Chain Hit damage by <b>10%</b> when attacking."
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>35%</b>, increases Bonus Damage by <b>25%</b>."
+      },
+      {
+       "abilityId": 314,
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>30%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Back In Time",
+   "cooldown": 300,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 253,
+       "ability": "REVIVE",
+       "description": "Revive with <b>80%</b> of Max HP"
+      }
+     ],
+     "activation": "when dead"
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Witch's Bones",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>100%</b> of Energy Attack <br>Additional <b>202</b> Energy Damage."
+      },
+      {
+       "abilityId": 107,
+       "ability": "BLEED",
+       "description": "Bleed: Deals additional <b>20%</b> Damage every <b>1</b> sec. (Removes Elasticity)",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Cursed Souls",
+   "cooldown": 10,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>85%</b> of Energy Attack <br>Additional <b>162</b> Energy Damage."
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Witch's Guardian",
+   "cooldown": 16,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 7
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>1%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>130%</b> of Energy Attack <br>Additional <b>231</b> Energy Damage."
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Heart-Piercing Sword",
+   "cooldown": 16,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 258,
+       "ability": "ALL DAMAGE IMMUNE",
+       "description": "<b>100%</b> chance to grant All Damage Immunity",
+       "duration": 7
+      },
+      {
+       "abilityId": 356,
+       "ability": "Increases all Basic Attacks",
+       "description": "Increases all Basic Attacks by <b>40%</b>.",
+       "duration": 6
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>95%</b> of Energy Attack <br>Additional <b>124</b> Energy Damage."
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Witch of Death",
+   "cooldown": 16,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>25%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 284,
+       "ability": "SKILL DAMAGE ↑",
+       "description": "Increases basic damage by <b>90%</b> for <b>1</b> attack(s).",
+       "duration": 6
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>90%</b> of Energy Attack <br>Additional <b>81</b> Energy Damage."
+      },
+      {
+       "abilityId": 201,
+       "ability": "FEAR",
+       "description": "Fear",
+       "duration": 3
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      },
+      {
+       "abilityId": 31060,
+       "ability": "Decreases all Basic Defenses (Can stack, ignores immunity)",
+       "description": "Decreases all Basic Defenses by <b>5%</b>. (Stacks up to <b>50%</b>, ignores immunity)",
+       "duration": 6
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Witch's Vengeance",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>40%</b>.",
+       "duration": 10
+      },
+      {
+       "abilityId": 509,
+       "ability": "Give Power",
+       "description": "Acquires the following effect for <b>10</b> sec."
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 487,
+       "ability": "Increases Accumulative ATK",
+       "description": "Increases all Basic Attacks by <b>20%</b> (Max <b>60%</b>)",
+       "duration": 10
+      }
+     ],
+     "activation": "when skill <b>(Regular Attacks Excluded)</b> is used"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "portrait": "morganlefay1",
+ "desde": "morganlefay1",
+ "fuente": [
+  "foro-1896956",
+  "cafe-3187937"
+ ],
+ "notas": [
+  "La Tier-4 es del personaje: el striker va en todos sus retratos."
+ ],
+ "slots": {
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Witch's Vengeance",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>40%</b>.",
+       "duration": 10
+      },
+      {
+       "abilityId": 509,
+       "ability": "Give Power",
+       "description": "Acquires the following effect for <b>10</b> sec."
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 487,
+       "ability": "Increases Accumulative ATK",
+       "description": "Increases all Basic Attacks by <b>20%</b> (Max <b>60%</b>)",
+       "duration": 10
+      }
+     ],
+     "activation": "when skill <b>(Regular Attacks Excluded)</b> is used"
+    }
+   ]
+  }
+ }
+}
