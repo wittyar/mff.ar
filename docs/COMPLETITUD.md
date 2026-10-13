@@ -1,6 +1,6 @@
 # Completitud de los datos
 
-Generado por `scripts/completitud.py` sobre `data.js` (juego 12.2.5, datos del 2026-10-13, formato 16) y `datos.json`.
+Generado por `scripts/completitud.py` sobre `data.js` (juego 12.2.5, datos del 2026-10-13, formato 17) y `datos.json`.
 
 Qué le falta a cada variante (un personaje con un uniforme) para tener la información que la app muestra y usa, y de dónde podría salir. Lo que dos fuentes dicen distinto está en `docs/AUDITORIA.md`; esto es lo que no está. Lo que no existe en el juego no es un faltante (un personaje sin artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito va aparte.
 
@@ -27,41 +27,45 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 ## Resumen
 
-240 de 888 variantes completas (27%); 54 de 290 personajes con todas sus variantes completas.
+240 de 891 variantes completas (27%); 54 de 291 personajes con todas sus variantes completas.
 
 Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo que falta en el personaje cuenta en todas sus variantes):
 
 | Faltante | Variantes | Personajes | Casos | De dónde podría salir |
 |---|---|---|---|---|
-| [Strikers](#strikers) | 356 | 122 | 122 | la wiki (pestaña Striker), el juego o foros |
-| [Rotación](#rotación) | 189 | 109 | 189 | thanosvibs (rotaciones), la guía de armado o foros |
-| [Fila vacía en la guía de armado](#fila-vacía-en-la-guía-de-armado) | 73 | 32 | 32 | la guía de armado o foros |
+| [Strikers](#strikers) | 358 | 123 | 123 | la wiki (pestaña Striker), el juego o foros |
+| [Rotación](#rotación) | 192 | 112 | 192 | thanosvibs (rotaciones), la guía de armado o foros |
+| [Fila vacía en la guía de armado](#fila-vacía-en-la-guía-de-armado) | 74 | 33 | 33 | la guía de armado o foros |
 | [«Give Power» sin lo que otorga](#give-power-sin-lo-que-otorga) | 68 | 27 | 78 | thanosvibs (Leads & Supports), la wiki o foros |
 | [Instinto desconocido](#instinto-desconocido) | 50 | 15 | 15 | la wiki (infobox o categoría de la página), el juego o foros |
 | [Skill sin efectos](#skill-sin-efectos) | 48 | 31 | 48 | la wiki (en la pasiva de uniforme, el «Bonus» del uniforme) o foros |
-| [Bonos de equipo que faltan](#bonos-de-equipo-que-faltan) | 33 | 32 | 32 | la wiki (sección Team Bonus), capturas del juego o foros |
+| [Bonos de equipo que faltan](#bonos-de-equipo-que-faltan) | 34 | 33 | 33 | la wiki (sección Team Bonus), capturas del juego o foros |
 | [Facción, tipo, raza o habilidad sin resolver ($HEROSUBTYPE1)](#facción-tipo-raza-o-habilidad-sin-resolver-herosubtype1) | 31 | 18 | 42 | el juego o foros, y a mano en scripts/contenido/marcadores.csv |
 | [Sin el C.T.P. de su contexto en la guía de armado](#sin-el-ctp-de-su-contexto-en-la-guía-de-armado) | 29 | 27 | 31 | la guía de armado o foros |
 | [ISO-8 u obelisco sin dato en la guía de armado](#iso-8-u-obelisco-sin-dato-en-la-guía-de-armado) | 23 | 6 | 6 | la guía de armado o foros |
+| [Valores del artefacto incompletos](#valores-del-artefacto-incompletos) | 17 | 7 | 7 | la wiki (página Artifact) o el juego |
 | [Nombre en Leads & Supports distinto del de la skill](#nombre-en-leads--supports-distinto-del-de-la-skill) | 15 | 14 | 16 | el juego o foros |
-| [Valores del artefacto incompletos](#valores-del-artefacto-incompletos) | 12 | 5 | 5 | la wiki (página Artifact) o el juego |
 | [Liderazgo sin completar](#liderazgo-sin-completar) | 10 | 4 | 10 | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | [Skill que falta](#skill-que-falta) | 7 | 3 | 11 | thanosvibs (API de skills), la wiki o foros |
-| [Soporte que Leads & Supports no publica](#soporte-que-leads--supports-no-publica) | 5 | 3 | 5 | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
+| [Soporte que Leads & Supports no publica](#soporte-que-leads--supports-no-publica) | 6 | 4 | 6 | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | [Activa sin recarga](#activa-sin-recarga) | 4 | 2 | 4 | la wiki o el juego |
+| [Retrato o ícono](#retrato-o-ícono) | 4 | 2 | 4 | thanosvibs (imágenes) |
 | [Bono de equipo sin nombre](#bono-de-equipo-sin-nombre) | 4 | 2 | 2 | capturas del juego o foros |
 | [Objetivo sin nombre (Target ID)](#objetivo-sin-nombre-target-id) | 3 | 3 | 3 | thanosvibs (Leads & Supports) o foros |
-| [Retrato o ícono](#retrato-o-ícono) | 3 | 1 | 3 | thanosvibs (imágenes) |
 | [Sin C.T.P. en la guía de armado](#sin-ctp-en-la-guía-de-armado) | 3 | 2 | 2 | la guía de armado o foros |
+| [Datos del uniforme](#datos-del-uniforme) | 2 | 2 | 4 | thanosvibs (uniformes) |
+| [Stats](#stats) | 1 | 1 | 1 | thanosvibs |
+| [Sin fila en la Ideal CTP List](#sin-fila-en-la-ideal-ctp-list) | 1 | 1 | 1 | thanosvibs (Ideal CTP List) |
+| [Sin lugar en la tier list General](#sin-lugar-en-la-tier-list-general) | 1 | 1 | 1 | thanosvibs (tier list General) |
 
-Sin casos: Dato de identidad vacío; Stats; Efecto que el catálogo no clasifica; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Sin fila en la Ideal CTP List; Sin lugar en la tier list General; Perfil de combate o roles; Datos del uniforme.
+Sin casos: Dato de identidad vacío; Efecto que el catálogo no clasifica; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles.
 
 ### Lo que ya se sabía que no cierra
 
 - **Marcadores sin resolver:** 42 efectos en 31 variantes. docs/AUDITORIA.md (sección 8) los cuenta por id de la API, que se repite en los uniformes que comparten la skill.
-- **Liderazgos:** Leads & Supports publica el de 414 variantes, y el build deriva el de 464 más de su Leader Skill (482 slots, con "src": "api"; docs/AUDITORIA.md, sección 12) y 12 soportes de las pasivas. 10 slots de 10 variantes no se pudieron derivar (efecto sin stat, 10; un slot puede tener más de un motivo).
-- **Strikers:** 119 personajes sin la pestaña Striker en la wiki y 3 con la pestaña sin filas que se puedan leer.
-- **Bonos de equipo por confirmar:** los que se vieron en capturas del juego y esperan confirmación no están en data.js, así que este informe no los ve. Sí ve 30 personajes sin ningún bono y 2 solo con los del juego (Annihilus y Galactus). Los 49 bonos con versiones empatadas entre páginas de la wiki son diferencias entre fuentes (docs/AUDITORIA.md, sección 10): van en «Lo que no cuenta».
+- **Liderazgos:** Leads & Supports publica el de 414 variantes, y el build deriva el de 467 más de su Leader Skill (485 slots, con "src": "api"; docs/AUDITORIA.md, sección 12) y 15 soportes de las pasivas. 10 slots de 10 variantes no se pudieron derivar (efecto sin stat, 10; un slot puede tener más de un motivo).
+- **Strikers:** 120 personajes sin la pestaña Striker en la wiki y 3 con la pestaña sin filas que se puedan leer.
+- **Bonos de equipo por confirmar:** los que se vieron en capturas del juego y esperan confirmación no están en data.js, así que este informe no los ve. Sí ve 31 personajes sin ningún bono y 2 solo con los del juego (Annihilus y Galactus). Los 49 bonos con versiones empatadas entre páginas de la wiki son diferencias entre fuentes (docs/AUDITORIA.md, sección 10): van en «Lo que no cuenta».
 - **Nombres de Leads & Supports que no son los de la API de skills:** 16 en 15 variantes; 5 con el nombre de otra skill de la variante, entre ellos Jeff the Land Shark y Polaris — Uncanny X-Men.
 
 ### Lo que no cuenta como faltante
@@ -97,6 +101,14 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Supergiant (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
 | Vulture (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
 | Wave (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
+
+### Stats
+
+1 caso en 1 personaje. thanosvibs publica recuperación y resistencias de todos los personajes.
+
+| Personaje | Qué falta | De dónde podría salir |
+|---|---|---|
+| Agatha Harkness | faltan recovery_rate, fire_resist, cold_resist, lightning_resist, poison_resist, mind_resist | thanosvibs |
 
 ### Skill que falta
 
@@ -261,10 +273,11 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Soporte que Leads & Supports no publica
 
-5 casos en 3 personajes y 5 variantes. Según el análisis, la pasiva le da algo al equipo, Leads & Supports no publica ese soporte (ni en su slot ni con el nombre de la skill) y el build no lo pudo derivar de la skill de la API (docs/AUDITORIA.md, sección 12, con el mismo motivo): la sinergia no lo cuenta.
+6 casos en 4 personajes y 6 variantes. Según el análisis, la pasiva le da algo al equipo, Leads & Supports no publica ese soporte (ni en su slot ni con el nombre de la skill) y el build no lo pudo derivar de la skill de la API (docs/AUDITORIA.md, sección 12, con el mismo motivo): la sinergia no lo cuenta.
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
+| Agatha Harkness | Pasiva «Rune Magic» le da al equipo «Ignora la reducción de daño del rival (no jefes)», «Menos daño recibido de ciertos rivales», Leads & Supports no lo publica y no se pudo derivar de la skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease) | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | Blue Marvel — Classic | Pasiva de uniforme «Classic» le da al equipo «Daño contra ciertos rivales», «Resistencias elementales», Leads & Supports no lo publica y no se pudo derivar de la skill: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy) | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | Invisible Woman (base, Future Foundation, Classic) | Pasiva «Invisibility Shift» le da al equipo «Barrera», Leads & Supports no lo publica y no se pudo derivar de la skill: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when hit»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Barrier 1 time(s)» (BARRIER) | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | Venom — King in Black | Pasiva de uniforme «King in Black» le da al equipo «Curación», «Daño crítico», Leads & Supports no lo publica y no se pudo derivar de la skill: la API no dice a quiénes llega («All Allies y All Allies: a quiénes otorga el «Give Power»») | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
@@ -292,23 +305,26 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Valores del artefacto incompletos
 
-5 casos en 5 personajes. El texto del artefacto usa valores que thanosvibs no publica en esos niveles de estrellas: la app los marca «sin dato» (docs/AUDITORIA.md, sección 6).
+7 casos en 7 personajes. El texto del artefacto usa valores que thanosvibs no publica en esos niveles de estrellas: la app los marca «sin dato» (docs/AUDITORIA.md, sección 6).
 
 | Personaje | Qué falta | De dónde podría salir |
 |---|---|---|
+| Agatha Harkness | The Vishanti's Sorcerer Supreme: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
 | Domino (sus 3 variantes) | Probability Power: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
 | Hulkbuster (Iron Man Mark 44) (sus 5 variantes) | Big Armor: thanosvibs no publica todos sus valores en 3★, 4★, 5★ y 6★ | la wiki (página Artifact) o el juego |
 | Inferno (sus 2 variantes) | The Flames of Attilan: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
+| Morgan le Fay (sus 3 variantes) | Dark Knowledge: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
 | Sunspot | Solar: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
-| Wiccan | Future Demiurge: thanosvibs no publica todos sus valores en 3★, 4★, 5★ y 6★ | la wiki (página Artifact) o el juego |
+| Wiccan (sus 2 variantes) | Future Demiurge: thanosvibs no publica todos sus valores en 3★, 4★, 5★ y 6★ | la wiki (página Artifact) o el juego |
 
 ### Strikers
 
-122 casos en 122 personajes. La app toma los strikers de la pestaña Striker de la página de la wiki: sin ella no tiene los suyos (docs/AUDITORIA.md, sección 11). Que existan en el juego para todos es [Probable].
+123 casos en 123 personajes. La app toma los strikers de la pestaña Striker de la página de la wiki: sin ella no tiene los suyos (docs/AUDITORIA.md, sección 11). Que existan en el juego para todos es [Probable].
 
 | Personaje | Qué falta | De dónde podría salir |
 |---|---|---|
 | Adam Warlock (sus 3 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
+| Agatha Harkness | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Agent Venom (sus 4 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Angel (sus 4 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Annihilus | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
@@ -375,7 +391,7 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Marvel Boy | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Maximus | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Moon Girl (sus 2 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
-| Morgan le Fay (sus 2 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
+| Morgan le Fay (sus 3 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Morph | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Ms. Marvel (Kamala Khan) (sus 6 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
 | Namor (sus 3 variantes) | la wiki no tiene la pestaña Striker de su página | la wiki (pestaña Striker), el juego o foros |
@@ -433,10 +449,11 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Bonos de equipo que faltan
 
-32 casos en 32 personajes. La app toma los bonos de la sección Team Bonus de la wiki y de lo que se vio en el juego. Sin ninguno, o solo con los del juego, faltan los demás [Probable].
+33 casos en 33 personajes. La app toma los bonos de la sección Team Bonus de la wiki y de lo que se vio en el juego. Sin ninguno, o solo con los del juego, faltan los demás [Probable].
 
 | Personaje | Qué falta | De dónde podría salir |
 |---|---|---|
+| Agatha Harkness | no tiene ningún bono de equipo: la wiki no lista ninguno con él | la wiki (sección Team Bonus), capturas del juego o foros |
 | Annihilus | solo tiene los 2 que se vieron en el juego: la wiki no lista ninguno con él | la wiki (sección Team Bonus), capturas del juego o foros |
 | Athena | no tiene ningún bono de equipo: la wiki no lista ninguno con él | la wiki (sección Team Bonus), capturas del juego o foros |
 | Black Knight | no tiene ningún bono de equipo: la wiki no lista ninguno con él | la wiki (sección Team Bonus), capturas del juego o foros |
@@ -478,6 +495,14 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 |---|---|---|
 | Thor (Jane Foster) (sus 2 variantes) | el bono con Titania no tiene nombre en ninguna página de la wiki | capturas del juego o foros |
 | Titania (sus 2 variantes) | el bono con Thor (Jane Foster) no tiene nombre en ninguna página de la wiki | capturas del juego o foros |
+
+### Sin fila en la Ideal CTP List
+
+1 caso en 1 personaje. La Ideal CTP List ubica a cada personaje en la fila de su C.T.P.
+
+| Personaje | Qué falta | De dónde podría salir |
+|---|---|---|
+| Agatha Harkness | no está en la Ideal CTP List (CrisisCardio) | thanosvibs (Ideal CTP List) |
 
 ### Sin C.T.P. en la guía de armado
 
@@ -525,10 +550,11 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Fila vacía en la guía de armado
 
-32 casos en 32 personajes. La guía de armado tiene una fila por personaje y esta no tiene nada de lo que la guía completa (C.T.P., ISO-8, obelisco, lugar en su tier list, cómo se consigue): no está hecha. La ficha y las tarjetas de equipo dicen «sin dato».
+33 casos en 33 personajes. La guía de armado tiene una fila por personaje y esta no tiene nada de lo que la guía completa (C.T.P., ISO-8, obelisco, lugar en su tier list, cómo se consigue): no está hecha. La ficha y las tarjetas de equipo dicen «sin dato».
 
 | Personaje | Qué falta | De dónde podría salir |
 |---|---|---|
+| Agatha Harkness | la guía de armado no tiene su fila | la guía de armado o foros |
 | Annihilus | su fila en la guía de armado está vacía: sin C.T.P., ISO-8, obelisco, lugar en su tier list ni cómo se consigue | la guía de armado o foros; la Ideal CTP List (CrisisCardio) lo pone en «Competition» |
 | Apocalypse (sus 4 variantes) | su fila en la guía de armado está vacía: sin C.T.P., ISO-8, obelisco, lugar en su tier list ni cómo se consigue | la guía de armado o foros; la Ideal CTP List (CrisisCardio) lo pone en «Conquest» |
 | Athena | su fila en la guía de armado está vacía: sin C.T.P., ISO-8, obelisco, lugar en su tier list ni cómo se consigue | la guía de armado o foros; la Ideal CTP List (CrisisCardio) lo pone en «Insight» |
@@ -575,20 +601,30 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Jubilee (sus 2 variantes) | su fila en la guía de armado no trae ISO-8 ni obelisco | la guía de armado o foros |
 | Wolverine (sus 8 variantes) | su fila en la guía de armado no trae ISO-8 ni obelisco | la guía de armado o foros |
 
+### Sin lugar en la tier list General
+
+1 caso en 1 personaje. La tier list General de thanosvibs ubica a todo el roster.
+
+| Personaje | Qué falta | De dónde podría salir |
+|---|---|---|
+| Agatha Harkness | no está en la tier list General | thanosvibs (tier list General) |
+
 ### Retrato o ícono
 
-3 casos en 1 personaje y 3 variantes. La app baja lo que publica datos.json; sin el archivo, no muestra el retrato o el ícono. El ícono del bando Neutral no lo baja el build: que thanosvibs tenga uno es [Conjetura].
+4 casos en 2 personajes y 4 variantes. La app baja lo que publica datos.json; sin el archivo, no muestra el retrato o el ícono. El ícono del bando Neutral no lo baja el build: que thanosvibs tenga uno es [Conjetura].
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
+| Agatha Harkness | el ícono de «Neutral» no está en datos.json | thanosvibs (imágenes) |
 | Destroyer (sus 3 variantes) | el ícono de «Neutral» no está en datos.json | thanosvibs (imágenes) |
 
 ### Rotación
 
-189 casos en 109 personajes y 189 variantes. thanosvibs publica rotaciones por uniforme, y la guía de armado, la del mejor uniforme de cada personaje. Se dice si otro uniforme del personaje tiene la suya.
+192 casos en 112 personajes y 192 variantes. thanosvibs publica rotaciones por uniforme, y la guía de armado, la del mejor uniforme de cada personaje. Se dice si otro uniforme del personaje tiene la suya.
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
+| Agatha Harkness | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Agent 13 (sus 2 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Annihilus | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Captain America (Sharon Rogers) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Star Light Armor, Dark Star Armor, Star Night Armor, Light Sirius Armor, Poseidon Armor y Arctic Warrior; la guía de armado tiene la de Arctic Warrior |
@@ -647,6 +683,7 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Minn-Erva | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Captain Marvel; la guía de armado tiene la de Marvel Studios' Captain Marvel |
 | Mister Fantastic — Marvel Studios' The Fantastic Four: First Steps | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Future Foundation, The Maker y The Fall of the Fantastic Four |
 | Mockingbird (sus 3 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
+| Morgan le Fay — Classic | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base y Fallen Soul; la guía de armado tiene la de Fallen Soul |
 | Ms. Marvel (Kamala Khan) (base, Karachi Costume) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Inhumans: Attilan Rising, Marvel Studios' Ms. Marvel, Marvel Studios' The Marvels y Marvel Animation's Marvel Zombies; la guía de armado tiene la de Marvel Animation's Marvel Zombies |
 | Nebula (base, Classic) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Avengers: Endgame, Team Suit y Marvel Studios' What If...? (Super Nova Nebula); la guía de armado tiene la de Marvel Studios' What If...? (Super Nova Nebula) |
 | Nick Fury — Secret Avengers | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Marvel Studios' Captain Marvel y Marvel Studios' The Marvels |
@@ -693,11 +730,21 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | War Machine (base, Iron Patriot, Avengers: The Initiative, Marvel Studios' Captain America: Civil War, Marvel Studios' Avengers: Infinity War) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Avengers: Endgame, Team Suit, 3099 y Invincible Iron Man; la guía de armado tiene la de Invincible Iron Man |
 | Warwolf | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | White Tiger | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Television's Daredevil: Born Again; la guía de armado tiene la de Marvel Television's Daredevil: Born Again |
+| Wiccan — Young Avengers | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base |
 | Winter Soldier (base, Marvel Studios' Captain America: Civil War, Captain America) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Avengers: Infinity War, Marvel Studios' The Falcon and the Winter Soldier, Revolution y Marvel Studios' Thunderbolts*; la guía de armado tiene la de Marvel Studios' Thunderbolts* |
 | Wolverine (Age of Apocalypse, All-New Marvel NOW!) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, X-Force, House of X, Enter the Phoenix, X Deaths of Wolverine y Marvel Studios' Deadpool & Wolverine; la guía de armado tiene la de Marvel Studios' Deadpool & Wolverine |
 | Wong (base, Marvel Studios' Doctor Strange) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Doctor Strange 2 y What If... Zombies?!; la guía de armado tiene la de What If... Zombies?! |
 | Yelena Belova — Marvel Studios' Thunderbolts* | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Marvel Studios' Black Widow y Marvel Studios' Black Widow (Snow Suit) |
 | Yondu — All-New, All-Different | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Guardians of the Galaxy 2 y Summer Vacation; la guía de armado tiene la de Summer Vacation |
+
+### Datos del uniforme
+
+4 casos en 2 personajes y 2 variantes. thanosvibs publica costo, materiales y opciones de cada uniforme.
+
+| Variante | Qué falta | De dónde podría salir |
+|---|---|---|
+| Morgan le Fay — Classic | sin materiales de mejora; las opciones de uniforme no son cinco retratos del roster | thanosvibs (uniformes) |
+| Wiccan — Young Avengers | sin materiales de mejora; las opciones de uniforme no son cinco retratos del roster | thanosvibs (uniformes) |
 
 ## Por personaje
 
@@ -718,6 +765,13 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 <details><summary>Aero: 1 faltante, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** instinto
+
+</details>
+
+<details><summary>Agatha Harkness: 10 faltantes, 1 de 1 variante incompleta</summary>
+
+- **Personaje:** stats; valores del artefacto; strikers; bonos de equipo; Ideal CTP List; fila vacía en la guía de armado; tier list General
+- **Base:** soporte sin Leads & Supports: Pasiva; retrato o ícono: Neutral; rotación
 
 </details>
 
@@ -1659,9 +1713,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Morgan le Fay: 1 faltante, 2 de 2 variantes incompletas</summary>
+<details><summary>Morgan le Fay: 5 faltantes, 3 de 3 variantes incompletas</summary>
 
-- **Personaje:** strikers
+- **Personaje:** valores del artefacto; strikers
+- **Classic:** rotación; datos del uniforme
 
 </details>
 
@@ -2307,9 +2362,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Wiccan: 1 faltante, 1 de 1 variante incompleta</summary>
+<details><summary>Wiccan: 4 faltantes, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** valores del artefacto
+- **Young Avengers:** rotación; datos del uniforme
 
 </details>
 

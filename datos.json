@@ -1,15 +1,15 @@
 {
- "formato": 16,
+ "formato": 17,
  "juego": "12.2.5",
  "generado": "2026-10-13",
  "archivos": {
   "data.js": {
-   "sha256": "b29a58a90fe9d18a610558464902ff04a3886268cb137c97df3caeb5494942ae",
-   "bytes": 6632316
+   "sha256": "f190660a5af14c724aa7ec85c5f9ebbf12b65e5a13f85a1f06d7c9bf82f95af0",
+   "bytes": 6652584
   },
   "docs/AUDITORIA.md": {
-   "sha256": "d604d9c49eb015e49d2d48339d865c1f9a5fe7a2eeb15bac6983e158594303e8",
-   "bytes": 164351
+   "sha256": "8b905d7f9930e40ca88537c6dd764979dc3cd05b4a4a80805c8e94e6e32cd531",
+   "bytes": 169981
   }
  },
  "imagenes": [
@@ -1818,6 +1818,10 @@
    "https://thanosvibs.money/images/items/artifact_aero.png"
   ],
   [
+   "images/items/artifact_agathaharkness.png",
+   "https://thanosvibs.money/images/items/artifact_agathaharkness.png"
+  ],
+  [
    "images/items/artifact_agentvenom.png",
    "https://thanosvibs.money/images/items/artifact_agentvenom.png"
   ],
@@ -2878,6 +2882,10 @@
    "https://thanosvibs.money/images/items/artifact_zeus.png"
   ],
   [
+   "images/items/ctp_ascent.png",
+   "https://thanosvibs.money/images/items/ctp_ascent.png"
+  ],
+  [
    "images/items/ctp_authority.png",
    "https://thanosvibs.money/images/items/ctp_authority.png"
   ],
@@ -3656,6 +3664,18 @@
   [
    "images/professorx2.png",
    "https://thanosvibs.money/images/portraits/professorx2.png"
+  ],
+  [
+   "images/propio/agathaharkness.png",
+   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/agathaharkness.png"
+  ],
+  [
+   "images/propio/morganlefay2.png",
+   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/morganlefay2.png"
+  ],
+  [
+   "images/propio/wiccan1.png",
+   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/wiccan1.png"
   ],
   [
    "images/proximamidnight.png",

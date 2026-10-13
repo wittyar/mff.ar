@@ -2,8 +2,8 @@
 
 Generado por `scripts/historico.py` (lo llama `scripts/build.py`). Las llegadas (personaje, uniforme, Tier-3, Potencial Trascendido, Tier-4) y las versiones con su fecha salen de `/api/updates` de thanosvibs; el texto, de las notas de actualización del foro oficial (`fuentes/foro/`, `scripts/foro.py`). Cada nota va a la versión que nombra su título; si no, a la de 4 días o menos con más llegadas que la nota nombra; si no hay, a la de 45 días o menos con más llegadas nombradas (al menos 2): thanosvibs tiene algunas fechas mal.
 
-- Versiones: 213; con nota: 198. Notas: 208; sin versión: 4.
-- Hechos: personaje 290, uniforme 598, t3 128, tp 156, t4 129, balance 517, modo 131.
+- Versiones: 214; con nota: 199. Notas: 208; sin versión: 3.
+- Hechos: personaje 291, uniforme 600, t3 129, tp 156, t4 135, balance 518, modo 131.
 
 ## Llegadas cuya nota no nombra al personaje (121)
 
@@ -139,12 +139,11 @@ La 1.0 es el lanzamiento: no tiene nota. Las notas salen de dos tableros del for
 
 1.0 (2015-03-29), 1.1 (2015-05-15), 1.2 (2015-06-10), 2.1.5 (2016-05-17), 2.9 (2017-02-15), 3.7.5 (2018-01-24), 5.6.5 (2019-12-17), 5.9.5 (2020-04-01), 6.3a (2020-08-18), 6.3b (2020-08-25), 6.4a (2020-09-22), 6.4b (2020-09-29), 6.4c (2020-10-13), 6.5a (2020-11-05), 10.6a (2025-01-01)
 
-## Notas sin versión (4)
+## Notas sin versión (3)
 
 - 2015-07-28: [Update : 1.3.1 Version Details](https://forum.netmarble.com/futurefight_en/view/2196/20772)
 - 2017-05-23: [5/24 Mid Patch Details](https://forum.netmarble.com/futurefight_en/view/2196/822085)
 - 2019-12-03: [12/3 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1563524)
-- 2026-10-13: [10/13 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1896956)
 
 ## Notas que el foro no deja leer (1)
 

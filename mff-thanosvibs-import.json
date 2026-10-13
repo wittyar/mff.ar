@@ -35477,7 +35477,7 @@
    "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
-   "t": "T3",
+   "t": "T4",
    "abilities": [
     "Movimiento Rápido",
     "Proyección de Energía"
@@ -35495,9 +35495,36 @@
    "striker": 5,
    "wba": "Proyección de Energía",
    "trans": true,
-   "new": false,
+   "new": true,
    "p": "wiccan",
-   "uniforms": []
+   "uniforms": [
+    {
+     "id": "wiccan-10100084",
+     "name": "Young Avengers",
+     "tier": "T4",
+     "p": "wiccan1",
+     "cost": "1750 Crystals",
+     "striker": 5,
+     "wba": "Proyección de Energía",
+     "trans": true,
+     "new": true,
+     "pr": [
+      "foro-1896956",
+      "cafe-3187937"
+     ],
+     "ab": [
+      "Movimiento Rápido",
+      "Proyección de Energía",
+      "Magia"
+     ],
+     "up": {
+      "update": "12.3",
+      "flags": [
+       "Crystal1750"
+      ]
+     }
+    }
+   ]
   },
   {
    "id": "hulkling",
@@ -55788,7 +55815,7 @@
    "ins": "Crueldad",
    "race": "Humano",
    "gender": "Femenino",
-   "t": "T3",
+   "t": "T4",
    "abilities": [
     "Magia",
     "Maldad Pura"
@@ -55806,19 +55833,19 @@
    "striker": 2,
    "wba": "Magia",
    "trans": false,
-   "new": false,
+   "new": true,
    "p": "morganlefay",
    "uniforms": [
     {
      "id": "morgan-le-fay-10100177",
      "name": "Fallen Soul",
-     "tier": "T3",
+     "tier": "T4",
      "p": "morganlefay1",
      "cost": "Halloween Exclusive (Paywall)",
      "striker": 2,
      "wba": "Magia",
      "trans": false,
-     "new": false,
+     "new": true,
      "r": [
       "Control",
       "Soporte",
@@ -55911,6 +55938,32 @@
       "hulkbuster3",
       "mistersinister1"
      ]
+    },
+    {
+     "id": "morgan-le-fay-10200177",
+     "name": "Classic",
+     "tier": "T4",
+     "p": "morganlefay2",
+     "cost": "1750 Crystals",
+     "striker": 2,
+     "wba": "Magia",
+     "trans": false,
+     "new": true,
+     "pr": [
+      "foro-1896956",
+      "cafe-3187937"
+     ],
+     "r": [
+      "Control",
+      "Soporte",
+      "Daño"
+     ],
+     "up": {
+      "update": "12.3",
+      "flags": [
+       "Crystal1750"
+      ]
+     }
     }
    ]
   },
@@ -69696,6 +69749,39 @@
    "new": false,
    "p": "galactus",
    "uniforms": []
+  },
+  {
+   "id": "agatha-harkness",
+   "name": "Agatha Harkness",
+   "c": "Detonación",
+   "f": "Neutral",
+   "r": [
+    "Control",
+    "Soporte",
+    "Tanque",
+    "Daño"
+   ],
+   "ins": "Destrucción",
+   "race": "Humano",
+   "gender": "Femenino",
+   "t": "T4",
+   "abilities": [
+    "Magia",
+    "Mente"
+   ],
+   "origin": "Cómic",
+   "tuc": [],
+   "stats": {},
+   "striker": null,
+   "wba": "Magia",
+   "trans": false,
+   "new": true,
+   "p": "agathaharkness",
+   "uniforms": [],
+   "pr": [
+    "foro-1896956",
+    "cafe-3187937"
+   ]
   }
  ],
  "teams": [],
@@ -83814,6 +83900,7 @@
   "portrait-captain-america-sharon-rogers": "images/sharonrogers.png",
   "portrait-white-tiger-10100083": "images/whitetiger1.png",
   "portrait-white-tiger": "images/whitetiger.png",
+  "portrait-wiccan-10100084": "images/propio/wiccan1.png",
   "portrait-wiccan": "images/wiccan.png",
   "portrait-hulkling": "images/hulkling.png",
   "portrait-songbird": "images/songbird.png",
@@ -84076,6 +84163,7 @@
   "portrait-crescent-10300176": "images/crescent3.png",
   "portrait-crescent": "images/crescent.png",
   "portrait-morgan-le-fay-10100177": "images/morganlefay1.png",
+  "portrait-morgan-le-fay-10200177": "images/propio/morganlefay2.png",
   "portrait-morgan-le-fay": "images/morganlefay.png",
   "portrait-white-fox-10100178": "images/whitefox1.png",
   "portrait-white-fox-10200178": "images/whitefox2.png",
@@ -84290,6 +84378,7 @@
   "portrait-morph": "images/morph.png",
   "portrait-annihilus": "images/annihilus.png",
   "portrait-galactus": "images/galactus.png",
+  "portrait-agatha-harkness": "images/propio/agathaharkness.png",
   "icon-Agente": "images/icons/agent.png",
   "icon-Agilidad": "images/icons/agility.png",
   "icon-Aniquiladores": "images/icons/annihilators.png",
@@ -84364,6 +84453,7 @@
   "ctp-veteran": "images/items/ctp_veteran.png",
   "ctp-conquest": "images/items/ctp_conquest.png",
   "ctp-liberation": "images/items/ctp_liberation.png",
+  "ctp-ascent": "images/items/ctp_ascent.png",
   "art-shangchi": "images/items/artifact_shangchi.png",
   "art-aero": "images/items/artifact_aero.png",
   "art-swordmaster": "images/items/artifact_swordmaster.png",
@@ -84632,7 +84722,8 @@
   "art-ulyssesklaue": "images/items/artifact_ulyssesklaue.png",
   "art-annihilus": "images/items/artifact_annihilus.png",
   "art-galactus": "images/items/artifact_galactus.png",
-  "art-redskull": "images/items/artifact_redskull.png"
+  "art-redskull": "images/items/artifact_redskull.png",
+  "art-agathaharkness": "images/items/artifact_agathaharkness.png"
  },
  "logo": ""
 }

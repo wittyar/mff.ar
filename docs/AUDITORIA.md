@@ -10,7 +10,7 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 
 | Chequeo | Coinciden | Difieren | Sin dato para comparar |
 |---|---|---|---|
-| Daño de skills (thanosvibs vs wiki) | 1122 (+849 donde la wiki lista menos etapas) | 57 | 57 |
+| Daño de skills (thanosvibs vs wiki) | 1122 (+850 donde la wiki lista menos etapas) | 57 | 57 |
 | Recarga de skills | 1777 | 40 | 86 |
 | Clase (infobox de la wiki) | 541 | 5 | — |
 | Bando (infobox de la wiki) | 528 | 11 | — |
@@ -20,13 +20,13 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Instinto (campo vs categoría de la wiki) | 78 | 4 | — |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
 | Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 119 páginas sin la pestaña |
-| Artefactos a 6★ (thanosvibs vs wiki) | 209 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
+| Artefactos a 6★ (thanosvibs vs wiki) | 209 (+31 donde la wiki lista otro nivel de estrellas) | 18 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
-Cobertura de la wiki: de 5887 skills (activas, Definitiva y Striker) de thanosvibs, 2270 (39%) se pudieron comparar; 1222 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 305 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
+Cobertura de la wiki: de 5911 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1223 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 307 sin pestaña de su uniforme y 32 de personajes sin infobox legible.
 
 Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; todos clasificados.
 
-Liderazgos y soportes: el build deriva de las skills de la API el liderazgo de 464 variantes y 12 soportes que Leads & Supports no publica; 17 slots no se pudieron derivar (sección 12).
+Liderazgos y soportes: el build deriva de las skills de la API el liderazgo de 467 variantes y 15 soportes que Leads & Supports no publica; 18 slots no se pudieron derivar (sección 12).
 
 ## 1. Skills: daño y recarga
 
@@ -236,7 +236,7 @@ thanosvibs no publica el instinto: la app lo toma del infobox de la wiki. Acá, 
 
 - Retratos marcados Tier-4 sin Striker Skill en sus skills: 6: Red Skull (Captain America: The First Avenger); Red Skull (Hydra Armor); Red Skull (Secret Wars: Red Skull); Sister Grimm (All-New, All-Different); Sister Grimm (Runaways); Sister Grimm (Secret Wars: A-Force)
 - Retratos con skill 6 (Tier-3 o Trascendido) sin Definitiva en sus skills: 1: Black Swan (Modern, Tier-3)
-- Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 225 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
+- Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 226 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
 
 ## 5. Lo que el build corrige de thanosvibs
 
@@ -271,6 +271,7 @@ Los números del texto a 6★ de thanosvibs contra la tabla de la página Artifa
 
 | Personaje | Artefacto | Solo en thanosvibs | Solo en la wiki |
 |---|---|---|---|
+| Agatha Harkness | The Vishanti's Sorcerer Supreme | 0.5, 15, 20, 200 |  |
 | Annihilus | Lord of the Negative Zone |  | 300 |
 | Captain America (Sharon Rogers) | Spear of Justice | 15, 16 | 50 |
 | Captain Marvel | Leader's Flight | 50 |  |
@@ -280,7 +281,7 @@ Los números del texto a 6★ de thanosvibs contra la tabla de la página Artifa
 | Domino | Probability Power | 25 |  |
 | Franklin Richards | Pocket Universe | 5, 180 |  |
 | Goliath | Giant-Man II |  | 0.1 |
-| Morgan le Fay | Dark Knowledge |  | 0.2, 10 |
+| Morgan le Fay | Dark Knowledge | 0.5, 15 | 0.2, 0.6, 10, 25, 50 |
 | Rhino | Charging Horn | 1, 15, 40, 70 | 20 |
 | Satana | Painful Temptation | 0.25 | 0.3 |
 | Shuri | Blossoming Talent | 25 | 16 |
@@ -333,9 +334,9 @@ Lo que no se puede detectar con un chequeo automático (scripts/contenido/hallaz
 
 ## 8. Facción, tipo o raza que la fuente no publica
 
-thanosvibs publica 249 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: `uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en el orden en que aparecen (qué valor va a cuál de esos efectos no se sabe: dos fuentes que dan los mismos valores en otro orden no difieren). En la ficha, el valor completado va subrayado y dice de dónde salió.
+thanosvibs publica 251 efectos con un marcador (`$HEROSUBTYPE1`, `$HEROCLASS1`) en vez de la facción, el tipo, la raza o la habilidad a la que se refieren (`Increases basic damage dealt to $HEROSUBTYPE1 faction by 30%`). El build los completa en este orden (Ezequiel, 3 de octubre de 2026): la tabla a mano (scripts/contenido/marcadores.csv); Leads & Supports, en los slots de la misma skill (Leader Skill: `leader` y `leader2`; Passive: `passive` y `passive2`; Tier-2 Passive: `t2` y `t22`; Uniform Passive: `uniform` y `uniform2`), con «Basic Damage Dealt to …» o «Basic Damage Received from …» en el mismo sentido, el mismo porcentaje (el recibido, sin el signo) y un grupo de la clase que pide el texto, y la wiki: la misma skill con el mismo porcentaje, en el mismo sentido (daño infligido o recibido). Si la skill trae el mismo efecto varias veces, la fuente tiene que dar tantos valores distintos como efectos, y se asignan en el orden en que aparecen (qué valor va a cuál de esos efectos no se sabe: dos fuentes que dan los mismos valores en otro orden no difieren). En la ficha, el valor completado va subrayado y dice de dónde salió.
 
-De los 249: 45 a mano, 134 de Leads & Supports, 38 de la wiki y 32 sin resolver (la app los muestra "sin especificar").
+De los 251: 47 a mano, 134 de Leads & Supports, 38 de la wiki y 32 sin resolver (la app los muestra "sin especificar").
 
 Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de su id, escrita como la muestra la app (Superhéroe, Supervillano, Neutral, Combate, Mutante...) o en inglés como la nombra el juego. `python3 scripts/marcadores.py` agrega las filas que falten.
 
@@ -601,7 +602,7 @@ Leads & Supports de thanosvibs no publica el liderazgo de todas las variantes. L
 
 Los soportes (pasiva, pasiva de Tier-2 y pasiva de uniforme: lo que le dan a un grupo de aliados) siguen la misma regla desde el 10 de octubre de 2026 (Ezequiel), con la correspondencia que se aprende de los liderazgos y la de a mano. De cada una de esas skills va lo de sus etapas con objetivo de aliados (no las de «Self»), y un «Give Power» otorga lo de la etapa que lo sigue, por su tiempo (si la API no lo publica, es constante), a los aliados de una de las dos. Un slot de soporte se deriva solo si Leads & Supports no publica ninguno de esa skill.
 
-414 variantes tienen liderazgo de Leads & Supports y 474 no. El build deriva el liderazgo de 464 (482 slots) y 12 slots de soporte; 17 slots, de 17 variantes, no se pudieron derivar.
+414 variantes tienen liderazgo de Leads & Supports y 477 no. El build deriva el liderazgo de 467 (485 slots) y 15 slots de soporte; 18 slots, de 18 variantes, no se pudieron derivar.
 
 ### Correspondencia aprendida
 
@@ -869,16 +870,17 @@ Solo en la skill de la API:
 - Electro — Spider-Man: No Way Home (`electro1`), `passive2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
 - Weapon Hex (`weaponhex`), `passive2`.
 
-### Sin derivar (17 slots en 17 variantes)
+### Sin derivar (18 slots en 18 variantes)
 
 Variantes sin liderazgo (o sin el soporte de una skill) de Leads & Supports con un slot que no se pudo derivar, con todos sus motivos. En docs/COMPLETITUD.md son los faltantes «Liderazgo sin completar» y «Soporte que Leads & Supports no publica».
 
-Por motivo (un slot puede tener más de uno): efecto sin stat, 15; objetivo sin nombre, 3; activación sin correspondencia, 3. Van juntas las variantes de un personaje con los mismos motivos.
+Por motivo (un slot puede tener más de uno): efecto sin stat, 18; objetivo sin nombre, 3; activación sin correspondencia, 3. Van juntas las variantes de un personaje con los mismos motivos.
 
-Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Barrier 1 time(s)» (BARRIER), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Paralyze» (PARALYZE), 2; «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy), 1; «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy), 1.
+Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Barrier 1 time(s)» (BARRIER), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction), 2; «Paralyze» (PARALYZE), 2; «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease), 1; «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy), 1; «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy), 1.
 
 Activaciones sin correspondencia, con los slots que dejan sin derivar: «when hit», 3.
 
+- Agatha Harkness (`agathaharkness`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease).
 - Blade (`blade`, `blade1`, `blade2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL).
 - Blue Marvel — Classic (`bluemarvel1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy).
 - Crescent (`crescent`, `crescent1`), `t2`: la API no dice a quiénes llega («Summoned Character»).
@@ -888,13 +890,14 @@ Activaciones sin correspondencia, con los slots que dejan sin derivar: «when hi
 - White Tiger (`whitetiger`, `whitetiger1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
 - Yellowjacket (`yellowjacket`, `yellowjacket1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Paralyze» (PARALYZE).
 
-### Derivados (467 variantes)
+### Derivados (470 variantes)
 
 Van juntas las variantes de un personaje con lo mismo derivado.
 
 - Absorbing Man (`absorbingman`, `absorbingman1`): `leader` Physical Defense +45%.
 - Adam Warlock (`adamwarlock`, `adamwarlock1`, `adamwarlock2`): `leader` Energy Defense +60%.
 - Aero (`aero`, `aero1`): `leader` All Speeds +6%.
+- Agatha Harkness (`agathaharkness`): `leader` Energy Defense +50%.
 - Agent 13 (`sharoncarter`, `sharoncarter1`): `leader` Skill Cooldown −24%.
 - Amadeus Cho — Heroic Age (`amadeuscho3`): `leader` Critical Rate +6%, Critical Damage +6%.
 - Angela (`angela`, `angela2`, `angela3`, `angela1`): `leader` Physical Defense +30%.
@@ -1003,6 +1006,7 @@ Van juntas las variantes de un personaje con lo mismo derivado.
 - Moonstone (`moonstone`): `leader` Dodge +6%.
 - Mordo (`baronmordo1`, `baronmordo2`): `leader` Dodge +6%.
 - Morgan le Fay (`morganlefay`, `morganlefay1`): `leader` Debuff Duration −24%.
+- Morgan le Fay — Classic (`morganlefay2`): `leader` Debuff Duration −24%; `uniform` All Basic Attacks +40%, Basic Damage Dealt to Boss Types +50% — para Type: Universal, recarga 18 s; `uniform2` Remove All Debuffs (10 s) — para Type: Universal, When Debuffed, recarga 18 s.
 - Morph (`morph`): `leader` Debuff Duration −24%.
 - Ms. Marvel (Kamala Khan) (`kamalakhan`, `kamalakhan2`, `kamalakhan1`, `kamalakhan5`, `kamalakhan3`, `kamalakhan4`): `leader` Physical Defense +45%.
 - Mysterio (`mysterio`, `mysterio1`, `mysterio2`): `leader` Skill Cooldown −24%.
@@ -1076,6 +1080,7 @@ Van juntas las variantes de un personaje con lo mismo derivado.
 - Weapon Hex (`weaponhex`, `weaponhex1`): `leader` Dodge +6%, Debuff Duration −24%.
 - Wenwu (`wenwu`): `passive` HP +25% — para Side: Supervillano.
 - Whiplash (`whiplash`): `leader` Skill Cooldown −24%.
+- Wiccan — Young Avengers (`wiccan1`): `leader` All Basic Attacks +24%; `t2` Remove All Debuffs (12 s) — para Ability: Magia, When Debuffed, recarga 20 s.
 - Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): `leader` Physical Attack +45%.
 - Wolverine (`wolverine`, `wolverine1`, `wolverine2`, `wolverine5`, `wolverine4`, `wolverine7`, `wolverine6`, `wolverine3`): `leader` Debuff Duration −30%.
 - Wong (`wong`, `wong1`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 60 s.
@@ -1083,3 +1088,64 @@ Van juntas las variantes de un personaje con lo mismo derivado.
 - X-23 (`x-23`, `x-232`, `x-233`, `x-231`): `leader` Debuff Duration −24%.
 - Yelena Belova (`yelenabelova`, `yelenabelova1`, `yelenabelova2`, `yelenabelova3`): `leader` All Speeds +6%.
 - Yondu (`yondu`, `yondu1`, `yondu2`, `yondu3`): `leader` Critical Rate +7.8%.
+
+## 13. Contenido propio contra thanosvibs
+
+Lo que fuentes/propio/ carga de las fuentes del juego (las notas de los foros oficiales) sobre lo de thanosvibs: la app usa lo propio. Cuando thanosvibs publica lo mismo, se compara: lo que coincide queda confirmado y lo que difiere se lista acá para revisarlo en el juego.
+
+### Distinto de thanosvibs (1)
+
+- artefacto morganlefay: text: propio ['Applies to: Universal Type Allies', '• Increases Basic Damage Dealt to SUPER VILLAIN faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)', '• Increases Basic Damage Dealt to SUPER HERO faction by [P3]%, and an additional [P4]% of total Instinct. (Up to 200%)'], thanosvibs ['Applies to: Self', '• Increases Basic Damage Dealt to enemies with 50% HP or below by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)']; values: propio {'6': ['15', '0.5', '15', '0.5']}, thanosvibs {'3': ['10', '0.3'], '4': ['15', '0.4'], '5': ['20', '0.5'], '6': ['25', '0.6']}
+
+### Sin thanosvibs todavía (14)
+
+- personaje agathaharkness (thanosvibs no lo publica)
+- personaje wiccan1 (thanosvibs no lo publica)
+- personaje morganlefay2 (thanosvibs no lo publica)
+- cambio en wiccan: tier-4 'False' → 'True', new 'False' → 'True'
+- cambio en morganlefay: tier-4 'False' → 'True', new 'False' → 'True'
+- cambio en morganlefay1: tier-4 'False' → 'True', new 'False' → 'True'
+- skills de agathaharkness (thanosvibs no las publica)
+- Striker Skill de morganlefay (thanosvibs no lo publica)
+- Striker Skill de morganlefay1 (thanosvibs no lo publica)
+- skills de morganlefay2 (thanosvibs no las publica)
+- Striker Skill de wiccan (thanosvibs no lo publica)
+- skills de wiccan1 (thanosvibs no las publica)
+- artefacto agathaharkness (thanosvibs no lo publica)
+- C.T.P. Ascent (thanosvibs no lo publica)
+
+### Confirmado por thanosvibs (0)
+
+Nada.
+
+### Lo que las fuentes no dicen (29)
+
+- personaje agathaharkness: native
+- personaje agathaharkness: original
+- personaje agathaharkness: world_boss_ability
+- personaje agathaharkness: striker_skill
+- personaje agathaharkness: id
+- personaje wiccan1: uniform_id
+- personaje wiccan1: striker_skill
+- personaje wiccan1: world_boss_ability
+- personaje wiccan1: stats
+- personaje morganlefay2: uniform_id
+- personaje morganlefay2: striker_skill
+- personaje morganlefay2: world_boss_ability
+- personaje morganlefay2: stats
+- versión 12.3: version
+- skills de agathaharkness: La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.
+- skills de agathaharkness: La Tier-3 (definitiva) no trae su recarga en la ficha: va sin recarga.
+- skills de agathaharkness: Striker de Tier-4: la ficha dice además «Can be activated again after 0.3 sec (7 Sec.)» (la recuperación por daño vuelve a activarse a los 0,3 s); el patrón de la API para el robo de PG no lo tiene y no va.
+- skills de agathaharkness: Rune Magic: el juego, desde esta actualización, dice «ignores enemy's basic damage decrease» (la nota cambia ese texto en todas las skills); va con el texto de la API, que todavía dice «damage decrease».
+- skills de morganlefay: La Tier-4 es del personaje: el striker va en todos sus retratos.
+- skills de morganlefay1: La Tier-4 es del personaje: el striker va en todos sus retratos.
+- skills de morganlefay2: Liderazgo y definitiva: los de Morgan Le Fay (la ficha del uniforme no los cambia).
+- skills de morganlefay2: La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.
+- skills de wiccan: La Tier-4 es del personaje: el striker va en todos sus retratos.
+- skills de wiccan1: Liderazgo y definitiva: los de Wiccan (la ficha del uniforme no los cambia).
+- skills de wiccan1: La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.
+- artefacto agathaharkness: update
+- artefacto agathaharkness: values
+- artefacto morganlefay: values
+- C.T.P. Ascent: es
