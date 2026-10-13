@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-10-12, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-10-13, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
@@ -17,7 +17,7 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Género (infobox de la wiki) | 541 | 3 | — |
 | Raza (infobox de la wiki) | 535 | 13 | — |
 | Tipo de ataque (infobox de la wiki) | 531 | 21 | — |
-| Instinto (campo vs categoría de la wiki) | 77 | 4 | — |
+| Instinto (campo vs categoría de la wiki) | 78 | 4 | — |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
 | Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 119 páginas sin la pestaña |
 | Artefactos a 6★ (thanosvibs vs wiki) | 209 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
