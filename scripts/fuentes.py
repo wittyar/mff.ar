@@ -125,8 +125,11 @@ def ctps(guia):
         nombre, corregido = nombre_ctp(c['name'])
         if corregido:
             print(f"AVISO: C.T.P. {c['name']!r}: el juego lo escribe {nombre!r}, y se usa el del juego")
+        # Un C.T.P. propio (fuentes/propio/ctps.json, propio.py) trae su nombre en español (es: el del juego, o null si
+        # todavía no se vio en el juego en español); los de thanosvibs lo toman de fuentes/juego-es/ctps.json (build.py).
+        propio = {'es_propio': c['es']} if 'es' in c else {}
         out.append({'id': cid, 'name': nombre, 'grupo': grupo.get(cid),
-                    'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged')), **corregido})
+                    'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged')), **corregido, **propio})
     sobran = set(_CTP_NOMBRE_JUEGO) - {c['name'] for c in datos}
     if sobran:
         print(f'AVISO: /api/ctps ya no publica {sorted(sobran)}: sobra su nombre del juego en fuentes.py (_CTP_NOMBRE_JUEGO)')
@@ -228,7 +231,9 @@ def artefactos(retratos_base):
                     'pve': a['pve_score'], 'pvp': a['pvp_score'], 'desde': a['update'],
                     'lineas': lineas, 'valores': a['values'], 'obtencion': [TXP(x) for x in a['acquisition']],
                     'fx': efectos_artefacto([ln['t'] for ln in lineas], reglas, soporte, a['artifact_name']),
-                    'a': aplica_artefacto([ln['t'] for ln in lineas], a['artifact_name'])})
+                    'a': aplica_artefacto([ln['t'] for ln in lineas], a['artifact_name']),
+                    # Uno del contenido propio (fuentes/propio/artefactos.json, propio.py) lleva sus fuentes.
+                    **({'pr': a['fuente']} if a.get('fuente') else {})})
     sobran = sorted(set(_ARTEFACTO_LINEA_JUEGO) - corregidas)
     if sobran:
         print(f'AVISO: /api/artifacts ya no publica {sobran}: sobra su línea del juego en fuentes.py (_ARTEFACTO_LINEA_JUEGO)')

@@ -567,7 +567,22 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     s += bonos_seccion(bonos, fuentes)
     s += strikers_seccion(strikers)
     s += liderazgos_seccion(liderazgos, A.chars, fuentes)
+    s += propio_seccion(cargar('work/propio.json'))
     return '\n'.join(s)
+
+
+def propio_seccion(P):
+    """Sección 13: el contenido propio (fuentes/propio/, propio.py) contra thanosvibs. Lo propio manda."""
+    s = ['## 13. Contenido propio contra thanosvibs\n']
+    s.append('Lo que fuentes/propio/ carga de las fuentes del juego (las notas de los foros oficiales) sobre lo de thanosvibs: '
+             'la app usa lo propio. Cuando thanosvibs publica lo mismo, se compara: lo que coincide queda confirmado y lo '
+             'que difiere se lista acá para revisarlo en el juego.\n')
+    for clave, titulo in (('difiere', 'Distinto de thanosvibs'), ('aplicado', 'Sin thanosvibs todavía'),
+                          ('confirmado', 'Confirmado por thanosvibs'), ('sin_confirmar', 'Lo que las fuentes no dicen')):
+        s.append(f'### {titulo} ({len(P[clave])})\n')
+        s += [f'- {x}' for x in P[clave]] or ['Nada.']
+        s.append('')
+    return s
 
 
 _AVISOS_MARCADORES = (

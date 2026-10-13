@@ -381,6 +381,10 @@ const T = {
   sk_artefacto:      { es:'Pasiva de artefacto', en:'Artifact passive' },
   ar_art_none:       { es:'thanosvibs no le lista artefacto exclusivo.', en:'thanosvibs lists no exclusive artifact for it.' },
   ar_score_t:        { es:'Puntaje de thanosvibs, de 0 a 3', en:'thanosvibs score, 0 to 3' },
+  ar_sin_puntaje:    { es:'sin puntaje todavía',  en:'no score yet' },
+  pr_tag:            { es:'propio',              en:'own' },
+  pr_t:              { es:'Contenido propio: cargado de las notas del juego antes de que thanosvibs lo publique, o distinto de lo que publica (manda lo propio; docs/AUDITORIA.md, sección 13). Fuente: {f}.',
+                       en:'Own content: loaded from the game notes before thanosvibs publishes it, or different from what it publishes (own content wins; docs/AUDITORIA.md, section 13). Source: {f}.' },
   ar_since:          { es:'desde la',            en:'since' },
   ar_nodata:         { es:'sin dato',            en:'no data' },
   ar_nodata_t:       { es:'La fuente no trae este valor para este nivel de estrellas.', en:'The source has no value for this star level.' },
@@ -1613,14 +1617,14 @@ function variant (cid, uid) {
   const skills = SKILLS[p] || [];
   if (!u) return { cid: ch.id, uid: null, key: ch.id + '::base', id: ch.id, name: ch.name, sub: 'Base',
                    c: ch.c, f: ch.f, race: ch.race, gender: ch.gender, t: ch.t, ins: ch.ins, r: ch.r, ab: ch.abilities || [],
-                   striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '',
+                   striker: ch.striker, wba: ch.wba, trans: ch.trans, nuevo: ch.new, cost: '', pr: ch.pr || null,
                    p, up: null, op: null, ch, skills };
   return { cid: ch.id, uid: u.id, key: ch.id + '::' + u.id, id: u.id, name: ch.name, sub: u.name,
            c: u.c || ch.c, f: u.f || ch.f, race: u.race || ch.race, gender: u.gender || ch.gender,
            t: u.tier || ch.t, ins: ch.ins, r: u.r || ch.r,
            ab: u.ab || ch.abilities || [],
            striker: u.striker != null ? u.striker : ch.striker, wba: u.wba || ch.wba,
-           trans: u.trans, nuevo: u.new, cost: u.cost || '',
+           trans: u.trans, nuevo: u.new, cost: u.cost || '', pr: u.pr || null,
            p, up: u.up || null, op: u.op || null, ch, skills };
 }
 /** Totales que muestra thanosvibs: carga combinada de las cinco activas. */
@@ -2506,8 +2510,9 @@ function skillCard (sk, v, si) {
   ATRIBUTOS.forEach(a => { if (marcas[a.k]) cabecera.push(`<span class="tag atributo">${h(a[LANG])}</span>`); });
   if (DUDAS.skill[v.p + '|' + sk.sl]) cabecera.push(dudaHtml('skill', v.p + '|' + sk.sl));
   // Una skill que el build corrige con el juego (scripts/contenido/skills_juego.json) lo dice, con su fuente.
-  if (sk.j) cabecera.push(`<span class="tag dim skjuego" title="${h(t('sk_juego_t').replace('{f}', sk.j.map(k => {
-    const f = GUIA.fuentes[k]; if (!f) throw new Error('fuente desconocida: ' + k); return f.nombre; }).join('; ')))}">${h(t('sk_juego'))}</span>`);
+  if (sk.j) cabecera.push(`<span class="tag dim skjuego" title="${h(t('sk_juego_t').replace('{f}', nombresFuentes(sk.j)))}">${h(t('sk_juego'))}</span>`);
+  // Una skill del contenido propio (fuentes/propio/), con sus fuentes.
+  if (sk.pr) cabecera.push(propioTag(sk.pr));
   if (esAjeno(tgComun)) cabecera.push(objetivoTag(tgComun, true));
   if (acComun != null) {
     const st0 = sk.st.find(x => x.ac === acComun) || {};
@@ -2974,7 +2979,7 @@ function fichaCabecera (ch, v) {
       <div class="fcab-face shot">${shot(v.id)}</div>
       <div class="fcab-nom"><h1>${h(ch.name)}</h1>
         <div class="row">${tagGhost(dom(v.c), classColor(v.c))}${tagSolid(v.t, tierColor(v.t))}${v.trans ? tagSolid(t('transcended_tag'), 'var(--gold)') : ''}${
-          v.nuevo ? tagSolid(t('new_tag'), 'var(--gold)') : ''}</div></div>
+          v.nuevo ? tagSolid(t('new_tag'), 'var(--gold)') : ''}${v.pr ? propioTag(v.pr) : ''}</div></div>
       ${navFicha(v)}
       <label class="fcab-uni"><span>${h(t('d_uniform'))}</span>
         <select data-a="uniformSel">${opcion('base', t('base'), ch.t)}${ch.uniforms.map(u => opcion(u.id, u.name, u.tier)).join('')}</select></label>
@@ -3070,6 +3075,15 @@ function fichaSkills (ch, v) {
     ${v.skills.map((sk, si) => skillCard(sk, v, si)).join('')}
     ${skillArtefacto(ch)}
     ${panelRotaciones(ch, v)}`;
+}
+/** Los nombres de unas fuentes (claves de contenido/guia.json), separados por «; ». */
+function nombresFuentes (ks) {
+  return ks.map(k => { const f = GUIA.fuentes[k]; if (!f) throw new Error('fuente desconocida: ' + k); return f.nombre; }).join('; ');
+}
+/** La marca de lo que es contenido propio (fuentes/propio/: un personaje, un uniforme, una skill o un artefacto cargado de
+ *  las notas del juego antes que thanosvibs, o distinto de thanosvibs), con sus fuentes. */
+function propioTag (fs) {
+  return `<span class="tag dim propio" title="${h(t('pr_t').replace('{f}', nombresFuentes(fs)))}">${h(t('pr_tag'))}</span>`;
 }
 /** La pasiva del artefacto exclusivo del personaje, si tiene, como una skill más (Ezequiel, 10 de octubre de 2026: «Ponelo en
  *  Skills, y no lo quites de armado»): lo mismo que en Armado, con el selector de estrellas. */
@@ -5665,9 +5679,11 @@ function miniPj (v, extra, nota) {
     ${u ? `<img src="${u}" alt="" loading="lazy">` : ''}<span class="who">${h(v.name)}</span>${v.uid ? `<span class="what">${h(v.sub)}</span>` : ''}${extra || ''}</span>`;
 }
 /** El nombre del C.T.P.: en español, el del juego (el del base: el juego llama distinto a algunos reforjados, #43). */
-function ctpNombre (c) { return LANG === 'es' ? c.es.base : 'C.T.P. of ' + c.name; }
+/** El nombre de un C.T.P.: en español, el del juego; uno propio que todavía no se vio en el juego en español (es: null) va
+ *  en inglés. */
+function ctpNombre (c) { return LANG === 'es' && c.es ? c.es.base : 'C.T.P. of ' + c.name; }
 /** El nombre corto (tablas y etiquetas): en español, el del base sin «C.T.P. de». */
-function ctpNomCorto (c) { if (LANG !== 'es') return c.name; const n = c.es.base.replace(/^C\.T\.P\. de /, ''); return n[0].toUpperCase() + n.slice(1); }
+function ctpNomCorto (c) { if (LANG !== 'es' || !c.es) return c.name; const n = c.es.base.replace(/^C\.T\.P\. de /, ''); return n[0].toUpperCase() + n.slice(1); }
 function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
 /** Un C.T.P. plegable con lo que hace según thanosvibs (normal y reforjado). */
 function ctpDetalle (c, extra) {
@@ -6116,15 +6132,17 @@ function armadoArtefacto (ch) {
       ? `<span class="sintrad" title="${h(t('untranslated'))}">${txt}</span>` : txt}${ln.tv
       ? ` <span class="corr" title="${h(t('ar_corregida').replace('{tv}', ln.tv))}">⚠</span>` : ''}</div>`;
   };
-  const puntaje = (lbl, n) => `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${'★'.repeat(n)}${'☆'.repeat(Math.max(0, 3 - n))}</span>`;
+  // Uno del contenido propio no tiene puntaje de thanosvibs todavía (null): lo dice.
+  const puntaje = (lbl, n) => n == null ? `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${h(t('ar_sin_puntaje'))}</span>`
+    : `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${'★'.repeat(n)}${'☆'.repeat(Math.max(0, 3 - n))}</span>`;
   return `<div class="row" style="gap:8px;margin-bottom:6px;flex-wrap:nowrap">${imgUrl('art-' + a.p) ? `<img class="artico" src="${imgUrl('art-' + a.p)}" alt="">` : ''}
-      <div><b>${h(a.name)}</b><div class="muted">${h(a.pasiva)} · ${h(t('ar_since'))} ${h(a.desde)}</div></div></div>
+      <div><b>${h(a.name)}</b>${a.pr ? ' ' + propioTag(a.pr) : ''}<div class="muted">${h(a.pasiva)} · ${h(t('ar_since'))} ${h(a.desde)}</div></div></div>
     <div class="row" style="gap:6px;margin-bottom:8px">${puntaje('PvE', a.pve)}${puntaje('PvP', a.pvp)}</div>
     <div class="seg" style="margin-bottom:8px">${Object.keys(a.valores).map(e => `<button class="${e === est ? 'on' : ''}" data-a="artEst" data-v="${e}">${e}★</button>`).join('')}</div>
     <div class="artlineas">${a.lineas.map(linea).join('')}</div>
     ${a.obtencion.length ? `<details class="usgrupo"><summary>${h(t('ar_obtain'))} (${a.obtencion.length})</summary>
       <ul class="sopfx">${a.obtencion.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>` : ''}
-    <div class="fuentes">${fuentesHtml(['tv-art', ...new Set(a.lineas.flatMap(ln => ln.f || []))])}</div>`;
+    <div class="fuentes">${fuentesHtml([...(a.pr || ['tv-art']), ...new Set(a.lineas.flatMap(ln => ln.f || []))])}</div>`;
 }
 /** Opciones del uniforme abierto: qué uniforme habilita cada una (thanosvibs) y qué stat
  *  conviene elegir en cada rango (guía de principiantes). */

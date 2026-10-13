@@ -14,6 +14,10 @@ TL_FILES = sorted(glob.glob('work/tierlists/*.json'))
 from dominio import TYPE, ALLIES, GENDER, SIDE, ORIGIN, INSTINCT, ABIL
 import modelo
 import catalogo
+import propio
+# Los retratos propios (fuentes/propio/retratos/) van con su imagen; los demás, con la de thanosvibs (imagenes.py).
+_RETRATOS_PROPIOS = propio.retratos()
+def retrato(p): return f'images/propio/{p}.png' if p in _RETRATOS_PROPIOS else f'images/{p}.png'
 def slug(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode()
     return re.sub(r'[^a-z0-9]+','-', s.lower()).strip('-')
@@ -78,6 +82,8 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
              'cost': r.get('uniform_cost',''), 'striker': r['striker_skill'],
              'wba': ABIL[r['world_boss_ability']], 'trans': r['skill6'] == 'Transcended',
              'new': r['new'] == 'True'}
+        # Un uniforme del contenido propio (fuentes/propio/, propio.py) lleva sus fuentes: la app lo marca.
+        if r.get('fuente'): u['pr'] = r['fuente']
         # El uniforme puede cambiar tipo, bando, raza, género o habilidades respecto de la
         # base (Ms. Marvel es inhumana, salvo con los uniformes del MCU, que es humana; Loki
         # con Lady Loki es femenino).
@@ -105,7 +111,7 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         if up.get('options'): u['op'] = up['options']
         anotar_sin_skills(r['portrait'], f"{base['character']} / {r['uniform']}")
         uniforms.append(u)
-        images['portrait-'+uid] = 'images/' + r['portrait'] + '.png'
+        images['portrait-'+uid] = retrato(r['portrait'])
         uindex[(numid, r.get('uniform_id'))] = (cid, uid)
 
     characters.append({
@@ -116,8 +122,8 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         'tuc': base.get('tuc', []), 'stats': base.get('stats', {}),
         'striker': base['striker_skill'], 'wba': ABIL[base['world_boss_ability']],
         'trans': base['skill6'] == 'Transcended', 'new': base['new'] == 'True',
-        'p': base['base_portrait'], 'uniforms': uniforms})
-    images['portrait-'+cid] = 'images/' + base['base_portrait'] + '.png'
+        'p': base['base_portrait'], 'uniforms': uniforms, **({'pr': base['fuente']} if base.get('fuente') else {})})
+    images['portrait-'+cid] = retrato(base['base_portrait'])
     uindex[(numid, None)] = (cid, None)
 if sin_skills:
     print(f'AVISO: {len(sin_skills)} retratos sin skills en la API:', sin_skills[:5])

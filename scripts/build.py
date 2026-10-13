@@ -3,7 +3,7 @@
 docs/CATALOGO.md, docs/COMPLETITUD.md, docs/HISTORICO.md y docs/NOTAS_COREANO.md desde work/, fuentes/foro/ y
 fuentes/cafe/. Correr tras fetch_all.py, parse_instinto.py, foro.py y cafe.py.
 
-Orden: skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
+Orden: propio.py (el contenido propio de fuentes/propio/ sobre work/), skills_api.py (work/skills_parsed.json), fuentes.py (work/fuentes.json),
 catalogo.py (valida el catálogo de efectos contra los datos; docs/CATALOGO.md),
 auditar.py (work/verificacion.json y docs/AUDITORIA.md) y _core.py (personajes y tier
 lists, work/build2.json); acá se junta todo en data.js, con el histórico de los personajes (historico.py, con
@@ -35,6 +35,8 @@ if _faltan:
     raise SystemExit('Faltan datos para construir: ' + ', '.join(_faltan) +
                      '\nCorre primero: python scripts/fetch_all.py --datos'
                      '  (o el boton "Actualizar datos del juego" en Ajustes)')
+# El contenido propio (fuentes/propio/) sobre lo bajado de thanosvibs, antes que nada lo lea (propio.py).
+subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'propio.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'skills_api.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'fuentes.py')], check=True)
 subprocess.run([sys.executable, os.path.join(os.path.dirname(__file__), 'catalogo.py')], check=True)
@@ -146,11 +148,14 @@ with open('docs/HISTORICO.md', 'w', encoding='utf-8', newline='\n') as _f:
 # brillante; el juego no siempre los llama igual (Judgment: «de justiciero» y «de juicio»), y la app muestra el del base.
 _CTP_ES = {c['id']: c for c in json.load(open(os.path.join(os.path.dirname(__file__), '..', 'fuentes', 'juego-es', 'ctps.json'),
                                                encoding='utf-8'))['ctps']}
-if {c['id'] for c in FUENTES['ctps']} != set(_CTP_ES):
+# Un C.T.P. propio (fuentes/propio/ctps.json) trae el suyo (es_propio, o null si todavía no se vio en el juego en español:
+# la app muestra el nombre en inglés).
+_ctp_tv = {c['id'] for c in FUENTES['ctps'] if 'es_propio' not in c}
+if _ctp_tv != set(_CTP_ES):
     raise SystemExit('fuentes/juego-es/ctps.json no tiene los mismos C.T.P. que thanosvibs: '
-                     f"{sorted({c['id'] for c in FUENTES['ctps']} ^ set(_CTP_ES))}")
+                     f"{sorted(_ctp_tv ^ set(_CTP_ES))}")
 for c in FUENTES['ctps']:
-    c['es'] = {k: _CTP_ES[c['id']][k] for k in ('base', 'poderoso', 'brillante')}
+    c['es'] = c.pop('es_propio') if 'es_propio' in c else {k: _CTP_ES[c['id']][k] for k in ('base', 'poderoso', 'brillante')}
 # La información dudosa entre el coreano, el inglés y el español (#32, scripts/contenido/dudas.json).
 import dudas
 DUDAS = dudas.armar(FUENTES['ctps'], json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8')),
@@ -230,7 +235,10 @@ hoy = hoy.isoformat()
 # 16: cada artefacto trae, en lugar de st, lo que da con su número (MFF_ARTEFACTOS[].fx: stat, renglón y marcador) y a quién
 #     se aplica (a); cada efecto del catálogo que alguien puede tener a su favor dice si se acumula (MFF_CATALOGO.efectos[].
 #     acumula). Con eso la app de formato 16 compara por potenciador (Ezequiel, 11 de octubre de 2026).
-FORMATO = 16
+# 17: el contenido propio (fuentes/propio/, propio.py; Ezequiel, 13 de octubre de 2026): personajes, uniformes, skills y
+#     artefactos llevan sus fuentes (pr), un artefacto puede no tener puntaje de thanosvibs (pve y pvp null) y un C.T.P.
+#     puede no tener nombre en español (es null). La app de formato 16 se cae con un C.T.P. sin es.
+FORMATO = 17
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

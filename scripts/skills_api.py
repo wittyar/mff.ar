@@ -221,6 +221,8 @@ def main():
             out = {'sl': tipo, 'n': T['name'].id(s.get('name')), 'cd': cd,
                    'st': [etapa(y) for x in s.get('stages', []) for y in partir(p, x)]}
             if c is not None: out['j'] = list(c['fuente'])
+            # Una skill del contenido propio (fuentes/propio/, propio.py) lleva sus fuentes: la app la marca.
+            if s.get('fuente'): out['pr'] = list(s['fuente'])
             if s.get('ult_charge') is not None: out['ult'] = s['ult_charge']
             if s.get('striker_charge') is not None: out['stk'] = s['striker_charge']
             lista.append(out)
