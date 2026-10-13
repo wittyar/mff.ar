@@ -68,9 +68,9 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (10 de octubre de 2026)
+## Estado (13 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.38 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.39 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -142,7 +142,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   (desde la 1.0.39, `MFF_ARTEFACTOS[].fx`: `contenido/artefactos_stats.json`, una regla por forma de línea;
   `fuentes.efectos_artefacto` para el build si una línea no tiene regla). Las categorías no cubren varios stats de artefactos (daño a villanos,
   héroes y jefes, crítico, esquiva, curación…): no se pueden filtrar todavía. Prueba: `verif_artefacto.py`.
-- La 1.0.39 (formato 16; la etiqueta va sobre el commit de datos), 11 de octubre: la vista «Por potenciador» de Comparar
+- La 1.0.39 (formato 16; etiqueta en 5993ce2, «Datos actualizados 2026-10-13»), 11 de octubre: la vista «Por potenciador» de Comparar
   (`cmpPorPotenciador`, `ui.cmpVista` 'pot'; Ezequiel: emparejar el tipo de potenciador, de dónde sale en un tooltip, la
   suma si más de una fuente da lo mismo y al pie a quiénes les llega; decidió: tercera vista, las cuatro fuentes, la suma
   con la regla del catálogo y el pie con los personajes del roster). Las fuentes: el análisis de las skills (lo que va
@@ -151,6 +151,19 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   aplica). `acumula` en cada efecto del catálogo a favor: de los stats donde ya estaba y 29 nuevos con la regla de
   Ezequiel (estadísticas se suman, habilidades una vez), sin confirmar uno por uno. La ventana de aliados acepta un grupo
   sin objetivo de las skills (`ui.aliados` = { r, tg }, `verGrupo`). Prueba: `verif_cmp_pot.py`.
+- La 1.0.40 (formato 17; la etiqueta va sobre el commit de datos), 13 de octubre: **contenido propio** (Ezequiel: «me
+  gustaría poder empezar a generar mi propio contenido y luego apoyarme en thanosvibs como confirmación»).
+  `fuentes/propio/` (personajes, cambios, uniformes, versiones, instintos, skills por retrato con `desde` y `slots`,
+  artefactos, C.T.P.s y retratos, en las formas de la API de thanosvibs, con `fuente` y `sin_confirmar`) y
+  `scripts/propio.py`, que el build corre primero: lo pone sobre `work/` (lo propio manda; `_propio.tv` guarda lo de
+  thanosvibs y se deshace al volver a correr) y compara con thanosvibs cuando lo publica (`work/propio.json`,
+  `docs/AUDITORIA.md` sección 13). Los retratos propios, de `fuentes/propio/retratos/` (`images/propio/`). En la app, la
+  marca «propio» (`pr`, `propioTag`). Primera carga: la actualización del 14 de octubre de 2026 de las notas de los dos
+  foros (Agatha Harkness, Wiccan — Young Avengers, Morgan Le Fay — Classic, las Tier-4 de Wiccan y Morgan, el artefacto
+  de Morgan cambiado, el C.T.P. de Ascenso sin nombre en español, Onslaught en modos.json). Prueba: `verif_propio.py`.
+  Pendiente: los nombres en español de las skills nuevas y del C.T.P. (con el juego en español), los stats base y la
+  progresión, el nivel 90 de Spider-Man y Ghost Rider (la app no tiene dónde mostrarlo) y la regla de Onslaught en los
+  equipos (hoy solo está escrita en Modos). `verif_historico` falla en celular por la barra de arriba (no por esto).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,

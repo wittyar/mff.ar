@@ -1,6 +1,6 @@
 {
- "version": "1.0.39",
+ "version": "1.0.40",
  "formato_datos": 17,
  "python": "3.14.7",
- "notas": "Comparar tiene una vista nueva, «Por potenciador»: cada potenciador (todos los ataques, daño de frío, ignorar esquiva…) en una fila y, al lado, lo que tiene de él cada personaje, de sus skills, su liderazgo, su soporte y su artefacto. Pasando el mouse (o tocando) cada fuente se ve de dónde sale, con el texto del juego. Si más de una fuente da lo mismo, debajo va la suma (lo que no se acumula, como las inmunidades, cuenta una vez: la mayor), y al pie, a quiénes les llega: tocando un grupo se ve la lista de personajes."
+ "notas": "Llega la actualización de octubre antes de que thanosvibs la publique, cargada de las notas oficiales del juego (en inglés y en coreano): Agatha Harkness, con sus skills, su Tier-3, su Tier-4 y su artefacto; los uniformes Wiccan — Young Avengers y Morgan Le Fay — Classic; la Tier-4 de Wiccan y de Morgan Le Fay; el artefacto nuevo de Morgan Le Fay; el C.T.P. de Ascenso, y Onslaught en Modos. Lo que viene de las notas y no de thanosvibs dice «propio»: cuando thanosvibs lo publique, se compara y se avisa lo que no coincida."
 }
