@@ -1,11 +1,11 @@
 {
- "formato": 15,
+ "formato": 16,
  "juego": "12.2.5",
  "generado": "2026-10-13",
  "archivos": {
   "data.js": {
-   "sha256": "c288d9dca1e2f0f1e73bc3a9159ee349b8c9b57587b59716cddc202bdd45dc0b",
-   "bytes": 6616395
+   "sha256": "b29a58a90fe9d18a610558464902ff04a3886268cb137c97df3caeb5494942ae",
+   "bytes": 6632316
   },
   "docs/AUDITORIA.md": {
    "sha256": "d604d9c49eb015e49d2d48339d865c1f9a5fe7a2eeb15bac6983e158594303e8",
