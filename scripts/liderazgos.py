@@ -274,7 +274,9 @@ def partes_soporte(sk, T, nombre):
             j = next((k for k, (_, f) in enumerate(fx) if T['ab'][f['a']]['en'] == OTORGA), None)
             propia = de_aliados(st)
             ac, act, av = activacion(st)
-            base = dict(ac=ac, act=act, av=av, cd=sk['cd'] or None)
+            # La recarga es de lo que se activa: una parte sin activación está siempre y no tiene (la del efecto de uniforme de
+            # Morgan Le Fay — Classic, 18 s, es de su anti-mermas al estar mermado, no de los ataques que da siempre).
+            base = dict(ac=ac, act=act, av=av, cd=(sk['cd'] or None) if ac is not None else None)
             if j is None:
                 if propia is not None:
                     ps.append(dict(base, efectos=propia[0], r=propia[1], al_entrar=propia[2], otorga=False))
@@ -302,6 +304,7 @@ def partes_soporte(sk, T, nombre):
             gp = fx[j][1].get('d')
             if base['ac'] is None:
                 base['ac'], base['act'], base['av'] = activacion(sig)
+                base['cd'] = (sk['cd'] or None) if base['ac'] is not None else None
             efs = [(n, f if 'd' in f or gp is None else dict(f, d=gp)) for n, f in efs]
             ps.append(dict(base, efectos=efs, r=r, al_entrar=al_entrar, otorga=False))
             i += 2
