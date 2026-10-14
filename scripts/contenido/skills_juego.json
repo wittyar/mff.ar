@@ -35,6 +35,41 @@
     "juego-capturas-en"
    ],
    "juego": "UNIFORM BONUS de Jessica Jones — Jewel: «Changes effects of skill, Telepathic Resistance / Changes effects of skill, Power Woman / Applies to: Defenders Allies / Activation Rate: when HP is below 35% / Applies to: Self / · Recovers 25% of HP.(1 Sec.) / · Decreases basic damage received by 95%.(10 Sec.) / Cooldown Time 100 second(s)». La API publica en su lugar el reflejo 70%, el daño de skill +30% y la superarmadura +30%, que el juego muestra en «Power Woman» (Tier-2), para ella. Lo mismo dicen Leads & Supports y la ficha de la nota del 16 de marzo de 2021 (con la curación que agregó la del 20 de abril)."
+  },
+  {
+   "p": "morganlefay1",
+   "slot": "Uniform Passive",
+   "cooldown": 18,
+   "stages": [
+    {
+     "target": "Universal Type Allies",
+     "abils": [
+      {
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>35%</b>"
+      },
+      {
+       "ability": "Increases basic damage when attacking boss types",
+       "description": "Increases basic damage dealt to boss types by <b>35%</b>."
+      }
+     ]
+    },
+    {
+     "target": "Universal Type Allies",
+     "activation": "when debuffed",
+     "abils": [
+      {
+       "ability": "Removes all Debuffs. ",
+       "description": "Removes all Debuffs.",
+       "duration": 10
+      }
+     ]
+    }
+   ],
+   "fuente": [
+    "foro-1770940"
+   ],
+   "juego": "Efecto de uniforme de Morgan le Fay — Fallen Soul, en la ficha de la nota del 18 de octubre de 2022: «Applies to: Universal Types / · Increases all Basic Attacks by +35%. / · Increases basic damage dealt to boss types by 35%. / Activation Rate: when debuffed / Applies to: Universal Types / · Removes all Debuffs. (10 Sec.) / Cooldown Time 18 second(s)». La API publica la primera parte con un «Give Power» («Acquires the following effect») sin la etapa que otorga: le falta el anti-mermas, que Leads & Supports sí publica (uniform2: al estar mermado, recarga 18 s, dura 10 s). Es la misma forma que el efecto de uniforme de Morgan Le Fay — Classic (14 de octubre de 2026)."
   }
  ]
 }
