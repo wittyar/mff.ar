@@ -164,13 +164,19 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   Pendiente: los nombres en español de las skills nuevas y del C.T.P. (con el juego en español), los stats base y la
   progresión, el nivel 90 de Spider-Man y Ghost Rider (la app no tiene dónde mostrarlo) y la regla de Onslaught en los
   equipos (hoy solo está escrita en Modos). `verif_historico` falla en celular por la barra de arriba (no por esto).
-- La 1.0.41 (formato 18; la etiqueta va sobre el commit de datos), 13 de octubre, #25: el soporte va en la skill con el
+- La 1.0.41 (formato 18; etiquetada en e8fccfc, el commit de datos), 13 de octubre, #25: el soporte va en la skill con el
   nombre que le da Leads & Supports solo si esa skill lo da (`skillDeSoporte`, `daSoporte`: Polaris — Uncanny X-Men;
   prueba `verif_soporte_skill.py`), y Alliance Battle tiene su contexto de C.T.P. (`ctp` «abx» en modos.json,
   `guia_armado.CTP_ABX` → `MFF_GUIA_ARMADO.leyenda.abx`, `ctpsAbxHtml`: Rage, y Judgement reforjado en su lugar; prueba
   `verif_ctp_abx.py`). Las combinaciones de la ficha siguen con sus C.T.P. en la ventana «Por qué y C.T.P.» (decisión del
   4 de octubre). El tercer punto de #25 (las casillas de las combinaciones) queda para #34 (Ezequiel). Fallan desde antes
   de esto, por los datos: `verif_mesa` (la cuenta de la lista), `verif_porque` 4a (el líder del caso) y `verif_contexto`.
+- La 1.0.42 (sin cambio de formato; la etiqueta va sobre el commit de versión), 14 de octubre: el anti-mermas del efecto
+  de uniforme de Morgan le Fay. Fallen Soul: la API publica «Give Power» sin la etapa que se activa; va lo del juego
+  (`skills_juego.json`, fuente `foro-1770940`). Classic: la recarga es solo de la parte que se activa
+  (`liderazgos.partes_soporte`). «Qué hace» (`cuandoAn`): lo que se activa dice cuándo y su recarga, no «Siempre activo».
+  Prueba: `verif_anti_mermas_morgan.py`. Pendiente: otras skills de la API que terminan en «Give Power» (unas 115 en
+  `work/skills_api`, la mayoría con el efecto en la misma etapa) pueden tener el mismo hueco; sin revisar contra el juego.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
@@ -220,4 +226,4 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
   las llegadas que siguen sin su nota (lista en `docs/HISTORICO.md`: de 2015, notas con imágenes y parches); los modos
-  que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #11 a #20 y #23. Bugs: #25, #26.
+  que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #11 a #20 y #23. Bugs: ninguno abierto (#25 y #26 cerrados).

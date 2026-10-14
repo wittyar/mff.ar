@@ -1,6 +1,6 @@
 {
- "version": "1.0.41",
+ "version": "1.0.42",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Alliance Battle muestra los C.T.P. que pide la guía de armado para ese modo: Rage, o un Judgement reforjado en su lugar, en Modos, arriba de los equipos por día y en tus equipos de Alliance Battle (antes mostraba los de PvE). Y el soporte de un personaje va en la skill que lo da: la Tier-2 de Polaris — Uncanny X-Men aparecía en su Activa 1, porque Leads & Supports le pone el nombre de esa skill."
+ "notas": "Morgan le Fay: el efecto de uniforme de sus dos uniformes (Fallen Soul y Classic) incluye su anti-mermas, como en el juego: al estar mermado, elimina todas las mermas de los aliados Universales (dura 10 s, recarga 18 s). En Fallen Soul la fuente pública lo omitía y ahora va lo del juego; en Classic la recarga de 18 s se mostraba en los ataques permanentes. Y «Qué hace» ya no dice «Siempre activo» de una pasiva que se activa: dice cuándo se activa y su recarga."
 }
