@@ -70,7 +70,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
 ## Estado (13 de octubre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.39 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -151,7 +151,7 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   aplica). `acumula` en cada efecto del catálogo a favor: de los stats donde ya estaba y 29 nuevos con la regla de
   Ezequiel (estadísticas se suman, habilidades una vez), sin confirmar uno por uno. La ventana de aliados acepta un grupo
   sin objetivo de las skills (`ui.aliados` = { r, tg }, `verGrupo`). Prueba: `verif_cmp_pot.py`.
-- La 1.0.40 (formato 17; la etiqueta va sobre el commit de datos), 13 de octubre: **contenido propio** (Ezequiel: «me
+- La 1.0.40 (formato 17; etiqueta en 6ff97db, «Datos actualizados 2026-10-13»), 13 de octubre: **contenido propio** (Ezequiel: «me
   gustaría poder empezar a generar mi propio contenido y luego apoyarme en thanosvibs como confirmación»).
   `fuentes/propio/` (personajes, cambios, uniformes, versiones, instintos, skills por retrato con `desde` y `slots`,
   artefactos, C.T.P.s y retratos, en las formas de la API de thanosvibs, con `fuente` y `sin_confirmar`) y
@@ -164,6 +164,13 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   Pendiente: los nombres en español de las skills nuevas y del C.T.P. (con el juego en español), los stats base y la
   progresión, el nivel 90 de Spider-Man y Ghost Rider (la app no tiene dónde mostrarlo) y la regla de Onslaught en los
   equipos (hoy solo está escrita en Modos). `verif_historico` falla en celular por la barra de arriba (no por esto).
+- La 1.0.41 (formato 18; la etiqueta va sobre el commit de datos), 13 de octubre, #25: el soporte va en la skill con el
+  nombre que le da Leads & Supports solo si esa skill lo da (`skillDeSoporte`, `daSoporte`: Polaris — Uncanny X-Men;
+  prueba `verif_soporte_skill.py`), y Alliance Battle tiene su contexto de C.T.P. (`ctp` «abx» en modos.json,
+  `guia_armado.CTP_ABX` → `MFF_GUIA_ARMADO.leyenda.abx`, `ctpsAbxHtml`: Rage, y Judgement reforjado en su lugar; prueba
+  `verif_ctp_abx.py`). Las combinaciones de la ficha siguen con sus C.T.P. en la ventana «Por qué y C.T.P.» (decisión del
+  4 de octubre). El tercer punto de #25 (las casillas de las combinaciones) queda para #34 (Ezequiel). Fallan desde antes
+  de esto, por los datos: `verif_mesa` (la cuenta de la lista), `verif_porque` 4a (el líder del caso) y `verif_contexto`.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
