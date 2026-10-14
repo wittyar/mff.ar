@@ -354,6 +354,14 @@ def soportes(retratos, nombres):
             else:
                 # Del artefacto se guarda el nivel máximo (6★): el detalle por estrellas
                 # está en el artefacto (MFF_ARTEFACTOS), que trae el texto completo.
+                # Un artefacto recién llegado puede venir a medio cargar: el efecto sin el % del
+                # instinto ([efecto, valor]) o sin valor ([efecto]); el de Morgan le Fay del 14 de
+                # octubre de 2026 llegó así. No se usa hasta que la fuente lo complete.
+                incompletos = [ef for ef in v['effect6'] if len(ef) < 3]
+                if incompletos:
+                    avisos.append(f'soporte {donde}: la fuente publica el artefacto sin el % del instinto '
+                                  f'({incompletos!r}); no se usa hasta que lo complete')
+                    continue
                 x['fx'] = [_efecto_artefacto(ef, donde) for ef in v['effect6']]
                 x['est'] = 6
             desconocidos = set(v) - {'name', 'significant', 'restrictions', 'activation', 'cooltime',
