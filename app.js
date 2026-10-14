@@ -413,6 +413,9 @@ const T = {
   ga_ctp_pvp:        { es:'Meta PvP',            en:'PvP meta' },
   ga_ctp_pvp_alt:    { es:'Fuera del meta PvP',  en:'PvP off-meta' },
   ga_ctp_notes:      { es:'Notas de la guía sobre C.T.P.', en:"The guide's C.T.P. notes" },
+  ctp_eq_title_abx:  { es:'C.T.P. en Alliance Battle, según la guía de armado', en:'C.T.P. in Alliance Battle, per the build guide' },
+  ctp_abx_alt:       { es:'o, en su lugar,',    en:'or, instead,' },
+  md_abx_ctp:        { es:'C.T.P. de estos equipos:', en:'C.T.P. for these teams:' },
   ctp_eq_title:      { es:'C.T.P. recomendados: {a} · {b} · Ideal CTP List', en:'Recommended C.T.P.: {a} · {b} · Ideal CTP List' },
   ctp_rec_title:     { es:'Recomendado, en cada contexto (lo mismo que dicen sus tarjetas de equipo): lo que dice la guía de armado de Cynicalex y lo que dice la Ideal CTP List (de la comunidad, en thanosvibs), cada uno con su fuente. Pueden no coincidir.',
                        en:'Recommended, in each context (what its team cards say): what Cynicalex\'s building guide says and what the Ideal CTP List (community, on thanosvibs) says, each with its source. They may disagree.' },
@@ -5967,7 +5970,8 @@ function notasCtpArmado () {
       <ul class="sopfx">${GUIA_ARMADO.leyenda.ctp.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul></details>`;
 }
 /** Columnas de la guía de armado para el C.T.P. de un contexto: el tipo del modo de un equipo (el ctp de
- *  MODOS), el orden de las combinaciones o el que se eligió al marcar un favorito. En PvP, el meta y fuera
+ *  MODOS, salvo Alliance Battle, 'abx', que no va por columnas: ctpsAbxHtml), el orden de las combinaciones o el que se
+ *  eligió al marcar un favorito. En PvP, el meta y fuera
  *  del meta de PvP; en PvE, los de PvE; sin contexto (sin modo, un modo propio, «puntos para él» o una tier
  *  list), el mejor y el segundo. */
 function columnasCtp (ctx) {
@@ -6052,6 +6056,7 @@ function ctpFuentesHtml () {
  *  dos columnas de la guía de armado y la de la Ideal CTP List, y las fuentes abajo. Si la recomendación es de otro
  *  uniforme que el que lleva, se dice. */
 function ctpsTablaHtml (vs, ctx) {
+  if (ctx === 'abx') return ctpsAbxHtml();
   const cols = columnasCtp(ctx), celda = 'style="white-space:normal;vertical-align:top;padding:4px 10px 4px 0"';
   const rs = vs.map(x => ctpRecomendado(x, ctx));
   const otra = rs.some((r, i) => (r.armado && r.armado.vv.key !== vs[i].key) || (r.ideal && r.ideal.vv.key !== vs[i].key));
@@ -6062,8 +6067,16 @@ function ctpsTablaHtml (vs, ctx) {
     ${otra ? `<p class="muted">${h(t('ga_eq_other'))}</p>` : ''}
     ${ctpFuentesHtml()}`;
 }
+/** Los C.T.P. de Alliance Battle (el contexto 'abx', #25): la guía de armado no los da por personaje sino en su leyenda
+ *  («ABX: Rage», «Judgement+ can replace Rage»): el mismo para todos, y el otro, reforjado, en su lugar. */
+function ctpsAbxHtml () {
+  if (!GUIA_ARMADO) return `<p class="muted">${h(t('ga_no_data'))}</p>`;
+  const a = GUIA_ARMADO.leyenda.abx;
+  return `<p class="row ctpabx" style="gap:6px">${ctpCorto({ c: a.c })}<span class="muted">${h(t('ctp_abx_alt'))}</span>${ctpCorto(a.alt)}</p>
+    <ul class="sopfx">${a.ley.map(x => `<li>${trHtml(x)}</li>`).join('')}</ul>${fuenteArmado()}`;
+}
 /** El rótulo de los C.T.P. de un equipo: las columnas del contexto y la Ideal CTP List. */
-function ctpsRotulo (ctx) { const cols = columnasCtp(ctx); return t('ctp_eq_title').replace('{a}', t('ga_ctp_' + cols[0])).replace('{b}', t('ga_ctp_' + cols[1])); }
+function ctpsRotulo (ctx) { if (ctx === 'abx') return t('ctp_eq_title_abx'); const cols = columnasCtp(ctx); return t('ctp_eq_title').replace('{a}', t('ga_ctp_' + cols[0])).replace('{b}', t('ga_ctp_' + cols[1])); }
 /** Los C.T.P. de un equipo, plegados (tus equipos y favoritos; en las combinaciones y «cómo entraría», van en la ventana
  *  del «Por qué»). */
 function ctpsEquipo (vs, ctx) { return `<details class="usgrupo ga-eq"><summary>${h(ctpsRotulo(ctx))}</summary>${ctpsTablaHtml(vs, ctx)}</details>`; }
@@ -6333,7 +6346,7 @@ function modoCard (m) {
       ${m.abx ? panelABX(m) : ''}
       ${panelRecomendados(m)}
       ${m.ctp ? panelCTPs(m.ctp) : ''}
-      ${m.ctp ? `<p class="muted"><a href="#armado" data-a="irArmado" data-v="${m.ctp}">${h(t(m.ctp === 'pvp' ? 'md_go_pvp' : 'md_go_pve'))}</a></p>` : ''}
+      ${m.ctp ? `<p class="muted"><a href="#armado" data-a="irArmado" data-v="${m.tipo}">${h(t(m.tipo === 'pvp' ? 'md_go_pvp' : 'md_go_pve'))}</a></p>` : ''}
       ${historialModo(m)}
     </div>` : ''}
   </div>`;
@@ -6389,6 +6402,8 @@ function panelABX (m) {
     ${m.cancels ? `<p class="muted" style="margin:8px 0">${h(bi(m.cancels_nota))} ${Object.entries(m.cancels).map(([modo, tipos]) =>
       `<b>${h(modo)}</b>: ${h(tipos.map(trTxt).join(', '))}`).join(' · ')}.
       ${h(t('md_cancel_read'))}</p>` : ''}
+    <p class="row ctpabx" style="gap:6px;margin:8px 0"><span class="muted">${h(t('md_abx_ctp'))}</span>${GUIA_ARMADO
+      ? `${ctpCorto({ c: GUIA_ARMADO.leyenda.abx.c })}<span class="muted">${h(t('ctp_abx_alt'))}</span>${ctpCorto(GUIA_ARMADO.leyenda.abx.alt)}` : `<span class="muted">${h(t('ga_no_data'))}</span>`}</p>
     ${eqs.length ? `<div class="abxeqs">${eqs.map(e => `<div class="abxeq">
         <div class="row" style="gap:6px;margin-bottom:6px"><span class="tag dim">${h(e.m)}</span>
           ${e.titulo ? `<span class="tag ghost" style="color:var(--gold)">${trHtml(e.titulo)}</span>` : ''}
@@ -6403,6 +6418,7 @@ function panelABX (m) {
 
 /** C.T.P.s recomendados para un tipo de modo, con la descripción de thanosvibs. */
 function panelCTPs (tipo) {
+  if (tipo === 'abx') return `<div class="bloque"><h4>${h(t('ctp_eq_title_abx'))}</h4>${ctpsAbxHtml()}</div>`;
   const grupos = (GUIA.ctp_ranking || { grupos: [] }).grupos.filter(g => g.id === tipo || (g.id === 'otros'));
   return `<div class="bloque"><h4>${h(t('md_ctps'))}</h4>
     ${grupos.map(g => `<p class="muted">${h(bi(g))}</p><div class="ctps">${g.ctps.map(id => {
@@ -6449,7 +6465,7 @@ function armadoHtml (tipo) {
 // EQUIPOS
 // ============================================================================
 /** Modos para armar equipos: los del juego con tamaño de equipo según su fuente, y los
- *  propios. {id, name, tam, juego, ctp}: ctp es el tipo del modo ('pvp', 'pve' o null), el de
+ *  propios. {id, name, tam, juego, ctp}: ctp es el contexto de los C.T.P. ('pvp', 'pve', 'abx' o null), el de
  *  MODOS en los del juego; los propios no tienen. */
 function modosEquipo () {
   return MODOS.filter(m => m.equipo && m.equipo.tam).map(m => ({ id: m.id, name: nombreModo(m), tam: m.equipo.tam, juego: true, ctp: m.ctp }))

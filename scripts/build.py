@@ -238,7 +238,10 @@ hoy = hoy.isoformat()
 # 17: el contenido propio (fuentes/propio/, propio.py; Ezequiel, 13 de octubre de 2026): personajes, uniformes, skills y
 #     artefactos llevan sus fuentes (pr), un artefacto puede no tener puntaje de thanosvibs (pve y pvp null) y un C.T.P.
 #     puede no tener nombre en español (es null). La app de formato 16 se cae con un C.T.P. sin es.
-FORMATO = 17
+# 18: Alliance Battle tiene su propio contexto de C.T.P. (ctp «abx» en modos.json) y la guía de armado trae lo que su
+#     leyenda dice de él (MFF_GUIA_ARMADO.leyenda.abx: Rage, y Judgement reforjado en su lugar; #25). La app de formato 17
+#     se cae con un equipo de Alliance Battle.
+FORMATO = 18
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,

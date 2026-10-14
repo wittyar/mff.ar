@@ -519,6 +519,7 @@ def guia_armado(chars):
         'art': [[k, TX(v)] for k, v in GA.LEY_ART],
         'rot': [[k, TX(v)] for k, v in GA.LEY_ROT],
         'ctp': [TX(x) for x in GA.LEY_CTP],
+        'abx': GA.CTP_ABX,
         'iso': {cat: [sets[x] for x in xs] for cat, xs in GA.LEY_ISO_CAT},
         'emojis': {k: TX(v) for k, v in r['emojis'].items()},
     }

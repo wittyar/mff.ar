@@ -59,6 +59,9 @@ LEY_ART = [('Y', 'Must have for character to function'), ('X', 'Nice to have'), 
 LEY_ROT = [('c', 'cancel by pressing next skill'), ('dc', 'delayed skill cancel'),
            ('H', 'hold skill for proc duration'), ('k / kite', 'run around for a couple seconds')]
 LEY_CTP = ['CTP+ = Reforged required', 'Elemental characters: Judgement', 'ABX: Rage', 'Judgement+ can replace Rage']
+# Lo que esas líneas dicen del C.T.P. en Alliance Battle: Rage y, reforjado, Judgement en su lugar (#25).
+CTP_ABX = {'c': 'rage', 'alt': {'c': 'judgement', 'r': True}, 'ley': ['ABX: Rage', 'Judgement+ can replace Rage']}
+assert all(x in LEY_CTP for x in CTP_ABX['ley'])
 LEY_ISO_CAT = [('offensive', ['POAH', 'OD', 'HE']), ('shield', ['DDE', 'BP']), ('defensive', ['PC', 'TS', 'SS'])]
 LEY_ISO_SET = [('POAH', 'Power of Angry Hulk'), ('OD', 'Overdrive'), ('HE', "Hawk's Eye"), ('BP', 'Binary Power'),
                ('DDE', 'Drastic Density Enhancement'), ('PC', 'Protect the Captain'), ('TS', 'Tenacious Symbiote'),
