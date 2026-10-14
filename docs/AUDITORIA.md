@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-10-13, sobre los datos del juego 12.2.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-10-14, sobre los datos del juego 12.3 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
@@ -20,7 +20,7 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Instinto (campo vs categoría de la wiki) | 78 | 4 | — |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
 | Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 119 páginas sin la pestaña |
-| Artefactos a 6★ (thanosvibs vs wiki) | 209 (+31 donde la wiki lista otro nivel de estrellas) | 18 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
+| Artefactos a 6★ (thanosvibs vs wiki) | 210 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
 Cobertura de la wiki: de 5911 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1223 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 307 sin pestaña de su uniforme y 32 de personajes sin infobox legible.
 
@@ -271,7 +271,6 @@ Los números del texto a 6★ de thanosvibs contra la tabla de la página Artifa
 
 | Personaje | Artefacto | Solo en thanosvibs | Solo en la wiki |
 |---|---|---|---|
-| Agatha Harkness | The Vishanti's Sorcerer Supreme | 0.5, 15, 20, 200 |  |
 | Annihilus | Lord of the Negative Zone |  | 300 |
 | Captain America (Sharon Rogers) | Spear of Justice | 15, 16 | 50 |
 | Captain Marvel | Leader's Flight | 50 |  |
