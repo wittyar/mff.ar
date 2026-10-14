@@ -33,7 +33,7 @@ CH = {c['id']: c for c in D0['MFF_SEED_CHARACTERS']}
 G, CTP = D0['MFF_GUIA_ARMADO'], {c['id']: c['name'] for c in D0['MFF_CTPS']}
 # En español, el nombre corto del juego (1.0.33, #43): el del base sin «C.T.P. de», con mayúscula.
 _corto = lambda n: (lambda x: x[0].upper() + x[1:])(n.replace('C.T.P. de ', ''))
-CTP_LANG = {'en': CTP, 'es': {c['id']: _corto(c['es']['base']) for c in D0['MFF_CTPS']}}
+CTP_LANG = {'en': CTP, 'es': {c['id']: _corto(c['es']['base']) if c['es'] else c['name'] for c in D0['MFF_CTPS']}}  # sin nombre en español (contenido propio): el inglés, como ctpNomCorto
 TIPO = {m['id']: m['ctp'] for m in D0['MFF_MODOS']}
 FUENTE = D0['MFF_GUIA']['fuentes']['cyn-armado']['nombre']
 SEED = D0['MFF_SEED']
