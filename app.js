@@ -647,6 +647,7 @@ const T = {
   an_tienen:         { es:'lo tiene el {n}%',    en:'{n}% have it' },
   an_nada_distingue: { es:'Nada de lo que hace es raro ni tiene un número alto contra el roster.', en:'Nothing it does is rare or has a high number against the roster.' },
   an_siempre:        { es:'Siempre activo',      en:'Always active' },
+  an_recarga:        { es:'recarga {c} s',       en:'cooldown {c} s' },
   an_por_carga:      { es:'Con la definitiva o el striker: van por carga.', en:'With the ultimate or the striker: they charge up.' },
   an_uso:            { es:'{n}% del tiempo ({d} s cada {c} s)', en:'{n}% of the time ({d} s every {c} s)' },
   an_dano_skill:     { es:'Daño por skill',      en:'Damage per skill' },
@@ -5397,16 +5398,18 @@ function filasAn (v) {
     const r = filas.get(clave);
     if (d === 'q' && objetivo != null && !r.objetivos.includes(objetivo)) r.objetivos.push(objetivo);
     for (const [si, ti, fi] of fuentes) {
-      const sk = v.skills[si], f = sk.st[ti].fx[fi], val = valorFx(f, e.id), dura = f.d != null ? f.d : null;
+      const sk = v.skills[si], st = sk.st[ti], f = st.fx[fi], val = valorFx(f, e.id), dura = f.d != null ? f.d : null;
       // Tiempo activo: de las skills con recarga y con duración; la curación no (la fuente le pone 1 s).
       const uso = !SLOTS_PASIVOS.has(sk.sl) && sk.cd > 0 && dura != null && e.id !== 'curacion' ? Math.min(1, dura / sk.cd) : null;
-      r.fuentes.push({ si, sl: sk.sl, val, dura, uso, cd: sk.cd });
+      // La activación de la etapa: una pasiva que se activa (al estar mermado, al morir…) no está siempre.
+      r.fuentes.push({ si, sl: sk.sl, val, dura, uso, cd: sk.cd, ac: st.ac != null ? txt('act', st.ac, st.av) : null });
     }
   }
   return [...filas.values()].map(r => {
     const vals = r.fuentes.map(x => x.val).filter(Boolean), usos = r.fuentes.map(x => x.uso).filter(x => x !== null);
     const val = vals.length ? vals.reduce((a, b) => b.n > a.n ? b : a) : null;
-    return Object.assign(r, { val, pasiva: r.fuentes.every(x => SLOTS_PASIVOS.has(x.sl)),
+    const pasivas = r.fuentes.every(x => SLOTS_PASIVOS.has(x.sl));
+    return Object.assign(r, { val, pasiva: pasivas && r.fuentes.every(x => x.ac === null), activada: pasivas && r.fuentes.some(x => x.ac !== null),
       uso: usos.length ? Math.max(...usos) : null, pvp: (r.d === 'e' || r.d === 'i') ? CATALOGO.pvp.prioridad.includes(r.e.id)
         : r.d === 'q' && CATALOGO.pvp.soporte.includes(r.e.id) });
   }).map(r => Object.assign(r, { dist: distincionAn(r) }));
@@ -5430,11 +5433,16 @@ function marcaAn (dist) {
   return '';
 }
 function pvpAn () { return `<span class="qhmarca pvp" title="${h(bi(CATALOGO.pvp.nota))}">PvP</span>`; }
-/** Cuándo está: siempre (pasivas), su tiempo activo (con la duración y la recarga de la que más dura) o con la definitiva
- *  o el striker, que van por carga. */
+/** Cuándo está: siempre (pasivas sin activación), cuando se activa (pasivas que se activan: al estar mermado, al morir…,
+ *  con su recarga), su tiempo activo (con la duración y la recarga de la que más dura) o con la definitiva o el striker,
+ *  que van por carga. */
 function cuandoAn (r) {
-  const aliados = r.objetivos.filter(o => grupoDe(o)).map(o => txt('tgt', o));
-  if (r.pasiva) return `<span class="qhsiempre">${h(t('an_siempre'))}${aliados.length ? ' · ' + h(aliados.join(', ')) : ''}</span>`;
+  const aliados = r.objetivos.filter(o => grupoDe(o)).map(o => txt('tgt', o)), ali = aliados.length ? ' · ' + h(aliados.join(', ')) : '';
+  if (r.pasiva) return `<span class="qhsiempre">${h(t('an_siempre'))}${ali}</span>`;
+  if (r.activada) {
+    const cuando = [...new Set(r.fuentes.map(x => x.ac === null ? t('an_siempre') : x.ac + (x.cd > 0 ? ' · ' + t('an_recarga').replace('{c}', numTxt(x.cd)) : '')))];
+    return `<span class="qhsiempre">${h(t('st_activation'))}: ${h(cuando.join(' / '))}${ali}</span>`;
+  }
   if (r.uso === null) return `<span class="muted qhuso">${h(t('an_por_carga'))}</span>`;
   const x = r.fuentes.filter(f => f.uso === r.uso)[0];
   return `<div class="qhuso"><div class="qhbarra ${r.d}"><i style="width:${Math.round(100 * r.uso)}%"></i></div><span>${
