@@ -3599,14 +3599,23 @@ function recibeFilaHtml (m, l, nombre, siempre) {
 // Slot de Leads & Supports -> tipo de la skill que lo da en la ficha.
 const SKILL_DE_SLOT = { leader: 'Leader Skill', leader2: 'Leader Skill', passive: 'Passive', passive2: 'Passive',
   t2: 'Tier-2 Passive', t22: 'Tier-2 Passive', uniform: 'Uniform Passive', uniform2: 'Uniform Passive' };
-/** La skill de la ficha de v que da su soporte o liderazgo k. Un liderazgo es la Leader Skill. Un
- *  soporte, la skill con el nombre que le da Leads & Supports, que a veces es de otro tipo (la «Pasiva
- *  4★ (secundaria)» de Jeff the Land Shark es su Activa 5, Jeff's Cuddle Buddy); si ninguna lo lleva
- *  (no tiene nombre, o lo escribe distinto), la de su tipo. null si la ficha no la tiene. */
+/** La skill de la ficha de v que da su soporte o liderazgo k. Un liderazgo es la Leader Skill. Un soporte, la de su tipo,
+ *  salvo que la skill con el nombre que le da Leads & Supports sea otra y dé lo que da el soporte (alguno de sus stats, en
+ *  los efectos del catálogo que el análisis le encuentra): la «Pasiva 4★ (secundaria)» de Jeff the Land Shark es su
+ *  Activa 5, Jeff's Cuddle Buddy. Un nombre que cae en una skill que no lo da es un error de Leads & Supports y no cuenta
+ *  (#25: la Tier-2 de Polaris — Uncanny X-Men se llama ahí «Magnetic Pulse», el nombre de su Activa 1). null si la ficha
+ *  no la tiene. */
 function skillDeSoporte (v, k, x) {
   const nombre = (sk) => { const f = fila('name', sk.n); return f ? f.en : null; };
   const porNombre = !LIDERAZGOS.includes(k) && x.n ? v.skills.find(sk => nombre(sk) === x.n) : null;
-  return porNombre || v.skills.find(sk => sk.sl === SKILL_DE_SLOT[k]) || null;
+  return (porNombre && daSoporte(v, v.skills.indexOf(porNombre), x) ? porNombre : null)
+    || v.skills.find(sk => sk.sl === SKILL_DE_SLOT[k]) || null;
+}
+/** ¿Da la skill si de v algo del soporte x? Alguno de los efectos del catálogo de sus stats está entre los que el análisis
+ *  le encuentra a esa skill. */
+function daSoporte (v, si, x) {
+  const efs = new Set(x.fx.flatMap(f => CATALOGO.soporte[f.s].efectos));
+  return ANALISIS[v.p].fx.some(([ie, , , fuentes]) => efs.has(CATALOGO.efectos[ie].id) && fuentes.some(([s]) => s === si));
 }
 /** Ancla de una skill en la pestaña Skills de la ficha: hay una por tipo. */
 function anclaSkill (sl) { return 'sk-' + slugId(sl); }
