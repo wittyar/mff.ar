@@ -16,7 +16,7 @@ thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo 
 - **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.
 - **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos los dan, si se acumulan y su tope (ver *Qué se acumula y los topes*, al final).
 
-16 grupos, 131 efectos, 228 etiquetas de skills y 90 stats de Leads & Supports y de bonos de equipo. Todo lo que traen los datos está clasificado.
+16 grupos, 131 efectos, 228 etiquetas de skills y 90 stats de Leads & Supports y de bonos de equipo. **Sin clasificar: 1** (docs/AUDITORIA.md, sección 9).
 
 ## Golpe
 
@@ -57,7 +57,7 @@ Sube un ataque, el stat del que sale el daño.
 
 - **Skills:**
   - `ENERGY ATTACK ↑` (139 retratos)
-  - `Explosion`, con `Energy Attack increases by #% every # sec (up to #%)` (26 retratos) — varía: crece cada unos segundos
+  - `Explosion`, con `Energy Attack increases by #% every # sec (up to #%)` (29 retratos) — varía: crece cada unos segundos
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of Energy Attack each #% of pure damage accumulated` (2 retratos) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
   - `Energy Attack` (81 retratos, 181 bonos de equipo) — se acumula
@@ -73,8 +73,8 @@ Sube un ataque, el stat del que sale el daño.
   - `ALL BASIC ATTACKS INCREASE` (415 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks each #% of pure damage accumulated` (323 retratos) — varía: crece con el daño puro acumulado
   - `Increases all Basic Attacks` (267 retratos)
-  - `Increases all Basic Attacks and Defenses` (221 retratos)
   - `Increases all basic stats` (221 retratos)
+  - `Increases all Basic Attacks and Defenses` (216 retratos)
   - `INCREASES ALL BASIC ATTACKS PER HP LOST` (77 retratos) — varía: crece con el daño recibido
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `ATK PER SUPER HIT SHIELD INCREASE` (12 retratos) — varía: según su escudo
@@ -93,7 +93,7 @@ Sube un ataque, el stat del que sale el daño.
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
-  - `All Basic Attacks` (182 retratos, 556 bonos de equipo) — se acumula
+  - `All Basic Attacks` (184 retratos, 556 bonos de equipo) — se acumula
   - `All Basic Attacks (Stackable)` (5 retratos) — se acumula; varía: se acumula
 
 ## Daño
@@ -110,8 +110,8 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Sube el daño. Es el efecto del proc de los obeliscos («Increases basic damage by x% for 1 attack(s)»), que según la guía sube mucho el daño. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Sube el daño. Es el efecto del proc de los obeliscos («Increases basic damage by x% for 1 attack(s)»), que según la guía sube mucho el daño. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `SKILL DAMAGE ↑` (477 retratos) — dura unos ataques
-  - `Basic Damage Increase (Influence)` (49 retratos) — varía: baja con el tiempo
+  - `SKILL DAMAGE ↑` (472 retratos) — dura unos ataques
+  - `Basic Damage Increase (Influence)` (52 retratos) — varía: baja con el tiempo
   - `Evasion Reload` (26 retratos)
   - `Increases a stack of basic damage` (21 retratos) — varía: se acumula
   - `Increases skill damage relative to HP` (3 retratos) — varía: crece con los PG que gana
@@ -184,9 +184,9 @@ Sube el daño que hace, aparte del ataque.
   - `All Basic Damage Increased Except Specific Species` (1 retrato) — contra todos menos una raza (cada skill dice cuál)
   - `Luck` (1 retrato) — contra todos menos los jefes
 - **Leads & Supports y bonos de equipo:**
-  - `Basic Damage Dealt to Villains` (87 retratos) — se acumula; contra una facción: Supervillano
-  - `Basic Damage Dealt to Boss Types` (44 retratos) — se acumula; contra jefes
-  - `Basic Damage Dealt to Heroes` (43 retratos) — se acumula; contra una facción: Superhéroe
+  - `Basic Damage Dealt to Villains` (88 retratos) — se acumula; contra una facción: Supervillano
+  - `Basic Damage Dealt to Boss Types` (45 retratos) — se acumula; contra jefes
+  - `Basic Damage Dealt to Heroes` (44 retratos) — se acumula; contra una facción: Superhéroe
   - `Basic Damage Dealt to Males` (6 retratos) — se acumula; contra un género: Masculino
   - `Basic Damage Dealt to Enemies with 25% HP or Higher` (4 retratos) — se acumula; contra rivales con los PG altos
   - `Basic Damage Dealt to Universals` (3 retratos) — se acumula; contra un tipo: Universal
@@ -203,7 +203,7 @@ Sube el daño que hace, aparte del ataque.
 - **PvP:** Más golpes críticos, con la misma reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
   - `FRENZY` (494 retratos)
-  - `CRITICAL RATE ↑` (312 retratos)
+  - `CRITICAL RATE ↑` (307 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate each #% of pure damage accumulated` (7 retratos) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
@@ -229,7 +229,7 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Multiplica el golpe crítico. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Multiplica el golpe crítico. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `CRITICAL DAMAGE ↑` (347 retratos)
+  - `CRITICAL DAMAGE ↑` (342 retratos)
   - `DOUBLE CRITICAL` (47 retratos)
   - `Precision` (15 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
@@ -265,9 +265,9 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Contra enemigos comunes, no contra jefes. [Probable]
 - **PvP:** Contra rivales que se protegen con reducción de daño. [Probable]
 - **Skills:**
-  - `Excluding bosses, ignores enemy's damage decrease` (25 retratos)
+  - `Excluding bosses, ignores enemy's damage decrease` (1 retrato)
 - **Leads & Supports y bonos de equipo:**
-  - `Ignore Non-Boss Damage Decrease` (4 retratos) — se acumula; Nota: Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026).
+  - `Ignore Non-Boss Damage Decrease` (5 retratos) — se acumula; Nota: Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026).
 
 ### Ignora los aumentos y reducciones entre facciones
 
@@ -408,7 +408,7 @@ Que el golpe entre o atraviese protecciones.
 - **PvE:** Si el rival iba a esquivar, el golpe entra igual con esa probabilidad. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Si el rival iba a esquivar, el golpe entra igual con esa probabilidad. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `IGNORE DODGE` (633 retratos)
+  - `IGNORE DODGE` (629 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Ignore Dodge` (93 retratos) — se acumula
 
@@ -690,8 +690,8 @@ Le baja algo al rival o le quita potenciadores.
   - `Incapacitation` (305 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
   - `ALL BASIC DEFENSES DECREASE` (58 retratos)
   - `DECREASES ALL BASIC DEFENSES (CAN STACK)` (58 retratos)
+  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (18 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `PHYSICAL DEFENSE ↓` (17 retratos)
-  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (15 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `All Basic Defenses Decrease` (13 retratos)
   - `VULNERABILITY` (4 retratos)
   - `ENERGY DEFENSE ↓` (3 retratos)
@@ -704,7 +704,7 @@ Le baja algo al rival o le quita potenciadores.
 - **PvP:** Ese rival pega menos. [Probable]
 - **Skills:**
   - `ALL BASIC ATTACKS DECREASE` (26 retratos)
-  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (15 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (18 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `DECREASES ALL BASIC ATTACKS (CAN STACK)` (11 retratos)
   - `VULNERABILITY` (4 retratos)
 
@@ -838,8 +838,8 @@ Sube las defensas.
 - **Skills:**
   - `FRENZY` (494 retratos)
   - `SUPER ARMOR` (330 retratos)
-  - `Increases all Basic Attacks and Defenses` (221 retratos)
   - `Increases all basic stats` (221 retratos)
+  - `Increases all Basic Attacks and Defenses` (216 retratos)
   - `ALL BASIC DEFENSES INCREASE` (91 retratos)
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según sus PG
@@ -1044,8 +1044,8 @@ Recibe menos daño o lo evita.
   - `DECREASES BASIC DAMAGE WHEN ATTACKED BY CHARACTERS WITH ABILITIES` (2 retratos) — contra quien tiene una habilidad (cada skill dice cuál)
   - `Luck` (1 retrato) — contra todos menos los jefes
 - **Leads & Supports y bonos de equipo:**
-  - `Basic Damage Received from Villains` (34 retratos) — se acumula; contra una facción: Supervillano; Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
-  - `Basic Damage Received from Heroes` (7 retratos) — se acumula; contra una facción: Superhéroe
+  - `Basic Damage Received from Villains` (35 retratos) — se acumula; contra una facción: Supervillano; Nota: Leads & Supports publica esta reducción a veces con signo positivo; la skill dice siempre que reduce.
+  - `Basic Damage Received from Heroes` (8 retratos) — se acumula; contra una facción: Superhéroe
   - `Basic Damage Received from Universals` (3 retratos) — se acumula; contra un tipo: Universal
 
 ### Menos daño físico recibido
@@ -1238,10 +1238,10 @@ Le saca las mermas o lo hace inmune a ellas.
 - **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). Cuando dura un tiempo, protege mientras dura: NamuWiki dice que el liderazgo de Malekith le da a todo el equipo 20 s de inmunidad a los estados alterados, y la guía de thanosvibs llama «Debuff Immunity» a la pasiva de Tier-2 de Wasp, que la API publica como «Removes all Debuffs» por 20 s. En los liderazgos y soportes casi siempre dura 12 s desde que recibe una merma: que esos protejan igual es lo probable, pero ninguna fuente lo dice. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), [NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Nota:** La API de skills a veces publica «Give Power» sin decir qué otorga; Leads & Supports trae que es esto (docs/AUDITORIA.md, sección 7).
 - **Skills:**
-  - `Removes all Debuffs. ` (411 retratos)
+  - `Removes all Debuffs. ` (408 retratos)
   - `Parry` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
-  - `Remove All Debuffs` (82 retratos) — cuenta una vez (la de mayor valor)
+  - `Remove All Debuffs` (84 retratos) — cuenta una vez (la de mayor valor)
 
 ### Inmunidad a mermas
 

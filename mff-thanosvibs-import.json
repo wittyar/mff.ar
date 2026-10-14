@@ -35518,11 +35518,90 @@
       "Magia"
      ],
      "up": {
+      "uniform_xp": [
+       10000,
+       16000,
+       27200,
+       48960,
+       93024
+      ],
+      "uniform_kits": [
+       30,
+       45,
+       90,
+       180,
+       330
+      ],
+      "gold": [
+       44000,
+       80000,
+       120000,
+       220000,
+       360000
+      ],
+      "totals": [
+       195184,
+       930,
+       945,
+       675,
+       824000
+      ],
       "update": "12.3",
       "flags": [
        "Crystal1750"
+      ],
+      "material1": [
+       {
+        "material": "bios",
+        "qty": 30
+       },
+       {
+        "material": "bios",
+        "qty": 60
+       },
+       {
+        "material": "bios",
+        "qty": 120
+       },
+       {
+        "material": "bios",
+        "qty": 240
+       },
+       {
+        "material": "bios",
+        "qty": 480
+       }
+      ],
+      "material2": [
+       {
+        "material": "norn_blast",
+        "qty": 90
+       },
+       {
+        "material": "norn_blast",
+        "qty": 135
+       },
+       {
+        "material": "norn_blast",
+        "qty": 195
+       },
+       {
+        "material": "norn_blast",
+        "qty": 240
+       },
+       {
+        "material": "norn_blast",
+        "qty": 285
+       }
       ]
-     }
+     },
+     "op": [
+      "elektra3",
+      "loki8",
+      "victorious1",
+      "x-233",
+      "scarletwitch6"
+     ]
     }
    ]
   },
@@ -55959,11 +56038,90 @@
       "Daño"
      ],
      "up": {
+      "uniform_xp": [
+       10000,
+       16000,
+       27200,
+       48960,
+       93024
+      ],
+      "uniform_kits": [
+       30,
+       45,
+       90,
+       180,
+       330
+      ],
+      "gold": [
+       44000,
+       80000,
+       120000,
+       220000,
+       360000
+      ],
+      "totals": [
+       195184,
+       930,
+       945,
+       675,
+       824000
+      ],
       "update": "12.3",
       "flags": [
        "Crystal1750"
+      ],
+      "material1": [
+       {
+        "material": "bios",
+        "qty": 30
+       },
+       {
+        "material": "bios",
+        "qty": 60
+       },
+       {
+        "material": "bios",
+        "qty": 120
+       },
+       {
+        "material": "bios",
+        "qty": 240
+       },
+       {
+        "material": "bios",
+        "qty": 480
+       }
+      ],
+      "material2": [
+       {
+        "material": "norn_universal",
+        "qty": 90
+       },
+       {
+        "material": "norn_universal",
+        "qty": 135
+       },
+       {
+        "material": "norn_universal",
+        "qty": 195
+       },
+       {
+        "material": "norn_universal",
+        "qty": 240
+       },
+       {
+        "material": "norn_universal",
+        "qty": 285
+       }
       ]
-     }
+     },
+     "op": [
+      "redguardian2",
+      "venom6",
+      "agentvenom3",
+      "storm5",
+      "apocalypse2"
+     ]
     }
    ]
   },
@@ -69830,7 +69988,7 @@
    "name": "General",
    "nameEn": "General",
    "source": "THANO$VIB$ General Tier List",
-   "author": "Gummy Steve 2129",
+   "author": "dupnyangee sully",
    "gameVersion": "12.2.5",
    "published": "2026-10-08",
    "description": "General character rankings",
@@ -70016,7 +70174,7 @@
    "name": "Soportes",
    "nameEn": "Supports",
    "source": "THANO$VIB$ Supports Tier List",
-   "author": "Gummy Steve 2129",
+   "author": "dupnyangee sully",
    "gameVersion": "12.2.5",
    "published": "2026-10-09",
    "description": "Support character rankings",
@@ -70769,7 +70927,7 @@
    "name": "Apes together strong",
    "nameEn": "Apes together strong",
    "source": "Apes together strong",
-   "author": "Gummy Steve 2129",
+   "author": "dupnyangee sully",
    "gameVersion": "12.1.5",
    "published": "2026-08-20",
    "description": "monki",

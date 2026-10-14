@@ -17,16 +17,16 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Género (infobox de la wiki) | 541 | 3 | — |
 | Raza (infobox de la wiki) | 535 | 13 | — |
 | Tipo de ataque (infobox de la wiki) | 531 | 21 | — |
-| Instinto (campo vs categoría de la wiki) | 78 | 4 | — |
-| Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
-| Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 119 páginas sin la pestaña |
+| Instinto (campo vs categoría de la wiki) | 79 | 4 | — |
+| Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 26 páginas sin la sección |
+| Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 120 páginas sin la pestaña |
 | Artefactos a 6★ (thanosvibs vs wiki) | 210 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
-Cobertura de la wiki: de 5911 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1223 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 307 sin pestaña de su uniforme y 32 de personajes sin infobox legible.
+Cobertura de la wiki: de 5917 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1223 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 308 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
 
-Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; todos clasificados.
+Catálogo de efectos (docs/CATALOGO.md): 229 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; 1 sin clasificar (sección 9).
 
-Liderazgos y soportes: el build deriva de las skills de la API el liderazgo de 467 variantes y 15 soportes que Leads & Supports no publica; 18 slots no se pudieron derivar (sección 12).
+Liderazgos y soportes: el build deriva de las skills de la API el liderazgo de 466 variantes y 12 soportes que Leads & Supports no publica; 17 slots no se pudieron derivar (sección 12).
 
 ## 1. Skills: daño y recarga
 
@@ -234,7 +234,7 @@ thanosvibs no publica el instinto: la app lo toma del infobox de la wiki. Acá, 
 
 ## 4. thanosvibs contra sí mismo
 
-- Retratos marcados Tier-4 sin Striker Skill en sus skills: 6: Red Skull (Captain America: The First Avenger); Red Skull (Hydra Armor); Red Skull (Secret Wars: Red Skull); Sister Grimm (All-New, All-Different); Sister Grimm (Runaways); Sister Grimm (Secret Wars: A-Force)
+- Retratos marcados Tier-4 sin Striker Skill en sus skills: 0.
 - Retratos con skill 6 (Tier-3 o Trascendido) sin Definitiva en sus skills: 1: Black Swan (Modern, Tier-3)
 - Textos de efecto con marcadores de plantilla sin resolver (`$HEROSUBTYPE`, `$HEROCLASS`, `$TIME`...): 18 patrones, usados por 226 retratos. La facción, el tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra "sin especificar" en vez de inventar el valor.
 
@@ -378,7 +378,9 @@ Para completar uno: en scripts/contenido/marcadores.csv, la columna `valor` de s
 
 Cada etiqueta de efecto de las skills y cada stat de Leads & Supports y de los bonos de equipo apunta a efectos del catálogo (scripts/contenido/catalogo.json; docs/CATALOGO.md lo muestra entero). Lo que thanosvibs o la wiki agreguen y el catálogo no tenga se lista acá hasta que se clasifique a mano; mientras tanto, la app lo cuenta para todos y lo dice.
 
-Ninguno: todo lo que traen los datos está clasificado.
+| Qué | Texto de la fuente | Ejemplos |
+|---|---|---|
+| Etiqueta | `Excluding bosses, ignores enemy's basic damage decrease` | adamwarlock2, beast3, beast4 |
 
 ## 10. Bonos de equipo: la wiki contra sí misma
 
@@ -386,7 +388,7 @@ thanosvibs no publica los bonos de equipo. La app los toma de la sección Team B
 
 1683 bonos: 938 de dos integrantes y 745 de tres; 3 del juego (MARVEL Future Fight — Team Bonus (dentro del juego, octubre de 2026)).
 
-Personajes sin la sección en su página (25): Absorbing Man, Annihilus, Athena, Black Knight, Black Swan, Cassandra Nova, Falcon (Joaquin Torres), Galactus, Havok, Hope Summers, Ikon, Kahhori, Leader, Madelyne Pryor, Man-Thing, Marvel Boy, Morph, Okoye, Omega Red, Silver Surfer (Shalla-Bal), Sleeper, Sunspot, Sylvie, The Hood, Valeria Richards. Sus bonos están solo si la página de otro integrante los lista.
+Personajes sin la sección en su página (26): Absorbing Man, Agatha Harkness, Annihilus, Athena, Black Knight, Black Swan, Cassandra Nova, Falcon (Joaquin Torres), Galactus, Havok, Hope Summers, Ikon, Kahhori, Leader, Madelyne Pryor, Man-Thing, Marvel Boy, Morph, Okoye, Omega Red, Silver Surfer (Shalla-Bal), Sleeper, Sunspot, Sylvie, The Hood, Valeria Richards. Sus bonos están solo si la página de otro integrante los lista.
 
 ### Del juego (3)
 
@@ -579,7 +581,7 @@ Esa página no cuenta para ese bono.
 
 thanosvibs no publica los strikers. La app los toma de la pestaña Striker de la página de cada personaje en la wiki (171 páginas la tienen, 7020 filas): quién puede aparecer a pegar junto a él y con qué probabilidad, cuando él ataca o cuando lo atacan (scripts/strikers.py).
 
-Personajes sin la pestaña en su página (119): Adam Warlock, Agent Venom, Angel, Annihilus, Ant-Man, Apocalypse, Arachknight, Athena, Beast, Bishop, Black Bolt, Black Knight, Black Swan, Black Widow, Captain America, Carnage, Cassandra Nova, Cassie Lang, Colossus, Cyclops, Destroyer, Doctor Doom, Doctor Octopus, Doctor Voodoo, Elektra, Emma Frost, Falcon (Joaquin Torres), Fantomex, Franklin Richards, Galactus, Gambit, Ghost Panther, Ghost Rider (Robbie Reyes), Giant-Man, Gorr, Green Goblin, Gwenpool, Hades (Pluto), Havok, Hercules, Hope Summers, Hulk, Iceman, Ikon, Iron Hammer, Ironheart, Jean Grey, Jeff the Land Shark, Jubilee, Juggernaut, Kahhori, Kang the Conqueror, Kid Omega, Kitty Pryde, Kraven The Hunter, Leader, Lizard, M'Baku, Madelyne Pryor, Magik, Magneto, Man-Thing, Mantis, Marvel Boy, Maximus, Moon Girl, Morgan le Fay, Morph, Ms. Marvel (Kamala Khan), Namor, Nightcrawler, Nova (Sam Alexander), Odin, Okoye, Omega Red, Polaris, Professor X, Psylocke, Punisher, Quicksilver, Rachel Summers, Rhino, Rogue, Sabretooth, Scarlet Spider, Scarlet Witch, Scorpion, Scream, Shadow Shell, She-Hulk, Shuri, Silver Samurai, Silver Surfer (Shalla-Bal), Skurge, Sleeper, Songbird, Spider-Man, Spider-Man (Miles Morales), Spot, Squirrel Girl, Storm, Sun Bird, Sunspot, Sylvie, The Hood, Thor (Jane Foster), Titania, Toxin, Valeria Richards, Valkyrie, Venom, Venus (Aphrodite), War Tiger, Wasp (Nadia Van Dyne), Weapon Hex, White Tiger, Wolverine, X-23, Zeus. En la app no tienen strikers propios; sí pueden ser strikers de otros.
+Personajes sin la pestaña en su página (120): Adam Warlock, Agatha Harkness, Agent Venom, Angel, Annihilus, Ant-Man, Apocalypse, Arachknight, Athena, Beast, Bishop, Black Bolt, Black Knight, Black Swan, Black Widow, Captain America, Carnage, Cassandra Nova, Cassie Lang, Colossus, Cyclops, Destroyer, Doctor Doom, Doctor Octopus, Doctor Voodoo, Elektra, Emma Frost, Falcon (Joaquin Torres), Fantomex, Franklin Richards, Galactus, Gambit, Ghost Panther, Ghost Rider (Robbie Reyes), Giant-Man, Gorr, Green Goblin, Gwenpool, Hades (Pluto), Havok, Hercules, Hope Summers, Hulk, Iceman, Ikon, Iron Hammer, Ironheart, Jean Grey, Jeff the Land Shark, Jubilee, Juggernaut, Kahhori, Kang the Conqueror, Kid Omega, Kitty Pryde, Kraven The Hunter, Leader, Lizard, M'Baku, Madelyne Pryor, Magik, Magneto, Man-Thing, Mantis, Marvel Boy, Maximus, Moon Girl, Morgan le Fay, Morph, Ms. Marvel (Kamala Khan), Namor, Nightcrawler, Nova (Sam Alexander), Odin, Okoye, Omega Red, Polaris, Professor X, Psylocke, Punisher, Quicksilver, Rachel Summers, Rhino, Rogue, Sabretooth, Scarlet Spider, Scarlet Witch, Scorpion, Scream, Shadow Shell, She-Hulk, Shuri, Silver Samurai, Silver Surfer (Shalla-Bal), Skurge, Sleeper, Songbird, Spider-Man, Spider-Man (Miles Morales), Spot, Squirrel Girl, Storm, Sun Bird, Sunspot, Sylvie, The Hood, Thor (Jane Foster), Titania, Toxin, Valeria Richards, Valkyrie, Venom, Venus (Aphrodite), War Tiger, Wasp (Nadia Van Dyne), Weapon Hex, White Tiger, Wolverine, X-23, Zeus. En la app no tienen strikers propios; sí pueden ser strikers de otros.
 
 ### Lo que no se pudo leer (2)
 
@@ -601,7 +603,7 @@ Leads & Supports de thanosvibs no publica el liderazgo de todas las variantes. L
 
 Los soportes (pasiva, pasiva de Tier-2 y pasiva de uniforme: lo que le dan a un grupo de aliados) siguen la misma regla desde el 10 de octubre de 2026 (Ezequiel), con la correspondencia que se aprende de los liderazgos y la de a mano. De cada una de esas skills va lo de sus etapas con objetivo de aliados (no las de «Self»), y un «Give Power» otorga lo de la etapa que lo sigue, por su tiempo (si la API no lo publica, es constante), a los aliados de una de las dos. Un slot de soporte se deriva solo si Leads & Supports no publica ninguno de esa skill.
 
-414 variantes tienen liderazgo de Leads & Supports y 477 no. El build deriva el liderazgo de 467 (485 slots) y 15 slots de soporte; 18 slots, de 18 variantes, no se pudieron derivar.
+415 variantes tienen liderazgo de Leads & Supports y 476 no. El build deriva el liderazgo de 466 (484 slots) y 12 slots de soporte; 17 slots, de 17 variantes, no se pudieron derivar.
 
 ### Correspondencia aprendida
 
@@ -609,7 +611,7 @@ De las variantes con liderazgo de Leads & Supports, efecto por efecto: lo que da
 
 | Efecto de la API | Leads & Supports | Variantes |
 |---|---|---|
-| «Increases all Basic Attacks by #%» (ALL BASIC ATTACKS INCREASE) | All Basic Attacks +n1 | 127 |
+| «Increases all Basic Attacks by #%» (ALL BASIC ATTACKS INCREASE) | All Basic Attacks +n1 | 128 |
 | «#% increase of Energy Attack.» (ENERGY ATTACK ↑) | Energy Attack +n1 | 71 |
 | «#% increase of Physical Attack.» (PHYSICAL ATTACK ↑) | Physical Attack +n1 | 57 |
 | «Ignores target's Dodge Rate by #%.» (IGNORE DODGE) | Ignore Dodge +n1 | 40 |
@@ -686,7 +688,7 @@ Requisitos que dice el juego: la API publica la skill del Tier más alto, y esto
 
 ### Verificación contra Leads & Supports
 
-Cada slot de liderazgo o de soporte de Leads & Supports contra el que la misma regla deriva de su skill, en stats, valores, duración, condición, restricción, activación y recarga (no en el nombre ni en «Notable»): de 685 slots, 481 iguales, 29 distintos, 164 que no se pueden derivar, 8 que la skill de la API no da aparte, 3 que Leads & Supports no publica.
+Cada slot de liderazgo o de soporte de Leads & Supports contra el que la misma regla deriva de su skill, en stats, valores, duración, condición, restricción, activación y recarga (no en el nombre ni en «Notable»): de 690 slots, 487 iguales, 29 distintos, 163 que no se pueden derivar, 8 que la skill de la API no da aparte, 3 que Leads & Supports no publica.
 
 Distintos (lo derivado / Leads & Supports):
 
@@ -718,6 +720,7 @@ No se pueden derivar:
 
 - Abomination (`abomination`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Chain Hit damage by 20% when attacking.» (CHAIN HIT DMG DEALT ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
 - Abomination — Infected Bioweapon (`abomination1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 60%.» (Increases basic damage based on character's faction).
+- Agatha Harkness (`agathaharkness`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease).
 - Agent Venom (`agentvenom2`, `agentvenom3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Chain Hit damage by 20% when attacking.» (CHAIN HIT DMG DEALT ↑).
 - Amadeus Cho — Heroic Age (`amadeuscho3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
 - Ancient One (`ancientone`, `ancientone1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 25%.» (ALL ELEMENT DAMAGE ↑).
@@ -758,11 +761,11 @@ No se pueden derivar:
 - Invisible Woman (`invisiblewoman4`, `invisiblewoman3`), `passive`: una activación sin correspondencia (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «when hit»; un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Barrier 1 time(s)» (BARRIER).
 - Invisible Woman — Marvel Studios' The Fantastic Four: First Steps (`invisiblewoman4`), `uniform`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
 - Invisible Woman — The Fall of the Fantastic Four (`invisiblewoman3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Immunity to all Debuffs.» (IMMUNE).
-- Jeff the Land Shark (`jeffthelandshark`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 10%.» (Excluding bosses, ignores enemy's damage decrease); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction).
+- Jeff the Land Shark (`jeffthelandshark`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's basic damage decrease by 10%.» (Excluding bosses, ignores enemy's basic damage decrease); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction).
 - Jessica Jones — Jewel (`jessicajones1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «100% chance to become immune to Mind Damage.» (MIND IMMUNITY).
 - Jessica Jones — Jewel (`jessicajones1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 95%.» (Decreases all basic damage).
 - Jubilee — Marvel Animation's X-Men '97 (`jubilee1`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 45%.» (Decreases basic damage based on character's faction).
-- Jubilee — Marvel Animation's X-Men '97 (`jubilee1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease).
+- Jubilee — Marvel Animation's X-Men '97 (`jubilee1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's basic damage decrease by 15%.» (Excluding bosses, ignores enemy's basic damage decrease).
 - Kahhori (`kahhori`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 206 effect by 50%» (Natural Enemy); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 407 effect by 50%» (Natural Enemy).
 - Kang the Conqueror (`kang`, `kang1`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
 - Kraven The Hunter — Interdimensional Hunter (`kraventhehunter1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 35%.» (Increases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 30%, increases Bonus Damage by 30%.» (SKILL AND BONUS DAMAGE ↑).
@@ -775,8 +778,6 @@ No se pueden derivar:
 - Medusa — Inhumans vs X-Men (`medusa2`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
 - Medusa — Ancient Curse (`medusa3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
 - Molecule Man (`moleculeman`), `leader2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Morgan le Fay — Fallen Soul (`morganlefay1`), `uniform`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
-- Morgan le Fay — Fallen Soul (`morganlefay1`), `uniform2`: otorga un efecto que la API no dice, por un tiempo que no publica («Give Power», $TIME).
 - Morph (`morph`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 types by 40%.» (INCREASES BASIC DAMAGE BASED ON CHARACTER'S GENDER).
 - Mystique (`mystique`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
 - Mystique — Hellfire Gala (`mystique1`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 45%.» (Increases basic damage based on character's faction).
@@ -798,7 +799,7 @@ No se pueden derivar:
 - Red Hulk — Marvel Studios' Captain America: Brave New World (`redhulk3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 25%.» (Increases basic damage based on character's faction).
 - Red She-Hulk (`redshehulk`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received by 10%.» (Decreases all basic damage).
 - Red Skull — The Crimson Fall (`redskull3`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 55%.» (Increases basic damage based on character's faction).
-- Rhino — Uncanny Spider-Man (`rhino1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 10%.» (Excluding bosses, ignores enemy's damage decrease).
+- Rhino — Uncanny Spider-Man (`rhino1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's basic damage decrease by 10%.» (Excluding bosses, ignores enemy's basic damage decrease).
 - Ronan — Annihilators (`ronan3`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
 - Satana — Ascended One (`satana2`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage to All element damage by 35%.» (ALL ELEMENT DAMAGE ↑).
 - Scarlet Spider (`scarletspider`), `t2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases Skill damage by 25%, increases Bonus Damage by 20%.» (SKILL AND BONUS DAMAGE ↑); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases basic damage dealt to $HEROSUBTYPE1 faction by 40%.» (Increases basic damage based on character's faction).
@@ -869,17 +870,16 @@ Solo en la skill de la API:
 - Electro — Spider-Man: No Way Home (`electro1`), `passive2`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 30%.» (Decreases basic damage based on character's faction).
 - Weapon Hex (`weaponhex`), `passive2`.
 
-### Sin derivar (18 slots en 18 variantes)
+### Sin derivar (17 slots en 17 variantes)
 
 Variantes sin liderazgo (o sin el soporte de una skill) de Leads & Supports con un slot que no se pudo derivar, con todos sus motivos. En docs/COMPLETITUD.md son los faltantes «Liderazgo sin completar» y «Soporte que Leads & Supports no publica».
 
-Por motivo (un slot puede tener más de uno): efecto sin stat, 18; objetivo sin nombre, 3; activación sin correspondencia, 3. Van juntas las variantes de un personaje con los mismos motivos.
+Por motivo (un slot puede tener más de uno): efecto sin stat, 15; objetivo sin nombre, 3; activación sin correspondencia, 3. Van juntas las variantes de un personaje con los mismos motivos.
 
-Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Barrier 1 time(s)» (BARRIER), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction), 2; «Paralyze» (PARALYZE), 2; «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease), 1; «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy), 1; «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy), 1.
+Efectos sin stat (no están en el catálogo o falta cargarlos a mano), con los slots que dejan sin derivar: «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED), 5; «Barrier 1 time(s)» (BARRIER), 3; «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL), 3; «Paralyze» (PARALYZE), 2; «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy), 1; «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy), 1.
 
 Activaciones sin correspondencia, con los slots que dejan sin derivar: «when hit», 3.
 
-- Agatha Harkness (`agathaharkness`), `passive`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.» (Decreases basic damage based on character's faction); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Excluding bosses, ignores enemy's damage decrease by 15%.» (Excluding bosses, ignores enemy's damage decrease).
 - Blade (`blade`, `blade1`, `blade2`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Recovers HP equal to 8% of damage dealt to a target<br>Cannot recover more than 0.5% HP each time damage is dealt.» (HP STEAL).
 - Blue Marvel — Classic (`bluemarvel1`), `uniform`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 206 effect by 30%» (Natural Enemy); un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Increases damage dealt to targets with 401 effect by 30%» (Natural Enemy).
 - Crescent (`crescent`, `crescent1`), `t2`: la API no dice a quiénes llega («Summoned Character»).
@@ -889,7 +889,7 @@ Activaciones sin correspondencia, con los slots que dejan sin derivar: «when hi
 - White Tiger (`whitetiger`, `whitetiger1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Bleed: Deals additional 10% Damage every 0.7 sec. (Removes Elasticity)» (BLEED).
 - Yellowjacket (`yellowjacket`, `yellowjacket1`), `leader`: un efecto sin stat (no se aprende de Leads & Supports ni está en scripts/contenido/liderazgos_api.json): «Paralyze» (PARALYZE).
 
-### Derivados (470 variantes)
+### Derivados (469 variantes)
 
 Van juntas las variantes de un personaje con lo mismo derivado.
 
@@ -1004,8 +1004,7 @@ Van juntas las variantes de un personaje con lo mismo derivado.
 - Moon Knight (`moonknight`, `moonknight1`, `moonknight4`, `moonknight3`, `moonknight2`): `leader` Debuff Duration −24%.
 - Moonstone (`moonstone`): `leader` Dodge +6%.
 - Mordo (`baronmordo1`, `baronmordo2`): `leader` Dodge +6%.
-- Morgan le Fay (`morganlefay`, `morganlefay1`): `leader` Debuff Duration −24%.
-- Morgan le Fay — Classic (`morganlefay2`): `leader` Debuff Duration −24%; `uniform` All Basic Attacks +40%, Basic Damage Dealt to Boss Types +50% — para Type: Universal, recarga 18 s; `uniform2` Remove All Debuffs (10 s) — para Type: Universal, When Debuffed, recarga 18 s.
+- Morgan le Fay (`morganlefay`, `morganlefay2`, `morganlefay1`): `leader` Debuff Duration −24%.
 - Morph (`morph`): `leader` Debuff Duration −24%.
 - Ms. Marvel (Kamala Khan) (`kamalakhan`, `kamalakhan2`, `kamalakhan1`, `kamalakhan5`, `kamalakhan3`, `kamalakhan4`): `leader` Physical Defense +45%.
 - Mysterio (`mysterio`, `mysterio1`, `mysterio2`): `leader` Skill Cooldown −24%.
@@ -1079,7 +1078,6 @@ Van juntas las variantes de un personaje con lo mismo derivado.
 - Weapon Hex (`weaponhex`, `weaponhex1`): `leader` Dodge +6%, Debuff Duration −24%.
 - Wenwu (`wenwu`): `passive` HP +25% — para Side: Supervillano.
 - Whiplash (`whiplash`): `leader` Skill Cooldown −24%.
-- Wiccan — Young Avengers (`wiccan1`): `leader` All Basic Attacks +24%; `t2` Remove All Debuffs (12 s) — para Ability: Magia, When Debuffed, recarga 20 s.
 - Winter Soldier — Marvel Studios' Thunderbolts* (`wintersoldier6`): `leader` Physical Attack +45%.
 - Wolverine (`wolverine`, `wolverine1`, `wolverine2`, `wolverine5`, `wolverine4`, `wolverine7`, `wolverine6`, `wolverine3`): `leader` Debuff Duration −30%.
 - Wong (`wong`, `wong1`): `leader` Physical Immunity Chance +100% (12 s) — 25% rate when hit, recarga 60 s.
@@ -1092,30 +1090,30 @@ Van juntas las variantes de un personaje con lo mismo derivado.
 
 Lo que fuentes/propio/ carga de las fuentes del juego (las notas de los foros oficiales) sobre lo de thanosvibs: la app usa lo propio. Cuando thanosvibs publica lo mismo, se compara: lo que coincide queda confirmado y lo que difiere se lista acá para revisarlo en el juego.
 
-### Distinto de thanosvibs (1)
+### Distinto de thanosvibs (10)
 
+- personaje agathaharkness: id: propio '9001', thanosvibs '294'; new: propio 'True', thanosvibs 'False'; stats: propio {}, thanosvibs {'recovery_rate': '1.00', 'fire_resist': '0.00', 'cold_resist': '0.00', 'lightning_resist': '0.00', 'poison_resist': '0.00', 'mind_resist': '0.00'}; striker_skill: propio None, thanosvibs 5
+- personaje wiccan1: new: propio 'True', thanosvibs 'False'; striker_skill: propio 5, thanosvibs 3
+- personaje morganlefay2: new: propio 'True', thanosvibs 'False'; original: propio 'Original', thanosvibs 'Comic'; stats: propio {}, thanosvibs {'recovery_rate': '1.20', 'fire_resist': '0.50', 'cold_resist': '0.50', 'lightning_resist': '0.50', 'poison_resist': '0.50', 'mind_resist': '0.50'}
+- skills de agathaharkness: Passive: fx: propio [(300, 'Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.', None), (433, "Excluding bosses, ignores enemy's damage decrease by 15%.", None)], thanosvibs [(300, 'Decreases basic damage received from $HEROSUBTYPE1 faction by 40%.', None), (433, "Excluding bosses, ignores enemy's basic damage decrease by 15%.", None)] | Active 3: fx: propio [(109, 'Energy Mind Damage: 80% of Energy Attack <br>Additional 162 Energy Mind Damage.', None), (18, 'Recovers 30% of HP.', 1), (209, 'Silence', 3), (231, 'Mind Control, increases basic damage received by 10%.', 3), (252, 'Increases all Basic Attacks and Defense by 50%, all speed by 1%, and Critical Rate by 25%, removes Incapacitation', 7), (331, 'Incapacitation (Removes Active Buffs from target)', 3)], thanosvibs [(109, 'Energy Mind Damage: 80% of Energy Attack <br>Additional 162 Energy Mind Damage.', None), (109, 'Energy Mind Damage: 85% of Energy Attack <br>Additional 81 Energy Mind Damage.', None), (18, 'Recovers 30% of HP.', 1), (209, 'Silence', 3), (231, 'Mind Control, increases basic damage received by 10%.', 3), (252, 'Increases all Basic Attacks and Defense by 50%, all speed by 1%, and Critical Rate by 25%, removes Incapacitation', 7), (331, 'Incapacitation (Removes Active Buffs from target)', 3)] | Active Ult: cooldown: propio None, thanosvibs 1; fx: propio [(109, 'Energy Mind Damage: 150% of Energy Attack <br>Additional 4 Energy Mind Damage.', None), (112, "Ignores target's Dodge Rate by 100%.", 8), (120, '80% chance to penetrate with Invincible, All Damage Immune, Shield, Barrier, Super Armor effect.', 8), (200, 'Stun', 3), (202, 'Invincible', 8), (204, 'Snare', 3), (231, 'Mind Control, increases basic damage received by 10%.', 3)], thanosvibs [(109, 'Energy Mind Damage: 150% of Energy Attack <br>Additional 43 Energy Mind Damage.', None), (109, 'Energy Mind Damage: 150% of Energy Attack <br>Additional 74 Energy Mind Damage.', None), (112, "Ignores target's Dodge Rate by 100%.", 8), (120, '80% chance to penetrate with Invincible, All Damage Immune, Shield, Barrier, Super Armor effect.', 8), (200, 'Stun', 3), (202, 'Invincible', 8), (204, 'Snare', 3), (231, 'Mind Control, increases basic damage received by 10%.', 3)] | Striker Skill: fx: propio [(462, 'Increases all Basic Attacks by 100%.', 7), (488, 'Recovers HP equal to 10% of Damage dealt.<br>Up to 10% of Max HP at once', 7)], thanosvibs [(462, 'Increases all Basic Attacks by 50%.', 7), (488, 'Recovers HP equal to 5% of Damage dealt.<br>Up to 5% of Max HP at once', 7)]
+- Striker Skill de morganlefay: fx: propio [(462, 'Increases all Basic Attacks by 40%.', 10), (487, 'Increases all Basic Attacks by 20% (Max 60%)', 10), (509, 'Acquires the following effect for 10 sec.', None)], thanosvibs [(462, 'Increases all Basic Attacks by 15%.', 10), (509, 'Acquires the following effect for 10 sec.', None)]
+- Striker Skill de morganlefay1: fx: propio [(462, 'Increases all Basic Attacks by 40%.', 10), (487, 'Increases all Basic Attacks by 20% (Max 60%)', 10), (509, 'Acquires the following effect for 10 sec.', None)], thanosvibs [(462, 'Increases all Basic Attacks by 15%.', 10), (509, 'Acquires the following effect for 10 sec.', None)]
+- skills de morganlefay2: Uniform Passive: cooldown: propio 18, thanosvibs 0; fx: propio [(206, 'Removes all Debuffs.', 10), (377, 'Increases basic damage dealt to boss types by 50%.', None), (9, 'Increases all Basic Attacks by 40%', None)], thanosvibs [(3251, 'Acquires the following effect for $TIME sec.', None), (377, 'Increases basic damage dealt to boss types by 50%.', None), (9, 'Increases all Basic Attacks by 40%', None)] | Active 2: fx: propio [(109, 'Energy Damage: 85% of Energy Attack <br>Additional 162 Energy Damage.', None), (200, 'Stun', 3), (204, 'Snare', 3)], thanosvibs [(109, 'Energy Damage: 70% of Energy Attack <br>Additional 147 Energy Damage.', None), (109, 'Energy Damage: 85% of Energy Attack <br>Additional 162 Energy Damage.', None), (200, 'Stun', 3), (204, 'Snare', 3)] | Active 3: fx: propio [(109, 'Energy Damage: 130% of Energy Attack <br>Additional 231 Energy Damage.', None), (200, 'Stun', 3), (309, 'Accumulates 10% of pure damage when attacking (Max 100%)', 7), (310, '1% Increase of All Basic Attacks each 1% of pure damage accumulated', 7)], thanosvibs [(109, 'Energy Damage: 130% of Energy Attack <br>Additional 231 Energy Damage.', None), (109, 'Energy Damage: 60% of Energy Attack <br>Additional 81 Energy Damage.', None), (200, 'Stun', 3), (309, 'Accumulates 10% of pure damage when attacking (Max 100%)', 7), (310, '1% Increase of All Basic Attacks each 1% of pure damage accumulated', 7)] | Active 5: fx: propio [(109, 'Energy Damage: 90% of Energy Attack <br>Additional 81 Energy Damage.', None), (18, 'Recovers 25% of HP.', 1), (201, 'Fear', 3), (209, 'Silence', 3), (284, 'Increases basic damage by 90% for 1 attack(s).', 6), (31060, 'Decreases all Basic Defenses by 5%. (Stacks up to 50%, ignores immunity)', 6)], thanosvibs [(109, 'Energy Damage: 90% of Energy Attack <br>Additional 81 Energy Damage.', None), (109, 'Energy Damage: 95% of Energy Attack <br>Additional 81 Energy Damage.', None), (18, 'Recovers 25% of HP.', 1), (201, 'Fear', 3), (209, 'Silence', 3), (284, 'Increases basic damage by 90% for 1 attack(s).', 6), (31060, 'Decreases all Basic Defenses by 5%. (Stacks up to 50%, ignores immunity)', 6)] | Striker Skill: fx: propio [(462, 'Increases all Basic Attacks by 40%.', 10), (487, 'Increases all Basic Attacks by 20% (Max 60%)', 10), (509, 'Acquires the following effect for 10 sec.', None)], thanosvibs [(462, 'Increases all Basic Attacks by 15%.', 10), (509, 'Acquires the following effect for 10 sec.', None)]
+- Striker Skill de wiccan: fx: propio [(462, 'Increases all Basic Attacks by 80%.', 7), (566, 'Increases basic damage dealt to enemies with 60% HP or lower by 50%.', 7)], thanosvibs [(462, 'Increases all Basic Attacks by 30%.', 7), (566, 'Increases basic damage dealt to enemies with 35% HP or lower by 25%.', 7)]
+- skills de wiccan1: Active 1: fx: propio [(108, 'Shock: Deals additional 20% Lightning Damage every 1 sec.', 3), (109, 'Energy Damage: 70% of Energy Attack <br>Additional 307 Energy Damage.', None), (200, 'Stun', 3), (209, 'Silence', 3)], thanosvibs [(108, 'Shock: Deals additional 20% Lightning Damage every 1 sec.', 3), (109, 'Energy Damage: 125% of Energy Attack <br>Additional 1531 Energy Damage.', None), (109, 'Energy Damage: 70% of Energy Attack <br>Additional 307 Energy Damage.', None), (200, 'Stun', 3), (209, 'Silence', 3)] | Active 2: fx: propio [(108, 'Shock: Deals additional 30% Lightning Damage every 1 sec.', 3), (109, 'Energy Damage: 115% of Energy Attack <br>Additional 1531 Energy Damage.', None), (200, 'Stun', 3)], thanosvibs [(108, 'Shock: Deals additional 30% Lightning Damage every 1 sec.', 3), (109, 'Energy Damage: 115% of Energy Attack <br>Additional 1531 Energy Damage.', None), (109, 'Energy Damage: 55% of Energy Attack <br>Additional 118 Energy Damage.', None), (200, 'Stun', 3)] | Active 3: fx: propio [(104, 'Burn: Deals additional 25% Flame Damage every 1 sec.', 3), (109, 'Energy Damage: 63% of Energy Attack <br>Additional 110 Energy Damage.', None), (215, 'Barrier 15 time(s)', 7), (331, 'Incapacitation (Removes Active Buffs from target)', 3), (531, 'Panic, increases basic damage received by 50%', 3)], thanosvibs [(104, 'Burn: Deals additional 25% Flame Damage every 1 sec.', 3), (109, 'Energy Damage: 63% of Energy Attack <br>Additional 110 Energy Damage.', None), (109, 'Energy Damage: 85% of Energy Attack <br>Additional 154 Energy Damage.', None), (215, 'Barrier 15 time(s)', 7), (331, 'Incapacitation (Removes Active Buffs from target)', 3), (531, 'Panic, increases basic damage received by 50%', 3)] | Active 4: fx: propio [(104, 'Burn: Deals additional 30% Flame Damage every 1 sec.', 3), (109, 'Energy Damage: 80% of Energy Attack <br>Additional 1531 Energy Damage.', None), (120, '70% chance to penetrate with Invincible, All Damage Immune, Shield, Barrier, Super Armor effect.', 6), (18, 'Recovers 25% of HP.', 1), (202, 'Invincible', 7), (209, 'Silence', 2), (309, 'Accumulates 10% of pure damage when attacking (Max 100%)', 6), (310, '1% Increase of All Basic Attacks each 1% of pure damage accumulated', 6), (331, 'Incapacitation (Removes Active Buffs from target)', 3)], thanosvibs [(104, 'Burn: Deals additional 30% Flame Damage every 1 sec.', 3), (109, 'Energy Damage: 60% of Energy Attack <br>Additional 86 Energy Damage.', None), (109, 'Energy Damage: 62% of Energy Attack <br>Additional 110 Energy Damage.', None), (109, 'Energy Damage: 80% of Energy Attack <br>Additional 1531 Energy Damage.', None), (120, '70% chance to penetrate with Invincible, All Damage Immune, Shield, Barrier, Super Armor effect.', 6), (18, 'Recovers 25% of HP.', 1), (202, 'Invincible', 7), (209, 'Silence', 2), (309, 'Accumulates 10% of pure damage when attacking (Max 100%)', 6), (310, '1% Increase of All Basic Attacks each 1% of pure damage accumulated', 6), (331, 'Incapacitation (Removes Active Buffs from target)', 3)] | Active 5: fx: propio [(108, 'Shock: Deals additional 30% Lightning Damage every 1 sec.', 3), (109, 'Energy Damage: 55% of Energy Attack <br>Additional 1531 Energy Damage.', None), (252, 'Increases all Basic Attacks and Defense by 45%, all speed by 10%, and Critical Rate by 10%, removes Incapacitation', 7), (258, '100% chance to grant All Damage Immunity', 7), (30264, 'Paralysis (Ignores immunity)', 2)], thanosvibs [(108, 'Shock: Deals additional 30% Lightning Damage every 1 sec.', 3), (109, 'Energy Damage: 55% of Energy Attack <br>Additional 1531 Energy Damage.', None), (109, 'Energy Damage: 80% of Energy Attack <br>Additional 86 Energy Damage.', None), (252, 'Increases all Basic Attacks and Defense by 45%, all speed by 10%, and Critical Rate by 10%, removes Incapacitation', 7), (258, '100% chance to grant All Damage Immunity', 7), (30264, 'Paralysis (Ignores immunity)', 2)] | Striker Skill: fx: propio [(462, 'Increases all Basic Attacks by 80%.', 7), (566, 'Increases basic damage dealt to enemies with 60% HP or lower by 50%.', 7)], thanosvibs [(462, 'Increases all Basic Attacks by 30%.', 7), (566, 'Increases basic damage dealt to enemies with 35% HP or lower by 25%.', 7)]
 - artefacto morganlefay: text: propio ['Applies to: Universal Type Allies', '• Increases Basic Damage Dealt to SUPER VILLAIN faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)', '• Increases Basic Damage Dealt to SUPER HERO faction by [P3]%, and an additional [P4]% of total Instinct. (Up to 200%)'], thanosvibs ['Applies to: Self', '• Increases Basic Damage Dealt to enemies with 50% HP or below by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)']; values: propio {'6': ['15', '0.5', '15', '0.5']}, thanosvibs {'3': ['10', '0.3'], '4': ['15', '0.4'], '5': ['20', '0.5'], '6': ['25', '0.6']}
 
-### Sin thanosvibs todavía (14)
+### Sin thanosvibs todavía (5)
 
-- personaje agathaharkness (thanosvibs no lo publica)
-- personaje wiccan1 (thanosvibs no lo publica)
-- personaje morganlefay2 (thanosvibs no lo publica)
-- cambio en wiccan: tier-4 'False' → 'True', new 'False' → 'True'
-- cambio en morganlefay: tier-4 'False' → 'True', new 'False' → 'True'
-- cambio en morganlefay1: tier-4 'False' → 'True', new 'False' → 'True'
-- skills de agathaharkness (thanosvibs no las publica)
-- Striker Skill de morganlefay (thanosvibs no lo publica)
-- Striker Skill de morganlefay1 (thanosvibs no lo publica)
-- skills de morganlefay2 (thanosvibs no las publica)
-- Striker Skill de wiccan (thanosvibs no lo publica)
-- skills de wiccan1 (thanosvibs no las publica)
+- cambio en wiccan: new 'False' → 'True'
+- cambio en morganlefay: new 'False' → 'True'
+- cambio en morganlefay1: new 'False' → 'True'
 - artefacto agathaharkness (thanosvibs no lo publica)
 - C.T.P. Ascent (thanosvibs no lo publica)
 
-### Confirmado por thanosvibs (0)
+### Confirmado por thanosvibs (1)
 
-Nada.
+- instinto de Agatha Harkness
 
 ### Lo que las fuentes no dicen (29)
 
