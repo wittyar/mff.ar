@@ -1,6 +1,6 @@
 """Contenido propio (fuentes/propio/, scripts/propio.py; Ezequiel, 13 de octubre de 2026): lo que se carga de las notas del
 juego antes de que thanosvibs lo publique. Agatha Harkness (personaje nuevo), los uniformes Wiccan — Young Avengers y
-Morgan Le Fay — Classic, sus Tier-4 y el artefacto de Morgan cambiado: en el roster, en la ficha (retrato propio, marca
+Morgan Le Fay — Classic, sus Tier-4 y el artefacto de Morgan cambiado: en el roster, en la ficha (retrato de thanosvibs, marca
 «propio», skills con su marca, el artefacto sin puntaje) y en la comparativa por potenciador. Lo que se espera sale de
 fuentes/propio/, no de app.js."""
 import json, os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, SALIDA  # noqa: E401
@@ -21,13 +21,13 @@ try:
         pg.on('pageerror', lambda e: errores.append(str(e)))
         pg.goto(url); pg.wait_for_selector('.ccard')
 
-        # 1. Agatha en el roster, con su retrato propio
+        # 1. Agatha en el roster, con el retrato de thanosvibs (fondo transparente; Ezequiel, 16 de octubre de 2026)
         ag = por_nombre.get('Agatha Harkness')
         ok('1 Agatha Harkness está en los datos', ag is not None and ag['p'] == 'agathaharkness')
         pg.fill('#q', 'Agatha'); pg.wait_for_timeout(300)
         carta = pg.locator(f'.ccard[data-cid="{ag["id"]}"][data-uid=""]')
         src = carta.locator('img').first.get_attribute('src') if carta.locator('img').count() else ''
-        ok('1 en el roster, con el retrato de fuentes/propio', carta.count() == 1 and 'images/propio/agathaharkness.png' in (src or ''), src)
+        ok('1 en el roster, con el retrato de thanosvibs', carta.count() == 1 and (src or '').endswith('images/agathaharkness.png'), src)
         nat = pg.evaluate("(s) => new Promise(r => { const i = new Image(); i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); i.src = s; })", src)
         ok('1 el retrato carga', nat == 256, nat)
 
