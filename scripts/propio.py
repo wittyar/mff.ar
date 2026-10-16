@@ -9,7 +9,8 @@ todavía no publica o publica distinto, en sus mismas formas:
   skills/<p>.json   las skills de un retrato como /api/skills: las de otro retrato (desde, el de thanosvibs) con los slots
                     que el juego cambia o agrega encima (slots).
   artefactos.json   filas de /api/artifacts.      ctps.json   filas de /api/ctps.
-  retratos/<p>.png  el retrato, de la ficha de la nota.
+  retratos/<p>.png  el retrato, de la ficha de la nota, solo mientras thanosvibs no publica el suyo: el de thanosvibs
+                    tiene el fondo transparente de los demás, el de la ficha es blanco (Ezequiel, 16 de octubre de 2026).
 
 Lo propio manda: este script lo pone en work/ antes del build (build.py lo corre primero), guardando en cada dato que
 reemplaza el de thanosvibs (_propio.tv, o null si thanosvibs no lo tenía), y al empezar deshace lo de la vez anterior: se
