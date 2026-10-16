@@ -11416,7 +11416,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T4",
@@ -15156,7 +15156,7 @@
     "Control",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T4",
@@ -17754,7 +17754,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T4",
@@ -19759,7 +19759,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -33206,7 +33206,7 @@
     "Control",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Alienígena",
    "gender": "Femenino",
    "t": "T3",
@@ -39847,7 +39847,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Orden",
    "race": "Inhumano",
    "gender": "Masculino",
    "t": "T3",
@@ -40958,7 +40958,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Crueldad",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T4",
@@ -45238,7 +45238,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -45475,7 +45475,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Crueldad",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -48656,7 +48656,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -54264,7 +54264,7 @@
     "Control",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Destrucción",
    "race": "Mutante",
    "gender": "Masculino",
    "t": "T4",
@@ -56914,7 +56914,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T4",
@@ -57349,7 +57349,7 @@
    "r": [
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T4",
@@ -61011,7 +61011,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -61779,7 +61779,7 @@
     "Control",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -62411,7 +62411,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Orden",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T4",
@@ -68731,7 +68731,7 @@
     "Soporte",
     "Daño"
    ],
-   "ins": "Orden",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Femenino",
    "t": "T3",
@@ -69042,7 +69042,7 @@
     "Control",
     "Daño"
    ],
-   "ins": "Orden",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -69499,7 +69499,7 @@
     "Tanque",
     "Daño"
    ],
-   "ins": "Desconocido",
+   "ins": "Justicia",
    "race": "Humano",
    "gender": "Masculino",
    "t": "T3",
@@ -70185,7 +70185,7 @@
     "PvE"
    ],
    "rating": 4.8,
-   "ratings": 12,
+   "ratings": 13,
    "rows": [
     {
      "id": "tier-s",
@@ -70221,10 +70221,10 @@
    "nameEn": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
    "source": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
    "author": "KnightSeeks",
-   "gameVersion": "12.2.5",
-   "published": "2026-10-10",
+   "gameVersion": "12.3",
+   "published": "2026-10-16",
    "description": "Special Thanks to Gummy Steve 2129!\n\nThis list is integrated tier list like the old THANO$VIB$ Tier list that includes not only general characters but also supports into a single tier list.\n\nI've also integrated the PVP and PVE supports into the list from the Gummy Steve's Support List.",
-   "notes": "According to Gummy Steve 2129, Sister Grimm Meta, Red Skull Tier 4/B, Invisible Woman demoted to Tier 4/A",
+   "notes": "Added Agatha Harkness and new uniforms of Wiccan and Morgan Le Fay to landing.",
    "tags": [
     "General",
     "PvE",
@@ -70232,7 +70232,7 @@
     "Other"
    ],
    "rating": 4.7,
-   "ratings": 18,
+   "ratings": 19,
    "rows": [
     {
      "id": "tier-s",
@@ -70373,8 +70373,8 @@
     "Other",
     "General"
    ],
-   "rating": 3.7,
-   "ratings": 3,
+   "rating": 3,
+   "ratings": 4,
    "rows": [
     {
      "id": "tier-s",
@@ -70418,7 +70418,7 @@
     "General"
    ],
    "rating": 1,
-   "ratings": 2,
+   "ratings": 3,
    "rows": [
     {
      "id": "tier-s",
@@ -80213,6 +80213,12 @@
    ],
    "singularity::base": [
     "tier-1788337320904"
+   ],
+   "wiccan::wiccan-10100084": [
+    "tier-1789112904075"
+   ],
+   "morgan-le-fay::morgan-le-fay-10200177": [
+    "tier-1789112904075"
    ]
   },
   "tv-proj-1789070562693-y3vb7": {

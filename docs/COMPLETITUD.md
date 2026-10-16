@@ -10,7 +10,7 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 | Pieza | Qué se pide | Por qué es esperable que esté |
 |---|---|---|
-| Identidad | Clase, bando, género, raza, habilidades, habilidad de World Boss, instinto y tipo de ataque. | thanosvibs los publica para todos [Comprobado], salvo el instinto, que la app toma del infobox de la wiki: que todos tengan uno en el juego es [Probable]. El tipo de ataque se deduce del daño de las activas. |
+| Identidad | Clase, bando, género, raza, habilidades, habilidad de World Boss, instinto y tipo de ataque. | thanosvibs los publica para todos [Comprobado]; el instinto, con lo visto en el juego encima. El tipo de ataque se deduce del daño de las activas. |
 | Stats | Recuperación y las cinco resistencias elementales. | Son los stats que thanosvibs publica [Comprobado]; la ficha muestra los del personaje en todas sus variantes. |
 | Skills | Liderazgo, pasiva, pasiva de Tier-2 y las cinco activas; la Definitiva con Tier-3 o Trascendido; la Striker con Tier-4; la pasiva de uniforme en cada uniforme. Cada skill con efectos tipados, sin marcadores sin resolver ($HEROSUBTYPE1, $TIME sin duración), sin códigos en lugar de nombres, sin objetivos sin nombre, sin «Give Power» vacíos y, las activas, con su recarga. | Son las skills de toda variante en el juego [Comprobado]: los 598 uniformes de los datos traen su pasiva de uniforme. El análisis, los roles y la sinergia leen sus efectos. |
 | Liderazgo y soportes | Su liderazgo, el de Leads & Supports o, si no lo publica, el que el build deriva de su Leader Skill; los soportes que sus pasivas le dan al equipo, en Leads & Supports, con el nombre de la skill de la que salen. | La sinergia y los órdenes PvP y PvE solo ven lo que publica Leads & Supports y los liderazgos que el build deriva de la Leader Skill de la API [Comprobado] (Ezequiel, 4 de octubre de 2026; docs/AUDITORIA.md, sección 12). |
@@ -27,7 +27,7 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 ## Resumen
 
-240 de 891 variantes completas (27%); 52 de 291 personajes con todas sus variantes completas.
+261 de 891 variantes completas (29%); 56 de 291 personajes con todas sus variantes completas.
 
 Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo que falta en el personaje cuenta en todas sus variantes):
 
@@ -37,7 +37,6 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [Rotación](#rotación) | 192 | 112 | 192 | thanosvibs (rotaciones), la guía de armado o foros |
 | [Fila vacía en la guía de armado](#fila-vacía-en-la-guía-de-armado) | 74 | 33 | 33 | la guía de armado o foros |
 | [«Give Power» sin lo que otorga](#give-power-sin-lo-que-otorga) | 68 | 27 | 78 | thanosvibs (Leads & Supports), la wiki o foros |
-| [Instinto desconocido](#instinto-desconocido) | 50 | 15 | 15 | la wiki (infobox o categoría de la página), el juego o foros |
 | [Skill sin efectos](#skill-sin-efectos) | 48 | 31 | 48 | la wiki (en la pasiva de uniforme, el «Bonus» del uniforme) o foros |
 | [Bonos de equipo que faltan](#bonos-de-equipo-que-faltan) | 34 | 33 | 33 | la wiki (sección Team Bonus), capturas del juego o foros |
 | [Facción, tipo, raza o habilidad sin resolver ($HEROSUBTYPE1)](#facción-tipo-raza-o-habilidad-sin-resolver-herosubtype1) | 31 | 18 | 42 | el juego o foros, y a mano en scripts/contenido/marcadores.csv |
@@ -79,28 +78,6 @@ Sin casos: Dato de identidad vacío; Duración sin publicar ($TIME); Código en 
 ## Por tipo de faltante
 
 Las variantes de un personaje con el mismo faltante van en una fila.
-
-### Instinto desconocido
-
-15 casos en 15 personajes. thanosvibs no publica el instinto y la app lo toma del infobox de la wiki, que no lo da para estos personajes. Que todos tengan uno en el juego es [Probable].
-
-| Personaje | Qué falta | De dónde podría salir |
-|---|---|---|
-| Aero (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Agent 13 (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Black Knight | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Blue Marvel (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Captain Marvel (sus 8 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Daredevil (sus 5 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Falcon (sus 7 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Gorgon | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Human Torch (sus 5 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Invisible Woman (sus 5 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Mysterio (sus 3 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Stryfe (sus 3 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Supergiant (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Vulture (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
-| Wave (sus 2 variantes) | la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da | la wiki (infobox o categoría de la página), el juego o foros |
 
 ### Stats
 
@@ -775,12 +752,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Aero: 1 faltante, 2 de 2 variantes incompletas</summary>
-
-- **Personaje:** instinto
-
-</details>
-
 <details><summary>Agatha Harkness: 9 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** stats; valores del artefacto; strikers; bonos de equipo; Ideal CTP List; fila vacía en la guía de armado; tier list General
@@ -788,9 +759,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Agent 13: 3 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Agent 13: 2 faltantes, 2 de 2 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Base:** rotación
 - **Marvel Studios' Captain America: Civil War:** rotación
 
@@ -897,9 +867,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Black Knight: 4 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Black Knight: 3 faltantes, 1 de 1 variante incompleta</summary>
 
-- **Personaje:** instinto; strikers; bonos de equipo; fila vacía en la guía de armado
+- **Personaje:** strikers; bonos de equipo; fila vacía en la guía de armado
 
 </details>
 
@@ -937,9 +907,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Blue Marvel: 2 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Blue Marvel: 1 faltante, 1 de 2 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Classic:** soporte sin Leads & Supports: Pasiva de uniforme
 
 </details>
@@ -979,9 +948,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Captain Marvel: 6 faltantes, 8 de 8 variantes incompletas</summary>
+<details><summary>Captain Marvel: 5 faltantes, 4 de 8 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Secret Wars: Captain Marvel & The Carol Corps:** skill sin efectos: Pasiva de uniforme
 - **Ms. Marvel:** skill sin efectos: Pasiva de uniforme
 - **Marvel Studios' Captain Marvel:** skill sin efectos: Pasiva de uniforme
@@ -1033,12 +1001,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 <details><summary>Daisy Johnson: 1 faltante, 1 de 3 variantes incompletas</summary>
 
 - **Marvel Studios' Agents of S.H.I.E.L.D. (Quake):** skill sin efectos: Pasiva de uniforme
-
-</details>
-
-<details><summary>Daredevil: 1 faltante, 5 de 5 variantes incompletas</summary>
-
-- **Personaje:** instinto
 
 </details>
 
@@ -1161,9 +1123,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Falcon: 5 faltantes, 7 de 7 variantes incompletas</summary>
+<details><summary>Falcon: 4 faltantes, 7 de 7 variantes incompletas</summary>
 
-- **Personaje:** instinto; fila vacía en la guía de armado
+- **Personaje:** fila vacía en la guía de armado
 - **Base:** rotación
 - **All-New Captain America:** rotación
 - **Marvel Studios' Captain America: Civil War:** rotación
@@ -1258,9 +1220,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Gorgon: 3 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Gorgon: 2 faltantes, 1 de 1 variante incompleta</summary>
 
-- **Personaje:** instinto
 - **Base:** marcador sin resolver: Activa 3; rotación
 
 </details>
@@ -1389,9 +1350,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Human Torch: 7 faltantes, 5 de 5 variantes incompletas</summary>
+<details><summary>Human Torch: 6 faltantes, 5 de 5 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Base:** «Give Power» vacío: Striker
 - **Future Foundation:** «Give Power» vacío: Striker
 - **Classic:** «Give Power» vacío: Striker
@@ -1424,9 +1384,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Invisible Woman: 9 faltantes, 5 de 5 variantes incompletas</summary>
+<details><summary>Invisible Woman: 8 faltantes, 5 de 5 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Base:** soporte sin Leads & Supports: Pasiva
 - **Future Foundation:** soporte sin Leads & Supports: Pasiva
 - **Classic:** soporte sin Leads & Supports: Pasiva
@@ -1755,9 +1714,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Mysterio: 2 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Mysterio: 1 faltante, 1 de 3 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Summer Mystery:** «Give Power» vacío: Pasiva T2
 
 </details>
@@ -2166,9 +2124,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Stryfe: 3 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Stryfe: 2 faltantes, 1 de 3 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **The Tyrant of Spring:** «Give Power» vacío: Pasiva de uniforme; rotación
 
 </details>
@@ -2183,12 +2140,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 <details><summary>Sunspot: 3 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** valores del artefacto; strikers; bonos de equipo
-
-</details>
-
-<details><summary>Supergiant: 1 faltante, 2 de 2 variantes incompletas</summary>
-
-- **Personaje:** instinto
 
 </details>
 
@@ -2330,12 +2281,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Vulture: 1 faltante, 2 de 2 variantes incompletas</summary>
-
-- **Personaje:** instinto
-
-</details>
-
 <details><summary>War Machine: 8 faltantes, 5 de 9 variantes incompletas</summary>
 
 - **Base:** rotación
@@ -2364,9 +2309,8 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Wave: 2 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Wave: 1 faltante, 1 de 2 variantes incompletas</summary>
 
-- **Personaje:** instinto
 - **Base:** objetivo sin nombre: Liderazgo
 
 </details>
