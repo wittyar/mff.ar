@@ -1,0 +1,10 @@
+capturas,uniforme,estrellas,maestria,nivel,nivel_max,tier,potencial,ataque_energia,defensa_fisica,defensa_energia,vida
+6;7,Moderno,1,0,1,40,1,0,22,13,15,95
+8,Moderno,2,0,1,40,1,0,28,17,20,118
+9,Moderno,3,0,1,45,1,0,33,20,24,141
+10,Moderno,4,0,1,50,1,0,41,22,27,167
+11,Moderno,5,0,1,55,1,0,49,26,31,193
+12,Moderno,6,0,1,60,1,0,56,29,34,219
+13,Moderno,6,6,60,60,2,0,7559,3824,4898,16648
+14,Moderno,6,6,70,70,3,6,12855,8871,11053,33935
+15,Moderno,6,6,80,80,4,12,19532,13694,16935,50429
