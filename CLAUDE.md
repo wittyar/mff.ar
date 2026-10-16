@@ -13,16 +13,18 @@ variante, en `docs/COMPLETITUD.md`.
 - Código: una sola ruta (sin caminos alternativos ni capas de compatibilidad), nada silencioso
   (nada se degrada ni cambia sin error o aviso), simple antes que defensivo, commits atómicos (una
   intención por commit; el que cambia una firma lleva sus llamadas), la causa y no el síntoma.
-- Entregas: el push desde el contenedor de Claude está bloqueado por el proxy, y no se esquiva. Se
-  commitea en un clon y se entrega un `git bundle` (`origin/main..main`, después de `git fetch`) con
-  un nombre nuevo cada vez (fecha y hora UTC) en la carpeta del repo, con el comando de pull. El push
-  y las etiquetas los hace Ezequiel. No se reescribe historia ya entregada. En su carpeta, solo git
+- Entregas: el push desde el contenedor de Claude está bloqueado (el proxy no le da credencial porque el repo no
+  está entre los autorizados de la sesión), y no se esquiva. Se commitea en un clon y se entrega un `git bundle`
+  (`origin/main..main`, después de `git fetch`) en la carpeta del repo, con un nombre nuevo cada vez:
+  `mff-AAAAMMDD-HHMM-<tema>-<versión>.bundle` (fecha y hora UTC). Cada entrega lleva versión, para no perder el
+  rastro (Ezequiel, 16 de octubre de 2026): el último commit del bundle es el de la versión. El push y las
+  etiquetas los hace Ezequiel. No se reescribe historia ya entregada. En su carpeta, solo git
   de lectura. Los pasos de cada entrega van con esta sintaxis (Ezequiel, 10 de octubre de 2026), en PowerShell:
   «1. Código» (`cd C:\Users\ezequ\dev\MFF.ar`, `git pull --ff-only`, `git pull --ff-only .\<bundle> main`, `git push`);
   «2. Build de datos» (Actions → «Actualizar datos MFF» → Run workflow sobre main, o `gh workflow run actualizar.yml` y
   `gh run watch`; termina con un commit «Datos actualizados» nuevo en main); «3. Etiqueta», cuando termina bien
-  (`git pull --ff-only`, `git tag vX.Y.Z`, `git push origin vX.Y.Z`). Sin versión nueva, sin el paso 3; sin formato
-  nuevo, la etiqueta va sobre el commit de la versión y no espera al de datos.
+  (`git pull --ff-only`, `git tag vX.Y.Z <commit>`, `git push origin vX.Y.Z`, con el commit explícito). Los tres
+  pasos van siempre. Sin formato nuevo, la etiqueta va sobre el commit de la versión y no espera al de datos.
 - Versiones: `version.json` (versión, notas para el usuario, formato de datos). El formato sube
   cuando la app nueva necesita algo que los datos viejos no traen (`FORMATO` en `scripts/build.py`,
   con la historia de cada uno). Los datos publicados salen de main. Con un formato nuevo, primero va el
@@ -59,6 +61,11 @@ Ezequiel sacó capturas de todo el juego en dos idiomas (álbumes de Google Foto
 - Coreano (386): https://photos.app.goo.gl/iuuBUAvSZc3qHzx96 — transcriptas en `fuentes/juego-ko/`.
 - Progresión de Galactus (84, del nivel 1 con 1★ al 80 con T4): https://photos.app.goo.gl/Q5hQWtXeubx9k85EA —
   transcriptas en `fuentes/progresion/galactus.csv` (#8). La de Mephisto, en `fuentes/progresion/mephisto.csv`.
+Desde el 14 de octubre de 2026 Claude también captura el juego en LDPlayer con el control de pantalla (desde el 16, los
+clics llegan: maneja él y Ezequiel no toca el juego mientras tanto). «Universo Marvel» del juego muestra a todos los
+personajes con rango, nivel, maestría, categoría y potencial elegibles, y sus pegadores. Cómo se hace, lo capturado y lo
+pendiente, en el doc del proyecto de Claude «claude/mff-captura-ldplayer.md»; las imágenes de cada tanda, en
+`capturas-ldplayer-AAAAMMDD.zip` de la carpeta de Ezequiel.
 **Índice:** `fuentes/capturas/INDICE.md` (e `indice.json`) dice qué muestra cada captura de los tres álbumes y de las
 380 en inglés del 4 de octubre (que no quedaron guardadas como imagen), y dónde está su transcripción; las transcripciones
 literales captura por captura del álbum coreano y de las de inglés, en `fuentes/capturas/crudo/`. Leer el índice antes de
