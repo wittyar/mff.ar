@@ -1,6 +1,6 @@
 {
- "version": "1.0.44",
+ "version": "1.0.45",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Agatha Harkness, Wiccan (Young Avengers) y Morgan le Fay (Classic) tienen el mismo retrato que el resto del roster, con fondo transparente: antes se veían con fondo blanco."
+ "notas": "El instinto de cada personaje sale ahora de la misma fuente que el resto de sus datos, verificado en el juego: los 15 que no lo mostraban ya lo tienen (Aero, Agent 13, Black Knight, Blue Marvel, Captain Marvel, Daredevil, Falcon, Gorgon, Human Torch, Invisible Woman, Mysterio, Stryfe, Supergiant, Vulture y Wave), Destroyer pasa a Destrucción y Agent Venom, Kahhori, Quasar (Wendell Vaughn) y Shadow Shell a Justicia, como en el juego."
 }
