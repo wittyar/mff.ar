@@ -4,8 +4,8 @@
  "generado": "2026-10-16",
  "archivos": {
   "data.js": {
-   "sha256": "ba4cbeb73a2c795a887a3a657ad6f86061f29e07fd457853f70f677c88ab1b43",
-   "bytes": 6654471
+   "sha256": "28fcc5516043960cdb1386fd432b2daf248bac486e9d5de993874bd585ff779f",
+   "bytes": 6654450
   },
   "docs/AUDITORIA.md": {
    "sha256": "8861ba150157dddcf6b838c08105d9af0ecc34bec26b0cd0bf75c3e3921a7f8c",
@@ -48,6 +48,10 @@
   [
    "images/aero1.png",
    "https://thanosvibs.money/images/portraits/aero1.png"
+  ],
+  [
+   "images/agathaharkness.png",
+   "https://thanosvibs.money/images/portraits/agathaharkness.png"
   ],
   [
    "images/agentvenom.png",
@@ -3502,6 +3506,10 @@
    "https://thanosvibs.money/images/portraits/morganlefay1.png"
   ],
   [
+   "images/morganlefay2.png",
+   "https://thanosvibs.money/images/portraits/morganlefay2.png"
+  ],
+  [
    "images/morph.png",
    "https://thanosvibs.money/images/portraits/morph.png"
   ],
@@ -3664,18 +3672,6 @@
   [
    "images/professorx2.png",
    "https://thanosvibs.money/images/portraits/professorx2.png"
-  ],
-  [
-   "images/propio/agathaharkness.png",
-   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/agathaharkness.png"
-  ],
-  [
-   "images/propio/morganlefay2.png",
-   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/morganlefay2.png"
-  ],
-  [
-   "images/propio/wiccan1.png",
-   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/wiccan1.png"
   ],
   [
    "images/proximamidnight.png",
@@ -4820,6 +4816,10 @@
   [
    "images/wiccan.png",
    "https://thanosvibs.money/images/portraits/wiccan.png"
+  ],
+  [
+   "images/wiccan1.png",
+   "https://thanosvibs.money/images/portraits/wiccan1.png"
   ],
   [
    "images/wintersoldier.png",
