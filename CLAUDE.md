@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (13 de octubre de 2026)
+## Estado (16 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -178,12 +178,18 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   `verif_ctp_abx.py`). Las combinaciones de la ficha siguen con sus C.T.P. en la ventana «Por qué y C.T.P.» (decisión del
   4 de octubre). El tercer punto de #25 (las casillas de las combinaciones) queda para #34 (Ezequiel). Fallan desde antes
   de esto, por los datos: `verif_mesa` (la cuenta de la lista), `verif_porque` 4a (el líder del caso) y `verif_contexto`.
-- La 1.0.42 (sin cambio de formato; la etiqueta va sobre el commit de versión), 14 de octubre: el anti-mermas del efecto
+- La 1.0.42 (sin cambio de formato; etiqueta en b1d069f), 14 de octubre: el anti-mermas del efecto
   de uniforme de Morgan le Fay. Fallen Soul: la API publica «Give Power» sin la etapa que se activa; va lo del juego
   (`skills_juego.json`, fuente `foro-1770940`). Classic: la recarga es solo de la parte que se activa
   (`liderazgos.partes_soporte`). «Qué hace» (`cuandoAn`): lo que se activa dice cuándo y su recarga, no «Siempre activo».
   Prueba: `verif_anti_mermas_morgan.py`. Pendiente: otras skills de la API que terminan en «Give Power» (unas 115 en
   `work/skills_api`, la mayoría con el efecto en la misma etapa) pueden tener el mismo hueco; sin revisar contra el juego.
+- La 1.0.43 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 16 de octubre, #8: la progresión de
+  Agatha Harkness (`fuentes/progresion/agatha.csv`: nivel 1 de 1★ a 6★ en categoría 1 y el máximo de las categorías 2
+  a 4), de «Universo Marvel» con LDPlayer. El build no la lee: sin cambio visible en la app. Las habilidades de pegador:
+  thanosvibs publica el Nv. 1 y las fichas del foro el Nv. 6 (Wiccan Nv. 6 en el juego da lo de la ficha; Agatha y Morgan
+  sin pegador, lo de thanosvibs) [Probable]; Ezequiel: se usan las habilidades de mayor nivel, como lo propio. Stats de
+  nivel 1 que faltan (wiki y capturas): 109 personajes, en `poder-faltan-stats-base-20261016.csv` de su carpeta.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,

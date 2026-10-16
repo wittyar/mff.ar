@@ -1,6 +1,6 @@
 {
- "version": "1.0.42",
+ "version": "1.0.43",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Morgan le Fay: el efecto de uniforme de sus dos uniformes (Fallen Soul y Classic) incluye su anti-mermas, como en el juego: al estar mermado, elimina todas las mermas de los aliados Universales (dura 10 s, recarga 18 s). En Fallen Soul la fuente pública lo omitía y ahora va lo del juego; en Classic la recarga de 18 s se mostraba en los ataques permanentes. Y «Qué hace» ya no dice «Siempre activo» de una pasiva que se activa: dice cuándo se activa y su recarga."
+ "notas": "Sin cambios en el programa ni en los datos que usa: se suma, como fuente, la progresión de stats de Agatha Harkness tomada del juego (nivel 1 de 1★ a 6★ y el máximo de cada categoría), para la evaluación de poder que todavía no está en la app."
 }
