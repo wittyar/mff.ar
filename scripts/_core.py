@@ -1,6 +1,5 @@
 import collections, glob, json, os, re, unicodedata
 d = json.load(open('work/characters.json'))
-inst = json.load(open('work/instintos.json'))
 SK = json.load(open('work/skills_parsed.json'))       # skills por retrato + tablas de texto
 UNI = json.load(open('work/uniforms.json'))           # costos y materiales por uniforme
 # La versión del juego en que salió cada uniforme, de /api/updates (added_in, por retrato). /api/uniforms la trae en update,
@@ -64,7 +63,7 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
     cid = slug(base['character'])
     if cid in seen: cid = f"{cid}-{numid}"
     seen.add(cid)
-    ins = INSTINCT.get(inst.get(base['character'], {}).get('instinct', ''), 'Desconocido')
+    ins = INSTINCT[base['instinct']]   # el de thanosvibs, con lo visto en el juego encima (propio.py)
 
     def anotar_sin_skills(portrait, quien):
         # Cada retrato tiene su propio set en la API. Si falta, se avisa: no hay

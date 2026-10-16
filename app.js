@@ -471,7 +471,7 @@ const T = {
   vf_dano:           { es:'daño {a}% en thanosvibs, {w}% en la wiki', en:'damage {a}% on thanosvibs, {w}% on the wiki' },
   vf_cd:             { es:'recarga {a} s en thanosvibs, {w} s en la wiki', en:'cooldown {a} s on thanosvibs, {w} s on the wiki' },
   vf_atk:            { es:'Tipo de ataque: {a} según sus skills; el infobox de la wiki dice {w}', en:'Attack type: {a} per its skills; the wiki infobox says {w}' },
-  vf_inst:           { es:'Instinto: {a} en el infobox de la wiki (el que usa la app); la categoría de la página dice {w}', en:'Instinct: {a} in the wiki infobox (the one the app uses); the page category says {w}' },
+  vf_inst:           { es:'Instinto: {a} en thanosvibs (el que usa la app); la wiki dice {w}', en:'Instinct: {a} in thanosvibs (the one the app uses); the wiki says {w}' },
   vf_t4:             { es:'thanosvibs lo marca Tier-4 pero no trae su Striker Skill.', en:'thanosvibs marks it Tier-4 but has no Striker Skill for it.' },
   vf_s6:             { es:'thanosvibs le marca skill 6 ({v}) pero no trae la Definitiva.', en:'thanosvibs marks a 6th skill ({v}) but has no Ultimate for it.' },
   vf_art:            { es:'Artefacto a 6★: números solo en thanosvibs {a}; solo en la wiki {w}', en:'Artifact at 6★: numbers only on thanosvibs {a}; only on the wiki {w}' },
@@ -1605,7 +1605,7 @@ function shot (id, cls) { const u = imgUrl('portrait-' + id); return u ? `<img c
 function slotClass (slot) { return slot === 'Liderazgo' ? 'lead' : slot === 'Pasiva' ? 'pass' : slot === 'Definitiva' ? 'ult' : ''; }
 function pluralUni (n) { return LANG === 'es' ? n + (n === 1 ? ' uniforme' : ' uniformes')
                                                 : n + (n === 1 ? ' uniform' : ' uniforms'); }
-/** La wiki no publica el instinto de todos: mostrar "Desconocido" es ruido, se omite. */
+/** Un personaje creado con «+ Personaje» puede no tener instinto: mostrar "Desconocido" es ruido, se omite. */
 function insTag (v) { return v && v !== 'Desconocido' ? `<span class="tag dim">${h(dom(v))}</span>` : ''; }
 /** Marca de trascendido: glifo aparte porque no todas las fuentes de texto traen ✦. */
 function transTag (on) { return on ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('transcended_tag'))}">TR</span>` : ''; }

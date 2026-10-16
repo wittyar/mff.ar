@@ -50,9 +50,8 @@ def cargar_datajs(ruta):
 PIEZAS = [
     ('identidad', 'Identidad',
      'Clase, bando, género, raza, habilidades, habilidad de World Boss, instinto y tipo de ataque.',
-     'thanosvibs los publica para todos [Comprobado], salvo el instinto, que la app toma del infobox de la '
-     'wiki: que todos tengan uno en el juego es [Probable]. El tipo de ataque se deduce del daño de las '
-     'activas.'),
+     'thanosvibs los publica para todos [Comprobado]; el instinto, con lo visto en el juego encima. El tipo de '
+     'ataque se deduce del daño de las activas.'),
     ('stats', 'Stats',
      'Recuperación y las cinco resistencias elementales.',
      'Son los stats que thanosvibs publica [Comprobado]; la ficha muestra los del personaje en todas sus '
@@ -116,10 +115,6 @@ PIEZAS = [
 # Tipos de faltante: pieza, título, nivel (variante o personaje), de dónde podría salir, rótulo corto (para
 # la lista por personaje) y por qué falta. Cada uno se detecta abajo; el orden es el de las tablas.
 TIPOS = collections.OrderedDict([
-    ('instinto', ('identidad', 'Instinto desconocido', 'personaje',
-                  'la wiki (infobox o categoría de la página), el juego o foros', 'instinto',
-                  'thanosvibs no publica el instinto y la app lo toma del infobox de la wiki, que no lo da para estos '
-                  'personajes. Que todos tengan uno en el juego es [Probable].')),
     ('identidad', ('identidad', 'Dato de identidad vacío', 'variante', 'thanosvibs', 'identidad',
                    'thanosvibs publica estos datos para todos los personajes.')),
     ('stats', ('stats', 'Stats', 'personaje', 'thanosvibs', 'stats',
@@ -408,8 +403,6 @@ def falta(lista, tipo, que, fuente=None, **datos):
 def chequear_personaje(X, pj, out, aparte):
     """Lo que es del personaje y vale para todas sus variantes."""
     ch, vs = pj['ch'], pj['vs']
-    if ch['ins'] == 'Desconocido':
-        falta(out, 'instinto', 'la app no sabe su instinto: thanosvibs no lo publica y la wiki no lo da')
     if any(k not in ch['stats'] for k in STATS):
         falta(out, 'stats', 'faltan ' + ', '.join(k for k in STATS if k not in ch['stats']))
     # La fila de la guía de armado: la de su mejor uniforme (app.js, armadoDe).

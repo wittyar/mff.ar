@@ -191,6 +191,33 @@
     "foro-1896956",
     "cafe-3187937"
    ]
+  },
+  {
+   "portrait": "destroyer",
+   "campos": {
+    "instinct": "Destruction"
+   },
+   "fuente": [
+    "juego-universo-es"
+   ]
+  },
+  {
+   "portrait": "destroyer1",
+   "campos": {
+    "instinct": "Destruction"
+   },
+   "fuente": [
+    "juego-universo-es"
+   ]
+  },
+  {
+   "portrait": "destroyer2",
+   "campos": {
+    "instinct": "Destruction"
+   },
+   "fuente": [
+    "juego-universo-es"
+   ]
   }
  ],
  "uniformes": {
@@ -213,15 +240,6 @@
     "Crystal1750"
    ],
    "opciones_normal": "All Basic Attacks Increase +15% / All Basic Defenses Increase +15%",
-   "fuente": [
-    "foro-1896956",
-    "cafe-3187937"
-   ]
-  }
- },
- "instintos": {
-  "Agatha Harkness": {
-   "instinct": "Destruction",
    "fuente": [
     "foro-1896956",
     "cafe-3187937"

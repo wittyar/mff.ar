@@ -76,7 +76,7 @@ más nuevo con versión de su personaje, 292 variantes en vez de 290].
 | Género | Masculino, Femenino, Neutro | Hay efectos de daño contra un género. | thanosvibs (`gender`) |
 | Habilidades | 44 etiquetas (Agente, Orden Negra, Simbionte...), de 1 a 3 por variante | Restringen liderazgos, soportes y skills de artefacto («Restricted by Ability: Black Order»). | thanosvibs (`ability`) |
 | Habilidad de World Boss | una de sus habilidades | Ver *Dudas*. | thanosvibs (`world_boss_ability`) |
-| Instinto | Justicia, Orden, Destrucción, Crueldad | Capa de daño de instinto, la de los artefactos; la guía de thanosvibs la da por irrelevante por ahora. Según la guía del juego, los ataques básicos suman daño de instinto según los stats de instinto, que crecen con el rango y el nivel; ese daño solo se defiende con habilidades de instinto, y los buffs y debuffs de stats básicos no lo tocan. Sus porcentajes (crítico, evasión) rinden más contra quien tiene menos instinto total. Los escudos de los C.T.P. Regeneration y Veteran también lo bloquean. | wiki (infobox): thanosvibs no lo publica; 15 de 290 personajes sin dato; guía del juego (Instinct); C.T.P. en el juego |
+| Instinto | Justicia, Orden, Destrucción, Crueldad | Capa de daño de instinto, la de los artefactos; la guía de thanosvibs la da por irrelevante por ahora. Según la guía del juego, los ataques básicos suman daño de instinto según los stats de instinto, que crecen con el rango y el nivel; ese daño solo se defiende con habilidades de instinto, y los buffs y debuffs de stats básicos no lo tocan. Sus porcentajes (crítico, evasión) rinden más contra quien tiene menos instinto total. Los escudos de los C.T.P. Regeneration y Veteran también lo bloquean. | thanosvibs (`instinct`, desde octubre de 2026 para todos), con lo visto en el juego encima (Destroyer: Destrucción, no Orden); la wiki, solo en la auditoría; guía del juego (Instinct); C.T.P. en el juego |
 | Origen | MCU, Cómic, Animación... | Sin efecto conocido en combate. | thanosvibs (`original`) |
 | Progresión | Tier (T2, T3, T4); skill 6 (Tier-3 o Trascendido); Striker (T4) | La skill 6 de un Trascendido se recarga aunque no esté en pantalla (guía, parte 4). | thanosvibs (`skill6`, `tier-4`, `striker_skill`) |
 | Stats propios | recuperación y resistencias elementales | Los únicos stats que la fuente publica por variante. | thanosvibs (`stats`) |
@@ -139,11 +139,6 @@ deducía en el navegador con dos funciones distintas; el resultado es el mismo e
   las dos capturas. Los World Bosses cuentan como
   Supervillanos (NamuWiki). Falta saber si un efecto contra el bando Supervillano les pega a los
   Villains comunes de una etapa.
-- **Instinto de los 15 sin dato.** La regla de NamuWiki (humano o no, héroe o villano) da el instinto
-  del infobox en 268 de 274 personajes; en las seis excepciones, como Quicksilver y Scarlet Witch, el
-  instinto no siguió a un cambio de raza (notas oficiales del 4 de noviembre de 2025), así que no
-  alcanza para completar los 15 (hallazgo `instinto-regla-namuwiki`). El juego tiene un filtro por
-  instinto (notas del 15 de octubre de 2024): con él se pueden ver.
 - **Roles.** Salían de juntar las skills de todos los uniformes del personaje. Se rehicieron en la
   etapa 2, por variante.
 

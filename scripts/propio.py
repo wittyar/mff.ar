@@ -5,7 +5,7 @@ mi propio contenido y luego apoyarme en thanosvibs como confirmación»).
 fuentes/propio/ trae, de las fuentes del juego (las notas de los foros oficiales en inglés y en coreano), lo que thanosvibs
 todavía no publica o publica distinto, en sus mismas formas:
   personajes.json   filas de /api/characters (nuevas o en lugar de las de thanosvibs), cambios de campos sobre las de
-                    thanosvibs, entradas de /api/uniforms y de /api/updates, e instintos.
+                    thanosvibs, entradas de /api/uniforms y de /api/updates.
   skills/<p>.json   las skills de un retrato como /api/skills: las de otro retrato (desde, el de thanosvibs) con los slots
                     que el juego cambia o agrega encima (slots).
   artefactos.json   filas de /api/artifacts.      ctps.json   filas de /api/ctps.
@@ -95,7 +95,6 @@ def restaurar():
     restaurar_lista(os.path.join(W, 'artifacts.json'))
     restaurar_lista(os.path.join(W, 'ctps.json'))
     restaurar_dict(os.path.join(W, 'uniforms.json'))
-    restaurar_dict(os.path.join(W, 'instintos.json'))
     restaurar_updates(os.path.join(W, 'updates.json'))
     restaurar_skills()
 
@@ -177,16 +176,6 @@ def main():
         nuevo = sin_meta(u)
         uni[p] = {**(uni.get(p) or {}), **nuevo, MARCA: {'tv': uni.get(p)}}
     escribir(ruta, uni)
-
-    ruta = os.path.join(W, 'instintos.json')
-    ins = cargar(ruta)
-    for n, x in P['instintos'].items():
-        fuentes(x, f'instinto de {n}')
-        if n in ins and ins[n].get('instinct') == x['instinct']:
-            informe['confirmado'].append(f'instinto de {n}')
-            continue
-        ins[n] = {'instinct': x['instinct'], MARCA: {'tv': ins.get(n)}}
-    escribir(ruta, ins)
 
     ruta = os.path.join(W, 'updates.json')
     ups = cargar(ruta)

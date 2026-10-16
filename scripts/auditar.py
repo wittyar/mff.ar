@@ -280,22 +280,26 @@ class Auditoria:
                         self.listas['atk'].append((nombre, r['uniform'], api, w))
 
     def instinto(self):
-        """Instinto: el campo del infobox (de donde lo toma la app) contra la categoría
-        de la página."""
-        INST = ('Justice', 'Order', 'Destruction', 'Cruelty')
+        """Instinto: el de thanosvibs (el que usa la app, con lo visto en el juego encima: propio.py) contra la
+        wiki, el campo del infobox y la categoría de la página."""
         inst = cargar('work/instintos.json')
-        for nombre, wt in self.paginas.items():
+        for r in self.chars:
+            if r['uniformed'] != 'False':
+                continue
+            nombre = r['character']
+            wt = self.paginas.get(nombre) or ''
             cats = {m.group(1) for m in re.finditer(r'\[\[Category:(Justice|Order|Destruction|Cruelty)\]\]', wt)}
             campo = (inst.get(nombre) or {}).get('instinct')
-            if not cats or not campo:
-                continue
-            if campo in cats:
+            wiki = cats | ({campo} if campo else set())
+            if not wiki:
+                self.res['instinto_sin_wiki'] += 1
+            elif wiki == {r['instinct']}:
                 self.res['instinto_ok'] += 1
             else:
                 self.res['instinto_dif'] += 1
-                for r in self.por_nombre[nombre]:
-                    self.dif(r['portrait'], t='instinto', api=campo, wiki=', '.join(sorted(cats)))
-                self.listas['instinto'].append((nombre, campo, sorted(cats)))
+                for x in self.por_nombre[nombre]:
+                    self.dif(x['portrait'], t='instinto', api=r['instinct'], wiki=', '.join(sorted(wiki)))
+                self.listas['instinto'].append((nombre, r['instinct'], campo or '—', ', '.join(sorted(cats)) or '—'))
 
     # -- thanosvibs contra sí mismo -------------------------------------------
     def interno(self):
@@ -434,7 +438,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     s.append(f"| Recarga de skills | {R['cd_ok']} | {R['cd_dif']} | {R['cd_sin_dato']} |")
     for campo, nom in (('type', 'Clase'), ('side', 'Bando'), ('gender', 'Género'), ('allies', 'Raza'), ('atk', 'Tipo de ataque')):
         s.append(f"| {nom} (infobox de la wiki) | {R[campo + '_ok']} | {R[campo + '_dif']} | — |")
-    s.append(f"| Instinto (campo vs categoría de la wiki) | {R['instinto_ok']} | {R['instinto_dif']} | — |")
+    s.append(f"| Instinto (thanosvibs vs infobox y categoría de la wiki) | {R['instinto_ok']} | {R['instinto_dif']} | {R['instinto_sin_wiki']} |")
     s.append(bonos_resumen(bonos))
     s.append(strikers_resumen(strikers))
     s.append(f"| Artefactos a 6★ (thanosvibs vs wiki) | {R['artefactos_ok']} (+{R['artefactos_otro_nivel']} donde la wiki lista otro nivel de estrellas) | {R['artefactos_dif']} | {R['artefactos_sin_wiki']} sin fila en la wiki; {R['artefactos_incompletos']} con niveles incompletos en thanosvibs |")
@@ -495,13 +499,13 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
             s.append('')
 
     s.append('## 3. Instinto\n')
-    s.append('thanosvibs no publica el instinto: la app lo toma del infobox de la wiki. Acá, los '
-             'personajes cuya página lo contradice en sus categorías.\n')
+    s.append('La app toma el instinto de thanosvibs, con lo visto en el juego encima (fuentes/propio/). Acá, los '
+             'personajes donde la wiki dice otro, en el infobox o en las categorías de la página.\n')
     if L['instinto']:
-        s.append('| Personaje | Infobox (lo que usa la app) | Categoría de la página |')
-        s.append('|---|---|---|')
-        for n, c, cats in sorted(L['instinto']):
-            s.append(f"| {n} | {c} | {', '.join(cats)} |")
+        s.append('| Personaje | thanosvibs (lo que usa la app) | Infobox de la wiki | Categoría de la página |')
+        s.append('|---|---|---|---|')
+        for n, t, c, cats in sorted(L['instinto']):
+            s.append(f"| {n} | {t} | {c} | {cats} |")
     s.append('')
 
     s.append('## 4. thanosvibs contra sí mismo\n')
