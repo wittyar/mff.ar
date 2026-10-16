@@ -1,6 +1,6 @@
 {
- "version": "1.0.43",
+ "version": "1.0.44",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Sin cambios en el programa ni en los datos que usa: se suma, como fuente, la progresión de stats de Agatha Harkness tomada del juego (nivel 1 de 1★ a 6★ y el máximo de cada categoría), para la evaluación de poder que todavía no está en la app."
+ "notas": "Agatha Harkness, Wiccan (Young Avengers) y Morgan le Fay (Classic) tienen el mismo retrato que el resto del roster, con fondo transparente: antes se veían con fondo blanco."
 }

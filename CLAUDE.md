@@ -184,12 +184,16 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   (`liderazgos.partes_soporte`). «Qué hace» (`cuandoAn`): lo que se activa dice cuándo y su recarga, no «Siempre activo».
   Prueba: `verif_anti_mermas_morgan.py`. Pendiente: otras skills de la API que terminan en «Give Power» (unas 115 en
   `work/skills_api`, la mayoría con el efecto en la misma etapa) pueden tener el mismo hueco; sin revisar contra el juego.
-- La 1.0.43 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 16 de octubre, #8: la progresión de
+- La 1.0.43 (sin cambio de formato, 18; etiqueta en 8b4a45e), 16 de octubre, #8: la progresión de
   Agatha Harkness (`fuentes/progresion/agatha.csv`: nivel 1 de 1★ a 6★ en categoría 1 y el máximo de las categorías 2
   a 4), de «Universo Marvel» con LDPlayer. El build no la lee: sin cambio visible en la app. Las habilidades de pegador:
   thanosvibs publica el Nv. 1 y las fichas del foro el Nv. 6 (Wiccan Nv. 6 en el juego da lo de la ficha; Agatha y Morgan
   sin pegador, lo de thanosvibs) [Probable]; Ezequiel: se usan las habilidades de mayor nivel, como lo propio. Stats de
   nivel 1 que faltan (wiki y capturas): 109 personajes, en `poder-faltan-stats-base-20261016.csv` de su carpeta.
+- La 1.0.44 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 16 de octubre: Agatha Harkness,
+  Wiccan — Young Avengers y Morgan le Fay — Classic con el retrato de thanosvibs, que ya los publica con el fondo
+  transparente de los demás (los de la ficha de la nota eran blancos; Ezequiel). Un retrato propio
+  (`fuentes/propio/retratos/`) va solo mientras thanosvibs no publica el suyo; hoy no queda ninguno.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
