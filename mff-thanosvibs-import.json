@@ -70222,17 +70222,17 @@
    "source": "Gummy Steve 2129's Integrated THANO$VIB$ Tier List",
    "author": "KnightSeeks",
    "gameVersion": "12.3",
-   "published": "2026-10-16",
+   "published": "2026-10-18",
    "description": "Special Thanks to Gummy Steve 2129!\n\nThis list is integrated tier list like the old THANO$VIB$ Tier list that includes not only general characters but also supports into a single tier list.\n\nI've also integrated the PVP and PVE supports into the list from the Gummy Steve's Support List.",
-   "notes": "Added Agatha Harkness and new uniforms of Wiccan and Morgan Le Fay to landing.",
+   "notes": "Support: \nRed Skull - PvE / S Tier\nRhino - PvP / A Tier\nGold Goblin - PvE / A Tier",
    "tags": [
     "General",
     "PvE",
     "PvP",
     "Other"
    ],
-   "rating": 4.7,
-   "ratings": 19,
+   "rating": 4.5,
+   "ratings": 20,
    "rows": [
     {
      "id": "tier-s",
@@ -70309,6 +70309,60 @@
     {
      "id": "tier-1789112904075",
      "label": "Landing"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1787634809961-ohych",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Personal Tier List (MVLSPY)",
+   "nameEn": "Personal Tier List (MVLSPY)",
+   "source": "Personal Tier List",
+   "author": "MVLSPY",
+   "gameVersion": "12.3",
+   "published": "2026-10-16",
+   "description": "How good I consider characters based on my experience using them and seeing people use them",
+   "notes": "Added new uniforms and characters",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP"
+   ],
+   "rating": 3.9,
+   "ratings": 14,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "HYBRID META (PVE+PVP)"
+    },
+    {
+     "id": "tier-a",
+     "label": "PVE META"
+    },
+    {
+     "id": "tier-b",
+     "label": "PVP META"
+    },
+    {
+     "id": "tier-c",
+     "label": "PVE VIABLE"
+    },
+    {
+     "id": "tier-d",
+     "label": "PVP VIABLE"
+    },
+    {
+     "id": "tier-1787634920294",
+     "label": "SUPPORT"
+    },
+    {
+     "id": "tier-1787922323741",
+     "label": "MID"
+    },
+    {
+     "id": "tier-1787635842846",
+     "label": "BAD"
     }
    ]
   },
@@ -70503,60 +70557,6 @@
     {
      "id": "tier-c",
      "label": "BAD PICKS in general (MOST REQUIRE UNIFORM)"
-    }
-   ]
-  },
-  {
-   "id": "tv-proj-1787634809961-ohych",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Personal Tier List (MVLSPY)",
-   "nameEn": "Personal Tier List (MVLSPY)",
-   "source": "Personal Tier List",
-   "author": "MVLSPY",
-   "gameVersion": "12.2.5",
-   "published": "2026-09-25",
-   "description": "How good I consider characters based on my experience using them and seeing people use them",
-   "notes": "Moved around a few uniforms, added new seasonals",
-   "tags": [
-    "General",
-    "PvE",
-    "PvP"
-   ],
-   "rating": 3.9,
-   "ratings": 14,
-   "rows": [
-    {
-     "id": "tier-s",
-     "label": "HYBRID META (PVE+PVP)"
-    },
-    {
-     "id": "tier-a",
-     "label": "PVE META"
-    },
-    {
-     "id": "tier-b",
-     "label": "PVP META"
-    },
-    {
-     "id": "tier-c",
-     "label": "PVE VIABLE"
-    },
-    {
-     "id": "tier-d",
-     "label": "PVP VIABLE"
-    },
-    {
-     "id": "tier-1787634920294",
-     "label": "SUPPORT"
-    },
-    {
-     "id": "tier-1787922323741",
-     "label": "MID"
-    },
-    {
-     "id": "tier-1787635842846",
-     "label": "BAD"
     }
    ]
   },
@@ -75125,6 +75125,9 @@
    "war-machine::war-machine-10800027": [
     "tier-1787634920294"
    ],
+   "wiccan::wiccan-10100084": [
+    "tier-1787634920294"
+   ],
    "phil-coulson::phil-coulson-10200061": [
     "tier-1787634920294"
    ],
@@ -75366,6 +75369,9 @@
    "nova-richard-rider::nova-richard-rider-10100225": [
     "tier-1787634920294"
    ],
+   "morgan-le-fay::morgan-le-fay-10200177": [
+    "tier-1787634920294"
+   ],
    "black-cat::black-cat-10400009": [
     "tier-1787634920294"
    ],
@@ -75394,9 +75400,6 @@
     "tier-1787634920294"
    ],
    "victorious::victorious-10100184": [
-    "tier-1787634920294"
-   ],
-   "morgan-le-fay::morgan-le-fay-10100177": [
     "tier-1787634920294"
    ],
    "venus-aphrodite::base": [
@@ -79273,7 +79276,8 @@
     "tier-s"
    ],
    "green-goblin::green-goblin-10500018": [
-    "tier-s"
+    "tier-s",
+    "tier-1788338022487"
    ],
    "mephisto::mephisto-10100244": [
     "tier-s"
@@ -79490,6 +79494,7 @@
     "tier-d"
    ],
    "rhino::rhino-10100133": [
+    "tier-1788338640527",
     "tier-d"
    ],
    "stryfe::stryfe-10200168": [
@@ -79522,6 +79527,7 @@
     "tier-d"
    ],
    "red-skull::red-skull-10300015": [
+    "tier-1788337991134",
     "tier-d"
    ],
    "bishop::bishop-10100193": [
@@ -79547,6 +79553,7 @@
     "tier-d"
    ],
    "dazzler::dazzler-10100229": [
+    "tier-1788337991134",
     "tier-d"
    ],
    "scorpion::scorpion-10100236": [
@@ -79674,9 +79681,6 @@
     "tier-1788336807559"
    ],
    "polaris::base": [
-    "tier-1788337991134"
-   ],
-   "dazzler::base": [
     "tier-1788337991134"
    ],
    "mysterio::mysterio-10200134": [
@@ -80146,9 +80150,6 @@
     "tier-1788337320904"
    ],
    "whiplash::base": [
-    "tier-1788337320904"
-   ],
-   "wiccan::base": [
     "tier-1788337320904"
    ],
    "vulture::vulture-10100135": [
