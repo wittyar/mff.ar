@@ -70214,6 +70214,129 @@
    ]
   },
   {
+   "id": "tv-proj-1787289919119-spoe2",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Ideal CTP List",
+   "nameEn": "Ideal CTP List",
+   "source": "Ideal CTP List",
+   "author": "CrisisCardio",
+   "gameVersion": "12.3",
+   "published": "2026-10-25",
+   "description": "A list of the most Ideal CTP for each character (at least to my own current knowledge).\n\nPVE characters can sometimes use weaker CTP's if need be, but PVP almost always require their most ideal CTP to be effective.\n\nFor Insight, Liberation and Ascent, try to equip them in a way where each pair of supports have one of each for maximum effectiveness (Example: Insight Dazzler and Lib Cyclops). Ascents are most useful when paired with characters with Competitions.",
+   "notes": "Wiccan added to Rage (I think this is his best?)\nAgatha added to Liberation\nMorgan still remains on Insight\nWill update for Ascent characters eventually",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP"
+   ],
+   "rating": 3.6,
+   "ratings": 10,
+   "rows": [
+    {
+     "id": "tier-1787538524197",
+     "label": "Competition and conquest (only toon were 2nd slot is worth it)"
+    },
+    {
+     "id": "tier-a",
+     "label": "Competition"
+    },
+    {
+     "id": "tier-s",
+     "label": "Rage"
+    },
+    {
+     "id": "tier-1787289935600",
+     "label": "Judgement"
+    },
+    {
+     "id": "tier-d",
+     "label": "Energy"
+    },
+    {
+     "id": "tier-1787289934119",
+     "label": "Destruction"
+    },
+    {
+     "id": "tier-b",
+     "label": "Conquest"
+    },
+    {
+     "id": "tier-c",
+     "label": "Greed"
+    },
+    {
+     "id": "tier-1787289935015",
+     "label": "Authority"
+    },
+    {
+     "id": "tier-1787290051499",
+     "label": "Refinement"
+    },
+    {
+     "id": "tier-1787290072838",
+     "label": "Regeneration"
+    },
+    {
+     "id": "tier-1787290059970",
+     "label": "Insight"
+    },
+    {
+     "id": "tier-1787290079605",
+     "label": "Liberation"
+    },
+    {
+     "id": "tier-1792914254099",
+     "label": "Ascent"
+    },
+    {
+     "id": "tier-1787290719441",
+     "label": "Not worth"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1792942495553-qh98x",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Avengers: Doomsday Update Uniform Prediction",
+   "nameEn": "Avengers: Doomsday Update Uniform Prediction",
+   "source": "Avengers: Doomsday Update Uniform Prediction",
+   "author": "yenablusher",
+   "gameVersion": "12.3",
+   "published": "2026-10-25",
+   "description": "ranking some characters that confirmed will appear in avengers doomsday (not counting the uncofirmed)",
+   "notes": "exclude characters that rumored or unconfirmed and confirmed but not in the game (peggy carter and love)",
+   "tags": [
+    "General",
+    "Other"
+   ],
+   "rating": 5,
+   "ratings": 1,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "Definietly 100%"
+    },
+    {
+     "id": "tier-a",
+     "label": "most likely"
+    },
+    {
+     "id": "tier-b",
+     "label": "maybe if we actually lucky"
+    },
+    {
+     "id": "tier-c",
+     "label": "yeah i guess"
+    },
+    {
+     "id": "tier-d",
+     "label": "maybe there's 20% chance (lmao)"
+    }
+   ]
+  },
+  {
    "id": "tv-proj-1788336451651-fgeiq",
    "order": 100,
    "group": "comunidad",
@@ -70427,8 +70550,8 @@
     "Other",
     "General"
    ],
-   "rating": 3,
-   "ratings": 4,
+   "rating": 3.4,
+   "ratings": 5,
    "rows": [
     {
      "id": "tier-s",
@@ -70557,84 +70680,6 @@
     {
      "id": "tier-c",
      "label": "BAD PICKS in general (MOST REQUIRE UNIFORM)"
-    }
-   ]
-  },
-  {
-   "id": "tv-proj-1787289919119-spoe2",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Ideal CTP List",
-   "nameEn": "Ideal CTP List",
-   "source": "Ideal CTP List",
-   "author": "CrisisCardio",
-   "gameVersion": "12.2.5",
-   "published": "2026-09-24",
-   "description": "A list of the most Ideal CTP for each character (at least to my own current knowledge).\n\nPVE characters can sometimes use weaker CTP's if need be, but PVP almost always require their most ideal CTP to be effective.\n\nFor Insight and Liberation, try to equip them in a way where each pair of supports have one of each for maximum effectiveness (Example: Insight Dazzler and Lib Cyclops).",
-   "notes": "Red Skull added to Insight (can use Liberation as well)\nSister Grimm added to Rage",
-   "tags": [
-    "General",
-    "PvE",
-    "PvP"
-   ],
-   "rating": 3.6,
-   "ratings": 10,
-   "rows": [
-    {
-     "id": "tier-1787538524197",
-     "label": "Competition and conquest (only toon were 2nd slot is worth it)"
-    },
-    {
-     "id": "tier-a",
-     "label": "Competition"
-    },
-    {
-     "id": "tier-s",
-     "label": "Rage"
-    },
-    {
-     "id": "tier-1787289935600",
-     "label": "Judgement"
-    },
-    {
-     "id": "tier-d",
-     "label": "Energy"
-    },
-    {
-     "id": "tier-1787289934119",
-     "label": "Destruction"
-    },
-    {
-     "id": "tier-b",
-     "label": "Conquest"
-    },
-    {
-     "id": "tier-c",
-     "label": "Greed"
-    },
-    {
-     "id": "tier-1787289935015",
-     "label": "Authority"
-    },
-    {
-     "id": "tier-1787290051499",
-     "label": "Refinement"
-    },
-    {
-     "id": "tier-1787290072838",
-     "label": "Regeneration"
-    },
-    {
-     "id": "tier-1787290059970",
-     "label": "Insight"
-    },
-    {
-     "id": "tier-1787290079605",
-     "label": "Liberation"
-    },
-    {
-     "id": "tier-1787290719441",
-     "label": "Not worth"
     }
    ]
   },
@@ -73776,9 +73821,6 @@
    "whiplash::base": [
     "tier-1787290719441"
    ],
-   "wiccan::base": [
-    "tier-1787290719441"
-   ],
    "yellowjacket::yellowjacket-10100052": [
     "tier-1787290719441"
    ],
@@ -74148,10 +74190,13 @@
    "invisible-woman::invisible-woman-10400180": [
     "tier-s"
    ],
+   "iron-man::iron-man-11000003": [
+    "tier-s"
+   ],
    "kid-omega::kid-omega-10100203": [
     "tier-s"
    ],
-   "iron-man::iron-man-11000003": [
+   "wiccan::wiccan-10100084": [
     "tier-s"
    ],
    "psylocke::psylocke-10300167": [
@@ -74181,13 +74226,13 @@
    "jubilee::jubilee-10100194": [
     "tier-1787290079605"
    ],
-   "rescue::rescue-10200191": [
-    "tier-1787290079605"
-   ],
    "ebony-maw::ebony-maw-10300077": [
     "tier-1787290079605"
    ],
    "ancient-one::ancient-one-10300094": [
+    "tier-1787290079605"
+   ],
+   "rescue::rescue-10200191": [
     "tier-1787290079605"
    ],
    "weapon-hex::weapon-hex-10100172": [
@@ -74373,6 +74418,9 @@
    "doctor-voodoo::doctor-voodoo-10200204": [
     "tier-1787290059970"
    ],
+   "morgan-le-fay::morgan-le-fay-10200177": [
+    "tier-1787290059970"
+   ],
    "phyla-vell::phyla-vell-10100223": [
     "tier-1787290059970"
    ],
@@ -74386,9 +74434,6 @@
     "tier-1787290059970"
    ],
    "medusa::medusa-10300109": [
-    "tier-1787290059970"
-   ],
-   "morgan-le-fay::morgan-le-fay-10100177": [
     "tier-1787290059970"
    ],
    "proxima-midnight::proxima-midnight-10200069": [
@@ -82801,6 +82846,98 @@
    ],
    "ultron::ultron-10500013": [
     "tier-1791224488369"
+   ]
+  },
+  "tv-proj-1792942495553-qh98x": {
+   "captain-america::captain-america-10700001": [
+    "tier-s"
+   ],
+   "mister-fantastic::mister-fantastic-10400179": [
+    "tier-s"
+   ],
+   "doctor-doom::base": [
+    "tier-s"
+   ],
+   "thor::thor-10800008": [
+    "tier-s"
+   ],
+   "falcon::falcon-10600030": [
+    "tier-a"
+   ],
+   "shuri::shuri-10300154": [
+    "tier-a"
+   ],
+   "yelena-belova::yelena-belova-10300221": [
+    "tier-s"
+   ],
+   "invisible-woman::invisible-woman-10400180": [
+    "tier-s"
+   ],
+   "cassie-lang::base": [
+    "tier-d"
+   ],
+   "ghost::ghost-10200162": [
+    "tier-d"
+   ],
+   "nightcrawler::base": [
+    "tier-d"
+   ],
+   "ant-man::ant-man-10600049": [
+    "tier-b"
+   ],
+   "winter-soldier::winter-soldier-10600031": [
+    "tier-b"
+   ],
+   "gambit::gambit-10200173": [
+    "tier-b"
+   ],
+   "mystique::base": [
+    "tier-c"
+   ],
+   "falcon-joaquin-torres::base": [
+    "tier-c"
+   ],
+   "the-thing::the-thing-10400182": [
+    "tier-c"
+   ],
+   "u-s-agent::base": [
+    "tier-c"
+   ],
+   "red-guardian::red-guardian-10200220": [
+    "tier-c"
+   ],
+   "hulk::hulk-10900002": [
+    "tier-c"
+   ],
+   "human-torch::human-torch-10400181": [
+    "tier-c"
+   ],
+   "magneto::base": [
+    "tier-c"
+   ],
+   "shang-chi::shang-chi-10100089": [
+    "tier-a"
+   ],
+   "sentry::sentry-10200235": [
+    "tier-d"
+   ],
+   "professor-x::professor-x-10100217": [
+    "tier-a"
+   ],
+   "cyclops::cyclops-10500123": [
+    "tier-a"
+   ],
+   "m-baku::base": [
+    "tier-d"
+   ],
+   "beast::beast-10400127": [
+    "tier-d"
+   ],
+   "namor::namor-10200198": [
+    "tier-b"
+   ],
+   "loki::loki-10700014": [
+    "tier-b"
    ]
   },
   "tv-soportes": {
