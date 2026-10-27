@@ -1,6 +1,6 @@
 {
- "version": "1.0.47",
+ "version": "1.0.48",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "El daño de las habilidades se lee como en el juego: el elemento y de qué ataque sale («Daño de fuego: 65% del ataque de energía», en lugar de «Daño de energía de fuego»). Y el uniforme nuevo de Dormammu (The Living Dark Planet) tiene su liderazgo de la nota oficial: +60% de daño básico a los Superhéroes para los aliados Supervillanos."
+ "notas": "Ayuda que se puede activar o desactivar con el botón «Ayuda» de arriba: activada, al pasar el mouse por una habilidad o un efecto dice qué hace, y el clic abre el detalle en una ventana (también desde la comparativa). El «?» ya no se sale de la pantalla. Y el roster se ordena por lanzamiento, lo más nuevo primero."
 }

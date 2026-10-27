@@ -215,6 +215,22 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   «Fuego (energía)». Y el liderazgo de Dormammu — The Living Dark Planet es el de la ficha (Supervillanos, +60% a los
   Superhéroes, como Damnation), no el de la base (+24% de defensas a todos), con su marcador (id propio 991160201). La
   12.3.5 queda confirmada por los nombres de archivo de la nota coreana («V1235_…»).
+- La 1.0.48 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 27 de octubre: la ayuda (Ezequiel). Un
+  botón «Ayuda» arriba, global y activado por defecto (`U.prefs.ayuda`): desactivada, se ocultan los «?» y el tooltip.
+  Activada y con mouse, pasar por el nombre de una skill dice qué hace (sus efectos, a quién, la lectura) y por la
+  etiqueta de un efecto, qué es (el término del glosario o su grupo) (`ayudaFlotanteHtml`, `#flotay`). El clic abre el
+  «Cómo funciona», que ahora es una ventana modal centrada con fondo (en el celular, la hoja de abajo), también desde la
+  comparativa en «Ficha» (nombre de la skill y cada efecto; `ui.tip` lleva la clave de la variante). El «?» se ubica con
+  `ubicarFlotante`: antes se abría siempre hacia abajo y cerca del borde de abajo quedaba fuera de la pantalla (lo que
+  vio Ezequiel en la comparativa). Y el roster se ordena por defecto por «Lanzamiento», lo más nuevo primero (la fecha
+  del hecho «personaje» o «uniforme» del histórico; lo creado a mano va primero); una capa que ya guardó otro orden lo
+  conserva. Las pruebas que buscan la base de un personaje con muchos uniformes eligen «Nombre». Pruebas:
+  `verif_ayuda.py`, `verif_tooltip_skill.py` (la ventana modal) y `verif_tooltip_todas.py` (también los tooltips; una
+  página por tanda: en una sola el renderer se queda sin memoria con 8 GB, también con la app de antes). Visto al
+  correr todas con los datos de la 12.3.5 y sin relación con esto (fallan igual con la 1.0.47): `verif_analisis` (un
+  texto sin clasificar en 24 variantes: «Excluding bosses, ignores enemy's basic damage decrease by #%.»), y fallas de
+  entorno o de datos en cierre, contexto, ctp_equipos, dudas, filtros_cobertura, glosario, guia_*, historico, otorga,
+  porque, programa y ultimo_uniforme.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
