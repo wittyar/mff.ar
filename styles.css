@@ -637,6 +637,28 @@ details.qhmas{display:flex;flex-direction:column;gap:8px}
   transition:all .14s}
 .langbtn span.on{background:var(--accent-soft);color:var(--accent)}
 .langbtn:hover span:not(.on){color:var(--text)}
+/* El interruptor de la ayuda: los «?» y el tooltip de skills y efectos (body.sin-ayuda los oculta). */
+.ayudabtn{border:1px solid var(--line-2);border-radius:var(--r-sm);background:none;cursor:pointer;margin-right:6px;padding:5px 10px;
+  font:700 11.5px var(--font-body);letter-spacing:.05em;color:var(--text-3)}
+.ayudabtn.on{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.ayudabtn:hover:not(.on){color:var(--text)}
+body.sin-ayuda details.ayuda,body.sin-ayuda .sktit::after{display:none}
+/* El tooltip de la ayuda (ayudaFlotanteHtml): lo ubica ubicarFlotante, en la pantalla. */
+.flotay{position:fixed;z-index:95;width:min(380px,calc(100vw - 16px));overflow-y:auto;padding:9px 12px;pointer-events:none;
+  background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r-sm);box-shadow:var(--sh-2);
+  color:var(--text-2);font-size:12.5px;line-height:1.5}
+.flotay[hidden]{display:none}
+.flotay .flotit{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-weight:600;color:var(--text)}
+.flotay p{margin:4px 0 0}
+.flotay .floefs{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:6px}
+.flotay .floef{display:inline-flex;align-items:center;gap:4px}
+.flotay .sklect{margin-top:6px}
+.flotay .flopie{margin-top:6px;font-size:11px;color:var(--text-3)}
+[data-ay]{cursor:help}
+.cmpsk{display:block;padding:0;margin-bottom:4px;border:0;background:none;color:inherit;font:600 inherit;font-weight:600;text-align:left;cursor:pointer}
+.cmpsk:hover{color:var(--accent)}
+.cmpfx[data-a]{cursor:pointer;border-radius:4px}
+.cmpfx[data-a]:hover{background:rgba(255,255,255,.035)}
 
 /* Original en inglés al lado del nombre traducido de la skill. */
 .skill .nm .orig{margin-left:8px;font-weight:400;font-size:11.5px;color:var(--text-3)}
@@ -666,8 +688,8 @@ table.cmpt .nm .orig{margin-left:6px;font-weight:400;font-size:11px;color:var(--
 .fxitems.sintrad{color:var(--gold);border-bottom:1px dotted rgba(255,176,32,.5)}
 
 /* «Cómo funciona» de una skill. Lo abre la cabecera (el tipo y el nombre son su botón, con un «?») o un
-   renglón de la skill. En la compu es un popover anclado a lo tocado, que se mueve con la página y pasa por
-   debajo de la cabecera fija; hasta 600 px (TIP_CELULAR en app.js), una hoja inferior con fondo. */
+   renglón de la skill, en la ficha y en la comparativa. En la compu es una ventana modal centrada, con fondo
+   (Ezequiel, 27 de octubre de 2026); hasta 600 px, una hoja inferior. */
 .skill .top[data-a]{cursor:pointer}
 .skill .top[data-a]:hover{background:rgba(255,255,255,.045)}
 .sktit{display:flex;align-items:center;gap:9px;flex:1;min-width:min(220px,100%);padding:0;border:0;background:none;
@@ -678,14 +700,14 @@ table.cmpt .nm .orig{margin-left:6px;font-weight:400;font-size:11px;color:var(--
 .skill .top[data-a]:hover .sktit::after,.sktit[aria-expanded="true"]::after{border-color:var(--accent);color:var(--accent-2)}
 .fxline[data-a],.stdano[data-a]{cursor:pointer}
 .fxline[data-a]:hover,.stdano[data-a]:hover{background:rgba(255,255,255,.035);border-radius:5px}
-.skpop{position:absolute;z-index:20;width:min(500px,calc(100vw - 32px));max-height:min(72vh,640px);overflow-y:auto;
+.skpop{position:fixed;z-index:90;top:50%;left:50%;transform:translate(-50%,-50%);width:min(560px,calc(100vw - 32px));max-height:min(82vh,720px);overflow-y:auto;
   overscroll-behavior:contain;padding:0 14px 12px;background:var(--surface-2);border:1px solid var(--line-2);
   border-radius:var(--r-md);box-shadow:var(--sh-3);font-size:12.5px;line-height:1.5}
 .skpop:focus{outline:none}
 .skpop .tag{white-space:normal}
 .skpop .dur{color:var(--gold);font-size:11.5px;white-space:nowrap}
 .skpop li .fuente{display:inline-block;margin:2px 4px 2px 0}
-.skpop-fondo{display:none}
+.skpop-fondo{position:fixed;inset:0;z-index:89;background:rgba(4,6,11,.6)}
 .tiphead{position:sticky;top:0;z-index:1;display:flex;align-items:flex-start;gap:8px;margin:0 -14px;padding:11px 14px 8px;
   background:var(--surface-2);border-bottom:1px solid var(--line)}
 .tiptit{flex:1;min-width:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -718,9 +740,9 @@ details.tiptx[open] > summary,details.tipls[open] > summary{margin-bottom:6px}
 .tipnom{font-weight:600;margin:2px 0 4px}
 .tiperr p{margin:4px 0 0;font-size:12px;color:var(--text-2)}
 @media (max-width:600px){
-  .skpop{position:fixed;left:0;right:0;bottom:0;top:auto;width:auto;max-height:85vh;z-index:90;border-bottom:0;
+  .skpop{position:fixed;left:0;right:0;bottom:0;top:auto;transform:none;width:auto;max-height:85vh;z-index:90;border-bottom:0;
     border-radius:16px 16px 0 0;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
-  .skpop-fondo{display:block;position:fixed;inset:0;z-index:89;background:rgba(4,6,11,.6);touch-action:none}
+  .skpop-fondo{touch-action:none}
 }
 
 .chargebar{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:14px;font-size:12px;
@@ -1076,7 +1098,7 @@ table.topes input{width:70px;padding:5px 7px}
 .ayuda > summary::-webkit-details-marker{display:none}
 .ayuda[open] > summary,.ayuda > summary:hover{border-color:var(--accent);color:var(--accent)}
 .ayudatx{position:absolute;z-index:30;top:26px;left:0;width:min(420px,80vw);padding:10px 12px;background:var(--surface-2);border:1px solid var(--line-2);
-  border-radius:var(--r-sm);box-shadow:var(--sh-2);color:var(--text-2);font-size:13px;font-weight:400;line-height:1.5}
+  border-radius:var(--r-sm);box-shadow:var(--sh-2);color:var(--text-2);font-size:13px;font-weight:400;line-height:1.5;overflow-y:auto}
 .sktabla{border-collapse:collapse;width:100%;font-size:13px}
 .sktabla th{font:600 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line-2)}
 .sktabla td{padding:4px 8px;border-bottom:1px solid var(--line);vertical-align:middle}

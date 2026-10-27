@@ -1,5 +1,5 @@
 """«Cómo funciona» de una skill (carril K): al tocar la cabecera o un renglón de una skill en la pestaña Skills
-de la ficha se abre un popover anclado a lo tocado (en el celular, una hoja inferior) con cinco secciones:
+de la ficha se abre una ventana modal centrada, con fondo (en el celular, una hoja inferior), con cinco secciones:
 cómo funciona, cuándo-cuánto-a quién, texto del juego, certeza y fuentes, y diferencias con el coreano.
 
 Casos (cada uno contra un modelo armado acá desde data.js, sin app.js):
@@ -11,10 +11,10 @@ Casos (cada uno contra un modelo armado acá desde data.js, sin app.js):
   6. Beast — Age of Apocalypse, pasiva de uniforme: sin efectos (los avisos).
 Para cada uno: las cinco secciones con su contenido (o el aviso), la ubicación, el cierre con Esc (el foco
 vuelve a la skill), en español y en inglés, y sin errores de página ni de consola. Con Doctor Voodoo, además:
-tocar afuera, el teclado (Enter abre, el foco queda adentro con Tab y Shift+Tab, Esc lo devuelve), el mismo
-disparador lo cierra, otra skill lo cambia, ← y → no cambian de personaje, abrir y cerrar no abre otra entrada
-del historial ni pliega lo que estaba abierto ni mueve la página, encima de la skill crece hacia arriba, y
-«Atrás» con el popover abierto. En el celular (390 px): hoja inferior sin desbordes, el fondo la cierra.
+tocar el fondo, el teclado (Enter abre, el foco queda adentro con Tab y Shift+Tab, Esc lo devuelve), otra skill
+abre la suya, ← y → no cambian de personaje, abrir y cerrar no abre otra entrada del historial ni pliega lo que
+estaba abierto ni mueve la página, cerca del borde de abajo sigue centrada, desplegar algo no la saca de la
+ventana, y «Atrás» con la ventana abierta. En el celular (390 px): hoja inferior sin desbordes, el fondo la cierra.
 Capturas: capturas/tooltip_1300.png y capturas/tooltip_390.png (Tier-2 de Doctor Voodoo)."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import os, re, sys
@@ -147,11 +147,20 @@ def secciones(pg):
         resumenes: [...s.querySelectorAll(':scope > details.tipef > summary')].map(x => x.textContent.replace(/\\s+/g, ' ').trim()),
         abiertos: [...s.querySelectorAll(':scope > details.tipef')].map(x => x.open) }))""")
 
-def ubicacion(pg, sel_ancla):
-    return pg.evaluate("""(s) => { const a = (s.startsWith('#skt-') ? document.querySelector(s).closest('.top') : document.querySelector(s)).getBoundingClientRect();
-        const p = document.getElementById('skpop').getBoundingClientRect(), techo = document.querySelector('.fcab').getBoundingClientRect().bottom;
-        return { a: [a.top, a.bottom], p: [p.top, p.bottom, p.left, p.right], techo, alto: innerHeight, ancho: document.documentElement.clientWidth,
-                 docw: document.documentElement.scrollWidth }; }""", sel_ancla)
+def ubicacion(pg):
+    return pg.evaluate("""() => { const p = document.getElementById('skpop').getBoundingClientRect(), f = document.getElementById('skpop-fondo').getBoundingClientRect();
+        return { p: [p.top, p.bottom, p.left, p.right], fondo: [f.width, f.height], alto: innerHeight, ancho: document.documentElement.clientWidth,
+                 docw: document.documentElement.scrollWidth }; }""")
+
+def centrada(u):
+    """Centrada en la ventana (±2 px), adentro, con el fondo a toda la ventana y sin desbordar la página."""
+    t, b, l, r = u['p']
+    return (abs((t + b) / 2 - u['alto'] / 2) < 2 and abs((l + r) / 2 - u['ancho'] / 2) < 2 and t >= 0 and b <= u['alto'] + 1
+            and l >= 0 and r <= u['ancho'] and u['fondo'][1] == u['alto'] and u['docw'] <= u['ancho'])
+
+def fondo(pg):
+    """Toca el fondo de la ventana, en la esquina de arriba a la izquierda (lejos de la ventana centrada)."""
+    pg.mouse.click(8, 8)
 
 def chequear_contenido(pg, c, lang, etiqueta):
     U = UI[lang]; es = entradas(c['p'], c['si']); ts = terminos(es); sk = c['sk']
@@ -234,9 +243,8 @@ try:
             ok(f'{et}: se abre', abierto(pg) and pg.get_attribute(f'#skt-{c["si"]}', 'aria-expanded') == 'true')
             ok(f'{et}: abrir no mueve la página', abs(pg.evaluate('scrollY') - y0) < 2, (pg.evaluate('scrollY'), y0))
             ok(f'{et}: el foco queda adentro', pg.evaluate("document.getElementById('skpop').contains(document.activeElement)"))
-            u = ubicacion(pg, sel)
-            ok(f'{et}: anclado debajo de lo tocado, dentro de la ventana y sin desbordar', u['p'][0] >= u['a'][1] - 1 and u['p'][0] - u['a'][1] < 20
-               and u['p'][1] <= u['alto'] + 1 and u['p'][2] >= 0 and u['p'][3] <= u['ancho'] and u['docw'] <= u['ancho'], u)
+            u = ubicacion(pg)
+            ok(f'{et}: ventana centrada, con fondo, dentro de la ventana y sin desbordar', centrada(u), u)
             S = chequear_contenido(pg, c, 'es', et)
             if c['foco']:
                 vis = pg.evaluate("""() => { const p = document.getElementById('skpop'), f = p.querySelector('details.tipef.foco');
@@ -265,19 +273,22 @@ try:
         sel = selector(c); llevar(pg, sel, 300)
         n0, largo0, y0 = pg.evaluate('history.state.n'), pg.evaluate('history.length'), pg.evaluate('scrollY')
         pg.click(sel); pg.wait_for_timeout(150)
-        pg.click('.fcab h1'); pg.wait_for_timeout(150)
-        ok('tocar afuera lo cierra y el foco vuelve a la skill', not abierto(pg) and pg.evaluate('document.activeElement.id') == f'skt-{c["si"]}')
+        fondo(pg); pg.wait_for_timeout(150)
+        ok('tocar el fondo lo cierra y el foco vuelve a la skill', not abierto(pg) and pg.evaluate('document.activeElement.id') == f'skt-{c["si"]}')
         ok('abrir y cerrar no abre otra entrada del historial, no pliega lo abierto ni mueve la página',
            pg.evaluate('history.state.n') == n0 and pg.evaluate('history.length') == largo0 and abs(pg.evaluate('scrollY') - y0) < 2
            and pg.evaluate("document.querySelector('#fcuerpo details.usgrupo').open"), (pg.evaluate('history.state.n'), n0, pg.evaluate('scrollY'), y0))
         # el botón de cerrar
         pg.click(sel); pg.wait_for_timeout(150); pg.click('#skpop [data-a="tipCerrar"]'); pg.wait_for_timeout(100)
         ok('el botón ✕ lo cierra y devuelve el foco', not abierto(pg) and pg.evaluate('document.activeElement.id') == f'skt-{c["si"]}')
-        # el mismo disparador lo cierra; otra skill lo cambia
-        pg.click(sel); pg.wait_for_timeout(150); pg.click(sel); pg.wait_for_timeout(150)
-        ok('tocar otra vez la misma skill lo cierra', not abierto(pg))
+        # el fondo tapa la página: con la ventana abierta, tocar otra skill la cierra; después, abre la de esa
         pg.click(sel); pg.wait_for_timeout(150)
-        otra = f'#skt-{c["si"] - 1}'; pg.click(otra); pg.wait_for_timeout(150)     # la de arriba: el popover no la tapa
+        otra = f'#skt-{c["si"] - 1}'
+        ok('con la ventana abierta, el fondo tapa las otras skills', pg.evaluate("""(s) => { const r = document.querySelector(s).getBoundingClientRect();
+            return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2) === document.getElementById('skpop-fondo')
+                || document.getElementById('skpop').contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)); }""", otra))
+        fondo(pg); pg.wait_for_timeout(150)
+        pg.click(otra); pg.wait_for_timeout(150)
         tit = plano(pg.locator('#skpop-t').text_content()) if abierto(pg) else ''
         ok('tocar otra skill abre la de esa', abierto(pg) and TB['name'][SK[c['p']][c['si'] - 1]['n']]['en'] in tit
            and pg.get_attribute(sel, 'aria-expanded') == 'false' and pg.get_attribute(otra, 'aria-expanded') == 'true', tit)
@@ -287,10 +298,10 @@ try:
         caja = pg.locator(f'#skt-{c["si"]}').locator('xpath=..').bounding_box()
         pg.mouse.click(caja['x'] + caja['width'] - 5, caja['y'] + caja['height'] / 2); pg.wait_for_timeout(150)
         ok('tocar la cabecera (fuera del nombre) también lo abre', abierto(pg))
-        # ← y → no cambian de personaje con el popover abierto
+        # ← y → no cambian de personaje con la ventana abierta
         cid0 = pg.evaluate('history.state.charId')
         pg.keyboard.press('ArrowRight'); pg.wait_for_timeout(250)
-        ok('← y → no cambian de personaje con el popover abierto', abierto(pg) and pg.evaluate('history.state.charId') == cid0)
+        ok('← y → no cambian de personaje con la ventana abierta', abierto(pg) and pg.evaluate('history.state.charId') == cid0)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
         # teclado: Enter abre, Tab y Shift+Tab no salen, Esc devuelve el foco
         pg.focus(sel); pg.keyboard.press('Enter'); pg.wait_for_timeout(150)
@@ -305,30 +316,24 @@ try:
         foco = pg.evaluate("document.activeElement.tagName")
         pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
         ok('teclado: Esc lo cierra y el foco vuelve a la skill', not abierto(pg) and pg.evaluate('document.activeElement.id') == f'skt-{c["si"]}', foco)
-        # encima de la skill, si abajo no entra; con una skill larga, del alto que hay
-        llevar(pg, sel, 820); pg.click(sel); pg.wait_for_timeout(200)
-        u = ubicacion(pg, sel)
-        ok('cerca del borde de abajo se abre encima de la skill, bajo la cabecera fija', u['p'][1] <= u['a'][0] + 1 and u['a'][0] - u['p'][1] < 20
-           and u['p'][0] >= u['techo'] - 1, u)
-        pg.evaluate("window.scrollBy({ top: 120, behavior: 'instant' })"); pg.wait_for_timeout(150)
-        u3 = ubicacion(pg, sel)
-        ok('se mueve con la página', abs((u3['a'][0] - u3['p'][1]) - (u['a'][0] - u['p'][1])) < 1.5 and abs(u3['a'][0] - u['a'][0] + 120) < 1.5, (u, u3))
+        # cerca del borde de abajo, igual centrada (el error de antes: se abría hacia abajo y quedaba afuera)
+        llevar(pg, sel, 820); y0 = pg.evaluate('scrollY'); pg.click(sel); pg.wait_for_timeout(200)
+        ok('cerca del borde de abajo, igual centrada y sin mover la página', centrada(ubicacion(pg)) and abs(pg.evaluate('scrollY') - y0) < 2, ubicacion(pg))
         pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
-        # «Atrás» (Alt+← o el botón del navegador) con el popover abierto
+        # «Atrás» (Alt+← o el botón del navegador) con la ventana abierta
         pg.click(sel); pg.wait_for_timeout(150)
         pg.go_back(); pg.wait_for_timeout(400)
-        ok('«Atrás» con el popover abierto vuelve al lugar anterior y lo cierra', not abierto(pg) and pg.evaluate('history.state.view') == 'roster')
+        ok('«Atrás» con la ventana abierta vuelve al lugar anterior y lo cierra', not abierto(pg) and pg.evaluate('history.state.view') == 'roster')
         pg.go_forward(); pg.wait_for_selector('.fcab'); pg.wait_for_timeout(300)
-        ok('y adelante vuelve a la ficha en Skills, sin el popover', not abierto(pg) and pg.evaluate('history.state.fichaTab') == 'skills'
+        ok('y adelante vuelve a la ficha en Skills, sin la ventana', not abierto(pg) and pg.evaluate('history.state.fichaTab') == 'skills'
            and pg.evaluate('history.state.charId') == c['cid'])
-        # una skill corta, encima: al desplegar algo crece hacia arriba, sin tapar la skill
+        # una skill corta: al desplegar algo crece y sigue centrada, adentro de la ventana
         cb = BEAST_UNI; abrir_ficha(pg, cb); selb = selector(cb)
         llevar(pg, selb, 820); pg.click(selb); pg.wait_for_timeout(200)
-        u = ubicacion(pg, selb)
+        u = ubicacion(pg)
         pg.locator('#skpop details.tiptx summary').first.click(); pg.wait_for_timeout(100)
-        u2 = ubicacion(pg, selb)
-        ok('encima, al desplegar algo crece hacia arriba y no tapa la skill', u['p'][1] <= u['a'][0] + 1 and abs(u2['p'][1] - u['p'][1]) < 1.5
-           and u2['p'][0] < u['p'][0] - 5 and u2['p'][0] >= u2['techo'] - 1, (u, u2))
+        u2 = ubicacion(pg)
+        ok('al desplegar algo crece y sigue centrada, adentro de la ventana', centrada(u) and centrada(u2) and u2['p'][1] - u2['p'][0] > u['p'][1] - u['p'][0] + 5, (u, u2))
         pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
 
         # captura (compu): la Tier-2 de Doctor Voodoo, con el primer efecto desplegado

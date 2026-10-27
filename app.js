@@ -63,7 +63,7 @@ function blankUser () {
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
-    prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
+    prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, ayuda:true, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
              filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
@@ -585,6 +585,9 @@ const T = {
   s_rank:            { es:'Posición en la lista',en:'Position in list' },
   s_skills:          { es:'Cantidad de skills',  en:'Skill count' },
   s_lanz:            { es:'Lanzamiento',         en:'Release' },
+  ay_toggle:         { es:'Ayuda',               en:'Help' },
+  ay_toggle_t:       { es:'Mostrar u ocultar la ayuda: los «?» y, al pasar el mouse, qué hace cada skill y cada efecto', en:'Show or hide help: the «?» and, on hover, what each skill and effect does' },
+  ay_clic:           { es:'Clic: el detalle',    en:'Click: details' },
 
   f_class:           { es:'Clase',               en:'Class' },
   f_role:            { es:'Rol',                 en:'Role' },
@@ -2484,11 +2487,11 @@ function metaEfecto (f, dura) {
 }
 /** Un efecto que no es daño: etiqueta tipada + texto, uno por línea. Al tocarlo se abre el «Cómo funciona»
  *  de la skill en ese efecto (si, ti, fi: skill, etapa y efecto). */
-function efectoLinea (f, si, ti, fi) {
+function efectoLinea (v, f, si, ti, fi) {
   const { renglones, sinTraducir } = renglonesEfecto(f), meta = metaEfecto(f), etiqueta = txt('ab', f.a);
   // Duración, tick y marcas van pegadas al final de la última línea, no en un renglón aparte.
-  return `<div class="fxline" data-a="skTip" data-si="${si}" data-st="${ti}" data-fx="${fi}">
-    <span class="fxtag" title="${h(etiqueta)}">${h(etiqueta)}</span>
+  return `<div class="fxline" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-st="${ti}" data-fx="${fi}">
+    <span class="fxtag" data-ay="fx"${U.prefs.ayuda ? '' : ` title="${h(etiqueta)}"`}>${h(etiqueta)}</span>
     <div class="fxitems ${sinTraducir ? 'sintrad' : ''}"
          ${sinTraducir ? `title="${h(t('untranslated'))}"` : ''}>
       ${renglones.map((x, i) => `<div>${x}${
@@ -2500,7 +2503,7 @@ function efectoLinea (f, si, ti, fi) {
  *  cabecera abre su «Cómo funciona»; cada renglón, el mismo, en ese efecto. */
 function skillCard (sk, v, si) {
   const etapas = sk.st || [];
-  const marcas = marcasDe(v.p, sk.sl), abierta = !!ui.tip && ui.tip.si === si;
+  const marcas = marcasDe(v.p, sk.sl), abierta = !!ui.tip && ui.tip.key === v.key && ui.tip.si === si;
   const filasDano = [];
   etapas.forEach((st, i) => {
     (st.fx || []).forEach((f, fi) => {
@@ -2528,14 +2531,14 @@ function skillCard (sk, v, si) {
   // Cada etapa, junta (Ezequiel, 6 de octubre de 2026: «lo que ocurre en cada skill en cada etapa tiene que estar
   // unido»): su activación y su objetivo si difieren de la skill, el daño (% del ataque, el fijo y el elemento) y los
   // demás efectos, en ese orden. Antes el daño de todas las etapas iba en una tabla y los efectos aparte.
-  const danoLinea = (r) => `<div class="stdano" data-a="skTip" data-si="${si}" data-st="${r.i}" data-fx="${r.fi}">
-      <span class="fxlabel dano">${h(t('st_dano'))}</span>
+  const danoLinea = (r) => `<div class="stdano" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-st="${r.i}" data-fx="${r.fi}">
+      <span class="fxlabel dano" data-ay="fx">${h(t('st_dano'))}</span>
       <b class="num">${h(r.dn.pct)}%</b> <span class="muted">${h(srcEs(r.dn.src))}</span>
       ${r.dn.flat != null ? `<span class="num">+${h(r.dn.flat)}</span>` : ''}
       ${r.st.el != null ? `<span class="tag dim">${h(txt('elem', r.st.el))}</span>` : `<span class="muted">${h(elemEs(r.dn.elem))}</span>`}</div>`;
   const otros = etapas.map((st, i) => {
     const danos = filasDano.filter(r => r.i === i).map(danoLinea);
-    const fx = (st.fx || []).map((f, fi) => esDano(f) ? '' : efectoLinea(f, si, i, fi)).filter(Boolean);
+    const fx = (st.fx || []).map((f, fi) => esDano(f) ? '' : efectoLinea(v, f, si, i, fi)).filter(Boolean);
     const meta = [];
     if (st.ac != null && st.ac !== acComun) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
     if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${objetivoTexto(st.tg)}</span>`);
@@ -2552,9 +2555,9 @@ function skillCard (sk, v, si) {
   // El tipo y el nombre son el botón del «Cómo funciona» (para el teclado); el resto de la cabecera
   // también lo abre al tocarlo, salvo el objetivo de grupo, que muestra quiénes lo cumplen.
   return `<div class="skill" id="${anclaSkill(sk.sl)}">
-    <div class="top" data-a="skTip" data-si="${si}">
-      <button class="sktit" id="skt-${si}" data-a="skTip" data-si="${si}" aria-haspopup="dialog" aria-expanded="${abierta}"${
-        abierta ? ' aria-controls="skpop"' : ''} title="${h(t('tt_abrir'))}">
+    <div class="top" data-a="skTip" data-k="${h(v.key)}" data-si="${si}">
+      <button class="sktit" id="skt-${si}" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-ay="sk" aria-haspopup="dialog" aria-expanded="${abierta}"${
+        abierta ? ' aria-controls="skpop"' : ''}>
         <span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>
         ${nombreSkill(sk)}
       </button>
@@ -2959,6 +2962,56 @@ function renderDetail () {
 function ayudaHtml (texto) {
   return `<details class="ayuda"><summary title="${h(t('ay_label'))}" aria-label="${h(t('ay_label'))}">?</summary><div class="ayudatx">${h(texto)}</div></details>`;
 }
+/** Ubica una caja flotante (position: fixed) junto a un rectángulo de la pantalla: debajo si entra; si no, del lado con
+ *  más lugar, con el alto de ese lado como máximo; y adentro de la ventana a lo ancho. Lo usan el tooltip de la ayuda y
+ *  el «?» (antes se abría siempre hacia abajo y, cerca del borde de abajo, quedaba fuera de la pantalla). */
+function ubicarFlotante (caja, r) {
+  Object.assign(caja.style, { position: 'fixed', top: '', bottom: 'auto', left: '', right: 'auto', maxHeight: '' });
+  const W = document.documentElement.clientWidth, H = innerHeight, m = 8;
+  const debajo = H - r.bottom - m - 6, encima = r.top - m - 6;
+  const abajo = caja.offsetHeight <= debajo || debajo >= encima;
+  caja.style.maxHeight = Math.max(120, abajo ? debajo : encima) + 'px';
+  caja.style.top = (abajo ? r.bottom + 6 : Math.max(m, r.top - 6 - caja.offsetHeight)) + 'px';
+  caja.style.left = Math.max(m, Math.min(r.left, W - caja.offsetWidth - m)) + 'px';
+}
+/** El «?» abierto, ubicado en la pantalla; en el celular es una hoja de abajo y lo ubica styles.css. */
+const AYUDA_CELULAR = '(max-width: 900px)';      // el mismo de styles.css (.ayudatx)
+function ubicarAyuda (d) {
+  const tx = d.querySelector('.ayudatx');
+  if (matchMedia(AYUDA_CELULAR).matches) { tx.removeAttribute('style'); return; }
+  ubicarFlotante(tx, d.querySelector('summary').getBoundingClientRect());
+}
+/** El tooltip de la ayuda (Ezequiel, 27 de octubre de 2026): con la ayuda activada, al pasar el mouse por el nombre de
+ *  una skill dice qué hace (sus efectos, con a quién le llegan, y lo que la distingue) y por la etiqueta de un efecto, qué
+ *  es ese efecto (el término del glosario del juego o, si no tiene, su grupo). El clic abre el «Cómo funciona». */
+function ayudaFlotanteHtml (el) {
+  const o = el.closest('[data-a="skTip"]'), v = variantDeClave(o.dataset.k), si = +o.dataset.si, sk = v.skills[si];
+  const pie = `<div class="flopie">${h(t('ay_clic'))}</div>`;
+  if (el.dataset.ay === 'sk') {
+    const es = entradasSkill(v, si).filter(x => !x.sc);
+    return `<div class="flotit"><span class="slotbadge ${slotClase(sk.sl)}">${h(slotEs(sk.sl))}</span>${nombreSkill(sk)}</div>
+      <div class="floefs">${es.map(x => `<span class="floef">${nombreAnHtml(CATALOGO.efectos[x.ie])} ${destinoTipHtml(x)}</span>`).join('')}</div>
+      ${lecturaSkillHtml(v, si)}${pie}`;
+  }
+  const ti = +o.dataset.st, fi = +o.dataset.fx;
+  return entradasSkill(v, si).filter(x => tocaEfecto(x, ti, fi)).map(x => {
+    if (x.sc) return `<p>${h(t('an_sc_t'))}</p>`;
+    const e = CATALOGO.efectos[x.ie], g = CATALOGO.grupos.find(y => y.id === e.grupo), term = GL_DE[e.id].terminos[0];
+    return `<div class="flotit">${nombreAnHtml(e)} ${destinoTipHtml(x)}</div><p>${h(bi(term ? term.que : g.que))}</p>`;
+  }).join('') + pie;
+}
+let FLOTA_DE = null;
+function mostrarFlotante (el) {
+  let caja = document.getElementById('flotay');
+  if (!caja) { caja = document.createElement('div'); caja.id = 'flotay'; caja.className = 'flotay'; caja.setAttribute('role', 'tooltip'); document.body.appendChild(caja); }
+  caja.innerHTML = ayudaFlotanteHtml(el); caja.hidden = false; FLOTA_DE = el;
+  ubicarFlotante(caja, el.getBoundingClientRect());
+}
+function ocultarFlotante () {
+  const caja = document.getElementById('flotay');
+  if (caja) caja.hidden = true;
+  FLOTA_DE = null;
+}
 /** La información dudosa sobre algo (#32, MFF_DUDAS): lo que un idioma del juego dice distinto de otro y lo que quiere
  *  decir el coreano, en un «≠» como el «?» de ayudaHtml. '' si no hay. Dentro de un <summary> va dudaTag y, en el
  *  cuerpo, dudaCaja (un «≠» plegable dentro de un summary abriría los dos). */
@@ -3216,7 +3269,6 @@ function pegaAn (v) {
 // y se cierra sin volver a pintar la ficha (no se pliega nada de lo que estaba abierto), no abre otra
 // entrada del historial y se cierra con Esc, tocando afuera o con su botón.
 // ---------------------------------------------------------------------------
-const TIP_CELULAR = '(max-width: 600px)';      // hasta este ancho va como hoja inferior (el mismo de styles.css)
 /** El efecto [skill, etapa, efecto] de una variante. */
 function efectoDe (v, [si, ti, fi]) { return v.skills[si].st[ti].fx[fi]; }
 /** ¿La entrada sale del efecto fi de la etapa ti de su skill? */
@@ -3394,13 +3446,20 @@ function tipCoreanoHtml (terminos) {
 }
 /** ¿El «Cómo funciona» abierto sigue siendo de lo que se ve (la pestaña Skills de la misma variante)? */
 function tipVigente () {
-  const v = ui.view === 'detail' && ui.fichaTab === 'skills' ? variant(ui.charId, ui.uniformId) : null;
-  return !!v && v.key === ui.tip.key;
+  if (ui.view === 'detail' && ui.fichaTab === 'skills') return variant(ui.charId, ui.uniformId).key === ui.tip.key;
+  if (ui.view === 'compare' && ui.cmpVista === 'ficha') return ui.picks.some(x => x.key === ui.tip.key);
+  return false;
+}
+/** La variante de una clave («cid::uid» o «cid::base»). */
+function variantDeClave (key) {
+  const [cid, uid] = key.split('::'), v = variant(cid, uid);
+  if (!v) throw new Error('no hay una variante con la clave ' + key);
+  return v;
 }
 /** El «Cómo funciona» abierto (ui.tip), o nada. Va al final de #app, fuera de main, como las ventanas. */
 function tipHtml () {
   if (!ui.tip) return '';
-  const v = variant(ui.charId, ui.uniformId), { si, ti, fi } = ui.tip, sk = v.skills[si];
+  const v = variantDeClave(ui.tip.key), { si, ti, fi } = ui.tip, sk = v.skills[si];
   if (!sk) throw new Error(`${fullLabel(v)} no tiene la skill ${si}`);
   const es = entradasSkill(v, si), terminos = terminosSkill(es), foco = ti == null ? [] : es.filter(x => tocaEfecto(x, ti, fi));
   const seccion = (k, cuerpo) => `<section class="tipsec" data-sec="${k}"><h4>${h(t('tt_' + k))}</h4>${cuerpo}</section>`;
@@ -3418,43 +3477,28 @@ function tipHtml () {
       ${seccion('coreano', tipCoreanoHtml(terminos))}
     </div>`;
 }
-/** Abre el «Cómo funciona» de la skill si (en el efecto fi de la etapa ti, si se tocó un renglón), lo ubica,
- *  le pasa el foco y, si se abrió en un efecto, lo lleva a la vista. */
-function abrirTip (si, ti, fi) {
-  ui.tip = { key: variant(ui.charId, ui.uniformId).key, si, ti, fi };
+/** Abre el «Cómo funciona» de la skill si de la variante key (en el efecto fi de la etapa ti, si se tocó un renglón),
+ *  como ventana modal (Ezequiel, 27 de octubre de 2026), le pasa el foco y, si se abrió en un efecto, lo lleva a la
+ *  vista. origen es lo que se tocó; su disparador es el botón de la skill (en la ficha, el de su .skill; en la
+ *  comparativa, el de su celda): ese queda expandido y el foco vuelve ahí al cerrarla. */
+let TIP_ORIGEN = null;
+function abrirTip (key, si, ti, fi, origen) {
+  ui.tip = { key, si, ti, fi };
+  const b = TIP_ORIGEN = (origen.closest('.skill') || origen.closest('td')).querySelector('[aria-haspopup="dialog"]');
   $('#app').insertAdjacentHTML('beforeend', tipHtml());
-  const b = document.getElementById('skt-' + si);
   b.setAttribute('aria-expanded', 'true'); b.setAttribute('aria-controls', 'skpop');
-  posicionarTip();
   const pop = document.getElementById('skpop'), foco = pop.querySelector('.tipef.foco');
   pop.focus({ preventScroll: true });
   if (foco) pop.scrollTop = foco.offsetTop - pop.querySelector('.tiphead').offsetHeight - 8;
 }
-/** Lo cierra; con devolverFoco, el foco vuelve a la skill, sin mover la página. */
+/** La cierra; con devolverFoco, el foco vuelve a lo que la abrió (si sigue en la página), sin moverla. */
 function cerrarTip (devolverFoco) {
-  const b = document.getElementById('skt-' + ui.tip.si);
   ui.tip = null;
   document.getElementById('skpop').remove(); document.getElementById('skpop-fondo').remove();
+  const b = TIP_ORIGEN; TIP_ORIGEN = null;
+  if (!b || !document.contains(b)) return;
   b.setAttribute('aria-expanded', 'false'); b.removeAttribute('aria-controls');
   if (devolverFoco) b.focus({ preventScroll: true });
-}
-/** En la compu va debajo de lo tocado; si ahí no entra, encima; si tampoco, del lado con más lugar. Su alto
- *  no pasa del lugar de ese lado: lo que se despliega adentro se recorre adentro. Encima, crece hacia arriba.
- *  Va en coordenadas de la página: se mueve con ella y pasa por debajo de la cabecera fija. En el celular es
- *  una hoja inferior y la ubica styles.css. */
-function posicionarTip () {
-  const pop = document.getElementById('skpop'), { si, ti, fi } = ui.tip;
-  Object.assign(pop.style, { top: '', bottom: '', left: '', maxHeight: '' });
-  if (matchMedia(TIP_CELULAR).matches) return;
-  const ancla = ti == null ? document.getElementById('skt-' + si).closest('.top')
-    : document.querySelector(`.skill [data-a="skTip"][data-si="${si}"][data-st="${ti}"][data-fx="${fi}"]`);
-  const r = ancla.getBoundingClientRect(), techo = document.querySelector('.fcab').getBoundingClientRect().bottom;
-  const debajo = innerHeight - r.bottom - 12, encima = r.top - techo - 12, abajo = pop.offsetHeight <= debajo || debajo >= encima;
-  pop.style.maxHeight = Math.min(parseFloat(getComputedStyle(pop).maxHeight), Math.max(240, abajo ? debajo : encima)) + 'px';
-  // Sin un contenedor ubicado, top y bottom se miden desde el bloque inicial (el alto de la ventana desde arriba de la página).
-  if (abajo) pop.style.top = r.bottom + 6 + scrollY + 'px';
-  else pop.style.bottom = document.documentElement.clientHeight - (r.top - 6 + scrollY) + 'px';
-  pop.style.left = Math.max(16, Math.min(r.left, document.documentElement.clientWidth - pop.offsetWidth - 16)) + scrollX + 'px';
 }
 /** Tab y Shift+Tab dan la vuelta adentro del «Cómo funciona»: el foco no se va a la página de atrás. */
 function atraparFoco (e) {
@@ -4969,8 +5013,9 @@ function renderCompare () {
   const syn = synergy(vs), razones = razonesTxt(syn.razones);
   const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
   // Los efectos de una skill: los primeros CMP_FX a la vista y el resto plegado, con cuántos son.
-  const fxCmp = (f) => `<div class="cmpfx"><span class="fxtag">${h(txt('ab', f.a))}</span>${
-    marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
+  // Cada efecto abre el «Cómo funciona» de su skill en ese efecto, como en la ficha; con la ayuda, su etiqueta dice qué hace.
+  const fxCmp = (v, si) => ({ f, ti, fi }) => `<div class="cmpfx" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-st="${ti}" data-fx="${fi}"><span class="fxtag" data-ay="fx"${
+    U.prefs.ayuda ? '' : ` title="${h(txt('ab', f.a))}"`}>${h(txt('ab', f.a))}</span>${marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
   const efecto = ui.cmpVista === 'efecto', pot = ui.cmpVista === 'pot';
 
@@ -5027,11 +5072,11 @@ function renderCompare () {
         if (!sk) return `<td><span class="muted">${h(t('cmp_missing_slot'))}</span></td>`;
         const dmg = [];
         (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d) dmg.push(d); }));
-        const otros = [];
-        (sk.st || []).forEach(st => (st.fx || []).forEach(f => { if (!esDano(f)) otros.push(f); }));
+        const otros = [], si = v.skills.indexOf(sk), fxv = fxCmp(v, si);
+        (sk.st || []).forEach((st, ti) => (st.fx || []).forEach((f, fi) => { if (!esDano(f)) otros.push({ f, ti, fi }); }));
         const tgC = comunEnEtapas(sk, 'tg'), acC = comunEnEtapas(sk, 'ac');
         const mk = marcasDe(v.p, sk.sl);
-        return `<td><div style="font-weight:600;margin-bottom:4px">${nombreSkill(sk)}</div>
+        return `<td><button class="cmpsk" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-ay="sk" aria-haspopup="dialog" aria-expanded="false">${nombreSkill(sk)}</button>
           ${Object.keys(mk).length ? `<div class="row" style="margin-bottom:5px">${
             ATRIBUTOS.filter(a => mk[a.k]).map(a => `<span class="tag atributo">${h(a[LANG])}</span>`).join('')}</div>` : ''}
           ${esAjeno(tgC) ? `<div class="row" style="margin-bottom:5px">${objetivoTag(tgC, true)}</div>` : ''}
@@ -5046,9 +5091,9 @@ function renderCompare () {
           </div>
           ${dmg.length ? `<div class="muted" style="margin-bottom:5px">${dmg.map(d =>
              `<b>${h(d.pct)}%</b>${d.flat != null ? ' +' + h(d.flat) : ''}`).join(' · ')}</div>` : ''}
-          ${otros.slice(0, CMP_FX).map(fxCmp).join('')}
+          ${otros.slice(0, CMP_FX).map(fxv).join('')}
           ${otros.length > CMP_FX ? `<details class="cmpmas"><summary>${h(t(otros.length - CMP_FX === 1 ? 'cmp_mas_1' : 'cmp_mas')
-            .replace('{n}', otros.length - CMP_FX))}</summary>${otros.slice(CMP_FX).map(fxCmp).join('')}</details>` : ''}</td>`;
+            .replace('{n}', otros.length - CMP_FX))}</summary>${otros.slice(CMP_FX).map(fxv).join('')}</details>` : ''}</td>`;
       }).join('')}</tr>`).join('')}
     </tbody>
   </table></div>
@@ -6898,6 +6943,7 @@ function renderNav () {
     ${link('historico','nav_history','goHistorico')}
     <span class="navspace"></span>
     <div class="navtools">
+      <button class="ayudabtn${U.prefs.ayuda ? ' on' : ''}" data-a="ayudaToggle" aria-pressed="${!!U.prefs.ayuda}" title="${h(t('ay_toggle_t'))}">${h(t('ay_toggle'))}</button>
       <button class="langbtn" data-a="lang" title="${h(t('lang_title'))}">
         <span class="${LANG === 'es' ? 'on' : ''}">ES</span><span class="${LANG === 'en' ? 'on' : ''}">EN</span>
       </button>
@@ -6943,7 +6989,8 @@ function render () {
   const q = $('#q');
   if (q && ui.focusSearch) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
   sincronizarLugar();
-  if (ui.tip) posicionarTip();
+  document.body.classList.toggle('sin-ayuda', !U.prefs.ayuda);
+  ocultarFlotante();
 }
 
 // ============================================================================
@@ -7027,12 +7074,24 @@ function resaltar (id) {
 // ============================================================================
 // EVENTOS
 // ============================================================================
+// La ayuda al pasar el mouse (ayudaFlotanteHtml): solo con la ayuda activada y con un mouse (en el celular, el toque abre
+// el «Cómo funciona»).
+document.addEventListener('mouseover', (e) => {
+  if (!U.prefs.ayuda || !matchMedia('(hover: hover)').matches) return;
+  const el = e.target.closest('[data-ay]');
+  if (el === FLOTA_DE) return;
+  if (el) mostrarFlotante(el); else ocultarFlotante();
+});
+document.addEventListener('scroll', () => {
+  ocultarFlotante();
+  document.querySelectorAll('details.ayuda[open]').forEach(ubicarAyuda);
+}, true);
+// El «?» se ubica al abrirse (el evento toggle no burbujea: se escucha en la captura).
+document.addEventListener('toggle', (e) => { if (e.target.matches && e.target.matches('details.ayuda') && e.target.open) ubicarAyuda(e.target); }, true);
 document.addEventListener('click', (e) => {
-  // Con el «Cómo funciona» de una skill abierto, tocar afuera lo cierra y el toque sigue su curso (si fue otra
-  // skill, la abre); si fue lo mismo que lo abrió, solo lo cierra. Si el foco no quedó en otra cosa, vuelve a
-  // la skill.
-  const tipAntes = ui.tip && !e.target.closest('#skpop') ? ui.tip : null;
-  if (tipAntes) cerrarTip(document.activeElement === document.body);
+  // Con el «Cómo funciona» de una skill abierto, tocar afuera (el fondo de la ventana modal) lo cierra. Si el
+  // foco no quedó en otra cosa, vuelve a lo que lo abrió.
+  if (ui.tip && !e.target.closest('#skpop')) cerrarTip(document.activeElement === document.body);
   const el = e.target.closest('[data-a]'); if (!el) return;
   // Un «?» o un «≠» (ayudaHtml, dudaHtml) se abre solo: no hace lo de lo que lo contiene (la cabecera de una skill abre
   // su «Cómo funciona»).
@@ -7047,6 +7106,7 @@ document.addEventListener('click', (e) => {
       ui.view = 'roster'; ui.charId = null; ui.focusSearch = false; render(); break; }
     case 'atras': history.back(); break;
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
+    case 'ayudaToggle': U.prefs.ayuda = !U.prefs.ayuda; ocultarFlotante(); commit(); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] };
       P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = ''; P.atributo = '';
@@ -7089,8 +7149,8 @@ document.addEventListener('click', (e) => {
     case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
     // Seleccionar texto de una skill no abre su «Cómo funciona».
     case 'skTip': { const si = +d.si, ti = d.st == null ? null : +d.st, fi = d.fx == null ? null : +d.fx;
-      if (getSelection().toString() || (tipAntes && tipAntes.si === si && tipAntes.ti === ti && tipAntes.fi === fi)) break;
-      abrirTip(si, ti, fi); break; }
+      if (getSelection().toString()) break;
+      ocultarFlotante(); abrirTip(d.k, si, ti, fi, el); break; }
     case 'tipCerrar': cerrarTip(true); break;
     // La ventana del «Por qué» de una tarjeta de equipo: arranca en el personaje de la ficha.
     case 'pqAbrir': abrirPq({ id: d.pq, charId: ui.charId, uid: ui.uniformId, tab: null, y: 0 }); break;
@@ -7371,8 +7431,6 @@ document.addEventListener('keydown', (e) => {
     if (x) { e.preventDefault(); abrirFicha(x.cid, x.uid); }
   }
 });
-// Al cambiar el tamaño de la ventana, el «Cómo funciona» se vuelve a ubicar (o pasa a hoja inferior y vuelve).
-window.addEventListener('resize', () => { if (ui.tip) posicionarTip(); });
 
 function download (name, text, type) {
   const a = document.createElement('a');
