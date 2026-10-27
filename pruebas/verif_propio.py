@@ -70,6 +70,11 @@ try:
         nombres = pg.evaluate("[...document.querySelectorAll('.skill .nm')].map(x => x.textContent)")
         ok('3b The Living Dark Planet: las skills de la nota y el striker de Tier-4', any('Dark Star Crush' in n for n in nombres)
            and any('Chaos and Fear' in n for n in nombres), nombres)
+        pg.locator('.skill .nm', has_text='Mindless Meteor').first.click(); pg.wait_for_selector('#skpop')
+        pop = pg.locator('#skpop').inner_text()
+        ok('3b el daño dice el elemento y de qué ataque sale, como el juego (Daño de fuego: 90% del ataque de energía)',
+           'Daño de fuego: 90% del ataque de energía' in pop, [l for l in pop.split('\n') if 'año' in l][:4])
+        pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         cl = por_nombre['Clea']
         ok('3b Clea es T4 y trae Death of Doctor Strange', cl['t'] == 'T4' and any(u['p'] == 'clea1' for u in cl['uniforms']))
 

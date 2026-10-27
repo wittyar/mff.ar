@@ -1,15 +1,15 @@
 {
  " Mind": " Mental",
  "Energy": "Energía",
- "Energy Cold": "Energía de frío",
- "Energy Fire": "Energía de fuego",
- "Energy Lightning": "Energía de rayo",
- "Energy Mind": "Energía mental",
- "Energy Poison": "Energía de veneno",
+ "Energy Cold": "Frío (energía)",
+ "Energy Fire": "Fuego (energía)",
+ "Energy Lightning": "Rayo (energía)",
+ "Energy Mind": "Mental (energía)",
+ "Energy Poison": "Veneno (energía)",
  "Physical": "Físico",
- "Physical Cold": "Físico de frío",
- "Physical Fire": "Físico de fuego",
- "Physical Lightning": "Físico de rayo",
- "Physical Mind": "Físico mental",
- "Physical Poison": "Físico de veneno"
+ "Physical Cold": "Frío (físico)",
+ "Physical Fire": "Fuego (físico)",
+ "Physical Lightning": "Rayo (físico)",
+ "Physical Mind": "Mental (físico)",
+ "Physical Poison": "Veneno (físico)"
 }
