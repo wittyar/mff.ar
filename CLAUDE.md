@@ -208,6 +208,13 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   blanco, hasta que thanosvibs publique los suyos. Pendiente: el nivel 90 de Dormammu (como el de Spider-Man y Ghost
   Rider, la app no tiene dónde mostrarlo) y los valores mínimo y medio del C.T.P. de Ascenso brillante (la app muestra los
   máximos, que no cambian).
+- La 1.0.47 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 27 de octubre: el daño se lee como en
+  el juego, el elemento y de qué ataque sale (Ezequiel: «flame damage of energy attack» es daño de fuego que sale del
+  ataque de energía; es un dato de todo el daño elemental). `traducciones/efectos.json`: «Daño de fuego: 65% del ataque de
+  energía»; el tipo (físico o de energía) entre paréntesis solo si no es el del ataque. `traducciones/elementos.json`:
+  «Fuego (energía)». Y el liderazgo de Dormammu — The Living Dark Planet es el de la ficha (Supervillanos, +60% a los
+  Superhéroes, como Damnation), no el de la base (+24% de defensas a todos), con su marcador (id propio 991160201). La
+  12.3.5 queda confirmada por los nombres de archivo de la nota coreana («V1235_…»).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,

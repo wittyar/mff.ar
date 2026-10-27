@@ -1,6 +1,6 @@
 {
- "version": "1.0.46",
+ "version": "1.0.47",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "La actualización del 27 de octubre: los uniformes nuevos de Dormammu (The Living Dark Planet) y Clea (Death of Doctor Strange), la Tier-4 de los dos con su habilidad de pegador y el artefacto exclusivo de Dormammu (Lord of Chaos), cargados de las notas oficiales hasta que la fuente pública los publique. Se pueden comparar como el resto del roster."
+ "notas": "El daño de las habilidades se lee como en el juego: el elemento y de qué ataque sale («Daño de fuego: 65% del ataque de energía», en lugar de «Daño de energía de fuego»). Y el uniforme nuevo de Dormammu (The Living Dark Planet) tiene su liderazgo de la nota oficial: +60% de daño básico a los Superhéroes para los aliados Supervillanos."
 }
