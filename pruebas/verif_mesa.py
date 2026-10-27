@@ -60,6 +60,9 @@ try:
         pg.on('dialog', lambda d: (dialogos.append(d.message), d.dismiss()))
         pg.goto(url); pg.wait_for_selector('.ccard')
         pg.wait_for_timeout(800)
+        # Por nombre: lo que la prueba toca de la lista de la ficha (que sigue el orden del roster) se escribió con ese orden;
+        # por lanzamiento, el orden por defecto, queda en otro lugar.
+        pg.select_option('select[data-a="sort"]', 'name'); pg.wait_for_timeout(150)
         viejo = next(x for x in capa()['teams'] if x['id'] == 'eq-viejo')
         ok('equipo de antes: se le declara un líder de sus integrantes y se guarda', viejo.get('lider') in VIEJO, viejo.get('lider'))
         pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)

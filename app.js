@@ -63,7 +63,7 @@ function blankUser () {
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
-    prefs: { lang:'es', view:'grid', sort:'name', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
+    prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
              filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
@@ -584,6 +584,7 @@ const T = {
   s_side:            { es:'Bando',               en:'Side' },
   s_rank:            { es:'Posición en la lista',en:'Position in list' },
   s_skills:          { es:'Cantidad de skills',  en:'Skill count' },
+  s_lanz:            { es:'Lanzamiento',         en:'Release' },
 
   f_class:           { es:'Clase',               en:'Class' },
   f_role:            { es:'Rol',                 en:'Role' },
@@ -2611,7 +2612,26 @@ function readFile (file, cb) { const r = new FileReader(); r.onload = () => cb(r
 // ============================================================================
 // ROSTER
 // ============================================================================
+/** La fecha en que llegó al juego cada variante (el personaje o su uniforme), del histórico: la del hecho «personaje» de
+ *  su base o «uniforme» de su uniforme (scripts/historico.py), con la fecha de su versión. Se arma la primera vez. Lo
+ *  creado a mano (un personaje nuevo o un uniforme agregado en la capa) no está en el histórico: null. Una variante de
+ *  los datos sin su llegada es un error de los datos. */
+let LANZAMIENTO = null, DE_LOS_DATOS = null;
+function lanzamientoDe (v) {
+  if (!LANZAMIENTO) {
+    const fecha = new Map(HISTORICO.versiones.map(x => [x[0], x[2]]));
+    LANZAMIENTO = new Map(HISTORICO.hechos.filter(x => x[1] === 'personaje' || x[1] === 'uniforme').map(x => [x[0], fecha.get(x[2])]));
+    DE_LOS_DATOS = new Set(CHARS_SEED.flatMap(c => [c.id + '::base', ...c.uniforms.map(u => c.id + '::' + u.id)]));
+  }
+  const f = LANZAMIENTO.get(v.key);
+  if (f) return f;
+  if (DE_LOS_DATOS.has(v.key)) throw new Error('el histórico no trae la llegada de ' + fullLabel(v) + ' (' + v.key + ')');
+  return null;
+}
 const SORTS = {
+  // Lo más nuevo primero (Ezequiel, 27 de octubre de 2026): el orden por defecto del roster. Lo creado a mano va antes
+  // que todo: es lo último que entró a la app.
+  lanz:   { k:'s_lanz',   get: v => { const f = lanzamientoDe(v); return f === null ? -Infinity : -Date.parse(f); } },
   name:   { k:'s_name',   get: v => fullLabel(v).toLowerCase() },
   tier:   { k:'s_tier',   get: v => ({T4:0,T3:1,T2:2})[v.t] },
   clase:  { k:'s_class',  get: v => v.c },
@@ -2682,7 +2702,8 @@ function rosterData () {
     if (F.art.length && !artefactoDa(v, F.art).length) return false;
     return true;
   });
-  const s = SORTS[U.prefs.sort] || SORTS.name;
+  const s = SORTS[U.prefs.sort];
+  if (!s) throw new Error('orden del roster desconocido: ' + U.prefs.sort);
   list.sort((a, b) => {
     const x = s.get(a), y = s.get(b);
     if (x < y) return -1 * U.prefs.dir;

@@ -161,6 +161,9 @@ def principal(url):
         b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1300, 'height': 900}); errores = []
         pg.on('pageerror', lambda e: errores.append(str(e)))
         pg.goto(url); pg.wait_for_selector('.ccard')
+        # Por nombre: la base de un personaje con muchos uniformes queda en la primera página de la búsqueda (por
+        # lanzamiento, el orden por defecto, va al final).
+        pg.select_option('select[data-a="sort"]', 'name'); pg.wait_for_timeout(150)
         # 1 categorías de cada bloque en «Lo que le da al equipo»
         malos = []
         for v in casos:
