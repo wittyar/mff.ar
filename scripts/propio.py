@@ -5,7 +5,8 @@ mi propio contenido y luego apoyarme en thanosvibs como confirmación»).
 fuentes/propio/ trae, de las fuentes del juego (las notas de los foros oficiales en inglés y en coreano), lo que thanosvibs
 todavía no publica o publica distinto, en sus mismas formas:
   personajes.json   filas de /api/characters (nuevas o en lugar de las de thanosvibs), cambios de campos sobre las de
-                    thanosvibs, entradas de /api/uniforms y de /api/updates.
+                    thanosvibs, entradas de /api/uniforms y de /api/updates (un parche de mitad de mes, con «dentro»:
+                    la versión mayor en la que va, como lo escribe thanosvibs).
   skills/<p>.json   las skills de un retrato como /api/skills: las de otro retrato (desde, el de thanosvibs) con los slots
                     que el juego cambia o agrega encima (slots).
   artefactos.json   filas de /api/artifacts.      ctps.json   filas de /api/ctps.
@@ -73,7 +74,7 @@ def restaurar_updates(ruta):
     for v in cargar(ruta):
         if MARCA in v:
             continue
-        for k in ('characters', 'uniforms', 't3s', 't4s'):
+        for k in ('characters', 'uniforms', 't3s', 't4s', 'potes'):
             if v.get(k):
                 v[k] = [x for x in v[k] if MARCA not in x]
         out.append(v)
@@ -181,8 +182,17 @@ def main():
     ups = cargar(ruta)
     for v in P['versiones']:
         fuentes(v, f'versión {v["version"]}')
-        e = next((x for x in ups if x['version'] == v['version']), None)
-        if e is None:
+        # Un parche de mitad de mes (12.3.5) va dentro de su versión mayor (dentro: 12.3), como lo escribe thanosvibs:
+        # un pote más y lo que trae con added_in de la versión del parche.
+        mayor = v.get('dentro')
+        e = next((x for x in ups if x['version'] == (mayor or v['version'])), None)
+        if mayor:
+            if e is None:
+                raise SystemExit(f'fuentes/propio/personajes.json: la versión {v["version"]} va dentro de {mayor}, que no está')
+            if not any(x['version'] == v['version'] for x in e['potes']):
+                e['potes'].append({'version': v['version'], 'name': v['subtitle'], 'date': v['fecha'], 'icon': '',
+                                   'main': 'False', MARCA: {'tv': None}})
+        elif e is None:
             e = {'version': v['version'], 'subtitle': v['subtitle'], 'img_format': 'jpg', 'themes': [],
                  'potes': [{'version': v['version'], 'name': v['subtitle'], 'date': v['fecha'], 'icon': '', 'main': 'True'}],
                  'characters': [], 'uniforms': [], 't3s': [], 'tps': [], 't4s': [], 'banners': [], MARCA: {'tv': None}}
