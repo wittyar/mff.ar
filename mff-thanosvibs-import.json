@@ -8419,15 +8419,10 @@
      "tier": "T4",
      "p": "spiderman12",
      "cost": "1750 Crystals",
-     "striker": 4,
+     "striker": 0,
      "wba": "Sentido Arácnido",
      "trans": false,
-     "new": true,
-     "ab": [
-      "Sentido Arácnido",
-      "Liderazgo",
-      "Simbionte"
-     ],
+     "new": false,
      "r": [
       "Tanque",
       "Daño"
@@ -37947,7 +37942,7 @@
    "ins": "Orden",
    "race": "Alienígena",
    "gender": "Femenino",
-   "t": "T3",
+   "t": "T4",
    "abilities": [
     "Magia",
     "Movimiento Rápido"
@@ -37965,9 +37960,31 @@
    "striker": 4,
    "wba": "Movimiento Rápido",
    "trans": true,
-   "new": false,
+   "new": true,
    "p": "clea",
-   "uniforms": []
+   "uniforms": [
+    {
+     "id": "clea-10100097",
+     "name": "Death of Doctor Strange",
+     "tier": "T4",
+     "p": "clea1",
+     "cost": "1750 Crystals",
+     "striker": 4,
+     "wba": "Movimiento Rápido",
+     "trans": true,
+     "new": true,
+     "pr": [
+      "foro-1897450",
+      "cafe-3188979"
+     ],
+     "up": {
+      "update": "12.3.5",
+      "flags": [
+       "Crystal1750"
+      ]
+     }
+    }
+   ]
   },
   {
    "id": "ulik",
@@ -40383,7 +40400,7 @@
    "ins": "Destrucción",
    "race": "Otro",
    "gender": "Masculino",
-   "t": "T3",
+   "t": "T4",
    "abilities": [
     "Magia",
     "Maldad Pura"
@@ -40401,19 +40418,19 @@
    "striker": 3,
    "wba": "Magia",
    "trans": false,
-   "new": false,
+   "new": true,
    "p": "dormammu",
    "uniforms": [
     {
      "id": "dormammu-10100116",
      "name": "Damnation",
-     "tier": "T3",
+     "tier": "T4",
      "p": "dormammu1",
      "cost": "2500 Crystals",
      "striker": 3,
      "wba": "Magia",
      "trans": false,
-     "new": false,
+     "new": true,
      "r": [
       "Control",
       "Daño"
@@ -40504,6 +40521,31 @@
       "cable2",
       "redguardian1"
      ]
+    },
+    {
+     "id": "dormammu-10200116",
+     "name": "The Living Dark Planet",
+     "tier": "T4",
+     "p": "dormammu2",
+     "cost": "2500 Crystals",
+     "striker": 3,
+     "wba": "Magia",
+     "trans": false,
+     "new": true,
+     "pr": [
+      "foro-1897450",
+      "cafe-3188979"
+     ],
+     "r": [
+      "Control",
+      "Daño"
+     ],
+     "up": {
+      "update": "12.3.5",
+      "flags": [
+       "Crystal2500"
+      ]
+     }
     }
    ]
   },
@@ -84235,6 +84277,7 @@
   "portrait-satana": "images/satana.png",
   "portrait-hellstorm-10100096": "images/hellstorm1.png",
   "portrait-hellstorm": "images/hellstorm.png",
+  "portrait-clea-10100097": "images/propio/clea1.png",
   "portrait-clea": "images/clea.png",
   "portrait-ulik": "images/ulik.png",
   "portrait-fandral": "images/fandral.png",
@@ -84271,6 +84314,7 @@
   "portrait-crystal": "images/crystal.png",
   "portrait-maximus": "images/maximus.png",
   "portrait-dormammu-10100116": "images/dormammu1.png",
+  "portrait-dormammu-10200116": "images/propio/dormammu2.png",
   "portrait-dormammu": "images/dormammu.png",
   "portrait-ghost-rider-robbie-reyes-10100117": "images/robbiereyes1.png",
   "portrait-ghost-rider-robbie-reyes": "images/robbiereyes.png",
@@ -85025,7 +85069,8 @@
   "art-annihilus": "images/items/artifact_annihilus.png",
   "art-galactus": "images/items/artifact_galactus.png",
   "art-redskull": "images/items/artifact_redskull.png",
-  "art-agathaharkness": "images/items/artifact_agathaharkness.png"
+  "art-agathaharkness": "images/items/artifact_agathaharkness.png",
+  "art-dormammu": "images/items/artifact_dormammu.png"
  },
  "logo": ""
 }

@@ -1,15 +1,15 @@
 {
  "formato": 18,
- "juego": "12.3",
- "generado": "2026-10-26",
+ "juego": "12.3.5",
+ "generado": "2026-10-27",
  "archivos": {
   "data.js": {
-   "sha256": "17a8f11468f6464b831360734c476164ffdf45af84ba321fa20563a511d0dcd2",
-   "bytes": 6657295
+   "sha256": "e2f09beee6b48bd50abf088c9f903a849225161bc6ec1fa40652fa0b6c626e10",
+   "bytes": 6671214
   },
   "docs/AUDITORIA.md": {
-   "sha256": "a25349c860dd8fb9583f55934540af8c220ba289e9c676fa304b16f5ee0f609f",
-   "bytes": 180228
+   "sha256": "50c7bcacf636fb363f37830b11179d4e1883001b4247a247a6a9c0265fbfe5c3",
+   "bytes": 184709
   }
  },
  "imagenes": [
@@ -2026,6 +2026,10 @@
    "https://thanosvibs.money/images/items/artifact_domino.png"
   ],
   [
+   "images/items/artifact_dormammu.png",
+   "https://thanosvibs.money/images/items/artifact_dormammu.png"
+  ],
+  [
    "images/items/artifact_drax.png",
    "https://thanosvibs.money/images/items/artifact_drax.png"
   ],
@@ -3672,6 +3676,14 @@
   [
    "images/professorx2.png",
    "https://thanosvibs.money/images/portraits/professorx2.png"
+  ],
+  [
+   "images/propio/clea1.png",
+   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/clea1.png"
+  ],
+  [
+   "images/propio/dormammu2.png",
+   "https://raw.githubusercontent.com/wittyar/mff.ar/main/fuentes/propio/retratos/dormammu2.png"
   ],
   [
    "images/proximamidnight.png",

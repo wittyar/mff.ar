@@ -1,6 +1,6 @@
 # Completitud de los datos
 
-Generado por `scripts/completitud.py` sobre `data.js` (juego 12.3, datos del 2026-10-26, formato 18) y `datos.json`.
+Generado por `scripts/completitud.py` sobre `data.js` (juego 12.3.5, datos del 2026-10-27, formato 18) y `datos.json`.
 
 Qué le falta a cada variante (un personaje con un uniforme) para tener la información que la app muestra y usa, y de dónde podría salir. Lo que dos fuentes dicen distinto está en `docs/AUDITORIA.md`; esto es lo que no está. Lo que no existe en el juego no es un faltante (un personaje sin artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito va aparte.
 
@@ -27,23 +27,23 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 ## Resumen
 
-261 de 891 variantes completas (29%); 56 de 291 personajes con todas sus variantes completas.
+259 de 893 variantes completas (29%); 54 de 291 personajes con todas sus variantes completas.
 
 Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo que falta en el personaje cuenta en todas sus variantes):
 
 | Faltante | Variantes | Personajes | Casos | De dónde podría salir |
 |---|---|---|---|---|
 | [Strikers](#strikers) | 358 | 123 | 123 | la wiki (pestaña Striker), el juego o foros |
-| [Rotación](#rotación) | 192 | 112 | 192 | thanosvibs (rotaciones), la guía de armado o foros |
+| [Rotación](#rotación) | 194 | 114 | 194 | thanosvibs (rotaciones), la guía de armado o foros |
 | [Fila vacía en la guía de armado](#fila-vacía-en-la-guía-de-armado) | 74 | 33 | 33 | la guía de armado o foros |
 | [«Give Power» sin lo que otorga](#give-power-sin-lo-que-otorga) | 68 | 27 | 78 | thanosvibs (Leads & Supports), la wiki o foros |
 | [Skill sin efectos](#skill-sin-efectos) | 48 | 31 | 48 | la wiki (en la pasiva de uniforme, el «Bonus» del uniforme) o foros |
 | [Bonos de equipo que faltan](#bonos-de-equipo-que-faltan) | 34 | 33 | 33 | la wiki (sección Team Bonus), capturas del juego o foros |
 | [Facción, tipo, raza o habilidad sin resolver ($HEROSUBTYPE1)](#facción-tipo-raza-o-habilidad-sin-resolver-herosubtype1) | 31 | 18 | 42 | el juego o foros, y a mano en scripts/contenido/marcadores.csv |
 | [Sin el C.T.P. de su contexto en la guía de armado](#sin-el-ctp-de-su-contexto-en-la-guía-de-armado) | 29 | 27 | 31 | la guía de armado o foros |
-| [Efecto que el catálogo no clasifica](#efecto-que-el-catálogo-no-clasifica) | 24 | 16 | 25 | a mano (scripts/contenido/catalogo.json) |
+| [Efecto que el catálogo no clasifica](#efecto-que-el-catálogo-no-clasifica) | 25 | 17 | 26 | a mano (scripts/contenido/catalogo.json) |
 | [ISO-8 u obelisco sin dato en la guía de armado](#iso-8-u-obelisco-sin-dato-en-la-guía-de-armado) | 23 | 6 | 6 | la guía de armado o foros |
-| [Valores del artefacto incompletos](#valores-del-artefacto-incompletos) | 17 | 7 | 7 | la wiki (página Artifact) o el juego |
+| [Valores del artefacto incompletos](#valores-del-artefacto-incompletos) | 20 | 8 | 8 | la wiki (página Artifact) o el juego |
 | [Nombre en Leads & Supports distinto del de la skill](#nombre-en-leads--supports-distinto-del-de-la-skill) | 15 | 14 | 16 | el juego o foros |
 | [Liderazgo sin completar](#liderazgo-sin-completar) | 10 | 4 | 10 | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | [Soporte que Leads & Supports no publica](#soporte-que-leads--supports-no-publica) | 5 | 3 | 5 | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
@@ -52,24 +52,25 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [Bono de equipo sin nombre](#bono-de-equipo-sin-nombre) | 4 | 2 | 2 | capturas del juego o foros |
 | [Objetivo sin nombre (Target ID)](#objetivo-sin-nombre-target-id) | 3 | 3 | 3 | thanosvibs (Leads & Supports) o foros |
 | [Sin C.T.P. en la guía de armado](#sin-ctp-en-la-guía-de-armado) | 3 | 2 | 2 | la guía de armado o foros |
+| [Datos del uniforme](#datos-del-uniforme) | 2 | 2 | 4 | thanosvibs (uniformes) |
 | [Skill que falta](#skill-que-falta) | 1 | 1 | 5 | thanosvibs (API de skills), la wiki o foros |
 | [Stats](#stats) | 1 | 1 | 1 | thanosvibs |
 | [Sin fila en la Ideal CTP List](#sin-fila-en-la-ideal-ctp-list) | 1 | 1 | 1 | thanosvibs (Ideal CTP List) |
 | [Sin lugar en la tier list General](#sin-lugar-en-la-tier-list-general) | 1 | 1 | 1 | thanosvibs (tier list General) |
 
-Sin casos: Dato de identidad vacío; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles; Datos del uniforme.
+Sin casos: Dato de identidad vacío; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles.
 
 ### Lo que ya se sabía que no cierra
 
 - **Marcadores sin resolver:** 42 efectos en 31 variantes. docs/AUDITORIA.md (sección 8) los cuenta por id de la API, que se repite en los uniformes que comparten la skill.
-- **Liderazgos:** Leads & Supports publica el de 415 variantes, y el build deriva el de 466 más de su Leader Skill (484 slots, con "src": "api"; docs/AUDITORIA.md, sección 12) y 12 soportes de las pasivas. 10 slots de 10 variantes no se pudieron derivar (efecto sin stat, 10; un slot puede tener más de un motivo).
+- **Liderazgos:** Leads & Supports publica el de 415 variantes, y el build deriva el de 468 más de su Leader Skill (486 slots, con "src": "api"; docs/AUDITORIA.md, sección 12) y 12 soportes de las pasivas. 10 slots de 10 variantes no se pudieron derivar (efecto sin stat, 10; un slot puede tener más de un motivo).
 - **Strikers:** 120 personajes sin la pestaña Striker en la wiki y 3 con la pestaña sin filas que se puedan leer.
 - **Bonos de equipo por confirmar:** los que se vieron en capturas del juego y esperan confirmación no están en data.js, así que este informe no los ve. Sí ve 31 personajes sin ningún bono y 2 solo con los del juego (Annihilus y Galactus). Los 49 bonos con versiones empatadas entre páginas de la wiki son diferencias entre fuentes (docs/AUDITORIA.md, sección 10): van en «Lo que no cuenta».
 - **Nombres de Leads & Supports que no son los de la API de skills:** 16 en 15 variantes; 5 con el nombre de otra skill de la variante, entre ellos Jeff the Land Shark y Polaris — Uncanny X-Men.
 
 ### Lo que no cuenta como faltante
 
-- **Sin artefacto:** 21 personajes, y ninguna fuente dice que tengan uno: Black Dwarf, Blue Marvel, Corvus Glaive, Darkhawk, Deathlok, Dormammu, Elsa Bloodstone, Iron Fist, Jessica Jones, Luke Cage, Molecule Man, Moonstone, Morbius, Nightcrawler, Proxima Midnight, Quasar (Avril Kincaid), Silk, Singularity, Songbird, Supergiant, Viper.
+- **Sin artefacto:** 20 personajes, y ninguna fuente dice que tengan uno: Black Dwarf, Blue Marvel, Corvus Glaive, Darkhawk, Deathlok, Elsa Bloodstone, Iron Fist, Jessica Jones, Luke Cage, Molecule Man, Moonstone, Morbius, Nightcrawler, Proxima Midnight, Quasar (Avril Kincaid), Silk, Singularity, Songbird, Supergiant, Viper.
 - **Guía de armado sin C.T.P., ISO-8 u obelisco para quien no vale la pena armar:** 63 personajes: la guía dice «dont waste gold» como ISO-8 o la Ideal CTP List los pone en «Not worth».
 - **Bonos con versiones empatadas entre páginas de la wiki:** 49 (docs/AUDITORIA.md, sección 10). La app muestra todas las versiones.
 - **Función en el contexto:** 60 variantes tienen función en PvP y 119 en PvE (están en las tier lists de ese contexto). Las demás no la tienen: la lista lo dice al no ponerlas.
@@ -152,12 +153,13 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Efecto que el catálogo no clasifica
 
-25 casos en 16 personajes y 24 variantes. Una etiqueta de efecto que el catálogo no clasifica (docs/AUDITORIA.md, sección 9).
+26 casos en 17 personajes y 25 variantes. Una etiqueta de efecto que el catálogo no clasifica (docs/AUDITORIA.md, sección 9).
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
 | Adam Warlock — Marvel Studios' Guardians of the Galaxy 3 | Pasiva T2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
 | Beast (All-New X-Men, Marvel Animation's X-Men '97) | Pasiva T2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
+| Dormammu — The Living Dark Planet | Pasiva T2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
 | Echo — Marvel Studios' Echo (Maya Lopez (Echo)) | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
 | Electro — Spider-Man: No Way Home | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
 | Galactus | Activa 2: «Excluding bosses, ignores enemy's basic damage decrease» (2 veces) | a mano (scripts/contenido/catalogo.json) |
@@ -303,12 +305,13 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Valores del artefacto incompletos
 
-7 casos en 7 personajes. El texto del artefacto usa valores que thanosvibs no publica en esos niveles de estrellas: la app los marca «sin dato» (docs/AUDITORIA.md, sección 6).
+8 casos en 8 personajes. El texto del artefacto usa valores que thanosvibs no publica en esos niveles de estrellas: la app los marca «sin dato» (docs/AUDITORIA.md, sección 6).
 
 | Personaje | Qué falta | De dónde podría salir |
 |---|---|---|
 | Agatha Harkness | The Vishanti's Sorcerer Supreme: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
 | Domino (sus 3 variantes) | Probability Power: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
+| Dormammu (sus 3 variantes) | Lord of Chaos: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
 | Hulkbuster (Iron Man Mark 44) (sus 5 variantes) | Big Armor: thanosvibs no publica todos sus valores en 3★, 4★, 5★ y 6★ | la wiki (página Artifact) o el juego |
 | Inferno (sus 2 variantes) | The Flames of Attilan: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
 | Morgan le Fay (sus 3 variantes) | Dark Knowledge: thanosvibs no publica todos sus valores en 3★, 4★ y 5★ | la wiki (página Artifact) o el juego |
@@ -618,7 +621,7 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Rotación
 
-192 casos en 112 personajes y 192 variantes. thanosvibs publica rotaciones por uniforme, y la guía de armado, la del mejor uniforme de cada personaje. Se dice si otro uniforme del personaje tiene la suya.
+194 casos en 114 personajes y 194 variantes. thanosvibs publica rotaciones por uniforme, y la guía de armado, la del mejor uniforme de cada personaje. Se dice si otro uniforme del personaje tiene la suya.
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
@@ -626,7 +629,9 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Agent 13 (sus 2 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Annihilus | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Captain America (Sharon Rogers) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Star Light Armor, Dark Star Armor, Star Night Armor, Light Sirius Armor, Poseidon Armor y Arctic Warrior; la guía de armado tiene la de Arctic Warrior |
+| Clea — Death of Doctor Strange | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base |
 | Dazzler — X-Song | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base |
+| Dormammu — The Living Dark Planet | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base y Damnation; la guía de armado tiene la de Damnation |
 | Drax (sus 4 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Ebony Maw | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Avengers: Infinity War, Dark Obsidian Armor y General's Hand |
 | Echo — Marvel Studios' Hawkeye (Maya Lopez) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base y Marvel Studios' Echo (Maya Lopez (Echo)); la guía de armado tiene la de Marvel Studios' Echo (Maya Lopez (Echo)) |
@@ -734,6 +739,15 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Wong (base, Marvel Studios' Doctor Strange) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Doctor Strange 2 y What If... Zombies?!; la guía de armado tiene la de What If... Zombies?! |
 | Yelena Belova — Marvel Studios' Thunderbolts* | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Marvel Studios' Black Widow y Marvel Studios' Black Widow (Snow Suit) |
 | Yondu — All-New, All-Different | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Guardians of the Galaxy 2 y Summer Vacation; la guía de armado tiene la de Summer Vacation |
+
+### Datos del uniforme
+
+4 casos en 2 personajes y 2 variantes. thanosvibs publica costo, materiales y opciones de cada uniforme.
+
+| Variante | Qué falta | De dónde podría salir |
+|---|---|---|
+| Clea — Death of Doctor Strange | sin materiales de mejora; las opciones de uniforme no son cinco retratos del roster | thanosvibs (uniformes) |
+| Dormammu — The Living Dark Planet | sin materiales de mejora; las opciones de uniforme no son cinco retratos del roster | thanosvibs (uniformes) |
 
 ## Por personaje
 
@@ -975,6 +989,12 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
+<details><summary>Clea: 3 faltantes, 1 de 2 variantes incompletas</summary>
+
+- **Death of Doctor Strange:** rotación; datos del uniforme
+
+</details>
+
 <details><summary>Colossus: 1 faltante, 4 de 4 variantes incompletas</summary>
 
 - **Personaje:** strikers
@@ -1057,6 +1077,13 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 <details><summary>Domino: 1 faltante, 3 de 3 variantes incompletas</summary>
 
 - **Personaje:** valores del artefacto
+
+</details>
+
+<details><summary>Dormammu: 5 faltantes, 3 de 3 variantes incompletas</summary>
+
+- **Personaje:** valores del artefacto
+- **The Living Dark Planet:** efecto sin clasificar: Pasiva T2; rotación; datos del uniforme
 
 </details>
 

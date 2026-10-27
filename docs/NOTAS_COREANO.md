@@ -2,7 +2,7 @@
 
 Generado por `scripts/cotejo_ko.py` (lo llama `scripts/build.py`). Cada nota del foro en inglés (`fuentes/foro/`) contra su par del café coreano (`fuentes/cafe/`, `scripts/cafe.py`: la de fecha más cercana, del mismo tipo a 3 días o menos o de otro a 12 horas o menos). El coreano es el original. Se comparan los porcentajes y los segundos, sección por sección cuando las dos tienen las mismas secciones (si no, la nota entera): un valor que está en una y no en la otra puede ser un error de traducción, algo que el inglés no trae o algo que una de las dos dice en una imagen. Leerlo y decidir es a mano (#3).
 
-- Pares: 191; con las mismas secciones: 172. Notas en inglés sin par: 15.
+- Pares: 192; con las mismas secciones: 173. Notas en inglés sin par: 15.
 - Pares con diferencias: 30; valores distintos: 65.
 
 ## Diferencias

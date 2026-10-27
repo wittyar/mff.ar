@@ -2,8 +2,8 @@
 
 Generado por `scripts/historico.py` (lo llama `scripts/build.py`). Las llegadas (personaje, uniforme, Tier-3, Potencial Trascendido, Tier-4) y las versiones con su fecha salen de `/api/updates` de thanosvibs; el texto, de las notas de actualización del foro oficial (`fuentes/foro/`, `scripts/foro.py`). Cada nota va a la versión que nombra su título; si no, a la de 4 días o menos con más llegadas que la nota nombra; si no hay, a la de 45 días o menos con más llegadas nombradas (al menos 2): thanosvibs tiene algunas fechas mal.
 
-- Versiones: 214; con nota: 199. Notas: 208; sin versión: 3.
-- Hechos: personaje 291, uniforme 600, t3 129, tp 156, t4 135, balance 518, modo 131.
+- Versiones: 215; con nota: 200. Notas: 209; sin versión: 3.
+- Hechos: personaje 291, uniforme 602, t3 129, tp 156, t4 140, balance 518, modo 131.
 
 ## Llegadas cuya nota no nombra al personaje (121)
 

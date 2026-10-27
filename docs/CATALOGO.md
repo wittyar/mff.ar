@@ -1,6 +1,6 @@
 # Catálogo de efectos
 
-Generado por `scripts/catalogo.py` el 2026-10-26, sobre los datos del juego 12.3, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
+Generado por `scripts/catalogo.py` el 2026-10-27, sobre los datos del juego 12.3.5, desde `scripts/contenido/catalogo.json` (contenido curado: se edita ahí, no acá).
 
 thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo traen como una etiqueta (`ALL BASIC ATTACKS INCREASE`) y Leads & Supports como un stat (`All Basic Attacks`). Acá los dos apuntan al mismo efecto, y cada efecto dice qué es, a quién le sirve y cómo se lee en PvE y en PvP. Cuándo se activa y a quién le llega no es del efecto sino de cada skill o soporte (su activación, su objetivo, su restricción): eso lo muestra la ficha.
 
@@ -31,7 +31,7 @@ El daño de la skill: lo que todo lo demás potencia.
 
 - **Skills:**
   - `PHYSICAL ATK DAMAGE` (501 retratos)
-  - `ENERGY ATK DAMAGE` (392 retratos)
+  - `ENERGY ATK DAMAGE` (394 retratos)
   - `HP DAMAGE` (6 retratos)
 
 ## Ataque
@@ -56,7 +56,7 @@ Sube un ataque, el stat del que sale el daño.
 `ataque_energia` · Energy Attack · Se aplica a su lado · Le sirve: a quien escala con el ataque de energía.
 
 - **Skills:**
-  - `ENERGY ATTACK ↑` (139 retratos)
+  - `ENERGY ATTACK ↑` (140 retratos)
   - `Explosion`, con `Energy Attack increases by #% every # sec (up to #%)` (29 retratos) — varía: crece cada unos segundos
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of Energy Attack each #% of pure damage accumulated` (2 retratos) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
@@ -69,12 +69,12 @@ Sube un ataque, el stat del que sale el daño.
 - **PvE:** Le rinde a cualquiera igual que su propio ataque. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Le rinde a cualquiera igual que su propio ataque. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `FRENZY` (494 retratos)
-  - `ALL BASIC ATTACKS INCREASE` (415 retratos)
-  - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks each #% of pure damage accumulated` (323 retratos) — varía: crece con el daño puro acumulado
-  - `Increases all Basic Attacks` (267 retratos)
+  - `FRENZY` (496 retratos)
+  - `ALL BASIC ATTACKS INCREASE` (417 retratos)
+  - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks each #% of pure damage accumulated` (325 retratos) — varía: crece con el daño puro acumulado
+  - `Increases all Basic Attacks` (269 retratos)
   - `Increases all basic stats` (221 retratos)
-  - `Increases all Basic Attacks and Defenses` (216 retratos)
+  - `Increases all Basic Attacks and Defenses` (217 retratos)
   - `INCREASES ALL BASIC ATTACKS PER HP LOST` (77 retratos) — varía: crece con el daño recibido
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `ATK PER SUPER HIT SHIELD INCREASE` (12 retratos) — varía: según su escudo
@@ -110,10 +110,11 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Sube el daño. Es el efecto del proc de los obeliscos («Increases basic damage by x% for 1 attack(s)»), que según la guía sube mucho el daño. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Sube el daño. Es el efecto del proc de los obeliscos («Increases basic damage by x% for 1 attack(s)»), que según la guía sube mucho el daño. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `SKILL DAMAGE ↑` (472 retratos) — dura unos ataques
+  - `SKILL DAMAGE ↑` (473 retratos) — dura unos ataques
   - `Basic Damage Increase (Influence)` (52 retratos) — varía: baja con el tiempo
   - `Evasion Reload` (26 retratos)
   - `Increases a stack of basic damage` (21 retratos) — varía: se acumula
+  - `ENLARGE`, con `Increases character size by #%, Basic Damage by #%^, all Basic Defenses by #%.` (3 retratos)
   - `Increases skill damage relative to HP` (3 retratos) — varía: crece con los PG que gana
   - `Damage Increase with Fewer Enemies` (2 retratos) — con pocos enemigos cerca
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
@@ -124,7 +125,7 @@ Sube el daño que hace, aparte del ataque.
 
 - **Nota:** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y «Additional Damage» al daño fijo extra. Según una guía de mecánicas de un jugador en el foro oficial (2018), «Bonus Damage» es ese daño fijo y las pasivas de Tier-2 suben las dos partes: es lo probable, pero ninguna fuente oficial lo dice.
 - **Skills:**
-  - `SKILL AND BONUS DAMAGE ↑` (630 retratos)
+  - `SKILL AND BONUS DAMAGE ↑` (632 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Skill Damage` (6 retratos) — se acumula
 
@@ -134,7 +135,7 @@ Sube el daño que hace, aparte del ataque.
 
 - **Nota:** La guía llama «Skill Damage» a la parte del golpe que sale del ataque y «Additional Damage» al daño fijo extra, el único que sube con el nivel de la skill (NamuWiki dice lo mismo del 추가 피해량, «daño adicional»). Una guía de mecánicas de un jugador en el foro oficial (2018) dice que «Bonus Damage» es ese daño fijo: en «Physical Damage: #% of Physical Attack. Additional # Physical Damage.», la primera parte es el daño de skill y la segunda, el «Bonus Damage», y las pasivas de Tier-2 suben las dos. Es lo probable, pero ninguna fuente oficial lo dice. El juego en coreano usa para las dos la misma palabra, 추가 (adicional): la pasiva de Tier-2 de Mephisto — Master of Hell dice «스킬 피해량 40% 상승, 추가 피해량 40% 상승» (los valores de su «Increases Skill damage by #%, increases Bonus Damage by #%.»), y sus skills escriben el daño fijo «추가 화염 피해 672» (capturas del 4 de octubre de 2026). En inglés, «Bonus damage» nombra también el daño continuo de la maldición y de la pérdida.
 - **Skills:**
-  - `SKILL AND BONUS DAMAGE ↑` (630 retratos)
+  - `SKILL AND BONUS DAMAGE ↑` (632 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Bonus Damage` (6 retratos) — se acumula
 
@@ -169,12 +170,12 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Sube el daño solo contra esos rivales. [Probable]
 - **PvP:** Sube el daño solo contra esos rivales. Contra una facción, es lo que suele aportar el tercero del equipo en Timeline, el «buffer»: según NamuWiki, un personaje con aumentos o bajas de daño entre facciones en su pasiva o su uniforme, como Colossus. [Comprobado] ([NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Skills:**
-  - `Increases basic damage based on character's faction` (139 retratos) — contra una facción (cada skill dice cuál)
-  - `Vigor` (30 retratos) — contra rivales con los PG bajos
+  - `Increases basic damage based on character's faction` (140 retratos) — contra una facción (cada skill dice cuál)
+  - `Vigor` (33 retratos) — contra rivales con los PG bajos
   - `Increases basic damage when attacking boss types` (26 retratos) — contra jefes
   - `Bravery` (23 retratos) — según los PG máx. del rival frente a los suyos
+  - `Strength` (18 retratos) — contra rivales con los PG altos
   - `Natural Enemy` (16 retratos) — contra rivales con un efecto dado; Nota: La fuente publica el efecto como un código; en Leads & Supports el mismo efecto aparece con nombre («Removes All Debuffs»).
-  - `Strength` (16 retratos) — contra rivales con los PG altos
   - `Increases basic damage based on character's type` (10 retratos) — contra un tipo (cada skill dice cuál)
   - `Increases basic damage based on character's race` (9 retratos) — contra una raza (cada skill dice cuál)
   - `INCREASES BASIC DAMAGE WHEN ATTACKING CHARACTERS WITH ABILITIES` (7 retratos) — contra quien tiene una habilidad (cada skill dice cuál)
@@ -202,8 +203,8 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Más golpes críticos. En pelea se reduce según el nivel del rival: la guía dice contar la mitad. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Más golpes críticos, con la misma reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `FRENZY` (494 retratos)
-  - `CRITICAL RATE ↑` (307 retratos)
+  - `FRENZY` (496 retratos)
+  - `CRITICAL RATE ↑` (308 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate each #% of pure damage accumulated` (7 retratos) — varía: crece con el daño puro acumulado
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Rate, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
 - **Leads & Supports y bonos de equipo:**
@@ -217,7 +218,7 @@ Sube el daño que hace, aparte del ataque.
 - **PvP:** Suma un valor fijo a la probabilidad de crítico, sin la reducción por nivel. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Nota:** El glosario en inglés dice que hace crítico «at a set rate»; según el coreano, le suma un valor fijo a la probabilidad de crítico.
 - **Skills:**
-  - `GUARANTEED CRITICAL RATE ↑` (209 retratos)
+  - `GUARANTEED CRITICAL RATE ↑` (210 retratos)
   - `Precision` (15 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Guaranteed Critical Rate` (10 retratos) — cuenta una vez (la de mayor valor); tope: Probab. crítico 75%; Nota: No se suma: con dos fuentes cuenta la de mayor valor; el tope es el de la probabilidad de crítico (Ezequiel, 5 de octubre de 2026). No sufre la reducción por el nivel del rival.
@@ -229,7 +230,7 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Multiplica el golpe crítico. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Multiplica el golpe crítico. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `CRITICAL DAMAGE ↑` (342 retratos)
+  - `CRITICAL DAMAGE ↑` (343 retratos)
   - `DOUBLE CRITICAL` (47 retratos)
   - `Precision` (15 retratos)
   - `STAT ↑ PROPORTIONAL TO TOTAL DMG`, con `#% Increase of All Basic Attacks, Critical Damage each #% of pure damage accumulated` (1 retrato) — varía: crece con el daño puro acumulado
@@ -254,7 +255,7 @@ Sube el daño que hace, aparte del ataque.
 
 - **Nota:** Rinde con las skills de impacto en cadena; la fuente no marca cuáles lo son.
 - **Skills:**
-  - `CHAIN HIT DMG DEALT ↑` (240 retratos)
+  - `CHAIN HIT DMG DEALT ↑` (242 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Chain Hit Damage` (5 retratos) — se acumula
 
@@ -285,7 +286,7 @@ Sube el daño que hace, aparte del ataque.
 
 - **Nota:** Parte de su propio kit: carga una reserva de daño que otro efecto suyo convierte en ataque o en daño.
 - **Skills:**
-  - `ACCUMULATE PURE DMG DEALT` (334 retratos)
+  - `ACCUMULATE PURE DMG DEALT` (336 retratos)
   - `ACCUMULATE PURE DMG` (78 retratos)
   - `Charge Rate Increase` (35 retratos)
   - `Accumulate All True Element Damage Dealt` (9 retratos)
@@ -408,7 +409,7 @@ Que el golpe entre o atraviese protecciones.
 - **PvE:** Si el rival iba a esquivar, el golpe entra igual con esa probabilidad. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Si el rival iba a esquivar, el golpe entra igual con esa probabilidad. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `IGNORE DODGE` (629 retratos)
+  - `IGNORE DODGE` (631 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Ignore Dodge` (93 retratos) — se acumula
 
@@ -418,7 +419,7 @@ Que el golpe entre o atraviese protecciones.
 
 - **Nota:** Atraviesa, con una probabilidad, la invencibilidad, el efecto inmune a todo el daño, los escudos, las barreras o la superarmadura del rival (cada skill dice cuáles).
 - **Skills:**
-  - `PIERCE` (666 retratos)
+  - `PIERCE` (667 retratos)
 
 ### Apunta a quien no se deja apuntar
 
@@ -426,7 +427,7 @@ Que el golpe entre o atraviese protecciones.
 
 - **Nota:** Le pega a los rivales con el efecto «Ignore Targeting».
 - **Skills:**
-  - `Guaranteed Targeting` (13 retratos)
+  - `Guaranteed Targeting` (14 retratos)
 
 ### Atraviesa una resistencia elemental
 
@@ -457,7 +458,7 @@ Daño que sigue unos segundos después del golpe.
 
 - **PvE:** Poco daño, pero corta el ataque especial de los jefes de Alliance Battle Extreme. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3), [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
 - **Skills:**
-  - `BURN` (414 retratos)
+  - `BURN` (416 retratos)
 
 ### Sangrado
 
@@ -465,7 +466,7 @@ Daño que sigue unos segundos después del golpe.
 
 - **Nota:** Además le saca la Elasticidad al rival.
 - **Skills:**
-  - `BLEED` (336 retratos)
+  - `BLEED` (337 retratos)
 
 ### Electrochoque
 
@@ -531,7 +532,7 @@ Inmoviliza o domina al rival.
 `aturdir` · Stun · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `STUN` (765 retratos)
+  - `STUN` (767 retratos)
 
 ### Parálisis
 
@@ -539,7 +540,7 @@ Inmoviliza o domina al rival.
 
 - **PvE:** Frena a los enemigos y corta el ataque especial de los jefes de Alliance Battle Extreme. [Comprobado] ([THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
 - **Skills:**
-  - `Paralysis (Ignores immunity)` (477 retratos) — Nota: La etiqueta dice que ignora la inmunidad. Según NamuWiki (World Boss Legend), los jefes de World Boss Legend ignoran incluso los controles que ignoran la inmunidad.
+  - `Paralysis (Ignores immunity)` (479 retratos) — Nota: La etiqueta dice que ignora la inmunidad. Según NamuWiki (World Boss Legend), los jefes de World Boss Legend ignoran incluso los controles que ignoran la inmunidad.
   - `PARALYZE` (85 retratos)
 
 ### Silencio
@@ -548,7 +549,7 @@ Inmoviliza o domina al rival.
 
 - **PvE:** Frena a los enemigos y corta el ataque especial de los jefes de Alliance Battle Extreme. [Comprobado] ([THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
 - **Skills:**
-  - `SILENCE` (348 retratos)
+  - `SILENCE` (350 retratos)
 
 ### Trampa
 
@@ -557,7 +558,7 @@ Inmoviliza o domina al rival.
 - **PvE:** No puede moverse, atacar ni usar skills por un rato. Corta el ataque especial de los jefes de Alliance Battle Legend. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
 - **PvP:** No puede moverse, atacar ni usar skills por un rato. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
-  - `SNARE` (312 retratos)
+  - `SNARE` (314 retratos)
 
 ### Congelar
 
@@ -581,7 +582,7 @@ Inmoviliza o domina al rival.
 - **PvE:** Huye de quien se lo aplicó y no puede atacar ni usar skills. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **PvP:** Huye de quien se lo aplicó y no puede atacar ni usar skills. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
-  - `FEAR` (111 retratos)
+  - `FEAR` (112 retratos)
 
 ### Control mental
 
@@ -624,7 +625,7 @@ Inmoviliza o domina al rival.
 - **PvE:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales a los que no se les aplican mermas, pero no a quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **PvP:** Le aplica miedo y recibe más daño. Se puede aplicar a World Bosses y a rivales a los que no se les aplican mermas, pero no a quien elimina todas las mermas. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
-  - `Panic` (24 retratos)
+  - `Panic` (28 retratos)
 
 ### Persuasión
 
@@ -679,16 +680,16 @@ Le baja algo al rival o le quita potenciadores.
 - **PvE:** Le baja todos los ataques básicos al rival (se acumula). Cada curación del rival le saca una carga y lo cura menos; «quitar todos los debuffs» no la saca. Además corta el ataque especial de los jefes de Alliance Battle Legend. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ — Alliance Battle (ABX/ABL)](https://thanosvibs.money/abxl))
 - **PvP:** Le baja todos los ataques básicos al rival (se acumula). Cada curación del rival le saca una carga y lo cura menos; «quitar todos los debuffs» no la saca. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
-  - `Fracture` (218 retratos)
+  - `Fracture` (219 retratos)
 
 ### Baja las defensas del rival
 
 `defensas_rival` · Lowers the foe's defenses · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Decreases all Basic Defenses (Can stack, ignores immunity)` (546 retratos)
-  - `Incapacitation` (305 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
-  - `ALL BASIC DEFENSES DECREASE` (58 retratos)
+  - `Decreases all Basic Defenses (Can stack, ignores immunity)` (547 retratos)
+  - `Incapacitation` (307 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
+  - `ALL BASIC DEFENSES DECREASE` (59 retratos)
   - `DECREASES ALL BASIC DEFENSES (CAN STACK)` (58 retratos)
   - `MINIATURIZE`, con `Decreases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (18 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `PHYSICAL DEFENSE ↓` (17 retratos)
@@ -713,7 +714,7 @@ Le baja algo al rival o le quita potenciadores.
 `velocidad_rival` · Lowers the foe's speed · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `ALL SPEED ↓` (115 retratos)
+  - `ALL SPEED ↓` (116 retratos)
   - `MOVEMENT SPEED ↓` (19 retratos)
   - `VULNERABILITY` (4 retratos)
   - `ALL SPEED ↓ (can stack)` (2 retratos)
@@ -726,14 +727,14 @@ Le baja algo al rival o le quita potenciadores.
 - **PvP:** Contra ese rival, el equipo pega más. [Probable]
 - **Skills:**
   - `Mind Control` (66 retratos)
-  - `Panic` (24 retratos)
+  - `Panic` (28 retratos)
 
 ### Baja la resistencia a fuego del rival
 
 `resistencia_rival_fuego` · Lowers the foe's fire resist · Se aplica al rival · Le sirve: a quien hace daño de fuego.
 
 - **Skills:**
-  - `Flame Resist Decrease (Can stack, ignores immunity)` (30 retratos)
+  - `Flame Resist Decrease (Can stack, ignores immunity)` (31 retratos)
   - `FLAME RESIST ↓` (9 retratos)
 
 ### Baja la resistencia al frío del rival
@@ -780,7 +781,7 @@ Le baja algo al rival o le quita potenciadores.
 `quitar_buffs` · Strips the foe's buffs · Se aplica al rival · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Incapacitation` (305 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
+  - `Incapacitation` (307 retratos) — Nota: La skill dice que le quita los potenciadores; el glosario del juego agrega que después le baja todas las defensas (se acumula) y que no sirve contra quien elimina todas las mermas.
   - `CANCEL` (103 retratos)
   - `REMOVE` (21 retratos) — Nota: La fuente publica qué quita como un código; la wiki (Spider-Man, «Hero's Responsibility») dice que le quita los potenciadores activos al rival.
   - `Loss` (5 retratos)
@@ -836,14 +837,15 @@ Sube las defensas.
 `defensas_todas` · All defenses · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `FRENZY` (494 retratos)
-  - `SUPER ARMOR` (330 retratos)
+  - `FRENZY` (496 retratos)
+  - `SUPER ARMOR` (331 retratos)
   - `Increases all basic stats` (221 retratos)
-  - `Increases all Basic Attacks and Defenses` (216 retratos)
+  - `Increases all Basic Attacks and Defenses` (217 retratos)
   - `ALL BASIC DEFENSES INCREASE` (91 retratos)
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según sus PG
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
+  - `ENLARGE`, con `Increases character size by #%, Basic Damage by #%^, all Basic Defenses by #%.` (3 retratos)
   - `Condensed Power` (1 retrato) — varía: se acumula
 - **Leads & Supports y bonos de equipo:**
   - `All Basic Defenses` (49 retratos, 280 bonos de equipo) — se acumula
@@ -882,7 +884,7 @@ Sube las defensas.
 - **PvE:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **PvP:** Los golpes no lo interrumpen ni le rompen la guardia, pero recibe el daño. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
-  - `SUPER ARMOR` (330 retratos)
+  - `SUPER ARMOR` (331 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Super Armor, All Basic Defenses` (9 retratos) — se acumula; Nota: La superarmadura es una habilidad y no se acumula; las defensas se suman, sin límite (Ezequiel, 5 de octubre de 2026). El número es el de las defensas, así que el stat se suma.
 
@@ -910,7 +912,7 @@ PG, curación, escudos y revivir.
 `curacion` · Healing · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `HP RECOVERY` (557 retratos)
+  - `HP RECOVERY` (559 retratos)
   - `Misdirection` (9 retratos) — varía: crece cada vez que recibe un golpe
   - `Accumulate Damage HP Recovery` (7 retratos)
   - `FORTITUDE` (6 retratos)
@@ -973,7 +975,7 @@ PG, curación, escudos y revivir.
 
 - **PvP:** Muy importante en PvP (la guía lo dice del de Sersi). [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `REVIVE` (40 retratos)
+  - `REVIVE` (41 retratos)
   - `Appearance` (3 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Revive with % HP` (2 retratos) — cuenta una vez (la de mayor valor)
@@ -1004,7 +1006,7 @@ Recibe menos daño o lo evita.
 - **PvP:** Los golpes no lo interrumpen ni lo mueven, y no lo afectan la rotura de guardia, el daño ni las mermas. Valiosa en PvP: la guía la sugiere en vez del proc de daño en el equipo de PvP. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026), [THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Nota:** El glosario en inglés dice que es inmune a los «basic attacks»; según el coreano, a la reacción al recibir un golpe (피격 모션). No tiene que ver con el stat de ataque básico.
 - **Skills:**
-  - `INVINCIBLE` (820 retratos)
+  - `INVINCIBLE` (822 retratos)
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
 
 ### Inmune a todo daño (probabilidad)
@@ -1014,7 +1016,7 @@ Recibe menos daño o lo evita.
 - **PvE:** Mientras dura no recibe daño ni mermas, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **PvP:** Mientras dura no recibe daño ni mermas, pero los golpes lo mueven igual y la rotura de guardia lo afecta. [Comprobado] (MARVEL Future Fight — Skill Name Glossary (guía dentro del juego, octubre de 2026), MARVEL Future Fight — 스킬 용어 사전 (el mismo glosario de skills, en coreano; dentro del juego, octubre de 2026))
 - **Skills:**
-  - `ALL DAMAGE IMMUNE` (557 retratos)
+  - `ALL DAMAGE IMMUNE` (559 retratos)
   - `Parry` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `All Damage Immunity` (0 retratos) — cuenta una vez (la de mayor valor)
@@ -1024,7 +1026,7 @@ Recibe menos daño o lo evita.
 `dano_recibido` · Less damage taken · Se aplica a su lado · Le sirve: a cualquiera del equipo.
 
 - **Skills:**
-  - `Decreases all basic damage` (381 retratos)
+  - `Decreases all basic damage` (383 retratos)
   - `Body Enhancement` (1 retrato) — varía: el daño crece con cada golpe que ignora
 - **Leads & Supports y bonos de equipo:**
   - `Basic Damage Received` (15 retratos) — se acumula
@@ -1238,7 +1240,7 @@ Le saca las mermas o lo hace inmune a ellas.
 - **PvP:** Muy útil en Timeline (la guía lo dice del soporte de Wasp). Cuando dura un tiempo, protege mientras dura: NamuWiki dice que el liderazgo de Malekith le da a todo el equipo 20 s de inmunidad a los estados alterados, y la guía de thanosvibs llama «Debuff Immunity» a la pasiva de Tier-2 de Wasp, que la API publica como «Removes all Debuffs» por 20 s. En los liderazgos y soportes casi siempre dura 12 s desde que recibe una merma: que esos protejan igual es lo probable, pero ninguna fuente lo dice. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 1](https://thanosvibs.money/beginners/1), [THANO$VIB$ Beginner's Guide, parte 4](https://thanosvibs.money/beginners/4), [NamuWiki — MARVEL 퓨처파이트/타임라인 배틀 (en coreano)](https://namu.wiki/w/MARVEL%20%ED%93%A8%EC%B2%98%ED%8C%8C%EC%9D%B4%ED%8A%B8/%ED%83%80%EC%9E%84%EB%9D%BC%EC%9D%B8%20%EB%B0%B0%ED%8B%80))
 - **Nota:** La API de skills a veces publica «Give Power» sin decir qué otorga; Leads & Supports trae que es esto (docs/AUDITORIA.md, sección 7).
 - **Skills:**
-  - `Removes all Debuffs. ` (408 retratos)
+  - `Removes all Debuffs. ` (410 retratos)
   - `Parry` (2 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Remove All Debuffs` (84 retratos) — cuenta una vez (la de mayor valor)
@@ -1307,7 +1309,7 @@ Velocidades, recarga de skills y cargas.
 - **PvP:** Incluye la velocidad de ataque, que importa; la de movimiento no. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Nota:** La regla de los liderazgos, soportes y bonos de equipo es de Ezequiel. En las skills sigue contando: el frenesí (FRENZY) lo trae, y la guía de thanosvibs lo usa en sus rotaciones.
 - **Skills:**
-  - `FRENZY` (494 retratos)
+  - `FRENZY` (496 retratos)
   - `Increases all basic stats` (221 retratos)
   - `ALL SPEED ↑` (148 retratos)
   - `Increases all Attacks, Defense and Speed relative to HP` (6 retratos) — varía: según sus PG
@@ -1345,7 +1347,7 @@ Velocidades, recarga de skills y cargas.
 - **PvE:** Crucial: los personajes están pensados con el tope de 50%. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **PvP:** Crucial: los personajes están pensados con el tope de 50%. [Comprobado] ([THANO$VIB$ Beginner's Guide, parte 3](https://thanosvibs.money/beginners/3))
 - **Skills:**
-  - `COOLDOWN DURATION ↓` (61 retratos)
+  - `COOLDOWN DURATION ↓` (62 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Skill Cooldown` (1 retrato, 242 bonos de equipo) — se acumula; tope: Reducir duración de recarga 50%
 
@@ -1397,7 +1399,7 @@ Le devuelve al que pega parte del daño recibido.
 
 - **Skills:**
   - `PHYSICAL REFLECT` (21 retratos)
-  - `REFLECT ALL ATTACKS ` (19 retratos)
+  - `REFLECT ALL ATTACKS ` (20 retratos)
   - `ENERGY REFLECT` (16 retratos)
   - `Always Reflect All Damage` (5 retratos)
   - `MIND REFLECT` (2 retratos)
@@ -1475,6 +1477,7 @@ Mecánicas propias de un personaje.
   - `ENLARGE`, con `Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.` (35 retratos)
   - `MINIATURIZE`, con `Decreases character size by #%, increases all Basic Attacks by #%^, all Basic Defenses by #%.` (6 retratos) — Nota: Achica al personaje (y le sube ataques y defensas) o al rival (y le baja los suyos): lo distingue el texto. Que el segundo vaya al rival lo dicen el texto y la activación «When attacking an enemy with MINIATURIZE effect applied».
   - `ENLARGE`, con `Increases character size by #% and all Speeds, all Basic Attacks by #%.` (4 retratos)
+  - `ENLARGE`, con `Increases character size by #%, Basic Damage by #%^, all Basic Defenses by #%.` (3 retratos)
 
 ## Qué se acumula y los topes
 
