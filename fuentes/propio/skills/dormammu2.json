@@ -6,7 +6,7 @@
   "cafe-3188979"
  ],
  "notas": [
-  "Liderazgo y definitiva: los de Dormammu. La ficha dice que el uniforme cambia Dread One, pero lo que muestra (los aliados Supervillanos, +60% de daño básico a los Superhéroes) es igual al de la base.",
+  "Definitiva: la de Dormammu. El liderazgo es el de la ficha (los aliados Supervillanos, +60% de daño básico a los Superhéroes), igual al de Damnation; el de la base da +24% de defensas a todos los aliados.",
   "La Tier-2 (Dark Planet) reemplaza a Impending Demise y la pasiva (Dark Vitality) a Lingering Fear; las recargas son las de la ficha (7 s y 300 s).",
   "Active 2: la ficha dice «Enables attacking enemies who have activated the Ignore Targeting effect»; va con la etiqueta de la API para eso (Guaranteed Targeting).",
   "Active 4: en la ficha la quemadura también baja 10% las defensas básicas («Burn: … and decreases all Basic Defenses by 10%»); va como dos efectos, la quemadura y la baja de defensas, por 3 s.",
@@ -16,6 +16,24 @@
   "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga."
  ],
  "slots": {
+  "Leader Skill": {
+   "type": "Leader Skill",
+   "name": "Dread One",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "id": 991160201,
+       "abilityId": 299,
+       "ability": "Increases basic damage based on character's faction",
+       "description": "Increases basic damage dealt to $HEROSUBTYPE1 faction by <b>60%</b>."
+      }
+     ],
+     "target": "Super Villain Allies"
+    }
+   ]
+  },
   "Uniform Passive": {
    "type": "Uniform Passive",
    "name": "The Living Dark Planet",
