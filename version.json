@@ -1,6 +1,6 @@
 {
- "version": "1.0.45",
+ "version": "1.0.46",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "El instinto de cada personaje sale ahora de la misma fuente que el resto de sus datos, verificado en el juego: los 15 que no lo mostraban ya lo tienen (Aero, Agent 13, Black Knight, Blue Marvel, Captain Marvel, Daredevil, Falcon, Gorgon, Human Torch, Invisible Woman, Mysterio, Stryfe, Supergiant, Vulture y Wave), Destroyer pasa a Destrucción y Agent Venom, Kahhori, Quasar (Wendell Vaughn) y Shadow Shell a Justicia, como en el juego."
+ "notas": "La actualización del 27 de octubre: los uniformes nuevos de Dormammu (The Living Dark Planet) y Clea (Death of Doctor Strange), la Tier-4 de los dos con su habilidad de pegador y el artefacto exclusivo de Dormammu (Lord of Chaos), cargados de las notas oficiales hasta que la fuente pública los publique. Se pueden comparar como el resto del roster."
 }

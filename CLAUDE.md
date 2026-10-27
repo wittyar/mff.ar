@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (16 de octubre de 2026)
+## Estado (27 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -195,11 +195,19 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   Wiccan — Young Avengers y Morgan le Fay — Classic con el retrato de thanosvibs, que ya los publica con el fondo
   transparente de los demás (los de la ficha de la nota eran blancos; Ezequiel). Un retrato propio
   (`fuentes/propio/retratos/`) va solo mientras thanosvibs no publica el suyo; hoy no queda ninguno.
-- La 1.0.45 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 16 de octubre, #17 (el instinto): la
+- La 1.0.45 (sin cambio de formato, 18; etiqueta en 4a9dc92), 16 de octubre, #17 (el instinto): la
   app toma el instinto de thanosvibs (`instinct`), que desde octubre de 2026 lo publica para los 291; la wiki queda en la
   auditoría (sección 3). En el juego (Universo Marvel) coincide en los 21 leídos salvo Destroyer (Destrucción, no Orden),
   que va como cambio propio (`fuentes/propio/personajes.json`, fuente `juego-universo-es`). Los 15 sin dato ya lo tienen.
   Visto de paso: el juego pone a Falcon (Sam Wilson) en el bando Superhéroe y thanosvibs en Supervillano; sin tocar.
+- La 1.0.46 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 27 de octubre: el parche del 27 de
+  octubre de 2026 como contenido propio (notas foro-1897450 y cafe-3188979): los uniformes Dormammu <The Living Dark Planet>
+  (`dormammu2`) y Clea <Death of Doctor Strange> (`clea1`), la Tier-4 de los dos (striker de Lv.6 en todos sus retratos), el
+  artefacto de Dormammu (Lord of Chaos) y la 12.3.5 dentro de la 12.3 (`propio.py` acepta `dentro`: un parche de mitad de mes
+  va como pote de su versión mayor, como en thanosvibs). Retratos propios de los dos uniformes, de las fichas sin el fondo
+  blanco, hasta que thanosvibs publique los suyos. Pendiente: el nivel 90 de Dormammu (como el de Spider-Man y Ghost
+  Rider, la app no tiene dónde mostrarlo) y los valores mínimo y medio del C.T.P. de Ascenso brillante (la app muestra los
+  máximos, que no cambian).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
