@@ -59,6 +59,20 @@ try:
         nombres = pg.evaluate("[...document.querySelectorAll('.skill .nm')].map(x => x.textContent)")
         ok('3 la base también trae el striker de Tier-4', any("Demiurge's Potential" in n for n in nombres), nombres)
 
+        # 3b. el parche del 27 de octubre de 2026: Dormammu, su uniforme nuevo y su Tier-4 (lo mismo vale para Clea)
+        do = por_nombre['Dormammu']
+        ok('3b Dormammu es T4 y trae The Living Dark Planet', do['t'] == 'T4' and any(u['p'] == 'dormammu2' for u in do['uniforms']))
+        pg.click('[data-a="back"]'); pg.fill('#q', 'Dormammu'); pg.wait_for_timeout(300)
+        pg.click(f'.ccard[data-cid="{do["id"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
+        uid = next(u['id'] for u in do['uniforms'] if u['p'] == 'dormammu2')
+        pg.select_option('select[data-a="uniformSel"]', uid); pg.wait_for_timeout(300)
+        pg.click('[data-a="fichaTab"][data-v="skills"]'); pg.wait_for_timeout(200)
+        nombres = pg.evaluate("[...document.querySelectorAll('.skill .nm')].map(x => x.textContent)")
+        ok('3b The Living Dark Planet: las skills de la nota y el striker de Tier-4', any('Dark Star Crush' in n for n in nombres)
+           and any('Chaos and Fear' in n for n in nombres), nombres)
+        cl = por_nombre['Clea']
+        ok('3b Clea es T4 y trae Death of Doctor Strange', cl['t'] == 'T4' and any(u['p'] == 'clea1' for u in cl['uniforms']))
+
         # 4. la comparativa por potenciador con Agatha
         pg.click('[data-a="back"]'); pg.click('[data-a="pickMode"]'); pg.wait_for_timeout(200)
         for n in ('Agatha Harkness', 'Wiccan'):

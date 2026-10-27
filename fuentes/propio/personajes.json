@@ -33,6 +33,33 @@
     "morganlefay1",
     "morganlefay2"
    ]
+  },
+  {
+   "version": "12.3.5",
+   "dentro": "12.3",
+   "subtitle": "Uncle and Niece",
+   "fecha": "October 27, 2026",
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ],
+   "sin_confirmar": [
+    "version",
+    "subtitle"
+   ],
+   "characters": [],
+   "uniforms": [
+    "dormammu2",
+    "clea1"
+   ],
+   "t3s": [],
+   "t4s": [
+    "dormammu",
+    "dormammu1",
+    "dormammu2",
+    "clea",
+    "clea1"
+   ]
   }
  ],
  "filas": [
@@ -156,6 +183,100 @@
     "world_boss_ability",
     "stats"
    ]
+  },
+  {
+   "character": "Dormammu",
+   "uniform": "The Living Dark Planet",
+   "uniformed": "True",
+   "portrait": "dormammu2",
+   "type": "Universal",
+   "allies": "Other",
+   "gender": "Male",
+   "side": "Super Villain",
+   "instinct": "Destruction",
+   "native": "Tier-2",
+   "ability": [
+    "Magic",
+    "Pure Evil"
+   ],
+   "original": "Comic",
+   "skill6": "Tier-3",
+   "tier-4": "True",
+   "new": "True",
+   "id": "116",
+   "striker_skill": 3,
+   "world_boss_ability": "Magic",
+   "stats": {
+    "recovery_rate": "1.00",
+    "fire_resist": "0.05",
+    "cold_resist": "0.05",
+    "lightning_resist": "0.05",
+    "poison_resist": "0.05",
+    "mind_resist": "0.05"
+   },
+   "tuc": [],
+   "base_portrait": "dormammu",
+   "uniform_id": "10200116",
+   "uniform_cost": "2500 Crystals",
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ],
+   "sin_confirmar": [
+    "portrait",
+    "uniform_id",
+    "stats",
+    "original",
+    "striker_skill",
+    "world_boss_ability"
+   ]
+  },
+  {
+   "character": "Clea",
+   "uniform": "Death of Doctor Strange",
+   "uniformed": "True",
+   "portrait": "clea1",
+   "type": "Universal",
+   "allies": "Alien",
+   "gender": "Female",
+   "side": "Super Hero",
+   "instinct": "Order",
+   "native": "Tier-1",
+   "ability": [
+    "Magic",
+    "Fast Movement"
+   ],
+   "original": "Comic",
+   "skill6": "Transcended",
+   "tier-4": "True",
+   "new": "True",
+   "id": "97",
+   "striker_skill": 4,
+   "world_boss_ability": "Fast Movement",
+   "stats": {
+    "recovery_rate": "1.00",
+    "fire_resist": "0.00",
+    "cold_resist": "0.00",
+    "lightning_resist": "0.00",
+    "poison_resist": "0.00",
+    "mind_resist": "0.00"
+   },
+   "tuc": [],
+   "base_portrait": "clea",
+   "uniform_id": "10100097",
+   "uniform_cost": "1750 Crystals",
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ],
+   "sin_confirmar": [
+    "portrait",
+    "uniform_id",
+    "stats",
+    "original",
+    "striker_skill",
+    "world_boss_ability"
+   ]
   }
  ],
  "cambios": [
@@ -218,6 +339,39 @@
    "fuente": [
     "juego-universo-es"
    ]
+  },
+  {
+   "portrait": "dormammu",
+   "campos": {
+    "tier-4": "True",
+    "new": "True"
+   },
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ]
+  },
+  {
+   "portrait": "dormammu1",
+   "campos": {
+    "tier-4": "True",
+    "new": "True"
+   },
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ]
+  },
+  {
+   "portrait": "clea",
+   "campos": {
+    "tier-4": "True",
+    "new": "True"
+   },
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ]
   }
  ],
  "uniformes": {
@@ -243,6 +397,30 @@
    "fuente": [
     "foro-1896956",
     "cafe-3187937"
+   ]
+  },
+  "dormammu2": {
+   "cost": "2500 Crystals",
+   "update": "12.3.5",
+   "flags": [
+    "Crystal2500"
+   ],
+   "opciones_normal": "All Basic Attacks Increase +20% / All Basic Defenses Increase +20%",
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ]
+  },
+  "clea1": {
+   "cost": "1750 Crystals",
+   "update": "12.3.5",
+   "flags": [
+    "Crystal1750"
+   ],
+   "opciones_normal": "All Basic Attacks Increase +15% / All Basic Defenses Increase +15%",
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
    ]
   }
  }

@@ -1,0 +1,393 @@
+{
+ "portrait": "dormammu2",
+ "desde": "dormammu",
+ "fuente": [
+  "foro-1897450",
+  "cafe-3188979"
+ ],
+ "notas": [
+  "Liderazgo y definitiva: los de Dormammu. La ficha dice que el uniforme cambia Dread One, pero lo que muestra (los aliados Supervillanos, +60% de daño básico a los Superhéroes) es igual al de la base.",
+  "La Tier-2 (Dark Planet) reemplaza a Impending Demise y la pasiva (Dark Vitality) a Lingering Fear; las recargas son las de la ficha (7 s y 300 s).",
+  "Active 2: la ficha dice «Enables attacking enemies who have activated the Ignore Targeting effect»; va con la etiqueta de la API para eso (Guaranteed Targeting).",
+  "Active 4: en la ficha la quemadura también baja 10% las defensas básicas («Burn: … and decreases all Basic Defenses by 10%»); va como dos efectos, la quemadura y la baja de defensas, por 3 s.",
+  "Striker: la ficha dice «Basic Damage +50%» en el agrandamiento; va con la etiqueta ENLARGE de la API, que en otros personajes dice «all Basic Attacks».",
+  "La ficha escribe «Flame Damage: …% of Energy Attack»; va como «Energy Fire Damage», como escribe la API las skills de fuego de energía de Dormammu (Damnation).",
+  "La Tier-4 es del personaje: el striker va en todos sus retratos (la nota da los valores de Lv.6).",
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga."
+ ],
+ "slots": {
+  "Uniform Passive": {
+   "type": "Uniform Passive",
+   "name": "The Living Dark Planet",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 41,
+       "ability": "CHAIN HIT DMG DEALT ↑",
+       "description": "Increases Chain Hit damage by <b>15%</b> when attacking."
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>40%</b>, increases Bonus Damage by <b>40%</b>."
+      },
+      {
+       "abilityId": 314,
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>40%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Dark Planet",
+   "cooldown": 7,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 433,
+       "ability": "Excluding bosses, ignores enemy's basic damage decrease",
+       "description": "Excluding bosses, ignores enemy's basic damage decrease by <b>25%</b>."
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>20%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 206,
+       "ability": "Removes all Debuffs. ",
+       "description": "Removes all Debuffs.",
+       "duration": 5
+      }
+     ],
+     "activation": "when hit"
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Dark Vitality",
+   "cooldown": 300,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 208,
+       "ability": "SUPER ARMOR",
+       "description": "Super Armor, increases all Basic Defenses by <b>40%</b>."
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 253,
+       "ability": "REVIVE",
+       "description": "Revive with <b>100%</b> of Max HP"
+      }
+     ],
+     "activation": "when dead"
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Flames of the Faltine",
+   "cooldown": 9,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Fire Damage: <b>65%</b> of Energy Attack <br>Additional <b>336</b> Energy Fire Damage."
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      },
+      {
+       "abilityId": 30082,
+       "ability": "Flame Resist Decrease (Can stack, ignores immunity)",
+       "description": "Decreases Flame Resist by <b>10%</b> (Stacks up to <b>60%</b>, ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Fire"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Planetary Explosion",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>70%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 5
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 4
+      },
+      {
+       "abilityId": 259,
+       "ability": "REFLECT ALL ATTACKS ",
+       "description": "Reflect <b>70%</b> of all damage received (Up to <b>70%</b> of Max Attack).",
+       "duration": 5
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Fire Damage: <b>90%</b> of Energy Attack <br>Additional <b>2014</b> Energy Fire Damage."
+      },
+      {
+       "abilityId": 319,
+       "ability": "Guaranteed Targeting",
+       "description": "Targets enemies with the Ignore Targeting effect"
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      },
+      {
+       "abilityId": 531,
+       "ability": "Panic",
+       "description": "Panic, increases basic damage received by <b>30%</b>",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Fire"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Mindless Meteor",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Fire Damage: <b>90%</b> of Energy Attack <br>Additional <b>224</b> Energy Fire Damage."
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 330,
+       "ability": "Fracture",
+       "description": "Fracture",
+       "duration": 5
+      },
+      {
+       "abilityId": 30082,
+       "ability": "Flame Resist Decrease (Can stack, ignores immunity)",
+       "description": "Decreases Flame Resist by <b>5%</b> (Stacks up to <b>60%</b>, ignores immunity)",
+       "duration": 5
+      }
+     ],
+     "element": "Energy Fire"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Dark Breath",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 7
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>0.8%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Fire Damage: <b>90%</b> of Energy Attack <br>Additional <b>403</b> Energy Fire Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>30%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 60,
+       "ability": "ALL BASIC DEFENSES DECREASE",
+       "description": "Decreases all Basic Defenses by <b>10%</b>.",
+       "duration": 3
+      },
+      {
+       "abilityId": 201,
+       "ability": "FEAR",
+       "description": "Fear",
+       "duration": 3
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Fire"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Dark Star Crush",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>30%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>45%</b>, all speed by <b>10%</b>, and Critical Rate by <b>45%</b>, removes Incapacitation",
+       "duration": 7
+      },
+      {
+       "abilityId": 258,
+       "ability": "ALL DAMAGE IMMUNE",
+       "description": "<b>100%</b> chance to grant All Damage Immunity",
+       "duration": 5
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Fire Damage: <b>95%</b> of Energy Attack <br>Additional <b>1007</b> Energy Fire Damage."
+      },
+      {
+       "abilityId": 201,
+       "ability": "FEAR",
+       "description": "Fear",
+       "duration": 3
+      },
+      {
+       "abilityId": 531,
+       "ability": "Panic",
+       "description": "Panic, increases basic damage received by <b>30%</b>",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      },
+      {
+       "abilityId": 31060,
+       "ability": "Decreases all Basic Defenses (Can stack, ignores immunity)",
+       "description": "Decreases all Basic Defenses by <b>5%</b>. (Stacks up to <b>50%</b>, ignores immunity)",
+       "duration": 7
+      }
+     ],
+     "element": "Energy Fire"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Chaos and Fear",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 566,
+       "ability": "Vigor",
+       "description": "Increases basic damage dealt to enemies with <b>50%</b> HP or lower by <b>50%</b>.",
+       "duration": 7
+      },
+      {
+       "abilityId": 511,
+       "ability": "ENLARGE",
+       "description": "Increases character size by <b>30%</b>, Basic Damage by <b>50%</b>^, all Basic Defenses by <b>50%</b>.",
+       "duration": 7
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Fire Damage: <b>1000%</b> of Energy Attack <br>Additional <b>267</b> Energy Fire Damage."
+      },
+      {
+       "abilityId": 531,
+       "ability": "Panic",
+       "description": "Panic, increases basic damage received by <b>50%</b>",
+       "duration": 3
+      }
+     ],
+     "element": "Energy Fire"
+    }
+   ]
+  }
+ }
+}

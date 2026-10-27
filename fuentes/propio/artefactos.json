@@ -1,6 +1,6 @@
 {
  "nota": {
-  "es": "Artefactos exclusivos propios (como /api/artifacts de thanosvibs): el de Agatha Harkness, nuevo, y el de Morgan Le Fay, que la actualización del 14 de octubre de 2026 cambia (antes: daño a enemigos con 50% de PG o menos, para ella; después: daño a supervillanos y a superhéroes, para los aliados Universales). La nota da los valores de Lv.4 (6★); los demás niveles no están.",
+  "es": "Artefactos exclusivos propios (como /api/artifacts de thanosvibs): el de Agatha Harkness, nuevo, y el de Morgan Le Fay, que la actualización del 14 de octubre de 2026 cambia (antes: daño a enemigos con 50% de PG o menos, para ella; después: daño a supervillanos y a superhéroes, para los aliados Universales). La nota da los valores de Lv.4 (6★); los demás niveles no están. El de Dormammu (Lord of Chaos), nuevo con el parche del 27 de octubre de 2026: la nota da también los valores de Lv.4 (6★).",
   "en": "Own exclusive artifacts."
  },
  "artefactos": [
@@ -64,6 +64,37 @@
     "cafe-3187937"
    ],
    "sin_confirmar": [
+    "values"
+   ]
+  },
+  {
+   "id": 9002,
+   "portrait": "dormammu",
+   "character": "Dormammu",
+   "artifact_name": "Lord of Chaos",
+   "passive_name": "Ruler of Darkness",
+   "update": "12.3.5",
+   "pve_score": null,
+   "pvp_score": null,
+   "text": [
+    "Applies to: Self",
+    "• Increases Basic Damage Dealt to SUPER HERO faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)",
+    "• Increases Basic Damage Dealt to SUPER VILLAIN faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)"
+   ],
+   "values": {
+    "6": [
+     "20",
+     "0.5"
+    ]
+   },
+   "acquisition": [],
+   "fuente": [
+    "foro-1897450",
+    "cafe-3188979"
+   ],
+   "sin_confirmar": [
+    "id",
+    "update",
     "values"
    ]
   }

@@ -1,0 +1,303 @@
+{
+ "portrait": "clea1",
+ "desde": "clea",
+ "fuente": [
+  "foro-1897450",
+  "cafe-3188979"
+ ],
+ "notas": [
+  "Liderazgo y definitiva: los de Clea (la ficha muestra Mystic Aura igual que la base: los aliados, −24% de recarga).",
+  "La Tier-2 (Mystic Discharge) reemplaza a Mystic Spirit y la pasiva (Faltine Energy) a Mystic Bond; la ficha no les da recarga.",
+  "La Tier-4 es del personaje: el striker va en todos sus retratos (la nota da los valores de Lv.6).",
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga."
+ ],
+ "slots": {
+  "Uniform Passive": {
+   "type": "Uniform Passive",
+   "name": "Death of Doctor Strange",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 41,
+       "ability": "CHAIN HIT DMG DEALT ↑",
+       "description": "Increases Chain Hit damage by <b>15%</b> when attacking."
+      }
+     ]
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Mystic Discharge",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 44,
+       "ability": "GUARANTEED CRITICAL RATE ↑",
+       "description": "Increases Guaranteed Critical Rate by <b>20%</b>"
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>35%</b>, increases Bonus Damage by <b>35%</b>."
+      },
+      {
+       "abilityId": 314,
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>20%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Faltine Energy",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 26,
+       "ability": "ENERGY ATTACK ↑",
+       "description": "<b>40%</b> increase of Energy Attack."
+      },
+      {
+       "abilityId": 112,
+       "ability": "IGNORE DODGE",
+       "description": "Ignores target's Dodge Rate by <b>30%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Clea Dash",
+   "cooldown": 7,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>100%</b> of Energy Attack <br>Additional <b>1611</b> Energy Damage."
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Faltine Missile",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>83%</b> of Energy Attack <br>Additional <b>231</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>25%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Dark Energy Bomb",
+   "cooldown": 14,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 356,
+       "ability": "Increases all Basic Attacks",
+       "description": "Increases all Basic Attacks by <b>35%</b>.",
+       "duration": 6
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>50%</b> of Energy Attack <br>Additional <b>108</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>25%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Spirit Strike",
+   "cooldown": 14,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>30%</b>, all speed by <b>5%</b>, and Critical Rate by <b>30%</b>, removes Incapacitation",
+       "duration": 7
+      },
+      {
+       "abilityId": 258,
+       "ability": "ALL DAMAGE IMMUNE",
+       "description": "<b>100%</b> chance to grant All Damage Immunity",
+       "duration": 6
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>65%</b> of Energy Attack <br>Additional <b>108</b> Energy Damage."
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 2
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Dark Dimension Family",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>20%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 6
+      },
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 8
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>1%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>65%</b> of Energy Attack <br>Additional <b>108</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>25%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 2
+      },
+      {
+       "abilityId": 531,
+       "ability": "Panic",
+       "description": "Panic, increases basic damage received by <b>20%</b>",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Dark Dimension Sorcerer",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>70%</b>.",
+       "duration": 10
+      },
+      {
+       "abilityId": 565,
+       "ability": "Strength",
+       "description": "Increases basic damage dealt to enemies with <b>50%</b> HP or higher by <b>50%</b>.",
+       "duration": 10
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}
