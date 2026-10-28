@@ -40,7 +40,7 @@ UI = {
            'dif_sin': 'No tiene términos del glosario del juego: no hay con qué comparar.',
            'dif_nada': 'Sus términos del glosario del juego dicen lo mismo en inglés y en coreano.',
            'sin_cond': 'sin condición: la fuente no publica una activación', 'al_usar': 'al usarla',
-           'sin_recarga': 'no tiene (la fuente pone 0 s)', 'dura': 'dura', 'texto': 'los publica thanosvibs (API de skills)',
+           'dura': 'dura', 'texto': 'los publica thanosvibs (API de skills)',
            'activa': 'Se activa:', 'recarga': 'Recarga:', 'etapa': 'Etapa', 'unspec': 'sin especificar', 'errores': 'Lo que el inglés traduce mal'},
     'en': {'secs': ['How it works', 'When, how much, to whom', 'Game text', 'Certainty and sources', 'Differences between languages (Korean is the original)'],
            'd': {'e': 'For itself', 'q': 'For the team', 'r': 'Against the foe', 'i': 'For its summons'},
@@ -49,7 +49,7 @@ UI = {
            'dif_sin': 'It has no game glossary terms: there is nothing to compare.',
            'dif_nada': 'Its game glossary terms say the same in English and in Korean.',
            'sin_cond': 'no condition: the source publishes no activation', 'al_usar': 'when used',
-           'sin_recarga': 'none (the source says 0 s)', 'dura': 'lasts', 'texto': 'published by thanosvibs (skills API)',
+           'dura': 'lasts', 'texto': 'published by thanosvibs (skills API)',
            'activa': 'Activates:', 'recarga': 'Cooldown:', 'etapa': 'Stage', 'unspec': 'unspecified', 'errores': 'What the English gets wrong'},
 }
 
@@ -185,9 +185,11 @@ def chequear_contenido(pg, c, lang, etiqueta):
     # 2. Cuándo, cuánto, a quién
     act = activacion(sk, lang)
     tx = S['cuando']['txt']
-    rec = f"{sk['cd']} s" if sk.get('cd') else U['sin_recarga'] if sk.get('cd') == 0 else None
-    ok(f'{etiqueta}: «Cuándo, cuánto, a quién» dice la activación y la recarga',
-       (act is None or f"{U['activa']} {act}" in tx) and (rec is None or f"{U['recarga']} {rec}" in tx), (act, rec, tx[:200]))
+    # sin recarga (la fuente pone 0 s), la skill es constante y no se dice nada (Ezequiel, 28 de octubre de 2026)
+    rec = f"{sk['cd']} s" if sk.get('cd') else None
+    ok(f'{etiqueta}: «Cuándo, cuánto, a quién» dice la activación y la recarga (o nada, si es constante)',
+       (act is None or f"{U['activa']} {act}" in tx) and (f"{U['recarga']} {rec}" in tx if rec else
+       sk.get('cd') != 0 or U['recarga'] not in tx), (act, rec, tx[:200]))
     fxs = [f for st in sk['st'] for f in st['fx']]
     faltan = [texto_efecto(f, lang) for f in fxs if texto_efecto(f, lang) not in tx]
     duras = [f"{U['dura']} {f['d']} s" for f in fxs if 'd' in f]
@@ -235,6 +237,9 @@ try:
         for c in CASOS:
             abrir_ficha(pg, c)
             et = c['nombre']
+            if c['sk'].get('cd') == 0:
+                ok(f'{et}: constante, la tarjeta no dice «Recarga»', pg.locator(f'#skt-{c["si"]}').locator('xpath=ancestor::div[contains(@class,"skill")][1]')
+                   .locator('.rec').count() == 0)
             ti, fi = c['foco'] or (None, None)
             sel = selector(c, ti, fi)
             llevar(pg, sel, 300)
