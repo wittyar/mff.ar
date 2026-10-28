@@ -1,6 +1,6 @@
 {
- "version": "1.0.49",
+ "version": "1.0.50",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Las habilidades sin recarga ya no dicen «Recarga: no tiene»: son constantes. Las habilidades que ignoran la reducción de daño básico del rival vuelven a contar en el análisis y en las comparativas (la fuente cambió el texto). Y arreglos de la ayuda: el tooltip se va al salir de la ventana y el «?» se reubica al cambiar su tamaño."
+ "notas": "Al comparar desde la ficha de un personaje, el roster muestra primero sus otras versiones: no hace falta buscarlo."
 }

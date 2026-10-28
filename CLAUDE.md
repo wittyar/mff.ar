@@ -238,6 +238,10 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   orden por lanzamiento la necesita). Y lo que se escapó en la 1.0.48: el botón de la skill se busca al cerrar el «Cómo
   funciona» (`disparadorTip`, `tipAbierto`), el tooltip se va al salir de la ventana y al desplazar solo si el mouse ya
   no está encima, los «?» se reubican al cambiar el tamaño, y la letra del nombre de la skill en la comparativa.
+- La 1.0.50 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 28 de octubre: comparar desde la
+  ficha pone primero las versiones de ese personaje (Ezequiel: «cuando estoy en Dormammu, para comparar prefiero no
+  tener que buscarlo»): `ui.pickDe`, `pickPrimero` en `rosterData`, con aviso arriba de la lista; no filtra, y sin otras
+  versiones la lista queda igual. Prueba: `verif_comparar_ficha.py`.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
