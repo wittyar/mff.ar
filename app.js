@@ -2501,7 +2501,7 @@ function efectoLinea (v, f, si, ti, fi) {
  *  cabecera abre su «Cómo funciona»; cada renglón, el mismo, en ese efecto. */
 function skillCard (sk, v, si) {
   const etapas = sk.st || [];
-  const marcas = marcasDe(v.p, sk.sl), abierta = !!ui.tip && ui.tip.key === v.key && ui.tip.si === si;
+  const marcas = marcasDe(v.p, sk.sl), abierta = tipAbierto(v, si);
   const filasDano = [];
   etapas.forEach((st, i) => {
     (st.fx || []).forEach((f, fi) => {
@@ -3477,26 +3477,31 @@ function tipHtml () {
       ${seccion('coreano', tipCoreanoHtml(terminos))}
     </div>`;
 }
+/** El botón de la skill si de la variante key (en la ficha, .sktit; en la comparativa, .cmpsk): queda expandido con
+ *  el «Cómo funciona» abierto y el foco vuelve ahí al cerrarlo. Se busca cada vez: un render con la ventana abierta
+ *  lo reemplaza (y lo pinta expandido, tipAbierto). */
+function disparadorTip ({ key, si }) {
+  return document.querySelector(`[aria-haspopup="dialog"][data-a="skTip"][data-k="${CSS.escape(key)}"][data-si="${si}"]`);
+}
+/** ¿Está abierto el «Cómo funciona» de la skill si de v? Para pintar su botón expandido. */
+function tipAbierto (v, si) { return !!ui.tip && ui.tip.key === v.key && ui.tip.si === si; }
 /** Abre el «Cómo funciona» de la skill si de la variante key (en el efecto fi de la etapa ti, si se tocó un renglón),
  *  como ventana modal (Ezequiel, 27 de octubre de 2026), le pasa el foco y, si se abrió en un efecto, lo lleva a la
- *  vista. origen es lo que se tocó; su disparador es el botón de la skill (en la ficha, el de su .skill; en la
- *  comparativa, el de su celda): ese queda expandido y el foco vuelve ahí al cerrarla. */
-let TIP_ORIGEN = null;
-function abrirTip (key, si, ti, fi, origen) {
+ *  vista. */
+function abrirTip (key, si, ti, fi) {
   ui.tip = { key, si, ti, fi };
-  const b = TIP_ORIGEN = (origen.closest('.skill') || origen.closest('td')).querySelector('[aria-haspopup="dialog"]');
+  const b = disparadorTip(ui.tip);
   $('#app').insertAdjacentHTML('beforeend', tipHtml());
   b.setAttribute('aria-expanded', 'true'); b.setAttribute('aria-controls', 'skpop');
   const pop = document.getElementById('skpop'), foco = pop.querySelector('.tipef.foco');
   pop.focus({ preventScroll: true });
   if (foco) pop.scrollTop = foco.offsetTop - pop.querySelector('.tiphead').offsetHeight - 8;
 }
-/** La cierra; con devolverFoco, el foco vuelve a lo que la abrió (si sigue en la página), sin moverla. */
+/** La cierra; con devolverFoco, el foco vuelve al botón de la skill, sin mover la página. */
 function cerrarTip (devolverFoco) {
+  const b = disparadorTip(ui.tip);
   ui.tip = null;
   document.getElementById('skpop').remove(); document.getElementById('skpop-fondo').remove();
-  const b = TIP_ORIGEN; TIP_ORIGEN = null;
-  if (!b || !document.contains(b)) return;
   b.setAttribute('aria-expanded', 'false'); b.removeAttribute('aria-controls');
   if (devolverFoco) b.focus({ preventScroll: true });
 }
@@ -5076,7 +5081,8 @@ function renderCompare () {
         (sk.st || []).forEach((st, ti) => (st.fx || []).forEach((f, fi) => { if (!esDano(f)) otros.push({ f, ti, fi }); }));
         const tgC = comunEnEtapas(sk, 'tg'), acC = comunEnEtapas(sk, 'ac');
         const mk = marcasDe(v.p, sk.sl);
-        return `<td><button class="cmpsk" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-ay="sk" aria-haspopup="dialog" aria-expanded="false">${nombreSkill(sk)}</button>
+        return `<td><button class="cmpsk" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-ay="sk" aria-haspopup="dialog" aria-expanded="${tipAbierto(v, si)}"${
+          tipAbierto(v, si) ? ' aria-controls="skpop"' : ''}>${nombreSkill(sk)}</button>
           ${Object.keys(mk).length ? `<div class="row" style="margin-bottom:5px">${
             ATRIBUTOS.filter(a => mk[a.k]).map(a => `<span class="tag atributo">${h(a[LANG])}</span>`).join('')}</div>` : ''}
           ${esAjeno(tgC) ? `<div class="row" style="margin-bottom:5px">${objetivoTag(tgC, true)}</div>` : ''}
@@ -7076,16 +7082,27 @@ function resaltar (id) {
 // ============================================================================
 // La ayuda al pasar el mouse (ayudaFlotanteHtml): solo con la ayuda activada y con un mouse (en el celular, el toque abre
 // el «Cómo funciona»).
+let MOUSE = null;       // dónde está el mouse, para saber al desplazar si sigue sobre lo que muestra el tooltip
+document.addEventListener('mousemove', (e) => { MOUSE = [e.clientX, e.clientY]; });
 document.addEventListener('mouseover', (e) => {
+  MOUSE = [e.clientX, e.clientY];
   if (!U.prefs.ayuda || !matchMedia('(hover: hover)').matches) return;
   const el = e.target.closest('[data-ay]');
   if (el === FLOTA_DE) return;
   if (el) mostrarFlotante(el); else ocultarFlotante();
 });
-document.addEventListener('scroll', () => {
-  ocultarFlotante();
+// Si el mouse sale de la ventana desde lo que tiene ayuda, no hay otro mouseover que la oculte.
+document.addEventListener('mouseout', (e) => { if (!e.relatedTarget) ocultarFlotante(); });
+// Al desplazar o cambiar el tamaño de la ventana, el tooltip sigue a lo suyo si el mouse sigue encima (si no, se va) y los
+// «?» abiertos se vuelven a ubicar.
+const reubicarAyudas = () => {
+  const debajo = MOUSE && document.elementFromPoint(MOUSE[0], MOUSE[1]);
+  if (FLOTA_DE && debajo && debajo.closest('[data-ay]') === FLOTA_DE) ubicarFlotante(document.getElementById('flotay'), FLOTA_DE.getBoundingClientRect());
+  else ocultarFlotante();
   document.querySelectorAll('details.ayuda[open]').forEach(ubicarAyuda);
-}, true);
+};
+document.addEventListener('scroll', reubicarAyudas, true);
+window.addEventListener('resize', reubicarAyudas);
 // El «?» se ubica al abrirse (el evento toggle no burbujea: se escucha en la captura).
 document.addEventListener('toggle', (e) => { if (e.target.matches && e.target.matches('details.ayuda') && e.target.open) ubicarAyuda(e.target); }, true);
 document.addEventListener('click', (e) => {
@@ -7150,7 +7167,7 @@ document.addEventListener('click', (e) => {
     // Seleccionar texto de una skill no abre su «Cómo funciona».
     case 'skTip': { const si = +d.si, ti = d.st == null ? null : +d.st, fi = d.fx == null ? null : +d.fx;
       if (getSelection().toString()) break;
-      ocultarFlotante(); abrirTip(d.k, si, ti, fi, el); break; }
+      ocultarFlotante(); abrirTip(d.k, si, ti, fi); break; }
     case 'tipCerrar': cerrarTip(true); break;
     // La ventana del «Por qué» de una tarjeta de equipo: arranca en el personaje de la ficha.
     case 'pqAbrir': abrirPq({ id: d.pq, charId: ui.charId, uid: ui.uniformId, tab: null, y: 0 }); break;

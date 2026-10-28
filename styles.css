@@ -655,7 +655,7 @@ body.sin-ayuda details.ayuda,body.sin-ayuda .sktit::after{display:none}
 .flotay .sklect{margin-top:6px}
 .flotay .flopie{margin-top:6px;font-size:11px;color:var(--text-3)}
 [data-ay]{cursor:help}
-.cmpsk{display:block;padding:0;margin-bottom:4px;border:0;background:none;color:inherit;font:600 inherit;font-weight:600;text-align:left;cursor:pointer}
+.cmpsk{display:block;padding:0;margin-bottom:4px;border:0;background:none;color:inherit;font:inherit;font-weight:600;text-align:left;cursor:pointer}
 .cmpsk:hover{color:var(--accent)}
 .cmpfx[data-a]{cursor:pointer;border-radius:4px}
 .cmpfx[data-a]:hover{background:rgba(255,255,255,.035)}

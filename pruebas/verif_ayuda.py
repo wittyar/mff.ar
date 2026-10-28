@@ -7,7 +7,8 @@ Casos (contra un modelo armado acá desde data.js, sin app.js):
   1. Roster: el orden por defecto es «Lanzamiento» y cada tarjeta llegó en la misma fecha o antes que la anterior
      (la fecha de su hecho «personaje» o «uniforme» en MFF_HISTORICO).
   2. Ficha de Doctor Voodoo — Savage Avengers, Skills: el tooltip de la Tier-2 (su nombre y sus efectos) y el de la
-     etiqueta de un efecto, dentro de la ventana; se va al salir; desactivada, sin tooltip (el clic igual abre), y la
+     etiqueta de un efecto, dentro de la ventana; se va al salir (también de la ventana) y al desplazar la página si
+     ya no está bajo el mouse; desactivada, sin tooltip (el clic igual abre), y la
      preferencia queda guardada al recargar.
   3. Comparativa en «Ficha»: el nombre de una skill y un efecto abren la ventana de esa variante (el efecto, desplegado);
      Esc devuelve el foco al nombre.
@@ -91,6 +92,13 @@ try:
         ok('ficha: el tooltip de un efecto, distinto del de la skill y dentro de la ventana', f2 and f2['txt'] != f['txt'] and f2['dentro'], (etq, f2))
         pg.mouse.move(5, 300); pg.wait_for_timeout(120)
         ok('ficha: al salir, el tooltip se va', flotante(pg) is None)
+        pasar(pg, sel, 300)
+        pg.evaluate(f"document.querySelector('{sel}').dispatchEvent(new MouseEvent('mouseout', {{ bubbles: true, relatedTarget: null }}))")
+        ok('ficha: al salir de la ventana desde la skill, el tooltip se va', flotante(pg) is None)
+        pasar(pg, sel, 300)
+        pg.evaluate("window.scrollBy({ top: 400, behavior: 'instant' })")
+        pg.evaluate("new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))"); pg.wait_for_timeout(100)
+        ok('ficha: al desplazar la página, si la skill ya no está bajo el mouse, el tooltip se va', flotante(pg) is None)
         pg.click(sel); pg.wait_for_timeout(200)
         ok('ficha: el clic abre la ventana y el tooltip se va', pg.locator('#skpop').count() == 1 and flotante(pg) is None)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(100)
@@ -117,6 +125,8 @@ try:
         pg.click('[data-a="cmpVista"][data-v="ficha"]'); pg.wait_for_timeout(300)
         clave = f'doctor-voodoo::{VOODOO["id"]}'
         bsel = f'.cmpsk[data-k="{clave}"][data-si="{SI_T2}"]'
+        letra = pg.eval_on_selector(bsel, "b => { const a = getComputedStyle(b), c = getComputedStyle(b.closest('td')); return [a.fontFamily === c.fontFamily && a.fontSize === c.fontSize, a.fontFamily, c.fontFamily, a.fontSize, c.fontSize]; }")
+        ok('comparativa: el nombre de la skill (un botón) con la letra de la tabla', letra[0], letra)
         pasar(pg, bsel, 300)
         f = flotante(pg)
         ok('comparativa: el tooltip del nombre de la skill', f and NOMBRE_T2['es'] in f['txt'] and f['dentro'], f)
