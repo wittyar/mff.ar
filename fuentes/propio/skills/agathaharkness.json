@@ -9,7 +9,7 @@
   "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.",
   "La Tier-3 (definitiva) no trae su recarga en la ficha: va sin recarga.",
   "Striker de Tier-4: la ficha dice además «Can be activated again after 0.3 sec (7 Sec.)» (la recuperación por daño vuelve a activarse a los 0,3 s); el patrón de la API para el robo de PG no lo tiene y no va.",
-  "Rune Magic: el juego, desde esta actualización, dice «ignores enemy's basic damage decrease» (la nota cambia ese texto en todas las skills); va con el texto de la API, que todavía dice «damage decrease»."
+  "Rune Magic: el juego, desde esta actualización, dice «ignores enemy's basic damage decrease» (la nota cambia ese texto en todas las skills); la API lo dice igual desde el 27 de octubre de 2026."
  ],
  "slots": {
   "Leader Skill": {
@@ -76,8 +76,8 @@
       },
       {
        "abilityId": 433,
-       "ability": "Excluding bosses, ignores enemy's damage decrease",
-       "description": "Excluding bosses, ignores enemy's damage decrease by <b>15%</b>."
+       "ability": "Excluding bosses, ignores enemy's basic damage decrease",
+       "description": "Excluding bosses, ignores enemy's basic damage decrease by <b>15%</b>."
       }
      ],
      "target": "Magic Allies"

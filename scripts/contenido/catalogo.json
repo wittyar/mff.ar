@@ -303,7 +303,7 @@
   "Entice": {"para": "rival", "efectos": ["seducir"]},
   "ENTOMB": {"para": "rival", "efectos": ["sepultar"]},
   "Evasion Reload": {"para": "propio", "efectos": ["esquivar_golpes", "dano_basico"]},
-  "Excluding bosses, ignores enemy's damage decrease": {"para": "propio", "efectos": ["ignorar_reduccion"]},
+  "Excluding bosses, ignores enemy's basic damage decrease": {"para": "propio", "efectos": ["ignorar_reduccion"]},
   "Explosion": {"por_patron": {"Energy Attack increases by #% every # sec (up to #%)": {"para": "propio", "efectos": ["ataque_energia"], "condicion": {"varia": {"es": "crece cada unos segundos", "en": "grows every few seconds"}}}, "Physical Attack increases by #% every # sec (up to #%)": {"para": "propio", "efectos": ["ataque_fisico"], "condicion": {"varia": {"es": "crece cada unos segundos", "en": "grows every few seconds"}}}}},
   "FEAR": {"para": "rival", "efectos": ["miedo"]},
   "FLAME DAMAGE ↑": {"para": "propio", "efectos": ["dano_fuego"]},
