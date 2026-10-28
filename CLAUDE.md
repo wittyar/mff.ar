@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (27 de octubre de 2026)
+## Estado (28 de octubre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -228,9 +228,16 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   `verif_ayuda.py`, `verif_tooltip_skill.py` (la ventana modal) y `verif_tooltip_todas.py` (también los tooltips; una
   página por tanda: en una sola el renderer se queda sin memoria con 8 GB, también con la app de antes). Visto al
   correr todas con los datos de la 12.3.5 y sin relación con esto (fallan igual con la 1.0.47): `verif_analisis` (un
-  texto sin clasificar en 24 variantes: «Excluding bosses, ignores enemy's basic damage decrease by #%.»), y fallas de
-  entorno o de datos en cierre, contexto, ctp_equipos, dudas, filtros_cobertura, glosario, guia_*, historico, otorga,
-  porque, programa y ultimo_uniforme.
+  texto sin clasificar en 24 variantes; resuelto en la 1.0.49), y fallas de entorno o de datos en cierre, contexto,
+  ctp_equipos, dudas, filtros_cobertura, glosario, guia_*, historico, otorga, porque, programa y ultimo_uniforme.
+- La 1.0.49 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 28 de octubre: sin recarga (la fuente
+  pone 0 s), la skill es constante y no se dice nada (Ezequiel: «Recarga: no tiene (la fuente pone 0 s)» sobra;
+  `recargaTxt` da null). thanosvibs cambió la etiqueta de la descripción 433 a «Excluding bosses, ignores enemy's basic
+  damage decrease» (como el juego desde el 27 de octubre): el catálogo la toma (`verif_analisis` vuelve a pasar) y la
+  pasiva de Agatha va con ese texto. `historico.armar` corta el build si una variante no tiene su llegada con fecha (el
+  orden por lanzamiento la necesita). Y lo que se escapó en la 1.0.48: el botón de la skill se busca al cerrar el «Cómo
+  funciona» (`disparadorTip`, `tipAbierto`), el tooltip se va al salir de la ventana y al desplazar solo si el mouse ya
+  no está encima, los «?» se reubican al cambiar el tamaño, y la letra del nombre de la skill en la comparativa.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
