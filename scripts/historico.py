@@ -253,6 +253,14 @@ def armar(chars, updates, dir_foro, modos):
             if not ms and rx_otros.search(t):
                 otros_modos.append((n['id'], t))
 
+    # Cada variante llega en una versión con fecha: la app ordena el roster por esa fecha (1.0.48, «Lanzamiento»).
+    con_fecha = {v for _, v, _ in versiones}
+    llegan = {h['k'] for h in hechos if h['t'] in ('personaje', 'uniforme') and h['v'] in con_fecha}
+    sin_llegada = sorted(k for _, k in variante.values() if k not in llegan)
+    if sin_llegada:
+        raise SystemExit(f'historico: {len(sin_llegada)} variantes sin su llegada (personaje o uniforme) en una versión con '
+                         f'fecha de thanosvibs, y la app ordena el roster por esa fecha: {sin_llegada[:10]}')
+
     H = {
         'ventana': VENTANA,
         'versiones': [[v, nombre, f.isoformat(), [n['id'] for n in por_version.get(v, [])]]
