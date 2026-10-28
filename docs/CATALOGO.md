@@ -16,7 +16,7 @@ thanosvibs publica el mismo efecto de dos lados que no se cruzan: las skills lo 
 - **Skills:** las etiquetas que apuntan al efecto, de la más usada a la menos, con cuántos retratos la usan.
 - **Leads & Supports y bonos de equipo:** los stats que apuntan al efecto, con cuántos retratos y cuántos bonos los dan, si se acumulan y su tope (ver *Qué se acumula y los topes*, al final).
 
-16 grupos, 131 efectos, 228 etiquetas de skills y 90 stats de Leads & Supports y de bonos de equipo. **Sin clasificar: 1** (docs/AUDITORIA.md, sección 9).
+16 grupos, 131 efectos, 228 etiquetas de skills y 90 stats de Leads & Supports y de bonos de equipo. Todo lo que traen los datos está clasificado.
 
 ## Golpe
 
@@ -266,7 +266,7 @@ Sube el daño que hace, aparte del ataque.
 - **PvE:** Contra enemigos comunes, no contra jefes. [Probable]
 - **PvP:** Contra rivales que se protegen con reducción de daño. [Probable]
 - **Skills:**
-  - `Excluding bosses, ignores enemy's damage decrease` (1 retrato)
+  - `Excluding bosses, ignores enemy's basic damage decrease` (26 retratos)
 - **Leads & Supports y bonos de equipo:**
   - `Ignore Non-Boss Damage Decrease` (5 retratos) — se acumula; Nota: Se suma, también con lo que dan los C.T.P., y vale en PvE y en PvP (en PvP no hay jefes) (Ezequiel, 5 de octubre de 2026).
 

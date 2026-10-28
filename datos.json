@@ -4,12 +4,12 @@
  "generado": "2026-10-28",
  "archivos": {
   "data.js": {
-   "sha256": "70ceb975e96e7f6283bf417370e86afb356ca72bc83772099bf6dab5a812f354",
-   "bytes": 6671163
+   "sha256": "29b4c477736dcdf5d0b8ad250849b5bd3c46f4d0746fd0db68e841c4a033d9bf",
+   "bytes": 6671717
   },
   "docs/AUDITORIA.md": {
-   "sha256": "28d19d8988a5203fafd40180137fe734d716c44c6790acdae9035848c42996e3",
-   "bytes": 184662
+   "sha256": "19b4b0cb985b08562285cf610a33de269f3fcff6f770a6f7c6e6961a094a9df2",
+   "bytes": 184191
   }
  },
  "imagenes": [

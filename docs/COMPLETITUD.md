@@ -27,7 +27,7 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 ## Resumen
 
-259 de 893 variantes completas (29%); 54 de 291 personajes con todas sus variantes completas.
+261 de 893 variantes completas (29%); 56 de 291 personajes con todas sus variantes completas.
 
 Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo que falta en el personaje cuenta en todas sus variantes):
 
@@ -41,7 +41,6 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [Bonos de equipo que faltan](#bonos-de-equipo-que-faltan) | 34 | 33 | 33 | la wiki (sección Team Bonus), capturas del juego o foros |
 | [Facción, tipo, raza o habilidad sin resolver ($HEROSUBTYPE1)](#facción-tipo-raza-o-habilidad-sin-resolver-herosubtype1) | 31 | 18 | 42 | el juego o foros, y a mano en scripts/contenido/marcadores.csv |
 | [Sin el C.T.P. de su contexto en la guía de armado](#sin-el-ctp-de-su-contexto-en-la-guía-de-armado) | 29 | 27 | 31 | la guía de armado o foros |
-| [Efecto que el catálogo no clasifica](#efecto-que-el-catálogo-no-clasifica) | 25 | 17 | 26 | a mano (scripts/contenido/catalogo.json) |
 | [ISO-8 u obelisco sin dato en la guía de armado](#iso-8-u-obelisco-sin-dato-en-la-guía-de-armado) | 23 | 6 | 6 | la guía de armado o foros |
 | [Valores del artefacto incompletos](#valores-del-artefacto-incompletos) | 20 | 8 | 8 | la wiki (página Artifact) o el juego |
 | [Nombre en Leads & Supports distinto del de la skill](#nombre-en-leads--supports-distinto-del-de-la-skill) | 15 | 14 | 16 | el juego o foros |
@@ -58,7 +57,7 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [Sin fila en la Ideal CTP List](#sin-fila-en-la-ideal-ctp-list) | 1 | 1 | 1 | thanosvibs (Ideal CTP List) |
 | [Sin lugar en la tier list General](#sin-lugar-en-la-tier-list-general) | 1 | 1 | 1 | thanosvibs (tier list General) |
 
-Sin casos: Dato de identidad vacío; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles.
+Sin casos: Dato de identidad vacío; Efecto que el catálogo no clasifica; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles.
 
 ### Lo que ya se sabía que no cierra
 
@@ -150,31 +149,6 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | War Machine — Marvel Studios' Captain America: Civil War | Pasiva de uniforme «Marvel Studios' Captain America: Civil War»: la API la publica sin ningún efecto | la wiki (el «Bonus» del uniforme) o foros |
 | Winter Soldier — Marvel Studios' Captain America: Civil War | Pasiva de uniforme «Marvel Studios' Captain America: Civil War»: la API la publica sin ningún efecto | la wiki (el «Bonus» del uniforme) o foros |
 | Winter Soldier — Marvel Studios' Avengers: Infinity War | Pasiva de uniforme «Marvel Studios' Avengers: Infinity War»: la API la publica sin ningún efecto | la wiki (el «Bonus» del uniforme) o foros |
-
-### Efecto que el catálogo no clasifica
-
-26 casos en 17 personajes y 25 variantes. Una etiqueta de efecto que el catálogo no clasifica (docs/AUDITORIA.md, sección 9).
-
-| Variante | Qué falta | De dónde podría salir |
-|---|---|---|
-| Adam Warlock — Marvel Studios' Guardians of the Galaxy 3 | Pasiva T2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Beast (All-New X-Men, Marvel Animation's X-Men '97) | Pasiva T2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Dormammu — The Living Dark Planet | Pasiva T2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Echo — Marvel Studios' Echo (Maya Lopez (Echo)) | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Electro — Spider-Man: No Way Home | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Galactus | Activa 2: «Excluding bosses, ignores enemy's basic damage decrease» (2 veces) | a mano (scripts/contenido/catalogo.json) |
-| Gorr — The God Butcher | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Jeff the Land Shark | Pasiva: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Jubilee — Marvel Animation's X-Men '97 | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Kang the Conqueror — Rama-Tut | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Knull — Ancient History | Activa 2: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Madelyne Pryor — Winter Queen | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Red Guardian — Marvel Studios' Thunderbolts* | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Rhino — Uncanny Spider-Man | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Sentry (Merged, Marvel Studios' Thunderbolts*) | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Spider-Man (Spider-Man: No Way Home (Integrated Suit), Back to Basics, The Symbiote Suit, Marvel Studios' Spider-Man: Brand New Day) | Pasiva de uniforme: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Thanos (Obsidian King, Wise Harvester, Thanos Wins) | Activa 5: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
-| Thanos — Annihilation | Activa 4: «Excluding bosses, ignores enemy's basic damage decrease» | a mano (scripts/contenido/catalogo.json) |
 
 ### Facción, tipo, raza o habilidad sin resolver ($HEROSUBTYPE1)
 
@@ -759,10 +733,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Adam Warlock: 2 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Adam Warlock: 1 faltante, 3 de 3 variantes incompletas</summary>
 
 - **Personaje:** strikers
-- **Marvel Studios' Guardians of the Galaxy 3:** efecto sin clasificar: Pasiva T2
 
 </details>
 
@@ -853,13 +826,12 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Beast: 6 faltantes, 5 de 5 variantes incompletas</summary>
+<details><summary>Beast: 4 faltantes, 5 de 5 variantes incompletas</summary>
 
 - **Personaje:** strikers
 - **Age of Apocalypse:** skill sin efectos: Pasiva de uniforme
 - **Uncanny X-Men:** skill sin efectos: Pasiva de uniforme
-- **All-New X-Men:** efecto sin clasificar: Pasiva T2
-- **Marvel Animation's X-Men '97:** efecto sin clasificar: Pasiva T2; C.T.P. de su contexto: PvP
+- **Marvel Animation's X-Men '97:** C.T.P. de su contexto: PvP
 
 </details>
 
@@ -1080,10 +1052,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Dormammu: 5 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Dormammu: 4 faltantes, 3 de 3 variantes incompletas</summary>
 
 - **Personaje:** valores del artefacto
-- **The Living Dark Planet:** efecto sin clasificar: Pasiva T2; rotación; datos del uniforme
+- **The Living Dark Planet:** rotación; datos del uniforme
 
 </details>
 
@@ -1102,19 +1074,19 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Echo: 8 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Echo: 7 faltantes, 3 de 3 variantes incompletas</summary>
 
 - **Personaje:** fila vacía en la guía de armado
 - **Base:** «Give Power» vacío: Striker
 - **Marvel Studios' Hawkeye (Maya Lopez):** «Give Power» vacío: Striker, Liderazgo; rotación
-- **Marvel Studios' Echo (Maya Lopez (Echo)):** efecto sin clasificar: Pasiva de uniforme; «Give Power» vacío: Striker, Liderazgo
+- **Marvel Studios' Echo (Maya Lopez (Echo)):** «Give Power» vacío: Striker, Liderazgo
 
 </details>
 
-<details><summary>Electro: 3 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Electro: 2 faltantes, 2 de 2 variantes incompletas</summary>
 
 - **Base:** rotación
-- **Spider-Man: No Way Home:** efecto sin clasificar: Pasiva de uniforme; nombre en Leads & Supports: Pasiva 4★
+- **Spider-Man: No Way Home:** nombre en Leads & Supports: Pasiva 4★
 
 </details>
 
@@ -1183,10 +1155,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Galactus: 6 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Galactus: 4 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** strikers; bonos de equipo; fila vacía en la guía de armado
-- **Base:** efecto sin clasificar: Activa 2 (2); rotación
+- **Base:** rotación
 
 </details>
 
@@ -1259,11 +1231,11 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Gorr: 8 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Gorr: 7 faltantes, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** strikers
 - **Base:** «Give Power» vacío: Pasiva, Pasiva T2, Liderazgo
-- **The God Butcher:** efecto sin clasificar: Pasiva de uniforme; «Give Power» vacío: Pasiva, Pasiva T2, Liderazgo
+- **The God Butcher:** «Give Power» vacío: Pasiva, Pasiva T2, Liderazgo
 
 </details>
 
@@ -1459,17 +1431,16 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Jeff the Land Shark: 6 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Jeff the Land Shark: 5 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** strikers; bonos de equipo; fila vacía en la guía de armado
-- **Base:** efecto sin clasificar: Pasiva; nombre en Leads & Supports: Pasiva 4★ (secundaria); rotación
+- **Base:** nombre en Leads & Supports: Pasiva 4★ (secundaria); rotación
 
 </details>
 
-<details><summary>Jubilee: 4 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Jubilee: 3 faltantes, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** strikers; C.T.P. en la guía de armado; ISO-8 u obelisco en la guía de armado
-- **Marvel Animation's X-Men '97:** efecto sin clasificar: Pasiva de uniforme
 
 </details>
 
@@ -1486,11 +1457,11 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Kang the Conqueror: 5 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Kang the Conqueror: 4 faltantes, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** strikers
 - **Base:** «Give Power» vacío: Liderazgo
-- **Rama-Tut:** efecto sin clasificar: Pasiva de uniforme; «Give Power» vacío: Liderazgo; rotación
+- **Rama-Tut:** «Give Power» vacío: Liderazgo; rotación
 
 </details>
 
@@ -1533,12 +1504,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 <details><summary>Kitty Pryde: 1 faltante, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** strikers
-
-</details>
-
-<details><summary>Knull: 1 faltante, 1 de 2 variantes incompletas</summary>
-
-- **Ancient History:** efecto sin clasificar: Activa 2
 
 </details>
 
@@ -1599,10 +1564,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Madelyne Pryor: 5 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Madelyne Pryor: 4 faltantes, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** strikers; bonos de equipo; fila vacía en la guía de armado
-- **Winter Queen:** efecto sin clasificar: Pasiva de uniforme; rotación
+- **Winter Queen:** rotación
 
 </details>
 
@@ -1874,12 +1839,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Red Guardian: 1 faltante, 1 de 3 variantes incompletas</summary>
-
-- **Marvel Studios' Thunderbolts*:** efecto sin clasificar: Pasiva de uniforme
-
-</details>
-
 <details><summary>Red Hulk: 1 faltante, 1 de 4 variantes incompletas</summary>
 
 - **Base:** rotación
@@ -1895,10 +1854,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Rhino: 2 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Rhino: 1 faltante, 2 de 2 variantes incompletas</summary>
 
 - **Personaje:** strikers
-- **Uncanny Spider-Man:** efecto sin clasificar: Pasiva de uniforme
 
 </details>
 
@@ -1978,11 +1936,11 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Sentry: 7 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Sentry: 5 faltantes, 3 de 3 variantes incompletas</summary>
 
 - **Base:** «Give Power» vacío: Striker
-- **Merged:** efecto sin clasificar: Pasiva de uniforme; «Give Power» vacío: Striker, Liderazgo
-- **Marvel Studios' Thunderbolts*:** efecto sin clasificar: Pasiva de uniforme; «Give Power» vacío: Striker; rotación
+- **Merged:** «Give Power» vacío: Striker, Liderazgo
+- **Marvel Studios' Thunderbolts*:** «Give Power» vacío: Striker; rotación
 
 </details>
 
@@ -2093,7 +2051,7 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Spider-Man: 13 faltantes, 13 de 13 variantes incompletas</summary>
+<details><summary>Spider-Man: 9 faltantes, 13 de 13 variantes incompletas</summary>
 
 - **Personaje:** strikers
 - **Base:** rotación
@@ -2102,10 +2060,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 - **Marvel Studios' Captain America: Civil War:** rotación
 - **Spider-Man: Homecoming Homemade Suit:** rotación
 - **Spider-Man: Far From Home:** rotación
-- **Spider-Man: No Way Home (Integrated Suit):** efecto sin clasificar: Pasiva de uniforme
-- **Back to Basics:** efecto sin clasificar: Pasiva de uniforme
-- **The Symbiote Suit:** efecto sin clasificar: Pasiva de uniforme
-- **Marvel Studios' Spider-Man: Brand New Day:** efecto sin clasificar: Pasiva de uniforme
 
 </details>
 
@@ -2184,13 +2138,13 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Thanos: 13 faltantes, 5 de 8 variantes incompletas</summary>
+<details><summary>Thanos: 9 faltantes, 5 de 8 variantes incompletas</summary>
 
 - **Secret Wars: Infinity:** rotación
-- **Obsidian King:** efecto sin clasificar: Activa 5; «Give Power» vacío: Pasiva de uniforme
-- **Wise Harvester:** efecto sin clasificar: Activa 5; «Give Power» vacío: Pasiva de uniforme, Liderazgo
-- **Thanos Wins:** efecto sin clasificar: Activa 5; «Give Power» vacío: Pasiva de uniforme, Liderazgo
-- **Annihilation:** efecto sin clasificar: Activa 4; «Give Power» vacío: Pasiva de uniforme, Liderazgo; rotación
+- **Obsidian King:** «Give Power» vacío: Pasiva de uniforme
+- **Wise Harvester:** «Give Power» vacío: Pasiva de uniforme, Liderazgo
+- **Thanos Wins:** «Give Power» vacío: Pasiva de uniforme, Liderazgo
+- **Annihilation:** «Give Power» vacío: Pasiva de uniforme, Liderazgo; rotación
 
 </details>
 
