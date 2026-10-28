@@ -376,6 +376,8 @@ ul.pqm-lista b{color:var(--text);font-weight:600}
 /* Armador: personaje que ya está en otro equipo del mismo modo. */
 .avisoeq{color:var(--gold);font-size:13px;margin-bottom:6px}
 .avisoeq.avisopick{margin:0}
+/* Al comparar desde una ficha, las versiones de ese personaje van primero (pickPrimero): lo dice arriba de la lista. */
+.pickprimero{margin:0 0 10px;font-size:12.5px;color:var(--text-3)}
 .enuso{opacity:.45}
 /* Armado: las reglas generales de la guía, plegadas. */
 details.reglas{margin-top:12px}

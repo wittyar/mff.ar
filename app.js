@@ -625,6 +625,7 @@ const T = {
   back_roster:       { es:'← Roster',            en:'← Roster' },
   back_to:           { es:'Volver a {x}',        en:'Back to {x}' },
   compare_this:      { es:'+ Comparar esta versión', en:'+ Compare this version' },
+  pick_primero:      { es:'Primero, las versiones de {x}', en:'First, the versions of {x}' },
   edit:              { es:'Editar',              en:'Edit' },
   d_uniform:         { es:'Uniforme',            en:'Uniform' },
   ft_resumen:        { es:'Resumen',             en:'Overview' },
@@ -1550,6 +1551,7 @@ function latir () {
 let ui = {
   view: 'roster', search: '', page: 0,
   pickMode: false, picks: [], avisoPick: null,  // avisoPick: por qué no se sumó la última que se tocó
+  pickDe: null,                // el personaje desde cuya ficha se empezó a comparar: sus versiones van primero (pickPrimero)
   charId: null, uniformId: 'base',
   tierList: (TIERLISTS_SEED[0] || {}).id || '',
   avisoMesa: null,                   // { txt, ok }: por qué la mesa no sumó al último que se puso, o que se guardó (ok)
@@ -2713,7 +2715,16 @@ function rosterData () {
     if (x > y) return 1 * U.prefs.dir;
     return fullLabel(a).localeCompare(fullLabel(b));
   });
-  return list;
+  const primero = pickPrimero(list);
+  return primero ? primero.concat(list.filter(v => v.cid !== ui.pickDe)) : list;
+}
+/** Al comparar desde una ficha («+ Comparar esta versión»), las versiones de ese personaje van primero en la lista, en
+ *  el orden elegido (Ezequiel, 28 de octubre de 2026: «cuando estoy en Dormammu, para comparar prefiero no tener que
+ *  buscarlo»). Si no tiene otras versiones en la lista, la lista queda como está: null. */
+function pickPrimero (list) {
+  if (!ui.pickMode || !ui.pickDe) return null;
+  const suyas = list.filter(v => v.cid === ui.pickDe);
+  return suyas.length > 1 ? suyas : null;
 }
 
 /** Las restricciones que tienen los liderazgos y soportes de los datos, por tipo:
@@ -2903,12 +2914,14 @@ function renderRoster () {
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   ui.page = Math.min(Math.max(0, ui.page), pages - 1);
   const slice = rows.slice(ui.page * PAGE, (ui.page + 1) * PAGE);
+  const primero = pickPrimero(rows);
+  const aviso = primero ? `<div class="pickprimero">${h(t('pick_primero').replace('{x}', primero[0].name))}</div>` : '';
   const body = rows.length === 0
     ? `<div class="empty"><div class="big">∅</div><div>${h(t('no_match'))}</div>
        <button class="btn sm" style="margin-top:12px" data-a="clearFilters">${h(t('clear_filters'))}</button></div>`
     : U.prefs.view === 'table' ? tableHtml(slice)
     : `<div class="grid ${U.prefs.view === 'dense' ? 'dense' : ''}">${slice.map(cardHtml).join('')}</div>`;
-  return toolbar(total, rows.length) + body + pager(pages, ui.page, 'page');
+  return toolbar(total, rows.length) + aviso + body + pager(pages, ui.page, 'page');
 }
 /** Paginador: extremos, vecinos de la actual y "…" entre medio, así llega a todas las páginas sin una fila de
  *  veintitantos botones. `accion` es el data-a que atiende el clic. */
@@ -7143,12 +7156,12 @@ document.addEventListener('click', (e) => {
     case 'kind': P.kind = d.v; ui.page = 0; commit(); break;
     case 'dir': P.dir = -P.dir; commit(); break;
     case 'page': ui.page = parseInt(d.p, 10); render(); window.scrollTo({top:0,behavior:'smooth'}); break;
-    case 'pickMode': ui.pickMode = !ui.pickMode; ui.avisoPick = null; ui.view = 'roster'; render(); break;
+    case 'pickMode': ui.pickMode = !ui.pickMode; ui.pickDe = null; ui.avisoPick = null; ui.view = 'roster'; render(); break;
     // «+ Comparar esta versión» la suma y lleva al roster a elegir las otras; las elegidas se ven en la mesa.
     case 'pick': case 'pickThis': {
       e.stopPropagation();
       togglePick(d.cid, d.uid || null);
-      if (a === 'pickThis') { ui.pickMode = true; ui.view = 'roster'; }
+      if (a === 'pickThis') { ui.pickMode = true; ui.pickDe = d.cid; ui.page = 0; ui.view = 'roster'; }
       render(); break; }
     case 'unpick': { const key = d.cid + '::' + (d.uid || 'base');
       ui.picks = ui.picks.filter(p => p.key !== key); ui.avisoPick = null;
