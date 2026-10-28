@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-10-27, sobre los datos del juego 12.3.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-10-28, sobre los datos del juego 12.3.5 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
@@ -20,7 +20,7 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 | Instinto (thanosvibs vs infobox y categoría de la wiki) | 284 | 5 | 2 |
 | Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 26 páginas sin la sección |
 | Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 120 páginas sin la pestaña |
-| Artefactos a 6★ (thanosvibs vs wiki) | 210 (+31 donde la wiki lista otro nivel de estrellas) | 18 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
+| Artefactos a 6★ (thanosvibs vs wiki) | 211 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
 Cobertura de la wiki: de 5934 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1225 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 310 sin pestaña de su uniforme y 31 de personajes sin infobox legible.
 
@@ -279,7 +279,6 @@ Los números del texto a 6★ de thanosvibs contra la tabla de la página Artifa
 | Daken | Cruel Claws | 50 |  |
 | Dazzler | Disco Queen |  | 0.2 |
 | Domino | Probability Power | 25 |  |
-| Dormammu | Lord of Chaos | 0.5, 20, 200 |  |
 | Franklin Richards | Pocket Universe | 5, 180 |  |
 | Goliath | Giant-Man II |  | 0.1 |
 | Morgan le Fay | Dark Knowledge | 0.5, 15 | 0.2, 0.6, 10, 25, 50 |
