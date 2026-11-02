@@ -1,6 +1,6 @@
 {
- "version": "1.0.50",
+ "version": "1.0.51",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Al comparar desde la ficha de un personaje, el roster muestra primero sus otras versiones: no hace falta buscarlo."
+ "notas": "Revisión del código: se sacó lo que no se usaba, y Dormammu (The Living Dark Planet) y Clea (Death of Doctor Strange) ya tienen el retrato de thanosvibs."
 }

@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (28 de octubre de 2026)
+## Estado (2 de noviembre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -242,6 +242,17 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   ficha pone primero las versiones de ese personaje (Ezequiel: «cuando estoy en Dormammu, para comparar prefiero no
   tener que buscarlo»): `ui.pickDe`, `pickPrimero` en `rosterData`, con aviso arriba de la lista; no filtra, y sin otras
   versiones la lista queda igual. Prueba: `verif_comparar_ficha.py`.
+- La 1.0.51 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 2 de noviembre: revisión del código.
+  Fuera lo que no se usaba (tres funciones y tres textos de app.js, imports de scripts que pyflakes marca), Dormammu
+  <The Living Dark Planet> y Clea <Death of Doctor Strange> con el retrato de thanosvibs (ya los publica; salen de
+  `fuentes/propio/retratos/`), y pruebas al día: `verif_consistencia` (una skill constante no dice recarga en ningún
+  lado) y las de la guía de armado (leen la versión y la fecha de la copia en uso). Corridas todas con los datos del 2
+  de noviembre: fallan lo mismo que con la 1.0.47 (datos o entorno: cierre, contexto, ctp_equipos, dudas,
+  filtros_cobertura, glosario, guia_ficha y guia_ajustes (el bloque de Cynicalex ya no está en el Resumen), historico
+  en celular, marcadores (la tabla vacía de A0), mesa, otorga, porque, programa, ultimo_uniforme, y guia_aceptar 15: la
+  guía tiene 290 de 291 personajes), más formato e imagenes, por la carpeta de datos armada a mano. La investigación de
+  cómo calcula el juego el daño (lo que se sabe, lo que no y cómo medirlo en LDPlayer), en el doc del proyecto de
+  Claude «claude/mff-modelo-combate.md».
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
