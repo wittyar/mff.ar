@@ -299,9 +299,7 @@ const T = {
   iso_amarilla:      { es:'amarilla',            en:'yellow' },
   iso_violeta:       { es:'violeta',             en:'purple' },
   iso_caos:          { es:'caos',                en:'chaos' },
-  us_lists:          { es:'Tier lists',          en:'Tier lists' },
   us_in_n_lists:     { es:'está en {n} de {t}',  en:'in {n} of {t}' },
-  us_atk:            { es:'Tipo de ataque (derivado)', en:'Attack type (derived)' },
   us_atk_note:       { es:'Derivado de sus skills activas: el stat con el que escala su % de daño. Define qué urus y qué piedras ISO le sirven.',
                        en:'Derived from its active skills: the stat its damage % scales with. It decides which Urus and ISO stones suit it.' },
   us_atk_none:       { es:'Sus skills activas no hacen daño.', en:'Its active skills deal no damage.' },
@@ -309,7 +307,6 @@ const T = {
   at_energia:        { es:'Ataque de energía',   en:'Energy Attack' },
   at_vida:           { es:'PG (su daño escala con los PG)', en:'HP (its damage scales with HP)' },
   at_mixto:          { es:'Mixto',               en:'Mixed' },
-  us_sup:            { es:'Lo que le da al equipo', en:'What it gives the team' },
   us_sup_none:       { es:'thanosvibs no le lista efectos de líder ni de soporte a este retrato.',
                        en:'thanosvibs lists no lead or support effects for this portrait.' },
   us_otorga:         { es:'Su Leader Skill da un poder que ninguna fuente publica («Give Power»: la API no dice qué otorga ni por cuánto tiempo).',
@@ -1595,7 +1592,6 @@ function h (v) {
   return d.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 function classColor (c) { return ({'Combate':'var(--class-combate)','Detonación':'var(--class-detonacion)','Velocidad':'var(--class-velocidad)','Universal':'var(--class-universal)'})[c] || 'var(--text-3)'; }
-function dmgColor (d) { return ({'Físico':'var(--dmg-fisico)','Energía':'var(--dmg-energia)','PG':'var(--dmg-pg)'})[d] || 'var(--text-3)'; }
 function tierColor (t) { return ({'T2':'var(--tier-t2)','T3':'var(--tier-t3)','T4':'var(--tier-t4)'})[t] || 'var(--text-3)'; }
 function roleColor (r) { return ({'Daño':'var(--role-dano)','Soporte':'var(--role-soporte)','Control':'var(--role-control)','Tanque':'var(--role-tanque)'})[r] || 'var(--line-2)'; }
 function rowColor (i, n) {
@@ -1606,7 +1602,6 @@ function tagSolid (label, color) { return `<span class="tag solid" style="backgr
 function tagGhost (label, color) { return `<span class="tag ghost" style="color:${color}">${h(label)}</span>`; }
 function icon (value) { const u = imgUrl('icon-' + value); return u ? `<img src="${u}" alt="" style="width:15px;height:15px;border-radius:3px;vertical-align:-3px">` : ''; }
 function shot (id, cls) { const u = imgUrl('portrait-' + id); return u ? `<img class="${cls||''}" src="${u}" alt="" loading="lazy">` : `<span class="ph">SIN RETRATO</span>`; }
-function slotClass (slot) { return slot === 'Liderazgo' ? 'lead' : slot === 'Pasiva' ? 'pass' : slot === 'Definitiva' ? 'ult' : ''; }
 function pluralUni (n) { return LANG === 'es' ? n + (n === 1 ? ' uniforme' : ' uniformes')
                                                 : n + (n === 1 ? ' uniform' : ' uniforms'); }
 /** Un personaje creado con «+ Personaje» puede no tener instinto: mostrar "Desconocido" es ruido, se omite. */
@@ -1647,12 +1642,6 @@ function danoTotal (skills) {
   skills.forEach(sk => { if (!/^Active/.test(sk.sl)) return;
     (sk.st || []).forEach(st => (st.fx || []).forEach(f => { const d = dano(f); if (d) n += d.pct; })); });
   return Math.round(n);
-}
-/** Índices de etiqueta de efecto presentes en un set de skills (para filtrar). */
-function efectosDe (skills) {
-  const out = new Set();
-  skills.forEach(sk => (sk.st || []).forEach(st => (st.fx || []).forEach(f => out.add(f.a))));
-  return out;
 }
 function allVariants () {
   const out = [];

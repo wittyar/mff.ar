@@ -17,7 +17,7 @@ catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierr
 equipo de la wiki; la 11, en los strikers, y la 12, los liderazgos que Leads & Supports no publica y
 el build deriva de la Leader Skill de la API, de work/fuentes.json).
 """
-import collections, datetime, difflib, glob, json, os, re, sys
+import collections, datetime, difflib, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima

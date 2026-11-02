@@ -20,7 +20,7 @@ llegadas cuya nota no nombra al personaje, las versiones sin nota, las notas sin
 están en modos.json.
 
 armar() devuelve MFF_HISTORICO y el texto de docs/HISTORICO.md. Solo biblioteca estándar."""
-import datetime as dt, glob, html, json, os, re, unicodedata
+import datetime as dt, html, json, os, re, unicodedata
 
 VENTANA = 4
 VENTANA_TITULO = 30

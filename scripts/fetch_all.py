@@ -16,7 +16,7 @@ Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       retratos) e images/items/*.png (íconos de C.T.P.s y artefactos).
 Y actualiza fuentes/guia-armado/ (la guía de armado de Cynicalex, versionada en el repo)
 si la planilla bajada es compatible; si no, anota por qué en su estado.json."""
-import datetime, glob, json, re, os, sys, time, unicodedata, urllib.parse, urllib.request
+import datetime, glob, json, re, os, sys, time, urllib.parse, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from imagenes import origen      # de dónde sale cada imagen: la misma regla que publica build.py
@@ -107,7 +107,7 @@ if HACER_DATOS:
             try:
                 open(fn, 'wb').write(get(f'{TV}/api/characters/{urllib.parse.quote(p)}/skills'))
                 return
-            except Exception as e:
+            except Exception:
                 if intento == 2: fallos_sk.append(p)
                 time.sleep(1.5)
     with ThreadPoolExecutor(5) as ex: list(ex.map(get_skills, ports_sk))
