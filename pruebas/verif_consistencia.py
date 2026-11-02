@@ -6,7 +6,8 @@ Preguntas que ya tienen respuesta única (la auditoría de inventario-app.md, se
 - formato_soportes: cada efecto de un liderazgo, un soporte o un bono de equipo dice lo mismo en el Resumen, el «Cómo
   funciona», el «Por qué», la comparativa, los bonos de la ficha y el detalle de PvP y PvE (tríos al azar).
 - verificacion: el Resumen y Más cuentan las mismas diferencias entre fuentes, y Más lista esas.
-- recarga: la tarjeta de la skill, su «Cómo funciona» y la comparativa dicen la misma recarga (en dos niveles).
+- recarga: la tarjeta de la skill, su «Cómo funciona» y la comparativa dicen la misma recarga (en dos niveles), o
+  ninguna la dice si la skill es constante (sin recarga, 1.0.49).
 - tier_list: la fila de cada variante en cada lista, con su «+N», es la misma en el roster (tarjeta y tabla), el
   Resumen y la tarjeta de combinación; la comparativa muestra todas esas filas.
 - habilidades: el filtro de habilidad del roster y el editor ofrecen todas las habilidades que muestran las fichas.
@@ -158,7 +159,7 @@ PREGUNTAS = [
   return out;
 }"""),
   dict(id='recarga', desc='la recarga de cada skill, igual en su tarjeta, su «Cómo funciona» y la comparativa', js=r"""() => {
-  const { pl, doc, vs, cmp } = window.__c, out = { casos: 0, mal: 0, ejemplos: [], dos_niveles: 0 };
+  const { pl, doc, vs, cmp } = window.__c, out = { casos: 0, mal: 0, ejemplos: [], dos_niveles: 0, constantes: 0 };
   const rot = t('tt_recarga') + ':';
   for (const v of vs) v.skills.forEach((sk, si) => {
     out.casos++;
@@ -166,7 +167,10 @@ PREGUNTAS = [
     const como = [...doc(tipCuandoHtml(v, sk, entradasSkill(v, si), null, null)).querySelectorAll(':scope > ul.tiplista > li')].map(pl).find(x => x.startsWith(rot)) || null;
     const td = cmp.get(v.key).slots[slotEs(sk.sl)], comparativa = td ? pl(td.querySelector('.tag.rec')) : null;
     if (tarjeta && tarjeta.includes('Leads & Supports')) out.dos_niveles++;
-    if (!tarjeta || tarjeta !== como || tarjeta !== comparativa) { out.mal++; if (out.ejemplos.length < 4) out.ejemplos.push([fullLabel(v), sk.sl, tarjeta, como, comparativa]); }
+    // sin recarga (constante, 1.0.49): ninguna de las tres la dice
+    const constante = sk.cd === 0 && !(tarjeta && tarjeta.includes('Leads & Supports'));
+    if (constante) out.constantes++;
+    if ((constante ? tarjeta !== null : !tarjeta) || tarjeta !== como || tarjeta !== comparativa) { out.mal++; if (out.ejemplos.length < 4) out.ejemplos.push([fullLabel(v), sk.sl, tarjeta, como, comparativa]); }
   });
   return out;
 }"""),
