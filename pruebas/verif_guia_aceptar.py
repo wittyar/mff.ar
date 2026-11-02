@@ -14,6 +14,8 @@ TV = json.load(open(f'{RAIZ}/work/characters.json'))
 CTPS = json.load(open(f'{RAIZ}/work/ctps.json'))
 REAL = {k: open(os.path.join(G.CARPETA, G.ARCHIVOS[k]), 'rb').read() for k in G.ARCHIVOS}
 ESTADO_REAL = open(os.path.join(G.CARPETA, 'estado.json'), encoding='utf-8').read()
+# La copia en uso de la guía cambia cuando el workflow de datos toma una nueva: su versión y su fecha salen del repo.
+VERSION, TOMADA = json.loads(ESTADO_REAL)['version'], json.loads(ESTADO_REAL)['tomada']
 
 # Todo en una carpeta temporal: la copia en uso de prueba arranca igual a la del repo.
 tmp = tempfile.mkdtemp(prefix='guia-')
@@ -41,14 +43,14 @@ def rechazo(nombre, crudo, *pedazos, dia='2026-10-12'):
     e = est()
     motivos = ' | '.join((e.get('rechazo') or {}).get('motivos', []))
     ok(f'rechaza: {nombre}', e['rechazo'] is not None and all(p in motivos for p in pedazos)
-       and copia() == antes and e['version'] == 'V12.2.0' and e['tomada'] == '2026-10-01' and e['comprobada'] == dia
+       and copia() == antes and e['version'] == VERSION and e['tomada'] == TOMADA and e['comprobada'] == dia
        and linea.startswith('AVISO'), motivos[:300])
 
 # 1. la misma planilla: sin cambios
 reset(); antes = copia()
 linea = G.aceptar(REAL, TV, CTPS, '2026-10-05'); e = est()
 ok('1 misma planilla: sin cambios, comprobada hoy, sin rechazo', 'sin cambios' in linea and copia() == antes
-   and e['comprobada'] == '2026-10-05' and e['tomada'] == '2026-10-01' and e['rechazo'] is None, linea)
+   and e['comprobada'] == '2026-10-05' and e['tomada'] == TOMADA and e['rechazo'] is None, linea)
 
 # 2. cambió una nota (compatible): pasa a ser la copia en uso
 def nota(t): t[ENC + 1][col(t, 'Notes')] = 'nota nueva de prueba'
@@ -92,7 +94,7 @@ rechazo('llega una página web', {'armado': b'<!DOCTYPE html><html>login</html>'
 reset(); antes = copia()
 linea = G.rechazar(['no se pudo bajar la planilla: HTTP Error 404'], '2026-10-12'); e = est()
 ok('11 no se pudo bajar: se anota y la copia queda', copia() == antes and e['rechazo']['motivos'] == ['no se pudo bajar la planilla: HTTP Error 404']
-   and e['comprobada'] == '2026-10-12' and e['tomada'] == '2026-10-01', linea)
+   and e['comprobada'] == '2026-10-12' and e['tomada'] == TOMADA, linea)
 
 # 12. después de un rechazo, una compatible lo limpia
 G.aceptar(REAL, TV, CTPS, '2026-10-19'); e = est()
@@ -128,7 +130,7 @@ os.chdir(RAIZ)
 import fuentes
 reset(); G.aceptar(mutar(renombrar), TV, CTPS, '2026-10-12')
 out = fuentes.guia_armado(TV)
-ok('16 data.js lleva la copia en uso y el rechazo con sus motivos', out['pj'] == r['pj'] and out['version'] == 'V12.2.0'
+ok('16 data.js lleva la copia en uso y el rechazo con sus motivos', out['pj'] == r['pj'] and out['version'] == VERSION
    and out['estado']['rechazo']['motivos'] == ['faltan columnas: «Best CTP»'] and out['estado']['comprobada'] == '2026-10-12'
    and out['raros'] == r['raros'] and out['leyenda']['iso']['shield'] == ['Drastic Density Enhancement', 'Binary Power'], out['estado'])
 shutil.rmtree(tmp)

@@ -12,12 +12,16 @@ def texto(loc): return loc.evaluate('e => e.textContent.replace(/\\s+/g, " ").tr
 def visto(loc): return loc.evaluate('e => e.innerText.replace(/\\s+/g, " ").trim().toLowerCase()')
 RX = re.compile(r'\nwindow\.MFF_GUIA_ARMADO = (.*?);\n')
 
+VERSION = TOMADA = COMPROBADA = None
 def carpeta(cambio):
+    global VERSION, TOMADA, COMPROBADA
     d = carpeta_datos()
     ruta = os.path.join(d, 'data.js')
     js = open(ruta, encoding='utf-8').read()
     m = RX.search(js)
     G = json.loads(m.group(1))
+    # la copia en uso cambia cuando el workflow de datos toma una nueva: su versión y su fecha salen de los datos
+    VERSION, TOMADA, COMPROBADA = G['version'], G['estado']['tomada'], G['estado']['comprobada']
     nuevo = cambio(G)
     js = js[:m.start()] + ('\n' if nuevo is None else '\nwindow.MFF_GUIA_ARMADO = ' + json.dumps(nuevo, ensure_ascii=False) + ';\n') + js[m.end():]
     open(ruta, 'w', encoding='utf-8').write(js)
@@ -45,8 +49,8 @@ with sync_playwright() as p:
             tv = visto(sec) if sec.count() else ''
             fuentes = texto(pg.locator('.section', has=pg.locator('h3', has_text='Fuentes')))
             if nombre == 'compatible':
-                ok('compatible: versión, fecha, revisión, personajes', all(x.lower() in tv for x in ['Versión en uso V12.2.0 tomada el 2026-10-01',
-                   'Última revisión 2026-10-01 compatible', 'Personajes 290']) and sec.locator('.ga-rechazo').count() == 0, tv[:300])
+                ok('compatible: versión, fecha, revisión, personajes', all(x.lower() in tv for x in [f'Versión en uso {VERSION} tomada el {TOMADA}',
+                   f'Última revisión {COMPROBADA} compatible', 'Personajes 290']) and sec.locator('.ga-rechazo').count() == 0, tv[:300])
                 sec.locator('summary', has_text='no interpreta').click(); pg.wait_for_timeout(100)
                 items = [texto(x) for x in sec.locator('details li').all()]
                 ok('compatible: los 3 valores sin interpretar, por columna', items == ['Best ISO-8 Set: defensive, shield, veteran soldier',
@@ -56,19 +60,19 @@ with sync_playwright() as p:
                    and 'Cynicalex Mega Guides' in fuentes, fuentes[-200:])
                 pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
                 tx_en = visto(ajustes(pg))
-                ok('compatible, en inglés', all(x.lower() in tx_en for x in ['Version in use V12.2.0 taken on 2026-10-01', 'Last check 2026-10-01 compatible']), tx_en[:300])
+                ok('compatible, en inglés', all(x.lower() in tx_en for x in [f'Version in use {VERSION} taken on {TOMADA}', f'Last check {COMPROBADA} compatible']), tx_en[:300])
                 pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
             elif nombre == 'rechazada':
                 av = texto(sec.locator('.ga-rechazo')) if sec.locator('.ga-rechazo').count() else ''
                 ok('rechazada: aviso con fecha, la versión que se sigue usando y los motivos',
-                   av.startswith('⚠ El 2026-10-12 la planilla (V13.0.0) no se pudo usar: se sigue con la V12.2.0, tomada el 2026-10-01. Motivos:')
+                   av.startswith(f'⚠ El 2026-10-12 la planilla (V13.0.0) no se pudo usar: se sigue con la {VERSION}, tomada el {TOMADA}. Motivos:')
                    and 'faltan columnas: «Best CTP»' in av and '«CTP+ = Reforged required»' in av, av)
                 ok('rechazada: la revisión dice que no se pudo usar', 'última revisión 2026-10-12 no se pudo usar' in tv, tv[:300])
                 # la ficha sigue con la copia en uso
                 pg.click('nav.topnav button'); pg.wait_for_selector('#q'); pg.fill('#q', 'Abomination'); pg.wait_for_timeout(250)
-                pg.locator('.ccard').first.click(); pg.wait_for_selector('.fcab')
+                pg.click('.ccard[data-cid="abomination"][data-uid=""]'); pg.wait_for_selector('.fcab')
                 bl = pg.locator('.usogrid .bloque', has=pg.locator('h4', has_text=re.compile('Cynicalex')))
-                ok('rechazada: la ficha sigue mostrando la versión en uso', 'Lead/Support Gods' in texto(bl) and 'V12.2.0' in texto(bl))
+                ok('rechazada: la ficha sigue mostrando la versión en uso', 'Lead/Support Gods' in texto(bl) and VERSION in texto(bl))
             else:
                 ok('sin guía: Ajustes lo dice', 'Los datos cargados no traen la guía de armado' in tx, tx)
                 ok('sin guía: Fuentes sigue andando', 'Cynicalex Mega Guides' in fuentes)
