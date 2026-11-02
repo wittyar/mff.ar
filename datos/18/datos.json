@@ -1,15 +1,15 @@
 {
  "formato": 18,
  "juego": "12.3.5",
- "generado": "2026-10-28",
+ "generado": "2026-11-02",
  "archivos": {
   "data.js": {
-   "sha256": "b6fcf1f863bf75fed7c011d89e81bec37dd1d56a433ddf03958494d9925663cb",
-   "bytes": 6671717
+   "sha256": "fc2f31d52665eb9a79b252d2908f358e5c64739cfd4ad6d198d03256703eaf5c",
+   "bytes": 6672429
   },
   "docs/AUDITORIA.md": {
-   "sha256": "19b4b0cb985b08562285cf610a33de269f3fcff6f770a6f7c6e6961a094a9df2",
-   "bytes": 184191
+   "sha256": "6716e346790b77a78a6ca25abd4da1b8617ba228cdefa824f82521974ca64a51",
+   "bytes": 193221
   }
  },
  "imagenes": [

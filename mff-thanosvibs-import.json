@@ -8419,7 +8419,7 @@
      "tier": "T4",
      "p": "spiderman12",
      "cost": "1750 Crystals",
-     "striker": 0,
+     "striker": 4,
      "wba": "Sentido Arácnido",
      "trans": false,
      "new": false,
@@ -37978,11 +37978,90 @@
       "cafe-3188979"
      ],
      "up": {
+      "uniform_xp": [
+       10000,
+       16000,
+       27200,
+       48960,
+       93024
+      ],
+      "uniform_kits": [
+       30,
+       45,
+       90,
+       180,
+       330
+      ],
+      "gold": [
+       44000,
+       80000,
+       120000,
+       220000,
+       360000
+      ],
+      "totals": [
+       195184,
+       930,
+       945,
+       675,
+       824000
+      ],
       "update": "12.3.5",
       "flags": [
        "Crystal1750"
+      ],
+      "material1": [
+       {
+        "material": "bios",
+        "qty": 30
+       },
+       {
+        "material": "bios",
+        "qty": 60
+       },
+       {
+        "material": "bios",
+        "qty": 120
+       },
+       {
+        "material": "bios",
+        "qty": 240
+       },
+       {
+        "material": "bios",
+        "qty": 480
+       }
+      ],
+      "material2": [
+       {
+        "material": "norn_universal",
+        "qty": 90
+       },
+       {
+        "material": "norn_universal",
+        "qty": 135
+       },
+       {
+        "material": "norn_universal",
+        "qty": 195
+       },
+       {
+        "material": "norn_universal",
+        "qty": 240
+       },
+       {
+        "material": "norn_universal",
+        "qty": 285
+       }
       ]
-     }
+     },
+     "op": [
+      "hellstorm1",
+      "ultron5",
+      "valkyrie3",
+      "bishop1",
+      "apocalypse3"
+     ]
     }
    ]
   },
@@ -40541,11 +40620,90 @@
       "Daño"
      ],
      "up": {
+      "uniform_xp": [
+       20000,
+       32000,
+       54400,
+       97920,
+       186048
+      ],
+      "uniform_kits": [
+       40,
+       60,
+       120,
+       240,
+       440
+      ],
+      "gold": [
+       88000,
+       160000,
+       240000,
+       440000,
+       720000
+      ],
+      "totals": [
+       390368,
+       30,
+       1260,
+       900,
+       1648000
+      ],
       "update": "12.3.5",
       "flags": [
        "Crystal2500"
+      ],
+      "material1": [
+       {
+        "material": "r2bam",
+        "qty": 10
+       },
+       {
+        "material": "r3bam",
+        "qty": 8
+       },
+       {
+        "material": "r4bam",
+        "qty": 6
+       },
+       {
+        "material": "r5bam",
+        "qty": 4
+       },
+       {
+        "material": "r6bam",
+        "qty": 2
+       }
+      ],
+      "material2": [
+       {
+        "material": "norn_chaos",
+        "qty": 120
+       },
+       {
+        "material": "norn_chaos",
+        "qty": 180
+       },
+       {
+        "material": "norn_chaos",
+        "qty": 260
+       },
+       {
+        "material": "norn_chaos",
+        "qty": 320
+       },
+       {
+        "material": "norn_chaos",
+        "qty": 380
+       }
       ]
-     }
+     },
+     "op": [
+      "ghostrider5",
+      "blackcat4",
+      "lunasnow5",
+      "beast4",
+      "odin3"
+     ]
     }
    ]
   },
@@ -70040,8 +70198,8 @@
     "PvE",
     "PvP"
    ],
-   "rating": 5,
-   "ratings": 26,
+   "rating": 4.9,
+   "ratings": 27,
    "rows": [
     {
      "id": "tier-s",
@@ -70256,57 +70414,118 @@
    ]
   },
   {
-   "id": "tv-proj-1791221730309-pkqfh",
+   "id": "tv-proj-1787634809961-ohych",
    "order": 100,
    "group": "comunidad",
-   "name": "Grayven Devil Tier List",
-   "nameEn": "Grayven Devil Tier List",
-   "source": "Grayven Devil Tier List",
-   "author": "Grayven Devil",
-   "gameVersion": "12.3",
-   "published": "2026-10-28",
-   "description": "Personal Opinion",
-   "notes": "",
+   "name": "Personal Tier List (MVLSPY)",
+   "nameEn": "Personal Tier List (MVLSPY)",
+   "source": "Personal Tier List",
+   "author": "MVLSPY",
+   "gameVersion": "12.3.5",
+   "published": "2026-11-01",
+   "description": "How good I consider characters based on my experience using them and seeing people use them",
+   "notes": "Added updated characters",
    "tags": [
     "General",
     "PvE",
-    "PvP",
-    "Other"
+    "PvP"
    ],
-   "rating": 3,
-   "ratings": 3,
+   "rating": 3.9,
+   "ratings": 15,
    "rows": [
     {
      "id": "tier-s",
-     "label": "PVP ALL CONTENT"
+     "label": "HYBRID META (PVE+PVP)"
     },
     {
      "id": "tier-a",
-     "label": "PVE ALL CONTENT"
+     "label": "PVE META"
     },
     {
-     "id": "tier-1791224488369",
-     "label": "OWB/TBA/aC"
+     "id": "tier-b",
+     "label": "PVP META"
     },
     {
-     "id": "tier-1793165050199",
-     "label": "ABXL"
-    },
-    {
-     "id": "tier-1793165693984",
-     "label": "Alternative ABXL"
-    },
-    {
-     "id": "tier-1793165497732",
-     "label": "WBL/WBl+/WBM"
+     "id": "tier-c",
+     "label": "PVE VIABLE"
     },
     {
      "id": "tier-d",
-     "label": "Supports"
+     "label": "PVP VIABLE"
     },
     {
-     "id": "tier-1791222185961",
-     "label": "not used anywhere/anymore"
+     "id": "tier-1787634920294",
+     "label": "SUPPORT"
+    },
+    {
+     "id": "tier-1787922323741",
+     "label": "MID"
+    },
+    {
+     "id": "tier-1787635842846",
+     "label": "BAD"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1789860708511-vz1ip",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Character Tier List",
+   "nameEn": "Character Tier List",
+   "source": "Character Tier List",
+   "author": "JMoreno01",
+   "gameVersion": "12.3.5",
+   "published": "2026-11-01",
+   "description": "Hope this helps y'all when deciding what characters to build",
+   "notes": "Updated some characters' ranking ;)",
+   "tags": [
+    "PvE",
+    "PvP",
+    "General"
+   ],
+   "rating": 3.2,
+   "ratings": 5,
+   "rows": [
+    {
+     "id": "tier-1789860760769",
+     "label": "PVE High Meta"
+    },
+    {
+     "id": "tier-1789868602633",
+     "label": "PVP High Meta"
+    },
+    {
+     "id": "tier-1789860735785",
+     "label": "PVE Low Meta"
+    },
+    {
+     "id": "tier-s",
+     "label": "PVP Low Meta"
+    },
+    {
+     "id": "tier-1789860776755",
+     "label": "PVE Support"
+    },
+    {
+     "id": "tier-1789871846243",
+     "label": "PVP Support"
+    },
+    {
+     "id": "tier-a",
+     "label": "A"
+    },
+    {
+     "id": "tier-b",
+     "label": "B"
+    },
+    {
+     "id": "tier-c",
+     "label": "C"
+    },
+    {
+     "id": "tier-d",
+     "label": "D"
     }
    ]
   },
@@ -70318,17 +70537,17 @@
    "nameEn": "Ideal CTP List",
    "source": "Ideal CTP List",
    "author": "CrisisCardio",
-   "gameVersion": "12.3",
-   "published": "2026-10-25",
+   "gameVersion": "12.3.5",
+   "published": "2026-10-31",
    "description": "A list of the most Ideal CTP for each character (at least to my own current knowledge).\n\nPVE characters can sometimes use weaker CTP's if need be, but PVP almost always require their most ideal CTP to be effective.\n\nFor Insight, Liberation and Ascent, try to equip them in a way where each pair of supports have one of each for maximum effectiveness (Example: Insight Dazzler and Lib Cyclops). Ascents are most useful when paired with characters with Competitions.",
-   "notes": "Wiccan added to Rage (I think this is his best?)\nAgatha added to Liberation\nMorgan still remains on Insight\nWill update for Ascent characters eventually",
+   "notes": "Clea added to Rage\nDommamu added to Conquest",
    "tags": [
     "General",
     "PvE",
     "PvP"
    ],
-   "rating": 3.6,
-   "ratings": 10,
+   "rating": 3.7,
+   "ratings": 11,
    "rows": [
     {
      "id": "tier-1787538524197",
@@ -70393,6 +70612,61 @@
    ]
   },
   {
+   "id": "tv-proj-1791221730309-pkqfh",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Grayven Devil Tier List",
+   "nameEn": "Grayven Devil Tier List",
+   "source": "Grayven Devil Tier List",
+   "author": "Grayven Devil",
+   "gameVersion": "12.3",
+   "published": "2026-10-28",
+   "description": "Personal Opinion",
+   "notes": "",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP",
+    "Other"
+   ],
+   "rating": 3.3,
+   "ratings": 3,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "PVP ALL CONTENT"
+    },
+    {
+     "id": "tier-a",
+     "label": "PVE ALL CONTENT"
+    },
+    {
+     "id": "tier-1791224488369",
+     "label": "OWB/TBA/aC"
+    },
+    {
+     "id": "tier-1793165050199",
+     "label": "ABXL"
+    },
+    {
+     "id": "tier-1793165693984",
+     "label": "Alternative ABXL"
+    },
+    {
+     "id": "tier-1793165497732",
+     "label": "WBL/WBl+/WBM"
+    },
+    {
+     "id": "tier-d",
+     "label": "Supports"
+    },
+    {
+     "id": "tier-1791222185961",
+     "label": "not used anywhere/anymore"
+    }
+   ]
+  },
+  {
    "id": "tv-proj-1792942495553-qh98x",
    "order": 100,
    "group": "comunidad",
@@ -70408,8 +70682,8 @@
     "General",
     "Other"
    ],
-   "rating": 5,
-   "ratings": 1,
+   "rating": 3.8,
+   "ratings": 4,
    "rows": [
     {
      "id": "tier-s",
@@ -70452,7 +70726,7 @@
     "Other"
    ],
    "rating": 4.5,
-   "ratings": 20,
+   "ratings": 21,
    "rows": [
     {
      "id": "tier-s",
@@ -70533,60 +70807,6 @@
    ]
   },
   {
-   "id": "tv-proj-1787634809961-ohych",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Personal Tier List (MVLSPY)",
-   "nameEn": "Personal Tier List (MVLSPY)",
-   "source": "Personal Tier List",
-   "author": "MVLSPY",
-   "gameVersion": "12.3",
-   "published": "2026-10-16",
-   "description": "How good I consider characters based on my experience using them and seeing people use them",
-   "notes": "Added new uniforms and characters",
-   "tags": [
-    "General",
-    "PvE",
-    "PvP"
-   ],
-   "rating": 3.9,
-   "ratings": 14,
-   "rows": [
-    {
-     "id": "tier-s",
-     "label": "HYBRID META (PVE+PVP)"
-    },
-    {
-     "id": "tier-a",
-     "label": "PVE META"
-    },
-    {
-     "id": "tier-b",
-     "label": "PVP META"
-    },
-    {
-     "id": "tier-c",
-     "label": "PVE VIABLE"
-    },
-    {
-     "id": "tier-d",
-     "label": "PVP VIABLE"
-    },
-    {
-     "id": "tier-1787634920294",
-     "label": "SUPPORT"
-    },
-    {
-     "id": "tier-1787922323741",
-     "label": "MID"
-    },
-    {
-     "id": "tier-1787635842846",
-     "label": "BAD"
-    }
-   ]
-  },
-  {
    "id": "tv-proj-1791109561322-up2b5",
    "order": 100,
    "group": "comunidad",
@@ -70604,8 +70824,8 @@
     "Other",
     "General"
    ],
-   "rating": 3.4,
-   "ratings": 5,
+   "rating": 3.3,
+   "ratings": 6,
    "rows": [
     {
      "id": "tier-s",
@@ -70684,8 +70904,8 @@
    "tags": [
     "General"
    ],
-   "rating": 4.9,
-   "ratings": 7,
+   "rating": 4.8,
+   "ratings": 8,
    "rows": [
     {
      "id": "tier-1788165259869",
@@ -70734,68 +70954,6 @@
     {
      "id": "tier-c",
      "label": "BAD PICKS in general (MOST REQUIRE UNIFORM)"
-    }
-   ]
-  },
-  {
-   "id": "tv-proj-1789860708511-vz1ip",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Character Tier List",
-   "nameEn": "Character Tier List",
-   "source": "Character Tier List",
-   "author": "JMoreno01",
-   "gameVersion": "12.2.5",
-   "published": "2026-09-23",
-   "description": "Hope this helps y'all when deciding what characters to build",
-   "notes": "Added Sister Girmm to the PVE High Meta tier and Red Skull to the PVE Support tier\n\nMoved a few characters to the Support tiers",
-   "tags": [
-    "PvE",
-    "PvP",
-    "General"
-   ],
-   "rating": 3.2,
-   "ratings": 5,
-   "rows": [
-    {
-     "id": "tier-1789860760769",
-     "label": "PVE High Meta"
-    },
-    {
-     "id": "tier-1789868602633",
-     "label": "PVP High Meta"
-    },
-    {
-     "id": "tier-1789860735785",
-     "label": "PVE Low Meta"
-    },
-    {
-     "id": "tier-s",
-     "label": "PVP Low Meta"
-    },
-    {
-     "id": "tier-1789860776755",
-     "label": "PVE Support"
-    },
-    {
-     "id": "tier-1789871846243",
-     "label": "PVP Support"
-    },
-    {
-     "id": "tier-a",
-     "label": "A"
-    },
-    {
-     "id": "tier-b",
-     "label": "B"
-    },
-    {
-     "id": "tier-c",
-     "label": "C"
-    },
-    {
-     "id": "tier-d",
-     "label": "D"
     }
    ]
   },
@@ -70870,7 +71028,7 @@
     "General"
    ],
    "rating": 3,
-   "ratings": 8,
+   "ratings": 9,
    "rows": [
     {
      "id": "tier-s",
@@ -74004,9 +74162,6 @@
    "heimdall::heimdall-10100145": [
     "tier-1787290719441"
    ],
-   "clea::base": [
-    "tier-1787290719441"
-   ],
    "blue-marvel::blue-marvel-10100146": [
     "tier-1787290719441"
    ],
@@ -74050,9 +74205,6 @@
     "tier-1787290719441"
    ],
    "anti-man::anti-man-10100150": [
-    "tier-1787290719441"
-   ],
-   "dormammu::dormammu-10100116": [
     "tier-1787290719441"
    ],
    "thena::thena-10100245": [
@@ -74106,10 +74258,10 @@
    "mister-fantastic::mister-fantastic-10400179": [
     "tier-b"
    ],
-   "drax::drax-10300022": [
+   "captain-america::captain-america-11400001": [
     "tier-b"
    ],
-   "captain-america::captain-america-11400001": [
+   "drax::drax-10300022": [
     "tier-b"
    ],
    "juggernaut::juggernaut-10200189": [
@@ -74196,10 +74348,10 @@
    "cyclops::cyclops-10500123": [
     "tier-1787290059970"
    ],
-   "phil-coulson::phil-coulson-10200061": [
+   "red-skull::red-skull-10300015": [
     "tier-1787290059970"
    ],
-   "red-skull::red-skull-10300015": [
+   "phil-coulson::phil-coulson-10200061": [
     "tier-1787290059970"
    ],
    "mysterio::mysterio-10200134": [
@@ -74229,13 +74381,13 @@
    "storm::storm-10400126": [
     "tier-s"
    ],
+   "sister-grimm::sister-grimm-10300053": [
+    "tier-s"
+   ],
    "doctor-strange::doctor-strange-10600028": [
     "tier-s"
    ],
    "magneto::magneto-10400129": [
-    "tier-s"
-   ],
-   "sister-grimm::sister-grimm-10300053": [
     "tier-s"
    ],
    "gambit::gambit-10200173": [
@@ -74403,10 +74555,10 @@
    "mystique::mystique-10100218": [
     "tier-1787290059970"
    ],
-   "hulk-amadeus-cho::hulk-amadeus-cho-10300068": [
+   "misty-knight::base": [
     "tier-1787290059970"
    ],
-   "misty-knight::base": [
+   "hulk-amadeus-cho::hulk-amadeus-cho-10300068": [
     "tier-1787290059970"
    ],
    "wave::wave-10100200": [
@@ -74436,6 +74588,9 @@
    "galactus::base": [
     "tier-b"
    ],
+   "dormammu::dormammu-10200116": [
+    "tier-b"
+   ],
    "thanos::thanos-10700075": [
     "tier-b"
    ],
@@ -74449,6 +74604,9 @@
     "tier-b"
    ],
    "loki::loki-10800014": [
+    "tier-s"
+   ],
+   "clea::clea-10100097": [
     "tier-s"
    ],
    "thor::thor-10900008": [
@@ -74484,6 +74642,9 @@
    "ghost-panther::base": [
     "tier-1787290059970"
    ],
+   "black-cat::black-cat-10400009": [
+    "tier-1787290059970"
+   ],
    "satana::satana-10200095": [
     "tier-1787290059970"
    ],
@@ -74491,9 +74652,6 @@
     "tier-1787290059970"
    ],
    "proxima-midnight::proxima-midnight-10200069": [
-    "tier-1787290059970"
-   ],
-   "black-cat::black-cat-10400009": [
     "tier-1787290059970"
    ],
    "angela::angela-10300039": [
@@ -74541,10 +74699,10 @@
    "scarlet-witch::scarlet-witch-10700140": [
     "tier-a"
    ],
-   "hades-pluto::base": [
+   "ghost-rider::ghost-rider-10500004": [
     "tier-a"
    ],
-   "ghost-rider::ghost-rider-10500004": [
+   "hades-pluto::base": [
     "tier-a"
    ],
    "zeus::base": [
@@ -75059,6 +75217,9 @@
    "scarlet-witch::scarlet-witch-10700140": [
     "tier-a"
    ],
+   "clea::clea-10100097": [
+    "tier-a"
+   ],
    "loki::loki-10800014": [
     "tier-a"
    ],
@@ -75456,10 +75617,13 @@
    "echo::echo-10200252": [
     "tier-1787634920294"
    ],
-   "thanos::thanos-10700075": [
+   "sentry::sentry-10200235": [
     "tier-b"
    ],
-   "sentry::sentry-10200235": [
+   "dormammu::dormammu-10200116": [
+    "tier-b"
+   ],
+   "thanos::thanos-10700075": [
     "tier-b"
    ],
    "silver-surfer::silver-surfer-10200199": [
@@ -75710,9 +75874,6 @@
    ],
    "emma-frost::emma-frost-10400160": [
     "tier-d"
-   ],
-   "dormammu::dormammu-10100116": [
-    "tier-1787635842846"
    ],
    "thane::thane-10100230": [
     "tier-1787635842846"
@@ -81247,7 +81408,18 @@
    "scarlet-witch::scarlet-witch-10700140": [
     "tier-1789860760769"
    ],
+   "ghost-rider::ghost-rider-10500004": [
+    "tier-1789860760769",
+    "tier-1789868602633"
+   ],
+   "dormammu::dormammu-10200116": [
+    "tier-1789860760769",
+    "tier-1789868602633"
+   ],
    "hades-pluto::base": [
+    "tier-1789860760769"
+   ],
+   "clea::clea-10100097": [
     "tier-1789860760769"
    ],
    "gladiator::gladiator-10100226": [
@@ -81287,9 +81459,6 @@
     "tier-1789860735785"
    ],
    "thor::thor-10900008": [
-    "tier-1789860735785"
-   ],
-   "zeus::base": [
     "tier-1789860735785"
    ],
    "phil-coulson::phil-coulson-10200061": [
@@ -81425,6 +81594,9 @@
    "nova-richard-rider::nova-richard-rider-10100225": [
     "tier-1789860776755"
    ],
+   "morgan-le-fay::morgan-le-fay-10200177": [
+    "tier-1789860776755"
+   ],
    "ghost-panther::base": [
     "tier-1789860776755"
    ],
@@ -81476,10 +81648,10 @@
    "kang-the-conqueror::kang-the-conqueror-10100259": [
     "tier-1789868602633"
    ],
-   "ghost-rider::ghost-rider-10500004": [
+   "thanos::thanos-10700075": [
     "tier-1789868602633"
    ],
-   "thanos::thanos-10700075": [
+   "zeus::base": [
     "tier-1789868602633"
    ],
    "wolverine::wolverine-10700125": [
@@ -81500,6 +81672,9 @@
    "deadpool::deadpool-10800164": [
     "tier-1789868602633"
    ],
+   "spider-man::spider-man-11200010": [
+    "tier-1789868602633"
+   ],
    "carnage::carnage-10300072": [
     "tier-s"
    ],
@@ -81515,10 +81690,10 @@
    "mister-fantastic::mister-fantastic-10400179": [
     "tier-s"
    ],
-   "spider-man::spider-man-11200010": [
+   "black-widow::black-widow-11100007": [
     "tier-s"
    ],
-   "black-widow::black-widow-11100007": [
+   "quicksilver::quicksilver-10400139": [
     "tier-s"
    ],
    "silver-surfer::silver-surfer-10200199": [
@@ -81588,9 +81763,6 @@
     "tier-a"
    ],
    "yelena-belova::yelena-belova-10300221": [
-    "tier-a"
-   ],
-   "quicksilver::quicksilver-10400139": [
     "tier-a"
    ],
    "scorpion::scorpion-10100236": [
@@ -81971,6 +82143,9 @@
    "hogun::base": [
     "tier-d"
    ],
+   "ulik::base": [
+    "tier-d"
+   ],
    "katy::base": [
     "tier-d"
    ],
@@ -82053,6 +82228,9 @@
     "tier-1789871846243"
    ],
    "jubilee::jubilee-10100194": [
+    "tier-1789871846243"
+   ],
+   "wiccan::wiccan-10100084": [
     "tier-1789871846243"
    ],
    "wenwu::wenwu-10100248": [

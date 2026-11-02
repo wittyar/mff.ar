@@ -1,6 +1,6 @@
 # Completitud de los datos
 
-Generado por `scripts/completitud.py` sobre `data.js` (juego 12.3.5, datos del 2026-10-28, formato 18) y `datos.json`.
+Generado por `scripts/completitud.py` sobre `data.js` (juego 12.3.5, datos del 2026-11-02, formato 18) y `datos.json`.
 
 Qué le falta a cada variante (un personaje con un uniforme) para tener la información que la app muestra y usa, y de dónde podría salir. Lo que dos fuentes dicen distinto está en `docs/AUDITORIA.md`; esto es lo que no está. Lo que no existe en el juego no es un faltante (un personaje sin artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito va aparte.
 
@@ -51,13 +51,12 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [Bono de equipo sin nombre](#bono-de-equipo-sin-nombre) | 4 | 2 | 2 | capturas del juego o foros |
 | [Objetivo sin nombre (Target ID)](#objetivo-sin-nombre-target-id) | 3 | 3 | 3 | thanosvibs (Leads & Supports) o foros |
 | [Sin C.T.P. en la guía de armado](#sin-ctp-en-la-guía-de-armado) | 3 | 2 | 2 | la guía de armado o foros |
-| [Datos del uniforme](#datos-del-uniforme) | 2 | 2 | 4 | thanosvibs (uniformes) |
 | [Skill que falta](#skill-que-falta) | 1 | 1 | 5 | thanosvibs (API de skills), la wiki o foros |
 | [Stats](#stats) | 1 | 1 | 1 | thanosvibs |
 | [Sin fila en la Ideal CTP List](#sin-fila-en-la-ideal-ctp-list) | 1 | 1 | 1 | thanosvibs (Ideal CTP List) |
 | [Sin lugar en la tier list General](#sin-lugar-en-la-tier-list-general) | 1 | 1 | 1 | thanosvibs (tier list General) |
 
-Sin casos: Dato de identidad vacío; Efecto que el catálogo no clasifica; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles.
+Sin casos: Dato de identidad vacío; Efecto que el catálogo no clasifica; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles; Datos del uniforme.
 
 ### Lo que ya se sabía que no cierra
 
@@ -714,15 +713,6 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Yelena Belova — Marvel Studios' Thunderbolts* | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Marvel Studios' Black Widow y Marvel Studios' Black Widow (Snow Suit) |
 | Yondu — All-New, All-Different | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base, Guardians of the Galaxy 2 y Summer Vacation; la guía de armado tiene la de Summer Vacation |
 
-### Datos del uniforme
-
-4 casos en 2 personajes y 2 variantes. thanosvibs publica costo, materiales y opciones de cada uniforme.
-
-| Variante | Qué falta | De dónde podría salir |
-|---|---|---|
-| Clea — Death of Doctor Strange | sin materiales de mejora; las opciones de uniforme no son cinco retratos del roster | thanosvibs (uniformes) |
-| Dormammu — The Living Dark Planet | sin materiales de mejora; las opciones de uniforme no son cinco retratos del roster | thanosvibs (uniformes) |
-
 ## Por personaje
 
 Los personajes con algún faltante, en orden alfabético: primero lo del personaje y después cada variante incompleta. El detalle está en las tablas de arriba.
@@ -961,9 +951,9 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Clea: 3 faltantes, 1 de 2 variantes incompletas</summary>
+<details><summary>Clea: 1 faltante, 1 de 2 variantes incompletas</summary>
 
-- **Death of Doctor Strange:** rotación; datos del uniforme
+- **Death of Doctor Strange:** rotación
 
 </details>
 
@@ -1052,10 +1042,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Dormammu: 4 faltantes, 3 de 3 variantes incompletas</summary>
+<details><summary>Dormammu: 2 faltantes, 3 de 3 variantes incompletas</summary>
 
 - **Personaje:** valores del artefacto
-- **The Living Dark Planet:** rotación; datos del uniforme
+- **The Living Dark Planet:** rotación
 
 </details>
 
