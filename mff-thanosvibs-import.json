@@ -70422,16 +70422,16 @@
    "source": "Personal Tier List",
    "author": "MVLSPY",
    "gameVersion": "12.3.5",
-   "published": "2026-11-01",
+   "published": "2026-11-03",
    "description": "How good I consider characters based on my experience using them and seeing people use them",
-   "notes": "Added updated characters",
+   "notes": "Upgraded Ghost Rider",
    "tags": [
     "General",
     "PvE",
     "PvP"
    ],
-   "rating": 3.9,
-   "ratings": 15,
+   "rating": 4,
+   "ratings": 16,
    "rows": [
     {
      "id": "tier-s",
@@ -70464,6 +70464,61 @@
     {
      "id": "tier-1787635842846",
      "label": "BAD"
+    }
+   ]
+  },
+  {
+   "id": "tv-proj-1791221730309-pkqfh",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Grayven Devil Tier List",
+   "nameEn": "Grayven Devil Tier List",
+   "source": "Grayven Devil Tier List",
+   "author": "Grayven Devil",
+   "gameVersion": "12.3.5",
+   "published": "2026-11-03",
+   "description": "Personal Opinion",
+   "notes": "New Characters",
+   "tags": [
+    "General",
+    "PvE",
+    "PvP",
+    "Other"
+   ],
+   "rating": 3.3,
+   "ratings": 3,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "PVP ALL CONTENT"
+    },
+    {
+     "id": "tier-a",
+     "label": "PVE ALL CONTENT"
+    },
+    {
+     "id": "tier-1791224488369",
+     "label": "OWB/TBA/aC"
+    },
+    {
+     "id": "tier-1793165050199",
+     "label": "ABXL"
+    },
+    {
+     "id": "tier-1793165693984",
+     "label": "Alternative ABXL"
+    },
+    {
+     "id": "tier-1793165497732",
+     "label": "WBL/WBl+/WBM"
+    },
+    {
+     "id": "tier-d",
+     "label": "Supports"
+    },
+    {
+     "id": "tier-1791222185961",
+     "label": "not used anywhere/anymore"
     }
    ]
   },
@@ -70608,61 +70663,6 @@
     {
      "id": "tier-1787290719441",
      "label": "Not worth"
-    }
-   ]
-  },
-  {
-   "id": "tv-proj-1791221730309-pkqfh",
-   "order": 100,
-   "group": "comunidad",
-   "name": "Grayven Devil Tier List",
-   "nameEn": "Grayven Devil Tier List",
-   "source": "Grayven Devil Tier List",
-   "author": "Grayven Devil",
-   "gameVersion": "12.3",
-   "published": "2026-10-28",
-   "description": "Personal Opinion",
-   "notes": "",
-   "tags": [
-    "General",
-    "PvE",
-    "PvP",
-    "Other"
-   ],
-   "rating": 3.3,
-   "ratings": 3,
-   "rows": [
-    {
-     "id": "tier-s",
-     "label": "PVP ALL CONTENT"
-    },
-    {
-     "id": "tier-a",
-     "label": "PVE ALL CONTENT"
-    },
-    {
-     "id": "tier-1791224488369",
-     "label": "OWB/TBA/aC"
-    },
-    {
-     "id": "tier-1793165050199",
-     "label": "ABXL"
-    },
-    {
-     "id": "tier-1793165693984",
-     "label": "Alternative ABXL"
-    },
-    {
-     "id": "tier-1793165497732",
-     "label": "WBL/WBl+/WBM"
-    },
-    {
-     "id": "tier-d",
-     "label": "Supports"
-    },
-    {
-     "id": "tier-1791222185961",
-     "label": "not used anywhere/anymore"
     }
    ]
   },
@@ -75205,6 +75205,9 @@
    "mephisto::mephisto-10100244": [
     "tier-s"
    ],
+   "ghost-rider::ghost-rider-10500004": [
+    "tier-s"
+   ],
    "jean-grey::jean-grey-10400124": [
     "tier-s"
    ],
@@ -75227,9 +75230,6 @@
     "tier-a"
    ],
    "hades-pluto::base": [
-    "tier-a"
-   ],
-   "ghost-rider::ghost-rider-10500004": [
     "tier-a"
    ],
    "zeus::base": [
@@ -82884,7 +82884,7 @@
    "ghost-rider::ghost-rider-10500004": [
     "tier-s"
    ],
-   "silver-surfer::silver-surfer-10200199": [
+   "dormammu::dormammu-10200116": [
     "tier-s"
    ],
    "mephisto::mephisto-10100244": [
@@ -82995,6 +82995,9 @@
    "elektra::elektra-10300040": [
     "tier-1791224488369"
    ],
+   "silver-surfer::silver-surfer-10200199": [
+    "tier-1791224488369"
+   ],
    "silver-surfer-shalla-bal::base": [
     "tier-1791224488369"
    ],
@@ -83083,6 +83086,9 @@
     "tier-1793165693984"
    ],
    "winter-soldier::winter-soldier-10600031": [
+    "tier-1793165693984"
+   ],
+   "clea::clea-10100097": [
     "tier-1793165693984"
    ]
   },
