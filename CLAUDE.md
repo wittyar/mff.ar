@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (2 de noviembre de 2026)
+## Estado (12 de noviembre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -253,6 +253,50 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   guía tiene 290 de 291 personajes), más formato e imagenes, por la carpeta de datos armada a mano. La investigación de
   cómo calcula el juego el daño (lo que se sabe, lo que no y cómo medirlo en LDPlayer), en el doc del proyecto de
   Claude «claude/mff-modelo-combate.md».
+- La 1.0.52 (sin cambio de formato, 18; la etiqueta va sobre el commit de versión), 12 de noviembre, **a prueba**: pedido
+  de Ezequiel («decime cómo podemos mejorar la interfaz... una mejor visual de las habilidades... formas de comparar en
+  un mismo personaje entre uniformes... que me proponga metodologías de comparación... Valida la lógica de navegación
+  de toda la aplicación, es necesario que tenga sentido cada botón y su funcionalidad... Separa el armado de mi propia
+  cuenta de lo demás del juego»). Es parte de #41 (la barra con «Mi cuenta»); de #41 quedan agrupar Tier lists,
+  Glosario e Histórico en «Referencia» (no se hizo: suma un clic), los avisos como estado y las direcciones estables.
+  - **Mi cuenta aparte.** La barra en dos grupos (`renderNav`: `VISTAS_ROSTER`, `VISTAS_CUENTA`): el juego y, con su
+    color (`--cuenta`), «Mi cuenta» y «Mesa». La mesa se ve solo abierta (`U.prefs.mesa`, `mesaVisible()`) o en Mi
+    cuenta › Equipos; cerrada no hay «Poner en la mesa» ni «+» en la lista (`.trabajo.sin-mesa`). La bandeja de comparar
+    va aparte (`bandejaVisible()`, `bandejaHtml()`), en el roster y en la ficha; elegir para comparar (`ui.pickMode`) se
+    apaga al pasar a otra sección (en `render`), y lo elegido queda. Vista `cuenta` (`ui.cuentaTab`, `CUENTA_TABS`; Equipos y el editor
+    son vistas propias con la misma sub-barra, `cuentaCabHtml`): resumen, progreso, personajes propios, atributos
+    marcados y Mi capa (exportar, importar y borrar salieron de Ajustes). «Mi cuenta» de la barra abre siempre el
+    resumen. La ficha tiene la pestaña `cuenta` (`fichaCuenta`): tus equipos y «cómo entraría» (`equiposTuyosHtml`,
+    antes en Equipos), tu progreso (antes en Armado), atributos marcados y tus cambios, con «Marcar atributos» y
+    «Editar» (que salieron de la cabecera de la ficha). El «Por qué» de «cómo entraría» (`t|…`) es vigente en esa pestaña.
+  - **Skills: el kit de un vistazo** (`kitDe`, `difSkill`, `kitVistazoHtml`): una fila por skill con su daño, su parte
+    del total, cada cuánto y sus efectos por destino, con «Comparar con» otra versión (`ui.kitCon`: suma, cambia, pierde).
+    La etiqueta de cada efecto del detalle lleva el color de su destino.
+  - **Comparativa: «Cómo compararlos»** (`metodosCmp`, `cmpMetodosHtml`): `ui.cmpVista` es el método (kit, efecto, pot,
+    pvp, listas, ficha; null = el sugerido, que se fija al pintar); `goCompare` lo vuelve a null. Nuevos: skill por skill
+    (`cmpPorKit`, con referencia `ui.cmpRef` y «Solo lo que cambia» entre versiones de un mismo personaje), en las listas
+    (`cmpEnListas`, con el rol de `rolEn`) y para PvP (`pesaEnPvp`). «Comparar sus versiones» en la ficha
+    (`cmpVersiones`) y el desplegable de versión en cada columna (`cmpCabHtml`, `cmpVersion`).
+  - **Tier lists de lectura** hasta «Editar listas» (`ui.tlEditar`): sin editar, una entrada abre su ficha.
+  - **Arreglos** encontrados al revisar: la ficha de un personaje creado a mano no abría desde #33 (`analisisDe`: sin
+    retrato, análisis vacío); «MAYOR» de la comparativa trataba lo de una pasiva sin condición como «sin duración»;
+    «Ult 0%» sin dato de carga (`cargas` da null); la tabla de topes se salía en el celular (`.stagewrap` sin regla); y la
+    traducción del efecto del striker de Dormammu.
+  - Pruebas nuevas: `verif_cuenta.py`, `verif_kit.py`, `verif_cmp_metodos.py`, `verif_tl_editar.py`. En el arnés,
+    `ir_a_equipos(pg)` y `abrir_mesa(pg)`. `verif_filas.py` y `verif_export_viejo.py` corren una app vieja y quedan como
+    estaban. Corridas todas (85) con los datos del 2 de noviembre: 54 sin fallas; las demás fallan lo mismo que con la
+    1.0.51 (datos o entorno: cierre, contexto, ctp_equipos, dudas, filtros_cobertura, formato, glosario, guia_aceptar,
+    guia_ajustes, guia_ficha, historico en celular, marcadores, otorga, porque, programa, ultimo_uniforme, y las que
+    piden otro armado: actualizacion_real, export_viejo, filas, parche_1xx, wine). `verif_mesa` vuelve a pasar (tenía
+    escrito «de 888»). `verif_tooltip_todas` recorre también los efectos del kit: 77.138 tooltips por idioma, sin errores.
+  - Visto y sin tocar (a decidir): entre el roster y la comparativa, «Comparando» sigue encendido después de abrir la
+    comparación (de vuelta en el roster, tocar una tarjeta la elige en vez de abrirla hasta apagarlo); la activación «al
+    tener menos de un {0}% de PG» sale así de la fuente; «Refleja daño» de Dormammu (Activa 4) figura como «para el
+    equipo» en el análisis; y el tiempo activo de «Qué hace» sigue dividiendo por la recarga base (ver el doc del modelo).
+  - El relevamiento de tier lists y opiniones de otras comunidades (inglés, coreano, chino, japonés y más: qué hay, con
+    qué criterios comparan y qué dicen de cómo funciona el juego, con lo que choca con nuestro modelo), en el doc del
+    proyecto de Claude «claude/mff-tier-lists.md». Lo más útil: la planilla coreana «정보 공유», que se puede leer por
+    programa (prioridad de C.T.P. y de artefacto por personaje, corredores de Alliance Battle).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
@@ -302,4 +346,5 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
   las llegadas que siguen sin su nota (lista en `docs/HISTORICO.md`: de 2015, notas con imágenes y parches); los modos
-  que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41). Preguntas abiertas: #11 a #20 y #23. Bugs: ninguno abierto (#25 y #26 cerrados).
+  que las notas nombran y `modos.json` no tiene (#46). Rediseño de la información, segunda parte (#41; la 1.0.52 hizo «Mi
+  cuenta» aparte: falta «Referencia», los avisos como estado y las direcciones estables). Preguntas abiertas: #11 a #20 y #23. Bugs: ninguno abierto (#25 y #26 cerrados).

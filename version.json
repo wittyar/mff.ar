@@ -1,6 +1,6 @@
 {
- "version": "1.0.51",
+ "version": "1.0.52",
  "formato_datos": 18,
  "python": "3.14.7",
- "notas": "Revisión del código: se sacó lo que no se usaba, y Dormammu (The Living Dark Planet) y Clea (Death of Doctor Strange) ya tienen el retrato de thanosvibs."
+ "notas": "Lo tuyo, aparte de lo del juego: «Mi cuenta» en la barra (equipos, progreso, personajes propios, atributos marcados y tu capa), la mesa de armado se abre con su botón y cada ficha tiene su pestaña «Mi cuenta». En Skills, el kit de un vistazo, con «Comparar con» otra versión del personaje. La comparativa propone cómo comparar (seis métodos, uno sugerido) y trae «Comparar sus versiones». Las tier lists son de lectura hasta «Editar listas». Y un arreglo: la ficha de un personaje creado a mano no abría."
 }
