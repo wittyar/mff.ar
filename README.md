@@ -186,7 +186,9 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
   seis primeros, el resto plegado, con cuántos son.
 - **Tier lists**: todas las listas públicas de thanosvibs, con sus filas originales; listas
   propias de personajes, de C.T.P., de artefactos o de tus equipos, con filas a medida. Una entrada
-  puede estar en varias filas de la misma lista.
+  puede estar en varias filas de la misma lista. Son de lectura (tocar una entrada abre su ficha) hasta que se elige
+  **«Editar listas»** (desde la 1.0.52): ahí se crean listas, se duplica una importada y se mueven o quitan entradas; una
+  importada con cambios tuyos lo dice.
 - **Modos**: los 14 modos que la guía marca como importantes, con qué dan, cómo armar el equipo,
   personajes y C.T.P. recomendados, y el armado general (ISO, urus, 4.º gear, opciones de
   uniforme, obelisco) para PvE y PvP.

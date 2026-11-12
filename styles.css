@@ -19,6 +19,8 @@
   --tier-t2:#7d8494; --tier-t3:#4dd0e1; --tier-t4:#ff6a5c;
   --role-dano:#ff5c5c; --role-soporte:#4ade80; --role-control:#a78bfa; --role-tanque:#60a5fa;
   --self:#4ade80; --enemy:#ff7a7a; --allies:#7ab8ff;
+  /* Mi cuenta (1.0.52): lo tuyo lleva su propio color, para que no se confunda con lo del juego */
+  --cuenta:#5fd4c4; --cuenta-soft:rgba(95,212,196,.13);
 
   --font-display:'Chakra Petch',ui-sans-serif,system-ui,sans-serif;
   --font-body:'Instrument Sans',ui-sans-serif,system-ui,-apple-system,sans-serif;
@@ -1260,3 +1262,11 @@ button.kfx:hover{border-color:currentColor}
 .cplver{font-size:11px;font-family:var(--font-mono)}
 .cli .cpecel{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:4px}
 .cli .cpecel .tag{white-space:normal;text-align:left}
+
+/* Tier lists (1.0.52): de lectura (una entrada abre su ficha) hasta que se elige «Editar listas». */
+button.tlchip{font:inherit;font-size:11.5px;color:inherit}
+button.tlchip,button.tlchip:active{cursor:pointer}
+.tlchip.fija{cursor:default}
+.tledit{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;
+  border:1px solid var(--cuenta);border-radius:var(--r-md);background:var(--cuenta-soft);font-size:12.5px}
+.tag.mia{background:var(--cuenta-soft);color:var(--cuenta)}

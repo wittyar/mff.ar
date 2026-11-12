@@ -1079,6 +1079,13 @@ const T = {
                        en:'The imported lists are every list published on thanosvibs, with the rows and labels their author wrote: they are not S–D ranks.' },
   tl_new_ph:         { es:'Nombre de una lista nueva', en:'Name for a new list' },
   tl_create:         { es:'+ Crear lista',       en:'+ Create list' },
+  tl_editar:         { es:'Editar listas',       en:'Edit lists' },
+  tl_editar_t:       { es:'Para crear una lista tuya, duplicar una importada o mover entradas de fila. Sin editar, tocar una entrada abre su ficha.',
+                       en:'To create a list of your own, duplicate an imported one or move entries between rows. When not editing, clicking an entry opens its sheet.' },
+  tl_editando:       { es:'Editando: tocá una entrada para elegir sus filas, o arrastrala. Lo que cambies queda en tu capa.',
+                       en:'Editing: click an entry to choose its rows, or drag it. Your changes are saved in your layer.' },
+  tl_cambios:        { es:'{n} cambios tuyos',   en:'{n} changes of yours' },
+  tl_vacia:          { es:'—',                   en:'—' },
   tl_source:         { es:'Fuente:',             en:'Source:' },
   tl_author:         { es:'autor:',              en:'author:' },
   tl_game:           { es:'juego',               en:'game' },
@@ -1630,6 +1637,7 @@ let ui = {
   plFiltros: false,                  // la lista de la izquierda con el panel de filtros abierto
   avisoLideres: null,                // equipos de antes a los que se les declaró el líder al cargar la capa (declararLideres)
   newListName: '', newListTpl: 'rango', newListKind: 'personajes', editRows: false, poolOpen: false, poolSearch: '', marcando: false,
+  tlEditar: false,                   // Tier lists: se están editando (crear, duplicar, mover entradas); si no, son de lectura y una entrada abre su ficha
   edStep: 0, edDraft: null, edId: null,
   dragKey: null, dragFrom: '', tlPick: null,
   aliados: null,                     // grupo cuya lista de personajes está abierta: { r, tg } (aliadosModal)
@@ -5990,19 +5998,29 @@ function renderTierList () {
     if (fs.length) { fs.forEach(r => byRow[r].push(it)); ubicados++; ubicaciones += fs.length; } else unset.push(it);
   });
   const imported = TIERLISTS_SEED.some(l => l.id === list.id);
-  // Tocar una ficha abre el selector de filas (sirve en el celular, donde no hay
-  // arrastrar y soltar); en la compu también se puede arrastrar para moverla.
-  const chip = (it, fila) => `<span class="tlchip" draggable="true" data-a="tlAbrir" data-key="${h(it.key)}" data-from="${h(fila)}"
-      title="${h(it.sub ? it.nom + ' — ' + it.sub : it.nom)}">
-      ${it.img ? `<img src="${it.img}" alt="" loading="lazy">` : ''}
+  const mios = imported && U.assign[list.id] ? Object.keys(U.assign[list.id]).length : 0;
+  // Sin editar, una entrada lleva a su ficha (la del personaje, o la del dueño del artefacto; un CTP o un equipo no tienen).
+  // Editando, abre el selector de filas (sirve en el celular, donde no hay arrastrar y soltar) y se puede arrastrar.
+  const editando = ui.tlEditar;
+  const chip = (it, fila) => {
+    const cuerpo = `${it.img ? `<img src="${it.img}" alt="" loading="lazy">` : ''}
       <span class="who">${h(it.nom)}</span>${it.sub ? `<span class="what">${h(it.sub)}</span>` : ''}
-      ${(a[it.key] || []).length > 1 ? `<span class="multi" title="${h(t('tl_multi'))}">×${a[it.key].length}</span>` : ''}
+      ${(a[it.key] || []).length > 1 ? `<span class="multi" title="${h(t('tl_multi'))}">×${a[it.key].length}</span>` : ''}`;
+    const titulo = h(it.sub ? it.nom + ' — ' + it.sub : it.nom);
+    if (editando) return `<span class="tlchip" draggable="true" data-a="tlAbrir" data-key="${h(it.key)}" data-from="${h(fila)}" title="${titulo}">${cuerpo}
       ${fila ? `<span class="x" data-a="unassign" data-key="${h(it.key)}" data-row="${h(fila)}" title="${h(t('tl_remove_row'))}">✕</span>` : ''}</span>`;
+    const cid = it.v ? it.v.cid : it.cid;
+    return cid ? `<button class="tlchip" data-a="open" data-cid="${h(cid)}" data-uid="${h(it.v && it.v.uid || '')}" data-key="${h(it.key)}" title="${titulo}">${cuerpo}</button>`
+               : `<span class="tlchip fija" data-key="${h(it.key)}" title="${titulo}">${cuerpo}</span>`;
+  };
   const conteo = `<span class="tag dim">${ubicados} ${h(t('tl_placed'))}${ubicaciones > ubicados ? ` · ${ubicaciones} ${h(t('tl_spots'))}` : ''}</span>`;
 
   return `
   <div class="page-head"><div><h1>${h(t('tl_title'))}</h1>
     <div class="sub">${h(t('tl_note'))}</div></div>
+    <button class="btn ${editando ? 'primary' : ''}" data-a="tlEditar" aria-pressed="${editando}" title="${h(t('tl_editar_t'))}">${h(t(editando ? 'tl_rows_done' : 'tl_editar'))}</button>
+  </div>
+  ${editando ? `<div class="tledit"><span class="muted">${h(t('tl_editando'))}</span>
     <div class="row">
       <input placeholder="${h(t('tl_new_ph'))}" value="${h(ui.newListName)}" data-a="newListName" style="width:220px">
       <select data-a="newListKind" title="${h(t('tk_title'))}">${TIPOS_LISTA.map(([id, k]) =>
@@ -6010,8 +6028,7 @@ function renderTierList () {
       <select data-a="newListTpl" title="${h(t('tp_title'))}">${PLANTILLAS.map(p =>
         `<option value="${p.id}" ${p.id === ui.newListTpl ? 'selected' : ''}>${h(t(p.k))}</option>`).join('')}</select>
       <button class="btn" data-a="addList">${h(t('tl_create'))}</button>
-    </div>
-  </div>
+    </div></div>` : ''}
   <div class="tlbar">${listasAgrupadas().map(gr => `<div class="tlgroup"><span class="tlglabel">${h(t(gr.k))}</span>
     ${gr.ls.map(l => `<button class="chip ${l.id === list.id ? 'on' : ''}" data-a="pickList" data-id="${l.id}"
       title="${h(l.author ? l.author + (l.gameVersion ? ' · ' + l.gameVersion : '') : '')}">${h(listName(l))}</button>`).join('')}</div>`).join('')}</div>
@@ -6025,21 +6042,21 @@ function renderTierList () {
          ${(list.tags || []).map(x => `<span class="tag ghost" style="color:var(--text-3)">${h(x)}</span>`).join('')}
          ${conteo}`
       : `<span>${h(t('tl_own'))}</span>
-         <input value="${h(list.name)}" data-a="listName" data-id="${list.id}" title="${h(t('tl_rename'))}" style="width:220px;padding:5px 9px">
+         ${editando ? `<input value="${h(list.name)}" data-a="listName" data-id="${list.id}" title="${h(t('tl_rename'))}" style="width:220px;padding:5px 9px">` : ''}
          <span class="tag dim">${h(t((TIPOS_LISTA.find(x => x[0] === tipoLista(list)) || TIPOS_LISTA[0])[1]))}</span>
          ${conteo}
-         <button class="btn sm ${ui.editRows ? 'primary' : ''}" data-a="editRows">${h(ui.editRows ? t('tl_rows_done') : t('tl_rows_edit'))}</button>
-         <button class="btn sm danger" data-a="removeList" data-id="${list.id}">${h(t('tl_delete'))}</button>`}
-    ${imported ? `<button class="btn sm" data-a="dupList" data-id="${list.id}" title="${h(t('tl_dup_title'))}">${h(t('tl_dup'))}</button>` : ''}
-    ${imported && U.assign[list.id] && Object.keys(U.assign[list.id]).length
-      ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">${h(t('tl_undo'))} (${Object.keys(U.assign[list.id]).length})</button>` : ''}
+         ${editando ? `<button class="btn sm ${ui.editRows ? 'primary' : ''}" data-a="editRows">${h(ui.editRows ? t('tl_rows_done') : t('tl_rows_edit'))}</button>
+         <button class="btn sm danger" data-a="removeList" data-id="${list.id}">${h(t('tl_delete'))}</button>` : ''}`}
+    ${mios && !editando ? `<span class="tag mia" title="${h(t('tl_editar_t'))}">${h(t('tl_cambios').replace('{n}', mios))}</span>` : ''}
+    ${imported && editando ? `<button class="btn sm" data-a="dupList" data-id="${list.id}" title="${h(t('tl_dup_title'))}">${h(t('tl_dup'))}</button>` : ''}
+    ${mios && editando ? `<button class="btn sm" data-a="resetList" data-id="${list.id}">${h(t('tl_undo'))} (${mios})</button>` : ''}
   </div>
   ${list.description || list.notes ? `<div class="tlmeta">
     ${list.description ? `<details><summary>${h(t('tl_description'))}</summary><p class="autor">${h(list.description)}</p></details>` : ''}
     ${list.notes ? `<details><summary>${h(t('tl_notes'))}</summary><p class="autor">${h(list.notes)}</p></details>` : ''}
     <span class="muted">${h(t('tl_author_lang'))}</span>
   </div>` : ''}
-  ${esPropia(list) && ui.editRows ? `<div class="card roweditor">
+  ${esPropia(list) && editando && ui.editRows ? `<div class="card roweditor">
     ${rows.map((r, i) => `<div class="row">
       <span class="tag solid" style="background:${rowColor(i, rows.length)};min-width:26px;justify-content:center">${i + 1}</span>
       <input value="${h(r.label)}" data-a="rowLabel" data-row="${h(r.id)}" style="flex:1;min-width:140px">
@@ -6050,11 +6067,11 @@ function renderTierList () {
     <div class="row"><button class="btn sm" data-a="rowAdd">${h(t('tl_row_add'))}</button>
       <span class="muted">${h(t('tl_rows_note2'))}</span></div>
   </div>` : ''}
-  ${rows.map((r, i) => `<div class="tierrow" data-a="drop" data-row="${h(r.id)}">
+  ${rows.map((r, i) => `<div class="tierrow" ${editando ? 'data-a="drop" ' : ''}data-row="${h(r.id)}">
     <div class="tierlabel" style="background:${rowColor(i, rows.length)}">${h(r.label)}</div>
-    <div class="tieritems">${byRow[r.id].map(v => chip(v, r.id)).join('') || `<span class="muted" style="align-self:center">${h(t('tl_drop_here'))}</span>`}</div>
+    <div class="tieritems">${byRow[r.id].map(v => chip(v, r.id)).join('') || `<span class="muted" style="align-self:center">${h(t(editando ? 'tl_drop_here' : 'tl_vacia'))}</span>`}</div>
   </div>`).join('')}
-  <div style="margin-top:18px">
+  ${!editando ? '' : `<div style="margin-top:18px">
     <div class="row">
       <button class="btn sm" data-a="togglePool">${h(ui.poolOpen ? t('tl_hide_pool') : t('tl_show_pool'))} (${unset.length})</button>
       ${ui.poolOpen ? `<input placeholder="${h(t('tl_filter'))}" value="${h(ui.poolSearch)}" data-a="poolSearch" style="width:220px">` : ''}
@@ -6068,7 +6085,7 @@ function renderTierList () {
         ${pool.length > 150 ? `<span class="muted" style="align-self:center">…${pool.length - 150} ${h(t('tl_more'))}</span>` : ''}
       </div>`;
     })() : ''}
-  </div>
+  </div>`}
   ${ui.tlPick ? selectorFilas(list, rows, a, items) : ''}`;
 }
 
@@ -7601,6 +7618,7 @@ document.addEventListener('click', (e) => {
       U.assign[id] = JSON.parse(JSON.stringify(assignOf(orig.id)));
       ui.tierList = id; commit(); break; }
     case 'editRows': ui.editRows = !ui.editRows; render(); break;
+    case 'tlEditar': ui.tlEditar = !ui.tlEditar; ui.tlPick = null; ui.editRows = false; render(); break;
     case 'rowAdd': { const l = U.lists.find(x => x.id === ui.tierList); if (!l) break;
       l.rows.push({ id: 'f-' + Date.now(), label: t('tp_new_row') }); commit(); break; }
     case 'rowMove': { const l = U.lists.find(x => x.id === ui.tierList); if (!l) break;
