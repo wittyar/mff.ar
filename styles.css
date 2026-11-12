@@ -1149,3 +1149,75 @@ table.topes input{width:70px;padding:5px 7px}
 .cpb .cpesec{overflow:visible}
 .cpb .cpecel:last-child .cpbtip{left:auto;right:0}
 .cpbpie .tag{white-space:normal;text-align:left}
+
+/* El kit de un vistazo (1.0.52): arriba de la pestaña Skills, una fila por skill con su daño, cada cuánto y lo que hace,
+   separado por a quién le llega. Los colores son los de los destinos: él, el equipo, el rival, sus invocaciones. */
+.kitcab{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.kitcab h3{margin:0;display:flex;align-items:center;gap:8px}
+.kittotal{font-family:var(--font-mono);font-size:12px;color:var(--text-2)}
+.kitcon{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2)}
+.kitcon select{max-width:230px}
+.kitley{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:11.5px;color:var(--text-2);margin-bottom:8px}
+.kitdif{margin:0 0 8px;font-size:12px}
+.kdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:8px;flex:none}
+.kitley .kdot:first-child,.kitfila.cab .kdot{margin-left:0;margin-right:5px}
+.kdot.e{background:var(--self)}.kdot.q{background:var(--allies)}.kdot.r{background:var(--enemy)}.kdot.i{background:var(--gold)}
+.kittabla{border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--surface)}
+.kitfila{display:grid;grid-template-columns:minmax(170px,1.15fr) minmax(150px,.9fr) minmax(84px,.5fr) repeat(3,minmax(0,1.25fr));
+  gap:0 12px;padding:7px 12px;align-items:start}
+.kitfila+.kitfila{border-top:1px solid var(--line)}
+.kitfila.cab{font-family:var(--font-display);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-3);
+  background:var(--surface-2);padding-top:6px;padding-bottom:6px;align-items:center}
+.kitfila.cab > div{display:flex;align-items:center}
+.kitfila.nueva{background:rgba(242,163,58,.06)}
+.kitfila.perdida{opacity:.7}
+.kitc{min-width:0;font-size:12.5px}
+.kitc.nom{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.kitnom{display:flex;align-items:center;gap:7px;min-width:0;padding:0;border:0;background:none;color:inherit;font:inherit;
+  font-weight:600;text-align:left;cursor:pointer;border-radius:5px}
+.kitnom:hover span:last-child{color:var(--accent-2);text-decoration:underline;text-underline-offset:3px}
+.kitnom span:last-child{min-width:0;overflow-wrap:anywhere}
+.knueva{background:var(--accent);font-size:9.5px}
+.kitc.dano{display:flex;flex-direction:column;gap:3px}
+.kbarra{display:block;height:6px;border-radius:3px;background:var(--surface-3);overflow:hidden}
+.kbarra i{display:block;height:100%;background:var(--accent)}
+.knum{font-size:12.5px;font-variant-numeric:tabular-nums}
+.knum small{display:inline-block;color:var(--text-3);font-size:11px}
+.kval{white-space:nowrap}
+.kdelta{margin-left:5px;font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kdelta.sube{color:var(--self)}.kdelta.baja{color:var(--enemy)}
+.kitc.cuando{color:var(--text-2);font-variant-numeric:tabular-nums}
+.kitc.fx{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start}
+.kfx{display:inline-block;max-width:100%;padding:2px 7px;border-radius:5px;border:1px solid transparent;
+  font:inherit;font-size:11.5px;line-height:1.45;text-align:left;color:var(--text);background:rgba(255,255,255,.06);cursor:pointer;
+  font-variant-numeric:tabular-nums}
+.kfx b{font-weight:600}
+span.kfx{cursor:default}
+.kfx.e{background:rgba(74,222,128,.13);color:var(--self)}
+.kfx.q{background:rgba(122,184,255,.14);color:var(--allies)}
+.kfx.r{background:rgba(255,122,122,.13);color:var(--enemy)}
+.kfx.i{background:var(--gold-soft);color:var(--gold)}
+.kfx.sc{color:var(--text-3);font-style:italic}
+button.kfx:hover{border-color:currentColor}
+.kfx.nuevo,.kfx.cambia{border-color:currentColor;font-weight:600}
+.kfx.perdido{background:none;border:1px dashed var(--line-2);color:var(--text-3);text-decoration:line-through}
+.kmarca{font-style:normal;font-weight:800}
+.kantes{color:var(--text-2);font-weight:400;font-size:11px;white-space:nowrap}
+.kantes::before{content:'('} .kantes::after{content:')'}
+/* El detalle de la skill: la etiqueta de cada efecto, con el color de a quién le llega. */
+.fxtag.d-e{background:rgba(74,222,128,.13);color:var(--self)}
+.fxtag.d-q{background:rgba(122,184,255,.14);color:var(--allies)}
+.fxtag.d-r{background:rgba(255,122,122,.13);color:var(--enemy)}
+.fxtag.d-i{background:var(--gold-soft);color:var(--gold)}
+@media (max-width:1180px){
+  .kitfila{grid-template-columns:minmax(150px,1fr) minmax(130px,.8fr) minmax(80px,.5fr);gap:6px 12px}
+  .kitfila.cab > div:nth-child(n+4){display:none}
+  .kitc.fx{grid-column:1 / -1;padding-left:2px}
+  .kitc.fx:empty{display:none}
+  .kitc.fx::before{content:attr(data-rot);flex:none;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-right:4px;align-self:center}
+}
+@media (max-width:640px){
+  .kitfila{grid-template-columns:minmax(0,1fr)}
+  .kitfila.cab{display:none}
+  .kitc.cuando::before{content:attr(data-rot) ': ';color:var(--text-3)}
+}

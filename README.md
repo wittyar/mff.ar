@@ -78,7 +78,11 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     controles aplica para cortar a los jefes y lo que dice la **guía de armado de Cynicalex**:
     su mejor uniforme, su lugar en la tier list de la guía con los emojis explicados, cómo se
     consigue y la nota.
-  - *Skills*: cargas de ult y striker, buffs clave, cada skill y, después, las **rotaciones** de
+  - *Skills*: cargas de ult y striker, buffs clave, **el kit de un vistazo** (desde la 1.0.52: una fila por skill con
+    cuánto pega —la suma de sus golpes y su parte del total—, cada cuánto y lo que hace, separado por a quién le llega:
+    él, el equipo o el rival, cada uno con su color; el nombre lleva a la skill y cada efecto abre su «Cómo funciona»;
+    con **«Comparar con»** otra versión del personaje, marca lo que esta suma, lo que cambia —con lo de antes— y lo que
+    pierde), cada skill (la etiqueta de cada efecto, con el color de su destino) y, después, las **rotaciones** de
     thanosvibs con la leyenda de la notación y las de la guía de armado (de proc, con su mejor C.T.P. y
     la skill de proc / frenesí, con su propia notación). Cada skill va por etapa, y en cada etapa todo
     junto: su activación y su objetivo si difieren de la skill, el daño (% del ataque, el fijo y el

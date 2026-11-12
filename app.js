@@ -731,6 +731,23 @@ const T = {
   ft_armado:         { es:'Armado',              en:'Build' },
   ft_progreso:       { es:'Tu progreso',         en:'Your progress' },
   ft_fuentes:        { es:'Fuentes',             en:'Sources' },
+  kit_title:         { es:'El kit de un vistazo', en:'The kit at a glance' },
+  kit_note:          { es:'Una fila por skill: cuánto pega (la suma de sus golpes, en % del ataque, y su parte del total), cada cuánto, y lo que hace, separado por a quién le llega. El nombre lleva al detalle de la skill, más abajo; cada efecto abre su «Cómo funciona».',
+                       en:'One row per skill: how hard it hits (the sum of its hits, in % of attack, and its share of the total), how often, and what it does, split by who gets it. The name jumps to the skill’s detail below; each effect opens its “How it works”.' },
+  kit_skill:         { es:'Skill',               en:'Skill' },
+  kit_cuando:        { es:'Cada cuánto',         en:'How often' },
+  kit_constante:     { es:'constante',           en:'always on' },
+  kit_barra_ult:     { es:'barra de ult',        en:'ult bar' },
+  kit_barra_stk:     { es:'barra de striker',    en:'striker bar' },
+  kit_total:         { es:'Daño total: {n}%',    en:'Total damage: {n}%' },
+  kit_con:           { es:'Comparar con',        en:'Compare with' },
+  kit_con_nada:      { es:'otra versión…',       en:'another version…' },
+  kit_antes:         { es:'antes {x}',           en:'was {x}' },
+  kit_solo_en:       { es:'Solo en {x}',         en:'Only in {x}' },
+  kit_nueva:         { es:'skill nueva',         en:'new skill' },
+  kit_sc:            { es:'{n} sin clasificar',  en:'{n} unclassified' },
+  kit_dif_note:      { es:'Contra {x}: «+» lo que esta versión suma, «≠» lo que cambia (con lo de antes) y, tachado, lo que {x} tiene y esta no.',
+                       en:'Against {x}: “+” what this version adds, “≠” what changes (with the previous value) and, struck through, what {x} has and this one lacks.' },
   st_dano:           { es:'Daño',                en:'Damage' },
   ay_label:          { es:'Cómo se lee',         en:'How to read it' },
   rs_donde:          { es:'Dónde rinde',         en:'Where it performs' },
@@ -1561,6 +1578,7 @@ let ui = {
   aliados: null,                     // grupo cuya lista de personajes está abierta: { r, tg } (aliadosModal)
   tip: null,                         // «Cómo funciona» abierto: { key de la variante, si: skill, ti y fi: el efecto tocado o null }
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
+  kitCon: null,                      // pestaña Skills: la otra versión del personaje contra la que se marca lo que cambia (su uid o 'base')
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
   glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
@@ -2488,11 +2506,11 @@ function metaEfecto (f, dura) {
 }
 /** Un efecto que no es daño: etiqueta tipada + texto, uno por línea. Al tocarlo se abre el «Cómo funciona»
  *  de la skill en ese efecto (si, ti, fi: skill, etapa y efecto). */
-function efectoLinea (v, f, si, ti, fi) {
+function efectoLinea (v, f, si, ti, fi, destino) {
   const { renglones, sinTraducir } = renglonesEfecto(f), meta = metaEfecto(f), etiqueta = txt('ab', f.a);
   // Duración, tick y marcas van pegadas al final de la última línea, no en un renglón aparte.
   return `<div class="fxline" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-st="${ti}" data-fx="${fi}">
-    <span class="fxtag" data-ay="fx"${U.prefs.ayuda ? '' : ` title="${h(etiqueta)}"`}>${h(etiqueta)}</span>
+    <span class="fxtag${destino ? ' d-' + destino : ''}" data-ay="fx"${U.prefs.ayuda ? '' : ` title="${h(etiqueta)}"`}>${h(etiqueta)}</span>
     <div class="fxitems ${sinTraducir ? 'sintrad' : ''}"
          ${sinTraducir ? `title="${h(t('untranslated'))}"` : ''}>
       ${renglones.map((x, i) => `<div>${x}${
@@ -2528,6 +2546,13 @@ function skillCard (sk, v, si) {
     cabecera.push(`<span class="tag dim">${h(t('st_activation'))}: ${h(txt('act', acComun, st0.av))}</span>`);
   }
   const varias = etapas.length > 1;
+  // A quién le llega cada efecto (el destino del análisis), para el color de su etiqueta: 'e', 'q', 'r' o 'i'; si un mismo
+  // efecto va a más de uno (un texto que da algo a él y le saca algo al rival), 'mix'.
+  const destinos = new Map();
+  for (const x of entradasSkill(v, si)) if (!x.sc) for (const [, ti, fi] of x.fuentes) {
+    const k = ti + '|' + fi;
+    destinos.set(k, destinos.has(k) && destinos.get(k) !== x.d ? 'mix' : x.d);
+  }
 
   // Cada etapa, junta (Ezequiel, 6 de octubre de 2026: «lo que ocurre en cada skill en cada etapa tiene que estar
   // unido»): su activación y su objetivo si difieren de la skill, el daño (% del ataque, el fijo y el elemento) y los
@@ -2539,7 +2564,7 @@ function skillCard (sk, v, si) {
       ${r.st.el != null ? `<span class="tag dim">${h(txt('elem', r.st.el))}</span>` : `<span class="muted">${h(elemEs(r.dn.elem))}</span>`}</div>`;
   const otros = etapas.map((st, i) => {
     const danos = filasDano.filter(r => r.i === i).map(danoLinea);
-    const fx = (st.fx || []).map((f, fi) => esDano(f) ? '' : efectoLinea(v, f, si, i, fi)).filter(Boolean);
+    const fx = (st.fx || []).map((f, fi) => esDano(f) ? '' : efectoLinea(v, f, si, i, fi, destinos.get(i + '|' + fi))).filter(Boolean);
     const meta = [];
     if (st.ac != null && st.ac !== acComun) meta.push(`<span class="stmeta">${h(t('st_activation'))}: ${h(txt('act', st.ac, st.av))}</span>`);
     if (st.tg != null && st.tg !== tgComun) meta.push(`<span class="stmeta">${h(t('st_target'))}: ${objetivoTexto(st.tg)}</span>`);
@@ -3042,6 +3067,7 @@ function dudaTx (d) {
 }
 /** Abre la ficha de un personaje (con un uniforme) desde el roster o desde las flechas. */
 function abrirFicha (cid, uid) {
+  if (cid !== ui.charId) ui.kitCon = null;      // «Comparar con» otra versión vale mientras se sigue en el mismo personaje
   ui.view = 'detail'; ui.charId = cid; ui.uniformId = uid || 'base'; ui.movil = 'centro';
   ui.eqPagina = 0; ui.eqCon = ''; ui.eqVerDescartados = false;
   render(); window.scrollTo(0, 0);
@@ -3152,6 +3178,141 @@ function queNecesitaHtml (ch, v) {
     <button class="btn sm" data-a="fichaTab" data-v="armado">${h(t('rs_ver_armado'))}</button>`;
 }
 /** Skills del uniforme puesto: cargas, buffs clave, rotaciones y cada skill. */
+// ---------------------------------------------------------------------------
+// EL KIT DE UN VISTAZO (1.0.52, Ezequiel, 12 de noviembre de 2026: «una mejor visual de las habilidades... formas de
+// comparar en un mismo personaje entre uniformes»). Arriba de la pestaña Skills, una fila por skill: cuánto pega (y su
+// parte del total), cada cuánto, y lo que hace, separado por a quién le llega (él, el equipo, el rival) con el color de
+// cada destino. Es el índice del detalle de abajo: el nombre lleva a la skill; cada efecto abre su «Cómo funciona».
+// Con otra versión del personaje elegida («Comparar con»), marca lo que cambia: lo nuevo, lo que sube o baja y lo que
+// la otra tiene y esta no. La comparativa («Skill por skill») usa las mismas filas, una columna por variante.
+// ---------------------------------------------------------------------------
+/** El kit de v: por skill, su daño (la suma de sus golpes, % del ataque) y su parte del total, los elementos de ese daño,
+ *  su recarga y sus efectos (uno por destino, efecto del catálogo y aliados), con el mayor número, la mayor duración y el
+ *  primer efecto de la skill del que sale ([etapa, efecto]). */
+function kitDe (v) {
+  const dn = danoSkillsAn(v);
+  return v.skills.map((sk, si) => {
+    const d = dn.xs.find(x => x.si === si), es = entradasSkill(v, si), elems = [];
+    (sk.st || []).forEach(st => (st.fx || []).forEach(f => {
+      const x = dano(f);
+      if (!x) return;
+      const n = st.el != null ? txt('elem', st.el) : elemEs(x.elem);
+      if (n && !elems.includes(n)) elems.push(n);
+    }));
+    // Un efecto por destino, efecto del catálogo y aliados: si la skill lo trae en más de una entrada del análisis (con otra
+    // condición: daño contra héroes y contra villanos), van juntas, con el mayor número y la mayor duración.
+    const efectos = new Map();
+    for (const x of es) {
+      const e = !x.sc && CATALOGO.efectos[x.ie];
+      if (!e || e.id === 'golpe') continue;
+      const fs = x.fuentes.map(src => efectoDe(v, src)), clave = x.d + '|' + e.id + '|' + (x.d === 'q' && x.objetivo != null ? x.objetivo : '');
+      const y = efectos.get(clave) || { clave, e, d: x.d, objetivo: x.objetivo, val: null, dura: null, ti: x.fuentes[0][1], fi: x.fuentes[0][2] };
+      for (const f of fs) {
+        const val = valorFx(f, e.id);
+        if (val && (!y.val || val.n > y.val.n)) y.val = val;
+        if (f.d != null && (y.dura === null || f.d > y.dura)) y.dura = f.d;
+      }
+      efectos.set(clave, y);
+    }
+    return { si, sk, sl: sk.sl, dano: d ? d.n : 0, parte: d ? d.parte : 0, elems, cd: sk.cd, efectos: [...efectos.values()], sinClasificar: es.filter(x => x.sc).length };
+  });
+}
+/** Lo que cambia en una skill de un kit (a) respecto de la del mismo slot de otro (ref): por efecto, 'nuevo' (ref no lo
+ *  tiene) o 'cambia' (otro número u otra duración; antes: el de ref); los que ref tiene y a no (perdidos), y la diferencia
+ *  de daño. Sin ref (el otro kit no tiene ese slot), la skill entera es nueva. */
+function difSkill (a, ref) {
+  if (!ref) return { nueva: true, marcas: new Map(), perdidos: [], dano: 0 };
+  const de = new Map(ref.efectos.map(x => [x.clave, x])), marcas = new Map(), num = (x) => x.val ? x.val.n : null;
+  for (const x of a.efectos) {
+    const y = de.get(x.clave);
+    if (!y) marcas.set(x.clave, { tipo: 'nuevo' });
+    else if (num(x) !== num(y) || x.dura !== y.dura) marcas.set(x.clave, { tipo: 'cambia', antes: y });
+  }
+  const mias = new Set(a.efectos.map(x => x.clave));
+  return { nueva: false, marcas, perdidos: ref.efectos.filter(y => !mias.has(y.clave)), dano: a.dano - ref.dano };
+}
+/** El número y la duración de un efecto del kit: «60% · 15 s». */
+function kitValorTxt (x) { return [x.val ? numCmp(x.val) : null, x.dura != null ? numTxt(x.dura) + ' s' : null].filter(Boolean).join(' · '); }
+/** Un efecto del kit, con el color de su destino; abre el «Cómo funciona» de su skill en ese efecto. marca: lo que cambia
+ *  contra la otra versión ({ tipo: 'nuevo' } o { tipo: 'cambia', antes }); perdido: lo tiene la otra versión y esta no. */
+function kitChip (v, k, x, marca) {
+  const valor = kitValorTxt(x), grupo = x.d === 'q' && grupoDe(x.objetivo) ? ' → ' + txt('tgt', x.objetivo) : '';
+  return `<button class="kfx ${x.d}${marca ? ' ' + marca.tipo : ''}" data-a="skTip" data-k="${h(v.key)}" data-si="${k.si}" data-st="${x.ti}" data-fx="${x.fi}" data-ay="fx">${
+    marca ? `<i class="kmarca" aria-hidden="true">${marca.tipo === 'nuevo' ? '+' : '≠'}</i> ` : ''}<b>${h(nombreAnTxt(x.e))}</b>${valor ? ` <span class="kval">${h(valor)}</span>` : ''}${h(grupo)}${
+    marca && marca.tipo === 'cambia' ? ` <span class="kantes">${h(t('kit_antes').replace('{x}', kitValorTxt(marca.antes) || '—'))}</span>` : ''}</button>`;
+}
+function kitPerdido (x) {
+  const valor = kitValorTxt(x);
+  return `<span class="kfx ${x.d} perdido"><b>${h(nombreAnTxt(x.e))}</b>${valor ? ` <span class="kval">${h(valor)}</span>` : ''}</span>`;
+}
+/** Cada cuánto está una skill: una pasiva, su activación (o «constante»); la definitiva y la de striker, su barra; las
+ *  demás, su recarga. */
+function kitCuando (k) {
+  const sk = k.sk;
+  if (SLOTS_PASIVOS.has(sk.sl)) {
+    const ac = comunEnEtapas(sk, 'ac'), st0 = ac != null ? sk.st.find(x => x.ac === ac) : null;
+    return [st0 ? txt('act', ac, st0.av) : null, sk.cd ? numTxt(sk.cd) + ' s' : null].filter(Boolean).join(' · ') || t('kit_constante');
+  }
+  return sk.cd ? numTxt(sk.cd) + ' s' : sk.sl === 'Active Ult' ? t('kit_barra_ult') : sk.sl === 'Striker Skill' ? t('kit_barra_stk') : '—';
+}
+/** El daño de una skill del kit: la barra (contra la que más pega: max), el número y su parte del total; con dif, cuánto
+ *  cambia contra la otra versión (también si esta ya no pega y la otra sí). */
+function kitDanoHtml (k, max, dif) {
+  const d = dif && !dif.nueva && dif.dano ? `<span class="kdelta ${dif.dano > 0 ? 'sube' : 'baja'}">${dif.dano > 0 ? '▲' : '▼'} ${h(numTxt(Math.abs(dif.dano)))}</span>` : '';
+  if (!k.dano) return `<span class="knum"><span class="muted">—</span>${d}</span>`;     // sin daño; si la otra versión lo tenía, cuánto perdió
+  return `<span class="kbarra"><i style="width:${Math.max(3, Math.round(100 * k.dano / max))}%"></i></span>
+    <span class="knum"><b>${h(numTxt(k.dano))}%</b>${d} <small>${h(t('an_del_total').replace('{n}', k.parte))}${k.elems.length ? ' · ' + k.elems.map(h).join(' · ') : ''}</small></span>`;
+}
+/** Los efectos de una skill del kit que van a un destino ('e' junta lo suyo y lo de sus invocaciones), con lo que cambia. */
+function kitDestinoHtml (v, k, ds, dif) {
+  const chips = k.efectos.filter(x => ds.includes(x.d)).map(x => kitChip(v, k, x, dif ? dif.marcas.get(x.clave) : null));
+  const perdidos = dif ? dif.perdidos.filter(x => ds.includes(x.d)).map(kitPerdido) : [];
+  return chips.concat(perdidos).join('');
+}
+/** Las otras versiones del personaje (base y uniformes), para comparar el kit contra una. */
+function otrasVersiones (v) { return variantesDe(v.ch).filter(x => x.key !== v.key); }
+/** El kit de un vistazo, arriba de la pestaña Skills. */
+function kitVistazoHtml (v) {
+  const kit = kitDe(v), otras = otrasVersiones(v), con = otras.find(x => (x.uid || 'base') === ui.kitCon) || null;
+  const ref = con ? new Map(kitDe(con).map(k => [k.sl, k])) : null;
+  const max = Math.max(1, ...kit.map(k => k.dano)), total = kit.reduce((a, k) => a + k.dano, 0);
+  const totalRef = con ? [...ref.values()].reduce((a, k) => a + k.dano, 0) : null;
+  const hayInv = kit.some(k => k.efectos.some(x => x.d === 'i'));
+  const fila = (k) => {
+    const dif = ref ? difSkill(k, ref.get(k.sl)) : null;
+    return `<div class="kitfila${dif && dif.nueva ? ' nueva' : ''}" role="row">
+      <div class="kitc nom" role="cell"><button class="kitnom" data-a="kitIr" data-ancla="${anclaSkill(k.sl)}"><span class="slotbadge ${slotClase(k.sl)}">${h(slotEs(k.sl))}</span>
+        <span>${h(nombreSkillTxt(k.sk))}</span></button>${dif && dif.nueva ? `<span class="tag solid knueva">${h(t('kit_nueva'))}</span>` : ''}</div>
+      <div class="kitc dano" role="cell" data-rot="${h(t('an_k_dano'))}">${kitDanoHtml(k, max, dif)}</div>
+      <div class="kitc cuando" role="cell" data-rot="${h(t('kit_cuando'))}">${h(kitCuando(k))}</div>
+      <div class="kitc fx" role="cell" data-rot="${h(t('an_e'))}">${kitDestinoHtml(v, k, ['e', 'i'], dif)}</div>
+      <div class="kitc fx" role="cell" data-rot="${h(t('an_q'))}">${kitDestinoHtml(v, k, ['q'], dif)}</div>
+      <div class="kitc fx" role="cell" data-rot="${h(t('an_r'))}">${kitDestinoHtml(v, k, ['r'], dif)}${
+        k.sinClasificar ? `<span class="kfx sc">${h(t('kit_sc').replace('{n}', k.sinClasificar))}</span>` : ''}</div>
+    </div>`;
+  };
+  // Las skills que la otra versión tiene y esta no (un slot de más), al final.
+  const soloRef = ref ? [...ref.values()].filter(k => !kit.some(x => x.sl === k.sl)) : [];
+  return `<div class="section kit" id="kit">
+    <div class="kitcab">
+      <h3>${h(t('kit_title'))} ${ayudaHtml(t('kit_note'))}</h3>
+      <span class="kittotal">${h(t('kit_total').replace('{n}', numTxt(total)))}${con && total !== totalRef
+        ? ` <span class="kdelta ${total > totalRef ? 'sube' : 'baja'}">${total > totalRef ? '▲' : '▼'} ${h(numTxt(Math.abs(total - totalRef)))}</span>` : ''}</span>
+      ${otras.length ? `<label class="kitcon">${h(t('kit_con'))} <select data-a="kitCon">
+        <option value="">${h(t('kit_con_nada'))}</option>
+        ${otras.map(x => `<option value="${x.uid || 'base'}" ${con === x ? 'selected' : ''}>${h(x.uid ? x.sub : t('base'))}</option>`).join('')}</select></label>` : ''}
+    </div>
+    <div class="kitley"><span class="kdot e"></span>${h(t('an_e'))}${hayInv ? ` <span class="kdot i"></span>${h(t('an_i'))}` : ''} <span class="kdot q"></span>${h(t('an_q'))} <span class="kdot r"></span>${h(t('an_r'))}</div>
+    ${con ? `<p class="muted kitdif">${h(t('kit_dif_note').replace(/\{x\}/g, con.uid ? con.sub : t('base')))}</p>` : ''}
+    <div class="kittabla" role="table">
+      <div class="kitfila cab" role="row"><div role="columnheader">${h(t('kit_skill'))}</div><div role="columnheader">${h(t('an_k_dano'))}</div><div role="columnheader">${h(t('kit_cuando'))}</div>
+        <div role="columnheader"><span class="kdot e"></span>${h(t('an_e'))}</div><div role="columnheader"><span class="kdot q"></span>${h(t('an_q'))}</div><div role="columnheader"><span class="kdot r"></span>${h(t('an_r'))}</div></div>
+      ${kit.map(fila).join('')}
+      ${soloRef.map(k => `<div class="kitfila perdida" role="row"><div class="kitc nom" role="cell"><span class="slotbadge ${slotClase(k.sl)}">${h(slotEs(k.sl))}</span>
+        <span>${h(nombreSkillTxt(k.sk))}</span></div><div class="kitc" role="cell" style="grid-column:2 / -1"><span class="muted">${h(t('kit_solo_en').replace('{x}', con.uid ? con.sub : t('base')))}</span></div></div>`).join('')}
+    </div>
+  </div>`;
+}
 function fichaSkills (ch, v) {
   if (!v.skills.length) return `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`;
   const car = cargas(v.skills), kb = BUFFS[v.p] || {}, ks = Object.keys(kb);
@@ -3164,6 +3325,7 @@ function fichaSkills (ch, v) {
       ${ks.map(k => `<div class="kbrow"><span class="kbname">${h(k)}</span>
          <span class="kbsrc">${kb[k].map(x => `<span class="tag dim">${h(slotEs(x))}</span>`).join('')}</span></div>`).join('')}
     </div>` : ''}
+    ${kitVistazoHtml(v)}
     ${v.skills.map((sk, si) => skillCard(sk, v, si)).join('')}
     ${skillArtefacto(ch)}
     ${panelRotaciones(ch, v)}`;
@@ -7181,6 +7343,8 @@ document.addEventListener('click', (e) => {
     case 'irSkill': ui.entradaNueva = true; ui.fichaTab = d.tab; abrirFicha(d.cid, d.uid); resaltar(d.ancla); break;
     case 'uniform': ui.uniformId = d.uid; ui.eqPagina = 0; render(); break;
     case 'fichaTab': ui.fichaTab = d.v; render(); irA('fcuerpo'); break;
+    // Del kit de un vistazo al detalle de esa skill, más abajo.
+    case 'kitIr': resaltar(d.ancla); break;
     // Seleccionar texto de una skill no abre su «Cómo funciona».
     case 'skTip': { const si = +d.si, ti = d.st == null ? null : +d.st, fi = d.fx == null ? null : +d.fx;
       if (getSelection().toString()) break;
@@ -7386,6 +7550,7 @@ document.addEventListener('change', (e) => {
   if (a === 'newListKind') { ui.newListKind = el.value; return; }
   if (a === 'abxDia') { ui.abxDia = parseInt(el.value, 10); render(); return; }
   if (a === 'uniformSel') { ui.uniformId = el.value; ui.eqPagina = 0; render(); return; }
+  if (a === 'kitCon') { ui.kitCon = el.value || null; render(); return; }
   if (a === 'eqOrden') { ui.eqOrden = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'hiPj') { ui.hiPj = el.value; ui.hiN = 20; render(); return; }
