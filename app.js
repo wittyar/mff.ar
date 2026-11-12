@@ -1630,6 +1630,16 @@ function variant (cid, uid) {
            trans: u.trans, nuevo: u.new, cost: u.cost || '', pr: u.pr || null,
            p, up: u.up || null, op: u.op || null, ch, skills };
 }
+/** El análisis de una variante (MFF_ANALISIS, por retrato: scripts/modelo.py). Lo creado a mano (un personaje, o un
+ *  uniforme agregado a uno del juego) no tiene retrato ni skills: su análisis es vacío. Un retrato de los datos sin
+ *  análisis es un error de los datos. */
+const SIN_ANALISIS = { fx: [], sc: [] };
+function analisisDe (v) {
+  if (v.p === undefined) return SIN_ANALISIS;
+  const an = ANALISIS[v.p];
+  if (!an) throw new Error('falta el análisis del retrato ' + v.p);
+  return an;
+}
 /** Totales que muestra thanosvibs: carga combinada de las cinco activas. */
 function cargas (skills) {
   let ult = 0, stk = 0;
@@ -1853,8 +1863,8 @@ function antiPropio (v) {
   let r = _ANTI_PROPIO.get(v.p);
   if (r) return r;
   r = { cuenta: [], prob: [] };
-  const an = ANALISIS[v.p], vistas = new Set();
-  if (an) for (const [ie, d, , fuentes] of an.fx) {
+  const vistas = new Set();
+  for (const [ie, d, , fuentes] of analisisDe(v).fx) {
     if (d !== 'e' || !STAT_ANTI.has(ie)) continue;
     for (const [si, ti] of fuentes) {
       const sk = v.skills[si];
@@ -3281,7 +3291,7 @@ function tocaEfecto (x, ti, fi) { return x.fuentes.some(s => s[1] === ti && s[2]
  *  una con sus fuentes en esta skill ([skill, etapa, efecto]). Un «Give Power» seguido de lo que otorga no
  *  es una entrada: lo otorgado, sí. Un efecto que no cae en ninguna es un error. */
 function entradasSkill (v, si) {
-  const an = ANALISIS[v.p], sk = v.skills[si], out = [];
+  const an = analisisDe(v), sk = v.skills[si], out = [];
   an.fx.forEach(([ie, d, objetivo, fuentes], i) => {
     const fs = fuentes.filter(x => x[0] === si);
     if (fs.length) out.push({ ie, d, objetivo, fuentes: fs, ns: (an.ns || []).includes(i) });
@@ -3691,7 +3701,7 @@ function skillDeSoporte (v, k, x) {
  *  le encuentra a esa skill. */
 function daSoporte (v, si, x) {
   const efs = new Set(x.fx.flatMap(f => CATALOGO.soporte[f.s].efectos));
-  return ANALISIS[v.p].fx.some(([ie, , , fuentes]) => efs.has(CATALOGO.efectos[ie].id) && fuentes.some(([s]) => s === si));
+  return analisisDe(v).fx.some(([ie, , , fuentes]) => efs.has(CATALOGO.efectos[ie].id) && fuentes.some(([s]) => s === si));
 }
 /** Ancla de una skill en la pestaña Skills de la ficha: hay una por tipo. */
 function anclaSkill (sl) { return 'sk-' + slugId(sl); }
@@ -5149,7 +5159,7 @@ function numCmp (x) { return numTxt(x.n) + (x.pct ? '%' : ''); }
 function filasCmp (vs) {
   const filas = new Map();
   vs.forEach((v, k) => {
-    for (const [ie, d, objetivo, fuentes] of ANALISIS[v.p].fx) {
+    for (const [ie, d, objetivo, fuentes] of analisisDe(v).fx) {
       const e = CATALOGO.efectos[ie], clave = d + '|' + e.id;
       if (!filas.has(clave)) filas.set(clave, { d, e, ie, clave, cel: vs.map(() => []), tx: vs.map(() => []) });
       const r = filas.get(clave);
@@ -5304,7 +5314,7 @@ function filasPot (vs) {
     return filas.get(e.id);
   };
   vs.forEach((v, k) => {
-    for (const [ie, d, objetivo, fuentes] of ANALISIS[v.p].fx) {
+    for (const [ie, d, objetivo, fuentes] of analisisDe(v).fx) {
       const e = CATALOGO.efectos[ie];
       if (d === 'r' || e.grupo === 'golpe' || e.id === 'otorga') continue;
       if (typeof e.acumula !== 'boolean') throw new Error('efecto a favor sin acumula en el catálogo: ' + e.id);
@@ -5466,7 +5476,7 @@ function distincionAn (f) {
  *  el mayor número, si sale solo de pasivas (siempre activo), su mayor tiempo activo y a qué aliados va. */
 function filasAn (v) {
   const filas = new Map();
-  for (const [ie, d, objetivo, fuentes] of ANALISIS[v.p].fx) {
+  for (const [ie, d, objetivo, fuentes] of analisisDe(v).fx) {
     const e = CATALOGO.efectos[ie], clave = d + '|' + e.id;
     if (!filas.has(clave)) filas.set(clave, { d, e, ie, clave, fuentes: [], objetivos: [] });
     const r = filas.get(clave);
@@ -5892,9 +5902,9 @@ function leSirveHtml (v) {
  *  liderazgo lo trae, con su fuente (otorga). Lo que Leads & Supports publica en esas variantes no se toma como lo que
  *  otorga: solo se avisa (5 de octubre de 2026). */
 function otorgaSinPublicar (v) {
-  const an = ANALISIS[v.p], so = SOPORTES[v.p] || {};
+  const so = SOPORTES[v.p] || {};
   if (LIDERAZGOS.some(k => so[k] && so[k].otorga)) return false;
-  return !!an && an.fx.some(([ie, , , fuentes]) => CATALOGO.efectos[ie].id === 'otorga'
+  return analisisDe(v).fx.some(([ie, , , fuentes]) => CATALOGO.efectos[ie].id === 'otorga'
     && fuentes.some(([si]) => v.skills[si].sl === 'Leader Skill'));
 }
 /** Lo que el retrato le da al equipo según thanosvibs (Leads & Supports), y el aviso de un «Give Power» de su Leader
