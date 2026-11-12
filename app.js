@@ -987,7 +987,7 @@ const T = {
   cmp_ley_dura:      { es:'cuánto dura',         en:'how long it lasts' },
   cmp_ley_slot:      { es:'de qué skill sale (LÍD, PAS, T2, UNI, A1–A5, DEF, STR)', en:'which skill it comes from (LDR, PAS, T2, UNI, A1–A5, ULT, STR)' },
   cmp_mayor:         { es:'MAYOR',               en:'TOP' },
-  cmp_mayor_t:       { es:'el que más da; si dan lo mismo o no tiene número, el que más dura', en:'the one that gives the most; if equal or with no number, the one that lasts longest' },
+  cmp_mayor_t:       { es:'el que más da; si dan lo mismo o no tiene número, el que más dura (lo de una pasiva sin condición está siempre)', en:'the one that gives the most; if equal or with no number, the one that lasts longest (a passive with no condition is always on)' },
   cmp_empate:        { es:'EMPATE',              en:'TIE' },
   cmp_empate_t:      { es:'Todos los que lo tienen dan lo mismo y duran lo mismo.', en:'All who have it give the same and last the same.' },
   cmp_igual:         { es:'IGUAL EN TODOS',      en:'SAME IN ALL' },
@@ -5165,12 +5165,14 @@ function filasCmp (vs) {
       const r = filas.get(clave);
       const cond = [d === 'q' && grupoDe(objetivo) ? txt('tgt', objetivo) : '', condicionAn(v, fuentes)].filter(Boolean).join(' · ');
       for (const src of fuentes) {
-        const f = efectoDe(v, src), sl = v.skills[src[0]].sl, val = valorFx(f, e.id), dura = f.d != null ? f.d : null;
+        const f = efectoDe(v, src), sk = v.skills[src[0]], sl = sk.sl, val = valorFx(f, e.id), dura = f.d != null ? f.d : null;
+        // De una pasiva sin activación y sin duración: está siempre (dura más que cualquier efecto con tiempo).
+        const siempre = dura === null && SLOTS_PASIVOS.has(sl) && sk.st[src[1]].ac == null;
         // Si la etiqueta de la skill da varios efectos (Pánico: pánico y más daño recibido), se dice de cuál sale.
         const origen = fuenteAn(v, src).m.efectos.filter(x => x !== 'golpe' && x !== 'otorga').length > 1 ? txt('ab', f.a) : '';
-        const firma = JSON.stringify([origen, val, dura, cond]);
+        const firma = JSON.stringify([origen, val, dura, cond, siempre]);
         let g = r.cel[k].find(x => x.firma === firma);
-        if (!g) { g = { firma, origen, val, dura, cond, slots: [] }; r.cel[k].push(g); }
+        if (!g) { g = { firma, origen, val, dura, cond, siempre, slots: [] }; r.cel[k].push(g); }
         if (!g.slots.includes(sl)) g.slots.push(sl);
         const tx = marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f);
         if (!r.tx[k].some(x => x.sl === sl && x.tx === tx && x.dura === dura)) r.tx[k].push({ sl, tx, dura });
@@ -5183,7 +5185,8 @@ function filasCmp (vs) {
     return x[0] - y[0] || x[1] - y[1] || x[2] - y[2];
   });
 }
-/** Quién tiene la fila, quién da más (por número y, a igual número, por duración; sin números, por duración), si empatan
+/** Quién tiene la fila, quién da más (por número y, a igual número, por duración; sin números, por duración; lo de una
+ *  pasiva sin activación está siempre: dura más que cualquier efecto con tiempo), si empatan
  *  todos los que la tienen y si es igual en todos (los mismos números, duraciones y condiciones). */
 function cmpFila (r) {
   const tienen = r.cel.map((c, k) => c.length ? k : -1).filter(k => k >= 0);
@@ -5191,7 +5194,7 @@ function cmpFila (r) {
   const medible = nums.length > 0 && nums.every(x => x.pct === nums[0].pct);
   const metrica = (c) => {
     const n = medible ? Math.max(...c.map(g => g.val ? g.val.n : -Infinity)) : null;
-    const dur = Math.max(...c.filter(g => !medible || (g.val && g.val.n === n)).map(g => g.dura == null ? -Infinity : g.dura));
+    const dur = Math.max(...c.filter(g => !medible || (g.val && g.val.n === n)).map(g => g.siempre ? Infinity : g.dura == null ? -Infinity : g.dura));
     return [medible ? n : 0, dur];
   };
   const ms = r.cel.map(c => c.length ? metrica(c) : null);

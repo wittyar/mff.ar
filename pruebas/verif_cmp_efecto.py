@@ -30,14 +30,17 @@ def valor(f, e):
     return (f['v'][i], pat[pos + 1:pos + 2] == '%')
 
 
+PASIVAS = {'Leader Skill', 'Passive', 'Tier-2 Passive', 'Uniform Passive'}
 filas = {}
 for k, p in enumerate(PS):
     for ie, d, obj, fu in A[p]['fx']:
         e = CAT['efectos'][ie]['id']
         r = filas.setdefault(f'{d}|{e}', [set() for _ in PS])
         for si, ti, fi in fu:
-            f = S[p][si]['st'][ti]['fx'][fi]
-            r[k].add((valor(f, e), f.get('d')))
+            sk = S[p][si]; f = sk['st'][ti]['fx'][fi]
+            # Lo de una pasiva sin activación y sin duración está siempre: dura más que cualquier efecto con tiempo (1.0.52).
+            siempre = f.get('d') is None and sk['sl'] in PASIVAS and sk['st'][ti].get('ac') is None
+            r[k].add((valor(f, e), float('inf') if siempre else f.get('d')))
 
 
 def mayor(cel):
