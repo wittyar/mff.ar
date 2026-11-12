@@ -962,10 +962,67 @@ const T = {
   sk_imposible:      { es:'Dato imposible de la fuente: una probabilidad no puede pasar de 100%. La wiki dice esto y la app lo muestra tal cual, sin corregirlo (docs/AUDITORIA.md, sección 11).',
                        en:'Impossible value from the source: a chance cannot exceed 100%. The wiki says this and the app shows it as is, uncorrected (docs/AUDITORIA.md, section 11).' },
   cmp_abilities:     { es:'Habilidades',         en:'Abilities' },
-  cmp_vista:         { es:'Vista',               en:'View' },
-  cmp_v_efecto:      { es:'Por efecto',          en:'By effect' },
-  cmp_v_ficha:       { es:'Ficha',               en:'Sheet' },
-  cmp_v_pot:         { es:'Por potenciador',     en:'By buff' },
+  cmp_kit_nota:      { es:'Skill por skill: cuánto pega cada una (las barras comparten escala), cada cuánto y lo que hace, con el color de a quién le llega.',
+                       en:'Skill by skill: how hard each one hits (the bars share a scale), how often and what it does, coloured by who gets it.' },
+  cmp_kit_mismo:     { es:'Versiones de {x}, skill por skill: lo que cada una suma, cambia o pierde contra la referencia.',
+                       en:'Versions of {x}, skill by skill: what each one adds, changes or loses against the reference.' },
+  cmp_listas_nota:   { es:'Dónde pone a cada uno cada tier list, y el rol que eso les da en PvE y en PvP.',
+                       en:'Where each tier list places each of them, and the role that gives them in PvE and in PvP.' },
+  cmp_pvp_nota:      { es:'Efecto por efecto, solo lo que más pesa en PvP.', en:'Effect by effect, only what matters most in PvP.' },
+  cmp_pvp_vacio:     { es:'Ninguno de los elegidos tiene de lo que más pesa en PvP.', en:'None of the picked ones has what matters most in PvP.' },
+  cmp_ref:           { es:'Referencia',          en:'Reference' },
+  cmp_ref_usar:      { es:'Usar de referencia',  en:'Use as reference' },
+  cmp_ref_t:         { es:'Lo que cambia en las otras columnas se marca contra esta versión.', en:'What changes in the other columns is marked against this version.' },
+  cmp_cambios:       { es:'Solo lo que cambia',  en:'Only what changes' },
+  cmp_igual_ref:     { es:'igual que {x}',       en:'same as {x}' },
+  cmp_sin_cambios:   { es:'Sin cambios en ninguna versión', en:'No changes in any version' },
+  cmp_total:         { es:'Daño total',          en:'Total damage' },
+  cmp_total_t:       { es:'La suma de los golpes de todas sus skills, en % del ataque. No es su daño real: no cuenta el proc del CTP, los potenciadores ni las recargas.',
+                       en:'The sum of the hits of all its skills, in % of attack. Not its real damage: it leaves out the CTP proc, buffs and cooldowns.' },
+  cmp_efectos:       { es:'Efectos',             en:'Effects' },
+  cmp_version:       { es:'Cambiar la versión de {x}', en:'Change the version of {x}' },
+  cmp_versiones:     { es:'Comparar sus versiones', en:'Compare its versions' },
+  cmp_versiones_t:   { es:'Compara hasta {n} versiones de este personaje, skill por skill. Reemplaza lo que tenías elegido para comparar.',
+                       en:'Compares up to {n} versions of this character, skill by skill. Replaces what you had picked to compare.' },
+  cmp_versiones_mas: { es:'{x} tiene {n} versiones: van {m}. Cambiá cualquiera desde el desplegable de su columna.',
+                       en:'{x} has {n} versions: {m} are shown. Swap any of them from its column’s dropdown.' },
+  cmp_rol:           { es:'Rol según las listas', en:'Role per the lists' },
+  cmp_rol_t:         { es:'El rol que le dan las filas de las listas de ese contexto en las que está (con tus cambios); el nivel es el de su mejor fila. Con eso arma los equipos la app.',
+                       en:'The role given by the rows of that context’s lists it sits in (with your changes); the level is that of its best row. The app builds teams from it.' },
+  cmp_rol_dps:       { es:'pega (nivel {n} de {m})',    en:'dealer (level {n} of {m})' },
+  cmp_rol_soporte:   { es:'soporte (nivel {n} de {m})', en:'support (level {n} of {m})' },
+  cmp_rol_lider:     { es:'líder',               en:'leader' },
+  cmp_rol_striker:   { es:'striker',             en:'striker' },
+  cmp_rol_fuera:     { es:'lo dejan fuera',      en:'left out' },
+  cmp_rol_nada:      { es:'no figura',           en:'not listed' },
+  cm_title:          { es:'Cómo compararlos',    en:'How to compare them' },
+  cm_note:           { es:'No hay una sola forma de comparar. Las comunidades que explican sus listas no usan una sola: separan PvE de PvP y a los que pegan de los que dan soporte, y en cada modo miran quién ocupa cada lugar. La sugerida sale de lo que elegiste (si son el mismo personaje, y el rol que les dan las listas); al abrir una comparación se muestra esa.',
+                       en:'There is no single way to compare. The communities that explain their lists do not use just one: they split PvE from PvP and dealers from supports, and in each mode they look at who fills each slot. The suggested one comes from what you picked (whether they are the same character, and the role the lists give them); a comparison opens on it.' },
+  cm_sugerida:       { es:'Sugerida',            en:'Suggested' },
+  cm_kit_t:          { es:'Skill por skill',     en:'Skill by skill' },
+  cm_kit_d:          { es:'Cuánto pega cada skill, cada cuánto y lo que hace.', en:'How hard each skill hits, how often and what it does.' },
+  cm_cambia_t:       { es:'Qué cambia entre versiones', en:'What changes between versions' },
+  cm_cambia_d:       { es:'Lo que cada versión suma, cambia o pierde, skill por skill.', en:'What each version adds, changes or loses, skill by skill.' },
+  cm_efecto_t:       { es:'Efecto por efecto',   en:'Effect by effect' },
+  cm_efecto_d:       { es:'Quién tiene cada efecto, cuánto da y cuánto dura.', en:'Who has each effect, how much and for how long.' },
+  cm_pot_t:          { es:'Lo que le dan al equipo', en:'What they give the team' },
+  cm_pot_d:          { es:'Con liderazgo, soporte y artefacto: la suma y a quiénes les llega.', en:'With leadership, support and artifact: the sum and who it reaches.' },
+  cm_pvp_t:          { es:'Para PvP',            en:'For PvP' },
+  cm_pvp_d:          { es:'Solo lo que más pesa en PvP: perforar, inmunidades, anti-mermas, curarse.', en:'Only what matters most in PvP: pierce, immunities, debuff removal, healing.' },
+  cm_listas_t:       { es:'En las listas',       en:'In the lists' },
+  cm_listas_d:       { es:'Dónde los pone cada tier list y qué rol les da.', en:'Where each tier list places them and the role it gives.' },
+  cm_ficha_t:        { es:'Ficha completa',      en:'Full sheet' },
+  cm_ficha_d:        { es:'Todo junto: clase, costos, listas y cada skill con su texto.', en:'Everything: class, costs, lists and each skill with its text.' },
+  cm_r_mismo:        { es:'Son versiones de {x}: lo que importa es qué suma, qué cambia y qué pierde cada una.',
+                       en:'They are versions of {x}: what matters is what each one adds, changes and loses.' },
+  cm_r_soportes:     { es:'Las listas los usan de soporte: lo que vale es lo que le dan al equipo, a quién le llega y si se suma.',
+                       en:'The lists use them as supports: what counts is what they give the team, who it reaches and whether it stacks.' },
+  cm_r_mixto:        { es:'{a} da soporte y {b} pega: no compiten por el mismo lugar. Mirá si lo que da uno le llega al otro.',
+                       en:'{a} supports and {b} deals damage: they don’t compete for the same slot. Check whether what one gives reaches the other.' },
+  cm_r_dps:          { es:'Las listas los usan para pegar: efecto por efecto se ve qué tiene cada uno para él y contra el rival. Dónde los ponen en cada modo está en «En las listas».',
+                       en:'The lists use them as dealers: effect by effect shows what each has for itself and against the foe. Where each mode places them is under “In the lists”.' },
+  cm_r_sin_rol:      { es:'Las listas de rol no ubican a ninguno: quedan sus skills, efecto por efecto.',
+                       en:'The role lists place none of them: what is left is their skills, effect by effect.' },
   cmp_pot_nota:      { es:'Potenciador por potenciador: lo que tiene cada uno de sus skills, su liderazgo, su soporte y su artefacto, la suma y a quiénes les llega.',
                        en:'Buff by buff: what each one has from its skills, leadership, support and artifact, the sum and whom it reaches.' },
   pb_propio:         { es:'Él',                  en:'Self' },
@@ -1579,13 +1636,16 @@ let ui = {
   tip: null,                         // «Cómo funciona» abierto: { key de la variante, si: skill, ti y fi: el efecto tocado o null }
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   kitCon: null,                      // pestaña Skills: la otra versión del personaje contra la que se marca lo que cambia (su uid o 'base')
+  cmpRef: null,                      // comparativa skill por skill de un mismo personaje: la clave de la versión de referencia (sin ella, la primera)
+  cmpCambios: true,                  // ...y si se ve solo lo que cambia
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
   glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
   hiPj: '', hiTipo: 'todos', hiN: 20, // Histórico: personaje, tipo de hecho y cuántas versiones se ven
   // Comparativa (#6): la vista ('efecto' o 'ficha'), qué destino se ve ('todo', 'q', 'r', 'e' o 'i'), si lo igual en todos
   // va en una línea, si lo que tiene uno solo va aparte al final de cada sección y las filas con sus textos abiertos
-  cmpVista: 'efecto', cmpDestino: 'todo', cmpIguales: true, cmpSolos: true, cmpTextos: [],
+  cmpVista: null,                    // el método de la comparativa (metodosCmp): kit, efecto, pot, pvp, listas o ficha; sin elegir, el sugerido
+  cmpDestino: 'todo', cmpIguales: true, cmpSolos: true, cmpTextos: [],
   artEst: '6',                       // nivel de estrellas que muestra el artefacto de la ficha
   // combinaciones de 3 de la pestaña Equipos: orden, filtros (se excluye por personaje) y página
   eqOrden: 'foco', eqExcluir: [], eqCon: '', eqPagina: 0, eqCalculando: null,
@@ -2990,6 +3050,7 @@ function renderDetail () {
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
     ${botonPoner(v)}
     <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}" ${ui.picks.some(p => p.key === v.key) ? 'disabled' : ''}>${h(t('compare_this'))}</button>
+    ${ch.uniforms.length ? `<button class="btn sm" data-a="cmpVersiones" data-cid="${ch.id}" data-uid="${v.uid || ''}" title="${h(t('cmp_versiones_t').replace('{n}', MAX_COMPARAR))}">${h(t('cmp_versiones'))}</button>` : ''}
     <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
     <button class="btn sm ${ui.marcando ? 'primary' : ''}" data-a="marcarModo">${h(ui.marcando ? t('at_done') : t('at_edit'))}</button>
   </div>
@@ -3620,10 +3681,11 @@ function tipCoreanoHtml (terminos) {
     ${errores.length ? `<div class="tipeh">${h(t('gl_errores'))}</div>${errores.map(e =>
       `<details class="tiperr"><summary>${h(bi(e.titulo))}</summary><p>${h(bi(e.texto))}</p></details>`).join('')}` : ''}`;
 }
-/** ¿El «Cómo funciona» abierto sigue siendo de lo que se ve (la pestaña Skills de la misma variante)? */
+/** ¿El «Cómo funciona» abierto sigue siendo de lo que se ve (la pestaña Skills de la misma variante, o la comparativa
+ *  en una vista que tiene el botón de cada skill: la ficha y skill por skill)? */
 function tipVigente () {
   if (ui.view === 'detail' && ui.fichaTab === 'skills') return variant(ui.charId, ui.uniformId).key === ui.tip.key;
-  if (ui.view === 'compare' && ui.cmpVista === 'ficha') return ui.picks.some(x => x.key === ui.tip.key);
+  if (ui.view === 'compare' && (ui.cmpVista === 'ficha' || ui.cmpVista === 'kit')) return ui.picks.some(x => x.key === ui.tip.key);
   return false;
 }
 /** La variante de una clave («cid::uid» o «cid::base»). */
@@ -5191,6 +5253,7 @@ function renderCompare () {
   const cC = same(v => v.c), cF = same(v => v.f), cT = same(v => v.t), cI = same(v => v.ins);
   const slots = SLOT_ORDER.filter(sl => vs.some(v => v.skills.some(sk => sk.sl === sl)));
   const car = vs.map(v => cargas(v.skills));
+  // La sinergia entre los comparados, como equipo: no la hay si un personaje está dos veces (versiones del mismo).
   const syn = synergy(vs), razones = razonesTxt(syn.razones);
   const cell = (v, txt, counts, key) => `<td class="${counts && counts[key] > 1 ? 'same' : ''}">${txt}</td>`;
   // Los efectos de una skill: los primeros CMP_FX a la vista y el resto plegado, con cuántos son.
@@ -5198,15 +5261,20 @@ function renderCompare () {
   const fxCmp = (v, si) => ({ f, ti, fi }) => `<div class="cmpfx" data-a="skTip" data-k="${h(v.key)}" data-si="${si}" data-st="${ti}" data-fx="${fi}"><span class="fxtag" data-ay="fx"${
     U.prefs.ayuda ? '' : ` title="${h(txt('ab', f.a))}"`}>${h(txt('ab', f.a))}</span>${marcadores(h(txt('desc', f.p, numerosFx(f)).replace(/<br\s*\/?>/gi, ' ')), f)}</div>`;
   const attr = (label, fn) => `<tr><th>${h(label)}</th>${vs.map(v => `<td>${fn(v)}</td>`).join('')}</tr>`;
-  const efecto = ui.cmpVista === 'efecto', pot = ui.cmpVista === 'pot';
+  // Una comparación se abre en el método sugerido para lo elegido; después, el que se elija.
+  const ms = metodosCmp(vs);
+  if (!ui.cmpVista) ui.cmpVista = ms.sugerida;
+  const vista = ui.cmpVista, mismo = vs.every(v => v.cid === vs[0].cid);
+  const nota = { efecto: t('cmp_ef_nota'), pvp: t('cmp_pvp_nota'), pot: t('cmp_pot_nota'), listas: t('cmp_listas_nota'), ficha: t('cmp_note'),
+    kit: mismo ? t('cmp_kit_mismo').replace('{x}', vs[0].name) : t('cmp_kit_nota') }[vista];
+  if (!nota) throw new Error('método de comparación desconocido: ' + vista);
 
   return `
   <div class="row" style="margin-bottom:14px"><button class="btn sm" data-a="back">${h(t('back_roster'))}</button></div>
   <div class="page-head"><div><h1>${h(t('cmp_title'))}</h1>
-    <div class="sub">${h(t(efecto ? 'cmp_ef_nota' : pot ? 'cmp_pot_nota' : 'cmp_note'))}</div></div>
-    <div class="seg" role="group" aria-label="${h(t('cmp_vista'))}">${['efecto', 'pot', 'ficha'].map(k =>
-      `<button class="${ui.cmpVista === k ? 'on' : ''}" aria-pressed="${ui.cmpVista === k}" data-a="cmpVista" data-v="${k}">${h(t('cmp_v_' + k))}</button>`).join('')}</div></div>
-  ${efecto ? cmpPorEfecto(vs) : pot ? cmpPorPotenciador(vs) : `
+    <div class="sub">${h(nota)}${vista === 'pvp' ? ' ' + ayudaHtml(bi(CATALOGO.pvp.nota)) : ''}</div></div></div>
+  ${cmpMetodosHtml(ms)}
+  ${vista === 'efecto' || vista === 'pvp' ? cmpPorEfecto(vs, vista === 'pvp') : vista === 'pot' ? cmpPorPotenciador(vs) : vista === 'kit' ? cmpPorKit(vs) : vista === 'listas' ? cmpEnListas(vs) : `
   <div class="cmp"><table class="cmpt">
     <thead><tr><th></th>${vs.map(v => `<th><div class="cmphead">
       ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
@@ -5240,14 +5308,8 @@ function renderCompare () {
            · ${h(t('d_gold'))}: ${((v.up.gold || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k
            · ${h(t('d_xp'))}: ${((v.up.uniform_xp || []).reduce((a, b) => a + b, 0) / 1000).toFixed(0)}k</div>`
         : '<span class="muted">—</span>'}</td>`).join('')}</tr>
-      ${LISTS.filter(l => vs.some(v => indicesFila(l, v.key).length)).map(l => {
-        const rows = rowsOf(l);
-        return `<tr><th>${h(listName(l))}</th>${vs.map(v => {
-          const idx = indicesFila(l, v.key);
-          return `<td>${!idx.length ? `<span class="muted">${h(t('cmp_unplaced'))}</span>`
-            : idx.map(i => `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`).join(' ')}</td>`;
-        }).join('')}</tr>`;
-      }).join('')}
+      ${LISTS.filter(l => vs.some(v => indicesFila(l, v.key).length)).map(l => `<tr><th>${h(listName(l))}</th>${vs.map(v =>
+        `<td>${filasListaHtml(l, v) || `<span class="muted">${h(t('cmp_unplaced'))}</span>`}</td>`).join('')}</tr>`).join('')}
       ${slots.map(sl => `<tr class="slotrow"><th>${h(slotEs(sl))}</th>${vs.map(v => {
         const sk = v.skills.find(x => x.sl === sl);
         if (!sk) return `<td><span class="muted">${h(t('cmp_missing_slot'))}</span></td>`;
@@ -5280,7 +5342,7 @@ function renderCompare () {
     </tbody>
   </table></div>
 `}
-  <div class="card" style="margin-top:18px">
+  ${new Set(vs.map(v => v.cid)).size < vs.length ? '' : `<div class="card" style="margin-top:18px">
     <div class="row" style="justify-content:space-between;margin-bottom:8px">
       <h3 style="margin:0">${h(t('cmp_synergy'))}</h3><span class="muted">${syn.score}${artPts(syn.art)} ${h(t('cmp_pts'))}</span></div>
     <div style="height:5px;background:var(--surface-3);border-radius:3px;overflow:hidden;margin-bottom:10px">
@@ -5288,7 +5350,7 @@ function renderCompare () {
     ${razones.length ? `<ul style="margin:0;padding-left:18px">${razones.map(r => `<li>${h(r)}</li>`).join('')}</ul>`
       : `<p class="muted">${h(t('cmp_no_synergy'))}</p>`}
     <p class="muted" style="margin-top:10px">${h(t('cmp_heuristic'))}</p>
-  </div>`;
+  </div>`}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -5399,8 +5461,149 @@ function filaCmpHtml (r, vs) {
       ls.map(x => `<div><span class="slotbadge ${slotClase(x.sl)}">${h(slotCorto(x.sl))}</span> ${x.tx}${x.dura != null ? ` <span class="cped">${h(numTxt(x.dura))} s</span>` : ''}</div>`).join('')
       || '<span class="muted">—</span>'}</div>`).join('')}</div>` : ''}</div>`;
 }
-function cmpPorEfecto (vs) {
-  const filas = filasCmp(vs);
+// ---------------------------------------------------------------------------
+// COMPARATIVA: LAS COLUMNAS, LOS MÉTODOS, SKILL POR SKILL Y LAS LISTAS (1.0.52, Ezequiel, 12 de noviembre de 2026:
+// «formas de comparar en un mismo personaje entre uniformes... y si intento comparar entre otros personajes, que me
+// proponga metodologías de comparación»).
+// ---------------------------------------------------------------------------
+/** La cabecera de la comparativa: una columna por variante elegida, con su retrato, su nombre, su versión (un
+ *  desplegable si el personaje tiene más de una: cambia esa columna por otra versión suya) y el botón de sacarla. */
+function cmpCabHtml (vs) {
+  return `<div class="cpecab"><div class="cpelab"></div>${vs.map(v => {
+    const suyas = variantesDe(v.ch).filter(x => x.key === v.key || !vs.some(y => y.key === x.key));
+    const version = (x) => x.uid ? x.sub : t('base');
+    return `<div class="cpecel cpepj">
+      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
+      <div class="cpepjn"><b>${h(v.name)}</b>${suyas.length > 1
+        ? `<select class="cpever" data-a="cmpVersion" data-key="${h(v.key)}" aria-label="${h(t('cmp_version').replace('{x}', v.name))}">${
+            suyas.map(x => `<option value="${x.uid || 'base'}" ${x.key === v.key ? 'selected' : ''}>${h(version(x))}</option>`).join('')}</select>`
+        : `<span class="muted">${h(version(v))}</span>`}</div>
+      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}" aria-label="${h(t('cmp_remove'))} ${h(fullLabel(v))}">✕</button></div>`;
+  }).join('')}</div>`;
+}
+/** Los métodos para comparar lo elegido, cada uno con la vista que abre, y el sugerido con su porqué. Sale de si son el
+ *  mismo personaje y del rol que les dan las listas (rolEn): versiones de uno, lo que cambia; soportes, lo que le dan al
+ *  equipo; un soporte y uno que pega, lo mismo (si lo de uno le llega al otro); los que pegan, o los que las listas no
+ *  ubican, efecto por efecto. */
+function metodosCmp (vs) {
+  const mismo = vs.every(v => v.cid === vs[0].cid);
+  const rol = vs.map(v => { const a = rolEn(v, 'pve'), b = rolEn(v, 'pvp'); return { pega: a.dps > 0 || b.dps > 0, soporte: a.soporte > 0 || b.soporte > 0 }; });
+  const soloSoporte = rol.map(r => r.soporte && !r.pega), soloPega = rol.map(r => r.pega && !r.soporte);
+  let sugerida, razon;
+  if (mismo) { sugerida = 'kit'; razon = t('cm_r_mismo').replace('{x}', vs[0].name); }
+  else if (rol.every(r => r.soporte)) { sugerida = 'pot'; razon = t('cm_r_soportes'); }
+  else if (soloSoporte.some(Boolean) && soloPega.some(Boolean)) {
+    sugerida = 'pot';
+    razon = t('cm_r_mixto').replace('{a}', vs[soloSoporte.indexOf(true)].name).replace('{b}', vs[soloPega.indexOf(true)].name);
+  }
+  else if (rol.some(r => r.pega)) { sugerida = 'efecto'; razon = t('cm_r_dps'); }
+  else { sugerida = 'efecto'; razon = t('cm_r_sin_rol'); }
+  const m = (id, k) => ({ id, titulo: t('cm_' + k + '_t'), que: t('cm_' + k + '_d'), sugerida: id === sugerida });
+  return { razon, sugerida, lista: [m('kit', mismo ? 'cambia' : 'kit'), m('efecto', 'efecto'), m('pot', 'pot'), m('pvp', 'pvp'), m('listas', 'listas'), m('ficha', 'ficha')] };
+}
+/** «Cómo compararlos»: los métodos, con el sugerido y su porqué. Es el selector de vistas de la comparativa. */
+function cmpMetodosHtml (ms) {
+  return `<div class="cmet"><div class="cmetcab"><h3>${h(t('cm_title'))} ${ayudaHtml(t('cm_note'))}</h3>
+      <p class="cmetrazon"><span class="cmetsug">${h(t('cm_sugerida'))}</span> <b>${h(ms.lista.find(m => m.sugerida).titulo)}</b>. ${h(ms.razon)}</p></div>
+    <div class="cmetlista" role="group" aria-label="${h(t('cm_title'))}">${ms.lista.map(m =>
+      `<button class="cmetb${m.id === ui.cmpVista ? ' on' : ''}${m.sugerida ? ' sug' : ''}" aria-pressed="${m.id === ui.cmpVista}" data-a="cmpVista" data-v="${m.id}">
+        <b>${h(m.titulo)}</b>${m.sugerida ? `<span class="cmetsug">${h(t('cm_sugerida'))}</span>` : ''}<span class="cmetque">${h(m.que)}</span></button>`).join('')}</div>
+  </div>`;
+}
+/** Skill por skill: una fila por slot y una columna por variante, con el daño de cada skill (las barras comparten
+ *  escala), cada cuánto y sus efectos con el color de a quién le llegan. Si todas son versiones del mismo personaje, lo
+ *  que cada una suma, cambia o pierde se marca contra la de referencia (la primera, o la que se elija) y, con «Solo lo que
+ *  cambia», las skills iguales en todas se juntan al pie. */
+function cmpPorKit (vs) {
+  const kits = vs.map(kitDe), mismo = vs.every(v => v.cid === vs[0].cid), todas = variantesDe(vs[0].ch).length;
+  const iRef = mismo ? Math.max(0, vs.findIndex(v => v.key === ui.cmpRef)) : -1;
+  const ref = mismo ? new Map(kits[iRef].map(k => [k.sl, k])) : null, nomRef = mismo ? (vs[iRef].uid ? vs[iRef].sub : t('base')) : '';
+  const max = Math.max(1, ...kits.flatMap(ks => ks.map(k => k.dano)));
+  const totales = kits.map(ks => ks.reduce((a, k) => a + k.dano, 0)), maxTotal = Math.max(1, ...totales);
+  const slots = SLOT_ORDER.filter(sl => kits.some(ks => ks.some(k => k.sl === sl)));
+  const difs = slots.map(sl => kits.map((ks, i) => { const k = ks.find(x => x.sl === sl); return mismo && i !== iRef && k ? difSkill(k, ref.get(sl)) : null; }));
+  const cambia = (d) => d.nueva || d.marcas.size > 0 || d.perdidos.length > 0 || d.dano !== 0;
+  // Con «Solo lo que cambia», una skill que no cambia en ninguna versión (y que tienen todas) no lleva fila.
+  const quieta = slots.map((sl, f) => mismo && ui.cmpCambios && kits.every(ks => ks.some(k => k.sl === sl)) && difs[f].every(d => !d || !cambia(d)));
+  const celda = (sl, f) => (v, i) => {
+    const k = kits[i].find(x => x.sl === sl), dif = difs[f][i];
+    if (!k) return `<div class="cpecel no" aria-label="${h(t('cmp_missing_slot'))}">${quienCmp(v)}—</div>`;
+    const igual = dif && !cambia(dif) && ui.cmpCambios;
+    return `<div class="cpecel ckcel${i === iRef ? ' ref' : ''}">${quienCmp(v)}
+      <div class="cknom"><button class="cmpsk" data-a="skTip" data-k="${h(v.key)}" data-si="${k.si}" data-ay="sk" aria-haspopup="dialog" aria-expanded="${tipAbierto(v, k.si)}"${
+        tipAbierto(v, k.si) ? ' aria-controls="skpop"' : ''}>${h(nombreSkillTxt(k.sk))}</button>${dif && dif.nueva ? `<span class="tag solid knueva">${h(t('kit_nueva'))}</span>` : ''}</div>
+      ${k.dano || (dif && !dif.nueva && dif.dano) ? `<div class="kitc dano">${kitDanoHtml(k, max, dif)}</div>` : ''}
+      <div class="ckcuando">${h(kitCuando(k))}</div>
+      ${igual ? `<span class="ckigual">${h(t('cmp_igual_ref').replace('{x}', nomRef))}</span>`
+        : `<div class="kitc fx">${kitDestinoHtml(v, k, ['e', 'i'], dif)}${kitDestinoHtml(v, k, ['q'], dif)}${kitDestinoHtml(v, k, ['r'], dif)}${
+            k.sinClasificar ? `<span class="kfx sc">${h(t('kit_sc').replace('{n}', k.sinClasificar))}</span>` : ''}</div>`}
+    </div>`;
+  };
+  const cuenta = (ks, ds) => new Set(ks.flatMap(k => k.efectos.filter(x => ds.includes(x.d)).map(x => x.clave))).size;
+  return `<div class="cpe ck" style="--cpe-n:${vs.length}">
+    <div class="row cpectl">
+      <div class="kitley"><span class="kdot e"></span>${h(t('an_e'))} <span class="kdot q"></span>${h(t('an_q'))} <span class="kdot r"></span>${h(t('an_r'))}</div>
+      ${mismo ? `<label class="chk"><input type="checkbox" data-a="cmpCambios"${ui.cmpCambios ? ' checked' : ''}> ${h(t('cmp_cambios'))}</label>
+        <span class="muted ckrefnota">${h(t('kit_dif_note').replace(/\{x\}/g, nomRef))}${todas > vs.length
+          ? ' ' + h(t('cmp_versiones_mas').replace('{x}', vs[0].name).replace('{n}', todas).replace('{m}', vs.length)) : ''}</span>` : ''}
+    </div>
+    ${cmpCabHtml(vs)}
+    <section class="cpesec">
+      ${mismo ? `<div class="cpefila ckref"><div class="cpelab"><span class="cpenom">${h(t('cmp_ref'))}</span>${ayudaHtml(t('cmp_ref_t'))}</div>${vs.map((v, i) =>
+        `<div class="cpecel">${i === iRef ? `<span class="tag solid ckesref">${h(t('cmp_ref'))}</span>`
+          : `<button class="btn sm" data-a="cmpRef" data-key="${h(v.key)}">${h(t('cmp_ref_usar'))}</button>`}</div>`).join('')}</div>` : ''}
+      <div class="cpefila cktotal"><div class="cpelab"><span class="cpenom">${h(t('cmp_total'))}</span>${ayudaHtml(t('cmp_total_t'))}</div>${vs.map((v, i) => {
+        const d = mismo && i !== iRef ? totales[i] - totales[iRef] : 0;
+        return `<div class="cpecel">${quienCmp(v)}<span class="kbarra"><i style="width:${Math.max(3, Math.round(100 * totales[i] / maxTotal))}%"></i></span>
+          <span class="knum"><b>${h(numTxt(totales[i]))}%</b>${d ? `<span class="kdelta ${d > 0 ? 'sube' : 'baja'}">${d > 0 ? '▲' : '▼'} ${h(numTxt(Math.abs(d)))}</span>` : ''}</span></div>`; }).join('')}</div>
+      <div class="cpefila ckcuenta"><div class="cpelab"><span class="cpenom">${h(t('cmp_efectos'))}</span></div>${kits.map((ks, i) =>
+        `<div class="cpecel">${quienCmp(vs[i])}<span class="ckn"><span class="kfx e">${cuenta(ks, ['e', 'i'])}</span><span class="kfx q">${cuenta(ks, ['q'])}</span><span class="kfx r">${cuenta(ks, ['r'])}</span></span></div>`).join('')}</div>
+    </section>
+    <section class="cpesec">
+      ${slots.map((sl, f) => quieta[f] ? '' : `<div class="cpefila ckfila" data-sl="${h(sl)}"><div class="cpelab"><span class="slotbadge ${slotClase(sl)}">${h(slotEs(sl))}</span></div>${vs.map(celda(sl, f)).join('')}</div>`).join('')}
+      ${quieta.some(Boolean) ? `<div class="ckquietas"><span class="muted">${h(t('cmp_sin_cambios'))}:</span> ${slots.filter((sl, f) => quieta[f]).map(sl =>
+        `<span class="slotbadge ${slotClase(sl)}">${h(slotEs(sl))}</span>`).join(' ')}</div>` : ''}
+    </section>
+    <p class="muted cpepie">${h(t('cmp_total_t'))}</p>
+  </div>`;
+}
+/** Las filas de una lista en las que está una variante, como etiquetas con su color; nada si no está. */
+function filasListaHtml (l, v) {
+  const rows = rowsOf(l);
+  return indicesFila(l, v.key).map(i => `<span class="tag solid" style="background:${rowColor(i, rows.length)}">${h(rows[i].label)}</span>`).join(' ');
+}
+/** El rol de una variante en un contexto según las listas (rolEn), en palabras. */
+function rolTxt (v, ctx) {
+  const r = rolEn(v, ctx);
+  // El nivel más alto que las listas de ese contexto le dan a cada rol.
+  const tope = (rol) => Math.max(...Object.values(ROLES_LISTAS[ctx]).flatMap(filas => Object.values(filas).filter(x => x[0] === rol).map(x => x[1])));
+  const nivel = (k, rol) => t(k).replace('{n}', r[rol]).replace('{m}', tope(rol));
+  const xs = [r.dps > 0 ? nivel('cmp_rol_dps', 'dps') : '', r.soporte > 0 ? nivel('cmp_rol_soporte', 'soporte') : '', r.lider ? t('cmp_rol_lider') : '',
+    r.striker ? t('cmp_rol_striker') : '', r.fuera ? t('cmp_rol_fuera') : ''].filter(Boolean);
+  return xs.length ? xs.join(' · ') : t('cmp_rol_nada');
+}
+/** En las listas: el rol que les dan las listas en PvE y en PvP y, lista por lista (las de personajes en las que está
+ *  alguno), la fila de cada uno. */
+function cmpEnListas (vs) {
+  const grupos = listasAgrupadas().map(g => ({ g, ls: g.ls.filter(l => tipoLista(l) === 'personajes' && vs.some(v => indicesFila(l, v.key).length)) })).filter(x => x.ls.length);
+  const celda = (v, cuerpo) => `<div class="cpecel${cuerpo ? '' : ' no'}">${quienCmp(v)}${cuerpo || '—'}</div>`;
+  return `<div class="cpe cli" style="--cpe-n:${vs.length}">
+    ${cmpCabHtml(vs)}
+    <section class="cpesec"><div class="cpesech"><h3>${h(t('cmp_rol'))} ${ayudaHtml(t('cmp_rol_t'))}</h3></div>
+      ${['pve', 'pvp'].map(ctx => `<div class="cpefila"><div class="cpelab"><span class="cpenom">${ctx === 'pve' ? 'PvE' : 'PvP'}</span></div>${vs.map(v => {
+        const r = rolEn(v, ctx), tiene = r.dps > 0 || r.soporte > 0 || r.lider || r.striker || r.fuera;
+        return `<div class="cpecel${tiene ? '' : ' no'}">${quienCmp(v)}${tiene ? `<span>${h(rolTxt(v, ctx))}</span>` : h(t('cmp_rol_nada'))}</div>`; }).join('')}</div>`).join('')}
+    </section>
+    ${grupos.map(({ g, ls }) => `<section class="cpesec"><div class="cpesech"><h3>${h(t(g.k))}</h3></div>
+      ${ls.map(l => `<div class="cpefila"><div class="cpelab"><button class="cplista" data-a="verLista" data-id="${l.id}">${h(listName(l))}</button>${
+        l.gameVersion ? `<span class="muted cplver">${h(l.gameVersion)}</span>` : ''}</div>${vs.map(v => celda(v, filasListaHtml(l, v))).join('')}</div>`).join('')}
+    </section>`).join('')}
+  </div>`;
+}
+
+function cmpPorEfecto (vs, soloPvp) {
+  const filas = filasCmp(vs).filter(r => !soloPvp || pesaEnPvp(r.d, r.e.id));
+  if (!filas.length) return `<div class="cpe" style="--cpe-n:${vs.length}">${cmpCabHtml(vs)}<div class="empty">${h(t('cmp_pvp_vacio'))}</div></div>`;
   const destinos = CMP_DESTINOS.filter(d => filas.some(r => r.d === d) && (ui.cmpDestino === 'todo' || ui.cmpDestino === d));
   const nombre = (v) => v.uid ? v.sub : v.name;
   const seccion = (d) => {
@@ -5433,10 +5636,7 @@ function cmpPorEfecto (vs) {
     </div>
     <div class="cpeley muted"><span><span class="cpev">40%</span> ${h(t('cmp_ley_valor'))}</span><span><span class="cped">5 s</span> ${h(t('cmp_ley_dura'))}</span>
       <span><span class="slotbadge">A3</span> ${h(t('cmp_ley_slot'))}</span><span><span class="cpemayor">${h(t('cmp_mayor'))}</span> ${h(t('cmp_mayor_t'))}</span></div>
-    <div class="cpecab"><div class="cpelab"></div>${vs.map(v => `<div class="cpecel cpepj">
-      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
-      <div class="cpepjn"><b>${h(nombre(v))}</b><span class="muted">${h(v.uid ? v.name : t('base'))}</span></div>
-      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}" aria-label="${h(t('cmp_remove'))} ${h(nombre(v))}">✕</button></div>`).join('')}</div>
+    ${cmpCabHtml(vs)}
     ${destinos.map(seccion).join('')}
     <p class="muted cpepie">${h(t('cmp_ef_pie'))}</p>
   </div>`;
@@ -5562,7 +5762,7 @@ function piePot (v, c) {
         h(t('al_count').replace('{n}', alcanzados(d.split('|')).length))}</button>`).join(' ')}</div>`;
 }
 function cmpPorPotenciador (vs) {
-  const filas = filasPot(vs), nombre = (v) => v.uid ? v.sub : v.name;
+  const filas = filasPot(vs);
   let grupo = null;
   const cuerpo = filas.map(r => {
     const g = r.e.grupo !== grupo ? CATALOGO.grupos.find(x => x.id === r.e.grupo) : null;
@@ -5581,10 +5781,7 @@ function cmpPorPotenciador (vs) {
     <div class="cpeley muted"><span><span class="slotbadge">A3</span> ${h(t('cmp_ley_slot'))}</span><span><span class="slotbadge sop">${h(t('pb_sop_corto'))}</span> ${h(t('pb_t_sop'))}</span>
       <span><span class="slotbadge art">${h(t('pb_art_corto'))}</span> ${h(t('pb_t_art'))} <span class="seg cpbest" role="group" aria-label="${h(t('pb_t_art'))}">${['3', '4', '5', '6'].map(e =>
         `<button class="${e === ui.artEst ? 'on' : ''}" aria-pressed="${e === ui.artEst}" data-a="artEst" data-v="${e}">${e}★</button>`).join('')}</span></span><span>${h(t('pb_ley_tip'))}</span></div>
-    <div class="cpecab"><div class="cpelab"></div>${vs.map(v => `<div class="cpecel cpepj">
-      ${imgUrl('portrait-' + v.id) ? `<img src="${imgUrl('portrait-' + v.id)}" alt="">` : ''}
-      <div class="cpepjn"><b>${h(nombre(v))}</b><span class="muted">${h(v.uid ? v.name : t('base'))}</span></div>
-      <button class="btn sm danger" data-a="unpick" data-cid="${v.cid}" data-uid="${v.uid || ''}" aria-label="${h(t('cmp_remove'))} ${h(nombre(v))}">✕</button></div>`).join('')}</div>
+    ${cmpCabHtml(vs)}
     <section class="cpesec">${cuerpo}</section>
     <p class="muted cpepie">${h(t('pb_nota_pie'))}</p>
   </div>`;
@@ -5639,6 +5836,10 @@ function distincionAn (f) {
   }
   return { tienen, raro: tienen <= AN_RARO, percentil, alto: percentil !== null && percentil >= AN_ALTO };
 }
+/** ¿Es de lo que más pesa en PvP (MFF_CATALOGO.pvp)? Para él o sus invocaciones, la prioridad; para el equipo, el soporte. */
+function pesaEnPvp (d, efId) {
+  return (d === 'e' || d === 'i') ? CATALOGO.pvp.prioridad.includes(efId) : d === 'q' && CATALOGO.pvp.soporte.includes(efId);
+}
 /** Las filas del análisis de v: una por destino y efecto, con sus fuentes (skill, slot, número, duración y tiempo activo),
  *  el mayor número, si sale solo de pasivas (siempre activo), su mayor tiempo activo y a qué aliados va. */
 function filasAn (v) {
@@ -5661,8 +5862,7 @@ function filasAn (v) {
     const val = vals.length ? vals.reduce((a, b) => b.n > a.n ? b : a) : null;
     const pasivas = r.fuentes.every(x => SLOTS_PASIVOS.has(x.sl));
     return Object.assign(r, { val, pasiva: pasivas && r.fuentes.every(x => x.ac === null), activada: pasivas && r.fuentes.some(x => x.ac !== null),
-      uso: usos.length ? Math.max(...usos) : null, pvp: (r.d === 'e' || r.d === 'i') ? CATALOGO.pvp.prioridad.includes(r.e.id)
-        : r.d === 'q' && CATALOGO.pvp.soporte.includes(r.e.id) });
+      uso: usos.length ? Math.max(...usos) : null, pvp: pesaEnPvp(r.d, r.e.id) });
   }).map(r => Object.assign(r, { dist: distincionAn(r) }));
 }
 /** El daño de cada skill (la suma de sus golpes, en % del ataque) y su parte del total. */
@@ -7333,7 +7533,7 @@ document.addEventListener('click', (e) => {
       ui.picks = ui.picks.filter(p => p.key !== key); ui.avisoPick = null;
       if (ui.picks.length < 2 && ui.view === 'compare') ui.view = 'roster';
       render(); break; }
-    case 'goCompare': ui.view = 'compare'; ui.avisoPick = null; render(); window.scrollTo(0, 0); break;
+    case 'goCompare': ui.cmpVista = null; ui.cmpRef = null; ui.view = 'compare'; ui.avisoPick = null; render(); window.scrollTo(0, 0); break;
     case 'open': {
       ui.tlPick = null; ui.aliados = null;
       if (ui.pickMode) { togglePick(d.cid, d.uid || null); render(); break; }
@@ -7467,6 +7667,13 @@ document.addEventListener('click', (e) => {
       ui.avisoMesa = { txt: t('ms_guardado').replace('{e}', nombre), ok: true }; commit(); break; }
     case 'glTab': ui.glTab = d.v; render(); break;
     case 'cmpVista': ui.cmpVista = d.v; render(); break;
+    case 'cmpRef': ui.cmpRef = d.key; render(); break;
+    // Desde la ficha: sus versiones (la que se ve, de referencia, y las más nuevas hasta MAX_COMPARAR), skill por skill.
+    case 'cmpVersiones': { const v = variant(d.cid, d.uid || null);
+      const otras = otrasVersiones(v).sort((a, b) => SORTS.lanz.get(a) - SORTS.lanz.get(b));
+      ui.picks = [v].concat(otras.slice(0, MAX_COMPARAR - 1)).map(x => ({ cid: x.cid, uid: x.uid, key: x.key }));
+      ui.cmpRef = v.key; ui.cmpVista = 'kit'; ui.pickMode = false; ui.pickDe = null; ui.avisoPick = null;
+      ui.view = 'compare'; render(); window.scrollTo(0, 0); break; }
     case 'cmpDestino': ui.cmpDestino = d.v; render(); break;
     case 'cmpTextos': ui.cmpTextos = ui.cmpTextos.includes(d.v) ? ui.cmpTextos.filter(x => x !== d.v) : ui.cmpTextos.concat(d.v); render(); break;
     case 'plFiltros': ui.plFiltros = !ui.plFiltros; render(); break;
@@ -7559,6 +7766,12 @@ document.addEventListener('change', (e) => {
     ui.eqPagina = 0; render(); return; }
   if (a === 'eqUltimo') { ui.eqUltimo = el.checked; ui.eqPagina = 0; render(); return; }
   if (a === 'cmpIguales') { ui.cmpIguales = el.checked; render(); return; }
+  if (a === 'cmpCambios') { ui.cmpCambios = el.checked; render(); return; }
+  // Una columna de la comparativa pasa a otra versión del mismo personaje (y sigue siendo la referencia, si lo era).
+  if (a === 'cmpVersion') { const i = ui.picks.findIndex(x => x.key === d.key), cid = ui.picks[i].cid, uid = el.value === 'base' ? null : el.value;
+    const key = cid + '::' + (uid || 'base');
+    if (ui.cmpRef === d.key) ui.cmpRef = key;
+    ui.picks[i] = { cid, uid, key }; render(); return; }
   if (a === 'cmpSolos') { ui.cmpSolos = el.checked; render(); return; }
   if (a === 'rowLabel' || a === 'listName') { rebuild(); render(); return; }
   if (a === 'refList') { U.prefs.refList = el.value; commit(); return; }

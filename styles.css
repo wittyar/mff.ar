@@ -1221,3 +1221,42 @@ button.kfx:hover{border-color:currentColor}
   .kitfila.cab{display:none}
   .kitc.cuando::before{content:attr(data-rot) ': ';color:var(--text-3)}
 }
+
+/* Comparativa (1.0.52): «Cómo compararlos» (los métodos, con el sugerido), skill por skill y las listas. */
+.cmet{margin-bottom:16px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--surface)}
+.cmetcab{display:flex;align-items:baseline;gap:6px 16px;flex-wrap:wrap;margin-bottom:10px}
+.cmetcab h3{margin:0;display:flex;align-items:center;gap:8px;flex:none}
+.cmetrazon{margin:0;font-size:12.5px;color:var(--text-2);flex:1;min-width:260px}
+.cmetrazon b{color:var(--text)}
+.cmetsug{display:inline-block;font-family:var(--font-display);font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:1px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent-2);vertical-align:1px}
+.cmetlista{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.cmetb{display:flex;flex-direction:column;align-items:flex-start;gap:3px;padding:8px 10px;text-align:left;font:inherit;color:var(--text-2);cursor:pointer;
+  background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:var(--r-md);transition:border-color .14s,background .14s}
+.cmetb b{color:var(--text);font-size:13px}
+.cmetb:hover{border-color:var(--line-2);background:rgba(255,255,255,.05)}
+.cmetb.sug{border-color:var(--accent-glow)}
+.cmetb.on{background:var(--surface-3);border-color:var(--accent);color:var(--text)}
+.cmetque{font-size:11.5px;line-height:1.4}
+@media (max-width:1280px){ .cmetlista{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:640px){ .cmetlista{grid-template-columns:repeat(2,minmax(0,1fr))} .cmetque{display:none} }
+.cpever{margin-top:2px;max-width:100%;padding:2px 22px 2px 6px;font-size:12px}
+.ck .cpectl{align-items:center}
+.ck .kitley{margin-bottom:0}
+.ckrefnota{font-size:12px;flex:1;min-width:240px}
+.ckcel{gap:5px}
+.ckcel.ref{background:rgba(255,255,255,.025)}
+.cknom{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cknom .cmpsk{margin-bottom:0}
+.ckcuando{font-size:11.5px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.ckigual{font-size:11.5px;color:var(--text-3);font-style:italic}
+.ckesref{background:var(--accent)}
+.cktotal .cpecel,.ckcuenta .cpecel,.ckref .cpecel{gap:4px}
+.ckn{display:flex;gap:4px}
+.ckn .kfx{cursor:default;font-weight:700}
+.ckquietas{padding:9px 16px;border-top:1px solid var(--line);font-size:12px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.cplista{padding:0;border:0;background:none;color:inherit;font:inherit;font-weight:600;text-align:left;cursor:pointer}
+.cplista:hover{color:var(--accent-2);text-decoration:underline;text-underline-offset:3px}
+.cplver{font-size:11px;font-family:var(--font-mono)}
+.cli .cpecel{flex-direction:row;flex-wrap:wrap;align-items:flex-start;gap:4px}
+.cli .cpecel .tag{white-space:normal;text-align:left}

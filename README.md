@@ -168,9 +168,21 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
 
   El análisis de las skills según el catálogo de efectos (lo que daba la pestaña *Análisis* hasta la 1.0.26) queda en
   el «Cómo funciona» de cada skill y en el «Pega con» del Resumen, hasta que se rehaga (#33).
-- **Comparar** hasta 4 variantes lado a lado, con la sinergia estimada; con 4 elegidas, la
-  quinta no se suma y la mesa lo dice. Se eligen con «+ Comparar esta versión» en la ficha o con
-  «Comparar» en el roster, y se ven en la mesa. Cada skill con todos sus efectos: pasados los
+- **Comparar** hasta 4 variantes lado a lado; con 4 elegidas, la
+  quinta no se suma y la bandeja lo dice. Se eligen con «+ Comparar esta versión» en la ficha o con
+  «Comparar» en el roster, y **«Comparar sus versiones»**, en la ficha, compara de una hasta 4 versiones de ese
+  personaje. Arriba, **«Cómo compararlos»** (desde la 1.0.52; Ezequiel: «que me proponga metodologías de
+  comparación»): seis métodos, con uno *sugerido* según lo elegido y su porqué, en el que abre cada comparación.
+  *Qué cambia entre versiones* / *Skill por skill* (el daño de cada skill con barras de la misma escala, cada cuánto y sus
+  efectos por destino; entre versiones de un mismo personaje, lo que cada una suma, cambia o pierde contra la de
+  referencia, que se elige, y «Solo lo que cambia» junta al pie las skills iguales en todas); *Efecto por efecto*
+  (quién tiene cada efecto, cuánto y por cuánto tiempo, con «MAYOR» al que más da: lo de una pasiva sin condición dura
+  más que cualquier efecto con tiempo); *Lo que le dan al equipo* (por potenciador, con liderazgo, soporte y artefacto);
+  *Para PvP* (efecto por efecto, solo lo que más pesa en PvP según el catálogo); *En las listas* (la fila de cada uno en
+  cada tier list y el rol que eso les da en PvE y en PvP); y *Ficha completa*. El sugerido: versiones de un mismo
+  personaje, lo que cambia; soportes según las listas, o un soporte y uno que pega, lo que le dan al equipo; los demás,
+  efecto por efecto. El desplegable de cada columna la cambia por otra versión del mismo personaje. Debajo, la sinergia
+  estimada entre los comparados (no entre versiones de un mismo personaje). En la ficha completa, cada skill con todos sus efectos: pasados los
   seis primeros, el resto plegado, con cuántos son.
 - **Tier lists**: todas las listas públicas de thanosvibs, con sus filas originales; listas
   propias de personajes, de C.T.P., de artefactos o de tus equipos, con filas a medida. Una entrada

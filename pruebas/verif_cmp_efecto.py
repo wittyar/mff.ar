@@ -1,4 +1,5 @@
-"""La comparativa por efecto (#6, 1.0.35, datos de formato 13): la vista por defecto y el paso a «Ficha»; una fila por
+"""La comparativa por efecto (#6, 1.0.35, datos de formato 13): abre en el método sugerido (1.0.52) y el paso a «Ficha» y a
+«Efecto por efecto»; una fila por
 destino y efecto del análisis de los comparados; el número de cada efecto (MFF_CATALOGO.valor) contra un modelo escrito
 acá; quién da más («MAYOR») y el empate; lo igual en todos en una línea; lo que tiene uno solo, aparte; el filtro por
 destino; «Ver textos»; en inglés; el celular sin desborde; sin errores de página ni de consola. Datos: MFF_DATOS."""
@@ -81,7 +82,8 @@ try:
             pg.fill('#q', cid.split('-')[0]); pg.wait_for_timeout(250)
             pg.click(f'.ccard[data-cid="{cid}"][data-uid="{uid}"]'); pg.wait_for_timeout(150)
         pg.click('.mesa [data-a="goCompare"]'); pg.wait_for_timeout(500)
-        ok('la comparativa abre por efecto', pg.locator('.cpe').count() == 1 and pg.locator('table.cmpt').count() == 0)
+        ok('la comparativa abre en el método sugerido, con los seis a la vista', pg.locator('.cmetb').count() == 6 and pg.locator('.cmetb.on.sug').count() == 1
+           and pg.locator('.cpe').count() == 1 and pg.locator('table.cmpt').count() == 0, pg.locator('.cmetb.on').all_inner_texts())
         pg.click('[data-a="cmpVista"][data-v="ficha"]'); pg.wait_for_timeout(300)
         ok('«Ficha»: la tabla de antes', pg.locator('table.cmpt').count() == 1 and pg.locator('.cpe').count() == 0)
         pg.click('[data-a="cmpVista"][data-v="efecto"]'); pg.wait_for_timeout(300)
@@ -137,7 +139,7 @@ try:
 
         # ---- inglés ----
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(400)
-        ok('inglés: la vista y sus marcas', pg.locator('[data-a="cmpVista"][data-v="efecto"]').inner_text() == 'By effect'
+        ok('inglés: la vista y sus marcas', pg.locator('[data-a="cmpVista"][data-v="efecto"] b').inner_text() == 'Effect by effect'
            and pg.locator('.cpecel.mayor .cpemayor').first.inner_text() == 'TOP' and 'LDR' in celdas('q|ataques_todos')[0], celdas('q|ataques_todos'))
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
 
