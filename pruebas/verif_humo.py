@@ -12,10 +12,15 @@ try:
         pg.on('pageerror', lambda e: errores.append(str(e)))
         pg.on('console', lambda m: m.type == 'error' and errores.append('consola: ' + m.text))
         pg.goto(url); pg.wait_for_selector('.ccard')
-        for accion, espera in (('goTier', '.tlrow, .tl, table'), ('goModos', 'main'), ('goTeams', 'main'),
-                               ('goSettings', '#seccion-actualizaciones')):
-            pg.click(f'[data-a="{accion}"]'); pg.wait_for_timeout(500)
+        for accion in ('goTier', 'goModos', 'goGlosario', 'goHistorico', 'goCuenta', 'goSettings'):
+            pg.click(f'nav.topnav [data-a="{accion}"]'); pg.wait_for_timeout(500)
             ok(f'vista {accion}', pg.locator('main').inner_text().strip() != '')
+        # Mi cuenta, apartado por apartado (Equipos es una vista propia, con la misma sub-barra)
+        pg.click('nav.topnav [data-a="goCuenta"]')
+        for i in range(pg.locator('.cutabs .cutab').count()):
+            pg.locator('.cutabs .cutab').nth(i).click(); pg.wait_for_timeout(300)
+            ok(f'Mi cuenta, apartado {i + 1}: {pg.locator(".cutabs .cutab.on").inner_text().split(chr(10))[0]}',
+               pg.locator('.cutabs .cutab.on').count() == 1 and pg.locator('main').inner_text().strip() != '')
         pg.click('[data-a="back"]') if pg.locator('[data-a="back"]').count() else None
         pg.goto(url); pg.wait_for_selector('.ccard')
         pg.locator('.ccard').nth(3).click(); pg.wait_for_selector('.fcab')

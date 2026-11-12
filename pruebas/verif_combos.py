@@ -11,7 +11,7 @@ misma consulta escrita aparte en Python (modelo_foco.py / auditoria_equipos.py):
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json, os, re, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
+from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js, ir_a_equipos
 from playwright.sync_api import sync_playwright
 import auditoria_equipos as A
 import modelo_foco as F
@@ -190,7 +190,7 @@ try:
         capa = json.load(open(os.path.join(D, 'capa.json'), encoding='utf-8'))
         ok('4 ★ se guarda en la capa y queda marcada', [f['members'] for f in capa.get('favoritos', [])] == [keys]
            and pg.locator('#combos .combo').nth(1).locator('[data-a="favorito"]').inner_text() == '★', capa.get('favoritos'))
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         favs = pg.locator('.section', has_text='Favoritos').locator('.eqsug')
         l = lider([A.VAR[k] for k in keys])
         vsf = [A.VAR[k] for k in keys]
@@ -215,7 +215,9 @@ try:
 
         # 6. Wong (Doctor Strange 2): cómo entraría y la primera página
         dt2, _ = abrir(pg, 'Wong', WONG2.split('::')[1])
+        pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_timeout(300)      # «cómo entraría» es de Mi cuenta (1.0.52)
         tx = pg.locator('#fcuerpo > .section').nth(1).inner_text()
+        pg.click('[data-a="fichaTab"][data-v="equipos"]'); pg.wait_for_selector('#combos .combo')
         # Arena (Captain America, Iron Man y Thor, las bases): sin ningún liderazgo, Wong no se vincula con nadie; con los
         # que el build deriva de la Leader Skill (carril Q: Captain America, HP +30%; Iron Man, Skill Cooldown −24%), el
         # líder le da algo, y el cambio no mejora la sinergia.

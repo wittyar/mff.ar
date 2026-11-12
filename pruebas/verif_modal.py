@@ -30,7 +30,7 @@ y modal_entra_1300_oscuro.png."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import origen_local, carpeta_datos, levantar, Chequeo
+from harness import origen_local, carpeta_datos, levantar, Chequeo, ir_a_equipos
 from playwright.sync_api import sync_playwright
 
 ok = Chequeo()
@@ -321,7 +321,7 @@ try:
         pg.select_option('select[data-a="eqOrden"]', 'foco'); pg.wait_for_timeout(300)
 
         # 7. «Cómo entraría»: Jeff en Black Cat + Doctor Voodoo + Thor.
-        ficha(pg, 'Jeff the Land Shark', 'jeff-the-land-shark')
+        ficha(pg, 'Jeff the Land Shark', 'jeff-the-land-shark', tab='cuenta'); pg.wait_for_selector('.eqsug', timeout=90000)    # «cómo entraría» es de Mi cuenta (1.0.52)
         sug = pg.locator('.card.eqsug', has_text=EQUIPO['name']).first
         ok('7 «cómo entraría»: el botón en la tarjeta y nada en línea', sug.locator('[data-a="pqAbrir"]').count() == 1
            and sug.locator('details, .ga-eq, table').count() == 0)
@@ -336,7 +336,7 @@ try:
            and next(x for x in R['tabs'] if x['sel'] == 'true')['key'] == JEFF, R['secciones'])
         pg.screenshot(path=f'{SH}/modal_entra_1300_oscuro.png')
         pg.keyboard.press('Escape')
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         ok('1 Equipos de tu cuenta y Favoritos: su bloque de C.T.P., plegado, como antes', pg.locator('.grid .card details.ga-eq').count() == 2
            and not pg.locator('.grid .card details.ga-eq[open]').count() and pg.locator('.grid .card [data-a="pqAbrir"]').count() == 0,
            pg.locator('.grid .card details.ga-eq').count())

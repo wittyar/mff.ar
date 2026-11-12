@@ -14,8 +14,10 @@ from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
 from playwright.sync_api import sync_playwright
 
 ok = Chequeo()
+# Lo que se sale de la columna de la ficha. Una tabla ancha dentro de su envoltorio con desplazamiento propio (.stagewrap: los
+# topes de «Mi cuenta») no se sale: se desplaza adentro.
 FUERA = """() => { const lim = document.getElementById('fcuerpo').getBoundingClientRect().right;
-  return [...document.querySelectorAll('#fcuerpo *')].filter(e => e.getBoundingClientRect().right > lim + 0.5)
+  return [...document.querySelectorAll('#fcuerpo *')].filter(e => e.getBoundingClientRect().right > lim + 0.5 && !e.closest('.stagewrap'))
     .map(e => (e.getAttribute('data-a') || e.className || e.tagName) + ' → ' + Math.round(e.getBoundingClientRect().right)).slice(0, 4); }"""
 D0 = datos_js('MFF_SEED_CHARACTERS', 'MFF_SOPORTES', 'MFF_SEED', 'MFF_MODOS')
 C, SOP, ADV = D0['MFF_SEED_CHARACTERS'], D0['MFF_SOPORTES'], D0['MFF_SEED']['VENTAJA_TIPO']
@@ -99,8 +101,9 @@ try:
         pg.fill('#q', 'Wong'); pg.wait_for_timeout(250)
         pg.click(f'.ccard[data-cid="{v["cid"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
         pg.select_option('select[data-a="uniformSel"]', v['uid'])
-        t0 = time.time(); pg.click('[data-a="fichaTab"][data-v="equipos"]'); pg.wait_for_selector('.eqsug'); dt = time.time() - t0
-        ok('pestaña Equipos: aparece y calcula', True, f'{dt * 1000:.0f} ms desde el clic')
+        t0 = time.time(); pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_selector('.eqsug'); dt = time.time() - t0
+        ok('pestaña «Mi cuenta» de la ficha (1.0.52: tus equipos y cómo entraría pasaron ahí): aparece y calcula',
+           pg.locator('.ftab.mia.on').count() == 1, f'{dt * 1000:.0f} ms desde el clic')
 
         secciones = pg.locator('#fcuerpo > .section')
         mios = secciones.nth(0)
@@ -151,7 +154,7 @@ try:
         pg.fill('#q', 'Wong'); pg.wait_for_timeout(250)
         pg.click(f'.ccard[data-cid="{v["cid"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
         pg.select_option('select[data-a="uniformSel"]', v['uid'])
-        pg.click('[data-a="fichaTab"][data-v="equipos"]'); pg.wait_for_selector('.eqsug')
+        pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_selector('.eqsug')
         otra = pg.locator('#fcuerpo > .section').nth(1).locator('.eqsug').first
         ok('la misma tarjeta de antes', sorted(f"{x.get_attribute('data-cid')}::{x.get_attribute('data-uid') or 'base'}" for x in otra.locator('.eqfoto').all())
            == sorted(esperado))
@@ -177,7 +180,7 @@ try:
             pg.fill('#q', nombre); pg.wait_for_timeout(250)
             pg.click(f'.ccard[data-cid="{c["id"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
             pg.select_option('select[data-a="uniformSel"]', u)
-            pg.click('[data-a="fichaTab"][data-v="equipos"]'); pg.wait_for_selector('.eqsug')
+            pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_selector('.eqsug')
             fuera[nombre] = pg.evaluate(FUERA)
         ok('celular con equipos: nada se sale de la columna', not any(fuera.values()), fuera)
         b.close()
@@ -192,11 +195,12 @@ try:
             pg.fill('#q', 'Wong'); pg.wait_for_timeout(250)
             pg.click(f'.ccard[data-cid="{v["cid"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
             vis = pg.evaluate("[...document.querySelectorAll('.ftab')].every(t => { const r = t.getBoundingClientRect(); return r.right <= 390 && r.left >= 0; })")
-            ok('celular: las 5 pestañas a la vista', vis and pg.locator('.ftab').count() == 5)
-            pg.click('[data-a="fichaTab"][data-v="equipos"]'); pg.wait_for_selector('#fcuerpo .section')
+            ok('celular: las 6 pestañas a la vista', vis and pg.locator('.ftab').count() == 6, pg.locator('.ftab').count())
+            pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_selector('#fcuerpo .section')
             tx = pg.locator('#fcuerpo').inner_text()
+            pg.click('[data-a="fichaTab"][data-v="equipos"]'); pg.wait_for_selector('#fcuerpo .section')
             pg.wait_for_selector('#combos .combo', timeout=60000)
-            ok('sin equipos: lo explica y muestra las combinaciones', 'Todavía no armaste equipos' in tx and pg.locator('#combos .combo').count() == 20,
+            ok('sin equipos: «Mi cuenta» lo explica y «Equipos» muestra las combinaciones', 'Todavía no armaste equipos' in tx and pg.locator('#combos .combo').count() == 20,
                pg.locator('#combos .combo').count())
             ancho = pg.evaluate("document.documentElement.scrollWidth")
             ok('celular: sin desborde', ancho <= 390 and not pg.evaluate(FUERA), (ancho, pg.evaluate(FUERA)))

@@ -45,6 +45,7 @@ with sync_playwright() as p:
     chequear('1 un cambio crea capa.json', os.path.exists(os.path.join(D, 'capa.json')) and capa(D)['prefs']['lang'] == 'en',
              capa(D)['prefs']['lang'] if os.path.exists(os.path.join(D, 'capa.json')) else 'sin archivo')
     # un equipo
+    harness.abrir_mesa(page)
     page.locator('.ccard').first.click(); page.wait_for_selector('.plista')
     dos = page.evaluate("(() => { const ks = [...document.querySelectorAll('.plista [data-a=\"mesaPoner\"]')].map(x => x.dataset.key), out = [];"
                         " for (const k of ks) if (!out.some(o => o.split('::')[0] === k.split('::')[0])) out.push(k); return out.slice(0, 2); })()")
@@ -59,7 +60,7 @@ with sync_playwright() as p:
     srv, url = levantar(D)
     page.goto(url); page.wait_for_selector('.ccard')
     idioma = page.evaluate("document.querySelector('.langbtn .on').textContent")
-    page.click('[data-a="goTeams"]'); page.wait_for_timeout(300)
+    harness.ir_a_equipos(page); page.wait_for_timeout(300)
     equipos = page.evaluate("[...document.querySelectorAll('.card > div[style*=\"font-weight:600\"]')].map(e => e.textContent.trim())")
     chequear('2 tras reiniciar el servidor: idioma y equipo', idioma == 'EN' and 'Prueba capa' in equipos, (idioma, equipos))
 
@@ -77,7 +78,7 @@ with sync_playwright() as p:
     # 7: importar una capa vieja
     vieja = {'lists': [], 'assign': {'tv-general': {'thanos::base': 'tier-a'}}, 'teams': [], 'prefs': {'lang': 'es'}}
     ruta_vieja = os.path.join(D, 'vieja.json'); json.dump(vieja, open(ruta_vieja, 'w'))
-    page.click('[data-a="goSettings"]'); page.wait_for_timeout(300)
+    page.click('nav.topnav [data-a="goCuenta"]'); page.click('.cutabs [data-a="cuentaTab"][data-v="capa"]'); page.wait_for_timeout(300)
     page.set_input_files('[data-a="importUser"]', ruta_vieja); page.wait_for_timeout(800)
     chequear('7 importar normaliza (texto -> lista) y guarda', capa(D)['assign'] == {'tv-general': {'thanos::base': ['tier-a']}}, capa(D)['assign'])
     chequear('sin errores de página', not errores, errores)

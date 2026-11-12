@@ -63,7 +63,7 @@ function blankUser () {
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
-    prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, ayuda:true, refList: (TIERLISTS_SEED[0]||{}).id || '',
+    prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, ayuda:true, mesa:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
              filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] },
              flags:{ t4:false, trans:false, nuevo:false } }
@@ -485,6 +485,42 @@ const T = {
   nav_settings:      { es:'Ajustes',             en:'Settings' },
   nav_glossary:      { es:'Glosario',            en:'Glossary' },
   nav_history:       { es:'Histórico',           en:'History' },
+  nav_juego:         { es:'El juego',            en:'The game' },
+  nav_cuenta:        { es:'Mi cuenta',           en:'My account' },
+  nav_mesa_t:        { es:'Mostrar u ocultar la mesa de armado de equipos al lado de lo que estés viendo', en:'Show or hide the team-building desk next to whatever you are viewing' },
+  nav_mesa_fija:     { es:'En Mi cuenta › Equipos la mesa está siempre a la vista', en:'In My account › Teams the desk is always visible' },
+  cu_note:           { es:'Lo tuyo: lo que armás y anotás. Se guarda en tu capa, aparte de los datos del juego, y ninguna actualización lo pisa.',
+                       en:'Your own things: what you build and note down. Saved in your layer, apart from the game data; no update overwrites it.' },
+  cu_tab_resumen:    { es:'Resumen',             en:'Overview' },
+  cu_tab_equipos:    { es:'Equipos',             en:'Teams' },
+  cu_tab_progreso:   { es:'Progreso',            en:'Progress' },
+  cu_tab_propios:    { es:'Personajes propios',  en:'Own characters' },
+  cu_tab_marcas:     { es:'Atributos marcados',  en:'Marked attributes' },
+  cu_tab_capa:       { es:'Mi capa',             en:'My layer' },
+  cu_ir:             { es:'Abrir',               en:'Open' },
+  cu_eq_t:           { es:'Equipos guardados',   en:'Saved teams' },
+  cu_eq_d:           { es:'{f} favoritos · {d} descartados · {m} en la mesa', en:'{f} favourites · {d} discarded · {m} on the desk' },
+  cu_prog_t:         { es:'Personajes con progreso', en:'Characters with progress' },
+  cu_prog_d:         { es:'{r} con hoja de ruta · {c} con topes', en:'{r} with a roadmap · {c} with caps' },
+  cu_prop_d:         { es:'{n} creados · {e} editados', en:'{n} created · {e} edited' },
+  cu_marcas_t:       { es:'Skills con atributos marcados', en:'Skills with marked attributes' },
+  cu_listas_t:       { es:'Tier lists propias',  en:'Own tier lists' },
+  cu_listas_d:       { es:'{c} cambios sobre listas importadas. Están en Tier lists, junto a las demás: esto las abre para editar.', en:'{c} changes on imported lists. They live in Tier lists, next to the others: this opens them for editing.' },
+  cu_marcas_d:       { es:'Lo que los datos todavía no traen y marcaste a mano.', en:'What the data does not carry yet and you marked by hand.' },
+  cu_capa_d:         { es:'Exportar, importar o borrar todo lo tuyo', en:'Export, import or delete everything of yours' },
+  cu_prog_note:      { es:'Hasta dónde llegaste con cada personaje. Se marca en su ficha, en la pestaña «Mi cuenta».', en:'How far you got with each character. Marked in its sheet, under the “My account” tab.' },
+  cu_prog_vacio:     { es:'Todavía no marcaste ningún paso de la hoja de ruta ni cargaste topes. Se hace en la ficha de cada personaje, en la pestaña «Mi cuenta».',
+                       en:'No roadmap steps marked and no caps entered yet. Do it in each character’s sheet, under the “My account” tab.' },
+  cu_prog_pj:        { es:'Personaje',           en:'Character' },
+  cu_prog_ruta:      { es:'Hoja de ruta',        en:'Roadmap' },
+  cu_prog_paso:      { es:'Paso {i} de {n}',     en:'Step {i} of {n}' },
+  cu_prog_topes:     { es:'Topes cargados',      en:'Caps entered' },
+  cu_prop_note:      { es:'Personajes que creaste a mano y los del juego a los que les cambiaste algún dato. Viven en tu capa.', en:'Characters you created by hand and game characters whose data you changed. They live in your layer.' },
+  cu_prop_vacio:     { es:'No creaste ni editaste ningún personaje.', en:'You have not created or edited any character.' },
+  cu_prop_creado:    { es:'creado',              en:'created' },
+  cu_prop_editado:   { es:'editado',             en:'edited' },
+  cu_marcas_note:    { es:'Atributos que marcaste a mano en las skills (los datos todavía no los traen). Se marcan en la pestaña Skills de cada ficha.', en:'Attributes you marked by hand on skills (the data does not carry them yet). Marked in the Skills tab of each sheet.' },
+  cu_marcas_vacio:   { es:'No marcaste atributos en ninguna skill.', en:'You have not marked attributes on any skill.' },
   hi_title:          { es:'Histórico', en:'History' },
   hi_note:           { es:'Qué llegó en cada versión del juego (personajes, uniformes, Tier-3, Potencial Trascendido y Tier-4, según thanosvibs) y lo que dicen de cada personaje y de cada modo de juego las notas de actualización del foro oficial, con el link a cada nota. El texto de las notas va como lo publica el foro, en inglés.',
                        en:'What came in each game version (characters, uniforms, Tier-3, Potential Transcendence and Tier-4, per thanosvibs) and what the official forum update notes say about each character and each game mode, with the link to each note.' },
@@ -731,6 +767,15 @@ const T = {
   ft_armado:         { es:'Armado',              en:'Build' },
   ft_progreso:       { es:'Tu progreso',         en:'Your progress' },
   ft_fuentes:        { es:'Fuentes',             en:'Sources' },
+  ft_cuenta:         { es:'Mi cuenta',           en:'My account' },
+  fc_note:           { es:'Lo tuyo con este personaje. Se guarda en tu capa; lo demás de la ficha son datos del juego.', en:'Your own things for this character. Saved in your layer; the rest of the sheet is game data.' },
+  fc_marcas:         { es:'Atributos que marcaste', en:'Attributes you marked' },
+  fc_marcas_none:    { es:'No marcaste atributos en las skills de esta versión.', en:'You have not marked attributes on this version’s skills.' },
+  fc_datos:          { es:'Tus cambios a sus datos', en:'Your changes to its data' },
+  fc_datos_creado:   { es:'Lo creaste vos: no viene de los datos del juego.', en:'You created it: it does not come from the game data.' },
+  fc_datos_editado:  { es:'Editaste sus datos: lo que se ve en la ficha es tu versión.', en:'You edited its data: the sheet shows your version.' },
+  fc_datos_none:     { es:'Sin cambios: la ficha muestra los datos del juego.', en:'No changes: the sheet shows the game data.' },
+  fc_marcando:       { es:'Marcando atributos: tildá en cada skill los que tiene.', en:'Marking attributes: tick on each skill the ones it has.' },
   kit_title:         { es:'El kit de un vistazo', en:'The kit at a glance' },
   kit_note:          { es:'Una fila por skill: cuánto pega (la suma de sus golpes, en % del ataque, y su parte del total), cada cuánto, y lo que hace, separado por a quién le llega. El nombre lleva al detalle de la skill, más abajo; cada efecto abre su «Cómo funciona».',
                        en:'One row per skill: how hard it hits (the sum of its hits, in % of attack, and its share of the total), how often, and what it does, split by who gets it. The name jumps to the skill’s detail below; each effect opens its “How it works”.' },
@@ -1180,7 +1225,7 @@ const T = {
   ed_uni_name:       { es:'Nombre del uniforme', en:'Uniform name' },
   ed_cost:           { es:'Costo',               en:'Cost' },
   ed_add_uni:        { es:'+ Agregar uniforme',  en:'+ Add uniform' },
-  ed_back:           { es:'Atrás',               en:'Back' },
+  ed_back:           { es:'← Anterior',          en:'← Previous' },
   ed_next:           { es:'Siguiente',           en:'Next' },
   ed_save:           { es:'Guardar',             en:'Save' },
   ed_discard:        { es:'Descartar mi edición', en:'Discard my edit' },
@@ -1189,8 +1234,8 @@ const T = {
                        en:'Your own characters have no skills: skills come typed from the thanosvibs API and are not entered by hand.' },
 
   st_title:          { es:'Ajustes',             en:'Settings' },
-  st_note:           { es:'Los datos del juego salen de data.js y no se guardan acá. Esto es solo lo tuyo.',
-                       en:'Game data comes from data.js and is not stored here. This is only your own layer.' },
+  st_note:           { es:'La app: actualizaciones, fuentes y apariencia. Lo tuyo (equipos, progreso, tu capa) está en Mi cuenta.',
+                       en:'The app: updates, sources and appearance. Your own things (teams, progress, your layer) are in My account.' },
   st_layer:          { es:'Tu capa guardada',    en:'Your saved layer' },
   st_own_chars:      { es:'Personajes propios o editados', en:'Own or edited characters' },
   st_teams:          { es:'Equipos',             en:'Teams' },
@@ -1525,7 +1570,7 @@ function refrescarImagenes () {
   });
 }
 /** Recarga la ventana volviendo a la misma sección (la ficha abierta no se conserva). */
-const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'glosario', 'historico', 'settings'];
+const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'cuenta', 'glosario', 'historico', 'settings'];
 function recargar () {
   try { sessionStorage.setItem('mff_volver', VISTAS_PRINCIPALES.includes(ui.view) ? ui.view : 'roster'); } catch (e) {}
   location.reload();
@@ -1643,6 +1688,7 @@ let ui = {
   aliados: null,                     // grupo cuya lista de personajes está abierta: { r, tg } (aliadosModal)
   tip: null,                         // «Cómo funciona» abierto: { key de la variante, si: skill, ti y fi: el efecto tocado o null }
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
+  cuentaTab: 'resumen',              // apartado de Mi cuenta (CUENTA_TABS); Equipos y el editor son vistas propias
   kitCon: null,                      // pestaña Skills: la otra versión del personaje contra la que se marca lo que cambia (su uid o 'base')
   cmpRef: null,                      // comparativa skill por skill de un mismo personaje: la clave de la versión de referencia (sin ella, la primera)
   cmpCambios: true,                  // ...y si se ve solo lo que cambia
@@ -3044,23 +3090,22 @@ function statLabel (k) { return LANG === 'es' ? (STAT_ES[k] || k) : dom(k); }
 // vista. Cada pestaña responde una pregunta: qué es y para qué sirve, qué hace (las skills
 // tal como las publica la fuente, y su análisis según el modelo), cómo se arma, cuánto
 // avanzaste con él, y el resto.
-const FICHA_TABS = ['resumen', 'skills', 'armado', 'equipos', 'fuentes'];
+// Las pestañas de la ficha: las cinco del juego y, aparte, «Mi cuenta» (lo tuyo con el personaje; 1.0.52).
+const FICHA_TABS = ['resumen', 'skills', 'armado', 'equipos', 'fuentes', 'cuenta'];
 function renderDetail () {
   const ch = CHAR_BY_ID[ui.charId];
   if (!ch) { ui.view = 'roster'; return renderRoster(); }
   const v = variant(ch.id, ui.uniformId);
-  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, equipos: fichaEquipos, fuentes: fichaFuentes }[ui.fichaTab];
+  const cuerpo = { resumen: fichaResumen, skills: fichaSkills, armado: fichaArmado, equipos: fichaEquipos, fuentes: fichaFuentes, cuenta: fichaCuenta }[ui.fichaTab];
   if (!cuerpo) throw new Error('pestaña de la ficha desconocida: ' + ui.fichaTab);
   const ant = lugarAnterior();
   return `
   <div class="row" style="margin-bottom:14px">
     ${ant && ant.view !== 'roster' ? `<button class="btn sm primary" data-a="atras" title="${h(t('back_to').replace('{x}', nombreLugar(ant, true)))}">← ${h(nombreLugar(ant))}</button>` : ''}
     <button class="btn sm" data-a="back">${h(t('back_roster'))}</button>
-    ${botonPoner(v)}
     <button class="btn sm" data-a="pickThis" data-cid="${ch.id}" data-uid="${v.uid || ''}" ${ui.picks.some(p => p.key === v.key) ? 'disabled' : ''}>${h(t('compare_this'))}</button>
     ${ch.uniforms.length ? `<button class="btn sm" data-a="cmpVersiones" data-cid="${ch.id}" data-uid="${v.uid || ''}" title="${h(t('cmp_versiones_t').replace('{n}', MAX_COMPARAR))}">${h(t('cmp_versiones'))}</button>` : ''}
-    <button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button>
-    <button class="btn sm ${ui.marcando ? 'primary' : ''}" data-a="marcarModo">${h(ui.marcando ? t('at_done') : t('at_edit'))}</button>
+    ${mesaVisible() ? botonPoner(v) : ''}
   </div>
   ${fichaCabecera(ch, v)}
   <div class="fcuerpo" id="fcuerpo">${cuerpo(ch, v)}</div>`;
@@ -3171,7 +3216,7 @@ function fichaCabecera (ch, v) {
       <label class="fcab-uni"><span>${h(t('d_uniform'))}</span>
         <select data-a="uniformSel">${opcion('base', t('base'), ch.t)}${ch.uniforms.map(u => opcion(u.id, u.name, u.tier)).join('')}</select></label>
     </div>
-    <div class="ftabs" role="tablist">${FICHA_TABS.map(k => `<button class="ftab ${ui.fichaTab === k ? 'on' : ''}" role="tab"
+    <div class="ftabs" role="tablist">${FICHA_TABS.map(k => `<button class="ftab ${ui.fichaTab === k ? 'on' : ''}${k === 'cuenta' ? ' mia' : ''}" role="tab"
       aria-selected="${ui.fichaTab === k}" data-a="fichaTab" data-v="${k}">${h(t('ft_' + k))}</button>`).join('')}</div>
   </div>`;
 }
@@ -3385,7 +3430,8 @@ function kitVistazoHtml (v) {
 function fichaSkills (ch, v) {
   if (!v.skills.length) return `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`;
   const car = cargas(v.skills), kb = BUFFS[v.p] || {}, ks = Object.keys(kb);
-  return `<div class="chargebar">
+  return `${ui.marcando ? `<div class="marcando"><span>${h(t('fc_marcando'))}</span><button class="btn sm primary" data-a="marcarModo">${h(t('at_done'))}</button></div>` : ''}
+    <div class="chargebar">
       <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult || 0)}%;background:var(--accent)"></i></div><b>${cargaTxt(car.ult)}</b>
       <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk || 0)}%;background:var(--role-control)"></i></div><b>${cargaTxt(car.stk)}</b>
     </div>
@@ -3777,16 +3823,29 @@ function fichaArmado (ch, v) {
       <div class="armado2">
         <div class="bloque"><h4>ISO-8</h4>${armadoISO(ta)}</div>
         <div class="bloque"><h4>${h(t('md_urus'))}</h4>${armadoUrus(ta)}</div>
-      </div></details></div>
-  ${fichaProgreso(ch, v)}`;
+      </div></details></div>`;
 }
-/** Tu avance con el personaje: hoja de ruta y topes de stats (se guardan en la capa). */
-function fichaProgreso (ch, v) {
-  return `<div class="section"><h3>${h(t('ft_progreso'))}</h3>
-    <div class="usogrid par">
-      <div class="bloque"><h4>${h(t('ru_title'))}</h4>${armadoRuta(ch, v)}</div>
-      <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
-    </div></div>`;
+/** La pestaña «Mi cuenta» de la ficha (1.0.52): lo tuyo con este personaje, aparte de los datos del juego. Tus equipos
+ *  con él y cómo entraría en los otros (antes en Equipos), tu progreso (hoja de ruta y topes; antes en Armado), los
+ *  atributos que marcaste en sus skills y tus cambios a sus datos (antes, botones de la cabecera). */
+function fichaCuenta (ch, v) {
+  const marcadas = v.skills.map(sk => ({ sk, ks: Object.keys(marcasDe(v.p, sk.sl)) })).filter(x => x.ks.length);
+  const creado = U.charNew.some(c => c.id === ch.id), editado = !!U.charEdits[ch.id];
+  return `<p class="muted fcnota">${h(t('fc_note'))}</p>
+    ${equiposTuyosHtml(ch, v)}
+    <div class="section"><h3>${h(t('ft_progreso'))}</h3>
+      <div class="usogrid par">
+        <div class="bloque"><h4>${h(t('ru_title'))}</h4>${armadoRuta(ch, v)}</div>
+        <div class="bloque"><h4>${h(t('cap_title'))}</h4>${armadoTopes(ch)}</div>
+      </div></div>
+    <div class="section"><h3>${h(t('fc_marcas'))}</h3>
+      ${marcadas.length ? marcadas.map(x => `<div class="row" style="gap:6px;margin-bottom:6px"><span class="slotbadge ${slotClase(x.sk.sl)}">${h(slotEs(x.sk.sl))}</span>
+        <b>${nombreSkill(x.sk)}</b>${x.ks.map(k => `<span class="tag atributo">${h(atrNombre(k))}</span>`).join('')}</div>`).join('')
+        : `<p class="muted" style="margin-bottom:8px">${h(t('fc_marcas_none'))}</p>`}
+      <div class="row"><button class="btn sm" data-a="marcarModo">${h(t('at_edit'))}</button></div></div>
+    <div class="section"><h3>${h(t('fc_datos'))}</h3>
+      <p class="muted" style="margin-bottom:8px">${h(t(creado ? 'fc_datos_creado' : editado ? 'fc_datos_editado' : 'fc_datos_none'))}</p>
+      <div class="row"><button class="btn sm" data-a="edit" data-cid="${ch.id}">${h(t('edit'))}</button></div></div>`;
 }
 /** Abre el armador con estos integrantes, para guardarlo como equipo de tu cuenta. */
 function botonArmar (vs, modo, nombre, etiqueta) {
@@ -4199,8 +4258,11 @@ function dialogoPq () {
 }
 /** El botón de la tarjeta que abrió la ventana, si está en la página. */
 function botonPq (id) { return document.querySelector(`#app [data-a="pqAbrir"][data-pq="${CSS.escape(id)}"]`); }
-/** ¿La ventana sigue siendo de lo que se ve (la pestaña Equipos de la misma ficha y el mismo uniforme)? */
-function pqVigente (pq) { return ui.view === 'detail' && ui.charId === pq.charId && ui.uniformId === pq.uid && ui.fichaTab === 'equipos'; }
+/** ¿La ventana sigue siendo de lo que se ve (la misma ficha y el mismo uniforme, en la pestaña de su tarjeta: Equipos
+ *  para una combinación, «c|…»; Mi cuenta para «cómo entraría en tus otros equipos», «t|…»)? */
+function pqVigente (pq) {
+  return ui.view === 'detail' && ui.charId === pq.charId && ui.uniformId === pq.uid && ui.fichaTab === (pq.id.startsWith('t|') ? 'cuenta' : 'equipos');
+}
 /** Abre la ventana de una tarjeta (pq: { id, charId, uid, tab, y }), con el foco en su título y, si se vuelve a ella, a la
  *  altura en que estaba. */
 function abrirPq (pq) {
@@ -4260,7 +4322,15 @@ function teclaPq (e) {
 }
 /** Equipos: cómo entra el personaje (con el uniforme elegido) en los equipos que armaste y
  *  todas las combinaciones de 3 con él. */
+/** Equipos de la ficha: lo que el juego y las fuentes dicen de con quién va (bonos, strikers, combinaciones). Tus equipos
+ *  con él están en su pestaña «Mi cuenta» (equiposTuyosHtml). */
 function fichaEquipos (ch, v) {
+  return `${bonosHtml(ch)}
+  ${strikersHtml(ch)}
+  ${combinacionesHtml(v)}`;
+}
+/** Tus equipos guardados en los que está el personaje y cómo entraría esta versión en los demás. */
+function equiposTuyosHtml (ch, v) {
   const suyos = U.teams.filter(tt => tt.members.some(k => k.split('::')[0] === ch.id));
   const otros = U.teams.filter(tt => !suyos.includes(tt)).map(tt => comoEntra(v, tt));
   const sinVinculo = otros.filter(o => o.sinVinculo), entra = otros.filter(o => !o.sinVinculo);
@@ -4285,10 +4355,7 @@ function fichaEquipos (ch, v) {
     </div>`).join('')}
     ${no.length ? `<p class="muted">${h(t('eq_no_gain'))} ${no.map(o => `${h(o.tt.name)} (${o.delta >= 0 ? '±0' : o.delta})`).join(' · ')}</p>` : ''}
     ${sinVinculo.length ? `<p class="muted">${h(t('eq_no_link'))} ${sinVinculo.map(o => h(o.tt.name)).join(' · ')}</p>` : ''}
-  </div>` : ''}
-  ${bonosHtml(ch)}
-  ${strikersHtml(ch)}
-  ${combinacionesHtml(v)}`;
+  </div>` : ''}`;
 }
 /** Los bonos de equipo del personaje (valen con cualquier uniforme), plegados: el nombre, con
  *  quiénes, qué suben y de dónde sale cada uno. Primero los de tres. */
@@ -7013,6 +7080,13 @@ function renderTeams () {
 // En una ventana angosta los paneles se ven de a uno, con pestañas abajo (ui.movil).
 // ============================================================================
 function mesaVs () { return U.mesa.members.map(k => variant(...k.split('::'))).filter(Boolean); }
+/** La mesa es de tu cuenta (armar un equipo): se ve en Mi cuenta › Equipos y, en las demás pantallas, solo si está abierta
+ *  (U.prefs.mesa: el botón «Mesa» de la barra; poner a alguien en la mesa la abre). Con la mesa cerrada, las pantallas del
+ *  juego no muestran nada del armado (Ezequiel, 12 de noviembre de 2026). */
+function mesaVisible () { return U.prefs.mesa || ui.view === 'teams'; }
+/** La bandeja de lo que se va a comparar: en el roster y en la ficha, que es donde se elige, mientras se elige o hay
+ *  elegidos; en la comparativa misma no (ya están arriba) y en las demás secciones tampoco (ahí no se elige: render). */
+function bandejaVisible () { return (ui.view === 'roster' || ui.view === 'detail') && (ui.pickMode || ui.picks.length > 0); }
 /** Restricción del día de Alliance Battle elegida en la mesa ({ d, m, r }), o null si el modo no es Alliance Battle. */
 function restriccionMesa () {
   if (U.mesa.modeId !== 'alliance-battle') return null;
@@ -7031,6 +7105,7 @@ function cumpleRestriccion (v, x) {
  *  juego no deja dos veces al mismo). Con la mesa llena no suma: lo dice. */
 function ponerEnMesa (key) {
   const v = variant(...key.split('::')), m = U.mesa, max = tamModo(m.modeId);
+  U.prefs.mesa = true;
   ui.avisoMesa = null;
   if (m.members.includes(key)) { ui.avisoMesa = { txt: t('ms_ya').replace('{x}', fullLabel(v)) }; return; }
   const i = m.members.findIndex(k => k.split('::')[0] === v.cid);
@@ -7047,8 +7122,8 @@ function botonPoner (v) {
 function panelListaHtml () {
   const lista = rosterData(), P = U.prefs, activos = filtrosActivos(), total = allVariants().length;
   const v = ui.view === 'detail' ? variant(ui.charId, ui.uniformId) : null;
-  return `<div class="panelcab"><span>${h(t('ms_lista_n').replace('{n}', lista.length).replace('{t}', total))}</span>
-      ${ui.view === 'detail' ? `<button class="btn sm" data-a="back">${h(t('nav_roster'))}</button>` : ''}</div>
+  const conMesa = mesaVisible();
+  return `<div class="panelcab"><span>${h(t('ms_lista_n').replace('{n}', lista.length).replace('{t}', total))}</span></div>
     <div class="plfiltros">
       <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search"></div>
       <div class="row">
@@ -7059,12 +7134,12 @@ function panelListaHtml () {
       </div>
       ${ui.plFiltros ? `<div class="filterpanel plpanel">${filtrosHtml()}</div>` : ''}
     </div>
-    <div class="plitems">${lista.length ? lista.map(x => `<div class="plit${v && x.key === v.key ? ' on' : ''}">
+    <div class="plitems">${lista.length ? lista.map(x => `<div class="plit${v && x.key === v.key ? ' on' : ''}${conMesa ? '' : ' sola'}">
       <button class="plabrir" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}" ${v && x.key === v.key ? 'aria-current="true"' : ''}>
         <span class="plfoto" style="--cc:${classColor(x.c)}">${shot(x.id)}</span>
         <span class="pltx"><b>${h(x.name)}</b><small>${h(x.uid ? x.sub : t('base_word'))}</small></span>
         <span class="tag dim">${h(x.t)}</span></button>
-      ${U.mesa.members.includes(x.key) ? `<span class="plmas en" title="${h(t('ms_en_mesa'))}" aria-label="${h(t('ms_en_mesa'))}">✓</span>`
+      ${!conMesa ? '' : U.mesa.members.includes(x.key) ? `<span class="plmas en" title="${h(t('ms_en_mesa'))}" aria-label="${h(t('ms_en_mesa'))}">✓</span>`
         : `<button class="plmas" data-a="mesaPoner" data-key="${x.key}" title="${h(t('ms_poner') + ': ' + fullLabel(x))}" aria-label="${h(t('ms_poner') + ': ' + fullLabel(x))}">+</button>`}
     </div>`).join('') : `<p class="muted plvacio">${h(t('no_match'))}</p>`}</div>`;
 }
@@ -7122,8 +7197,11 @@ function mesaHtml () {
       <input data-a="mesaNombre" value="${h(m.name)}" placeholder="${h(t('ms_nombre_ph'))}" aria-label="${h(t('ms_nombre_ph'))}">
       <div class="row"><button class="btn primary" data-a="mesaGuardar" ${vs.length < 2 || vs.length > max ? 'disabled' : ''}>${h(t('ms_guardar'))}</button>
         <button class="btn" data-a="mesaVaciar" ${vs.length || m.name ? '' : 'disabled'}>${h(t('ms_vaciar'))}</button></div>
-    </div>
-    <div class="panelcab sub"><span>${h(t('ms_cmp'))}</span><span>${ui.picks.length} / ${MAX_COMPARAR}</span></div>
+    </div>`;
+}
+/** Lo que se va a comparar (hasta MAX_COMPARAR), con el botón que lleva a la comparativa. */
+function bandejaHtml () {
+  return `<div class="panelcab${mesaVisible() ? ' sub' : ''}"><span>${h(t('ms_cmp'))}</span><span>${ui.picks.length} / ${MAX_COMPARAR}</span></div>
     <div class="msbloque">
       ${ui.picks.length ? ui.picks.map(pk => { const x = variant(pk.cid, pk.uid);
         return `<div class="mscmp"><button class="plabrir" data-a="fichaVecina" data-cid="${x.cid}" data-uid="${x.uid || ''}"><span class="plfoto" style="--cc:${classColor(x.c)}">${shot(x.id)}</span>
@@ -7135,9 +7213,122 @@ function mesaHtml () {
     </div>`;
 }
 /** Pestañas de abajo en una ventana angosta: qué panel se ve. */
-function movilTabsHtml (conLista) {
-  const tabs = (conLista ? [['lista', t('ms_lista_tab')]] : []).concat([['centro', t('ms_ver_tab')], ['mesa', t('ms_title') + ' · ' + U.mesa.members.length]]);
+function movilTabsHtml (conLista, conMesa, derecha) {
+  const tabs = (conLista ? [['lista', t('ms_lista_tab')]] : []).concat([['centro', t('ms_ver_tab')]])
+    .concat(derecha ? [['mesa', conMesa ? t('ms_title') + ' · ' + U.mesa.members.length : t('ms_cmp') + ' · ' + ui.picks.length]] : []);
   return `<nav class="movtabs" aria-label="${h(t('ms_title'))}">${tabs.map(([k, n]) => `<button data-a="movil" data-v="${k}" aria-pressed="${ui.movil === k}">${h(n)}</button>`).join('')}</nav>`;
+}
+
+// ============================================================================
+// MI CUENTA (1.0.52, Ezequiel, 12 de noviembre de 2026: «Separa el armado de mi propia cuenta de lo demás del juego»;
+// la sección «Mi cuenta» de la arquitectura aprobada en #24/#41). Todo lo tuyo en un lugar, aparte de las secciones del
+// juego: tus equipos (con la mesa), tu progreso con cada personaje, los personajes que creaste o editaste, los atributos
+// que marcaste y tu capa. Lo que es de un personaje se sigue cargando en su ficha (pestaña «Mi cuenta»); acá se lista.
+// Tus tier lists quedan en Tier lists, junto a las públicas (decisión de la arquitectura: un solo lugar para cada cosa).
+// ============================================================================
+const CUENTA_TABS = ['resumen', 'equipos', 'progreso', 'propios', 'marcas', 'capa'];
+/** El apartado de Mi cuenta en el que se está: Equipos y el editor de personajes son vistas propias. */
+function cuentaTabActual () { return ui.view === 'teams' ? 'equipos' : ui.view === 'editor' ? 'propios' : ui.cuentaTab; }
+/** Cuánto hay en cada apartado, para la sub-barra y el resumen. */
+function cuentaCuentas () {
+  const conRuta = Object.keys(U.ruta), conTopes = Object.keys(U.topes);
+  return { equipos: U.teams.length, progreso: new Set(conRuta.concat(conTopes)).size, ruta: conRuta.length, topes: conTopes.length,
+           creados: U.charNew.length, editados: Object.keys(U.charEdits).length, propios: U.charNew.length + Object.keys(U.charEdits).length,
+           marcas: Object.keys(U.marcas).length, listas: U.lists.length,
+           // Cambios sobre las listas importadas: las ubicaciones de tus listas propias no lo son.
+           cambios: Object.entries(U.assign).filter(([id]) => !U.lists.some(l => l.id === id)).reduce((n, [, o]) => n + Object.keys(o).length, 0) };
+}
+/** La sub-barra de Mi cuenta, arriba de cada uno de sus apartados. */
+function cuentaCabHtml () {
+  const actual = cuentaTabActual(), n = cuentaCuentas();
+  return `<div class="cucab"><span class="curot">${h(t('nav_cuenta'))}</span>
+    <div class="cutabs" role="tablist">${CUENTA_TABS.map(k => `<button class="cutab ${actual === k ? 'on' : ''}" role="tab" aria-selected="${actual === k}"
+      ${k === 'equipos' ? 'data-a="goTeams"' : `data-a="cuentaTab" data-v="${k}"`}>${h(t('cu_tab_' + k))}${n[k] ? ` <span class="cun">${n[k]}</span>` : ''}</button>`).join('')}</div></div>`;
+}
+function renderCuenta () {
+  const cuerpo = { resumen: cuentaResumen, progreso: cuentaProgreso, propios: cuentaPropios, marcas: cuentaMarcas, capa: cuentaCapa }[ui.cuentaTab];
+  if (!cuerpo) throw new Error('apartado de Mi cuenta desconocido: ' + ui.cuentaTab);
+  return cuerpo();
+}
+/** El resumen: una tarjeta por apartado, con lo que hay y adónde lleva. */
+function cuentaResumen () {
+  const n = cuentaCuentas();
+  const tarjeta = (attrs, titulo, valor, detalle) => `<button class="cutile" ${attrs}><span class="k">${h(titulo)}</span>
+    ${valor != null ? `<span class="v">${valor}</span>` : ''}<span class="d">${h(detalle)}</span></button>`;
+  return `<div class="page-head"><div><h1>${h(t('nav_cuenta'))}</h1><div class="sub">${h(t('cu_note'))}</div></div></div>
+    <div class="cuhub">
+      ${tarjeta('data-a="goTeams"', t('cu_eq_t'), n.equipos, t('cu_eq_d').replace('{f}', U.favoritos.length).replace('{d}', U.descartados.length).replace('{m}', U.mesa.members.length))}
+      ${tarjeta('data-a="cuentaTab" data-v="progreso"', t('cu_prog_t'), n.progreso, t('cu_prog_d').replace('{r}', n.ruta).replace('{c}', n.topes))}
+      ${tarjeta('data-a="cuentaTab" data-v="propios"', t('cu_tab_propios'), n.propios, t('cu_prop_d').replace('{n}', n.creados).replace('{e}', n.editados))}
+      ${tarjeta('data-a="cuentaTab" data-v="marcas"', t('cu_marcas_t'), n.marcas, t('cu_marcas_d'))}
+      ${tarjeta('data-a="cuentaListas"', t('cu_listas_t'), n.listas, t('cu_listas_d').replace('{c}', n.cambios))}
+      ${tarjeta('data-a="cuentaTab" data-v="capa"', t('cu_tab_capa'), null, t('cu_capa_d'))}
+    </div>`;
+}
+/** Tu progreso con cada personaje: el paso de la hoja de ruta al que llegó y los topes que cargaste. Se edita en su ficha. */
+function cuentaProgreso () {
+  const P = GUIA.progresion, cids = [...new Set(Object.keys(U.ruta).concat(Object.keys(U.topes)))]
+    .filter(c => CHAR_BY_ID[c]).sort((a, b) => CHAR_BY_ID[a].name.localeCompare(CHAR_BY_ID[b].name));
+  const fila = (cid) => {
+    const v = variant(cid, null), i = P.pasos.findIndex(x => x.id === U.ruta[cid]), topes = Object.keys(U.topes[cid] || {});
+    return `<tr><td>${miniPj(v)}</td>
+      <td>${i > -1 ? `<b>${h(t('cu_prog_paso').replace('{i}', i + 1).replace('{n}', P.pasos.length))}</b><div class="muted">${h(bi(P.pasos[i]))}</div>` : '<span class="muted">—</span>'}</td>
+      <td>${topes.length ? topes.map(k => statHtml(k)).join(' · ') : '<span class="muted">—</span>'}</td>
+      <td><button class="btn sm" data-a="abrirEn" data-cid="${cid}" data-tab="cuenta">${h(t('cu_ir'))}</button></td></tr>`;
+  };
+  return `<div class="page-head"><div><h1>${h(t('cu_tab_progreso'))}</h1><div class="sub">${h(t('cu_prog_note'))}</div></div></div>
+    ${cids.length ? `<div class="stagewrap"><table class="cutabla"><thead><tr><th>${h(t('cu_prog_pj'))}</th><th>${h(t('cu_prog_ruta'))}</th><th>${h(t('cu_prog_topes'))}</th><th></th></tr></thead>
+      <tbody>${cids.map(fila).join('')}</tbody></table></div>`
+    : `<div class="empty"><div class="big">◇</div><div>${h(t('cu_prog_vacio'))}</div></div>`}`;
+}
+/** Los personajes que creaste a mano y los del juego que editaste, con el botón para crear otro. */
+function cuentaPropios () {
+  const filas = U.charNew.map(c => [c, 'creado']).concat(Object.values(U.charEdits).map(c => [c, 'editado']))
+    .sort((a, b) => a[0].name.localeCompare(b[0].name));
+  return `<div class="page-head"><div><h1>${h(t('cu_tab_propios'))}</h1><div class="sub">${h(t('cu_prop_note'))}</div></div>
+      <button class="btn primary" data-a="goEditor">${h(t('nav_new_char'))}</button></div>
+    ${filas.length ? `<div class="stagewrap"><table class="cutabla"><tbody>${filas.map(([c, tipo]) => `<tr>
+        <td>${miniPj(variant(c.id, null))}</td><td><span class="tag dim">${h(t('cu_prop_' + tipo))}</span></td>
+        <td><button class="btn sm" data-a="edit" data-cid="${c.id}">${h(t('edit'))}</button></td></tr>`).join('')}</tbody></table></div>`
+    : `<div class="empty"><div class="big">◇</div><div>${h(t('cu_prop_vacio'))}</div></div>`}`;
+}
+/** Los atributos que marcaste a mano en las skills, por personaje. Se marcan en la pestaña Skills de la ficha. */
+function cuentaMarcas () {
+  const por = new Map();
+  for (const [clave, m] of Object.entries(U.marcas)) {
+    const [p, sl] = clave.split('::'), v = varDeRetrato(p);
+    if (!v) continue;                       // el retrato ya no está en los datos: la marca queda guardada, sin dónde mostrarse
+    if (!por.has(v.key)) por.set(v.key, { v, skills: [] });
+    por.get(v.key).skills.push({ sl, ks: Object.keys(m) });
+  }
+  const grupos = [...por.values()].sort((a, b) => fullLabel(a.v).localeCompare(fullLabel(b.v)));
+  return `<div class="page-head"><div><h1>${h(t('cu_tab_marcas'))}</h1><div class="sub">${h(t('cu_marcas_note'))}</div></div></div>
+    ${grupos.length ? `<div class="stagewrap"><table class="cutabla"><tbody>${grupos.map(g => `<tr>
+        <td>${miniPj(g.v)}</td>
+        <td>${g.skills.map(x => `<div class="row" style="gap:6px"><span class="slotbadge ${slotClase(x.sl)}">${h(slotEs(x.sl))}</span>${
+          x.ks.map(k => `<span class="tag atributo">${h(atrNombre(k))}</span>`).join('')}</div>`).join('')}</td>
+        <td><button class="btn sm" data-a="abrirEn" data-cid="${g.v.cid}" data-uid="${g.v.uid || ''}" data-tab="skills">${h(t('cu_ir'))}</button></td></tr>`).join('')}</tbody></table></div>`
+    : `<div class="empty"><div class="big">◇</div><div>${h(t('cu_marcas_vacio'))}</div></div>`}`;
+}
+/** Tu capa guardada: cuánto hay de cada cosa y exportarla, importarla o borrarla (antes en Ajustes). */
+function cuentaCapa () {
+  const n = cuentaCuentas();
+  return `<div class="page-head"><div><h1>${h(t('st_layer'))}</h1><div class="sub">${h(t('cu_note'))}</div></div></div>
+    <div class="statgrid">
+      <div class="stat"><div class="k">${h(t('st_own_chars'))}</div><div class="v">${n.propios}</div></div>
+      <div class="stat"><div class="k">${h(t('st_teams'))}</div><div class="v">${n.equipos}</div></div>
+      <div class="stat"><div class="k">${h(t('st_own_lists'))}</div><div class="v">${n.listas}</div></div>
+      <div class="stat"><div class="k">${h(t('st_list_changes'))}</div><div class="v">${n.cambios}</div></div>
+      <div class="stat"><div class="k">${h(t('st_images'))}</div><div class="v">${Object.keys(U.images).length}</div></div>
+      <div class="stat"><div class="k">${h(t('st_marks'))}</div><div class="v">${n.marcas}</div></div>
+      <div class="stat"><div class="k">${h(t('st_routes'))}</div><div class="v">${n.ruta}</div></div>
+      <div class="stat"><div class="k">${h(t('st_caps'))}</div><div class="v">${n.topes}</div></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
+      <label class="btn" style="cursor:pointer">${h(t('st_import'))}<input type="file" accept=".json" hidden data-a="importUser"></label>
+      <button class="btn danger" data-a="resetUser">${h(t('st_reset'))}</button>
+    </div>`;
 }
 
 // ============================================================================
@@ -7199,29 +7390,13 @@ function renderEditor () {
 // AJUSTES
 // ============================================================================
 function renderSettings () {
-  const mine = Object.keys(U.charEdits).length + U.charNew.length;
-  const changed = Object.values(U.assign).reduce((n, o) => n + Object.keys(o).length, 0);
   return `<div class="page-head"><div><h1>${h(t('st_title'))}</h1>
     <div class="sub">${h(t('st_note'))}</div></div></div>
 
-  <div class="section"><h3>${h(t('st_layer'))}</h3>
-    <div class="statgrid">
-      <div class="stat"><div class="k">${h(t('st_own_chars'))}</div><div class="v">${mine}</div></div>
-      <div class="stat"><div class="k">${h(t('st_teams'))}</div><div class="v">${U.teams.length}</div></div>
-      <div class="stat"><div class="k">${h(t('st_own_lists'))}</div><div class="v">${U.lists.length}</div></div>
-      <div class="stat"><div class="k">${h(t('st_list_changes'))}</div><div class="v">${changed}</div></div>
-      <div class="stat"><div class="k">${h(t('st_images'))}</div><div class="v">${Object.keys(U.images).length}</div></div>
-      <div class="stat"><div class="k">${h(t('st_marks'))}</div><div class="v">${Object.keys(U.marcas || {}).length}</div></div>
-      <div class="stat"><div class="k">${h(t('st_routes'))}</div><div class="v">${Object.keys(U.ruta).length}</div></div>
-      <div class="stat"><div class="k">${h(t('st_caps'))}</div><div class="v">${Object.keys(U.topes).length}</div></div>
-    </div>
-    <div class="row" style="margin-top:12px">
-      <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
-      <label class="btn" style="cursor:pointer">${h(t('st_import'))}<input type="file" accept=".json" hidden data-a="importUser"></label>
+  <div class="section"><div class="row">
       <button class="btn" data-a="exportCsv">${h(t('st_export_csv'))}</button>
-      <button class="btn danger" data-a="resetUser">${h(t('st_reset'))}</button>
-    </div>
-  </div>
+      <button class="btn" data-a="cuentaTab" data-v="capa">${h(t('st_layer'))} →</button>
+    </div></div>
 
   ${seccionActualizaciones()}
 
@@ -7331,26 +7506,37 @@ function pintarActualizaciones () {
 // ============================================================================
 // NAV + DISPATCH
 // ============================================================================
+/** Vistas del juego que cuelgan del roster (la ficha y la comparativa) y vistas de Mi cuenta. */
+const VISTAS_ROSTER = ['roster', 'detail', 'compare'], VISTAS_CUENTA = ['cuenta', 'teams', 'editor'];
+/** La barra separa lo del juego de lo tuyo (Ezequiel, 12 de noviembre de 2026: «Separa el armado de mi propia cuenta de
+ *  lo demás del juego»): a la izquierda las secciones del juego; a la derecha, Mi cuenta y la mesa de armado, que se
+ *  muestra u oculta con su botón. La sección en la que se está queda marcada también dentro de una ficha o comparando. */
 function renderNav () {
-  const link = (view, clave, act) => `<button class="navlink ${ui.view === view ? 'on' : ''}" data-a="${act}">${h(t(clave))}</button>`;
+  const link = (vistas, clave, act) => `<button class="navlink ${vistas.includes(ui.view) ? 'on' : ''}" data-a="${act}">${h(t(clave))}</button>`;
+  const fija = ui.view === 'teams', max = tamModo(U.mesa.modeId);
   return `<nav class="topnav">
     <span class="brand" data-a="back">${U.images['brand-logo']
       ? `<img src="${U.images['brand-logo']}" style="height:26px">`
       : `<span class="dot"></span>TA GUIANAEL <span style="color:var(--accent)">MFF</span>`}</span>
-    ${link('roster','nav_roster','back')}
-    ${link('tierlist','nav_tierlists','goTier')}
-    ${link('modos','nav_modes','goModos')}
-    ${link('teams','nav_teams','goTeams')}
-    ${link('glosario','nav_glossary','goGlosario')}
-    ${link('historico','nav_history','goHistorico')}
+    <div class="navgrupo" role="group" aria-label="${h(t('nav_juego'))}">
+      ${link(VISTAS_ROSTER, 'nav_roster', 'back')}
+      ${link(['tierlist'], 'nav_tierlists', 'goTier')}
+      ${link(['modos'], 'nav_modes', 'goModos')}
+      ${link(['glosario'], 'nav_glossary', 'goGlosario')}
+      ${link(['historico'], 'nav_history', 'goHistorico')}
+    </div>
     <span class="navspace"></span>
+    <div class="navgrupo cuenta" role="group" aria-label="${h(t('nav_cuenta'))}">
+      ${link(VISTAS_CUENTA, 'nav_cuenta', 'goCuenta')}
+      <button class="mesabtn${mesaVisible() ? ' on' : ''}" data-a="mesaToggle" aria-pressed="${mesaVisible()}" ${fija ? 'disabled' : ''}
+        title="${h(t(fija ? 'nav_mesa_fija' : 'nav_mesa_t'))}">${h(t('ms_title'))} <b>${U.mesa.members.length}/${max}</b></button>
+    </div>
     <div class="navtools">
       <button class="ayudabtn${U.prefs.ayuda ? ' on' : ''}" data-a="ayudaToggle" aria-pressed="${!!U.prefs.ayuda}" title="${h(t('ay_toggle_t'))}">${h(t('ay_toggle'))}</button>
       <button class="langbtn" data-a="lang" title="${h(t('lang_title'))}">
         <span class="${LANG === 'es' ? 'on' : ''}">ES</span><span class="${LANG === 'en' ? 'on' : ''}">EN</span>
       </button>
-      ${link('editor','nav_new_char','goEditor')}
-      ${link('settings','nav_settings','goSettings')}
+      ${link(['settings'], 'nav_settings', 'goSettings')}
     </div>
   </nav>`;
 }
@@ -7360,6 +7546,9 @@ function render () {
   // ventana del «Por qué», lo mismo con la pestaña Equipos (anotarLugar ya la anotó para volver con «Atrás»).
   if (ui.tip && !tipVigente()) ui.tip = null;
   if (ui.pq && !pqVigente(ui.pq)) cerrarPq(false);
+  // Elegir para comparar es del roster (y de la ficha y la comparativa, que cuelgan de él): al pasar a otra sección se deja
+  // de elegir, para que ahí tocar a alguien abra su ficha; lo elegido queda.
+  if (ui.pickMode && !VISTAS_ROSTER.includes(ui.view)) { ui.pickMode = false; ui.pickDe = null; }
   let body;
   switch (ui.view) {
     case 'detail':   body = renderDetail(); break;
@@ -7370,19 +7559,25 @@ function render () {
     case 'glosario': body = renderGlosario(); break;
     case 'historico': body = renderHistorico(); break;
     case 'editor':   body = renderEditor(); break;
+    case 'cuenta':   body = renderCuenta(); break;
     case 'settings': body = renderSettings(); break;
     default:         body = renderRoster();
   }
+  if (VISTAS_CUENTA.includes(ui.view)) body = cuentaCabHtml() + body;
+  // El panel de la derecha: la mesa de armado (si está a la vista) y la bandeja de lo que se va a comparar (si hay algo).
+  const conMesa = mesaVisible(), conBandeja = bandejaVisible(), derecha = conMesa || conBandeja;
+  if (ui.movil === 'mesa' && !derecha) ui.movil = 'centro';
   // Los avisos van fuera de <main>: la barra del roster se pega arriba de main con margen
   // negativo y los taparía.
   // Tres paneles (ver MESA DE TRABAJO): la lista y la mesa conservan su desplazamiento al repintar.
   const conLista = (ui.view === 'detail' && ui.charId != null) || ui.view === 'teams', previo = {};
   for (const sel of ['.plista', '.mesa']) { const x = $(sel); if (x) previo[sel] = x.scrollTop; }
   $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div>'
-    + `<div class="trabajo${conLista ? ' con-lista' : ''}" data-movil="${ui.movil}">`
+    + `<div class="trabajo${conLista ? ' con-lista' : ''}${derecha ? '' : ' sin-mesa'}" data-movil="${ui.movil}">`
     + (conLista ? `<aside class="plista" aria-label="${h(t('ms_lista_tab'))}">${panelListaHtml()}</aside>` : '')
     + '<main>' + body + '</main>'
-    + `<aside class="mesa" aria-label="${h(t('ms_title'))}">${mesaHtml()}</aside></div>` + movilTabsHtml(conLista)
+    + (derecha ? `<aside class="mesa" aria-label="${h(t(conMesa ? 'ms_title' : 'ms_cmp'))}">${(conMesa ? mesaHtml() : '') + (conBandeja ? bandejaHtml() : '')}</aside>` : '')
+    + '</div>' + movilTabsHtml(conLista, conMesa, derecha)
     + (ui.aliados != null ? aliadosModal() : '') + tipHtml();
   for (const sel in previo) { const x = $(sel); if (x) x.scrollTop = previo[sel]; }
   const actual = $('.plista .plit.on'), pl = $('.plista');
@@ -7406,7 +7601,7 @@ function render () {
 // ============================================================================
 function lugar () { return ui.view === 'detail' ? 'detail:' + ui.charId : ui.view; }
 function fotoLugar () {
-  return { lugar: lugar(), view: ui.view, charId: ui.charId, uniformId: ui.uniformId, fichaTab: ui.fichaTab,
+  return { lugar: lugar(), view: ui.view, charId: ui.charId, uniformId: ui.uniformId, fichaTab: ui.fichaTab, cuentaTab: ui.cuentaTab,
            eqPagina: ui.eqPagina, eqCon: ui.eqCon, eqVerDescartados: ui.eqVerDescartados, page: ui.page, tierList: ui.tierList };
 }
 /** Antes de pintar: si cambió el lugar, el anterior queda anotado con su posición y se abre
@@ -7436,14 +7631,14 @@ function nombreLugar (d, largo) {
     if (!v) return t('nav_roster');
     return largo ? fullLabel(v) + ' · ' + t('ft_' + d.fichaTab) : v.name;
   }
-  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', glosario: 'nav_glossary', historico: 'nav_history', settings: 'nav_settings',
-             editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
+  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history',
+             settings: 'nav_settings', editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
 }
 window.addEventListener('popstate', (e) => {
   const s = e.state;
   if (!s || !s.lugar) return;
   if (ui.pq) cerrarPq(false);
-  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, eqPagina: s.eqPagina,
+  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, cuentaTab: s.cuentaTab, eqPagina: s.eqPagina,
                       eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
                       aliados: null, tip: null, tlPick: null, focusSearch: false, volverY: s.y,
                       volverAbiertos: s.abiertos || [],   // una entrada anotada por una versión anterior no los trae
@@ -7576,6 +7771,12 @@ document.addEventListener('click', (e) => {
     case 'aliadosCerrar': ui.aliados = null; render(); break;
 
     case 'goTier': ui.view = 'tierlist'; render(); break;
+    // «Mi cuenta» de la barra abre siempre su resumen; a cada apartado se va desde ahí o desde la sub-barra.
+    case 'goCuenta': ui.view = 'cuenta'; ui.cuentaTab = 'resumen'; render(); window.scrollTo(0, 0); break;
+    case 'cuentaTab': ui.view = 'cuenta'; ui.cuentaTab = d.v; render(); window.scrollTo(0, 0); break;
+    case 'mesaToggle': U.prefs.mesa = !U.prefs.mesa; commit(); break;
+    // Abre la ficha de un personaje en una pestaña (desde Mi cuenta: su progreso, sus skills marcadas).
+    case 'abrirEn': ui.fichaTab = d.tab; abrirFicha(d.cid, d.uid || null); break;
     case 'goModos': ui.view = 'modos'; render(); break;
     // Desde el Histórico: Modos con ese modo abierto, a la vista.
     case 'verModo': ui.view = 'modos'; ui.modoAbierto = d.id; ui.movil = 'centro'; render();
@@ -7619,6 +7820,8 @@ document.addEventListener('click', (e) => {
       ui.tierList = id; commit(); break; }
     case 'editRows': ui.editRows = !ui.editRows; render(); break;
     case 'tlEditar': ui.tlEditar = !ui.tlEditar; ui.tlPick = null; ui.editRows = false; render(); break;
+    // Desde Mi cuenta: las tier lists, listas para editar, en la primera propia si hay.
+    case 'cuentaListas': ui.view = 'tierlist'; ui.tlEditar = true; if (U.lists.length) ui.tierList = U.lists[0].id; render(); window.scrollTo(0, 0); break;
     case 'rowAdd': { const l = U.lists.find(x => x.id === ui.tierList); if (!l) break;
       l.rows.push({ id: 'f-' + Date.now(), label: t('tp_new_row') }); commit(); break; }
     case 'rowMove': { const l = U.lists.find(x => x.id === ui.tierList); if (!l) break;
@@ -7667,7 +7870,7 @@ document.addEventListener('click', (e) => {
     // «Llevar a la mesa» (combinaciones, favoritos, tus equipos): el equipo reemplaza lo que había en la mesa, con su
     // líder primero, su modo y su nombre. No cambia de sección: la mesa está a la vista.
     case 'teamDesde': U.mesa.members = d.m.split(','); U.mesa.modeId = d.modo || ''; U.mesa.name = d.nombre || '';
-      ui.avisoMesa = null; if (ui.movil !== 'centro') ui.movil = 'mesa'; saveUser(); render(); break;
+      U.prefs.mesa = true; ui.avisoMesa = null; if (ui.movil !== 'centro') ui.movil = 'mesa'; saveUser(); render(); break;
     case 'mesaPoner': ponerEnMesa(d.key); saveUser(); render(); break;
     case 'mesaQuitar': U.mesa.members.splice(+d.i, 1); ui.avisoMesa = null; saveUser(); render(); break;
     case 'mesaLider': U.mesa.members.unshift(U.mesa.members.splice(+d.i, 1)[0]); saveUser(); render(); break;

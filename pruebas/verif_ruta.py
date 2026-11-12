@@ -1,4 +1,5 @@
-"""Hoja de ruta (pestaña Progreso): el paso previo al Tier-4 pide skills en Nv. 10 y el aviso dice por qué."""
+"""Hoja de ruta (en la pestaña «Mi cuenta» de la ficha desde la 1.0.52; antes en Armado y, hasta la 1.0.26, en Progreso):
+el paso previo al Tier-4 pide skills en Nv. 10 y el aviso dice por qué."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -16,7 +17,7 @@ try:
             pg.evaluate("""() => { const el = document.createElement('button'); el.dataset.a = 'open';
                 el.dataset.cid = 'gorr'; el.dataset.uid = ''; document.body.appendChild(el); el.click(); el.remove(); }""")
             pg.wait_for_selector('.fcab')
-            pg.click('[data-a="fichaTab"][data-v="armado"]'); pg.wait_for_timeout(200)
+            pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_timeout(200)
             ruta = pg.locator('ol.ruta').inner_text()
             ok(f'{lang}: el paso previo al Tier-4 dice «{paso}» y ninguno dice 12', paso in ruta and '12' not in ruta.split('Tier-4')[0], ruta[:400])
             ok(f'{lang}: el aviso del Tier-4 explica el cambio', aviso in pg.locator('ol.ruta .req.aviso').inner_text(), pg.locator('ol.ruta .req.aviso').inner_text())

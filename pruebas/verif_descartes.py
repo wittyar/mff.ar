@@ -4,7 +4,7 @@ Cantidades y páginas contra la consulta escrita aparte (la de verif_combos.py).
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
+from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js, ir_a_equipos
 from playwright.sync_api import sync_playwright
 import auditoria_equipos as A
 import modelo_foco as F
@@ -114,7 +114,7 @@ try:
         abrir(pg, 'Annihilus')
         t1 = sorted(k.split('::')[0] for k in claves_pagina(pg)[0]); pg.locator('#combos .combo').first.locator('[data-a="descartar"]').click(); pg.wait_for_timeout(300)
         t2 = sorted(k.split('::')[0] for k in claves_pagina(pg)[0]); pg.locator('#combos .combo').first.locator('[data-a="descartar"]').click(); pg.wait_for_timeout(300)
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         sec = pg.locator('.section', has_text='Descartados (2)')
         ok('4 Equipos: «Descartados (2)», plegado', sec.count() == 1 and not sec.locator('.combo').first.is_visible())
         sec.locator('summary').click(); pg.wait_for_timeout(150)

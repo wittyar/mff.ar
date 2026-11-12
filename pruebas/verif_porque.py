@@ -626,7 +626,7 @@ try:
         cerrar(pg)
 
         # 5. «Cómo entraría»: Jeff en Black Cat + Doctor Voodoo + Thor.
-        ficha(pg, 'Jeff the Land Shark', 'jeff-the-land-shark')
+        ficha(pg, 'Jeff the Land Shark', 'jeff-the-land-shark', tab='cuenta'); pg.wait_for_selector('.eqsug', timeout=90000)    # «cómo entraría» es de Mi cuenta (1.0.52)
         tarjeta5 = lambda: pg.locator('.card.eqsug', has_text=EQUIPO['name']).first
         card = tarjeta5()
         ok('5 la tarjeta: entra por Thor y mejora (14 → 23)', 'en lugar de Thor' in card.inner_text() and card.locator('.eqpts b').inner_text() == '23'
@@ -693,7 +693,7 @@ try:
         r = pg.evaluate(FUERA, '#pqdlg')
         ok('7 celular: la ventana de PvP (el detalle y lo que recibe) no se sale', r['doc'] <= 390 and not r['fuera'], r)
         cerrar(pg)
-        ficha(pg, 'Jeff the Land Shark', 'jeff-the-land-shark')
+        ficha(pg, 'Jeff the Land Shark', 'jeff-the-land-shark', tab='cuenta'); pg.wait_for_selector('.eqsug', timeout=90000)    # «cómo entraría» es de Mi cuenta (1.0.52)
         abrir(pg, pg.locator('.card.eqsug').first)
         r = pg.evaluate(FUERA, '#pqdlg')
         ok('7 celular: la ventana de «Cómo entraría» no se sale', r['doc'] <= 390 and not r['fuera'], r)

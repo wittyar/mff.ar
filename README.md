@@ -29,10 +29,18 @@ cómo armarlo, armar equipos y trabajar sobre tier lists. 290 personajes, 598 un
   repetidos, la resistencia de los jefes de World Boss a los strikers y el instinto.
 
 ## Qué hay en la app
-La pantalla va en tres paneles (la *mesa de trabajo*, desde la 1.0.25, a prueba): en la ficha y en Equipos, a la
+La barra separa lo del juego de lo tuyo (desde la 1.0.52; Ezequiel, 12 de noviembre de 2026: «Separa el armado de mi
+propia cuenta de lo demás del juego»): a la izquierda, **Roster · Tier lists · Modos · Glosario · Histórico**; a la
+derecha, **Mi cuenta** (tus equipos, tu progreso, tus personajes propios, los atributos que marcaste y tu capa) con el
+botón **Mesa**; y al final, la ayuda, el idioma y Ajustes (que es solo de la app).
+
+La pantalla va en tres paneles (la *mesa de trabajo*, desde la 1.0.25): en la ficha y en Equipos, a la
 izquierda, la lista del roster con su búsqueda, sus filtros (los mismos del roster: lo que se filtra en uno se ve en
-el otro) y su orden, que dice cuántos quedan (la misma lista de las flechas ‹ ›; tocar uno abre su ficha y su «+» lo
-pone en la mesa; el que ya está lleva ✓); en el centro, la sección; a la derecha, en todas las secciones, la **mesa**:
+el otro) y su orden, que dice cuántos quedan (la misma lista de las flechas ‹ ›; tocar uno abre su ficha y, con la mesa
+abierta, su «+» lo pone en la mesa; el que ya está lleva ✓); en el centro, la sección; a la derecha, la **mesa**, que es de
+Mi cuenta: está cerrada hasta que se abre con el botón «Mesa» de la barra (queda en la capa; ponerle a alguien desde una
+tarjeta de equipo también la abre) y está siempre en Mi cuenta › Equipos. Con la mesa cerrada, las pantallas del juego no
+muestran nada del armado: ni la mesa, ni «Poner en la mesa», ni el «+» de la lista. La mesa tiene:
 - El equipo que se está armando, en orden: el primero es el líder, como en el juego, y «↑» hace líder a otro. Se
   pone desde la ficha («Poner en la mesa»), desde el «+» de la lista o con «Llevar a la mesa» en una tarjeta de
   equipo (combinaciones, favoritos, tus equipos, «cómo entraría»), que reemplaza lo que había con su líder primero.
@@ -45,15 +53,18 @@ pone en la mesa; el que ya está lleva ✓); en el centro, la sección; a la der
 - Guardarlo en *Equipos de tu cuenta*, con un nombre o sin él (entonces, los integrantes), con el primero de la mesa
   declarado como líder; avisa si alguno ya está en otro equipo tuyo del mismo modo, y si ese mismo equipo ya está
   guardado con ese modo y ese líder (los mismos con otro líder son otro equipo).
-- Los elegidos para comparar (hasta 4), con el botón que abre la comparación.
+
+Aparte de la mesa, en el mismo panel, va la bandeja de lo elegido para comparar (hasta 4), con el botón que abre la
+comparación: se ve en el roster y en la ficha, mientras se elige o hay elegidos. Elegir para comparar es del roster: al
+pasar a otra sección se deja de elegir (lo elegido queda).
 
 La mesa se guarda en la capa: sigue ahí al cambiar de sección y al volver a abrir la app. En una ventana angosta se
-ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
+ve un panel por vez, con pestañas abajo (Lista, Ver y, si está abierta, Mesa).
 
 - **Roster** con filtros (clase, rol, tier, bando, instinto, raza, habilidad, efecto, objetivo,
   atributos marcados, y lo que da su liderazgo o su soporte: ver *Índice para armar equipos*) y
   orden por la tier list que elijas.
-- **Ficha** de cada personaje y uniforme, en cinco pestañas (desde la 1.0.27, #24: cada una abre con lo que contesta y
+- **Ficha** de cada personaje y uniforme, en cinco pestañas del juego y, aparte, la de **Mi cuenta** (desde la 1.0.27, #24: cada una abre con lo que contesta y
   deja el detalle plegado; las reglas y explicaciones van a un «?» junto al título, no en párrafos arriba). Arriba, fijos, la foto, el nombre, las
   flechas ‹ › para pasar al anterior o al siguiente del listado del roster tal como está
   filtrado y ordenado (también con ← y →; la pestaña se conserva) y el selector de uniforme (el
@@ -106,15 +117,18 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
     armado; las **opciones del uniforme** abierto (qué uniforme habilita cada una y qué stat
     conviene elegir); plegadas, las reglas generales de ISO y urus para su tipo de ataque
     (derivado de sus skills). Lo de la guía de armado es de su mejor uniforme: si está abierto
-    otro, lo dice. Los bloques van en dos columnas que se reparten la altura. Abajo, **tu progreso**: la hoja de ruta de progresión y la calculadora de topes de
-    stats, que se guardan en tu capa (hasta la 1.0.26, la pestaña *Progreso*).
-  - *Equipos*: con el uniforme elegido, tus equipos donde ya está; cómo entraría en los otros
+    otro, lo dice. Los bloques van en dos columnas que se reparten la altura.
+  - *Mi cuenta* (desde la 1.0.52, a la derecha de las otras y con su color): lo tuyo con ese personaje. **Tus equipos**
+    donde ya está; **cómo entraría** en los otros
     (el mejor cambio según la sinergia de la app: a quién reemplaza o si se suma, el puntaje
     antes y después, y qué se gana y qué se pierde; tiene que quedar con *vínculo* con alguien
     del equipo: le da un soporte o el liderazgo, o recibe uno suyo, y le sirve (un efecto que sube
     un ataque o un daño elemental solo cuenta para quien pega con eso según sus skills, así que un
     liderazgo de daño de fuego no vincula a uno que pega físico), o forman juntos un bono de
-    equipo); sus **bonos de equipo**, plegados: con quiénes, qué suben y de dónde sale cada uno
+    equipo); **tu progreso** (la hoja de ruta de progresión y la calculadora de topes de stats, que se guardan en tu
+    capa; hasta la 1.0.51, dentro de Armado); **los atributos que marcaste** en sus skills, con el botón para marcarlos; y
+    **tus cambios a sus datos**, con «Editar». «Poner en la mesa» también está acá.
+  - *Equipos*: sus **bonos de equipo**, plegados: con quiénes, qué suben y de dónde sale cada uno
     (valen con cualquier uniforme); sus **strikers**, plegados, en una tabla con una fila por personaje y los
     dos sentidos (si aparece junto a él y si él aparece junto al otro, con la probabilidad y cuándo; «no» si la
     pestaña Striker de ese lado no lo trae y «sin dato» si la wiki no tiene esa pestaña; una de más de 100% es un
@@ -192,7 +206,11 @@ ve un panel por vez, con pestañas abajo (Lista, Ver y Mesa).
 - **Modos**: los 14 modos que la guía marca como importantes, con qué dan, cómo armar el equipo,
   personajes y C.T.P. recomendados, y el armado general (ISO, urus, 4.º gear, opciones de
   uniforme, obelisco) para PvE y PvP.
-- **Equipos**: los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
+- **Mi cuenta** (desde la 1.0.52): un resumen con una tarjeta por apartado y, en su sub-barra, *Equipos*, *Progreso*
+  (hasta dónde llegó cada personaje en la hoja de ruta y qué topes cargaste; se edita en su ficha), *Personajes propios*
+  (los que creaste y los del juego que editaste, y «+ Personaje»), *Atributos marcados* y *Mi capa* (lo que hay guardado,
+  exportar, importar y borrar; antes, en Ajustes). Las tier lists propias siguen en Tier lists.
+- **Equipos** (en Mi cuenta): los equipos de tu cuenta, con el modo y su tamaño según la fuente (Alliance
   Conquest: dos escuadras de 3); los favoritos (★), y los descartados, plegados, para
   restaurarlos. Se arman en la mesa. Cada equipo se guarda con sus integrantes en un orden fijo y su
   **líder declarado** (Ezequiel, 6 de octubre de 2026: «necesita estar declarado como tal para el cálculo
@@ -275,8 +293,8 @@ Sin conexión, la app anda igual con lo que tiene y lo dice en un aviso.
 
 ### Pasar lo que tenías en el navegador
 Hasta la versión anterior, la capa (listas, equipos, rutas, topes, marcas) vivía en el navegador.
-Se pasa una vez: en la versión vieja, **Ajustes → Exportar mi capa**; en la nueva, **Ajustes →
-Importar**.
+Se pasa una vez: en la versión vieja, **Ajustes → Exportar mi capa**; en la nueva, **Mi cuenta → Mi capa →
+Importar** (hasta la 1.0.51, en Ajustes).
 
 ### Desde el repo
 `MFF.bat` (Windows, con Python instalado) o `MFF.sh` (Linux/macOS) corren el mismo lanzador sobre
@@ -437,7 +455,7 @@ uniformes y coincide con la planilla en sus 213 filas.
   importadas, imágenes subidas, atributos marcados, hojas de ruta, topes cargados y
   preferencias. Se guarda a través del servidor local en cada cambio; si un guardado falla,
   la app lo dice y ofrece reintentar. Un `capa.json` ilegible frena el arranque en vez de
-  pisarlo. Se exporta e importa desde **Ajustes**, y las capas viejas (una sola fila por
+  pisarlo. Se exporta e importa desde **Mi cuenta › Mi capa**, y las capas viejas (una sola fila por
   entrada, modos de ejemplo) se convierten al cargarlas.
 - `scripts/contenido/` — lo curado a mano, cada bloque con su fuente: `guia.json` (armado,
   progresión, topes, ranking de C.T.P., reglas de ISO y urus), `modos.json`, `hallazgos.json`,

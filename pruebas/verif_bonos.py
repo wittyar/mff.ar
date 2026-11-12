@@ -14,7 +14,7 @@ Carril de consistencia: los bonos y la comparativa escriben los números como el
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json, os, re, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
+from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js, ir_a_equipos
 from playwright.sync_api import sync_playwright
 import auditoria_equipos as A
 import modelo_foco as F
@@ -178,7 +178,7 @@ try:
         inicio(); pg.click('[data-a="pickMode"]'); pg.wait_for_timeout(150)
 
         # 6. un equipo de la capa
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         tx = pg.locator('.card', has_text='Devoradores').first.inner_text()
         esperado = A.score([A.VAR[k] for k in EQUIPO['members']])
         ok('equipo Devoradores: la sinergia del modelo (con Galactus Abducted)', f'{esperado} pts de sinergia' in tx, (esperado, tx.replace('\n', ' | ')))

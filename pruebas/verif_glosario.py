@@ -181,7 +181,7 @@ try:
         ok('búsqueda vacía: todos los términos', cuenta('details.glitem[id^="gl-"]') == N_TERM)
 
         # «Atrás» y adelante
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_timeout(300)      # otra sección, a un paso
         pg.go_back(); pg.wait_for_selector('.glitem')
         ok('Atrás vuelve al glosario', titulo() == 'Glosario', titulo())
         pg.go_back(); pg.wait_for_selector('.ccard')

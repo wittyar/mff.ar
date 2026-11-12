@@ -112,6 +112,36 @@ nav.topnav{
 .navlink.on{color:var(--text);background:var(--surface-3)}
 .navspace{margin-left:auto}
 nav.topnav .navtools{display:flex;gap:4px;align-items:center}
+/* La barra en dos grupos (1.0.52): las secciones del juego y, aparte y con su color, Mi cuenta y la mesa de armado. */
+.navgrupo{display:flex;gap:4px;align-items:center}
+.navgrupo.cuenta{margin-right:10px;padding:0 10px;border-left:1px solid var(--line-2);border-right:1px solid var(--line-2)}
+.navgrupo.cuenta .navlink{color:var(--cuenta)}
+.navgrupo.cuenta .navlink.on{background:var(--cuenta-soft);color:var(--cuenta)}
+.mesabtn{border:1px solid var(--line-2);border-radius:var(--r-sm);background:none;cursor:pointer;padding:5px 10px;white-space:nowrap;
+  font:600 12px var(--font-body);color:var(--text-3)}
+.mesabtn b{font:600 11px var(--font-mono);margin-left:4px}
+.mesabtn:hover:not(:disabled){color:var(--text)}
+.mesabtn.on{background:var(--cuenta-soft);color:var(--cuenta);border-color:var(--cuenta)}
+.mesabtn:disabled{cursor:default}
+/* Mi cuenta: su sub-barra y el resumen */
+.cucab{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:-6px 0 20px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.curot{font:600 11px var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--cuenta)}
+.cutabs{display:flex;gap:4px;flex-wrap:wrap}
+.cutab{background:none;border:0;border-radius:var(--r-sm);padding:6px 11px;cursor:pointer;color:var(--text-2);font:500 13px var(--font-body);white-space:nowrap}
+.cutab:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.cutab.on{color:var(--cuenta);background:var(--cuenta-soft)}
+.cun{font:600 10.5px var(--font-mono);color:var(--text-3);margin-left:3px}
+.cutab.on .cun{color:var(--cuenta)}
+.cuhub{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:12px}
+.cutile{display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;cursor:pointer;padding:14px 16px;min-height:112px;
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--cuenta);border-radius:var(--r-md);color:inherit}
+.cutile:hover{border-color:var(--cuenta);background:var(--surface-2)}
+.cutile .k{font:600 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+.cutile .v{font:700 26px var(--font-display);line-height:1.1}
+.cutile .d{font-size:12.5px;color:var(--text-2)}
+.cutabla{border-collapse:collapse;width:100%;font-size:13px}
+.cutabla th{font:600 10.5px var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);text-align:left;padding:6px 10px;border-bottom:1px solid var(--line-2)}
+.cutabla td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
 
 main{max-width:1360px;margin:0 auto;padding:22px 20px 80px}
 .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
@@ -1014,6 +1044,9 @@ table.topes input{width:70px;padding:5px 7px}
 /* ---------- mesa de trabajo: tres paneles (1.0.25) ---------- */
 .trabajo{display:grid;grid-template-columns:minmax(0,1fr) 300px;align-items:start}
 .trabajo.con-lista{grid-template-columns:250px minmax(0,1fr) 300px}
+/* Sin el panel de la derecha (la mesa cerrada y nada para comparar): el centro toma su lugar. */
+.trabajo.sin-mesa{grid-template-columns:minmax(0,1fr)}
+.trabajo.sin-mesa > main{max-width:1360px;margin:0 auto}
 .trabajo > main{max-width:none;width:100%;min-width:0}
 .plista,.mesa{position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));overflow-y:auto;background:var(--surface);min-width:0}
 .plista{border-right:1px solid var(--line)}
@@ -1084,7 +1117,16 @@ table.topes input{width:70px;padding:5px 7px}
 .plmas.en{display:grid;place-items:center;color:var(--self);border-color:transparent;cursor:default}
 .plvacio{padding:12px}
 .trabajo.con-lista{grid-template-columns:280px minmax(0,1fr) 300px}
-@media (max-width:1180px){ .trabajo.con-lista{grid-template-columns:240px minmax(0,1fr) 270px} }
+.trabajo.con-lista.sin-mesa{grid-template-columns:280px minmax(0,1fr)}
+@media (max-width:1180px){ .trabajo.con-lista{grid-template-columns:240px minmax(0,1fr) 270px} .trabajo.con-lista.sin-mesa{grid-template-columns:240px minmax(0,1fr)} }
+/* La lista sin el «+» de la mesa: la fila es una sola columna. */
+.plit.sola{grid-template-columns:minmax(0,1fr)}
+/* La ficha: la pestaña «Mi cuenta» va aparte de las del juego, con su color; y la barra de «marcando atributos» en Skills. */
+.ftab.mia{margin-left:auto;color:var(--cuenta)}
+.ftab.mia.on{color:var(--cuenta);border-bottom-color:var(--cuenta)}
+.fcnota{margin-bottom:18px;padding-left:10px;border-left:3px solid var(--cuenta)}
+.marcando{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;
+  background:var(--cuenta-soft);border:1px solid var(--cuenta);border-radius:var(--r-sm);font-size:13px}
 
 /* ---------- ficha: respuesta primero (#24, 1.0.27) ---------- */
 .resumen3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:12px;margin-bottom:22px;align-items:start}
@@ -1270,3 +1312,7 @@ button.tlchip,button.tlchip:active{cursor:pointer}
 .tledit{display:flex;justify-content:space-between;align-items:center;gap:10px 16px;flex-wrap:wrap;margin-bottom:12px;padding:8px 12px;
   border:1px solid var(--cuenta);border-radius:var(--r-md);background:var(--cuenta-soft);font-size:12.5px}
 .tag.mia{background:var(--cuenta-soft);color:var(--cuenta)}
+
+/* Una tabla ancha se desplaza dentro de su envoltorio en vez de salirse de la columna (los topes de la ficha y las tablas
+   de Mi cuenta). La regla se había ido con las tablas de etapas de las skills y los topes se salían en el celular. */
+.stagewrap{overflow-x:auto;max-width:100%}

@@ -5,6 +5,7 @@ el Python embebido sin la carpeta del script en el path, y el apagado por falta 
 """
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import http.server, json, os, shutil, subprocess, threading, time
+from harness import ir_a_equipos
 from playwright.sync_api import sync_playwright
 
 PFX = '/tmp/wine64pfx'
@@ -64,7 +65,7 @@ with sync_playwright() as pw:
     pg.goto(url); pg.wait_for_selector('.ccard', timeout=60000)
     chequear('la página carga servida desde Windows', pg.locator('.ccard').count() > 0)
     # un cambio con caracteres fuera de cp1252 en la capa
-    pg.click('[data-a="goTeams"]'); pg.click('[data-a="teamOpen"]')
+    ir_a_equipos(pg); pg.click('[data-a="teamOpen"]')
     pg.fill('[data-a="teamName"]', 'Equipo ★ ↑ ñandú')
     for i in range(2): pg.locator('[data-a="teamToggle"]').nth(i).click()
     pg.click('[data-a="teamSave"]'); pg.wait_for_timeout(1500)

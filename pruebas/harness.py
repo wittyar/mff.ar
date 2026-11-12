@@ -76,3 +76,14 @@ def datos_js(*globales):
           f"vm.runInContext(fs.readFileSync('{DATOS}/data.js','utf8'),c);"
           f"process.stdout.write(JSON.stringify({{{','.join(f'{g}:c.window.{g}' for g in globales)}}}));")
     return json.loads(subprocess.run(['node', '-e', js], capture_output=True, text=True, check=True).stdout)
+
+
+def ir_a_equipos(pg):
+    """Mi cuenta › Equipos. Desde la 1.0.52 «Equipos» no está en la barra: es un apartado de Mi cuenta."""
+    pg.click('nav.topnav [data-a="goCuenta"]'); pg.click('.cutabs [data-a="goTeams"]')
+
+
+def abrir_mesa(pg):
+    """Abre la mesa (el botón «Mesa» de la barra) si está cerrada. Desde la 1.0.52 no se ve hasta que se abre."""
+    if pg.get_attribute('nav.topnav [data-a="mesaToggle"]', 'aria-pressed') != 'true':
+        pg.click('nav.topnav [data-a="mesaToggle"]')

@@ -23,7 +23,7 @@ con MFF_GUIA_ARMADO, la Ideal CTP List, MFF_CTPS y MFF_MODOS:
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
+from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js, ir_a_equipos, abrir_mesa
 from playwright.sync_api import sync_playwright
 
 ok = Chequeo()
@@ -375,7 +375,8 @@ try:
            and fila_de(r, 'Adam Warlock')['celdas'][0]['uni'] == "Marvel Studios' Guardians of the Galaxy 3" and r['nota'] == [TXT['es']['nota']],
            resumen(malas) if malas else fila_de(r, 'Adam Warlock'))
 
-        # 6. Tus equipos en la ficha (Adam Warlock está en Arena AW y en Otro mundo).
+        # 6. Tus equipos en la ficha, pestaña «Mi cuenta» (Adam Warlock está en Arena AW y en Otro mundo).
+        pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_timeout(300)
         mios = pg.locator('#fcuerpo > .section').nth(0).locator('.card').all()
         nombres = [c.locator('div').first.inner_text() for c in mios]
         bien = []
@@ -385,6 +386,7 @@ try:
         ok('6 ficha, en tus equipos: cada tarjeta con el modo de su equipo', nombres == ['Arena AW', 'Otro mundo'] and all(bien), (nombres, bien))
 
         # 7. Equipos de tu cuenta: uno de PvE guardado con el armador (como verif_escuadras).
+        abrir_mesa(pg); pg.wait_for_timeout(200)
         pg.click('[data-a="mesaVaciar"]') if not pg.locator('[data-a="mesaVaciar"]').is_disabled() else None
         pg.fill('[data-a="mesaNombre"]', JEFE[0])
         pg.select_option('select[data-a="mesaModo"]', JEFE[1]); pg.wait_for_timeout(150)
@@ -392,7 +394,7 @@ try:
             pg.evaluate("k => { const b = document.createElement('button'); b.dataset.a = 'mesaPoner'; b.dataset.key = k; document.body.appendChild(b); b.click(); b.remove(); }", k)
             pg.wait_for_timeout(120)
         pg.click('[data-a="mesaGuardar"]'); pg.wait_for_timeout(600)
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         capa = json.load(open(os.path.join(D, 'capa.json'), encoding='utf-8'))
         ok('7 el armador guarda «Jefe» (World Boss, PvE)', capa['teams'][0]['name'] == JEFE[0] and capa['teams'][0]['modeId'] == JEFE[1]
            and capa['teams'][0]['members'] == sorted(JEFE[2]), capa['teams'][0])    # en orden canónico
@@ -424,6 +426,7 @@ try:
 
         # 8. Cómo entraría Black Cat — Winter Criminal en tus equipos: el modo de cada uno.
         ficha(pg, 'Black Cat', 'black-cat', BLACK_CAT_WC.split('::')[1])
+        pg.click('[data-a="fichaTab"][data-v="cuenta"]'); pg.wait_for_timeout(300)
         sugs = pg.locator('#fcuerpo > .section').nth(1).locator('.eqsug').all()
         modo = {tt['name']: tt['modeId'] for tt in capa['teams']}
         res = {}
@@ -462,7 +465,7 @@ try:
 
         # 9. En inglés.
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         sec = pg.locator('.section', has=pg.locator('h3', has_text="Your account's teams"))
         bien = {}
         for c, tt in zip(sec.locator('.grid > .card').all(), capa['teams']):
@@ -486,7 +489,7 @@ try:
         pg.on('console', lambda m: m.type == 'error' and errores.append('consola: ' + m.text))
         pg.goto(url); pg.wait_for_selector('.ccard')
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)    # la capa quedó en inglés: de vuelta al castellano
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         for s in pg.locator('details.ga-eq > summary').all(): s.click()
         pg.wait_for_timeout(200)
         desborde = """() => { const out = []; for (const d of document.querySelectorAll('details.ga-eq')) { const lim = d.closest('.card').getBoundingClientRect().right;

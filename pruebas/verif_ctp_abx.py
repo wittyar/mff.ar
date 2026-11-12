@@ -3,7 +3,7 @@ can replace Rage»). Alliance Battle tiene su contexto propio (ctp «abx» en mo
 Judgement en su lugar (no los de PvE), y también arriba de sus equipos por día; un equipo guardado con el modo Alliance
 Battle muestra lo mismo."""
 import json, os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import SALIDA  # noqa: E401
-from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
+from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js, ir_a_equipos
 from playwright.sync_api import sync_playwright
 
 ok = Chequeo()
@@ -37,7 +37,7 @@ try:
         pg.screenshot(path=f'{SALIDA}/ctp_abx_modos.png')
 
         # 2. el equipo guardado con el modo Alliance Battle
-        pg.click('nav.topnav [data-a="goTeams"]'); pg.wait_for_timeout(500)
+        ir_a_equipos(pg); pg.wait_for_timeout(500)
         pg.screenshot(path=f'{SALIDA}/ctp_abx_equipos.png')
         card = pg.locator('main .card', has_text='Equipo AB').filter(has=pg.locator('.ga-eq'))
         ok('2 el equipo guardado está', card.count() == 1, pg.locator('main').inner_text()[:300])

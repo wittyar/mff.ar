@@ -1,5 +1,6 @@
-"""Ficha en pestañas: cabecera fija (foto, nombre, uniforme), Resumen · Skills · Análisis ·
-Armado · Equipos · Progreso · Más, reglas generales plegadas, enlaces internos, y alturas por pestaña."""
+"""Ficha en pestañas: cabecera fija (foto, nombre, uniforme), Resumen · Skills · Armado · Equipos · Fuentes y, aparte,
+«Mi cuenta» (1.0.52: tu progreso, tus equipos, los atributos que marcaste y tus cambios a sus datos), reglas generales
+plegadas, enlaces internos, y alturas por pestaña."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -76,9 +77,11 @@ try:
         reglas.first.locator(':scope > summary').click()
         ok('5 las reglas se abren con un clic', pg.locator('details.reglas h4:has-text("ISO-8")').is_visible())
 
-        # 6. Tu progreso, dentro de Armado (1.0.27): hoja de ruta y topes; marcar un paso queda en la capa
-        ok('6 Armado: tu progreso, con la hoja de ruta y los topes', pg.locator('.bloque h4:has-text("Hoja de ruta")').count() == 1
-           and pg.locator('.bloque h4:has-text("Topes de stats")').count() == 1)
+        # 6. Tu progreso, en la pestaña «Mi cuenta» (1.0.52; antes, dentro de Armado): hoja de ruta y topes; marcar un paso queda en la capa
+        ok('6 Armado ya no tiene tu progreso', pg.locator('.bloque h4:has-text("Hoja de ruta")').count() == 0 and pg.locator('[data-a="ruta"]').count() == 0)
+        pestana(pg, 'cuenta')
+        ok('6 Mi cuenta: tu progreso, con la hoja de ruta y los topes', pg.locator('.ftab.mia.on').count() == 1
+           and pg.locator('.bloque h4:has-text("Hoja de ruta")').count() == 1 and pg.locator('.bloque h4:has-text("Topes de stats")').count() == 1)
         pg.locator('[data-a="ruta"]').first.click(); pg.wait_for_timeout(600)
         capa = json.load(open(os.path.join(D, 'capa.json'), encoding='utf-8'))
         ok('6 marcar un paso de la hoja de ruta se guarda', capa.get('ruta', {}).get(pj['Wong']['id']), capa.get('ruta'))
@@ -94,11 +97,14 @@ try:
         ok('8 el aviso de diferencias lleva a Fuentes, a la verificación', pg.locator('.ftab.on').inner_text() == 'Fuentes'
            and pg.locator('#verif').is_visible())
 
-        # 9. Marcar atributos lleva a Skills con los marcadores
-        pestana(pg, 'resumen'); pg.click('[data-a="marcarModo"]'); pg.wait_for_timeout(200)
+        # 9. Marcar atributos (en «Mi cuenta», 1.0.52) lleva a Skills con los marcadores y una barra con «Listo»
+        pestana(pg, 'resumen')
+        ok('9 la cabecera de la ficha no tiene «Marcar atributos» ni «Editar»: son de Mi cuenta', pg.locator('[data-a="marcarModo"], [data-a="edit"]').count() == 0)
+        pestana(pg, 'cuenta'); pg.click('[data-a="marcarModo"]'); pg.wait_for_timeout(200)
         ok('9 Marcar atributos abre Skills con los marcadores', pg.locator('.ftab.on').inner_text() == 'Skills'
-           and pg.locator('.marcador').count() > 0, pg.locator('.marcador').count())
-        pg.click('[data-a="marcarModo"]')
+           and pg.locator('.marcador').count() > 0 and pg.locator('.marcando [data-a="marcarModo"]').count() == 1, pg.locator('.marcador').count())
+        pg.click('.marcando [data-a="marcarModo"]'); pg.wait_for_timeout(200)
+        ok('9 «Listo» los saca', pg.locator('.marcador').count() == 0 and pg.locator('.marcando').count() == 0)
 
         # 10. rotaciones de otro uniforme: el botón cambia el uniforme del selector
         abrir(pg, 'Hulk'); pestana(pg, 'skills')
@@ -110,7 +116,7 @@ try:
         # 11. alturas por pestaña (compu)
         abrir(pg, 'Wong', ds2)
         alturas = {}
-        for k in ('resumen', 'skills', 'armado', 'equipos', 'fuentes'):
+        for k in ('resumen', 'skills', 'armado', 'equipos', 'fuentes', 'cuenta'):
             pestana(pg, k); alturas[k] = pg.evaluate("document.documentElement.scrollHeight")
         print('   alturas en compu (px):', alturas)
         pestana(pg, 'resumen'); pg.evaluate("window.scrollTo(0,0)"); pg.wait_for_timeout(500)
@@ -123,7 +129,7 @@ try:
         # 12. inglés
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
         tabs = [x.inner_text() for x in pg.locator('.ftab').all()]
-        ok('12 pestañas en inglés', tabs == ['Overview', 'Skills', 'Build', 'Teams', 'Sources'], tabs)
+        ok('12 pestañas en inglés', tabs == ['Overview', 'Skills', 'Build', 'Teams', 'Sources', 'My account'], tabs)
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
         ok('sin errores de página (compu)', not errores, errores[:3])
         b.close()
@@ -138,7 +144,7 @@ try:
         tabs_vis = pg.evaluate("[...document.querySelectorAll('.ftab')].every(t => { const r = t.getBoundingClientRect(); return r.right <= 390 && r.left >= 0; })")
         ok('13 celular: cabecera compacta, pestañas a la vista y sin desborde', cab <= 190 and ancho <= 390 and tabs_vis, (cab, ancho, tabs_vis))
         alt_cel = {}
-        for k in ('resumen', 'skills', 'armado', 'equipos', 'fuentes'):
+        for k in ('resumen', 'skills', 'armado', 'equipos', 'fuentes', 'cuenta'):
             pestana(pg, k); alt_cel[k] = pg.evaluate("document.documentElement.scrollHeight")
         print('   alturas en celular (px):', alt_cel)
         pestana(pg, 'skills'); pg.evaluate("window.scrollTo({top: 1800, behavior: 'instant'})"); pg.wait_for_timeout(300)

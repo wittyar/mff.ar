@@ -7,7 +7,7 @@ formulario de crear lista estaban siempre a la vista, sobre listas que casi siem
      que tiene un cambio tuyo.
   4. Crear una lista propia: queda elegida y se sigue editando (renombrar, editar filas, eliminar); sin editar, esos
      controles no están.
-  5. Mientras se elige para comparar, tocar una entrada la suma a la bandeja en vez de abrirla.
+  5. Elegir para comparar es del roster: al pasar a Tier lists se deja de elegir y tocar una entrada abre su ficha.
   6. En inglés. Sin errores de página ni de consola."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import json
@@ -84,10 +84,10 @@ try:
         pg.click('nav.topnav [data-a="goTier"]'); pg.wait_for_selector('.tlchip')
         chip = pg.locator('.tierrow button.tlchip').nth(5); key = chip.get_attribute('data-key')
         chip.click(); pg.wait_for_timeout(250)
-        ok('5 mientras se elige para comparar, tocar una entrada la suma a la bandeja (que está a la vista) y no abre la ficha',
-           cuenta('.fcab') == 0 and cuenta('aside.mesa .mscmp') == 1 and cuenta(f'aside.mesa [data-a="unpick"][data-cid="{key.split("::")[0]}"]') == 1)
+        ok('5 se venía eligiendo para comparar: en Tier lists ya no, y tocar una entrada abre su ficha sin sumarla',
+           cuenta('.fcab') == 1 and pg.locator('select[data-a="uniformSel"]').input_value() == key.split('::')[1] and cuenta('aside.mesa .mscmp') == 0)
         pg.evaluate("document.querySelector('nav.topnav .navlink').click()"); pg.wait_for_selector('.ccard')
-        pg.click('[data-a="pickMode"]'); pg.wait_for_timeout(150)
+        ok('5 y en el roster, «Comparar» quedó apagado', 'primary' not in pg.get_attribute('[data-a="pickMode"]', 'class'))
 
         # 6. inglés
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)

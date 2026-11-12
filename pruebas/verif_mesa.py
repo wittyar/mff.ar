@@ -1,4 +1,6 @@
 """Mesa de trabajo (1.0.25): tres paneles y la mesa, contra un modelo escrito aparte con data.js.
+- La mesa es de Mi cuenta (1.0.52): cerrada, las pantallas del juego no la muestran ni tienen «Poner en la mesa» ni el «+»
+  de la lista; se abre con el botón «Mesa» de la barra (queda en la capa) y está siempre en Mi cuenta › Equipos.
 - Ficha: lista a la izquierda (el roster filtrado, el actual marcado), mesa a la derecha; en las otras secciones, sin
   lista y con la mesa.
 - Poner en la mesa: desde la ficha y desde el «+» de la lista; el mismo personaje con otro uniforme reemplaza (y lo
@@ -18,7 +20,7 @@
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
+from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js, ir_a_equipos, abrir_mesa
 from playwright.sync_api import sync_playwright
 
 ok = Chequeo()
@@ -65,7 +67,7 @@ try:
         pg.select_option('select[data-a="sort"]', 'name'); pg.wait_for_timeout(150)
         viejo = next(x for x in capa()['teams'] if x['id'] == 'eq-viejo')
         ok('equipo de antes: se le declara un líder de sus integrantes y se guarda', viejo.get('lider') in VIEJO, viejo.get('lider'))
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         ok('equipo de antes: Equipos dice a cuál se le declaró', 'Equipo viejo' in ' '.join(pg.locator('main .avisoeq').all_inner_texts()),
            pg.locator('main .avisoeq').all_inner_texts())
         tarjeta_vieja = pg.locator('.card', has_text='Equipo viejo')
@@ -76,6 +78,21 @@ try:
         miembros = lambda: pg.evaluate("[...document.querySelectorAll('.mesa .mslot:not(.libre) .msfoto')].map(x => x.dataset.cid + '::' + (x.dataset.uid || 'base'))")
         avisos = lambda: pg.locator('.mesa .avisoeq').all_inner_texts()
 
+        # la mesa es de Mi cuenta: cerrada, lo del juego no muestra nada del armado
+        ok('barra: el grupo del juego y el de Mi cuenta, con el botón de la mesa',
+           pg.locator('nav.topnav .navgrupo').count() == 2 and pg.locator('nav.topnav .navgrupo.cuenta [data-a="goCuenta"]').count() == 1
+           and pg.inner_text('nav.topnav [data-a="mesaToggle"]').split() == ['Mesa', '0/3']
+           and pg.locator('nav.topnav [data-a="goTeams"], nav.topnav [data-a="goEditor"]').count() == 0, pg.inner_text('nav.topnav'))
+        ok('mesa cerrada: el roster va sin lista y sin mesa', pg.locator('.plista').count() == 0 and pg.locator('aside.mesa').count() == 0
+           and pg.locator('.trabajo.sin-mesa').count() == 1)
+        pg.locator('main [data-a="open"]').first.click(); pg.wait_for_selector('.fcab')
+        ok('mesa cerrada: la ficha no tiene «Poner en la mesa» ni el «+» de la lista',
+           pg.locator('[data-a="mesaPoner"]').count() == 0 and pg.locator('aside.mesa').count() == 0 and pg.locator('.plista .plit.sola').count() > 0)
+        abrir_mesa(pg); pg.wait_for_timeout(600)
+        ok('«Mesa» de la barra la abre, queda marcado y en la capa',
+           pg.locator('aside.mesa .mslot').count() == 3 and pg.get_attribute('nav.topnav [data-a="mesaToggle"]', 'aria-pressed') == 'true'
+           and capa()['prefs']['mesa'] is True and pg.locator('main [data-a="mesaPoner"]').count() == 1, capa()['prefs'])
+        pg.evaluate("document.querySelector('nav.topnav .navlink').click()"); pg.wait_for_selector('.ccard')
         ok('roster: sin lista, con la mesa', pg.locator('.plista').count() == 0 and pg.locator('aside.mesa').count() == 1)
         ok('roster: la barra de comparar de abajo ya no está', pg.locator('[data-a="goCompare"]').count() == 0)
         pg.fill('#q', 'Abomination'); pg.wait_for_timeout(300)
@@ -83,7 +100,8 @@ try:
         pg.locator('main [data-a="open"]').first.click(); pg.wait_for_selector('.fcab')
         items = pg.locator('.plista .plit')
         cab = pg.locator('.plista .panelcab').inner_text()
-        ok('ficha: lista con el roster filtrado', items.count() == n_roster and f'{n_roster} DE 888' in cab.upper(), (items.count(), n_roster, cab))
+        n_todas = sum(1 + len(c['uniforms']) for c in CH.values())
+        ok('ficha: lista con el roster filtrado', items.count() == n_roster and f'{n_roster} DE {n_todas}' in cab.upper(), (items.count(), n_roster, cab))
         ok('ficha: el actual marcado', pg.locator('.plista .plit.on [data-a="fichaVecina"]').get_attribute('data-uid') == '')
         pg.locator('.plista .plit').nth(1).locator('[data-a="fichaVecina"]').click(); pg.wait_for_timeout(300)
         ok('lista: tocar otro abre su ficha', pg.locator('select[data-a="uniformSel"]').input_value() == 'abomination-10100228')
@@ -142,7 +160,7 @@ try:
         pg.locator('.mesa .mslot').nth(1).locator('[data-a="mesaLider"]').click(); pg.wait_for_timeout(150)
         pg.fill('[data-a="mesaNombre"]', 'Prueba mesa'); pg.wait_for_timeout(300)
         ok('la mesa vuelve a Red Hulk de líder', miembros() == [RHULK, ABO_I, HULK], miembros())
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(300)
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
         ok('Equipos: el guardado está en Mis equipos', pg.locator('.card', has_text='Prueba mesa').count() == 1)
         guardado = next(x for x in capa()['teams'] if x['name'] == 'Prueba mesa')
         ok('líder declarado: el primero de la mesa, con los integrantes en orden canónico',
@@ -181,7 +199,7 @@ try:
         # llevar a la mesa desde la tarjeta
         pg.click('[data-a="mesaVaciar"]'); pg.wait_for_timeout(150)
         ok('vaciar', miembros() == [] and pg.locator('[data-a="mesaNombre"]').input_value() == '')
-        pg.click('[data-a="goTeams"]'); pg.wait_for_timeout(200)
+        ir_a_equipos(pg); pg.wait_for_timeout(200)
         pg.locator('.card', has_text='Prueba mesa').locator('[data-a="teamDesde"]').click(); pg.wait_for_timeout(200)
         lider_card = pg.locator('.card', has_text='Prueba mesa').locator('.eqfoto.lider').get_attribute('data-cid')
         ok('llevar a la mesa: el equipo con su líder primero, su modo y su nombre',
@@ -211,7 +229,8 @@ try:
            pg.locator('.mesa .mscmp').count() == 4 and any(x.startswith('⚠ Ya hay 4 para comparar: quitá una para sumar ') for x in avisos()),
            pg.locator('.mesa .avisoeq').all_inner_texts())
         pg.click('.mesa [data-a="goCompare"]'); pg.wait_for_timeout(300)
-        ok('comparar: el botón lleva a la comparación (por efecto)', pg.locator('.cpe').count() == 1)
+        ok('comparar: el botón lleva a la comparación, en el método sugerido', pg.locator('.cpe').count() == 1
+           and pg.locator('.cmetb.on.sug').count() == 1, pg.locator('.cmetb.on').all_inner_texts())
 
         # ventana angosta
         pg.locator('.mesa .mslot [data-a="fichaVecina"]').first.click(); pg.wait_for_selector('.fcab')
@@ -235,6 +254,22 @@ try:
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
         ok('inglés: la mesa en inglés', pg.locator('.mesa .panelcab').first.inner_text().upper().startswith('DESK'), pg.locator('.mesa .panelcab').first.inner_text())
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(200)
+
+        # cerrar la mesa: en la ficha queda solo lo que se eligió para comparar; en Mi cuenta › Equipos está siempre
+        pg.click('nav.topnav [data-a="mesaToggle"]'); pg.wait_for_timeout(600)
+        ok('«Mesa» otra vez la cierra: sin la mesa ni «Poner en la mesa», con lo elegido para comparar; queda en la capa',
+           pg.locator('.mesa .mslot').count() == 0 and pg.locator('[data-a="mesaPoner"]').count() == 0 and pg.locator('.mesa .mscmp').count() == 4
+           and capa()['prefs']['mesa'] is False, capa()['prefs'])
+        pg.click('nav.topnav [data-a="goTier"]'); pg.wait_for_timeout(300)
+        ok('mesa cerrada, en otra sección: ni la mesa ni la bandeja de comparar', pg.locator('aside.mesa').count() == 0)
+        pg.evaluate("document.querySelector('nav.topnav .navlink').click()"); pg.wait_for_selector('.ccard')
+        ok('de vuelta en el roster: se dejó de elegir al salir (tocar una tarjeta abre su ficha) y lo elegido sigue en la bandeja',
+           pg.locator('aside.mesa .mscmp').count() == 4 and 'primary' not in pg.get_attribute('[data-a="pickMode"]', 'class')
+           and pg.locator('aside.mesa .mslot').count() == 0, pg.get_attribute('[data-a="pickMode"]', 'class'))
+        ir_a_equipos(pg); pg.wait_for_timeout(300)
+        ok('Mi cuenta › Equipos: la mesa está aunque esté cerrada, y el botón de la barra no la puede cerrar',
+           pg.locator('aside.mesa .mslot').count() >= 3 and pg.locator('nav.topnav [data-a="mesaToggle"]').is_disabled()
+           and pg.locator('.cutabs .cutab.on').inner_text().startswith('Equipos'), pg.locator('.cutabs .cutab.on').all_inner_texts())
 
         ok('sin errores de página ni de consola', not errores, errores[:5])
         ok('sin diálogos del navegador', not dialogos, dialogos)
