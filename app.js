@@ -1640,12 +1640,14 @@ function analisisDe (v) {
   if (!an) throw new Error('falta el análisis del retrato ' + v.p);
   return an;
 }
-/** Totales que muestra thanosvibs: carga combinada de las cinco activas. */
+/** Totales que muestra thanosvibs: carga combinada de las cinco activas. null si ninguna skill trae ese dato (un
+ *  personaje creado a mano): no es lo mismo que 0. */
 function cargas (skills) {
-  let ult = 0, stk = 0;
-  skills.forEach(sk => { if (sk.ult) ult += sk.ult; if (sk.stk) stk += sk.stk; });
-  return { ult: Math.round(ult * 10) / 10, stk: Math.round(stk * 10) / 10 };
+  const suma = (k) => skills.some(sk => sk[k] != null) ? Math.round(skills.reduce((a, sk) => a + (sk[k] || 0), 0) * 10) / 10 : null;
+  return { ult: suma('ult'), stk: suma('stk') };
 }
+/** Una carga combinada, en texto: «47%», o «—» sin dato. */
+function cargaTxt (n) { return n == null ? '—' : n + '%'; }
 /** Suma del % de ataque de todas las etapas de las skills activas. */
 function danoTotal (skills) {
   let n = 0;
@@ -3154,8 +3156,8 @@ function fichaSkills (ch, v) {
   if (!v.skills.length) return `<div class="empty"><div class="big">?</div><div>${h(t('d_no_skills'))}</div></div>`;
   const car = cargas(v.skills), kb = BUFFS[v.p] || {}, ks = Object.keys(kb);
   return `<div class="chargebar">
-      <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult)}%;background:var(--accent)"></i></div><b>${car.ult}%</b>
-      <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk)}%;background:var(--role-control)"></i></div><b>${car.stk}%</b>
+      <span>${h(t('c_ult'))}</span><div class="bar"><i style="width:${Math.min(100, car.ult || 0)}%;background:var(--accent)"></i></div><b>${cargaTxt(car.ult)}</b>
+      <span>${h(t('c_striker'))}</span><div class="bar"><i style="width:${Math.min(100, car.stk || 0)}%;background:var(--role-control)"></i></div><b>${cargaTxt(car.stk)}</b>
     </div>
     ${ks.length ? `<div class="keybuffs">
       <div class="kbhead">${h(t('c_keybuffs'))}</div>
@@ -5060,8 +5062,8 @@ function renderCompare () {
       ${attr(t('c_worldboss'), v => icon(v.wba) + h(dom(v.wba) || '—'))}
       ${attr(t('cmp_abilities'), v => (v.ab || []).map(a => `<span class="tag dim">${h(dom(a))}</span>`).join(' ') || '—')}
       ${attr(t('cmp_cost'), v => h(v.cost || '—'))}
-      <tr><th>${h(t('c_ult'))}</th>${vs.map((v, i) => `<td class="num">${car[i].ult}%</td>`).join('')}</tr>
-      <tr><th>${h(t('c_striker'))}</th>${vs.map((v, i) => `<td class="num">${car[i].stk}%</td>`).join('')}</tr>
+      <tr><th>${h(t('c_ult'))}</th>${vs.map((v, i) => `<td class="num">${cargaTxt(car[i].ult)}</td>`).join('')}</tr>
+      <tr><th>${h(t('c_striker'))}</th>${vs.map((v, i) => `<td class="num">${cargaTxt(car[i].stk)}</td>`).join('')}</tr>
       <tr><th>${h(t('c_dmg_total'))}</th>${vs.map(v => `<td class="num">${danoTotal(v.skills)}%</td>`).join('')}</tr>
       <tr><th>${h(t('c_attrs'))}</th>${vs.map(v => { const a = [...atributosDe(v.p, v.skills)];
         return `<td>${a.length ? a.map(k => `<span class="tag atributo">${h(atrNombre(k))}</span>`).join(' ')
