@@ -236,6 +236,7 @@
  "Increases basic damage dealt to targets with a higher Max HP than the character by #%.Decreases basic damage taken from targets with a lower Max HP than the character by #%.": "Aumenta el daño básico infligido a objetivos con más PG máximos que el personaje #%.Reduce el daño básico recibido de objetivos con menos PG máximos que el personaje #%.",
  "Increases character size by #% and all Speeds, all Basic Attacks by #%.": "Aumenta el tamaño del personaje #% y todas las velocidades y los ataques básicos #%.",
  "Increases character size by #%, all Basic Attacks by #%^, all Basic Defenses by #%.": "Aumenta el tamaño del personaje #%, los ataques básicos #%^ y las defensas básicas #%.",
+ "Increases character size by #%, Basic Damage by #%^, all Basic Defenses by #%.": "Aumenta el tamaño del personaje #%, el daño básico #%^ y las defensas básicas #%.",
  "Increases damage dealt to targets with # effect by #%": "Aumenta el daño infligido a objetivos con el efecto # en #%",
  "Increases damage to All element damage by #%.": "Aumenta el daño de todos los elementos #%.",
  "Increases summoned characters' Basic Attacks and Basic Defenses by #%,<br>Increases HP by #%, increases duration of summoned characters by #%.": "Aumenta los ataques básicos y las defensas básicas de los personajes invocados #%,<br>aumenta los PG #% y aumenta la duración de los personajes invocados #%.",
