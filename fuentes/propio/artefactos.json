@@ -1,6 +1,6 @@
 {
  "nota": {
-  "es": "Artefactos exclusivos propios (como /api/artifacts de thanosvibs): el de Agatha Harkness, nuevo, y el de Morgan Le Fay, que la actualización del 14 de octubre de 2026 cambia (antes: daño a enemigos con 50% de PG o menos, para ella; después: daño a supervillanos y a superhéroes, para los aliados Universales). La nota da los valores de Lv.4 (6★); los demás niveles no están. El de Dormammu (Lord of Chaos), nuevo con el parche del 27 de octubre de 2026: la nota da también los valores de Lv.4 (6★).",
+  "es": "Artefactos exclusivos propios (como /api/artifacts de thanosvibs): el de Agatha Harkness, nuevo, y el de Morgan Le Fay, que la actualización del 14 de octubre de 2026 cambia (antes: daño a enemigos con 50% de PG o menos, para ella; después: daño a supervillanos y a superhéroes, para los aliados Universales). La nota da los valores de Lv.4 (6★); los demás niveles no están. El de Dormammu (Lord of Chaos), nuevo con el parche del 27 de octubre de 2026: la nota da también los valores de Lv.4 (6★). Los de Lilandra (Empress of the Shi'ar Empire), Deathbird (Exiled Princess) y Vulcan (Vulcan the Kingbreaker), nuevos con la actualización del 17 de noviembre de 2026: la nota da también los valores de Lv.4 (6★).",
   "en": "Own exclusive artifacts."
  },
  "artefactos": [
@@ -94,6 +94,102 @@
    ],
    "sin_confirmar": [
     "id",
+    "update",
+    "values"
+   ]
+  },
+  {
+   "id": 9003,
+   "portrait": "lilandra",
+   "character": "Lilandra",
+   "artifact_name": "Empress of the Shi'ar Empire",
+   "passive_name": "Benevolent Empress",
+   "update": "12.4",
+   "pve_score": null,
+   "pvp_score": null,
+   "text": [
+    "Applies to: Super Hero Allies",
+    "• Ignores target's Dodge Rate by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)",
+    "• Increases All Basic Attacks by [P3]%, and an additional [P4]% of total Instinct. (Up to 200%)"
+   ],
+   "values": {
+    "6": [
+     "15",
+     "0.5",
+     "20",
+     "0.5"
+    ]
+   },
+   "acquisition": [],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "update",
+    "values"
+   ]
+  },
+  {
+   "id": 9004,
+   "portrait": "deathbird",
+   "character": "Deathbird",
+   "artifact_name": "Exiled Princess",
+   "passive_name": "Mad Princess",
+   "update": "12.4",
+   "pve_score": null,
+   "pvp_score": null,
+   "text": [
+    "Applies to: Self",
+    "• Increases Basic Damage Dealt to SUPER HERO faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)",
+    "• Increases Basic Damage Dealt to SUPER VILLAIN faction by [P1]%, and an additional [P2]% of total Instinct. (Up to 200%)"
+   ],
+   "values": {
+    "6": [
+     "20",
+     "0.5"
+    ]
+   },
+   "acquisition": [],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "update",
+    "values"
+   ]
+  },
+  {
+   "id": 9005,
+   "portrait": "vulcan",
+   "character": "Vulcan",
+   "artifact_name": "Vulcan the Kingbreaker",
+   "passive_name": "Mad Tyrant",
+   "update": "12.4",
+   "pve_score": null,
+   "pvp_score": null,
+   "text": [
+    "Activation Rate: when HP is below 5%",
+    "&emsp;Applies to: Self",
+    "&emsp;• Guard Break Immunity",
+    "&emsp;• HP does not drop to 1 or below. Recovers HP by [P1]% of Max HP when the buff ends.",
+    "&emsp;• Recovers by an additional [P2]% of Total Instinct. (Up to 100% of HP Recovery) ([P3] sec.)",
+    "Cooldown Time 180 seconds"
+   ],
+   "values": {
+    "6": [
+     "50",
+     "0.5",
+     "7"
+    ]
+   },
+   "acquisition": [],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
     "update",
     "values"
    ]

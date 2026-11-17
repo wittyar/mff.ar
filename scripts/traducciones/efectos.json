@@ -66,6 +66,7 @@
  "Attack Speed increases by #%.": "Aumenta la velocidad de ataque #%.",
  "Barrier # time(s)": "Barrera # vez/veces",
  "Bleed: Deals additional #% Damage every # sec. (Removes Elasticity)": "Sangrado: Inflige #% de daño adicional cada # s. Elimina la Elasticidad.",
+ "Bleed: Deals additional #% Damage every # sec. Decreases Recovery Rate by #%. (Removes Elasticity)": "Sangrado: Inflige #% de daño adicional cada # s. Reduce el índice de recuperación #%. Elimina la Elasticidad.",
  "Burn: Deals additional #% Flame Damage every # sec.": "Quemadura: inflige #% de daño de fuego adicional cada # s.",
  "Charm: Deals #% Mind Damage every # sec, Recovery equal to #% of DOT Damage. (Up to #% of Max HP)": "Hechizo: inflige #% de daño mental cada # s y recupera un #% del daño por tiempo. (Hasta un #% de los PG máximos)",
  "Chill: Deals additional #% Cold Damage every # sec": "Congelación: inflige #% de daño de frío adicional cada # s",

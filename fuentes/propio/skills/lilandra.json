@@ -1,0 +1,343 @@
+{
+ "portrait": "lilandra",
+ "desde": null,
+ "fuente": [
+  "foro-1897819",
+  "cafe-3190031"
+ ],
+ "notas": [
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.",
+  "La Tier-3 (definitiva) no trae su recarga en la ficha: va sin recarga.",
+  "La ficha escribe la perforación con los efectos en otro orden («SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE»): va con el texto de la API, que nombra los mismos cinco.",
+  "Activas 2 y 4: la ficha pone en el sangrado «Decreases Recovery Rate by -50%»; la API no tiene esa variante del sangrado ni una etiqueta para bajarle la recuperación al rival: va como un solo efecto, el sangrado, con el texto de la ficha.",
+  "Pasiva (Empress's Resolve): el bando de los dos efectos (Super Villain) va en scripts/contenido/marcadores.csv.",
+  "Tier-4: la nota da los valores de Lv.6 del striker (Majestrix's Strategy)."
+ ],
+ "slots": {
+  "Leader Skill": {
+   "type": "Leader Skill",
+   "name": "Glory of the Shi'ar Empire",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 9,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>60%</b>"
+      }
+     ],
+     "target": "Super Hero Allies"
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Shi'ar Empire Tactics",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 44,
+       "ability": "GUARANTEED CRITICAL RATE ↑",
+       "description": "Increases Guaranteed Critical Rate by <b>25%</b>"
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>40%</b>, increases Bonus Damage by <b>40%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Empress's Resolve",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "id": 999003301,
+       "abilityId": 299,
+       "ability": "Increases basic damage based on character's faction",
+       "description": "Increases basic damage dealt to $HEROSUBTYPE1 faction by <b>55%</b>."
+      },
+      {
+       "id": 999003302,
+       "abilityId": 300,
+       "ability": "Decreases basic damage based on character's faction",
+       "description": "Decreases basic damage received from $HEROSUBTYPE1 faction by <b>40%</b>."
+      }
+     ],
+     "target": "Super Hero Allies"
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Psychic Empress",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>95%</b> of Physical Attack.<br>Additional <b>403</b> Physical Damage."
+      },
+      {
+       "abilityId": 231,
+       "ability": "Mind Control",
+       "description": "Mind Control^, increases basic damage received by <b>10%</b>.",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Gate of Chandilar",
+   "cooldown": 9,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>100%</b> of Physical Attack.<br>Additional <b>202</b> Physical Damage."
+      },
+      {
+       "abilityId": 107,
+       "ability": "BLEED",
+       "description": "Bleed: Deals additional <b>25%</b> Damage every <b>1</b> sec. Decreases Recovery Rate by <b>50%</b>. (Removes Elasticity)",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Shi'ar Moonlight",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>30%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>50%</b>, all speed by <b>1%</b>, and Critical Rate by <b>40%</b>, removes Incapacitation",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>130%</b> of Physical Attack.<br>Additional <b>1611</b> Physical Damage."
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Shi'ar Sword",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 8
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>1%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>55%</b> of Physical Attack.<br>Additional <b>806</b> Physical Damage."
+      },
+      {
+       "abilityId": 107,
+       "ability": "BLEED",
+       "description": "Bleed: Deals additional <b>25%</b> Damage every <b>1</b> sec. Decreases Recovery Rate by <b>50%</b>. (Removes Elasticity)",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Dash Strike",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 5
+      },
+      {
+       "abilityId": 263,
+       "ability": "Increases all basic stats",
+       "description": "Increases all Basic Attacks by <b>50%</b>, all Basic Defenses by <b>50%</b>, and all Speeds by <b>1%</b>.",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>70%</b> of Physical Attack.<br>Additional <b>269</b> Physical Damage."
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      },
+      {
+       "abilityId": 31060,
+       "ability": "Decreases all Basic Defenses (Can stack, ignores immunity)",
+       "description": "Decreases all Basic Defenses by <b>5%</b>. (Stacks up to <b>50%</b>, ignores immunity)",
+       "duration": 5
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active Ult": {
+   "type": "Active Ult",
+   "name": "Lux Gloriana",
+   "cooldown": null,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>80%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 8
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 8
+      },
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>50%</b>.",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>150%</b> of Physical Attack.<br>Additional <b>48</b> Physical Damage."
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Majestrix's Strategy",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 528,
+       "ability": "Basic Damage Increase (Influence)",
+       "description": "Increases Basic Damage by <b>100%</b>, decreases by <b>10%</b> every <b>1</b> Sec",
+       "duration": 10
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}

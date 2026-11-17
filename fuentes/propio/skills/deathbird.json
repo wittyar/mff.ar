@@ -1,0 +1,351 @@
+{
+ "portrait": "deathbird",
+ "desde": null,
+ "fuente": [
+  "foro-1897819",
+  "cafe-3190031"
+ ],
+ "notas": [
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.",
+  "La Tier-3 (definitiva) no trae su recarga en la ficha: va sin recarga.",
+  "La ficha escribe la perforación con los efectos en otro orden («SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE»): va con el texto de la API, que nombra los mismos cinco.",
+  "Activa 4: «Increases basic damage by 100% for 1 attack(s).(7 Sec.)» va con la etiqueta de la API para ese texto (SKILL DAMAGE ↑).",
+  "Tier-4: la nota da los valores de Lv.6 del striker (Violent Rage)."
+ ],
+ "slots": {
+  "Leader Skill": {
+   "type": "Leader Skill",
+   "name": "Violent Princess",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 25,
+       "ability": "PHYSICAL ATTACK ↑",
+       "description": "<b>50%</b> increase of Physical Attack."
+      }
+     ],
+     "target": "Combat Type Allies"
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Wings of Death",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 44,
+       "ability": "GUARANTEED CRITICAL RATE ↑",
+       "description": "Increases Guaranteed Critical Rate by <b>25%</b>"
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>40%</b>, increases Bonus Damage by <b>40%</b>."
+      },
+      {
+       "abilityId": 314,
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>20%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Nameless Princess",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 112,
+       "ability": "IGNORE DODGE",
+       "description": "Ignores target's Dodge Rate by <b>35%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Fit of Rage",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>75%</b> of Physical Attack.<br>Additional <b>231</b> Physical Damage."
+      },
+      {
+       "abilityId": 107,
+       "ability": "BLEED",
+       "description": "Bleed: Deals additional <b>30%</b> Damage every <b>1</b> sec. (Removes Elasticity)",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Deathbird Spearmanship",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>70%</b> of Physical Attack.<br>Additional <b>323</b> Physical Damage."
+      },
+      {
+       "abilityId": 108,
+       "ability": "SHOCK",
+       "description": "Shock: Deals additional <b>30%</b> Lightning Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Poison Spear",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 5
+      },
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 7
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>1%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>50%</b> of Physical Attack.<br>Additional <b>90</b> Physical Damage."
+      },
+      {
+       "abilityId": 106,
+       "ability": "POISON",
+       "description": "Poison: Deals additional <b>30%</b> Poison Damage every <b>1</b> sec",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 31060,
+       "ability": "Decreases all Basic Defenses (Can stack, ignores immunity)",
+       "description": "Decreases all Basic Defenses by <b>5%</b>. (Stacks up to <b>50%</b>, ignores immunity)",
+       "duration": 5
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Deathbird Strike",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>30%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 284,
+       "ability": "SKILL DAMAGE ↑",
+       "description": "Increases basic damage by <b>100%</b> for <b>1</b> attack(s).",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>60%</b> of Physical Attack.<br>Additional <b>162</b> Physical Damage."
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Usurpers of the Throne",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>50%</b>, all speed by <b>1%</b>, and Critical Rate by <b>25%</b>, removes Incapacitation",
+       "duration": 7
+      },
+      {
+       "abilityId": 258,
+       "ability": "ALL DAMAGE IMMUNE",
+       "description": "<b>100%</b> chance to grant All Damage Immunity",
+       "duration": 5
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>60%</b> of Physical Attack.<br>Additional <b>95</b> Physical Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>30%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 204,
+       "ability": "SNARE",
+       "description": "Snare",
+       "duration": 3
+      },
+      {
+       "abilityId": 330,
+       "ability": "Fracture",
+       "description": "Fracture",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Active Ult": {
+   "type": "Active Ult",
+   "name": "Shi'ar Spear",
+   "cooldown": null,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 112,
+       "ability": "IGNORE DODGE",
+       "description": "Ignores target's Dodge Rate by <b>100%</b>.",
+       "duration": 8
+      },
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>80%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 8
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 100,
+       "ability": "PHYSICAL ATK DAMAGE",
+       "description": "Physical Damage: <b>145%</b> of Physical Attack.<br>Additional <b>5</b> Physical Damage."
+      },
+      {
+       "abilityId": 107,
+       "ability": "BLEED",
+       "description": "Bleed: Deals additional <b>30%</b> Damage every <b>1</b> sec. (Removes Elasticity)",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      }
+     ],
+     "element": "Physical"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Violent Rage",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 569,
+       "ability": "Precision",
+       "description": "Applies Critical Hit to all attacks and increases Critical Damage by <b>120%</b>",
+       "duration": 10
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}

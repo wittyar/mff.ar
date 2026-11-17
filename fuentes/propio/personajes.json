@@ -59,6 +59,38 @@
     "clea",
     "clea1"
    ]
+  },
+  {
+   "version": "12.4",
+   "subtitle": "War of Kings",
+   "fecha": "November 17, 2026",
+   "characters": [
+    "vulcan",
+    "lilandra",
+    "deathbird"
+   ],
+   "uniforms": [],
+   "t3s": [
+    "vulcan",
+    "lilandra",
+    "deathbird"
+   ],
+   "t4s": [
+    "vulcan",
+    "lilandra",
+    "deathbird"
+   ],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "version"
+   ],
+   "notas": [
+    "El nivel máximo de Hulk y de Vulcan pasa de 80 a 90 (la nota); la app no tiene dónde mostrarlo.",
+    "La nota no da el número de versión: 12.4 es la que sigue a la 12.3.5."
+   ]
   }
  ],
  "filas": [
@@ -276,6 +308,135 @@
     "striker_skill",
     "world_boss_ability"
    ]
+  },
+  {
+   "uniformed": "False",
+   "original": "Comic",
+   "skill6": "Tier-3",
+   "tier-4": "True",
+   "new": "True",
+   "striker_skill": null,
+   "stats": {},
+   "tuc": [],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "character": "Vulcan",
+   "uniform": "War of Kings",
+   "portrait": "vulcan",
+   "type": "Blast",
+   "allies": "Mutant",
+   "gender": "Male",
+   "side": "Super Villain",
+   "instinct": "Destruction",
+   "native": "Tier-3",
+   "ability": [
+    "Energy Projection",
+    "Pure Evil"
+   ],
+   "id": "9002",
+   "world_boss_ability": "Energy Projection",
+   "sin_confirmar": [
+    "portrait",
+    "id",
+    "original",
+    "world_boss_ability",
+    "striker_skill",
+    "stats"
+   ],
+   "notas": [
+    "La ficha dice «Evil»: va como «Pure Evil», como lo escribe la API.",
+    "Nativo de Tier-3 (la nota): se consigue en «False Emperor» de la búsqueda épica War of Kings, con Lilandra, Polaris, Ronan, Deathbird, Black Bolt, Medusa y Karnak mejorados como pide la pantalla.",
+    "Nivel máximo 90 desde esta actualización (con Hulk): la app no tiene dónde mostrarlo."
+   ],
+   "base_portrait": "vulcan"
+  },
+  {
+   "uniformed": "False",
+   "original": "Comic",
+   "skill6": "Tier-3",
+   "tier-4": "True",
+   "new": "True",
+   "striker_skill": null,
+   "stats": {},
+   "tuc": [],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "character": "Lilandra",
+   "uniform": "Majestrix Lilandra",
+   "portrait": "lilandra",
+   "type": "Speed",
+   "allies": "Alien",
+   "gender": "Female",
+   "side": "Super Hero",
+   "instinct": "Order",
+   "native": "Tier-2",
+   "ability": [
+    "Durability",
+    "Agility"
+   ],
+   "id": "9003",
+   "world_boss_ability": "Durability",
+   "sin_confirmar": [
+    "portrait",
+    "id",
+    "original",
+    "world_boss_ability",
+    "striker_skill",
+    "stats"
+   ],
+   "notas": [
+    "Nativa de Tier-2 (la nota): solo mejora con la búsqueda épica War of Kings; su pasiva de Tier-2 se aplica al conseguirla y llega a Tier-3 con las recompensas de progreso, sin búsqueda ni mejora de potencial.",
+    "Stats básicos máximos de la imagen de la nota (sin decir nivel, rango ni categoría): ataque físico 2848, defensa física 1893, defensa de energía 1802, PG 6951. La fila de la API no tiene dónde ponerlos."
+   ],
+   "base_portrait": "lilandra"
+  },
+  {
+   "uniformed": "False",
+   "original": "Comic",
+   "skill6": "Tier-3",
+   "tier-4": "True",
+   "new": "True",
+   "striker_skill": null,
+   "stats": {},
+   "tuc": [],
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "character": "Deathbird",
+   "uniform": "Uncanny X-Men",
+   "portrait": "deathbird",
+   "type": "Combat",
+   "allies": "Alien",
+   "gender": "Female",
+   "side": "Super Villain",
+   "instinct": "Destruction",
+   "native": "Tier-1",
+   "ability": [
+    "Fast Movement",
+    "Pure Evil",
+    "Weapons Master"
+   ],
+   "id": "9004",
+   "world_boss_ability": "Fast Movement",
+   "sin_confirmar": [
+    "portrait",
+    "id",
+    "original",
+    "world_boss_ability",
+    "striker_skill",
+    "stats",
+    "native"
+   ],
+   "notas": [
+    "La ficha dice «Evil»: va como «Pure Evil», como lo escribe la API.",
+    "La nota no dice su categoría nativa: va Tier-1, lo más común. Con el paquete Deluxe de la búsqueda épica se consigue con 6★."
+   ],
+   "base_portrait": "deathbird"
   }
  ],
  "cambios": [

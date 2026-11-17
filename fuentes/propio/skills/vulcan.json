@@ -1,0 +1,457 @@
+{
+ "portrait": "vulcan",
+ "desde": null,
+ "fuente": [
+  "foro-1897819",
+  "cafe-3190031"
+ ],
+ "notas": [
+  "La ficha no dice la carga de definitiva ni de striker, ni cuántos golpes da cada skill: cada skill va con un golpe y sin carga.",
+  "La Tier-3 (definitiva) no trae su recarga en la ficha: va sin recarga.",
+  "La ficha escribe la perforación con los efectos en otro orden («SUPER ARMOR, BARRIER, SHIELD, ALL DAMAGE IMMUNE, INVINCIBLE»): va con el texto de la API, que nombra los mismos cinco.",
+  "Liderazgo: la ficha da dos partes, «Applies to: All Allies» con «Activation Rate: when debuffed», elimina todas las mermas (12 s, recarga 20 s), y «Applies to: Self», +30% a todos los ataques básicos, +20% a todas las defensas básicas y +1% a todas las velocidades: van como dos etapas, la segunda para él.",
+  "Tier-4: la nota da los valores de Lv.6 del striker (Twisted Rage)."
+ ],
+ "slots": {
+  "Leader Skill": {
+   "type": "Leader Skill",
+   "name": "Emperor's Authority",
+   "cooldown": 20,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 206,
+       "ability": "Removes all Debuffs. ",
+       "description": "Removes all Debuffs.",
+       "duration": 12
+      }
+     ],
+     "target": "All Allies",
+     "activation": "when debuffed"
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 263,
+       "ability": "Increases all basic stats",
+       "description": "Increases all Basic Attacks by <b>30%</b>, all Basic Defenses by <b>20%</b>, and all Speeds by <b>1%</b>."
+      }
+     ],
+     "target": "Self"
+    }
+   ]
+  },
+  "Tier-2 Passive": {
+   "type": "Tier-2 Passive",
+   "name": "Omega-Level Emperor",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 41,
+       "ability": "CHAIN HIT DMG DEALT ↑",
+       "description": "Increases Chain Hit damage by <b>15%</b> when attacking."
+      },
+      {
+       "abilityId": 124,
+       "ability": "ADDITIONAL PIERCE DAMAGE INCREASE",
+       "description": "Increases Additional Pierce Damage by <b>5%</b>"
+      },
+      {
+       "abilityId": 304,
+       "ability": "SKILL AND BONUS DAMAGE ↑",
+       "description": "Increases Skill damage by <b>40%</b>, increases Bonus Damage by <b>40%</b>."
+      }
+     ]
+    }
+   ]
+  },
+  "Passive": {
+   "type": "Passive",
+   "name": "Imperial Guard Shield",
+   "cooldown": 0,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 208,
+       "ability": "SUPER ARMOR",
+       "description": "Super Armor, increases all Basic Defenses by <b>30%</b>."
+      },
+      {
+       "abilityId": 314,
+       "ability": "Decreases all basic damage",
+       "description": "Decreases basic damage received by <b>40%</b>."
+      },
+      {
+       "abilityId": 506,
+       "ability": "Absorb",
+       "description": "<b>30%</b> chance to Absorb Energy Damage, upon absorption all Basic Attacks increased by <b>15%</b> (Max <b>45%</b>)"
+      }
+     ]
+    }
+   ]
+  },
+  "Active 1": {
+   "type": "Active 1",
+   "name": "Vulcan Blast",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>60%</b> of Energy Attack <br>Additional <b>336</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>50%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 2": {
+   "type": "Active 2",
+   "name": "Emperor's Footsteps",
+   "cooldown": 8,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>20%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>80%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 6
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 4
+      },
+      {
+       "abilityId": 206,
+       "ability": "Removes all Debuffs. ",
+       "description": "Removes all Debuffs.",
+       "duration": 3
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>55%</b> of Energy Attack <br>Additional <b>135</b> Energy Damage."
+      },
+      {
+       "abilityId": 319,
+       "ability": "Guaranteed Targeting",
+       "description": "Targets enemies with the Ignore Targeting effect"
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      },
+      {
+       "abilityId": 531,
+       "ability": "Panic",
+       "description": "Panic, increases basic damage received by <b>30%</b>",
+       "duration": 3
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 3": {
+   "type": "Active 3",
+   "name": "Vulcan Punch",
+   "cooldown": 14,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 215,
+       "ability": "BARRIER",
+       "description": "Barrier <b>15</b> time(s)",
+       "duration": 7
+      },
+      {
+       "abilityId": 309,
+       "ability": "ACCUMULATE PURE DMG DEALT",
+       "description": "Accumulates <b>10%</b> of pure damage when attacking (Max 100%)",
+       "duration": 7
+      },
+      {
+       "abilityId": 310,
+       "ability": "STAT ↑ PROPORTIONAL TO TOTAL DMG",
+       "description": "<b>1.1%</b> Increase of <b>All Basic Attacks</b> each 1% of pure damage accumulated",
+       "duration": 7
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>57%</b> of Energy Attack <br>Additional <b>144</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>50%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 3
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 4": {
+   "type": "Active 4",
+   "name": "Vulcan Explosion",
+   "cooldown": 15,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>125%</b> of Energy Attack <br>Additional <b>2014</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>50%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 4
+      },
+      {
+       "abilityId": 330,
+       "ability": "Fracture",
+       "description": "Fracture",
+       "duration": 5
+      },
+      {
+       "abilityId": 31060,
+       "ability": "Decreases all Basic Defenses (Can stack, ignores immunity)",
+       "description": "Decreases all Basic Defenses by <b>5%</b>. (Stacks up to <b>50%</b>, ignores immunity)",
+       "duration": 5
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active 5": {
+   "type": "Active 5",
+   "name": "Energy of Wrath",
+   "cooldown": 14,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 18,
+       "ability": "HP RECOVERY",
+       "description": "Recovers <b>20%</b> of HP.",
+       "duration": 1,
+       "tick": 1
+      },
+      {
+       "abilityId": 252,
+       "ability": "FRENZY",
+       "description": "Increases all Basic Attacks and Defense by <b>50%</b>, all speed by <b>1%</b>, and Critical Rate by <b>30%</b>, removes Incapacitation",
+       "duration": 7
+      },
+      {
+       "abilityId": 258,
+       "ability": "ALL DAMAGE IMMUNE",
+       "description": "<b>100%</b> chance to grant All Damage Immunity",
+       "duration": 5
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>95%</b> of Energy Attack <br>Additional <b>144</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>50%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 3
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 201,
+       "ability": "FEAR",
+       "description": "Fear",
+       "duration": 4
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 3
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Active Ult": {
+   "type": "Active Ult",
+   "name": "Vulcan The Emperor",
+   "cooldown": null,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 112,
+       "ability": "IGNORE DODGE",
+       "description": "Ignores target's Dodge Rate by <b>100%</b>.",
+       "duration": 8
+      },
+      {
+       "abilityId": 120,
+       "ability": "PIERCE",
+       "description": "<b>80%</b> chance to penetrate with <b>Invincible, All Damage Immune, Shield, Barrier, Super Armor</b> effect.",
+       "duration": 8
+      },
+      {
+       "abilityId": 202,
+       "ability": "INVINCIBLE",
+       "description": "Invincible",
+       "duration": 8
+      }
+     ]
+    },
+    {
+     "abils": [
+      {
+       "abilityId": 109,
+       "ability": "ENERGY ATK DAMAGE",
+       "description": "Energy Damage: <b>155%</b> of Energy Attack <br>Additional <b>14</b> Energy Damage."
+      },
+      {
+       "abilityId": 104,
+       "ability": "BURN",
+       "description": "Burn: Deals additional <b>50%</b> Flame Damage every <b>1</b> sec.",
+       "duration": 2
+      },
+      {
+       "abilityId": 200,
+       "ability": "STUN",
+       "description": "Stun",
+       "duration": 3
+      },
+      {
+       "abilityId": 209,
+       "ability": "SILENCE",
+       "description": "Silence",
+       "duration": 2
+      },
+      {
+       "abilityId": 331,
+       "ability": "Incapacitation",
+       "description": "Incapacitation (Removes <b>Active Buffs</b> from target)",
+       "duration": 2
+      },
+      {
+       "abilityId": 30264,
+       "ability": "Paralysis (Ignores immunity)",
+       "description": "Paralysis (Ignores immunity)",
+       "duration": 2
+      }
+     ],
+     "element": "Energy"
+    }
+   ]
+  },
+  "Striker Skill": {
+   "type": "Striker Skill",
+   "name": "Twisted Rage",
+   "cooldown": 1,
+   "stages": [
+    {
+     "abils": [
+      {
+       "abilityId": 462,
+       "ability": "ALL BASIC ATTACKS INCREASE",
+       "description": "Increases all Basic Attacks by <b>80%</b>.",
+       "duration": 7
+      },
+      {
+       "abilityId": 515,
+       "ability": "MAX HP ↑",
+       "description": "<b>50%</b> increase of MAX HP.",
+       "duration": 7
+      }
+     ],
+     "activation": "When Striker Skill is used"
+    }
+   ]
+  }
+ }
+}

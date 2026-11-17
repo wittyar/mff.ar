@@ -1,5 +1,5 @@
 """Contenido propio (fuentes/propio/, scripts/propio.py; Ezequiel, 13 de octubre de 2026): lo que se carga de las notas del
-juego antes de que thanosvibs lo publique. Agatha Harkness (personaje nuevo), los uniformes Wiccan — Young Avengers y
+juego antes de que thanosvibs lo publique. Agatha Harkness, Vulcan, Lilandra y Deathbird (personajes nuevos), los uniformes Wiccan — Young Avengers y
 Morgan Le Fay — Classic, sus Tier-4 y el artefacto de Morgan cambiado: en el roster, en la ficha (retrato de thanosvibs, marca
 «propio», skills con su marca, el artefacto sin puntaje) y en la comparativa por potenciador. Lo que se espera sale de
 fuentes/propio/, no de app.js."""
@@ -77,6 +77,34 @@ try:
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         cl = por_nombre['Clea']
         ok('3b Clea es T4 y trae Death of Doctor Strange', cl['t'] == 'T4' and any(u['p'] == 'clea1' for u in cl['uniforms']))
+
+        # 3c. la actualización del 17 de noviembre de 2026 (War of Kings): Vulcan, Lilandra y Deathbird, personajes nuevos con su
+        # Tier-3, su Tier-4 y su artefacto; sin retrato hasta que thanosvibs publique el suyo
+        for nombre, defin, striker, artefacto in (('Vulcan', 'Vulcan The Emperor', 'Twisted Rage', 'Vulcan the Kingbreaker'),
+                                                  ('Lilandra', 'Lux Gloriana', "Majestrix's Strategy", "Empress of the Shi'ar Empire"),
+                                                  ('Deathbird', "Shi'ar Spear", 'Violent Rage', 'Exiled Princess')):
+            c = por_nombre.get(nombre)
+            fila = FILAS[nombre.lower()]
+            ok(f'3c {nombre} está en los datos, T4, con lo de la ficha', c is not None and c['t'] == 'T4'
+               and c['p'] == fila['portrait'] and c['pr'] == fila['fuente'], c and (c['t'], c['p'], c['pr']))
+            pg.click('[data-a="back"]'); pg.fill('#q', nombre); pg.wait_for_timeout(300)
+            pg.click(f'.ccard[data-cid="{c["id"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
+            ok(f'3c {nombre}: la cabecera dice «propio»', pg.locator('.fcab .propio').count() == 1)
+            pg.click('[data-a="fichaTab"][data-v="skills"]'); pg.wait_for_timeout(200)
+            slots = json.load(open(os.path.join(PROP, 'skills', fila['portrait'] + '.json'), encoding='utf-8'))['slots']
+            n_sk = pg.locator('.skill:not(#sk-artefacto)').count(); n_pr = pg.locator('.skill:not(#sk-artefacto) .propio').count()
+            ok(f'3c {nombre}: las {len(slots)} skills de la ficha, cada una marcada', n_sk == len(slots) == n_pr, (n_sk, n_pr))
+            nombres = pg.evaluate("[...document.querySelectorAll('.skill .nm')].map(x => x.textContent)")
+            ok(f'3c {nombre}: la definitiva de Tier-3 y el striker de Tier-4', any(defin in n for n in nombres)
+               and any(striker in n for n in nombres), nombres)
+            art = pg.locator('#sk-artefacto')
+            ok(f'3c {nombre}: el artefacto nuevo, marcado', art.count() == 1 and artefacto in art.inner_text()
+               and art.locator('.propio').count() == 1, art.inner_text()[:200] if art.count() else '')
+        pg.click('[data-a="back"]'); pg.fill('#q', 'Lilandra'); pg.wait_for_timeout(300)
+        pg.click(f'.ccard[data-cid="{por_nombre["Lilandra"]["id"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
+        pg.click('[data-a="fichaTab"][data-v="skills"]'); pg.wait_for_timeout(200)
+        txt = pg.locator('.skill', has_text='Gate of Chandilar').first.inner_text()
+        ok('3c Lilandra, Activa 2: el sangrado con la baja del índice de recuperación (50%)', 'recuperación' in txt and '50' in txt, txt[:300])
 
         # 4. la comparativa por potenciador con Agatha
         pg.click('[data-a="back"]'); pg.click('[data-a="pickMode"]'); pg.wait_for_timeout(200)

@@ -538,6 +538,7 @@
    "Accumulates #% of pure damage when attacking (Max #%)": {"acumula_dano": 0},
    "Acquires the following effect for # sec.": {"otorga": null},
    "Barrier # time(s)": {"barrera": 0},
+   "Bleed: Deals additional #% Damage every # sec. Decreases Recovery Rate by #%. (Removes Elasticity)": {"continuo_sangrado": 0},
    "Charm: Deals #% Mind Damage every # sec, Recovery equal to #% of DOT Damage. (Up to #% of Max HP)": {"continuo_encanto": 0, "encantar": null},
    "Creates # Misdirection(s) and uses # when hit to increase All Basic Attacks accumulatively by #% and recovers HP by #%.": {"ataques_todos": 2, "curacion": 3},
    "Creates a Recharge Shield (#% of Max HP), Recreates #% Shield every $TICK secAbsorbs #% from normal Shield": {"escudo": 0},
