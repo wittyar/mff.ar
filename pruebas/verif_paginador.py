@@ -7,6 +7,8 @@ RAIZ = RAIZ
 OUT = PRUEBAS
 DATOS = tempfile.mkdtemp(prefix='mff-pag-')
 os.symlink(os.path.join(RAIZ, 'images'), os.path.join(DATOS, 'images'))
+# Con una capa guardada (vacía): sin capa, la app abre la bienvenida del recorrido encima de todo (1.0.54).
+open(os.path.join(DATOS, 'capa.json'), 'w').write('{}')
 srv = subprocess.Popen([sys.executable, 'desktop/lanzador.py', '--datos', DATOS, '--sin-ventana'], cwd=RAIZ,
                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 URL = None

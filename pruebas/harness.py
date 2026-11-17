@@ -35,12 +35,17 @@ def origen_local():
     return f'http://127.0.0.1:{srv.server_port}/'
 
 
-def carpeta_datos():
+def carpeta_datos(primer_uso=False):
+    """Carpeta de datos nueva. Sin primer_uso lleva una capa guardada vacía (capa.json con {}), como la de quien ya abrió
+    la app: sin capa, la app abre la bienvenida del recorrido encima de todo (1.0.54). Con primer_uso, sin capa.json: lo
+    que ve alguien que la abre por primera vez (verif_recorrido, verif_capa)."""
     d = tempfile.mkdtemp(prefix='mffdatos-')
     for f in ('data.js', 'datos.json'):
         shutil.copy(os.path.join(DATOS, f), d)
     shutil.copytree(os.path.join(DATOS, 'docs'), os.path.join(d, 'docs'))
     os.symlink(os.path.join(DATOS, 'images'), os.path.join(d, 'images'))
+    if not primer_uso:
+        json.dump({}, open(os.path.join(d, 'capa.json'), 'w'))
     return d
 
 

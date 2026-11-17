@@ -120,10 +120,11 @@ function validarMazos (cr) {
     if (new Set(m.map(x => x.id)).size !== m.length) mal(`un cromo está dos veces en el mazo ${i + 1}`);
   });
 }
-/** Lee capa.json. Sin archivo (primer uso) es una capa vacía; un archivo ilegible es un
- *  error que corta el arranque: seguir con una capa vacía y guardar la pisaría. */
+/** Lee capa.json. Sin archivo (primer uso) es una capa vacía y abre la bienvenida (RECORRIDO); un archivo ilegible es
+ *  un error que corta el arranque: seguir con una capa vacía y guardar la pisaría. */
 async function cargarCapa () {
   const { capa } = await apiLocal('/api/capa');
+  ui.bienvenida = !capa;
   return capa ? normalizarCapa(capa) : blankUser();
 }
 /** Guarda la capa. Un PUT a la vez y siempre con el último estado: si llegan cambios
@@ -695,7 +696,7 @@ const T = {
   ay_toggle:         { es:'Ayuda',               en:'Help' },
   ay_toggle_t:       { es:'Mostrar u ocultar la ayuda: los «?» y, al pasar el mouse, qué hace cada skill y cada efecto', en:'Show or hide help: the «?» and, on hover, what each skill and effect does' },
   ay_clic:           { es:'Clic: el detalle',    en:'Click: details' },
-  // El recorrido guiado (RECORRIDO): los botones de su tarjeta y el selector de áreas.
+  // El recorrido guiado (RECORRIDO): los botones de su tarjeta, el selector de áreas y la bienvenida.
   rc_btn:            { es:'Recorrido',           en:'Tour' },
   rc_btn_t:          { es:'Un recorrido guiado: arranca por la parte de la app en la que estás y te muestra qué mirar y cómo llegar', en:'A guided tour: it starts with the part of the app you are on and shows you what to look at and how to get there' },
   rc_salir:          { es:'Salir del recorrido', en:'Leave the tour' },
@@ -710,6 +711,11 @@ const T = {
   rc_elegir_x:       { es:'Elegí un área: el recorrido te lleva y te muestra qué mirar ahí. El completo pasa por todas, en orden. Al salir, la app vuelve a donde estabas.',
                        en:'Pick an area: the tour takes you there and shows you what to look at. The full tour goes through all of them, in order. When you leave, the app goes back to where you were.' },
   rc_completo:       { es:'Recorrido completo',  en:'Full tour' },
+  rc_bienv_t:        { es:'Esto es MFF.ar',      en:'This is MFF.ar' },
+  rc_bienv_x:        { es:'Un comparador de los personajes de MARVEL Future Fight: qué hace cada uno con sus skills, cómo armarlo, con quién rinde, y lo que vos anotás de tu cuenta. El recorrido te muestra cada parte en pocos pasos. Lo podés ver cuando quieras con el botón «Recorrido» de arriba.',
+                       en:'A comparison tool for MARVEL Future Fight characters: what each one does with its skills, how to build it, who it works with, and what you note down about your account. The tour shows you each part in a few steps. You can see it any time with the «Tour» button at the top.' },
+  rc_bienv_si:       { es:'Empezar el recorrido', en:'Start the tour' },
+  rc_bienv_no:       { es:'Ahora no',            en:'Not now' },
   rc_area_barra:     { es:'La barra de arriba',  en:'The top bar' },
   rc_area_roster:    { es:'Roster',              en:'Roster' },
   rc_area_ficha:     { es:'Ficha de un personaje', en:'Character page' },
@@ -1957,7 +1963,8 @@ let ui = {
   pq: null,                          // ventana del «Por qué» abierta: { id de su tarjeta, charId y uid de la ficha, tab, y }
   volverPq: null,                    // la que se vuelve a abrir con «Atrás» (ver HISTORIAL)
   entradaNueva: false,               // el próximo render abre otra entrada del historial aunque no cambie el lugar
-  rec: null                          // el recorrido abierto (RECORRIDO): { modo: 'paso' o 'elegir', pasos, i, antes, y }
+  rec: null,                         // el recorrido abierto (RECORRIDO): { modo: 'paso' o 'elegir', pasos, i, antes, y }
+  bienvenida: false                  // la bienvenida del primer uso (sin capa guardada) está abierta
 };
 
 // ============================================================================
@@ -8114,6 +8121,7 @@ function resaltar (id) {
 // comparados); desde otra área, el tramo abre el ejemplo (RECORRIDO_EJEMPLO). Todo lo que el recorrido abre es estado de
 // la pantalla (ui): no toca tu capa (U) ni guarda nada, cada paso parte de cómo estaba la pantalla al empezar y al salir
 // vuelve a eso. Mientras está abierto no se anota el historial: «Atrás» lo cierra y hace lo de siempre (popstate).
+// La primera vez (sin capa guardada) va la bienvenida: empezar u omitir guardan la capa, y con capa no vuelve a salir.
 // ============================================================================
 const RECORRIDO_EJEMPLO = { ficha: 'thor', comparar: ['hulk', 'wolverine'] };
 function ejemploRec (cid) {
@@ -8231,12 +8239,20 @@ function terminarRecorrido () {
   window.scrollTo({ top: r.y, behavior: 'instant' });
   document.querySelector('nav.topnav [data-a="recorrido"]').focus({ preventScroll: true });
 }
-/** La tarjeta: el selector de áreas o el paso abierto (falta: su elemento no está en la pantalla). */
+/** La bienvenida se contesta una vez: empezar u omitir guardan la capa (la marca de que ya no es el primer uso). */
+function contestarBienvenida (empezar) {
+  ui.bienvenida = false;
+  saveUser();
+  if (empezar) empezarRecorrido(RECORRIDO.map(tr => tr.k)); else pintarRecorrido();
+}
+/** La tarjeta: la bienvenida, el selector de áreas o el paso abierto (falta: su elemento no está en la pantalla). */
 function tarjetaRecHtml (falta) {
   const r = ui.rec, salir = (a) => `<button class="btn icon sm" data-a="${a}" title="${h(t('rc_salir'))}" aria-label="${h(t('rc_salir'))}">✕</button>`;
   const tarjeta = (cab, titulo, texto, pie) => `<div class="rcard" id="rc-tarjeta" role="dialog" aria-modal="true" aria-labelledby="rc-t" tabindex="-1">
     <div class="rccab">${cab}</div><div class="rctit" id="rc-t">${h(titulo)}</div><p>${h(texto)}</p>
     ${falta ? `<p class="rcfalta">${h(t('rc_no_esta'))}</p>` : ''}<div class="rcpie">${pie}</div></div>`;
+  if (!r) return tarjeta(`<span class="rcarea">MFF.ar</span>${salir('recOmitir')}`, t('rc_bienv_t'), t('rc_bienv_x'),
+    `<button class="btn sm" data-a="recOmitir">${h(t('rc_bienv_no'))}</button><button class="btn sm primary" data-a="recEmpezar">${h(t('rc_bienv_si'))}</button>`);
   if (r.modo === 'elegir') {
     const aqui = areaDe(r.antes.view);
     return tarjeta(`<span class="rcarea">${h(t('rc_btn'))}</span>${salir('recSalir')}`, t('rc_elegir_t'), t('rc_elegir_x'),
@@ -8258,14 +8274,14 @@ function pintarRecorrido () {
   let capa = document.getElementById('rc-capa');
   const r = ui.rec;
   REC_ANCLA = null;
-  if (!r) { if (capa) capa.remove(); document.body.classList.remove('con-recorrido'); return; }
+  if (!r && !ui.bienvenida) { if (capa) capa.remove(); document.body.classList.remove('con-recorrido'); return; }
   const a = document.activeElement, foco = a && a.closest('#rc-tarjeta') ? a.dataset.a : null;
   if (!capa) { capa = document.createElement('div'); capa.id = 'rc-capa'; document.body.appendChild(capa); }
-  const el = r.modo === 'paso' ? document.querySelector(r.pasos[r.i].an) : null;
+  const el = r && r.modo === 'paso' ? document.querySelector(r.pasos[r.i].an) : null;
   const ancla = el && el.getClientRects().length ? el : null;
   document.body.classList.add('con-recorrido');
-  capa.innerHTML = `<div class="rcfondo${ancla ? '' : ' oscuro'}" data-a="recSalir"></div>${ancla ? '<div class="rcluz" id="rc-luz"></div>' : ''}`
-    + tarjetaRecHtml(r.modo === 'paso' && !ancla);
+  capa.innerHTML = `<div class="rcfondo${ancla ? '' : ' oscuro'}" data-a="${r ? 'recSalir' : 'recOmitir'}"></div>${ancla ? '<div class="rcluz" id="rc-luz"></div>' : ''}`
+    + tarjetaRecHtml(r && r.modo === 'paso' && !ancla);
   const tarjeta = document.getElementById('rc-tarjeta');
   if (ancla) { REC_ANCLA = ancla; enfocarAncla(ancla); ubicarRecorrido(); } else tarjeta.classList.add('centro');
   const b = foco && tarjeta.querySelector(`[data-a="${foco}"]:not([disabled])`);
@@ -8288,12 +8304,13 @@ function ubicarRecorrido () {
   if (matchMedia(AYUDA_CELULAR).matches) { tarjeta.removeAttribute('style'); return; }
   ubicarFlotante(tarjeta, luz.getBoundingClientRect());
 }
-/** Las teclas mientras está abierto: ← y → pasan de paso, Esc sale y Tab no sale de la tarjeta. */
+/** Las teclas mientras está abierto: ← y → pasan de paso, Esc sale (en la bienvenida, es «Ahora no») y Tab no sale de la
+ *  tarjeta. */
 function teclaRecorrido (e) {
   const r = ui.rec;
   if (e.key === 'Tab') { atraparFoco(e, document.getElementById('rc-tarjeta')); return; }
-  if (e.key === 'Escape') { e.preventDefault(); terminarRecorrido(); return; }
-  if (r.modo === 'paso' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+  if (e.key === 'Escape') { e.preventDefault(); if (r) terminarRecorrido(); else contestarBienvenida(false); return; }
+  if (r && r.modo === 'paso' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
     e.preventDefault();
     const i = r.i + (e.key === 'ArrowRight' ? 1 : -1);
     if (i === r.pasos.length) terminarRecorrido(); else if (i >= 0) irAPaso(i);
@@ -8356,6 +8373,8 @@ document.addEventListener('click', (e) => {
     case 'recOtras': ui.rec.modo = 'elegir'; pintarRecorrido(); break;
     case 'recArea': empezarRecorrido([d.v]); break;
     case 'recCompleto': empezarRecorrido(RECORRIDO.map(tr => tr.k)); break;
+    case 'recEmpezar': contestarBienvenida(true); break;
+    case 'recOmitir': contestarBienvenida(false); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] };
       P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = ''; P.atributo = '';
@@ -8707,8 +8726,8 @@ document.addEventListener('error', (e) => {
   verificarServidor();
 }, true);
 document.addEventListener('keydown', (e) => {
-  // Con el recorrido abierto, las teclas son de él (teclaRecorrido).
-  if (ui.rec) { teclaRecorrido(e); return; }
+  // Con el recorrido (o la bienvenida) abierto, las teclas son de él (teclaRecorrido).
+  if (ui.rec || ui.bienvenida) { teclaRecorrido(e); return; }
   // Con la ventana del «Por qué» abierta, las teclas son de ella (teclaPq).
   if (ui.pq) { teclaPq(e); return; }
   // Con el «Cómo funciona» abierto: Esc lo cierra (el foco vuelve a la skill) y Tab no sale de él.

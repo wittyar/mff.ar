@@ -86,6 +86,8 @@ def carpeta_datos():
     os.symlink(os.path.join(DATOS, 'images'), os.path.join(d, 'images'))
     shutil.copy(os.path.join(DATOS, 'data.js'), d)
     json.dump(manifiesto_repo(), open(os.path.join(d, 'datos.json'), 'w', encoding='utf-8'))
+    # Con una capa guardada (vacía): sin capa, la app abre la bienvenida del recorrido encima de todo (1.0.54).
+    open(os.path.join(d, 'capa.json'), 'w').write('{}')
     return d
 
 def lanzar(datos, origen=None):

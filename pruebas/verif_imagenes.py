@@ -62,6 +62,8 @@ def carpeta():
         shutil.copy(os.path.join(RAIZ, f), d)
     shutil.copy(os.path.join(ORIGEN_DATOS, 'datos.json'), d)
     os.makedirs(os.path.join(d, 'docs')); shutil.copy(os.path.join(RAIZ, 'docs', 'AUDITORIA.md'), os.path.join(d, 'docs'))
+    # Con una capa guardada (vacía): sin capa, la app abre la bienvenida del recorrido encima de todo (1.0.54).
+    open(os.path.join(d, 'capa.json'), 'w').write('{}')
     return d
 
 def lanzar(d):

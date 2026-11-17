@@ -1,6 +1,6 @@
 """Capa del usuario en capa.json (a través del servidor).
 
-1  primer uso: sin capa.json arranca vacía; un cambio crea capa.json
+1  primer uso: sin capa.json arranca vacía y con la bienvenida; contestarla crea capa.json, y un cambio queda ahí
 2  persiste entre reinicios del servidor (idioma y un equipo)
 3  respaldo diario: la segunda escritura del día deja respaldos/capa-HOY.json
 4  capa.json ilegible: pantalla de error y el archivo queda intacto
@@ -33,16 +33,19 @@ def capa(d):
 
 with sync_playwright() as p:
     b = p.chromium.launch()
-    D = carpeta_datos()
+    D = carpeta_datos(primer_uso=True)
     srv, url = levantar(D)
     ctx = b.new_context(viewport={'width': 1300, 'height': 900})
     page = ctx.new_page()
     errores = []
     page.on('pageerror', lambda e: errores.append(str(e)))
     page.goto(url); page.wait_for_selector('.ccard')
-    chequear('1 primer uso: arranca sin capa.json', not os.path.exists(os.path.join(D, 'capa.json')))
+    chequear('1 primer uso: arranca sin capa.json y con la bienvenida', not os.path.exists(os.path.join(D, 'capa.json'))
+             and page.locator('#rc-tarjeta [data-a="recOmitir"]').count() > 0)
+    page.click('#rc-tarjeta [data-a="recOmitir"]'); page.wait_for_timeout(500)
+    chequear('1 contestar la bienvenida crea capa.json', os.path.exists(os.path.join(D, 'capa.json')))
     page.click('[data-a="lang"]'); page.wait_for_timeout(500)
-    chequear('1 un cambio crea capa.json', os.path.exists(os.path.join(D, 'capa.json')) and capa(D)['prefs']['lang'] == 'en',
+    chequear('1 un cambio queda en capa.json', os.path.exists(os.path.join(D, 'capa.json')) and capa(D)['prefs']['lang'] == 'en',
              capa(D)['prefs']['lang'] if os.path.exists(os.path.join(D, 'capa.json')) else 'sin archivo')
     # un equipo
     harness.abrir_mesa(page)
