@@ -99,8 +99,12 @@ VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato
 # que los retratos; si falta el archivo la app muestra el nombre sin ícono.
 for c in FUENTES['ctps']:
     images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
+# Un artefacto propio que thanosvibs todavía no publica no tiene ícono allá: va sin ícono.
+_art_sin_tv = {r['portrait'] for r in json.load(open('work/artifacts.json', encoding='utf-8'))
+               if r.get('_propio', {}).get('tv', True) is None}
 for a in FUENTES['artefactos']:
-    images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
+    if a['p'] not in _art_sin_tv:
+        images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
 # Los cromos de cómic (#35, scripts/cromos.py), con sus imágenes (las baja fetch_all --imagenes, como los íconos).
 import cromos
 CROMOS, _img_cromos = cromos.armar(json.load(open('work/cards.json', encoding='utf-8')),

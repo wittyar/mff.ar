@@ -14,9 +14,15 @@ from dominio import TYPE, ALLIES, GENDER, SIDE, ORIGIN, INSTINCT, ABIL
 import modelo
 import catalogo
 import propio
-# Los retratos propios (fuentes/propio/retratos/) van con su imagen; los demás, con la de thanosvibs (imagenes.py).
+# Los retratos propios (fuentes/propio/retratos/) van con su imagen; los demás, con la de thanosvibs (imagenes.py). Un
+# personaje o uniforme propio que thanosvibs todavía no publica (_propio.tv null) no tiene retrato allá: sin uno propio, va
+# sin retrato (la app dice «SIN RETRATO»), no con una imagen que no existe.
 _RETRATOS_PROPIOS = propio.retratos()
-def retrato(p): return f'images/propio/{p}.png' if p in _RETRATOS_PROPIOS else f'images/{p}.png'
+def retrato(r):
+    p = r['portrait']
+    if p in _RETRATOS_PROPIOS:
+        return f'images/propio/{p}.png'
+    return None if r.get('_propio', {}).get('tv', True) is None else f'images/{p}.png'
 def slug(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode()
     return re.sub(r'[^a-z0-9]+','-', s.lower()).strip('-')
@@ -110,7 +116,8 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         if up.get('options'): u['op'] = up['options']
         anotar_sin_skills(r['portrait'], f"{base['character']} / {r['uniform']}")
         uniforms.append(u)
-        images['portrait-'+uid] = retrato(r['portrait'])
+        if retrato(r):
+            images['portrait-'+uid] = retrato(r)
         uindex[(numid, r.get('uniform_id'))] = (cid, uid)
 
     characters.append({
@@ -122,7 +129,8 @@ for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
         'striker': base['striker_skill'], 'wba': ABIL[base['world_boss_ability']],
         'trans': base['skill6'] == 'Transcended', 'new': base['new'] == 'True',
         'p': base['base_portrait'], 'uniforms': uniforms, **({'pr': base['fuente']} if base.get('fuente') else {})})
-    images['portrait-'+cid] = retrato(base['base_portrait'])
+    if retrato(base):
+        images['portrait-'+cid] = retrato(base)
     uindex[(numid, None)] = (cid, None)
 if sin_skills:
     print(f'AVISO: {len(sin_skills)} retratos sin skills en la API:', sin_skills[:5])
