@@ -8009,7 +8009,9 @@ document.addEventListener('change', (e) => {
   if (a === 'tlFila') { const actuales = filasDe(ui.tierList, ui.tlPick);
     setFilas(ui.tierList, ui.tlPick, el.checked ? actuales.concat(d.row) : actuales.filter(r => r !== d.row)); return; }
   if (a === 'upload') { const f = el.files[0]; if (f) readFile(f, url => { U.images[d.img] = url; commit(); }); return; }
+  // El campo se vacía al leer: si la capa no entra, elegir otra vez el mismo archivo (ya corregido) vuelve a disparar el cambio.
   if (a === 'importUser') { const f = el.files[0]; if (!f) return;
+    el.value = '';
     const r = new FileReader();
     r.onload = () => { try { U = normalizarCapa(JSON.parse(r.result)); commit(); }
                        catch (err) { alert(t('st_bad_import') + err.message); } };
