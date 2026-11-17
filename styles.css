@@ -1318,8 +1318,8 @@ button.tlchip,button.tlchip:active{cursor:pointer}
 .stagewrap{overflow-x:auto;max-width:100%}
 
 /* Cromos de cómic (1.0.53, #35): la sección, con los filtros del roster (chips) y cada cromo con su imagen, sus fijas y las
-   opciones de cada grado (la activación en dorado, lo que se busca resaltado con el acento). Lo tuyo (en qué mazo está)
-   lleva el color de Mi cuenta. */
+   opciones de cada grado (la activación en dorado, lo que se busca resaltado con el acento); y Mi cuenta › Cromos, los
+   dos mazos. Lo tuyo (en qué mazo está) lleva el color de Mi cuenta. */
 .crfiltros{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:12px;margin-bottom:12px}
 .crresumen{margin-bottom:12px}
 .crgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(470px,100%),1fr));gap:10px}
@@ -1342,8 +1342,29 @@ button.tlchip,button.tlchip:active{cursor:pointer}
 .crop b{color:var(--accent)}
 .crop.act{background:var(--gold-soft);color:var(--gold)}
 .crop.hit{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.crmini{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;margin-bottom:4px}
+.crmini .crimg{width:30px}
+.crmini:hover b{color:var(--accent-2)}
+.crmini .ph{display:none}
+.crops{display:flex;flex-wrap:wrap;gap:6px 10px}
+.crsel{display:flex;align-items:center;gap:5px}
+.crsel select{max-width:230px;padding-top:4px;padding-bottom:4px;font-size:12px}
+.crcobertura{margin-top:12px}
+.crcobertura h4{margin:10px 0 6px;color:var(--text-2);display:flex;align-items:center;gap:6px}
+.crcobertura .cutabla{max-width:520px}
+.crcobertura ul{margin:0;padding-left:18px;font-size:13px}
+.cutabla .num{text-align:right;font-variant-numeric:tabular-nums}
 @media (max-width:600px){
   .crcard{grid-template-columns:56px minmax(0,1fr);gap:9px}
   .crimg{width:56px}
   .crmazos{margin-left:0}
+  .crsel{width:100%}
+  .crsel select{max-width:none;flex:1;min-width:0}
+  /* En el celular, cada lugar del mazo en dos renglones: el cromo y «Sacar», y abajo las opciones a todo el ancho. */
+  .crmazotabla thead{display:none}
+  .crmazotabla,.crmazotabla tbody{display:block}
+  .crmazotabla tr{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:6px 8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+  .crmazotabla td{padding:0;border:0}
+  .crmazotabla td[colspan]{grid-column:2/-1}
+  .crmazotabla td.crtdops{grid-column:1/-1;grid-row:2}
 }

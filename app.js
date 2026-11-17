@@ -560,6 +560,28 @@ const T = {
   cu_listas_d:       { es:'{c} cambios sobre listas importadas. Están en Tier lists, junto a las demás: esto las abre para editar.', en:'{c} changes on imported lists. They live in Tier lists, next to the others: this opens them for editing.' },
   cu_marcas_d:       { es:'Lo que los datos todavía no traen y marcaste a mano.', en:'What the data does not carry yet and you marked by hand.' },
   cu_capa_d:         { es:'Exportar, importar o borrar todo lo tuyo', en:'Export, import or delete everything of yours' },
+  cu_tab_cromos:     { es:'Cromos',              en:'Cards' },
+  cu_cr_t:           { es:'Cromos en tus mazos', en:'Cards in your decks' },
+  cu_cr_d:           { es:'Mazo 1: {a} de 5 · mazo 2: {b} de 5', en:'Deck 1: {a} of 5 · deck 2: {b} of 5' },
+  cu_cr_note:        { es:'Tus dos mazos de cromos, de 5 lugares cada uno: qué cromo pusiste y, si querés, qué opción le salió en cada grado. Lo que no anotes queda sin anotar. Los cromos también se ponen y se sacan desde la sección Cromos.',
+                       en:'Your two card decks, 5 slots each: which card you put in and, if you want, which option it rolled in each grade. What you do not note stays unnoted. Cards can also be put in and removed from the Cards section.' },
+  cu_cr_lugar:       { es:'Lugar',               en:'Slot' },
+  cu_cr_cromo:       { es:'Cromo',               en:'Card' },
+  cu_cr_opciones:    { es:'Opción de cada grado', en:'Option of each grade' },
+  cu_cr_libre:       { es:'Libre',               en:'Empty' },
+  cu_cr_poner:       { es:'Poner un cromo…',     en:'Put a card…' },
+  cu_cr_sin_anotar:  { es:'sin anotar',          en:'not noted' },
+  cu_cr_sacar:       { es:'Sacar',               en:'Remove' },
+  cu_cr_no_esta:     { es:'El cromo {id} ya no está en los datos.', en:'Card {id} is no longer in the data.' },
+  cu_cr_op_no_esta:  { es:'La opción anotada en {g}★ ({o}) ya no está entre las del cromo.', en:'The option noted at {g}★ ({o}) is no longer among the card’s options.' },
+  cu_cr_resumen:     { es:'Qué cubre el mazo {n}', en:'What deck {n} covers' },
+  cu_cr_resumen_nota:{ es:'Cuántos cromos del mazo dan cada stat: fijo, o en un grado si anotaste esa opción. No se suman porcentajes: thanosvibs no publica cuánto da cada opción.', en:'How many cards in the deck give each stat: fixed, or in a grade if you noted that option. Percentages are not added up: thanosvibs does not publish how much each option gives.' },
+  cu_cr_stat:        { es:'Stat',                en:'Stat' },
+  cu_cr_n_fija:      { es:'Fijo',                en:'Fixed' },
+  cu_cr_n_anotada:   { es:'Anotado',             en:'Noted' },
+  cu_cr_acts:        { es:'Activaciones anotadas', en:'Noted activations' },
+  cu_cr_vacio:       { es:'Este mazo está vacío.', en:'This deck is empty.' },
+  st_cromos:         { es:'Cromos en los mazos', en:'Cards in the decks' },
   cu_prog_note:      { es:'Hasta dónde llegaste con cada personaje. Se marca en su ficha, en la pestaña «Mi cuenta».', en:'How far you got with each character. Marked in its sheet, under the “My account” tab.' },
   cu_prog_vacio:     { es:'Todavía no marcaste ningún paso de la hoja de ruta ni cargaste topes. Se hace en la ficha de cada personaje, en la pestaña «Mi cuenta».',
                        en:'No roadmap steps marked and no caps entered yet. Do it in each character’s sheet, under the “My account” tab.' },
@@ -5386,6 +5408,8 @@ function statCromo (k) {
   if (!n) throw new Error('stat de cromo sin nombre: ' + k);
   return n[LANG];
 }
+/** Lo que guarda la capa de una opción: el stat, o el stat y cuándo si es una activación. */
+function claveOpcion (o) { return o.act ? o.s + '@' + o.act : o.s; }
 /** Una opción, en palabras: el stat o, si es una activación, «Activación: stat, cuándo». */
 function opcionTxt (o) { return o.act ? `${t('cr_act')}: ${statCromo(o.s)}, ${bi(CROMOS.cuando[o.act])}` : statCromo(o.s); }
 /** Los grados de un cromo, en orden (los Premium no tienen 3★). */
@@ -5470,6 +5494,13 @@ function cromoCard (c) {
       ${col.map(x => `<p class="muted">${h(t('cr_coleccion').replace('{n}', x.n).replace('{k}', x.cromos.length)
         .replace('{g}', t('cr_mitico')).replace('{s}', statCromo(x.premio.s)).replace('{v}', numTxt(x.premio.v)))}</p>`).join('')}
     </div></div>`;
+}
+/** Lleva a la vista un cromo de la sección, debajo de la barra, y lo resalta hasta que se vuelva a pintar. */
+function irACromo (id) {
+  const el = document.getElementById('cromo-' + id);
+  if (!el) throw new Error('la sección Cromos no tiene el cromo ' + id);
+  window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - document.querySelector('nav.topnav').offsetHeight - 14, behavior: 'instant' });
+  el.classList.add('resaltada');
 }
 /** Pone un cromo en un mazo tuyo o lo saca. Un mazo lleno no lo toma y lo dice. */
 function cromoEnMazo (id, i) {
@@ -7392,7 +7423,7 @@ function movilTabsHtml (conLista, conMesa, derecha) {
 // que marcaste y tu capa. Lo que es de un personaje se sigue cargando en su ficha (pestaña «Mi cuenta»); acá se lista.
 // Tus tier lists quedan en Tier lists, junto a las públicas (decisión de la arquitectura: un solo lugar para cada cosa).
 // ============================================================================
-const CUENTA_TABS = ['resumen', 'equipos', 'progreso', 'propios', 'marcas', 'capa'];
+const CUENTA_TABS = ['resumen', 'equipos', 'progreso', 'propios', 'marcas', 'cromos', 'capa'];
 /** El apartado de Mi cuenta en el que se está: Equipos y el editor de personajes son vistas propias. */
 function cuentaTabActual () { return ui.view === 'teams' ? 'equipos' : ui.view === 'editor' ? 'propios' : ui.cuentaTab; }
 /** Cuánto hay en cada apartado, para la sub-barra y el resumen. */
@@ -7400,7 +7431,7 @@ function cuentaCuentas () {
   const conRuta = Object.keys(U.ruta), conTopes = Object.keys(U.topes);
   return { equipos: U.teams.length, progreso: new Set(conRuta.concat(conTopes)).size, ruta: conRuta.length, topes: conTopes.length,
            creados: U.charNew.length, editados: Object.keys(U.charEdits).length, propios: U.charNew.length + Object.keys(U.charEdits).length,
-           marcas: Object.keys(U.marcas).length, listas: U.lists.length,
+           marcas: Object.keys(U.marcas).length, listas: U.lists.length, cromos: U.cromos.mazos.reduce((n, m) => n + m.length, 0),
            // Cambios sobre las listas importadas: las ubicaciones de tus listas propias no lo son.
            cambios: Object.entries(U.assign).filter(([id]) => !U.lists.some(l => l.id === id)).reduce((n, [, o]) => n + Object.keys(o).length, 0) };
 }
@@ -7412,7 +7443,8 @@ function cuentaCabHtml () {
       ${k === 'equipos' ? 'data-a="goTeams"' : `data-a="cuentaTab" data-v="${k}"`}>${h(t('cu_tab_' + k))}${n[k] ? ` <span class="cun">${n[k]}</span>` : ''}</button>`).join('')}</div></div>`;
 }
 function renderCuenta () {
-  const cuerpo = { resumen: cuentaResumen, progreso: cuentaProgreso, propios: cuentaPropios, marcas: cuentaMarcas, capa: cuentaCapa }[ui.cuentaTab];
+  const cuerpo = { resumen: cuentaResumen, progreso: cuentaProgreso, propios: cuentaPropios, marcas: cuentaMarcas, cromos: cuentaCromos,
+                   capa: cuentaCapa }[ui.cuentaTab];
   if (!cuerpo) throw new Error('apartado de Mi cuenta desconocido: ' + ui.cuentaTab);
   return cuerpo();
 }
@@ -7428,6 +7460,7 @@ function cuentaResumen () {
       ${tarjeta('data-a="cuentaTab" data-v="propios"', t('cu_tab_propios'), n.propios, t('cu_prop_d').replace('{n}', n.creados).replace('{e}', n.editados))}
       ${tarjeta('data-a="cuentaTab" data-v="marcas"', t('cu_marcas_t'), n.marcas, t('cu_marcas_d'))}
       ${tarjeta('data-a="cuentaListas"', t('cu_listas_t'), n.listas, t('cu_listas_d').replace('{c}', n.cambios))}
+      ${tarjeta('data-a="cuentaTab" data-v="cromos"', t('cu_cr_t'), n.cromos, t('cu_cr_d').replace('{a}', U.cromos.mazos[0].length).replace('{b}', U.cromos.mazos[1].length))}
       ${tarjeta('data-a="cuentaTab" data-v="capa"', t('cu_tab_capa'), null, t('cu_capa_d'))}
     </div>`;
 }
@@ -7476,6 +7509,64 @@ function cuentaMarcas () {
         <td><button class="btn sm" data-a="abrirEn" data-cid="${g.v.cid}" data-uid="${g.v.uid || ''}" data-tab="skills">${h(t('cu_ir'))}</button></td></tr>`).join('')}</tbody></table></div>`
     : `<div class="empty"><div class="big">◇</div><div>${h(t('cu_marcas_vacio'))}</div></div>`}`;
 }
+/** Tus dos mazos de cromos: en cada lugar, el cromo y la opción que le salió en cada grado (o sin anotar), y qué cubre el
+ *  mazo. Un cromo o una opción anotada que ya no están en los datos quedan a la vista con su aviso. */
+function cuentaCromos () {
+  return `<div class="page-head"><div><h1>${h(t('cu_tab_cromos'))}</h1><div class="sub">${h(t('cu_cr_note'))}</div></div>
+      <button class="btn" data-a="goCromos">${h(t('cr_title'))}</button></div>
+    ${U.cromos.mazos.map(mazoHtml).join('')}`;
+}
+function mazoHtml (m, i) {
+  const libres = Array.from({ length: LUGARES_MAZO - m.length }, (_, k) => m.length + k);
+  const poner = CROMOS.cromos.filter(c => !m.some(x => x.id === c.id)).sort((a, b) => a.n.localeCompare(b.n));
+  const fila = (x, l) => {
+    const c = CROMO_POR_ID[x.id];
+    const sacar = `<button class="btn sm" data-a="crQuitar" data-m="${i}" data-l="${l}">${h(t('cu_cr_sacar'))}</button>`;
+    if (!c) return `<tr><td class="num">${l + 1}</td><td colspan="2"><span class="aviso">${h(t('cu_cr_no_esta').replace('{id}', x.id))}</span></td><td>${sacar}</td></tr>`;
+    const perdidas = Object.entries(x.op).filter(([g, k]) => !(c.grados[g] || []).some(o => claveOpcion(o) === k));
+    return `<tr><td class="num">${l + 1}</td>
+      <td><a class="crmini" href="#cromo-${h(c.id)}" data-a="crVer" data-id="${h(c.id)}"><span class="crimg">${cromoImg(c)}</span><b>${h(c.n)}</b></a>
+        <div class="row">${tipoCromo(c)}${c.pr ? propioTag(c.pr) : ''}</div></td>
+      <td class="crtdops"><div class="crops">${gradosDe(c).map(g => `<label class="crsel"><span class="crg">${h(t('cr_grado').replace('{g}', g))}</span>
+        <select data-a="crOp" data-m="${i}" data-l="${l}" data-g="${g}"><option value="">${h(t('cu_cr_sin_anotar'))}</option>${
+          c.grados[g].map(o => `<option value="${h(claveOpcion(o))}" ${x.op[g] === claveOpcion(o) ? 'selected' : ''}>${h(opcionTxt(o))}</option>`).join('')}</select></label>`).join('')}</div>
+        ${perdidas.map(([g, k]) => `<div class="aviso">${h(t('cu_cr_op_no_esta').replace('{g}', g).replace('{o}', k))}</div>`).join('')}</td>
+      <td>${sacar}</td></tr>`;
+  };
+  return `<div class="section"><h3>${h(t('cr_mazo').replace('{n}', i + 1))} <span class="cun">${m.length}/${LUGARES_MAZO}</span></h3>
+    <div class="stagewrap"><table class="cutabla crmazotabla"><thead><tr><th>${h(t('cu_cr_lugar'))}</th><th>${h(t('cu_cr_cromo'))}</th>
+      <th>${h(t('cu_cr_opciones'))}</th><th></th></tr></thead><tbody>
+      ${m.map(fila).join('')}
+      ${libres.map((l, k) => `<tr><td class="num">${l + 1}</td><td colspan="3">${k === 0
+        ? `<select data-a="crPoner" data-m="${i}" aria-label="${h(t('cu_cr_poner'))}"><option value="">${h(t('cu_cr_poner'))}</option>${
+            poner.map(c => `<option value="${h(c.id)}">${h(c.n)}</option>`).join('')}</select>`
+        : `<span class="muted">${h(t('cu_cr_libre'))}</span>`}</td></tr>`).join('')}
+    </tbody></table></div>
+    ${m.length ? coberturaMazo(m, i) : `<p class="muted">${h(t('cu_cr_vacio'))}</p>`}</div>`;
+}
+/** Qué cubre un mazo: por stat, cuántos cromos lo dan fijo y cuántos en una opción anotada; y las activaciones anotadas.
+ *  Sin sumar porcentajes: thanosvibs no publica cuánto da cada opción. */
+function coberturaMazo (m, i) {
+  const por = {}, acts = [];
+  for (const x of m) {
+    const c = CROMO_POR_ID[x.id];
+    if (!c) continue;
+    for (const f of c.fijas) (por[f.s] = por[f.s] || { fija: [], anotada: [] }).fija.push(c.n);
+    for (const [g, k] of Object.entries(x.op)) {
+      const o = (c.grados[g] || []).find(y => claveOpcion(y) === k);
+      if (!o) continue;
+      if (o.act) acts.push([c, o, g]); else (por[o.s] = por[o.s] || { fija: [], anotada: [] }).anotada.push(c.n + ' (' + g + '★)');
+    }
+  }
+  const ks = Object.keys(por).sort((a, b) => (por[b].fija.length + por[b].anotada.length) - (por[a].fija.length + por[a].anotada.length)
+    || statCromo(a).localeCompare(statCromo(b)));
+  const n = (xs) => xs.length ? `<span title="${h(xs.join(' · '))}">${xs.length}</span>` : '<span class="muted">—</span>';
+  return `<div class="crcobertura"><h4>${h(t('cu_cr_resumen').replace('{n}', i + 1))} ${ayudaHtml(t('cu_cr_resumen_nota'))}</h4>
+    <table class="cutabla"><thead><tr><th>${h(t('cu_cr_stat'))}</th><th class="num">${h(t('cu_cr_n_fija'))}</th><th class="num">${h(t('cu_cr_n_anotada'))}</th></tr></thead>
+      <tbody>${ks.map(k => `<tr><td>${h(statCromo(k))}</td><td class="num">${n(por[k].fija)}</td><td class="num">${n(por[k].anotada)}</td></tr>`).join('')}</tbody></table>
+    ${acts.length ? `<h4>${h(t('cu_cr_acts'))}</h4><ul>${acts.map(([c, o, g]) => `<li>${h(opcionTxt(o))} <span class="muted">— ${h(c.n)} (${g}★)</span></li>`).join('')}</ul>` : ''}
+  </div>`;
+}
 /** Tu capa guardada: cuánto hay de cada cosa y exportarla, importarla o borrarla (antes en Ajustes). */
 function cuentaCapa () {
   const n = cuentaCuentas();
@@ -7489,6 +7580,7 @@ function cuentaCapa () {
       <div class="stat"><div class="k">${h(t('st_marks'))}</div><div class="v">${n.marcas}</div></div>
       <div class="stat"><div class="k">${h(t('st_routes'))}</div><div class="v">${n.ruta}</div></div>
       <div class="stat"><div class="k">${h(t('st_caps'))}</div><div class="v">${n.topes}</div></div>
+      <div class="stat"><div class="k">${h(t('st_cromos'))}</div><div class="v">${n.cromos}</div></div>
     </div>
     <div class="row" style="margin-top:12px">
       <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
@@ -7955,6 +8047,9 @@ document.addEventListener('click', (e) => {
     case 'crAct': ui.crAct = d.v; render(); break;
     case 'crModo': ui.crModo = d.v; render(); break;
     case 'crMazo': cromoEnMazo(d.id, +d.m); saveUser(); render(); break;
+    case 'crQuitar': U.cromos.mazos[+d.m].splice(+d.l, 1); saveUser(); render(); break;
+    case 'crVer': e.preventDefault(); Object.assign(ui, { view: 'cromos', crBusca: '', crTipo: '', crStat: '', crAct: '', crAviso: null, focusSearch: false });
+      render(); irACromo(d.id); break;
     case 'goHistorico': ui.view = 'historico'; ui.hiPj = d.cid || ''; ui.hiN = 20; render(); window.scrollTo(0, 0); break;
     case 'hiTipo': ui.hiTipo = d.v; ui.hiN = 20; render(); break;
     case 'hiMas': ui.hiN += 20; render(); break;
@@ -8157,6 +8252,11 @@ document.addEventListener('change', (e) => {
   if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'hiPj') { ui.hiPj = el.value; ui.hiN = 20; render(); return; }
   if (a === 'crStat') { ui.crStat = el.value; ui.focusSearch = false; render(); return; }
+  // Mi cuenta › Cromos: poner un cromo en el primer lugar libre de un mazo y anotar la opción de un grado (vacío: sin anotar).
+  if (a === 'crPoner') { cromoEnMazo(el.value, +d.m); saveUser(); render(); return; }
+  if (a === 'crOp') { const op = U.cromos.mazos[+d.m][+d.l].op;
+    if (el.value) op[d.g] = el.value; else delete op[d.g];
+    saveUser(); render(); return; }
   if (a === 'eqExcluir') { if (el.value) ui.eqExcluir = ui.eqExcluir.concat(el.value); ui.eqPagina = 0; render(); return; }
   if (a === 'eqCobertura') { ui.eqCobertura = COBERTURA.map(g => g.k).filter(k => k === d.g ? el.checked : ui.eqCobertura.includes(k));
     ui.eqPagina = 0; render(); return; }

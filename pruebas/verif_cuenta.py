@@ -72,15 +72,15 @@ try:
         pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
         tabs = [x[0] for x in pg.evaluate(SUB)]
         ok('2 Mi cuenta: marcada en la barra, con su sub-barra', marcado() == ['Mi cuenta'] and sub() == 'Resumen'
-           and tabs == ['Resumen', 'Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', 'Mi capa'], (marcado(), tabs))
+           and tabs == ['Resumen', 'Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', 'Cromos', 'Mi capa'], (marcado(), tabs))
         cuentas = {x[0]: x[1] for x in pg.evaluate(SUB) if x[1]}
         ok('2 la sub-barra dice cuánto hay en cada apartado', cuentas == {'Equipos': '1', 'Progreso': '1', 'Personajes propios': '1', 'Atributos marcados': '1'}, cuentas)
         tiles = pg.locator('.cuhub .cutile')
         valores = [tiles.nth(i).locator('.v').inner_text() if tiles.nth(i).locator('.v').count() else None for i in range(tiles.count())]
-        ok('2 el resumen: una tarjeta por apartado, con lo que hay (equipos, progreso, propios, marcas, listas) y la capa',
-           tiles.count() == 6 and valores == ['1', '1', '1', '1', '1', None], valores)
+        ok('2 el resumen: una tarjeta por apartado, con lo que hay (equipos, progreso, propios, marcas, listas, cromos) y la capa',
+           tiles.count() == 7 and valores == ['1', '1', '1', '1', '1', '0', None], valores)
         destinos = []
-        for i, espera in enumerate(('Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', None, 'Mi capa')):
+        for i, espera in enumerate(('Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', None, 'Cromos', 'Mi capa')):
             pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
             pg.locator('.cuhub .cutile').nth(i).click(); pg.wait_for_timeout(300)
             destinos.append((espera, sub(), marcado()))
@@ -172,7 +172,7 @@ try:
         pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
         tabs_en = [x[0] for x in pg.evaluate(SUB)]
         ok('8 inglés: la barra y la sub-barra', pg.locator('nav.topnav .navgrupo.cuenta .navlink').inner_text() == 'My account'
-           and tabs_en == ['Overview', 'Teams', 'Progress', 'Own characters', 'Marked attributes', 'My layer'], tabs_en)
+           and tabs_en == ['Overview', 'Teams', 'Progress', 'Own characters', 'Marked attributes', 'Cards', 'My layer'], tabs_en)
         resto = [x for x in ('Progreso', 'Personajes propios', 'Mi capa', 'Equipos', 'Tier lists propias') if x in pg.locator('main').inner_text()]
         ok('8 inglés: el resumen sin restos en castellano', not resto, resto)
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
