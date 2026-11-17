@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # va directo a la pantalla del usuario.
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
                        'work/updates.json', 'work/ctps.json', 'work/artifacts.json', 'work/abxl.json',
-                       'work/supports.json', 'work/rotations.json', 'work/wiki_artifact.json',
+                       'work/supports.json', 'work/rotations.json', 'work/wiki_artifact.json', 'work/cards.json',
                        'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
            if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
@@ -101,6 +101,11 @@ for c in FUENTES['ctps']:
     images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
 for a in FUENTES['artefactos']:
     images['art-' + a['p']] = f"images/items/artifact_{a['p']}.png"
+# Los cromos de cómic (#35, scripts/cromos.py), con sus imágenes (las baja fetch_all --imagenes, como los íconos).
+import cromos
+CROMOS, _img_cromos = cromos.armar(json.load(open('work/cards.json', encoding='utf-8')),
+                                   json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8'))['stats'])
+images.update(_img_cromos)
 
 
 def _aplica_artefacto(en):
@@ -241,11 +246,14 @@ hoy = hoy.isoformat()
 # 18: Alliance Battle tiene su propio contexto de C.T.P. (ctp «abx» en modos.json) y la guía de armado trae lo que su
 #     leyenda dice de él (MFF_GUIA_ARMADO.leyenda.abx: Rage, y Judgement reforjado en su lugar; #25). La app de formato 17
 #     se cae con un equipo de Alliance Battle.
-FORMATO = 18
+# 19: los cromos de cómic (MFF_CROMOS, scripts/cromos.py; #35): cada uno con sus fijas, sus opciones por grado y sus
+#     activaciones, los nombres de sus stats, los tipos y las colecciones, y sus imágenes. La app de formato 19 tiene la
+#     sección Cromos y Mi cuenta › Cromos; la de formato 18 no los lee.
+FORMATO = 19
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
-// soportes, rotaciones, Alliance Battle, guía, retratos e íconos), future-fight.fandom.com
+// soportes, rotaciones, Alliance Battle, cromos, guía, retratos e íconos), future-fight.fandom.com
 // (instintos, bonos de equipo y el contraste de docs/AUDITORIA.md) y la guía de armado de
 // Cynicalex Mega Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex
 // Mega Guides.
@@ -303,6 +311,9 @@ parts = [header,
  'window.MFF_CANCELS = ' + json.dumps(FUENTES['cancels'], ensure_ascii=False) + ';\n',
  'window.MFF_SOPORTES = ' + json.dumps(FUENTES['soportes'], ensure_ascii=False) + ';\n',
  'window.MFF_ROTACIONES = ' + json.dumps(FUENTES['rotaciones'], ensure_ascii=False) + ';\n',
+ '// Cromos de cómic (scripts/cromos.py, scripts/contenido/cromos.json): cada uno con sus fijas, sus opciones por grado\n'
+ '// y sus activaciones; los valores, solo los de los propios (los de la nota, a la máxima calidad y grado).\n',
+ 'window.MFF_CROMOS = ' + json.dumps(CROMOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Contraste con la wiki y chequeos internos por retrato (scripts/auditar.py; informe en docs/AUDITORIA.md).\n',
  'window.MFF_VERIFICACION = ' + json.dumps(VERIF, ensure_ascii=False) + ';\n',
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',

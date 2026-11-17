@@ -10,6 +10,8 @@ todavía no publica o publica distinto, en sus mismas formas:
   skills/<p>.json   las skills de un retrato como /api/skills: las de otro retrato (desde, el de thanosvibs) con los slots
                     que el juego cambia o agrega encima (slots).
   artefactos.json   filas de /api/artifacts.      ctps.json   filas de /api/ctps.
+  cromos.json       filas de /api/cards (los cromos de cómic, por nombre), con lo que da cada opción según la nota
+                    (valores), que thanosvibs no publica; y las colecciones, que lee cromos.py.
   retratos/<p>.png  el retrato, de la ficha de la nota, solo mientras thanosvibs no publica el suyo: el de thanosvibs
                     tiene el fondo transparente de los demás, el de la ficha es blanco (Ezequiel, 16 de octubre de 2026).
 
@@ -95,6 +97,7 @@ def restaurar():
     restaurar_lista(os.path.join(W, 'characters.json'))
     restaurar_lista(os.path.join(W, 'artifacts.json'))
     restaurar_lista(os.path.join(W, 'ctps.json'))
+    restaurar_lista(os.path.join(W, 'cards.json'))
     restaurar_dict(os.path.join(W, 'uniforms.json'))
     restaurar_updates(os.path.join(W, 'updates.json'))
     restaurar_skills()
@@ -125,6 +128,7 @@ def main():
     P = cargar(os.path.join(PROPIO, 'personajes.json'))
     A = cargar(os.path.join(PROPIO, 'artefactos.json'))
     T = cargar(os.path.join(PROPIO, 'ctps.json'))
+    C = cargar(os.path.join(PROPIO, 'cromos.json'))
     S = {os.path.basename(f)[:-5]: cargar(f) for f in sorted(glob.glob(os.path.join(PROPIO, 'skills', '*.json')))}
     informe = {'aplicado': [], 'confirmado': [], 'difiere': [], 'sin_confirmar': []}
 
@@ -241,9 +245,13 @@ def main():
     for p, d in salida.items():
         escribir(os.path.join(W, 'skills_api', p + '.json'), d)
 
-    # Artefactos y C.T.P.s.
-    for archivo, clave, lista, campo in (('artifacts.json', 'portrait', A['artefactos'], 'artefacto'),
-                                         ('ctps.json', 'name', T['ctps'], 'C.T.P.')):
+    # Artefactos, C.T.P.s y cromos. No se compara lo que thanosvibs pone por su cuenta (id, puntajes, de dónde se
+    # consigue) ni lo que la fuente propia da y thanosvibs no publica (los valores de los cromos y su nota). La imagen de un
+    # cromo sí: cuando thanosvibs lo publique, la auditoría dice que el propio no la tiene.
+    for archivo, clave, lista, campo, sin_comparar in (
+            ('artifacts.json', 'portrait', A['artefactos'], 'artefacto', ('id', 'pve_score', 'pvp_score', 'acquisition')),
+            ('ctps.json', 'name', T['ctps'], 'C.T.P.', ('id', 'pve_score', 'pvp_score', 'acquisition')),
+            ('cards.json', 'name', C['cromos'], 'cromo', ('id', 'valores', 'nota'))):
         ruta = os.path.join(W, archivo)
         filas = cargar(ruta)
         por = {r[clave]: i for i, r in enumerate(filas)}
@@ -252,7 +260,7 @@ def main():
             nueva = sin_meta(r)
             if r[clave] in por:
                 tv = filas[por[r[clave]]]
-                d = diferencias(nueva, tv, [k for k in nueva if k not in ('id', 'pve_score', 'pvp_score', 'acquisition')])
+                d = diferencias(nueva, tv, [k for k in nueva if k not in sin_comparar])
                 (informe['difiere'] if d else informe['confirmado']).append(f'{campo} {r[clave]}' + (': ' + '; '.join(d) if d else ''))
                 filas[por[r[clave]]] = {**nueva, MARCA: {'tv': tv}}
             else:

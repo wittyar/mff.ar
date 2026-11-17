@@ -1,0 +1,61 @@
+{
+ "nota": {
+  "es": "Cómo se leen los cromos de cómic que publica thanosvibs (/api/cards) y los propios (fuentes/propio/cromos.json), para scripts/cromos.py. stats: cada texto de una opción (en mayúsculas, como lo escribe thanosvibs) y la clave del stat; las claves de guia.json (stats) toman su nombre de ahí, y las demás, de nombres. Dos textos de thanosvibs traen una coma al final («ATTACK SPEED,» y «POISON RESIST,»): son el mismo stat, y van acá como tales para que se vea que la fuente los escribe así. «CROWD CONTROL TIME» es como escriben los cromos nuevos de la nota del 17 de noviembre de 2026 lo que thanosvibs llama «DEBUFF DURATION» en los demás; que sean el mismo stat es probable (el catálogo de efectos les da el mismo efecto), sin confirmar: van con su clave cada uno. Una opción «… Proc (cuándo)» es una activación: el stat (con estas mismas claves) y cuándo (cuando). tipos: los de thanosvibs, en orden, con su nombre en la app; «Rare?» es como lo publica thanosvibs, y la app lo muestra como Rare marcado como dudoso. Un texto, un cuándo o un tipo que no esté acá corta el build.",
+  "en": "How to read the comic cards thanosvibs publishes (/api/cards) and the own ones (fuentes/propio/cromos.json), for scripts/cromos.py."
+ },
+ "stats": {
+  "PHYSICAL ATTACK": "patk",
+  "ENERGY ATTACK": "eatk",
+  "ALL BASIC ATTACKS": "allatk",
+  "ATTACK SPEED": "aspd",
+  "ATTACK SPEED,": "aspd",
+  "MOVEMENT SPEED": "mspd",
+  "CRITICAL RATE": "crit",
+  "CRITICAL DAMAGE": "critdmg",
+  "IGNORE DEFENSE": "igdef",
+  "IGNORE DODGE": "igdodge",
+  "ADDITIONAL PIERCE DAMAGE INCREASE": "perforacion",
+  "MAX HP": "hpmax",
+  "RECOVERY RATE": "rec",
+  "DODGE": "dodge",
+  "COOLDOWN DURATION": "cd",
+  "SKILL COOLDOWN": "cd",
+  "DEBUFF DURATION": "debuff",
+  "CROWD CONTROL TIME": "cc",
+  "ALL BASIC DEFENSES": "alldef",
+  "PHYSICAL DEFENSE": "pdef",
+  "ENERGY DEFENSE": "edef",
+  "FIRE RESIST": "res_fuego",
+  "COLD RESIST": "res_frio",
+  "LIGHTNING RESIST": "res_rayo",
+  "POISON RESIST": "res_veneno",
+  "POISON RESIST,": "res_veneno",
+  "MIND RESIST": "res_mente",
+  "ALL RESISTANCES": "res_todas"
+ },
+ "nombres": {
+  "perforacion": {"es": "Daño de perforación adicional", "en": "Additional Pierce Damage"},
+  "hpmax": {"es": "PG máx.", "en": "Max HP"},
+  "res_fuego": {"es": "Resistencia a fuego", "en": "Fire Resist"},
+  "res_frio": {"es": "Resiste frío", "en": "Cold Resist"},
+  "res_rayo": {"es": "Resistencia a rayo", "en": "Lightning Resist"},
+  "res_veneno": {"es": "Resistencia a veneno", "en": "Poison Resist"},
+  "res_mente": {"es": "Resistencia a mental", "en": "Mind Resist"},
+  "res_todas": {"es": "Todas las resistencias", "en": "All Resistances"}
+ },
+ "cuando": {
+  "when attacking": {"id": "atacar", "es": "al atacar", "en": "when attacking"},
+  "when hit": {"id": "golpe", "es": "al recibir un golpe", "en": "when hit"},
+  "when critting": {"id": "critico", "es": "al asestar un ataque crítico", "en": "when dealing a critical hit"},
+  "when dodging": {"id": "esquivar", "es": "al esquivar", "en": "when dodging"}
+ },
+ "tipos": [
+  {"id": "Premium", "es": "Premium", "en": "Premium"},
+  {"id": "Semi-Premium", "es": "Semi-Premium", "en": "Semi-Premium"},
+  {"id": "Chest Semi-Premium", "es": "Semi-Premium de cofre", "en": "Chest Semi-Premium"},
+  {"id": "Rare", "es": "Raro", "en": "Rare"},
+  {"id": "Event", "es": "De evento", "en": "Event"},
+  {"id": "Support", "es": "De apoyo", "en": "Support"}
+ ],
+ "dudosos": {"Rare?": "Rare"}
+}

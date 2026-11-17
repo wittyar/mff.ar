@@ -17,7 +17,7 @@ def chequear(nombre, cond, detalle=''):
     print(('OK   ' if cond else 'FALLA'), nombre, '|', detalle)
     if not cond: fallas.append(nombre)
 
-MAPA = {'portraits': '', 'items': 'items/', 'attributes': 'icons/'}
+MAPA = {'portraits': '', 'items': 'items/', 'attributes': 'icons/', 'cards': 'cards/'}
 ROTAS = set()          # rutas de origen que responden 500
 LENTAS = set()         # con algo adentro, cada imagen tarda medio segundo
 NO_PNG = set()         # rutas de origen que responden algo que no es PNG

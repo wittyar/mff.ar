@@ -1,0 +1,344 @@
+{
+ "nota": {
+  "es": "Cromos de cómic propios (como /api/cards de thanosvibs, por nombre): los cinco de War of Kings, de la nota de la actualización del 17 de noviembre de 2026, que thanosvibs todavía no publica. Además de lo de thanosvibs, cada uno trae en valores lo que da según la nota «a la máxima calidad y grado» (las fijas, la opción de cada grado y la activación: probabilidad, cuánto y cuántos segundos); los demás cromos no tienen valores (thanosvibs no los publica). La colección (colecciones): los cinco en Mítico dan +3% al índice de recuperación. Lo que la nota nombra sin sus opciones (el cromo premium Fantastic Four (1961) #49) no va.",
+  "en": "Own comic cards (like thanosvibs' /api/cards, by name): the five War of Kings cards from the November 17, 2026 update notes."
+ },
+ "cromos": [
+  {
+   "id": 9001,
+   "name": "WAR OF KINGS (2009) #1",
+   "type": "Premium",
+   "img": null,
+   "stat1": "ENERGY ATTACK",
+   "stat2": "CRITICAL RATE",
+   "stat3": "MAX HP",
+   "stat4": [
+    "PHYSICAL DEFENSE",
+    "CRITICAL DAMAGE",
+    "COLD RESIST",
+    "CROWD CONTROL TIME",
+    "Energy Attack Proc (when attacking)"
+   ],
+   "stat5": [
+    "PHYSICAL ATTACK",
+    "ALL BASIC DEFENSES",
+    "MOVEMENT SPEED",
+    "COOLDOWN DURATION",
+    "POISON RESIST"
+   ],
+   "stat6": [
+    "IGNORE DEFENSE",
+    "ENERGY DEFENSE",
+    "ATTACK SPEED",
+    "DODGE",
+    "ALL BASIC ATTACKS"
+   ],
+   "valores": {
+    "fijas": [
+     11,
+     11,
+     5.1
+    ],
+    "4": 5.4,
+    "5": 5.7,
+    "6": 6,
+    "activacion": {
+     "prob": 5,
+     "v": 30,
+     "dur": 15
+    }
+   },
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "id"
+   ],
+   "notas": [
+    "Transcripto de la imagen de la nota con el vocabulario de thanosvibs: ALL BASIC ATTACKS/DEFENSE(S) INCREASE como ALL BASIC ATTACKS/DEFENSES, FLAME RESIST como FIRE RESIST y COOLDOWN DURATION ↓ como COOLDOWN DURATION; CROWD CONTROL TIME ↓ queda como lo escribe la nota.",
+    "La nota: su activación de ataque de energía no se acumula con la de ataque de energía de otros cromos.",
+    "No sale del cofre de cromos premium (el que se compra con fichas de intercambio)."
+   ],
+   "nota": {
+    "es": "Su activación de ataque de energía no se acumula con la de ataque de energía de otros cromos (la nota).",
+    "en": "Its Energy Attack activation does not stack with the Energy Attack activation of other cards (the notes)."
+   }
+  },
+  {
+   "id": 9002,
+   "name": "WAR OF KINGS (2009) #3",
+   "type": null,
+   "img": null,
+   "stat1": "DODGE",
+   "stat2": "COOLDOWN DURATION",
+   "stat3": [
+    "PHYSICAL ATTACK",
+    "ALL BASIC DEFENSES",
+    "LIGHTNING RESIST",
+    "CRITICAL RATE",
+    "RECOVERY RATE"
+   ],
+   "stat4": [
+    "ATTACK SPEED",
+    "ENERGY ATTACK",
+    "ALL BASIC ATTACKS",
+    "FIRE RESIST",
+    "All Basic Attacks Proc (when attacking)"
+   ],
+   "stat5": [
+    "MIND RESIST",
+    "CRITICAL DAMAGE",
+    "MAX HP",
+    "MOVEMENT SPEED",
+    "COLD RESIST"
+   ],
+   "stat6": [
+    "POISON RESIST",
+    "PHYSICAL DEFENSE",
+    "ENERGY DEFENSE",
+    "IGNORE DEFENSE",
+    "CROWD CONTROL TIME"
+   ],
+   "valores": {
+    "fijas": [
+     11,
+     11
+    ],
+    "3": 5.1,
+    "4": 5.4,
+    "5": 5.7,
+    "6": 6,
+    "activacion": {
+     "prob": 5,
+     "v": 20,
+     "dur": 15
+    }
+   },
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "id",
+    "type"
+   ],
+   "notas": [
+    "Transcripto de la imagen de la nota con el vocabulario de thanosvibs: ALL BASIC ATTACKS/DEFENSE(S) INCREASE como ALL BASIC ATTACKS/DEFENSES, FLAME RESIST como FIRE RESIST y COOLDOWN DURATION ↓ como COOLDOWN DURATION; CROWD CONTROL TIME ↓ queda como lo escribe la nota.",
+    "La nota no dice de qué tipo es."
+   ]
+  },
+  {
+   "id": 9003,
+   "name": "WAR OF KINGS (2009) #4",
+   "type": null,
+   "img": null,
+   "stat1": "PHYSICAL ATTACK",
+   "stat2": "ENERGY ATTACK",
+   "stat3": [
+    "CRITICAL DAMAGE",
+    "ALL BASIC DEFENSES",
+    "DODGE",
+    "FIRE RESIST",
+    "RECOVERY RATE"
+   ],
+   "stat4": [
+    "CRITICAL RATE",
+    "ENERGY DEFENSE",
+    "ALL BASIC ATTACKS",
+    "LIGHTNING RESIST",
+    "Attack Speed Proc (when hit)"
+   ],
+   "stat5": [
+    "IGNORE DEFENSE",
+    "POISON RESIST",
+    "ATTACK SPEED",
+    "CROWD CONTROL TIME",
+    "PHYSICAL DEFENSE"
+   ],
+   "stat6": [
+    "MIND RESIST",
+    "MOVEMENT SPEED",
+    "COLD RESIST",
+    "MAX HP",
+    "COOLDOWN DURATION"
+   ],
+   "valores": {
+    "fijas": [
+     11,
+     11
+    ],
+    "3": 5.1,
+    "4": 5.4,
+    "5": 5.7,
+    "6": 6,
+    "activacion": {
+     "prob": 5,
+     "v": 20,
+     "dur": 15
+    }
+   },
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "id",
+    "type"
+   ],
+   "notas": [
+    "Transcripto de la imagen de la nota con el vocabulario de thanosvibs: ALL BASIC ATTACKS/DEFENSE(S) INCREASE como ALL BASIC ATTACKS/DEFENSES, FLAME RESIST como FIRE RESIST y COOLDOWN DURATION ↓ como COOLDOWN DURATION; CROWD CONTROL TIME ↓ queda como lo escribe la nota.",
+    "La nota no dice de qué tipo es."
+   ]
+  },
+  {
+   "id": 9004,
+   "name": "WAR OF KINGS (2009) #5",
+   "type": null,
+   "img": null,
+   "stat1": "IGNORE DEFENSE",
+   "stat2": "ALL BASIC ATTACKS",
+   "stat3": [
+    "POISON RESIST",
+    "ENERGY ATTACK",
+    "PHYSICAL ATTACK",
+    "CROWD CONTROL TIME",
+    "PHYSICAL DEFENSE"
+   ],
+   "stat4": [
+    "COLD RESIST",
+    "ATTACK SPEED",
+    "RECOVERY RATE",
+    "ENERGY DEFENSE",
+    "All Basic Defenses Proc (when attacking)"
+   ],
+   "stat5": [
+    "CRITICAL RATE",
+    "COOLDOWN DURATION",
+    "CRITICAL DAMAGE",
+    "DODGE",
+    "ALL BASIC DEFENSES"
+   ],
+   "stat6": [
+    "FIRE RESIST",
+    "MIND RESIST",
+    "MOVEMENT SPEED",
+    "LIGHTNING RESIST",
+    "MAX HP"
+   ],
+   "valores": {
+    "fijas": [
+     11,
+     11
+    ],
+    "3": 5.1,
+    "4": 5.4,
+    "5": 5.7,
+    "6": 6,
+    "activacion": {
+     "prob": 5,
+     "v": 20,
+     "dur": 15
+    }
+   },
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "id",
+    "type"
+   ],
+   "notas": [
+    "Transcripto de la imagen de la nota con el vocabulario de thanosvibs: ALL BASIC ATTACKS/DEFENSE(S) INCREASE como ALL BASIC ATTACKS/DEFENSES, FLAME RESIST como FIRE RESIST y COOLDOWN DURATION ↓ como COOLDOWN DURATION; CROWD CONTROL TIME ↓ queda como lo escribe la nota.",
+    "La nota no dice de qué tipo es."
+   ]
+  },
+  {
+   "id": 9005,
+   "name": "WAR OF KINGS (2009) #6",
+   "type": null,
+   "img": null,
+   "stat1": "RECOVERY RATE",
+   "stat2": "COOLDOWN DURATION",
+   "stat3": [
+    "ENERGY DEFENSE",
+    "IGNORE DEFENSE",
+    "PHYSICAL DEFENSE",
+    "POISON RESIST",
+    "COLD RESIST"
+   ],
+   "stat4": [
+    "ATTACK SPEED",
+    "FIRE RESIST",
+    "ALL BASIC DEFENSES",
+    "CROWD CONTROL TIME",
+    "Max HP Proc (when attacking)"
+   ],
+   "stat5": [
+    "ALL BASIC ATTACKS",
+    "MOVEMENT SPEED",
+    "LIGHTNING RESIST",
+    "DODGE",
+    "CRITICAL DAMAGE"
+   ],
+   "stat6": [
+    "CRITICAL RATE",
+    "PHYSICAL ATTACK",
+    "MIND RESIST",
+    "MAX HP",
+    "ENERGY ATTACK"
+   ],
+   "valores": {
+    "fijas": [
+     11,
+     11
+    ],
+    "3": 5.1,
+    "4": 5.4,
+    "5": 5.7,
+    "6": 6,
+    "activacion": {
+     "prob": 5,
+     "v": 20,
+     "dur": 15
+    }
+   },
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ],
+   "sin_confirmar": [
+    "id",
+    "type"
+   ],
+   "notas": [
+    "Transcripto de la imagen de la nota con el vocabulario de thanosvibs: ALL BASIC ATTACKS/DEFENSE(S) INCREASE como ALL BASIC ATTACKS/DEFENSES, FLAME RESIST como FIRE RESIST y COOLDOWN DURATION ↓ como COOLDOWN DURATION; CROWD CONTROL TIME ↓ queda como lo escribe la nota.",
+    "La nota no dice de qué tipo es.",
+    "La activación dice «+20% increase of HP»: va como Max HP Proc, como escribe thanosvibs las activaciones de PG."
+   ]
+  }
+ ],
+ "colecciones": [
+  {
+   "id": "war-of-kings",
+   "nombre": "War of Kings",
+   "cromos": [
+    "WAR OF KINGS (2009) #1",
+    "WAR OF KINGS (2009) #3",
+    "WAR OF KINGS (2009) #4",
+    "WAR OF KINGS (2009) #5",
+    "WAR OF KINGS (2009) #6"
+   ],
+   "grado": "Mythic",
+   "premio": {
+    "stat": "RECOVERY RATE",
+    "v": 3
+   },
+   "fuente": [
+    "foro-1897819",
+    "cafe-3190031"
+   ]
+  }
+ ]
+}
