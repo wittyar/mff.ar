@@ -2734,7 +2734,7 @@ function skillCard (sk, v, si) {
   if (esAjeno(tgComun)) cabecera.push(objetivoTag(tgComun, true));
   if (acComun != null) {
     const st0 = sk.st.find(x => x.ac === acComun) || {};
-    cabecera.push(`<span class="tag dim">${h(t('st_activation'))}: ${h(txt('act', acComun, st0.av))}</span>`);
+    cabecera.push(`<span class="tag dim act">${h(t('st_activation'))}: ${h(txt('act', acComun, st0.av))}</span>`);
   }
   const varias = etapas.length > 1;
   // A quién le llega cada efecto (el destino del análisis), para el color de su etiqueta: 'e', 'q', 'r' o 'i'; si un mismo
@@ -5259,7 +5259,7 @@ function renderHistorico () {
   const personajes = CHARS.slice().sort((a, b) => a.name.localeCompare(b.name));
   return `<div class="page-head"><div><h1>${h(t('hi_title'))} ${ayudaHtml(t('hi_note'))}</h1></div></div>
     <div class="row" style="gap:10px;margin-bottom:12px;flex-wrap:wrap">
-      <label>${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}
+      <label class="hipj">${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}
         <optgroup label="${h(t('hi_pj_modos'))}">${MODOS.slice().sort((a, b) => nombreModo(a).localeCompare(nombreModo(b))).map(m => opcionHtml(MODO_HI + m.id, nombreModo(m), pj)).join('')}</optgroup>
         <optgroup label="${h(t('hi_pj_pjs'))}">${personajes.map(c => opcionHtml(c.id, c.name, pj)).join('')}</optgroup></select></label>
       <div class="seg">${['todos'].concat(HI_TIPOS).map(k => `<button class="${tipo === k ? 'on' : ''}" data-a="hiTipo" data-v="${k}">${h(t(k === 'todos' ? 'hi_t_todos' : 'hi_t_' + k))}</button>`).join('')}</div>

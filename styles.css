@@ -95,6 +95,8 @@ select{appearance:none;padding-right:28px;
 .tag.dim{background:rgba(255,255,255,.06);color:var(--text-2)}
 /* La recarga de una skill: puede ser una frase (la de la skill y la de un efecto según Leads & Supports). */
 .tag.rec{text-transform:none;letter-spacing:0;white-space:normal}
+/* Cuándo se activa una skill: puede ser una frase larga, que entera desbordaba la página en el celular. */
+.tag.act{white-space:normal}
 
 /* ---------- layout ---------- */
 nav.topnav{
@@ -401,6 +403,8 @@ ul.pqm-lista b{color:var(--text);font-weight:600}
 /* Cobertura de un trío: lo que le dan al personaje sus compañeros. */
 .cobertura{gap:4px;margin-top:3px}
 .tag.cob{font-weight:600}
+/* Una casilla larga («Ataque: …» con varias categorías) se parte en líneas: entera, en el celular desbordaba la página. */
+.cobertura .tag.cob{white-space:normal;text-align:left}
 .tag.cob.si{background:rgba(74,222,128,.14);color:var(--role-soporte)}
 .tag.cob.art{background:var(--gold-soft);color:var(--gold);cursor:help}
 .tag.cob.no{background:rgba(255,255,255,.04);color:var(--text-3)}
@@ -1026,6 +1030,9 @@ table.topes input{width:70px;padding:5px 7px}
 .glerr{scroll-margin-top:calc(var(--nav-h) + 12px)}
 .glfoco{outline:2px solid var(--accent);outline-offset:3px}
 /* Histórico */
+/* Histórico: el selector de personaje o modo no pasa del ancho (su opción más larga desbordaba la página en el celular). */
+.hipj{display:inline-flex;align-items:center;gap:6px;max-width:100%;min-width:0}
+.hipj select{min-width:0;max-width:100%}
 .hiversion{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px;background:var(--surface)}
 .hicab{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;cursor:pointer;list-style:none}
 .hicab::-webkit-details-marker{display:none}
