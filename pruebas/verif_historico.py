@@ -197,6 +197,7 @@ try:
         ok('7 solo «Modo de juego»: lo del modelo', not comparar(pg.evaluate(LEER), esperado(mg[:20], 'es')), comparar(pg.evaluate(LEER), esperado(mg[:20], 'es'))[:1])
         quien = pg.locator('.hiquien [data-a="verModo"]').first
         mid = quien.get_attribute('data-id'); quien.click(); pg.wait_for_selector(f'#modo-{mid}.on')
+        pg.wait_for_timeout(1000)   # el desplazamiento es suave (html{scroll-behavior}): un modo de más abajo tarda en llegar
         ok('7 el nombre de un modo abre Modos con ese modo abierto y a la vista', pg.evaluate(f"document.getElementById('modo-{mid}').getBoundingClientRect().top") < 400)
         mh = grupos(lambda x: x[0] == 'modo:' + mid)
         app = pg.evaluate(LEER.replace("document.querySelectorAll('.hiversion')", f"document.querySelectorAll('#modo-{mid} .hiversion')"))
