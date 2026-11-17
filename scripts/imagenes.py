@@ -7,11 +7,12 @@ las que le falten.
     images/<retrato>.png        -> thanosvibs /images/portraits/<retrato>.png
     images/icons/<slug>.png     -> thanosvibs /images/attributes/<slug>.png
     images/items/<nombre>.png   -> thanosvibs /images/items/<nombre>.png
+    images/cards/<nombre>.png   -> thanosvibs /images/cards/<nombre>.png (los cromos de cómic)
     images/propio/<retrato>.png -> el repo, fuentes/propio/retratos/<retrato>.png (contenido propio: propio.py)
 """
 TV = 'https://thanosvibs.money'
 REPO = 'https://raw.githubusercontent.com/wittyar/mff.ar/main'
-CARPETAS = {'icons': 'attributes', 'items': 'items'}
+CARPETAS = {'icons': 'attributes', 'items': 'items', 'cards': 'cards'}
 
 
 def origen(ruta):

@@ -11,9 +11,10 @@ Uso:
 Las partes se pueden pedir sueltas para que cada boton de Ajustes actualice solo lo suyo.
 Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
       work/skills_api/*.json, work/uniforms.json, work/ctps.json, work/artifacts.json,
-      work/abxl.json, work/supports.json, work/rotations.json, work/guia/*,
-      work/wikitext/*.json, images/icons/*.png (insumo del build), images/*.png (los
-      retratos) e images/items/*.png (íconos de C.T.P.s y artefactos).
+      work/abxl.json, work/supports.json, work/rotations.json, work/cards.json (los cromos de
+      cómic), work/guia/*, work/wikitext/*.json, images/icons/*.png (insumo del build),
+      images/*.png (los retratos), images/items/*.png (íconos de C.T.P.s y artefactos) e
+      images/cards/*.png (los cromos).
 Y actualiza fuentes/guia-armado/ (la guía de armado de Cynicalex, versionada en el repo)
 si la planilla bajada es compatible; si no, anota por qué en su estado.json."""
 import datetime, glob, json, re, os, sys, time, urllib.parse, urllib.request
@@ -128,9 +129,11 @@ if HACER_DATOS:
     json.dump(get_json(TV + '/api/abxl-data'), open('work/abxl.json', 'w'))
     json.dump(get_json(TV + '/api/supports'), open('work/supports.json', 'w'))
     json.dump(get_json(TV + '/api/rotations/default'), open('work/rotations.json', 'w'))
+    json.dump(get_json(TV + '/api/cards'), open('work/cards.json', 'w'))
     print('ctps:', len(json.load(open('work/ctps.json'))), '| artefactos:', len(json.load(open('work/artifacts.json'))),
           '| alliance battle:', len(json.load(open('work/abxl.json'))['teams']), 'equipos',
-          '| soportes:', len(json.load(open('work/supports.json'))), '| rotaciones:', len(json.load(open('work/rotations.json'))))
+          '| soportes:', len(json.load(open('work/supports.json'))), '| rotaciones:', len(json.load(open('work/rotations.json'))),
+          '| cromos:', len(json.load(open('work/cards.json'))))
     os.makedirs('work/guia', exist_ok=True)
     json.dump(get_json(TV + '/api/beginners/changelog'), open('work/guia/changelog.json', 'w'))
     for parte in range(1, 6):
@@ -207,16 +210,20 @@ if HACER_IMAGENES:
     with ThreadPoolExecutor(6) as ex: list(ex.map(getp, ports))
     print('retratos:', len([f for f in os.listdir('images') if f.endswith('.png')]))
 
-    # Íconos de C.T.P.s y de artefactos: arte de terceros como los retratos. Salen de los
-    # insumos que baja --datos, así que se omiten si todavía no se bajaron.
+    # Íconos de C.T.P.s y de artefactos, y las imágenes de los cromos: arte de terceros como
+    # los retratos. Salen de los insumos que baja --datos, así que se omiten si todavía no se
+    # bajaron.
     os.makedirs('images/items', exist_ok=True)
+    os.makedirs('images/cards', exist_ok=True)
     items = []
     if os.path.exists('work/ctps.json'):
-        items += ['ctp_' + re.sub(r'[^a-z0-9]', '', c['name'].lower()) for c in json.load(open('work/ctps.json'))]
+        items += ['items/ctp_' + re.sub(r'[^a-z0-9]', '', c['name'].lower()) for c in json.load(open('work/ctps.json'))]
     if os.path.exists('work/artifacts.json'):
-        items += ['artifact_' + a['portrait'] for a in json.load(open('work/artifacts.json'))]
+        items += ['items/artifact_' + a['portrait'] for a in json.load(open('work/artifacts.json'))]
+    if os.path.exists('work/cards.json'):
+        items += ['cards/' + c['img'] for c in json.load(open('work/cards.json'))]
     def geti_item(n):
-        fn = f'images/items/{n}.png'
+        fn = f'images/{n}.png'
         if os.path.exists(fn): return
         try:
             data = get(origen(fn))
@@ -224,7 +231,7 @@ if HACER_IMAGENES:
             else: print('AVISO ícono de ítem no es PNG:', n)
         except Exception as e: print('AVISO ícono de ítem fallo:', n, e)
     with ThreadPoolExecutor(6) as ex: list(ex.map(geti_item, items))
-    print('íconos de ítems:', len(os.listdir('images/items')))
+    print('íconos de ítems:', len(os.listdir('images/items')), '| cromos:', len(os.listdir('images/cards')))
 
 
 if HACER_DATOS:
