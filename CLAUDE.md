@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (12 de noviembre de 2026)
+## Estado (17 de noviembre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -297,6 +297,42 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     qué criterios comparan y qué dicen de cómo funciona el juego, con lo que choca con nuestro modelo), en el doc del
     proyecto de Claude «claude/mff-tier-lists.md». Lo más útil: la planilla coreana «정보 공유», que se puede leer por
     programa (prioridad de C.T.P. y de artefacto por personaje, corredores de Alliance Battle).
+- La 1.0.53 (formato 19; la etiqueta va sobre el commit de datos), 17 de noviembre de 2026:
+  - **La actualización War of Kings (12.4) como contenido propio** (notas foro-1897819 y cafe-3190031, que se suman a
+    `fuentes/foro` y `fuentes/cafe`): Vulcan <War of Kings> (nativo de Tier-3), Lilandra <Majestrix Lilandra> (nativa de
+    Tier-2) y Deathbird <Uncanny X-Men>, personajes nuevos con sus fichas, la definitiva de Tier-3, el striker de Tier-4 (Lv.6)
+    y sus artefactos (Lv.4). La ficha de Deathbird no llegó con las imágenes pegadas, pero está en la nota del foro: va
+    completa (sin confirmar, como los otros dos, retrato, id, origen, habilidad de jefe mundial, striker y resistencias; y su
+    categoría nativa, Tier-1). La 12.4 («War of Kings»; el número, sin confirmar) entra como versión. Sin retrato: un propio
+    que thanosvibs no publica va sin imagen («SIN RETRATO»; antes pedía una de thanosvibs que daba 404). En notas de lo
+    propio: el requisito de Vulcan («False Emperor»), el nivel 90 de Hulk y Vulcan y los stats básicos máximos de Lilandra
+    (2848/1893/1802/6951; ni la app ni la fila de la API tienen dónde). El sangrado de Lilandra que también baja el índice de
+    recuperación va como un solo efecto (la API no tiene uno para bajarle la recuperación al rival). Vulcan: su liderazgo
+    tiene dos partes (aliados al estar mermados; él) y no se deriva (docs/AUDITORIA.md lo lista).
+  - **Cromos de cómic** (#35; Ezequiel: «Arma un modulo sobre cromos donde pongas todos los cromos con sus caractaristicas y
+    en lo que respecta la cuenta personal poder anotar los cromos que tengo en sus dos sets»). `fetch_all.py` baja
+    `/api/cards` (112) y sus imágenes; `scripts/cromos.py` arma `MFF_CROMOS` (fijas, cinco opciones por grado, activaciones,
+    tipos, colecciones) con `scripts/contenido/cromos.json` (cómo se lee cada texto; lo que no está corta el build). «Rare?»
+    va como Raro marcado dudoso. Los cinco de War of Kings, propios (`fuentes/propio/cromos.json`, por nombre), con los
+    valores de la nota a la máxima calidad y grado (solo ellos tienen valores), la colección (los 5 en Mítico, +3% de índice
+    de recuperación) y que el #1 no acumula su activación de ataque de energía. La sección «Cromos» (en el grupo del juego):
+    «Da este stat» (fijo, posible o cualquiera), tipo, activación y búsqueda; cada cromo dice en qué mazo tuyo está. Mi
+    cuenta › Cromos: los dos mazos («Mazo de cromos» en el juego) de 5 lugares (`U.cromos.mazos`, {id, op}; la capa los
+    valida al cargar e importar), la opción de cada grado y qué cubre cada mazo, sin sumar porcentajes. Un cromo va una vez
+    por mazo: la guía del juego en inglés (captura 57: «Only one of a card type can be equipped at a time») y en coreano.
+    Arreglo de paso: importar otra vez el mismo archivo después de que no entró.
+  - Pendiente: el cromo Premium Fantastic Four (1961) #49 (la nota lo nombra sin opciones); el tipo de los War of Kings #3 a
+    #6; «CROWD CONTROL TIME» de los cromos nuevos y «DEBUFF DURATION» de los de thanosvibs son probablemente el mismo stat
+    (van aparte); los valores de los demás cromos; cómo pesan los cromos en los equipos (#34). Los cinco cromos y los tres
+    personajes, hasta que thanosvibs los publique (la auditoría compara).
+  - Pruebas nuevas: `verif_cromos.py`, `verif_cuenta_cromos.py`; `verif_propio` con los tres personajes; `verif_cuenta` con
+    la pestaña y la barra nuevas; `verif_historico` espera el desplazamiento suave (con la 12.4, el modo más reciente es Epic
+    Quests). Corridas con los datos armados el 17 de noviembre (formato 19): sin fallas propio, cuenta, cuenta_cromos,
+    cromos, analisis, atras, capa, datos, ficha, kit, artefacto, cmp_pot, que_hace, modos_juego, mesa, ayuda, humo y
+    tooltip_todas (77.416 tooltips, sin errores). Fallan igual que sin estos cambios (la 1.0.52 con sus datos del mismo
+    `work/`): historico en celular, tooltip_skill (Angela — Asgard's Assassin, «abrir no mueve la página») y dudas; glosario
+    falla a veces por un 409 de la bajada de imágenes (los íconos de artefacto que thanosvibs no publica). formato e imagenes
+    piden los datos del repo, que siguen en el formato 18 hasta correr el workflow.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
@@ -341,8 +377,8 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
 - Español del juego (#45, lo que queda): los nombres de objetos donde la app los nombra, «striker» → «pegador»,
   «Tier-N» → «categoría N» y «skill» → «habilidad» (Ezequiel no lo decidió: los nombres de las skills no importan, las
   características sí), los textos de los modos (Tier, WBL…). Las capturas: sección «Capturas del juego».
-- Apartados nuevos: Cromos de cómic (#35), Espadas (#36), Jarvis (#37, falta el alcance); atributos de las skills
-  (#38).
+- Apartados nuevos: Cromos de cómic (#35: la sección y los mazos, en la 1.0.53; falta cómo pesan en los equipos, con #34),
+  Espadas (#36), Jarvis (#37, falta el alcance); atributos de las skills (#38).
 - Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
   las llegadas que siguen sin su nota (lista en `docs/HISTORICO.md`: de 2015, notas con imágenes y parches); los modos

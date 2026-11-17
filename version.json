@@ -1,6 +1,6 @@
 {
- "version": "1.0.52",
+ "version": "1.0.53",
  "formato_datos": 19,
  "python": "3.14.7",
- "notas": "Lo tuyo, aparte de lo del juego: «Mi cuenta» en la barra (equipos, progreso, personajes propios, atributos marcados y tu capa), la mesa de armado se abre con su botón y cada ficha tiene su pestaña «Mi cuenta». En Skills, el kit de un vistazo, con «Comparar con» otra versión del personaje. La comparativa propone cómo comparar (seis métodos, uno sugerido) y trae «Comparar sus versiones». Las tier lists son de lectura hasta «Editar listas». Y un arreglo: la ficha de un personaje creado a mano no abría."
+ "notas": "La actualización War of Kings (12.4): Vulcan, Lilandra y Deathbird, con sus Tier-3 y Tier-4 y sus artefactos, cargados de la nota oficial hasta que thanosvibs los publique (todavía sin retrato). Nueva sección «Cromos»: todos los cromos de cómic con sus opciones fijas y las posibles de cada grado, para buscar cuáles dan un stat, por tipo o por activación; los cinco de War of Kings con los valores de la nota. Y en Mi cuenta › Cromos, tus dos mazos: qué cromo pusiste en cada lugar, qué opción le salió en cada grado y qué cubre cada mazo."
 }
