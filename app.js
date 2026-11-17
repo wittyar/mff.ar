@@ -37,6 +37,10 @@ const BUFFS          = window.MFF_BUFFS || {};    // buffs clave por retrato
 const CTPS           = window.MFF_CTPS || [];     // C.T.P.s (scripts/fuentes.py)
 const DUDAS          = window.MFF_DUDAS;          // lo que un idioma del juego dice distinto de otro (scripts/contenido/dudas.json)
 const ARTES          = window.MFF_ARTEFACTOS || []; // artefactos exclusivos, por retrato base
+const CROMOS         = window.MFF_CROMOS;         // cromos de cómic (scripts/cromos.py, #35)
+// El juego tiene dos mazos de cromos de 5 lugares, y un mismo cromo va una sola vez en cada uno (la guía del juego, «Equipar
+// cromo de cómic»: «Only one of a card type can be equipped at a time»; en coreano, «같은 종류의 카드는 1개만»).
+const MAZOS = 2, LUGARES_MAZO = 5, GRADOS_CROMO = ['3', '4', '5', '6'];
 const DEFAULT_ROWS   = window.MFF_DEFAULT_TIER_ROWS || [{id:'S',label:'S'},{id:'A',label:'A'},{id:'B',label:'B'},{id:'C',label:'C'},{id:'D',label:'D'}];
 const SLOT_ORDER     = ['Leader Skill','Passive','Tier-2 Passive','Uniform Passive',
                         'Active 1','Active 2','Active 3','Active 4','Active 5','Active Ult','Striker Skill'];
@@ -63,6 +67,7 @@ function blankUser () {
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
+    cromos: { mazos: [[], []] },      // tus dos mazos de cromos (MAZOS): en cada uno, hasta 5 {id del cromo, op: {grado: opción}}
     prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, ayuda:true, mesa:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
              filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] },
@@ -98,7 +103,22 @@ function normalizarCapa (saved) {
   for (const f of u.favoritos) if (!('ctx' in f)) f.ctx = null;
   // Los equipos se guardan en orden canónico (mesaGuardar); los de antes, en el orden en que se armaron.
   for (const tt of u.teams) tt.members = tt.members.slice().sort();
+  validarMazos(u.cromos);
   return u;
+}
+/** Los mazos de cromos de una capa tienen la forma que guarda la app: si no, la capa no se carga (un import roto no pisa
+ *  la tuya). Un cromo o una opción que ya no están en los datos sí se cargan: Mi cuenta › Cromos los muestra con aviso. */
+function validarMazos (cr) {
+  const mal = (x) => { throw new Error('cromos: ' + x); };
+  if (!cr || typeof cr !== 'object' || !Array.isArray(cr.mazos) || cr.mazos.length !== MAZOS) mal(`tienen que ser ${MAZOS} mazos`);
+  cr.mazos.forEach((m, i) => {
+    if (!Array.isArray(m) || m.length > LUGARES_MAZO) mal(`el mazo ${i + 1} no es una lista de hasta ${LUGARES_MAZO} cromos`);
+    for (const x of m) {
+      if (!x || typeof x.id !== 'string' || !x.op || typeof x.op !== 'object' || Array.isArray(x.op)) mal(`un lugar del mazo ${i + 1} no es {id, op}`);
+      for (const [g, o] of Object.entries(x.op)) if (!GRADOS_CROMO.includes(g) || typeof o !== 'string') mal(`la opción anotada ${g}: ${o} del cromo ${x.id}`);
+    }
+    if (new Set(m.map(x => x.id)).size !== m.length) mal(`un cromo está dos veces en el mazo ${i + 1}`);
+  });
 }
 /** Lee capa.json. Sin archivo (primer uso) es una capa vacía; un archivo ilegible es un
  *  error que corta el arranque: seguir con una capa vacía y guardar la pisaría. */
@@ -484,6 +504,38 @@ const T = {
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
   nav_glossary:      { es:'Glosario',            en:'Glossary' },
+  nav_cromos:        { es:'Cromos',              en:'Cards' },
+  cr_title:          { es:'Cromos de cómic',     en:'Comic cards' },
+  cr_note:           { es:'Los cromos de cómic que publica thanosvibs, con sus opciones fijas y las cinco posibles de cada grado (de 3★ a 6★; los Premium, de 4★ a 6★ y con una tercera fija). Al equiparlos, sus estadísticas se suman a todos los personajes (la guía del juego). Se equipan en dos mazos de 5 lugares, y un mismo cromo va una sola vez en cada mazo. thanosvibs no publica cuánto da cada opción: solo los de la nota del 17 de noviembre de 2026 traen sus valores, a la máxima calidad y grado.',
+                       en:'The comic cards thanosvibs publishes, with their fixed options and the five possible ones for each grade (3★ to 6★; Premium cards, 4★ to 6★ with a third fixed one). When equipped, their stats are added to every character (the in-game guide). They go in two decks of 5 slots, and a card goes only once in each deck. thanosvibs does not publish how much each option gives: only the cards from the November 17, 2026 notes carry their values, at the highest quality and grade.' },
+  cr_busca:          { es:'Buscar un cromo por nombre', en:'Search a card by name' },
+  cr_stat:           { es:'Da este stat',        en:'Gives this stat' },
+  cr_stat_todos:     { es:'Cualquier stat',      en:'Any stat' },
+  cr_modo_cualquiera:{ es:'Fijo o posible',      en:'Fixed or possible' },
+  cr_modo_fija:      { es:'Fijo',                en:'Fixed' },
+  cr_modo_posible:   { es:'Posible en un grado', en:'Possible in a grade' },
+  cr_tipo:           { es:'Tipo',                en:'Type' },
+  cr_tipo_todos:     { es:'Todos',               en:'All' },
+  cr_sin_tipo:       { es:'Sin tipo publicado',  en:'No published type' },
+  cr_act:            { es:'Activación',          en:'Activation' },
+  cr_act_todas:      { es:'Con o sin',           en:'With or without' },
+  cr_act_con:        { es:'Con activación',      en:'With activation' },
+  cr_n:              { es:'{n} de {total} cromos', en:'{n} of {total} cards' },
+  cr_resumen_stat:   { es:'{s}: {f} lo dan fijo y {p} lo pueden dar en un grado.', en:'{s}: {f} give it fixed and {p} can give it in a grade.' },
+  cr_nada:           { es:'Ningún cromo cumple con lo elegido.', en:'No card matches what you chose.' },
+  cr_fijas:          { es:'Fijas',               en:'Fixed' },
+  cr_grado:          { es:'{g}★',                en:'{g}★' },
+  cr_dudoso:         { es:'¿?',                  en:'?' },
+  cr_dudoso_t:       { es:'thanosvibs lo publica como «Rare?»: el tipo no está confirmado', en:'thanosvibs publishes it as "Rare?": the type is not confirmed' },
+  cr_sin_img:        { es:'SIN IMAGEN',          en:'NO IMAGE' },
+  cr_valores_t:      { es:'Valores de la nota, a la máxima calidad y grado', en:'Values from the notes, at the highest quality and grade' },
+  cr_act_txt:        { es:'{p}% {c}: {s} +{v}% ({d} s)', en:'{p}% {c}: {s} +{v}% ({d} s)' },
+  cr_coleccion:      { es:'Colección {n}: los {k} en {g}, {s} +{v}%', en:'{n} collection: all {k} at {g}, {s} +{v}%' },
+  cr_mitico:         { es:'Mítico',              en:'Mythic' },
+  cr_mazo:           { es:'Mazo {n}',            en:'Deck {n}' },
+  cr_mazo_poner:     { es:'Ponerlo en el mazo {n}', en:'Put it in deck {n}' },
+  cr_mazo_sacar:     { es:'Sacarlo del mazo {n}', en:'Remove it from deck {n}' },
+  cr_mazo_lleno:     { es:'El mazo {n} ya tiene {k} cromos: sacá uno para poner {c}.', en:'Deck {n} already has {k} cards: remove one to put {c}.' },
   nav_history:       { es:'Histórico',           en:'History' },
   nav_juego:         { es:'El juego',            en:'The game' },
   nav_cuenta:        { es:'Mi cuenta',           en:'My account' },
@@ -1570,7 +1622,7 @@ function refrescarImagenes () {
   });
 }
 /** Recarga la ventana volviendo a la misma sección (la ficha abierta no se conserva). */
-const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'teams', 'cuenta', 'glosario', 'historico', 'settings'];
+const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'cromos', 'teams', 'cuenta', 'glosario', 'historico', 'settings'];
 function recargar () {
   try { sessionStorage.setItem('mff_volver', VISTAS_PRINCIPALES.includes(ui.view) ? ui.view : 'roster'); } catch (e) {}
   location.reload();
@@ -1695,6 +1747,9 @@ let ui = {
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
   glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
+  // Cromos: búsqueda por nombre, tipo ('', un tipo o 'sin'), el stat que se busca y si fijo, posible o cualquiera, la
+  // activación ('', 'con' o cuándo) y el aviso de un mazo lleno
+  crBusca: '', crTipo: '', crStat: '', crModo: 'cualquiera', crAct: '', crAviso: null,
   hiPj: '', hiTipo: 'todos', hiN: 20, // Histórico: personaje, tipo de hecho y cuántas versiones se ven
   // Comparativa (#6): la vista ('efecto' o 'ficha'), qué destino se ve ('todo', 'q', 'r', 'e' o 'i'), si lo igual en todos
   // va en una línea, si lo que tiene uno solo va aparte al final de cada sección y las filas con sus textos abiertos
@@ -5318,6 +5373,117 @@ function renderGlosario () {
 }
 
 // ============================================================================
+// CROMOS DE CÓMIC (#35; Ezequiel, 17 de noviembre de 2026: «Arma un modulo sobre cromos donde pongas todos los cromos con
+// sus caractaristicas y en lo que respecta la cuenta personal poder anotar los cromos que tengo en sus dos sets»)
+// Todos los cromos (MFF_CROMOS) con sus fijas, las opciones posibles de cada grado y sus activaciones, para contestar
+// «¿qué cromos me dan X?»; cada uno dice en cuál de tus mazos está y se pone o se saca de ahí (lo tuyo, con el color de
+// Mi cuenta). Tus mazos y lo que le salió a cada cromo, en Mi cuenta › Cromos.
+// ============================================================================
+let CROMO_POR_ID;                      // los cromos por id (iniciarDatos)
+/** El nombre de un stat de los cromos, en el idioma activo. */
+function statCromo (k) {
+  const n = CROMOS.stats[k];
+  if (!n) throw new Error('stat de cromo sin nombre: ' + k);
+  return n[LANG];
+}
+/** Una opción, en palabras: el stat o, si es una activación, «Activación: stat, cuándo». */
+function opcionTxt (o) { return o.act ? `${t('cr_act')}: ${statCromo(o.s)}, ${bi(CROMOS.cuando[o.act])}` : statCromo(o.s); }
+/** Los grados de un cromo, en orden (los Premium no tienen 3★). */
+function gradosDe (c) { return GRADOS_CROMO.filter(g => c.grados[g]); }
+function tipoCromo (c) {
+  if (c.t == null) return `<span class="tag dim">${h(t('cr_sin_tipo'))}</span>`;
+  const tp = CROMOS.tipos.find(x => x.id === c.t);
+  return `<span class="tag dim">${h(tp[LANG])}</span>${c.td ? `<span class="tag solid dudatag" title="${h(t('cr_dudoso_t'))}">${h(t('cr_dudoso'))}</span>` : ''}`;
+}
+function cromoImg (c) {
+  const u = c.img ? imgUrl(c.img) : '';
+  return u ? `<img src="${u}" alt="" loading="lazy">` : `<span class="ph">${h(t('cr_sin_img'))}</span>`;
+}
+/** Los mazos en los que está un cromo (sus índices). */
+function mazosDe (id) { return U.cromos.mazos.map((m, i) => m.some(x => x.id === id) ? i : -1).filter(i => i > -1); }
+/** ¿Lo da el cromo? modo: 'fija', 'posible' (en algún grado, también como activación) o 'cualquiera'. */
+function cromoDa (c, k, modo) {
+  const fija = c.fijas.some(f => f.s === k), posible = gradosDe(c).some(g => c.grados[g].some(o => o.s === k));
+  return modo === 'fija' ? fija : modo === 'posible' ? posible : fija || posible;
+}
+function cromosFiltrados () {
+  const q = plano(ui.crBusca.trim());
+  return CROMOS.cromos.filter(c => (!q || plano(c.n).includes(q))
+    && (!ui.crTipo || (ui.crTipo === 'sin' ? c.t == null : c.t === ui.crTipo))
+    && (!ui.crStat || cromoDa(c, ui.crStat, ui.crModo))
+    && (!ui.crAct || gradosDe(c).some(g => c.grados[g].some(o => o.act && (ui.crAct === 'con' || o.act === ui.crAct)))));
+}
+function renderCromos () {
+  const lista = cromosFiltrados(), orden = CROMOS.tipos.map(x => x.id);
+  lista.sort((a, b) => (a.t == null ? -1 : orden.indexOf(a.t)) - (b.t == null ? -1 : orden.indexOf(b.t)) || a.n.localeCompare(b.n));
+  const stats = Object.keys(CROMOS.stats).sort((a, b) => statCromo(a).localeCompare(statCromo(b)));
+  const tipos = [['', t('cr_tipo_todos')]].concat(CROMOS.tipos.map(x => [x.id, x[LANG]]),
+    CROMOS.cromos.some(c => c.t == null) ? [['sin', t('cr_sin_tipo')]] : []);
+  const acts = [['', t('cr_act_todas')], ['con', t('cr_act_con')]].concat(Object.entries(CROMOS.cuando).map(([k, v]) => [k, v[LANG]]));
+  const chips = (a, actual, ops) => ops.map(([v, n]) => `<button class="chip ${actual === v ? 'on' : ''}" data-a="${a}" data-v="${v}">${h(n)}</button>`).join('');
+  const resumen = ui.crStat ? t('cr_resumen_stat').replace('{s}', statCromo(ui.crStat))
+    .replace('{f}', CROMOS.cromos.filter(c => cromoDa(c, ui.crStat, 'fija')).length)
+    .replace('{p}', CROMOS.cromos.filter(c => cromoDa(c, ui.crStat, 'posible')).length) : '';
+  return `<div class="page-head"><div><h1>${h(t('cr_title'))} ${ayudaHtml(t('cr_note'))}</h1></div></div>
+    <div class="row glbusca">
+      <div class="search"><input id="q" placeholder="${h(t('cr_busca'))}" value="${h(ui.crBusca)}" data-a="crBusca"></div>
+      <select data-a="crStat" aria-label="${h(t('cr_stat'))}"><option value="">${h(t('cr_stat') + ': ' + t('cr_stat_todos'))}</option>${
+        stats.map(k => `<option value="${k}" ${ui.crStat === k ? 'selected' : ''}>${h(t('cr_stat') + ': ' + statCromo(k))}</option>`).join('')}</select>
+      ${ui.crStat ? `<div class="seg">${['cualquiera', 'fija', 'posible'].map(m =>
+        `<button class="${ui.crModo === m ? 'on' : ''}" data-a="crModo" data-v="${m}">${h(t('cr_modo_' + m))}</button>`).join('')}</div>` : ''}
+      <span class="count">${h(t('cr_n').replace('{n}', lista.length).replace('{total}', CROMOS.cromos.length))}</span>
+    </div>
+    <div class="crfiltros">
+      <div class="filtergroup"><div class="lbl">${h(t('cr_tipo'))}</div><div class="row">${chips('crTipo', ui.crTipo, tipos)}</div></div>
+      <div class="filtergroup"><div class="lbl">${h(t('cr_act'))}</div><div class="row">${chips('crAct', ui.crAct, acts)}</div></div>
+    </div>
+    ${resumen ? `<p class="muted crresumen">${h(resumen)}</p>` : ''}
+    ${ui.crAviso ? `<div class="aviso crresumen">${h(ui.crAviso)}</div>` : ''}
+    ${lista.length ? `<div class="crgrid">${lista.map(cromoCard).join('')}</div>` : `<div class="empty"><div>${h(t('cr_nada'))}</div></div>`}`;
+}
+/** Un cromo: su imagen, nombre y tipo, en qué mazo tuyo está, sus fijas y las opciones de cada grado, con la activación
+ *  marcada y lo que se busca resaltado. Los propios, con su marca y los valores de la nota. */
+function cromoCard (c) {
+  const hit = (o) => ui.crStat && o.s === ui.crStat ? ' hit' : '';
+  const enMazos = mazosDe(c.id);
+  const col = CROMOS.colecciones.filter(x => x.cromos.includes(c.id));
+  // La activación, con lo que da si la fuente lo dice (los propios: probabilidad, cuánto y cuántos segundos).
+  const opcion = (o) => {
+    if (!o.act) return `<span class="crop${hit(o)}">${h(statCromo(o.s))}</span>`;
+    const txt = c.act ? t('cr_act_txt').replace('{p}', numTxt(c.act.prob)).replace('{c}', bi(CROMOS.cuando[o.act]))
+      .replace('{s}', statCromo(o.s)).replace('{v}', numTxt(c.act.v)).replace('{d}', numTxt(c.act.dur))
+      : `${statCromo(o.s)}, ${bi(CROMOS.cuando[o.act])}`;
+    return `<span class="crop act${hit(o)}" title="${h(opcionTxt(o) + (c.act ? ' — ' + t('cr_valores_t') : ''))}">⚡ ${h(txt)}</span>`;
+  };
+  return `<div class="crcard" id="cromo-${h(c.id)}">
+    <div class="crimg">${cromoImg(c)}</div>
+    <div class="crbody">
+      <div class="crcab"><b class="crnom">${h(c.n)}</b>${tipoCromo(c)}${c.pr ? propioTag(c.pr) : ''}
+        <span class="crmazos">${Array.from({ length: MAZOS }, (_, i) => `<button class="btn sm crmazo ${enMazos.includes(i) ? 'on' : ''}"
+          data-a="crMazo" data-id="${h(c.id)}" data-m="${i}" aria-pressed="${enMazos.includes(i)}"
+          title="${h(t(enMazos.includes(i) ? 'cr_mazo_sacar' : 'cr_mazo_poner').replace('{n}', i + 1))}">${h(t('cr_mazo').replace('{n}', i + 1))}</button>`).join('')}</span></div>
+      <div class="crfila"><span class="crg">${h(t('cr_fijas'))}</span>${c.fijas.map(f => `<span class="crop fija${hit(f)}">${h(statCromo(f.s))}${
+        f.v != null ? ` <b title="${h(t('cr_valores_t'))}">+${h(numTxt(f.v))}%</b>` : ''}</span>`).join('')}</div>
+      ${gradosDe(c).map(g => `<div class="crfila"><span class="crg">${h(t('cr_grado').replace('{g}', g))}${
+        c.v ? ` <b title="${h(t('cr_valores_t'))}">${h(numTxt(c.v[g]))}%</b>` : ''}</span>${c.grados[g].map(opcion).join('')}</div>`).join('')}
+      ${c.nota ? `<p class="muted">${h(bi(c.nota))}</p>` : ''}
+      ${col.map(x => `<p class="muted">${h(t('cr_coleccion').replace('{n}', x.n).replace('{k}', x.cromos.length)
+        .replace('{g}', t('cr_mitico')).replace('{s}', statCromo(x.premio.s)).replace('{v}', numTxt(x.premio.v)))}</p>`).join('')}
+    </div></div>`;
+}
+/** Pone un cromo en un mazo tuyo o lo saca. Un mazo lleno no lo toma y lo dice. */
+function cromoEnMazo (id, i) {
+  const m = U.cromos.mazos[i], j = m.findIndex(x => x.id === id);
+  ui.crAviso = null;
+  if (j > -1) { m.splice(j, 1); return; }
+  if (m.length >= LUGARES_MAZO) {
+    ui.crAviso = t('cr_mazo_lleno').replace('{n}', i + 1).replace('{k}', LUGARES_MAZO).replace('{c}', CROMO_POR_ID[id].n);
+    return;
+  }
+  m.push({ id, op: {} });
+}
+
+// ============================================================================
 // COMPARACIÓN
 // ============================================================================
 const CMP_FX = 6;                      // efectos de cada skill a la vista; el resto, plegado
@@ -7522,6 +7688,7 @@ function renderNav () {
       ${link(VISTAS_ROSTER, 'nav_roster', 'back')}
       ${link(['tierlist'], 'nav_tierlists', 'goTier')}
       ${link(['modos'], 'nav_modes', 'goModos')}
+      ${link(['cromos'], 'nav_cromos', 'goCromos')}
       ${link(['glosario'], 'nav_glossary', 'goGlosario')}
       ${link(['historico'], 'nav_history', 'goHistorico')}
     </div>
@@ -7557,6 +7724,7 @@ function render () {
     case 'modos':    body = renderModos(); break;
     case 'teams':    body = renderTeams(); break;
     case 'glosario': body = renderGlosario(); break;
+    case 'cromos':   body = renderCromos(); break;
     case 'historico': body = renderHistorico(); break;
     case 'editor':   body = renderEditor(); break;
     case 'cuenta':   body = renderCuenta(); break;
@@ -7631,7 +7799,7 @@ function nombreLugar (d, largo) {
     if (!v) return t('nav_roster');
     return largo ? fullLabel(v) + ' · ' + t('ft_' + d.fichaTab) : v.name;
   }
-  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history',
+  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history', cromos: 'nav_cromos',
              settings: 'nav_settings', editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
 }
 window.addEventListener('popstate', (e) => {
@@ -7782,6 +7950,11 @@ document.addEventListener('click', (e) => {
     case 'verModo': ui.view = 'modos'; ui.modoAbierto = d.id; ui.movil = 'centro'; render();
       document.getElementById('modo-' + d.id).scrollIntoView({ block: 'start' }); break;
     case 'goGlosario': ui.view = 'glosario'; ui.focusSearch = false; render(); break;
+    case 'goCromos': ui.view = 'cromos'; ui.focusSearch = false; ui.crAviso = null; render(); window.scrollTo(0, 0); break;
+    case 'crTipo': ui.crTipo = d.v; render(); break;
+    case 'crAct': ui.crAct = d.v; render(); break;
+    case 'crModo': ui.crModo = d.v; render(); break;
+    case 'crMazo': cromoEnMazo(d.id, +d.m); saveUser(); render(); break;
     case 'goHistorico': ui.view = 'historico'; ui.hiPj = d.cid || ''; ui.hiN = 20; render(); window.scrollTo(0, 0); break;
     case 'hiTipo': ui.hiTipo = d.v; ui.hiN = 20; render(); break;
     case 'hiMas': ui.hiN += 20; render(); break;
@@ -7947,6 +8120,7 @@ document.addEventListener('input', (e) => {
   const a = el.getAttribute('data-a'), d = el.dataset;
   if (a === 'search') { ui.search = el.value; ui.page = 0; ui.focusSearch = true; render(); return; }
   if (a === 'glBusca') { ui.glBusca = el.value; ui.focusSearch = true; render(); return; }
+  if (a === 'crBusca') { ui.crBusca = el.value; ui.focusSearch = true; render(); return; }
   if (a === 'newListName') { ui.newListName = el.value; return; }
   if (a === 'rowLabel') { const l = U.lists.find(x => x.id === ui.tierList); const r = l && l.rows.find(x => x.id === d.row);
     if (r) { r.label = el.value; saveUser(); } return; }
@@ -7982,6 +8156,7 @@ document.addEventListener('change', (e) => {
   if (a === 'eqOrden') { ui.eqOrden = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'hiPj') { ui.hiPj = el.value; ui.hiN = 20; render(); return; }
+  if (a === 'crStat') { ui.crStat = el.value; ui.focusSearch = false; render(); return; }
   if (a === 'eqExcluir') { if (el.value) ui.eqExcluir = ui.eqExcluir.concat(el.value); ui.eqPagina = 0; render(); return; }
   if (a === 'eqCobertura') { ui.eqCobertura = COBERTURA.map(g => g.k).filter(k => k === d.g ? el.checked : ui.eqCobertura.includes(k));
     ui.eqPagina = 0; render(); return; }
@@ -8167,6 +8342,7 @@ function iniciarDatos () {
   STRIKERS_DE = {};
   for (const [cid, filas] of Object.entries(STRIKERS)) for (const [x, p, cuando] of filas) (STRIKERS_DE[x] = STRIKERS_DE[x] || []).push([cid, p, cuando]);
   GL_DE = Object.fromEntries(CATALOGO.efectos.map(e => [e.id, { e, terminos: [], etiquetas: [], stats: [] }]));
+  CROMO_POR_ID = Object.fromEntries(CROMOS.cromos.map(c => [c.id, c]));
   for (const x of GLOSARIO.terminos) for (const id of x.efectos) GL_DE[id].terminos.push(x);
   for (const [st, x] of Object.entries(CATALOGO.soporte)) for (const id of x.efectos) GL_DE[id].stats.push(st);
   TB.ab.forEach((r, i) => {

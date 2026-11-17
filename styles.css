@@ -1316,3 +1316,34 @@ button.tlchip,button.tlchip:active{cursor:pointer}
 /* Una tabla ancha se desplaza dentro de su envoltorio en vez de salirse de la columna (los topes de la ficha y las tablas
    de Mi cuenta). La regla se había ido con las tablas de etapas de las skills y los topes se salían en el celular. */
 .stagewrap{overflow-x:auto;max-width:100%}
+
+/* Cromos de cómic (1.0.53, #35): la sección, con los filtros del roster (chips) y cada cromo con su imagen, sus fijas y las
+   opciones de cada grado (la activación en dorado, lo que se busca resaltado con el acento). Lo tuyo (en qué mazo está)
+   lleva el color de Mi cuenta. */
+.crfiltros{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:12px;margin-bottom:12px}
+.crresumen{margin-bottom:12px}
+.crgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(470px,100%),1fr));gap:10px}
+.crcard{display:grid;grid-template-columns:76px minmax(0,1fr);gap:12px;padding:10px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-md)}
+.crimg{position:relative;width:76px;aspect-ratio:2/3;border-radius:var(--r-sm);overflow:hidden;background:var(--surface-2);flex:none}
+.crimg img{width:100%;height:100%;object-fit:cover;display:block}
+.crimg .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;
+  font:500 8.5px var(--font-mono);letter-spacing:.08em;color:var(--text-3)}
+.crbody{display:flex;flex-direction:column;gap:5px;min-width:0}
+.crcab{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.crnom{font-size:13.5px;margin-right:2px}
+.crmazos{margin-left:auto;display:flex;gap:4px}
+.crmazo.on{color:var(--cuenta);border-color:var(--cuenta);background:var(--cuenta-soft)}
+.crfila{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.crg{font:600 10.5px var(--font-mono);color:var(--text-3);min-width:36px}
+.crg b{color:var(--accent);font-weight:600}
+.crop{font-size:11.5px;padding:2px 7px;border-radius:5px;background:rgba(255,255,255,.05);color:var(--text-2)}
+.crop.fija{color:var(--text)}
+.crop b{color:var(--accent)}
+.crop.act{background:var(--gold-soft);color:var(--gold)}
+.crop.hit{background:var(--accent-soft);color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+@media (max-width:600px){
+  .crcard{grid-template-columns:56px minmax(0,1fr);gap:9px}
+  .crimg{width:56px}
+  .crmazos{margin-left:0}
+}
