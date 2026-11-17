@@ -1,6 +1,6 @@
 {
- "version": "1.0.53",
+ "version": "1.0.54",
  "formato_datos": 19,
  "python": "3.14.7",
- "notas": "La actualización War of Kings (12.4): Vulcan, Lilandra y Deathbird, con sus Tier-3 y Tier-4 y sus artefactos, cargados de la nota oficial hasta que thanosvibs los publique (todavía sin retrato). Nueva sección «Cromos»: todos los cromos de cómic con sus opciones fijas y las posibles de cada grado, para buscar cuáles dan un stat, por tipo o por activación; los cinco de War of Kings con los valores de la nota. Y en Mi cuenta › Cromos, tus dos mazos: qué cromo pusiste en cada lugar, qué opción le salió en cada grado y qué cubre cada mazo."
+ "notas": "Nuevo: un recorrido guiado para aprender a usar la app. El botón «Recorrido», arriba, muestra paso a paso qué mirar en la parte de la app en la que estás y cómo llegar a cada cosa; desde ahí podés ver otra parte o el recorrido completo, y al salir la app vuelve a donde estabas, sin cambiar nada de lo tuyo. La primera vez que se abre la app, lo ofrece solo. Y en el celular, tres cosas que se salían del ancho de la pantalla (las combinaciones de la ficha, la activación de algunas skills y el selector del Histórico)."
 }

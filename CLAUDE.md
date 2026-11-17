@@ -333,6 +333,48 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     `work/`): historico en celular, tooltip_skill (Angela — Asgard's Assassin, «abrir no mueve la página») y dudas; glosario
     falla a veces por un 409 de la bajada de imágenes (los íconos de artefacto que thanosvibs no publica). formato e imagenes
     piden los datos del repo, que siguen en el formato 18 hasta correr el workflow.
+- La 1.0.54 (sin cambio de formato, 19; la etiqueta va sobre el commit de versión), 17 de noviembre de 2026: **el recorrido
+  guiado** (Ezequiel: «Ok, ahora empiezo a necesitar una opcion para poder enseñar a utilizar la aplicacion... Es decir, la
+  primera vez que lo abris y, si presionas el boton, te aparece un tutorial de cada area de la aplicacion explicando que
+  cosas ver y como verlas.»). Hasta ahora la usaba solo él: es para mostrársela a alguien que no la conoce.
+  - **El botón.** «Recorrido», en la barra junto a «Ayuda», arranca el tramo del área en la que se está, con lo que se tiene
+    abierto (el personaje de la ficha, los comparados); «Otras áreas» ofrece cada una y el recorrido completo, que navega
+    solo de un área a otra (fuera de su área, la ficha de Thor y la comparación de Hulk y Wolverine: `RECORRIDO_EJEMPLO`).
+    Ajustes cuenta como la barra; Equipos y el editor, como Mi cuenta.
+  - **Los pasos.** Una sola tabla, `RECORRIDO`: once tramos y 49 pasos (barra 6, Roster 5, Ficha 9, Comparativa 3, Tier
+    lists 3, Modos 3, Cromos 3, Glosario 3, Histórico 3, Mi cuenta 8, Mesa 3), cada uno con el selector de lo que señala
+    (`data-rec` donde no había una clase estable), la clave de sus textos (`rc_<área>_<paso>_t` y `_x`, es y en) y la
+    pantalla que pide (`ui`). Cada paso resalta su elemento (`#rc-luz`) con la tarjeta al lado (`ubicarFlotante`; en el
+    celular, la hoja de abajo, y la página deja lugar abajo para subir lo que está al final): título, qué mirar y cómo
+    llegar, «Paso n de m», Anterior, Siguiente, ← y →, Esc y tocar afuera para salir (como el «Cómo funciona»); el foco
+    queda en la tarjeta (`atraparFoco` recibe la ventana) y vuelve a «Recorrido» al salir. Si el elemento de un paso no está
+    en la pantalla (el roster sin resultados), la tarjeta lo dice, al centro y sin resaltar, y se sigue.
+  - **No toca nada tuyo.** Lo que abre es estado de pantalla (`ui`): cada paso parte de cómo estaba la pantalla al empezar
+    (`restaurarUi`) y al salir vuelve a eso, a la misma altura; no guarda la capa, ni la mesa, ni la bandeja de comparar.
+    Mientras está abierto no se anota el historial (`anotarLugar`, `sincronizarLugar`): «Atrás» del navegador lo cierra y va
+    al lugar anterior, como siempre. El fondo tapa la página: el tooltip de la ayuda no se abre debajo, y con el «Cómo
+    funciona» abierto no se llega al botón (tocar afuera solo lo cierra). Cambiar de idioma no es parte del recorrido.
+  - **La primera vez.** Sin capa guardada (`/api/capa` sin archivo) sale una bienvenida: «Empezar el recorrido» (el
+    completo) o «Ahora no» (también Esc o tocar afuera); las dos guardan la capa, y con capa no vuelve a salir. Una capa ya
+    guardada (la de Ezequiel) no la ve al actualizar, sin marca nueva ni compatibilidad. No sale en la pantalla de datos ni
+    en la de error (ahí no se pinta la app). Las pruebas arrancan con una capa vacía guardada (`carpeta_datos()`;
+    `primer_uso=True` es sin capa) y las que arman su carpeta también (verif_datos, verif_imagenes, verif_paginador,
+    verif_servidor_caido).
+  - **Arreglos de paso**, que encontró el recorrido en el celular: tres cosas desbordaban el ancho de la página (las
+    casillas de cobertura de las combinaciones, la activación larga de una skill y el selector del Histórico) y, con eso, el
+    navegador agrandaba la página y la hoja de abajo (del recorrido y del «Cómo funciona») quedaba fuera de la vista.
+  - Pruebas: `verif_recorrido.py` (primer uso, capa existente, el botón en cada área, el completo en escritorio y celular
+    con cada paso a la vista, volver como estaba, teclas, un paso sin su elemento, «Atrás», convivencia, inglés). Corridas
+    con los datos armados el 17 de noviembre: sin fallas recorrido, humo, ayuda, atras, capa, cuenta, cromos, cuenta_cromos,
+    ficha, mesa, datos, historico (vuelve a pasar en celular), modal, cmp_metodos y servidor_caido. Fallan igual que sin
+    estos cambios: tooltip_skill (Angela, «abrir no mueve la página») y kit (Cyclops, Definitiva: «63%» contra 62 del
+    modelo, con estos datos). paginador falló 1 de 3 veces por un 409 de la bajada de imágenes ya en curso (el de glosario:
+    la segunda página la pide mientras sigue la de la primera); sin estos cambios pasó las 5 veces que se corrió.
+  - Pendiente / a decidir: los textos de los pasos los corrige Ezequiel (están en `T`, `rc_*`). En el celular, un elemento
+    más alto que el lugar sobre la hoja (el primer bloque del Resumen) queda con su comienzo a la vista y el resto debajo
+    de la hoja. Otra cosa que desborde el ancho en el celular vuelve a sacar la hoja de la vista (se encontraron tres; no se
+    revisaron todas las variantes). Los personajes de ejemplo se nombran en `RECORRIDO_EJEMPLO`: si faltan en los datos, el
+    recorrido de otra área corta con un error.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
