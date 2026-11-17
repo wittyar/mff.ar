@@ -695,6 +695,175 @@ const T = {
   ay_toggle:         { es:'Ayuda',               en:'Help' },
   ay_toggle_t:       { es:'Mostrar u ocultar la ayuda: los «?» y, al pasar el mouse, qué hace cada skill y cada efecto', en:'Show or hide help: the «?» and, on hover, what each skill and effect does' },
   ay_clic:           { es:'Clic: el detalle',    en:'Click: details' },
+  // El recorrido guiado (RECORRIDO): los botones de su tarjeta y el selector de áreas.
+  rc_btn:            { es:'Recorrido',           en:'Tour' },
+  rc_btn_t:          { es:'Un recorrido guiado: arranca por la parte de la app en la que estás y te muestra qué mirar y cómo llegar', en:'A guided tour: it starts with the part of the app you are on and shows you what to look at and how to get there' },
+  rc_salir:          { es:'Salir del recorrido', en:'Leave the tour' },
+  rc_ant:            { es:'Anterior',            en:'Back' },
+  rc_sig:            { es:'Siguiente',           en:'Next' },
+  rc_fin:            { es:'Terminar',            en:'Finish' },
+  rc_otras:          { es:'Otras áreas',         en:'Other areas' },
+  rc_paso:           { es:'Paso {n} de {m}',     en:'Step {n} of {m}' },
+  rc_no_esta:        { es:'Ahora no está en la pantalla: con lo que tenés abierto no hay nada que mostrar acá. Seguí con «Siguiente».',
+                       en:'It is not on the screen right now: with what you have open there is nothing to show here. Go on with «Next».' },
+  rc_elegir_t:       { es:'¿Qué querés ver?',    en:'What do you want to see?' },
+  rc_elegir_x:       { es:'Elegí un área: el recorrido te lleva y te muestra qué mirar ahí. El completo pasa por todas, en orden. Al salir, la app vuelve a donde estabas.',
+                       en:'Pick an area: the tour takes you there and shows you what to look at. The full tour goes through all of them, in order. When you leave, the app goes back to where you were.' },
+  rc_completo:       { es:'Recorrido completo',  en:'Full tour' },
+  rc_area_barra:     { es:'La barra de arriba',  en:'The top bar' },
+  rc_area_roster:    { es:'Roster',              en:'Roster' },
+  rc_area_ficha:     { es:'Ficha de un personaje', en:'Character page' },
+  rc_area_comparativa: { es:'Comparativa',       en:'Comparison' },
+  rc_area_tierlist:  { es:'Tier lists',          en:'Tier lists' },
+  rc_area_modos:     { es:'Modos',               en:'Modes' },
+  rc_area_cromos:    { es:'Cromos',              en:'Cards' },
+  rc_area_glosario:  { es:'Glosario',            en:'Glossary' },
+  rc_area_historico: { es:'Histórico',           en:'History' },
+  rc_area_cuenta:    { es:'Mi cuenta',           en:'My account' },
+  rc_area_mesa:      { es:'Mesa',                en:'Desk' },
+  // Los pasos (RECORRIDO): el título (_t) y qué mirar ahí y cómo llegar (_x).
+  rc_barra_juego_t:  { es:'Las secciones del juego', en:'The game sections' },
+  rc_barra_juego_x:  { es:'Todo lo que sale de los datos del juego: el Roster con todos los personajes, las Tier lists, los Modos, los Cromos, el Glosario y el Histórico. Tocá una para ir; la que estás viendo queda marcada.',
+                       en:'Everything that comes from the game data: the Roster with every character, Tier lists, Modes, Cards, the Glossary and the History. Tap one to go there; the one you are on stays highlighted.' },
+  rc_barra_cuenta_t: { es:'Lo tuyo, aparte',     en:'Your things, apart' },
+  rc_barra_cuenta_x: { es:'«Mi cuenta» junta lo que anotás vos (tus equipos, tu progreso, tus mazos de cromos), con su propio color para no confundirlo con lo del juego. «Mesa» abre al costado la mesa donde se arma un equipo; el número dice cuántos tiene y cuántos entran.',
+                       en:'«My account» gathers what you note down yourself (your teams, your progress, your card decks), in its own color so it is not mixed up with the game. «Desk» opens, on the side, the desk where a team is built; the number says how many it has and how many fit.' },
+  rc_barra_ayuda_t:  { es:'Ayuda',               en:'Help' },
+  rc_barra_ayuda_x:  { es:'Encendida, junto a los títulos aparece un «?»: tocalo y te dice cómo se lee eso. Con mouse, pasar por el nombre de una skill (una habilidad del personaje) o por un efecto dice qué hace. Cuando ya no la necesites, apagala acá.',
+                       en:'When it is on, a «?» shows up next to titles: tap it and it tells you how to read that. With a mouse, hovering over the name of a skill (one of the character\'s abilities) or an effect tells you what it does. When you no longer need it, turn it off here.' },
+  rc_barra_rec_t:    { es:'Este recorrido',      en:'This tour' },
+  rc_barra_rec_x:    { es:'Tocá «Recorrido» cuando quieras: arranca por la parte en la que estás y desde ahí podés elegir otra o verlo completo.',
+                       en:'Tap «Tour» whenever you want: it starts with the part you are on, and from there you can pick another one or see the whole tour.' },
+  rc_barra_idioma_t: { es:'Idioma',              en:'Language' },
+  rc_barra_idioma_x: { es:'Cambia la app entre español e inglés.', en:'Switches the app between Spanish and English.' },
+  rc_barra_ajustes_t: { es:'Ajustes',            en:'Settings' },
+  rc_barra_ajustes_x: { es:'Si hay datos nuevos del juego o una versión nueva de la app, la planilla con todo el roster (CSV) y tus modos de juego propios.',
+                       en:'Whether there is new game data or a new version of the app, the spreadsheet with the whole roster (CSV) and your own game modes.' },
+  rc_roster_buscar_t: { es:'Buscar',             en:'Search' },
+  rc_roster_buscar_x: { es:'El Roster tiene a todos los personajes y sus uniformes. Escribí acá un nombre (de personaje o de uniforme) y la lista se achica mientras escribís.',
+                       en:'The Roster has every character and its uniforms. Type a name here (of a character or a uniform) and the list narrows down as you type.' },
+  rc_roster_filtros_t: { es:'Filtros',           en:'Filters' },
+  rc_roster_filtros_x: { es:'Tocá «Filtros» para elegir por clase, rol, Tier, bando, habilidades o lo que le da a su equipo. Al lado se ve cuántos filtros tenés puestos; «Limpiar» los saca.',
+                       en:'Tap «Filters» to pick by class, role, Tier, side, abilities or what it gives its team. Next to it you see how many filters are on; «Clear» removes them.' },
+  rc_roster_orden_t: { es:'Orden y vista',       en:'Order and view' },
+  rc_roster_orden_x: { es:'El desplegable elige el orden (de entrada, lo más nuevo primero) y la flecha de al lado lo invierte. A la izquierda, «Tarjetas», «Compacto» y «Tabla» cambian cómo se ve la lista.',
+                       en:'The dropdown picks the order (by default, the newest first) and the arrow next to it reverses it. To the left, «Cards», «Compact» and «Table» change how the list looks.' },
+  rc_roster_pj_t:    { es:'Un personaje',        en:'A character' },
+  rc_roster_pj_x:    { es:'Cada tarjeta es un personaje o uno de sus uniformes, con su clase, su Tier y sus roles. Tocala para abrir su ficha, donde está todo lo suyo.',
+                       en:'Each card is a character or one of its uniforms, with its class, Tier and roles. Tap it to open its page, where everything about it is.' },
+  rc_roster_cmp_t:   { es:'Elegir para comparar', en:'Pick to compare' },
+  rc_roster_cmp_x:   { es:'Tocá «Comparar» y después las tarjetas de hasta 4: se juntan a la derecha y, con dos o más, el botón de ahí te los muestra lado a lado. Volvé a tocar «Comparar» para dejar de elegir.',
+                       en:'Tap «Compare» and then the cards of up to 4: they gather on the right and, with two or more, the button there shows them side by side. Tap «Compare» again to stop picking.' },
+  rc_ficha_cab_t:    { es:'La ficha',            en:'The character page' },
+  rc_ficha_cab_x:    { es:'Arriba, quién es y qué uniforme estás viendo: cambialo en el desplegable y todo lo de abajo pasa a ser de ese uniforme. Las flechas (o ← y → del teclado) pasan al anterior y al siguiente del Roster.',
+                       en:'At the top, who it is and which uniform you are viewing: change it in the dropdown and everything below switches to that uniform. The arrows (or ← and → on the keyboard) go to the previous and next one in the Roster.' },
+  rc_ficha_tabs_t:   { es:'Las pestañas',        en:'The tabs' },
+  rc_ficha_tabs_x:   { es:'La ficha va en pestañas: Resumen, Skills, Armado, Equipos y Fuentes son del juego; «Mi cuenta», a la derecha y con otro color, es lo tuyo con este personaje.',
+                       en:'The page is split in tabs: Overview, Skills, Build, Teams and Sources come from the game; «My account», on the right and in another color, is your own things with this character.' },
+  rc_ficha_resumen_t: { es:'Resumen',            en:'Overview' },
+  rc_ficha_resumen_x: { es:'Lo primero que conviene saber, en tres bloques: dónde rinde según las tier lists (este), qué le da a su equipo y qué necesita que le den. Más abajo, quién es y lo que dicen las fuentes, plegado.',
+                       en:'The first things worth knowing, in three blocks: where it does well according to the tier lists (this one), what it gives its team and what it needs from others. Further down, who it is and what the sources say, folded.' },
+  rc_ficha_kit_t:    { es:'Skills: el kit de un vistazo', en:'Skills: the kit at a glance' },
+  rc_ficha_kit_x:    { es:'El kit son todas sus skills juntas, una fila por skill como esta: cuánto pega, cada cuánto se usa y qué hace, separado por a quién le llega (a él, a sus aliados o al rival). Arriba, «Comparar con» marca lo que cambia contra otro uniforme suyo.',
+                       en:'The kit is all its skills together, one row per skill like this one: how hard it hits, how often it is used and what it does, split by who gets it (itself, its allies or the enemy). Above, «Compare with» marks what changes against another of its uniforms.' },
+  rc_ficha_skill_t:  { es:'Cada skill, en detalle', en:'Each skill, in detail' },
+  rc_ficha_skill_x:  { es:'Más abajo va cada skill completa, etapa por etapa. Tocá su nombre (o uno de sus efectos) para abrir «Cómo funciona»: qué hace, cuándo y qué tan seguro es el dato.',
+                       en:'Further down comes each skill in full, stage by stage. Tap its name (or one of its effects) to open «How it works»: what it does, when, and how sure the data is.' },
+  rc_ficha_armado_t: { es:'Armado',              en:'Build' },
+  rc_ficha_armado_x: { es:'Cómo armarlo según las guías: C.T.P., artefacto, ISO-8 y las opciones de uniforme. Las reglas generales de su tipo de ataque van plegadas al final.',
+                       en:'How to build it according to the guides: C.T.P., artifact, ISO-8 and uniform options. The general rules for its attack type are folded at the end.' },
+  rc_ficha_equipos_t: { es:'Equipos',            en:'Teams' },
+  rc_ficha_equipos_x: { es:'Con quién rinde: los bonos de equipo que activa, los strikers (los que entran a ayudar en combate) y, más abajo, las combinaciones de tres que arma la app, cada una con su porqué.',
+                       en:'Who it works with: the team bonuses it activates, the strikers (those who jump in to help in combat) and, further down, the teams of three the app puts together, each with its reason.' },
+  rc_ficha_fuentes_t: { es:'Fuentes',            en:'Sources' },
+  rc_ficha_fuentes_x: { es:'De dónde sale cada dato y en qué no coinciden las fuentes, lo que dicen de él las notas de cada actualización del juego y, si querés, un retrato tuyo para la app.',
+                       en:'Where each piece of data comes from and where the sources disagree, what the notes of each game update say about it and, if you want, your own portrait for the app.' },
+  rc_ficha_cuenta_t: { es:'Mi cuenta, en la ficha', en:'My account, on the page' },
+  rc_ficha_cuenta_x: { es:'Lo tuyo con este personaje: en qué equipos tuyos está y cómo entraría en los demás, hasta dónde lo subiste, los atributos que les marcaste a sus skills y tus cambios a sus datos. Queda guardado en tu computadora y ninguna actualización lo pisa.',
+                       en:'Your things with this character: which of your teams it is in and how it would fit in the others, how far you have upgraded it, the attributes you marked on its skills and your changes to its data. It is saved on your computer and no update overwrites it.' },
+  rc_cmp_elegir_t:   { es:'Cómo se llega',       en:'How to get here' },
+  rc_cmp_elegir_x:   { es:'A la comparativa se llega desde el Roster («Comparar» y tocá hasta 4) o desde una ficha («+ Comparar esta versión» o «Comparar sus versiones»). Acá, de ejemplo, dos personajes del roster.',
+                       en:'You get to the comparison from the Roster («Compare» and tap up to 4) or from a character page («+ Compare this version» or «Compare its versions»). Here, as an example, two characters from the roster.' },
+  rc_cmp_metodos_t:  { es:'Cómo compararlos',    en:'How to compare them' },
+  rc_cmp_metodos_x: { es:'Hay varias formas de comparar: skill por skill, efecto por efecto, lo que le dan al equipo, para PvP, en las listas o la ficha completa. La app marca la sugerida para los que elegiste y te dice por qué; tocá otra para cambiar.',
+                       en:'There are several ways to compare: skill by skill, effect by effect, what they give the team, for PvP, in the lists or the full sheet. The app marks the suggested one for the ones you picked and tells you why; tap another to switch.' },
+  rc_cmp_lado_t:     { es:'Lado a lado',         en:'Side by side' },
+  rc_cmp_lado_x:     { es:'Una columna por personaje: el desplegable cambia de uniforme y la ✕ lo saca de la comparación. Debajo, cada dato en una fila, con el que más da marcado.',
+                       en:'One column per character: the dropdown switches the uniform and the ✕ removes it from the comparison. Below, each piece of data in a row, with the one that gives the most marked.' },
+  rc_tl_listas_t:    { es:'Qué lista ver',       en:'Which list to see' },
+  rc_tl_listas_x:   { es:'Una tier list ordena a los personajes de mejor a peor según quien la hizo. Tocá una para verla: las principales y las de la comunidad (las publica thanosvibs, el sitio de donde salen los datos de la app) y las tuyas.',
+                       en:'A tier list ranks the characters from best to worst according to whoever made it. Tap one to see it: the main ones and the community ones (published by thanosvibs, the site the app takes its data from) and your own.' },
+  rc_tl_fila_t:      { es:'Las filas',           en:'The rows' },
+  rc_tl_fila_x:      { es:'Cada fila es un puesto de esa lista, de mejor a peor, con el nombre que le puso su autor. Tocá a alguien, como a este, para abrir su ficha.',
+                       en:'Each row is a place in that list, from best to worst, with the name its author gave it. Tap someone, like this one, to open their page.' },
+  rc_tl_editar_t:    { es:'Tus listas',          en:'Your lists' },
+  rc_tl_editar_x:    { es:'Con «Editar listas» podés crear las tuyas, copiar una de las publicadas y mover a cada uno de fila, arrastrándolo o tocándolo.',
+                       en:'With «Edit lists» you can create your own, copy one of the published ones and move each one to another row, by dragging or tapping it.' },
+  rc_modos_filtro_t: { es:'Qué modos ver',       en:'Which modes to see' },
+  rc_modos_filtro_x: { es:'Los modos de juego, con lo que da cada uno. Elegí PvE, PvP, diarios o semanales para ver solo esos.',
+                       en:'The game modes, with what each one gives. Pick PvE, PvP, daily or weekly to see only those.' },
+  rc_modos_modo_t:   { es:'Cada modo',           en:'Each mode' },
+  rc_modos_modo_x:   { es:'Tocá un modo para abrirlo: qué da, cómo armar el equipo para ese modo y con quién, según fuentes citadas (donde no hay fuente, no se afirma).',
+                       en:'Tap a mode to open it: what it gives, how to build the team for that mode and with whom, according to cited sources (where there is no source, nothing is claimed).' },
+  rc_modos_armado_t: { es:'Armado general',      en:'General build' },
+  rc_modos_armado_x: { es:'Al final de la página, el armado de PvE y de PvP para todos: C.T.P., ISO-8 y artefactos.',
+                       en:'At the end of the page, the PvE and PvP build for everyone: C.T.P., ISO-8 and artifacts.' },
+  rc_cromos_buscar_t: { es:'Qué cromo da qué',   en:'Which card gives what' },
+  rc_cromos_buscar_x: { es:'Los cromos de cómic suman estadísticas a todos tus personajes. Elegí un stat en «Da este stat» para ver cuáles lo dan, fijo o como opción posible; también se busca por nombre.',
+                       en:'Comic cards add stats to all your characters. Pick a stat in «Gives this stat» to see which ones give it, fixed or as a possible option; you can also search by name.' },
+  rc_cromos_filtros_t: { es:'Tipo y activación', en:'Type and activation' },
+  rc_cromos_filtros_x: { es:'Filtrá por el tipo de cromo o por lo que se activa en combate.', en:'Filter by card type or by what triggers in combat.' },
+  rc_cromos_cromo_t: { es:'Un cromo',            en:'A card' },
+  rc_cromos_cromo_x: { es:'Cada cromo con sus opciones fijas y las posibles de cada grado (⚡: se activa en combate). «Mazo 1» y «Mazo 2» lo ponen en tus mazos o lo sacan; qué opción le salió se anota en Mi cuenta › Cromos.',
+                       en:'Each card with its fixed options and the possible ones for each grade (⚡: it triggers in combat). «Deck 1» and «Deck 2» put it in your decks or take it out; which option you got is noted in My account › Cards.' },
+  rc_gl_tabs_t:      { es:'Dos pestañas',        en:'Two tabs' },
+  rc_gl_tabs_x:      { es:'La primera, los términos de las skills como los usa el juego. La segunda, cada efecto que la app reconoce y cómo se lee en PvE y en PvP.',
+                       en:'The first one, the skill terms as the game uses them. The second one, each effect the app recognizes and how it reads in PvE and in PvP.' },
+  rc_gl_buscar_t:    { es:'Buscar un término',   en:'Search a term' },
+  rc_gl_buscar_x:    { es:'Escribilo en español, en inglés o en coreano. Si está en la otra pestaña, te lo dice.',
+                       en:'Type it in Spanish, English or Korean. If it is in the other tab, it tells you.' },
+  rc_gl_entrada_t:   { es:'Una entrada',         en:'An entry' },
+  rc_gl_entrada_x:   { es:'Cada entrada va plegada en una línea: tocala para ver qué es. Los enlaces de adentro llevan a otros términos.',
+                       en:'Each entry is folded into one line: tap it to see what it is. The links inside take you to other terms.' },
+  rc_hi_pj_t:        { es:'Por personaje o modo', en:'By character or mode' },
+  rc_hi_pj_x:        { es:'Qué llegó en cada versión del juego. Elegí un personaje o un modo para ver solo lo suyo.',
+                       en:'What arrived in each game version. Pick a character or a mode to see only what concerns it.' },
+  rc_hi_tipo_t:      { es:'Por tipo',            en:'By type' },
+  rc_hi_tipo_x:     { es:'Elegí qué tipo de novedad ver: personajes nuevos, uniformes, Tier-3, Potencial Trascendido, Tier-4, skills y balance o modos de juego.',
+                       en:'Pick which kind of news to see: new characters, uniforms, Tier-3, Potential Transcendence, Tier-4, skills and balance or game modes.' },
+  rc_hi_version_t:   { es:'Cada versión',        en:'Each version' },
+  rc_hi_version_x:   { es:'La más nueva arriba: tocala para abrirla o cerrarla. Adentro, los links a las notas oficiales y una fila por personaje.',
+                       en:'The newest on top: tap it to open or close it. Inside, the links to the official notes and one row per character.' },
+  rc_cu_tabs_t:      { es:'Mi cuenta',           en:'My account' },
+  rc_cu_tabs_x:      { es:'Todo lo que anotás vos, separado de los datos del juego. Se guarda en tu computadora y ninguna actualización lo pisa. Cada pestaña es una parte; el número dice cuánto tenés.',
+                       en:'Everything you note down yourself, apart from the game data. It is saved on your computer and no update overwrites it. Each tab is one part; the number says how much you have.' },
+  rc_cu_resumen_t:   { es:'Resumen',             en:'Overview' },
+  rc_cu_resumen_x:   { es:'Cuánto tenés de cada cosa, en una tarjeta por parte como esta. Tocala para ir a esa parte.', en:'How much you have of each thing, in one card per part like this one. Tap it to go to that part.' },
+  rc_cu_equipos_t:   { es:'Tus equipos',         en:'Your teams' },
+  rc_cu_equipos_x:   { es:'Los equipos que guardaste, con su líder y la sinergia que estima la app. Se arman en la mesa, a la derecha (en el celular, en la pestaña de abajo).',
+                       en:'The teams you saved, with their leader and the synergy the app estimates. They are built on the desk, on the right (on a phone, in the tab at the bottom).' },
+  rc_cu_progreso_t:  { es:'Progreso',            en:'Progress' },
+  rc_cu_progreso_x:  { es:'Por personaje, hasta qué paso de la hoja de ruta llegaste y los topes que cargaste. Se anota en la ficha de cada uno, pestaña «Mi cuenta».',
+                       en:'For each character, which step of the roadmap you reached and the caps you entered. It is noted on each character\'s page, «My account» tab.' },
+  rc_cu_propios_t:   { es:'Personajes propios',  en:'Own characters' },
+  rc_cu_propios_x:   { es:'Los personajes que creaste a mano y los que les cambiaste datos.', en:'The characters you created by hand and the ones whose data you changed.' },
+  rc_cu_marcas_t:    { es:'Atributos marcados',  en:'Marked attributes' },
+  rc_cu_marcas_x:   { es:'Lo que les marcaste a las skills (por ejemplo, rotura de guardia o que ignora objetivo). Se marca en la ficha, pestaña «Mi cuenta», con «Marcar atributos».',
+                       en:'What you marked on skills (for example, guard break or ignore targeting). You mark it on the character page, «My account» tab, with «Mark attributes».' },
+  rc_cu_cromos_t:    { es:'Tus mazos',           en:'Your decks' },
+  rc_cu_cromos_x:    { es:'Tus dos mazos de cinco cromos: poné un cromo en cada lugar, anotá qué opción le salió en cada grado y abajo ves qué cubre cada mazo.',
+                       en:'Your two decks of five cards: put a card in each slot, note which option you got for each grade and below you see what each deck covers.' },
+  rc_cu_capa_t:      { es:'Tu copia',            en:'Your copy' },
+  rc_cu_capa_x:     { es:'Todo lo tuyo vive en un archivo, tu capa. «Exportar» baja una copia; «Importar» carga una (por ejemplo, en otra computadora) y reemplaza la que tenés; «Borrar todo lo mío» la deja vacía.',
+                       en:'All your things live in one file, your layer. «Export» downloads a copy; «Import» loads one (for example, on another computer) and replaces the one you have; «Delete everything of mine» empties it.' },
+  rc_mesa_boton_t:   { es:'La mesa',             en:'The desk' },
+  rc_mesa_boton_x:   { es:'Donde se arma un equipo. El botón «Mesa» de arriba la abre al costado de cualquier sección; en Mi cuenta › Equipos está siempre a la vista.',
+                       en:'Where a team is built. The «Desk» button at the top opens it beside any section; in My account › Teams it is always visible.' },
+  rc_mesa_lugares_t: { es:'Los lugares',         en:'The slots' },
+  rc_mesa_lugares_x: { es:'Los integrantes en orden: el primero es el líder, como en el juego. Arriba se elige el modo. Para sumar a alguien: «Poner en la mesa» en su ficha o «+» en la lista de la izquierda.',
+                       en:'The members in order: the first one is the leader, as in the game. The mode is picked at the top. To add someone: «Put on the desk» on their page or «+» in the list on the left.' },
+  rc_mesa_guardar_t: { es:'Guardar el equipo',   en:'Save the team' },
+  rc_mesa_guardar_x: { es:'Con dos o más, ponele un nombre y «Guardar en Mis equipos» lo suma a tus equipos.', en:'With two or more, give it a name and «Save to My teams» adds it to your teams.' },
 
   f_class:           { es:'Clase',               en:'Class' },
   f_role:            { es:'Rol',                 en:'Role' },
@@ -1787,7 +1956,8 @@ let ui = {
   volverAbiertos: [],                // plegados que se vuelven a abrir con «Atrás» (ver HISTORIAL)
   pq: null,                          // ventana del «Por qué» abierta: { id de su tarjeta, charId y uid de la ficha, tab, y }
   volverPq: null,                    // la que se vuelve a abrir con «Atrás» (ver HISTORIAL)
-  entradaNueva: false                // el próximo render abre otra entrada del historial aunque no cambie el lugar
+  entradaNueva: false,               // el próximo render abre otra entrada del historial aunque no cambie el lugar
+  rec: null                          // el recorrido abierto (RECORRIDO): { modo: 'paso' o 'elegir', pasos, i, antes, y }
 };
 
 // ============================================================================
@@ -3874,9 +4044,9 @@ function cerrarTip (devolverFoco) {
   b.setAttribute('aria-expanded', 'false'); b.removeAttribute('aria-controls');
   if (devolverFoco) b.focus({ preventScroll: true });
 }
-/** Tab y Shift+Tab dan la vuelta adentro del «Cómo funciona»: el foco no se va a la página de atrás. */
-function atraparFoco (e) {
-  const pop = document.getElementById('skpop');
+/** Tab y Shift+Tab dan la vuelta adentro de una ventana (el «Cómo funciona», la tarjeta del recorrido): el foco no se va
+ *  a la página de atrás. */
+function atraparFoco (e, pop) {
   const fs = [...pop.querySelectorAll('button, a[href], summary')].filter(x => x.getClientRects().length);
   const a = document.activeElement, primero = fs[0], ultimo = fs[fs.length - 1];
   if (e.shiftKey ? (a === primero || a === pop || !pop.contains(a)) : (a === ultimo || !pop.contains(a))) {
@@ -5259,10 +5429,10 @@ function renderHistorico () {
   const personajes = CHARS.slice().sort((a, b) => a.name.localeCompare(b.name));
   return `<div class="page-head"><div><h1>${h(t('hi_title'))} ${ayudaHtml(t('hi_note'))}</h1></div></div>
     <div class="row" style="gap:10px;margin-bottom:12px;flex-wrap:wrap">
-      <label class="hipj">${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}
+      <label class="hipj" data-rec="hi-pj">${h(t('hi_pj'))} <select data-a="hiPj">${opcionHtml('', t('hi_pj_todos'), pj)}
         <optgroup label="${h(t('hi_pj_modos'))}">${MODOS.slice().sort((a, b) => nombreModo(a).localeCompare(nombreModo(b))).map(m => opcionHtml(MODO_HI + m.id, nombreModo(m), pj)).join('')}</optgroup>
         <optgroup label="${h(t('hi_pj_pjs'))}">${personajes.map(c => opcionHtml(c.id, c.name, pj)).join('')}</optgroup></select></label>
-      <div class="seg">${['todos'].concat(HI_TIPOS).map(k => `<button class="${tipo === k ? 'on' : ''}" data-a="hiTipo" data-v="${k}">${h(t(k === 'todos' ? 'hi_t_todos' : 'hi_t_' + k))}</button>`).join('')}</div>
+      <div class="seg" data-rec="hi-tipo">${['todos'].concat(HI_TIPOS).map(k => `<button class="${tipo === k ? 'on' : ''}" data-a="hiTipo" data-v="${k}">${h(t(k === 'todos' ? 'hi_t_todos' : 'hi_t_' + k))}</button>`).join('')}</div>
     </div>
     <p class="muted">${h(t('hi_cuenta').replace('{n}', grupos.length))}</p>
     ${grupos.length ? grupos.slice(0, ui.hiN).map((g, i) => grupoHistoricoHtml(g, true, i === 0)).join('') : `<p class="muted">${h(t('hi_vacio'))}</p>`}
@@ -7053,7 +7223,7 @@ function renderModos () {
       <div class="sub">${h(t('md_note'))}</div></div>
       <div class="row"><span class="tag dim">${h(t('md_guide'))} ${h(GUIA.version_guia)}</span>
         ${desact ? `<span class="tag solid" style="background:var(--gold)" title="${h(t('md_guide_old_t'))}">${h(t('md_guide_old'))} ${h(GUIA.version_fuente)}</span>` : ''}</div></div>
-    <div class="seg" style="margin-bottom:14px">${['todos', 'pve', 'pvp', 'diario', 'semanal'].map(k =>
+    <div class="seg" style="margin-bottom:14px" data-rec="modos-filtro">${['todos', 'pve', 'pvp', 'diario', 'semanal'].map(k =>
       `<button class="${F === k ? 'on' : ''}" data-a="modoFiltro" data-v="${k}">${h(t('md_f_' + k))}</button>`).join('')}</div>
     <div class="modos">${lista.map(modoCard).join('')}</div>
     <div class="section" id="armado" style="margin-top:28px"><h3>${h(t('md_builds'))}</h3>
@@ -7390,7 +7560,7 @@ function mesaHtml () {
       ${bonos.length ? bonos.map(b => `<div class="msbono"><b>${h(b.n || t('bn_noname'))}</b> <span class="muted">${h(b.m.map(c => CHAR_BY_ID[c].name).join(' + '))}</span>
         ${b.vs.map(v => `<div class="muted">${h(v.fx.map(f => efectoSoporteTxt(v, f)).join(' · '))}</div>`).join('')}</div>`).join('')
         : `<p class="muted">${h(t('ms_sin_bonos'))}</p>`}</div>` : ''}
-    <div class="msbloque">
+    <div class="msbloque" data-rec="mesa-guardar">
       <input data-a="mesaNombre" value="${h(m.name)}" placeholder="${h(t('ms_nombre_ph'))}" aria-label="${h(t('ms_nombre_ph'))}">
       <div class="row"><button class="btn primary" data-a="mesaGuardar" ${vs.length < 2 || vs.length > max ? 'disabled' : ''}>${h(t('ms_guardar'))}</button>
         <button class="btn" data-a="mesaVaciar" ${vs.length || m.name ? '' : 'disabled'}>${h(t('ms_vaciar'))}</button></div>
@@ -7582,7 +7752,7 @@ function cuentaCapa () {
       <div class="stat"><div class="k">${h(t('st_caps'))}</div><div class="v">${n.topes}</div></div>
       <div class="stat"><div class="k">${h(t('st_cromos'))}</div><div class="v">${n.cromos}</div></div>
     </div>
-    <div class="row" style="margin-top:12px">
+    <div class="row" style="margin-top:12px" data-rec="capa-botones">
       <button class="btn" data-a="exportUser">${h(t('st_export'))}</button>
       <label class="btn" style="cursor:pointer">${h(t('st_import'))}<input type="file" accept=".json" hidden data-a="importUser"></label>
       <button class="btn danger" data-a="resetUser">${h(t('st_reset'))}</button>
@@ -7776,7 +7946,7 @@ function renderNav () {
     <span class="brand" data-a="back">${U.images['brand-logo']
       ? `<img src="${U.images['brand-logo']}" style="height:26px">`
       : `<span class="dot"></span>TA GUIANAEL <span style="color:var(--accent)">MFF</span>`}</span>
-    <div class="navgrupo" role="group" aria-label="${h(t('nav_juego'))}">
+    <div class="navgrupo" role="group" aria-label="${h(t('nav_juego'))}" data-rec="nav-juego">
       ${link(VISTAS_ROSTER, 'nav_roster', 'back')}
       ${link(['tierlist'], 'nav_tierlists', 'goTier')}
       ${link(['modos'], 'nav_modes', 'goModos')}
@@ -7785,13 +7955,14 @@ function renderNav () {
       ${link(['historico'], 'nav_history', 'goHistorico')}
     </div>
     <span class="navspace"></span>
-    <div class="navgrupo cuenta" role="group" aria-label="${h(t('nav_cuenta'))}">
+    <div class="navgrupo cuenta" role="group" aria-label="${h(t('nav_cuenta'))}" data-rec="nav-cuenta">
       ${link(VISTAS_CUENTA, 'nav_cuenta', 'goCuenta')}
       <button class="mesabtn${mesaVisible() ? ' on' : ''}" data-a="mesaToggle" aria-pressed="${mesaVisible()}" ${fija ? 'disabled' : ''}
         title="${h(t(fija ? 'nav_mesa_fija' : 'nav_mesa_t'))}">${h(t('ms_title'))} <b>${U.mesa.members.length}/${max}</b></button>
     </div>
     <div class="navtools">
       <button class="ayudabtn${U.prefs.ayuda ? ' on' : ''}" data-a="ayudaToggle" aria-pressed="${!!U.prefs.ayuda}" title="${h(t('ay_toggle_t'))}">${h(t('ay_toggle'))}</button>
+      <button class="ayudabtn" data-a="recorrido" title="${h(t('rc_btn_t'))}">${h(t('rc_btn'))}</button>
       <button class="langbtn" data-a="lang" title="${h(t('lang_title'))}">
         <span class="${LANG === 'es' ? 'on' : ''}">ES</span><span class="${LANG === 'en' ? 'on' : ''}">EN</span>
       </button>
@@ -7848,6 +8019,7 @@ function render () {
   sincronizarLugar();
   document.body.classList.toggle('sin-ayuda', !U.prefs.ayuda);
   ocultarFlotante();
+  pintarRecorrido();
 }
 
 // ============================================================================
@@ -7867,6 +8039,7 @@ function fotoLugar () {
 /** Antes de pintar: si cambió el lugar, el anterior queda anotado con su posición y se abre
  *  una entrada nueva que recuerda de dónde se vino. */
 function anotarLugar () {
+  if (ui.rec) return;            // lo que abre el recorrido no es un lugar al que se vuelva (RECORRIDO)
   const previo = history.state, nueva = ui.entradaNueva;
   ui.entradaNueva = false;
   if (!previo || !previo.lugar) { history.replaceState({ ...fotoLugar(), n: 0, y: 0, abiertos: [], desde: null }, ''); return; }
@@ -7879,6 +8052,7 @@ function anotarLugar () {
 /** Después de pintar: la entrada actual sigue lo que cambió en el lugar (pestaña, uniforme,
  *  página), para volver a él como quedó. */
 function sincronizarLugar () {
+  if (ui.rec) return;
   const s = history.state, nuevo = { ...s, ...fotoLugar() };
   if (JSON.stringify(nuevo) !== JSON.stringify(s)) history.replaceState(nuevo, '');
 }
@@ -7897,6 +8071,8 @@ function nombreLugar (d, largo) {
 window.addEventListener('popstate', (e) => {
   const s = e.state;
   if (!s || !s.lugar) return;
+  // «Atrás» con el recorrido abierto lo cierra (la pantalla vuelve a como estaba) y va al lugar anterior, como siempre.
+  if (ui.rec) cerrarRecorrido();
   if (ui.pq) cerrarPq(false);
   Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, cuentaTab: s.cuentaTab, eqPagina: s.eqPagina,
                       eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
@@ -7929,6 +8105,202 @@ function resaltar (id) {
 }
 
 // ============================================================================
+// RECORRIDO (1.0.54, Ezequiel, 17 de noviembre de 2026: «necesito una opcion para poder enseñar a utilizar la
+// aplicacion... la primera vez que lo abris y, si presionas el boton, te aparece un tutorial de cada area de la
+// aplicacion explicando que cosas ver y como verlas»)
+// Un tramo por área y, en cada paso, lo que señala en la pantalla (an: un selector; vale el primero que coincide), su
+// texto (k: k_t, el título, y k_x, qué mirar y cómo llegar, en T) y lo que hace falta para que esté a la vista (ui). El
+// botón «Recorrido» arranca el tramo del área en la que se está (con lo que se tiene abierto: el personaje, los
+// comparados); desde otra área, el tramo abre el ejemplo (RECORRIDO_EJEMPLO). Todo lo que el recorrido abre es estado de
+// la pantalla (ui): no toca tu capa (U) ni guarda nada, cada paso parte de cómo estaba la pantalla al empezar y al salir
+// vuelve a eso. Mientras está abierto no se anota el historial: «Atrás» lo cierra y hace lo de siempre (popstate).
+// ============================================================================
+const RECORRIDO_EJEMPLO = { ficha: 'thor', comparar: ['hulk', 'wolverine'] };
+function ejemploRec (cid) {
+  if (!CHAR_BY_ID[cid]) throw new Error('el personaje de ejemplo del recorrido no está en los datos: ' + cid);
+  return cid;
+}
+const RECORRIDO = [
+  { k: 'barra', ir: () => ({}), pasos: [
+    { an: '[data-rec="nav-juego"]', k: 'rc_barra_juego' },
+    { an: '[data-rec="nav-cuenta"]', k: 'rc_barra_cuenta' },
+    { an: 'nav.topnav [data-a="ayudaToggle"]', k: 'rc_barra_ayuda' },
+    { an: 'nav.topnav [data-a="recorrido"]', k: 'rc_barra_rec' },
+    { an: 'nav.topnav [data-a="lang"]', k: 'rc_barra_idioma' },
+    { an: 'nav.topnav [data-a="goSettings"]', k: 'rc_barra_ajustes' }] },
+  { k: 'roster', ir: () => ({ view: 'roster' }), pasos: [
+    { an: '.toolbar .search', k: 'rc_roster_buscar' },
+    { an: '.toolbar [data-a="toggleFilters"]', k: 'rc_roster_filtros' },
+    { an: '.toolbar [data-a="sort"]', k: 'rc_roster_orden' },
+    { an: 'main [data-a="open"]', k: 'rc_roster_pj' },
+    { an: '.toolbar [data-a="pickMode"]', k: 'rc_roster_cmp' }] },
+  { k: 'ficha', ir: (aqui) => aqui ? {} : { view: 'detail', charId: ejemploRec(RECORRIDO_EJEMPLO.ficha), uniformId: 'base' }, pasos: [
+    { an: '.fcab-id', k: 'rc_ficha_cab', ui: { fichaTab: 'resumen' } },
+    { an: '.ftabs', k: 'rc_ficha_tabs', ui: { fichaTab: 'resumen' } },
+    { an: '.resumen3 > .bloque', k: 'rc_ficha_resumen', ui: { fichaTab: 'resumen' } },
+    { an: '#kit .kitfila:not(.cab)', k: 'rc_ficha_kit', ui: { fichaTab: 'skills' } },
+    { an: '.skill .top', k: 'rc_ficha_skill', ui: { fichaTab: 'skills' } },
+    { an: '#fcuerpo > .section > h3', k: 'rc_ficha_armado', ui: { fichaTab: 'armado' } },
+    { an: '#bonos', k: 'rc_ficha_equipos', ui: { fichaTab: 'equipos' } },
+    { an: '#verif', k: 'rc_ficha_fuentes', ui: { fichaTab: 'fuentes' } },
+    { an: '.fcnota', k: 'rc_ficha_cuenta', ui: { fichaTab: 'cuenta' } }] },
+  { k: 'comparativa', ir: (aqui) => aqui ? {} : { view: 'compare', cmpVista: null, cmpRef: null, pickMode: false, pickDe: null,
+      picks: RECORRIDO_EJEMPLO.comparar.map(c => ({ cid: ejemploRec(c), uid: null, key: c + '::base' })) }, pasos: [
+    { an: 'main .page-head', k: 'rc_cmp_elegir' },
+    { an: '.cmet', k: 'rc_cmp_metodos' },
+    { an: '.cpecab, .cmpt thead', k: 'rc_cmp_lado' }] },
+  { k: 'tierlist', ir: () => ({ view: 'tierlist', tlPick: null }), pasos: [
+    { an: '.tlbar', k: 'rc_tl_listas' },
+    { an: '.tierrow .tlchip', k: 'rc_tl_fila' },
+    { an: 'main [data-a="tlEditar"]', k: 'rc_tl_editar' }] },
+  { k: 'modos', ir: () => ({ view: 'modos' }), pasos: [
+    { an: '[data-rec="modos-filtro"]', k: 'rc_modos_filtro' },
+    { an: '.modos .modo', k: 'rc_modos_modo' },
+    { an: '#armado > h3', k: 'rc_modos_armado' }] },
+  { k: 'cromos', ir: () => ({ view: 'cromos' }), pasos: [
+    { an: 'main .glbusca', k: 'rc_cromos_buscar' },
+    { an: '.crfiltros', k: 'rc_cromos_filtros' },
+    { an: '.crcard', k: 'rc_cromos_cromo' }] },
+  { k: 'glosario', ir: () => ({ view: 'glosario' }), pasos: [
+    { an: '.gltabs', k: 'rc_gl_tabs' },
+    { an: 'main .glbusca .search', k: 'rc_gl_buscar' },
+    { an: '.gllista > *', k: 'rc_gl_entrada' }] },
+  { k: 'historico', ir: () => ({ view: 'historico' }), pasos: [
+    { an: '[data-rec="hi-pj"]', k: 'rc_hi_pj' },
+    { an: '[data-rec="hi-tipo"]', k: 'rc_hi_tipo' },
+    { an: '.hiversion > summary', k: 'rc_hi_version' }] },
+  { k: 'cuenta', ir: () => ({ view: 'cuenta' }), pasos: [
+    { an: '.cutabs', k: 'rc_cu_tabs', ui: { cuentaTab: 'resumen' } },
+    { an: '.cuhub .cutile', k: 'rc_cu_resumen', ui: { cuentaTab: 'resumen' } },
+    { an: 'main .page-head', k: 'rc_cu_equipos', ui: { view: 'teams' } },
+    { an: 'main .page-head', k: 'rc_cu_progreso', ui: { cuentaTab: 'progreso' } },
+    { an: 'main .page-head', k: 'rc_cu_propios', ui: { cuentaTab: 'propios' } },
+    { an: 'main .page-head', k: 'rc_cu_marcas', ui: { cuentaTab: 'marcas' } },
+    { an: 'main .page-head', k: 'rc_cu_cromos', ui: { cuentaTab: 'cromos' } },
+    { an: '[data-rec="capa-botones"]', k: 'rc_cu_capa', ui: { cuentaTab: 'capa' } }] },
+  { k: 'mesa', ir: () => ({ view: 'teams' }), pasos: [
+    { an: 'nav.topnav [data-a="mesaToggle"]', k: 'rc_mesa_boton' },
+    { an: '.mesa .msslots', k: 'rc_mesa_lugares', ui: { movil: 'mesa' } },
+    { an: '[data-rec="mesa-guardar"]', k: 'rc_mesa_guardar', ui: { movil: 'mesa' } }] }
+];
+/** El tramo del recorrido de una vista. */
+function areaDe (view) {
+  const k = { roster: 'roster', detail: 'ficha', compare: 'comparativa', tierlist: 'tierlist', modos: 'modos', cromos: 'cromos',
+              glosario: 'glosario', historico: 'historico', cuenta: 'cuenta', teams: 'cuenta', editor: 'cuenta', settings: 'barra' }[view];
+  if (!k) throw new Error('vista sin tramo en el recorrido: ' + view);
+  return k;
+}
+/** La pantalla vuelve a como estaba al empezar el recorrido (antes), que sigue abierto. */
+function restaurarUi (antes) {
+  const rec = ui.rec;
+  for (const k of Object.keys(ui)) if (!(k in antes)) delete ui[k];
+  Object.assign(ui, structuredClone(antes));
+  ui.rec = rec;
+}
+/** Arranca los tramos ks, en el orden de RECORRIDO, desde cómo estaba la pantalla al abrir el recorrido. El tramo del área
+ *  en la que se estaba muestra lo que había abierto; los demás, su ejemplo. Cada paso lleva la pantalla completa que pide. */
+function empezarRecorrido (ks) {
+  if (!ui.rec) ui.rec = { antes: structuredClone(ui), y: scrollY };
+  restaurarUi(ui.rec.antes);
+  const aqui = areaDe(ui.view);
+  const pasos = RECORRIDO.filter(tr => ks.includes(tr.k)).flatMap(tr => {
+    const base = tr.ir(tr.k === aqui);
+    return tr.pasos.map(p => ({ area: tr.k, an: p.an, k: p.k, ui: { focusSearch: false, movil: 'centro', aliados: null, ...base, ...p.ui } }));
+  });
+  Object.assign(ui.rec, { pasos });
+  irAPaso(0);
+}
+function irAPaso (i) {
+  const r = ui.rec;
+  r.modo = 'paso'; r.i = i;
+  restaurarUi(r.antes);
+  Object.assign(ui, r.pasos[i].ui);
+  render();
+}
+/** Lo cierra sin pintar (lo usa «Atrás», que pinta después): la pantalla vuelve a como estaba. Devuelve lo que se cerró. */
+function cerrarRecorrido () {
+  const r = ui.rec;
+  ui.rec = null;
+  restaurarUi(r.antes);
+  return r;
+}
+/** Lo cierra: la app vuelve adonde estaba, a la misma altura, y el foco al botón «Recorrido». */
+function terminarRecorrido () {
+  const r = cerrarRecorrido();
+  render();
+  window.scrollTo({ top: r.y, behavior: 'instant' });
+  document.querySelector('nav.topnav [data-a="recorrido"]').focus({ preventScroll: true });
+}
+/** La tarjeta: el selector de áreas o el paso abierto (falta: su elemento no está en la pantalla). */
+function tarjetaRecHtml (falta) {
+  const r = ui.rec, salir = (a) => `<button class="btn icon sm" data-a="${a}" title="${h(t('rc_salir'))}" aria-label="${h(t('rc_salir'))}">✕</button>`;
+  const tarjeta = (cab, titulo, texto, pie) => `<div class="rcard" id="rc-tarjeta" role="dialog" aria-modal="true" aria-labelledby="rc-t" tabindex="-1">
+    <div class="rccab">${cab}</div><div class="rctit" id="rc-t">${h(titulo)}</div><p>${h(texto)}</p>
+    ${falta ? `<p class="rcfalta">${h(t('rc_no_esta'))}</p>` : ''}<div class="rcpie">${pie}</div></div>`;
+  if (r.modo === 'elegir') {
+    const aqui = areaDe(r.antes.view);
+    return tarjeta(`<span class="rcarea">${h(t('rc_btn'))}</span>${salir('recSalir')}`, t('rc_elegir_t'), t('rc_elegir_x'),
+      `<div class="rcareas">${RECORRIDO.map(tr => `<button class="btn sm${tr.k === aqui ? ' on' : ''}" data-a="recArea" data-v="${tr.k}">${h(t('rc_area_' + tr.k))}</button>`).join('')}</div>
+      <button class="btn sm primary" data-a="recCompleto">${h(t('rc_completo'))}</button>`);
+  }
+  const p = r.pasos[r.i], ultimo = r.i === r.pasos.length - 1;
+  return tarjeta(`<span class="rcarea">${h(t('rc_area_' + p.area))}</span><span class="rcn">${h(t('rc_paso').replace('{n}', r.i + 1).replace('{m}', r.pasos.length))}</span>${salir('recSalir')}`,
+    t(p.k + '_t'), t(p.k + '_x'),
+    `<button class="btn sm" data-a="recOtras">${h(t('rc_otras'))}</button><span class="navspace"></span>
+     <button class="btn sm" data-a="recAnt" ${r.i === 0 ? 'disabled' : ''}>${h(t('rc_ant'))}</button>
+     <button class="btn sm primary" data-a="recSig">${h(t(ultimo ? 'rc_fin' : 'rc_sig'))}</button>`);
+}
+let REC_ANCLA = null;          // el elemento que señala el paso abierto (null: ninguno a la vista)
+/** Pinta el recorrido encima de la app (fuera de #app: render la reemplaza), o lo quita. Lo llama render al terminar. Un
+ *  fondo que tapa la página (tocarlo es salir, como en la ventana del «Cómo funciona»), el resaltado del elemento del paso
+ *  y la tarjeta al lado (en el celular, la hoja de abajo). Sin elemento a la vista, la tarjeta va sola y lo dice. */
+function pintarRecorrido () {
+  let capa = document.getElementById('rc-capa');
+  const r = ui.rec;
+  REC_ANCLA = null;
+  if (!r) { if (capa) capa.remove(); document.body.classList.remove('con-recorrido'); return; }
+  const a = document.activeElement, foco = a && a.closest('#rc-tarjeta') ? a.dataset.a : null;
+  if (!capa) { capa = document.createElement('div'); capa.id = 'rc-capa'; document.body.appendChild(capa); }
+  const el = r.modo === 'paso' ? document.querySelector(r.pasos[r.i].an) : null;
+  const ancla = el && el.getClientRects().length ? el : null;
+  document.body.classList.add('con-recorrido');
+  capa.innerHTML = `<div class="rcfondo${ancla ? '' : ' oscuro'}" data-a="recSalir"></div>${ancla ? '<div class="rcluz" id="rc-luz"></div>' : ''}`
+    + tarjetaRecHtml(r.modo === 'paso' && !ancla);
+  const tarjeta = document.getElementById('rc-tarjeta');
+  if (ancla) { REC_ANCLA = ancla; enfocarAncla(ancla); ubicarRecorrido(); } else tarjeta.classList.add('centro');
+  const b = foco && tarjeta.querySelector(`[data-a="${foco}"]:not([disabled])`);
+  (b || tarjeta).focus({ preventScroll: true });
+}
+/** Lleva el elemento del paso a la vista, arriba y debajo de lo que queda fijo (la barra, y la del roster o la cabecera de
+ *  la ficha si no es parte de ellas); en la barra misma, solo a lo ancho (en el celular se desplaza). */
+function enfocarAncla (el) {
+  el.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+  const nav = document.querySelector('nav.topnav');
+  if (nav.contains(el)) return;
+  let arriba = nav.offsetHeight;
+  for (const s of document.querySelectorAll('main .toolbar, main .fcab')) if (!s.contains(el) && getComputedStyle(s).position === 'sticky') arriba += s.offsetHeight;
+  window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - arriba - 16, behavior: 'instant' });
+}
+/** El resaltado sobre el elemento y la tarjeta junto a él (ubicarFlotante); en el celular la ubica styles.css. */
+function ubicarRecorrido () {
+  const luz = document.getElementById('rc-luz'), tarjeta = document.getElementById('rc-tarjeta'), r = REC_ANCLA.getBoundingClientRect(), m = 4;
+  Object.assign(luz.style, { top: r.top - m + 'px', left: r.left - m + 'px', width: r.width + 2 * m + 'px', height: r.height + 2 * m + 'px' });
+  if (matchMedia(AYUDA_CELULAR).matches) { tarjeta.removeAttribute('style'); return; }
+  ubicarFlotante(tarjeta, luz.getBoundingClientRect());
+}
+/** Las teclas mientras está abierto: ← y → pasan de paso, Esc sale y Tab no sale de la tarjeta. */
+function teclaRecorrido (e) {
+  const r = ui.rec;
+  if (e.key === 'Tab') { atraparFoco(e, document.getElementById('rc-tarjeta')); return; }
+  if (e.key === 'Escape') { e.preventDefault(); terminarRecorrido(); return; }
+  if (r.modo === 'paso' && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+    e.preventDefault();
+    const i = r.i + (e.key === 'ArrowRight' ? 1 : -1);
+    if (i === r.pasos.length) terminarRecorrido(); else if (i >= 0) irAPaso(i);
+  }
+}
+
+// ============================================================================
 // EVENTOS
 // ============================================================================
 // La ayuda al pasar el mouse (ayudaFlotanteHtml): solo con la ayuda activada y con un mouse (en el celular, el toque abre
@@ -7951,6 +8323,7 @@ const reubicarAyudas = () => {
   if (FLOTA_DE && debajo && debajo.closest('[data-ay]') === FLOTA_DE) ubicarFlotante(document.getElementById('flotay'), FLOTA_DE.getBoundingClientRect());
   else ocultarFlotante();
   document.querySelectorAll('details.ayuda[open]').forEach(ubicarAyuda);
+  if (REC_ANCLA) ubicarRecorrido();
 };
 document.addEventListener('scroll', reubicarAyudas, true);
 window.addEventListener('resize', reubicarAyudas);
@@ -7975,6 +8348,14 @@ document.addEventListener('click', (e) => {
     case 'atras': history.back(); break;
     case 'lang': LANG = U.prefs.lang = (LANG === 'es' ? 'en' : 'es'); commit(); break;
     case 'ayudaToggle': U.prefs.ayuda = !U.prefs.ayuda; ocultarFlotante(); commit(); break;
+    // El recorrido (RECORRIDO): el botón arranca el tramo del área en la que se está.
+    case 'recorrido': empezarRecorrido([areaDe(ui.view)]); break;
+    case 'recSig': if (ui.rec.i === ui.rec.pasos.length - 1) terminarRecorrido(); else irAPaso(ui.rec.i + 1); break;
+    case 'recAnt': irAPaso(ui.rec.i - 1); break;
+    case 'recSalir': terminarRecorrido(); break;
+    case 'recOtras': ui.rec.modo = 'elegir'; pintarRecorrido(); break;
+    case 'recArea': empezarRecorrido([d.v]); break;
+    case 'recCompleto': empezarRecorrido(RECORRIDO.map(tr => tr.k)); break;
     case 'toggleFilters': P.filtersOpen = !P.filtersOpen; commit(); break;
     case 'clearFilters': P.filters = { c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] };
       P.flags = { t4:false, trans:false, nuevo:false }; P.kind = 'todo'; P.objetivo = ''; P.atributo = '';
@@ -8326,11 +8707,13 @@ document.addEventListener('error', (e) => {
   verificarServidor();
 }, true);
 document.addEventListener('keydown', (e) => {
+  // Con el recorrido abierto, las teclas son de él (teclaRecorrido).
+  if (ui.rec) { teclaRecorrido(e); return; }
   // Con la ventana del «Por qué» abierta, las teclas son de ella (teclaPq).
   if (ui.pq) { teclaPq(e); return; }
   // Con el «Cómo funciona» abierto: Esc lo cierra (el foco vuelve a la skill) y Tab no sale de él.
   if (ui.tip && e.key === 'Escape') { e.preventDefault(); cerrarTip(true); return; }
-  if (ui.tip && e.key === 'Tab') { atraparFoco(e); return; }
+  if (ui.tip && e.key === 'Tab') { atraparFoco(e, document.getElementById('skpop')); return; }
   if (e.key === 'Escape' && ui.tlPick) { ui.tlPick = null; render(); }
   if (e.key === 'Escape' && ui.aliados != null) { ui.aliados = null; render(); }
   // En la ficha, ← y → pasan al anterior y al siguiente del listado (no mientras se escribe ni con algo abierto).

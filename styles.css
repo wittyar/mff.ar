@@ -692,6 +692,31 @@ body.sin-ayuda details.ayuda,body.sin-ayuda .sktit::after{display:none}
 .flotay .floef{display:inline-flex;align-items:center;gap:4px}
 .flotay .sklect{margin-top:6px}
 .flotay .flopie{margin-top:6px;font-size:11px;color:var(--text-3)}
+/* El recorrido (RECORRIDO, 1.0.54): un fondo que tapa la página, el resaltado del elemento del paso y la tarjeta junto a él
+   (la ubica ubicarFlotante); sin elemento a la vista, la tarjeta va al centro. En el celular (el corte de AYUDA_CELULAR), la
+   hoja de abajo. */
+.rcfondo{position:fixed;inset:0;z-index:96}
+.rcfondo.oscuro{background:rgba(4,6,11,.6)}
+.rcluz{position:fixed;z-index:97;pointer-events:none;border-radius:var(--r-sm);box-shadow:0 0 0 2px var(--accent),0 0 0 200vmax rgba(4,6,11,.6)}
+.rcard{position:fixed;z-index:98;width:min(380px,calc(100vw - 16px));overflow-y:auto;overscroll-behavior:contain;padding:12px 14px;
+  background:var(--surface-2);border:1px solid var(--line-2);border-radius:var(--r-md);box-shadow:var(--sh-3);font-size:13px;line-height:1.5;color:var(--text-2)}
+.rcard:focus{outline:none}
+.rcard.centro{top:50%;left:50%;transform:translate(-50%,-50%);width:min(460px,calc(100vw - 32px));max-height:82vh}
+.rccab{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.rccab .btn{margin-left:auto}
+.rcarea{font:600 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.rcn{font-size:11.5px;color:var(--text-3)}
+.rctit{font:600 16px var(--font-display);color:var(--text);margin-bottom:4px}
+.rcard p{margin:0 0 6px}
+.rcfalta{color:var(--gold)}
+.rcpie{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
+.rcareas{display:flex;flex-wrap:wrap;gap:6px;width:100%;margin-bottom:4px}
+.rcareas .btn.on{border-color:var(--accent);color:var(--accent)}
+@media (max-width:900px){
+  body.con-recorrido{padding-bottom:50vh}     /* lugar para subir a la vista lo que está al final de la página, sobre la hoja */
+  .rcard,.rcard.centro{left:0;right:0;bottom:0;top:auto;transform:none;width:auto;max-height:50vh;border-radius:16px 16px 0 0;border-bottom:0;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+}
 [data-ay]{cursor:help}
 .cmpsk{display:block;padding:0;margin-bottom:4px;border:0;background:none;color:inherit;font:inherit;font-weight:600;text-align:left;cursor:pointer}
 .cmpsk:hover{color:var(--accent)}
