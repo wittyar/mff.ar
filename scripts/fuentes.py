@@ -55,8 +55,14 @@ class Textos:
         if es is None:
             self.faltan.add(en)
         else:
-            self.usados[en] = es
+            self.registrar(en, es)
         return en
+
+    def registrar(self, en, es):
+        """Lo que viaja en MFF_TXT: un mismo texto en inglés tiene una sola traducción en toda la app."""
+        if self.usados.get(en, es) != es:
+            raise SystemExit(f'traducciones: {en!r} se traduce de dos maneras: {self.usados[en]!r} y {es!r}')
+        self.usados[en] = es
 
 
 TX = Textos('ctps.json', 'abx.json', 'guia.json', 'soportes.json', 'rotaciones.json', 'armado.json', 'bonos.json')
@@ -67,14 +73,19 @@ _NUM = re.compile(r'\[P\d+\]|\d+(?:\.\d+)?')
 
 
 class Patrones:
-    """Traducción por patrón de las líneas de artefacto: la tabla trae la línea con '#'
+    """Traducción por patrón de las líneas de artefacto y de C.T.P.: la tabla trae la línea con '#'
     en lugar de cada número, en el mismo orden en los dos idiomas; la traducción de
-    cada línea concreta se registra en TX, que es lo que viaja a la app."""
-    def __init__(self, archivo):
-        tabla = json.load(open(os.path.join(_DIR, 'traducciones', archivo), encoding='utf-8'))
-        # La fuente escribe igual una misma frase con mayúsculas distintas
-        # ("total Instinct" / "Total Instinct"): el patrón se busca sin distinguirlas.
-        self.tabla = {k.casefold(): v for k, v in tabla.items()}
+    cada línea concreta se registra en TX, que es lo que viaja a la app. Un patrón va en un solo archivo."""
+    def __init__(self, *archivos):
+        self.tabla = {}
+        for archivo in archivos:
+            tabla = json.load(open(os.path.join(_DIR, 'traducciones', archivo), encoding='utf-8'))
+            # La fuente escribe igual una misma frase con mayúsculas distintas
+            # ("total Instinct" / "Total Instinct"): el patrón se busca sin distinguirlas.
+            repetidos = sorted(k for k in tabla if k.casefold() in self.tabla)
+            if repetidos:
+                raise SystemExit(f'traducciones/{archivo}: patrones que ya están en otro archivo: {repetidos}')
+            self.tabla.update({k.casefold(): v for k, v in tabla.items()})
 
     def __call__(self, en):
         en = (en or '').strip()
@@ -89,14 +100,14 @@ class Patrones:
         if len(partes) - 1 != len(nums):
             raise SystemExit(f'traducciones/artefactos.json: la traducción de {en!r} no tiene '
                              f'{len(nums)} marcadores "#": {es!r}')
-        TX.usados[en] = partes[0] + ''.join(n + p for n, p in zip(nums, partes[1:]))
+        TX.registrar(en, partes[0] + ''.join(n + p for n, p in zip(nums, partes[1:])))
         return en
 
 
-TXP = Patrones('artefactos.json')
-# Las opciones de los C.T.P. (una línea de la ficha por cada '<br>' de thanosvibs) y de dónde se consiguen, por patrón
-# como las de los artefactos: el español sale de las fichas del juego en español (fuentes/juego-es/ctps_fichas.json).
-TXC = Patrones('ctp_opciones.json')
+# Las líneas de los artefactos y, con las mismas frases, las opciones de los C.T.P. (una línea de la ficha por cada '<br>'
+# de thanosvibs) y de dónde se consiguen: lo propio de los C.T.P. en ctp_opciones.json, con el vocabulario de sus fichas en
+# el juego en español (fuentes/juego-es/ctps_fichas.json).
+TXP = Patrones('artefactos.json', 'ctp_opciones.json')
 
 
 def cargar(ruta):
@@ -130,7 +141,7 @@ def opciones_ctp(c):
     opción va como sus líneas (una por '<br>', traducidas por patrón); los valores, por grado. Un grado que no trae todos
     los valores que usa su texto se avisa, y la app marca cada número que falta, como en los artefactos."""
     def lineas(texto):
-        return [TXC(x) for x in texto.split('<br>')]
+        return [TXP(x) for x in texto.split('<br>')]
     partes = [('fija', c['stats_normal'], 'stats_normal', None)]
     if c.get('stats_reforge'):
         partes += [(k, [c['stats_reforge'][campo]], 'stats_reforge', campo) for k, campo in (('esp', 'special'), ('gen', 'generic'))]
@@ -153,7 +164,7 @@ def opciones_ctp(c):
 def obtencion_ctp(c):
     """De dónde se consigue cada grado de un C.T.P. thanosvibs escribe en cursiva (<i>) el nombre de la película de una
     Batalla legendaria: va entre comillas, para traducir por patrón sin HTML."""
-    return {gid: [TXC(re.sub(r'<i>(.*?)</i>', r'«\1»', x)) for x in c[g]['acquisition']]
+    return {gid: [TXP(re.sub(r'<i>(.*?)</i>', r'«\1»', x)) for x in c[g]['acquisition']]
             for g, gid in GRADOS_CTP if c.get(g)}
 
 
