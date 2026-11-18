@@ -7317,7 +7317,7 @@ function columnasCtp (ctx) {
 function ctpCorto (x) {
   if (!x.c) return sinInterpretar(x.x);
   const c = CTPS.find(y => y.id === x.c);
-  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}${ctpLink(c)}${x.r ? reforjadoTag() : ''}</span>`;
+  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${ctpLink(c)}</span>${x.r ? reforjadoTag() : ''}</span>`;
 }
 // C.T.P. RECOMENDADO (Ezequiel, 4 de octubre de 2026): una sola respuesta, la misma en la ficha y en todas las
 // tarjetas de equipo (combinaciones, «cómo entraría», tus equipos y favoritos), siempre con su fuente. Desde el 5 de
@@ -7350,7 +7350,7 @@ function ctpRecomendado (v, ctx) {
 /** Una fila de la Ideal CTP List: el C.T.P. que nombra, «Not worth» dicho, u otro rótulo tal cual, marcado. */
 function ctpFilaIdeal (rotulo) {
   const id = slugId(rotulo), c = CTPS.find(x => x.id === id);
-  if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}${ctpLink(c)}</span>`;
+  if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${ctpLink(c)}</span></span>`;
   return id === 'notworth' ? `<span>${h(t('ctp_not_worth'))}</span>` : sinInterpretar(rotulo);
 }
 /** La fuente de una recomendación, como enlace: la guía de armado (con su versión) o la Ideal CTP List. */
