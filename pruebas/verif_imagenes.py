@@ -29,6 +29,9 @@ class Origen(http.server.BaseHTTPRequestHandler):
         pre = f"/datos/{m['formato']}"
         if ruta.startswith(pre + '/') and ruta[len(pre):] in ('/datos.json', '/data.js', '/docs/AUDITORIA.md'):
             archivo = os.path.join(ORIGEN_DATOS, ruta[len(pre) + 1:])
+        elif ruta.startswith('/fuentes/propio/retratos/'):
+            # Los retratos propios (imagenes.origen: del repo en GitHub), del repo local.
+            archivo = os.path.join(RAIZ, ruta[1:])
         elif ruta.startswith('/images/'):
             _, _, carpeta, nombre = ruta.split('/', 3)
             if ruta in ROTAS: return self.send_error(500)
@@ -50,7 +53,8 @@ BASE = f'http://127.0.0.1:{srv.server_port}'
 # datos.json con las URLs de las imágenes apuntando al origen falso
 ORIGEN_DATOS = tempfile.mkdtemp(prefix='mff-od-')
 m = json.load(open(os.path.join(RAIZ, 'datos.json'), encoding='utf-8'))
-m['imagenes'] = [[r, u.replace('https://thanosvibs.money', BASE)] for r, u in m['imagenes']]
+sys.path.insert(0, os.path.join(RAIZ, 'scripts')); import imagenes  # noqa: E402
+m['imagenes'] = [[r, u.replace(imagenes.TV, BASE).replace(imagenes.REPO, BASE)] for r, u in m['imagenes']]
 json.dump(m, open(os.path.join(ORIGEN_DATOS, 'datos.json'), 'w', encoding='utf-8'))
 shutil.copy(os.path.join(RAIZ, 'data.js'), ORIGEN_DATOS)
 os.makedirs(os.path.join(ORIGEN_DATOS, 'docs'))
