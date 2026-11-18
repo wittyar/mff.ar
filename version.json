@@ -1,6 +1,6 @@
 {
- "version": "1.0.55",
+ "version": "1.0.56",
  "formato_datos": 20,
  "python": "3.14.7",
- "notas": "Vulcan, Lilandra y Deathbird ya tienen retrato: uno provisorio, sacado de las fichas oficiales del juego y sin el fondo blanco, hasta que thanosvibs publique los suyos."
+ "notas": "Nuevo: «Objetos», en la barra en lugar de «Cromos», con una pestaña por sistema del equipamiento: C.T.P. (las opciones con los valores de cada grado, de dónde se consiguen y a qué personajes se los pone la guía de armado), ISO-8 (las piedras y los 26 sets con sus piezas, lo que dan y su activación), Bendiciones de Odín (cada stat con su valor, bono y total), Emblemas (los 63, con su valor en cada nivel y dónde rigen), J.A.R.V.I.S. (qué es, sus chips y en qué modos rige) y los Cromos, como estaban. Desde la ficha y desde Modos, el nombre de un C.T.P. o de un set de ISO-8 lleva a su detalle. El recorrido guiado tiene sus pasos."
 }

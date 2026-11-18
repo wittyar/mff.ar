@@ -388,6 +388,52 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   falso, no desde GitHub). Corridas con los datos armados el 18 de noviembre: sin fallas propio, imagenes, humo, ficha,
   recorrido y ayuda. Pendiente: los íconos de los tres artefactos (la nota los trae, pero lo propio no tiene dónde
   ponerlos: haría falta código, como `images/propio/` para los retratos).
+- La 1.0.56 (formato 20; la etiqueta va sobre el commit de datos), 18 de noviembre de 2026: **Objetos** (Ezequiel: «Por otro
+  lado, ademas de la parte de cormos... Arma un modulo para * CTPs, donde este el detalle. * Bendiciones de Odin * Javis *
+  Emblemas * Sets de Iso e ISOs»). Como Cromos: una sección de consulta por sistema, con todo el detalle que dan las fuentes.
+  - **La entrada.** «Objetos» reemplaza a «Cromos» en el grupo del juego (decisión de quien coordinó: cinco entradas más no
+    entran). El nombre es el del glosario de objetos del juego en español (capturas 116 a 162), el único que nombra a todos
+    (ISO-8, cromos, equipo personalizado, uru encantado, datos de emblema y de JARVIS); «Crecimiento de equipo», la sección de
+    la guía, no tiene los emblemas y «equipo» ya es otra cosa en la app. Sub-pestañas, con la sub-barra de Mi cuenta
+    (`subBarraHtml`, ahora de las dos; la de Objetos con el color del juego): C.T.P., ISO-8, Bendiciones de Odín, Emblemas,
+    J.A.R.V.I.S. y Cromos (la vista de la 1.0.53, adentro tal cual; Mi cuenta › Cromos no cambia). `ui.objTab` va en el
+    historial (`fotoLugar`/`popstate`); cada elemento es un `details.glitem.objitem` (las entradas del Glosario) y lo abierto
+    sigue abierto al repintar.
+  - **Las fuentes.** C.T.P.: `/api/ctps`, lo que ya se bajaba y el build tiraba (`MFF_CTPS[].op`: opción bloqueada y las dos de
+    reforja con los valores de normal, poderoso y brillante; `.obt`: de dónde se consigue cada grado), traducido por patrón
+    con el vocabulario de las fichas del juego (`traducciones/ctp_opciones.json`; los patrones que ya tenían los artefactos
+    valen los de ellos: un texto, una traducción, y si no el build corta). Bendiciones de Odín: `/api/odins-blessings` (17,
+    con valor, bono de amplificación y total por stat, como su página; color, forma, de dónde caen). Emblemas: `/api/emblems`
+    (63), `/api/emblems/static` (el modo de cada colección, cómo se consiguen: así los lee su página) y `/api/emblems/levels`
+    (estrellas y costo de cada nivel); los íconos, de `/_game-assets/ui_item/` (`images/emblemas/`). Sets de ISO-8: la tabla
+    «ISO SET BONUS» de la página ISO-8 de la wiki (`work/wiki_iso.json`; thanosvibs no tiene API de ISO-8), 26 sets; las
+    piedras, las de `guia.json`; los sets de la guía y de la leyenda de la guía de armado tienen que estar en la wiki y cerrar.
+    J.A.R.V.I.S. (#37: el alcance de esta versión es de consulta): `fuentes/objetos/jarvis.json`, de la nota del 2 de
+    septiembre de 2026 que lo introdujo (foro-1895951; la lista de los 27 chips es una imagen de la nota, transcripta tal
+    cual), la del 14 de octubre (foro-1896956) y la guía del juego. `scripts/objetos.py` arma `MFF_OBJETOS` con
+    `scripts/contenido/objetos.json` (cómo se lee cada texto; lo que no está corta el build) y las notas de cada sistema con su
+    fuente. El nombre en español de seis piedras y de Fuerza del Hulk cabreado, de las capturas 246 y 247.
+  - **Lo dudoso.** «Advanced» de thanosvibs va como «De lujo» marcado dudoso (la guía del juego dice «Luxury», y en español
+    «de lujo», en ese lugar de la lista). Healing Factor: la wiki escribe «Crowd Control Time ↑», y «↓» en los demás. Los
+    valores de los sets son los de la wiki, que no dice a qué rango ni despertar corresponden (la página lo dice). El C.T.P. de
+    Ascenso sigue propio, ahora marcado y sin ícono (thanosvibs no lo publica: pedía uno que daba 404).
+  - **Enlaces.** El nombre de un C.T.P. (`ctpDetalle`, `ctpCorto`, `ctpFilaIdeal`: la ficha, Modos, Alliance Battle, las
+    tarjetas de equipo) y el de un set de ISO-8 (la ficha › Armado, Modos › Armado) llevan a su detalle (`verObj`), con
+    «Atrás». Los de los emblemas y J.A.R.V.I.S. a sus modos (`modoLink`, también el del histórico). Todos son `button.objlink`.
+  - **Recorrido.** El tramo «Objetos» reemplaza al de Cromos: un paso por pestaña y los tres de Cromos (55 pasos en 11 tramos).
+  - Pendiente: los valores de los chips de J.A.R.V.I.S. (ninguna fuente los da: harían falta capturas del juego, chip por
+    chip) y sus nombres en español; los nombres en español de las bendiciones, de los sets de ISO-8 (salvo uno) y de las
+    piedras Vital y Nimble; qué piedra es de qué color en el juego (los colores son los de la guía); a qué rango o despertar
+    corresponden los valores de la wiki; las recompensas de las colecciones de emblemas (`/api/emblems/collections`, sin
+    bajar); los nombres por grado de los C.T.P. en inglés. Fuera de alcance, por pedido: anotar en Mi cuenta lo que uno tiene
+    de cada sistema, cómo pesan en los equipos (#34) y las espadas (#36).
+  - Pruebas: `verif_objetos.py` (nueva: las seis pestañas, todos los de cada fuente, filtros, detalle, valores, lo dudoso y
+    lo propio, los enlaces con «Atrás», el historial, inglés y celular); `verif_cromos` y `verif_cuenta_cromos` entran por
+    Objetos; `verif_cuenta` y `verif_recorrido`, con la barra y el tramo nuevos; `verif_imagenes`, los íconos de los emblemas.
+    Corridas con los datos armados el 18 de noviembre (formato 20): sin fallas objetos, cromos, cuenta_cromos, cuenta,
+    recorrido, atras, humo, ayuda, propio, ctp_abx, ficha, modos_juego, historico, glosario, capa, datos y artefacto; imagenes y
+    formato, con esos datos puestos en el repo. Fallan igual que la 1.0.55 con datos de su formato del mismo `work/`:
+    ctp_equipos (404 de consola), guia_aceptar 15, guia_ajustes y guia_ficha (el bloque de Cynicalex).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
@@ -433,7 +479,8 @@ abiertos. Decisiones de Ezequiel del 6 de octubre de 2026:
   «Tier-N» → «categoría N» y «skill» → «habilidad» (Ezequiel no lo decidió: los nombres de las skills no importan, las
   características sí), los textos de los modos (Tier, WBL…). Las capturas: sección «Capturas del juego».
 - Apartados nuevos: Cromos de cómic (#35: la sección y los mazos, en la 1.0.53; falta cómo pesan en los equipos, con #34),
-  Espadas (#36), Jarvis (#37, falta el alcance); atributos de las skills (#38).
+  Espadas (#36), Jarvis (#37: la consulta, en Objetos de la 1.0.56; faltan los valores de los chips); atributos de las skills
+  (#38). Objetos (1.0.56): lo pendiente de cada sistema, en su entrada de «Estado»; anotar lo que uno tiene, con #34.
 - Histórico: el texto coreano de las notas en la app (#42; las notas en `fuentes/cafe/`, el cotejo en
   `docs/NOTAS_COREANO.md`, la revisión en `docs/REVISION_COREANO.md`; desde la 1.0.33 los casos dudosos llevan «≠»),
   las llegadas que siguen sin su nota (lista en `docs/HISTORICO.md`: de 2015, notas con imágenes y parches); los modos
