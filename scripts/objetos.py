@@ -10,7 +10,8 @@ De dónde sale cada parte:
   Defensive), «nores» (rige en todo el contenido) y cómo se consigue (las claves de static.farming).
 - Sets de ISO-8: la tabla «ISO SET BONUS» de la página ISO-8 de la wiki (work/wiki_iso.json); thanosvibs no tiene API de
   ISO-8. Las piedras (color, nombre y stats) son las de la guía (contenido/guia.json, iso.piedras): la app las toma de ahí.
-  Los sets que nombra la guía tienen que cerrar con la wiki pieza por pieza y stat por stat.
+  Los sets que nombra la guía tienen que cerrar con la wiki pieza por pieza y stat por stat, y los de la leyenda de la guía
+  de armado (guia_armado.LEY_ISO_SET) tienen que estar: la app lleva de su nombre a su detalle.
 - J.A.R.V.I.S.: fuentes/objetos/jarvis.json (la nota oficial que lo introdujo, la del 14 de octubre de 2026 y la guía del
   juego; thanosvibs no lo publica).
 
@@ -29,6 +30,7 @@ armar(...) devuelve (MFF_OBJETOS, imágenes):
   jarvis (fuentes/objetos/jarvis.json: categorias, chips con id, ex_opciones, modos, notas, imagen_lista).
 Solo biblioteca estándar."""
 import json, os, re
+from guia_armado import LEY_ISO_SET
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 _NUM = re.compile(r'^(.*?)\s*\+?(\d+(?:\.\d+)?)%$')
@@ -175,6 +177,10 @@ def armar(odins, emblems, emb_static, emb_levels, wiki_iso, guia, cromos_nombres
             mal.append(f"guia.json nombra el set de ISO-8 {g['nombre']}, que la wiki no tiene")
         elif sorted(s['piezas']) != sorted(g['piedras']) or {x['s'] for x in s['st']} != set(g['stats']):
             mal.append(f"el set de ISO-8 {g['nombre']}: guia.json y la wiki no dicen las mismas piezas o stats")
+    # La app lleva al detalle de cada set que nombran la guía y la guía de armado (isoSetLink): tienen que estar.
+    for n in [x for _, x in LEY_ISO_SET]:
+        if n.replace('-', ' ').lower() not in por_nombre:
+            mal.append(f'la leyenda de la guía de armado nombra el set de ISO-8 {n}, que la wiki no tiene')
     for k in set(I['sets_es']) - {s['n'] for s in sets}:
         mal.append(f'contenido/objetos.json: iso.sets_es nombra el set {k}, que la wiki no tiene')
 

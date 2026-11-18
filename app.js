@@ -518,6 +518,7 @@ const T = {
   ob_como:           { es:'Cómo funciona',       en:'How it works' },
   ob_da:             { es:'Da',                  en:'Gives' },
   ob_stat:           { es:'Stat',                en:'Stat' },
+  ob_ver:            { es:'Ver el detalle en Objetos', en:'See the details in Items' },
   ob_grado:          { es:'Grado',               en:'Grade' },
   ob_grado_normal:   { es:'Normal',              en:'Normal' },
   ob_grado_poderoso: { es:'Poderoso',            en:'Mighty' },
@@ -539,6 +540,7 @@ const T = {
   ob_ctp_armado_n:   { es:'Guía de armado: {n}', en:'Build guide: {n}' },
   ob_ctp_armado_t:   { es:'A cuántos personajes se lo pone la guía de armado de Cynicalex, en alguna de sus columnas', en:'How many characters Cynicalex\'s build guide gives it to, in any of its columns' },
   ob_ctp_armado_nadie: { es:'La guía de armado no se lo pone a nadie.', en:'The build guide gives it to no one.' },
+  ob_ctp_ver:        { es:'Ver sus opciones y valores en Objetos ›', en:'See its options and values in Items ›' },
   ob_ctp_sistema:    { es:'Los C.T.P. son equipo personalizado. Se reforjan con el mismo C.T.P. y un núcleo de reforja de C.T.P.: con éxito sale el poderoso y con superéxito el brillante, con estadísticas más altas; se pueden usar C.T.P. adicionales para aumentar el índice de superéxito. Solo se pueden reforjar C.T.P. determinados.',
                        en:'C.T.P.s are custom gear. They are reforged with the same C.T.P. and a C.T.P. Reforging Core: a success gives the Mighty one and a super success the Brilliant one, with higher stats; extra C.T.P.s raise the super success rate. Only certain C.T.P.s can be reforged.' },
   ob_iso_title:      { es:'ISO-8',               en:'ISO-8' },
@@ -5750,6 +5752,22 @@ function objNotas (notas, extra) {
 function objLista (items, vacio) {
   return items.length ? `<div class="gllista">${items.join('')}</div>` : `<div class="empty"><div>${h(vacio || t('ob_nada'))}</div></div>`;
 }
+/** Lleva a la vista un elemento de Objetos (abierto por objItem), debajo de la barra y la sub-barra, y lo resalta. */
+function irAObjeto (id) {
+  const el = document.getElementById(id);
+  if (!el) throw new Error('Objetos no tiene ' + id);
+  window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - document.querySelector('nav.topnav').offsetHeight - 14, behavior: 'instant' });
+  el.classList.add('resaltada');
+}
+/** Abre en Objetos el detalle de un elemento (de la ficha, Modos o Alliance Battle), con los filtros de su pestaña
+ *  vacíos para que esté a la vista. */
+function verObjeto (tab, id) {
+  const vacios = { ctp: { ctpBusca: '', ctpGrupo: '' }, iso: { isoBusca: '', isoStat: '', isoPiezas: '' } }[tab];
+  if (!vacios) throw new Error('Objetos no abre detalles de ' + tab);
+  Object.assign(ui, vacios, { view: 'objetos', objTab: tab, objVer: id, focusSearch: false, movil: 'centro' });
+  render();
+  irAObjeto(id);
+}
 
 // ---- C.T.P. ----
 /** Los personajes a los que la guía de armado les pone un C.T.P. (en alguna de sus columnas), con cuáles y si reforjado. */
@@ -5809,6 +5827,11 @@ function isoSetDe (nombre) {
   const k = plano(nombre).replace(/-/g, ' '), s = OBJ.iso.sets.find(x => plano(x.n).replace(/-/g, ' ') === k);
   if (!s) throw new Error('set de ISO-8 desconocido: ' + nombre);
   return s;
+}
+/** El nombre de un set de ISO-8 que lleva a su detalle en Objetos. */
+function isoSetLink (nombre) {
+  const s = isoSetDe(nombre);
+  return `<a class="objlink" href="#iso-${s.id}" data-a="verObj" data-tab="iso" data-id="iso-${s.id}" title="${h(t('ob_ver'))}">${h(isoSetNombre(s))}</a>`;
 }
 function isoSetNombre (s) { return LANG === 'es' && s.es ? s.es : s.n; }
 function piedraNombre (k) { return LANG === 'es' && OBJ.iso.piedras_es[k] ? OBJ.iso.piedras_es[k] : GUIA.iso.piedras[k].nombre; }
@@ -7000,11 +7023,16 @@ function miniPj (v, extra, nota) {
 function ctpNombre (c) { return LANG === 'es' && c.es ? c.es.base : 'C.T.P. of ' + c.name; }
 /** El nombre corto (tablas y etiquetas): en español, el del base sin «C.T.P. de». */
 function ctpNomCorto (c) { if (LANG !== 'es' || !c.es) return c.name; const n = c.es.base.replace(/^C\.T\.P\. de /, ''); return n[0].toUpperCase() + n.slice(1); }
+/** El nombre corto de un C.T.P. que lleva a su detalle en Objetos (sus opciones y valores). */
+function ctpLink (c) {
+  return `<a class="objlink" href="#ctp-${c.id}" data-a="verObj" data-tab="ctp" data-id="ctp-${c.id}" title="${h(t('ob_ver'))}">${h(ctpNomCorto(c))}</a>`;
+}
 function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
 /** Un C.T.P. plegable con lo que hace según thanosvibs (normal y reforjado). */
 function ctpDetalle (c, extra) {
   return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>${h(ctpNombre(c))}</b>${dudaTag('ctp', c.id)}${extra || ''}</summary>
-    ${dudaCaja('ctp', c.id)}<p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}</details>`;
+    ${dudaCaja('ctp', c.id)}<p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}
+    <p><a class="objlink" href="#ctp-${c.id}" data-a="verObj" data-tab="ctp" data-id="ctp-${c.id}">${h(t('ob_ctp_ver'))}</a></p></details>`;
 }
 /** Controles de Alliance Battle que aplican las skills de un retrato, como etiquetas:
  *  "Parálisis: 1/4" = las skills 1 y 4 (6 = la definitiva). */
@@ -7288,7 +7316,7 @@ function columnasCtp (ctx) {
 function ctpCorto (x) {
   if (!x.c) return sinInterpretar(x.x);
   const c = CTPS.find(y => y.id === x.c);
-  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(ctpNomCorto(c))}</span>${x.r ? reforjadoTag() : ''}</span>`;
+  return `<span class="row" style="gap:4px">${ctpIcono(c.id)}${ctpLink(c)}${x.r ? reforjadoTag() : ''}</span>`;
 }
 // C.T.P. RECOMENDADO (Ezequiel, 4 de octubre de 2026): una sola respuesta, la misma en la ficha y en todas las
 // tarjetas de equipo (combinaciones, «cómo entraría», tus equipos y favoritos), siempre con su fuente. Desde el 5 de
@@ -7321,7 +7349,7 @@ function ctpRecomendado (v, ctx) {
 /** Una fila de la Ideal CTP List: el C.T.P. que nombra, «Not worth» dicho, u otro rótulo tal cual, marcado. */
 function ctpFilaIdeal (rotulo) {
   const id = slugId(rotulo), c = CTPS.find(x => x.id === id);
-  if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}<span>${h(ctpNomCorto(c))}</span></span>`;
+  if (c) return `<span class="row" style="gap:4px">${ctpIcono(c.id)}${ctpLink(c)}</span>`;
   return id === 'notworth' ? `<span>${h(t('ctp_not_worth'))}</span>` : sinInterpretar(rotulo);
 }
 /** La fuente de una recomendación, como enlace: la guía de armado (con su versión) o la Ideal CTP List. */
@@ -7408,7 +7436,7 @@ function isoArmado (ch, v) {
   if (!a) return `<p class="muted">${h(t('ga_none'))}</p>`;
   const e = a.e, L = GUIA_ARMADO.leyenda, sets = GUIA.iso.sets_pve.concat(GUIA.iso.sets_pvp);
   const set = (nombre) => { const s = sets.find(x => x.nombre === nombre);
-    return `<div class="isoset">${h(nombre)}${s ? piedrasHtml(s.piedras) : ''}</div>`; };
+    return `<div class="isoset">${isoSetLink(nombre)}${s ? piedrasHtml(s.piedras) : ''}</div>`; };
   return `${otraVar(a.vv, v) ? `<div class="row" style="margin-bottom:6px">${otraVar(a.vv, v)}</div>` : ''}
     <p class="muted">${h(t('ga_iso'))}</p>
     ${(e.iso || []).map(k => `<div class="isocat"><b>${trHtml(k)}</b>${(L.iso[k] || []).map(set).join('')}</div>`).join('')}
@@ -7425,7 +7453,7 @@ function armadoISO (ta) {
   const G = GUIA.iso, P = G.piedras, k = ta ? ta.k : null;
   const piedras = k === 'fisico' ? ['roja'] : k === 'energia' ? ['blanca'] : k === 'mixto' ? ['roja', 'blanca'] : [];
   return `<p class="muted">${h(t('ar_iso_pve').replace('{n}', G.sets_pve.length))}</p>
-    ${G.sets_pve.map(s => `<div class="isoset"><b>${h(s.nombre)}</b> ${piedrasHtml(s.piedras)}
+    ${G.sets_pve.map(s => `<div class="isoset"><b>${isoSetLink(s.nombre)}</b> ${piedrasHtml(s.piedras)}
       <div class="muted">${s.stats.map(statNom).join(' · ')}</div></div>`).join('')}
     ${piedras.map(p => `<p>${piedrasHtml([p])} <b>${h(P[p].nombre)}</b>: ${h(bi(P[p]))}</p>`).join('')}
     <p>${piedrasHtml(['caos'])} <b>${h(P.caos.nombre)}</b>: ${h(bi(P.caos))}</p>
@@ -7744,7 +7772,7 @@ function armadoHtml (tipo) {
   const sets = pvp ? G.iso.sets_pvp : G.iso.sets_pve;
   return `<div class="card armado"><h3 style="margin-bottom:10px">${pvp ? 'PvP' : 'PvE'}</h3>
     <h4>ISO-8</h4>
-    ${sets.map(s => `<div class="isoset"><b>${h(s.nombre)}</b> ${piedrasHtml(s.piedras)}
+    ${sets.map(s => `<div class="isoset"><b>${isoSetLink(s.nombre)}</b> ${piedrasHtml(s.piedras)}
       <div class="muted">${s.stats.map(statNom).join(' · ')}${s.es ? ' — ' + h(bi(s)) : ''}</div></div>`).join('')}
     ${!pvp ? `<p class="muted">${h(bi(G.iso.efecto_pve))}</p>` : ''}
     ${(pvp ? G.iso.notas_pvp : G.iso.notas_pve).map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
@@ -8849,6 +8877,7 @@ document.addEventListener('click', (e) => {
     case 'objTab': ui.objTab = d.v; ui.objVer = null; ui.focusSearch = false; ui.crAviso = null; render(); window.scrollTo(0, 0); break;
     case 'obFiltro': if (!OB_FILTROS.includes(d.k)) throw new Error('filtro de Objetos desconocido: ' + d.k);
       if (el.tagName !== 'SELECT') { ui[d.k] = d.v; ui.focusSearch = false; render(); } break;
+    case 'verObj': e.preventDefault(); verObjeto(d.tab, d.id); break;
     case 'crTipo': ui.crTipo = d.v; render(); break;
     case 'crAct': ui.crAct = d.v; render(); break;
     case 'crModo': ui.crModo = d.v; render(); break;
