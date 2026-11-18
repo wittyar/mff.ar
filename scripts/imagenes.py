@@ -8,11 +8,13 @@ las que le falten.
     images/icons/<slug>.png     -> thanosvibs /images/attributes/<slug>.png
     images/items/<nombre>.png   -> thanosvibs /images/items/<nombre>.png
     images/cards/<nombre>.png   -> thanosvibs /images/cards/<nombre>.png (los cromos de cómic)
+    images/emblemas/<nombre>.png -> thanosvibs /_game-assets/ui_item/<nombre>.png (los emblemas: de ahí los toma su página)
     images/propio/<retrato>.png -> el repo, fuentes/propio/retratos/<retrato>.png (contenido propio: propio.py)
 """
 TV = 'https://thanosvibs.money'
 REPO = 'https://raw.githubusercontent.com/wittyar/mff.ar/main'
-CARPETAS = {'icons': 'attributes', 'items': 'items', 'cards': 'cards'}
+# Carpeta local -> ruta de thanosvibs.
+CARPETAS = {'icons': 'images/attributes', 'items': 'images/items', 'cards': 'images/cards', 'emblemas': '_game-assets/ui_item'}
 
 
 def origen(ruta):
@@ -25,5 +27,5 @@ def origen(ruta):
     if len(partes) == 3 and partes[1] == 'propio':
         return f'{REPO}/fuentes/propio/retratos/{partes[2]}'
     if len(partes) == 3 and partes[1] in CARPETAS:
-        return f'{TV}/images/{CARPETAS[partes[1]]}/{partes[2]}'
+        return f'{TV}/{CARPETAS[partes[1]]}/{partes[2]}'
     raise ValueError(f'ruta de imagen sin origen conocido: {ruta}')
