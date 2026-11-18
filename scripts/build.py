@@ -99,8 +99,12 @@ STRIKERS = {_CID[n]: [[_CID[x], p, c] for x, p, c in filas] for n, filas in FUEN
 VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato']
 # Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
 # que los retratos; si falta el archivo la app muestra el nombre sin ícono.
+# Un C.T.P. propio que thanosvibs todavía no publica (el de Ascenso) no tiene ícono allá: va sin ícono, como un artefacto.
+_ctp_sin_tv = {re.sub(r'[^a-z0-9]', '', r['name'].lower()) for r in json.load(open('work/ctps.json', encoding='utf-8'))
+               if r.get('_propio', {}).get('tv', True) is None}
 for c in FUENTES['ctps']:
-    images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
+    if c['id'] not in _ctp_sin_tv:
+        images['ctp-' + c['id']] = f"images/items/ctp_{c['id']}.png"
 # Un artefacto propio que thanosvibs todavía no publica no tiene ícono allá: va sin ícono.
 _art_sin_tv = {r['portrait'] for r in json.load(open('work/artifacts.json', encoding='utf-8'))
                if r.get('_propio', {}).get('tv', True) is None}
