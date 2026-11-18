@@ -8435,6 +8435,8 @@ function render () {
   // Tres paneles (ver MESA DE TRABAJO): la lista y la mesa conservan su desplazamiento al repintar.
   const conLista = (ui.view === 'detail' && ui.charId != null) || ui.view === 'teams', previo = {};
   for (const sel of ['.plista', '.mesa']) { const x = $(sel); if (x) previo[sel] = x.scrollTop; }
+  // En Objetos, lo que estaba abierto sigue abierto al repintar (cambiar el grado o un filtro no lo cierra).
+  const abiertosObj = [...document.querySelectorAll('main details.objitem[open]')].map(x => x.id);
   $('#app').innerHTML = renderNav() + '<div id="avisos" class="avisos">' + avisosHtml() + '</div>'
     + `<div class="trabajo${conLista ? ' con-lista' : ''}${derecha ? '' : ' sin-mesa'}" data-movil="${ui.movil}">`
     + (conLista ? `<aside class="plista" aria-label="${h(t('ms_lista_tab'))}">${panelListaHtml()}</aside>` : '')
@@ -8443,6 +8445,7 @@ function render () {
     + '</div>' + movilTabsHtml(conLista, conMesa, derecha)
     + (ui.aliados != null ? aliadosModal() : '') + tipHtml();
   for (const sel in previo) { const x = $(sel); if (x) x.scrollTop = previo[sel]; }
+  for (const id of abiertosObj) { const x = document.getElementById(id); if (x && x.matches('main details.objitem')) x.open = true; }
   const actual = $('.plista .plit.on'), pl = $('.plista');
   if (actual && pl && (actual.offsetTop < pl.scrollTop || actual.offsetTop + actual.offsetHeight > pl.scrollTop + pl.clientHeight))
     pl.scrollTop = actual.offsetTop - pl.clientHeight / 2;
