@@ -3,7 +3,7 @@ juego antes de que thanosvibs lo publique. Agatha Harkness, Vulcan, Lilandra y D
 Morgan Le Fay — Classic, sus Tier-4 y el artefacto de Morgan cambiado: en el roster, en la ficha (retrato de thanosvibs, marca
 «propio», skills con su marca, el artefacto sin puntaje) y en la comparativa por potenciador. Lo que se espera sale de
 fuentes/propio/, no de app.js."""
-import json, os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, SALIDA  # noqa: E401
+import json, os, re, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, SALIDA  # noqa: E401
 from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
 from playwright.sync_api import sync_playwright
 
@@ -19,6 +19,11 @@ try:
     with sync_playwright() as p:
         b = p.chromium.launch(); pg = b.new_page(viewport={'width': 1300, 'height': 900}); errores = []
         pg.on('pageerror', lambda e: errores.append(str(e)))
+        # Los retratos pedidos (images/<p>.png, images/propio/<p>.png) que dan error. Los íconos de artefacto que thanosvibs
+        # no publica (Agatha, Dormammu: su fila sí) dan 404 desde antes y no son de esto.
+        fallidas = []
+        pg.on('response', lambda r: fallidas.append(f'{r.status} {r.url}') if r.status >= 400
+              and re.search(r'/images/(propio/)?[^/]+\.png$', r.url) else None)
         pg.goto(url); pg.wait_for_selector('.ccard')
 
         # 1. Agatha en el roster, con el retrato de thanosvibs (fondo transparente; Ezequiel, 16 de octubre de 2026)
@@ -79,7 +84,8 @@ try:
         ok('3b Clea es T4 y trae Death of Doctor Strange', cl['t'] == 'T4' and any(u['p'] == 'clea1' for u in cl['uniforms']))
 
         # 3c. la actualización del 17 de noviembre de 2026 (War of Kings): Vulcan, Lilandra y Deathbird, personajes nuevos con su
-        # Tier-3, su Tier-4 y su artefacto; sin retrato hasta que thanosvibs publique el suyo
+        # Tier-3, su Tier-4 y su artefacto; con el retrato propio (fuentes/propio/retratos/, de la ficha de la nota y sin el
+        # fondo blanco; Ezequiel, 18 de noviembre de 2026) hasta que thanosvibs publique el suyo
         for nombre, defin, striker, artefacto in (('Vulcan', 'Vulcan The Emperor', 'Twisted Rage', 'Vulcan the Kingbreaker'),
                                                   ('Lilandra', 'Lux Gloriana', "Majestrix's Strategy", "Empress of the Shi'ar Empire"),
                                                   ('Deathbird', "Shi'ar Spear", 'Violent Rage', 'Exiled Princess')):
@@ -87,8 +93,18 @@ try:
             fila = FILAS[nombre.lower()]
             ok(f'3c {nombre} está en los datos, T4, con lo de la ficha', c is not None and c['t'] == 'T4'
                and c['p'] == fila['portrait'] and c['pr'] == fila['fuente'], c and (c['t'], c['p'], c['pr']))
+            propio_png = f'images/propio/{fila["portrait"]}.png'
+            ok(f'3c {nombre}: el retrato propio está en fuentes/propio/retratos/',
+               os.path.isfile(os.path.join(PROP, 'retratos', fila['portrait'] + '.png')))
             pg.click('[data-a="back"]'); pg.fill('#q', nombre); pg.wait_for_timeout(300)
-            pg.click(f'.ccard[data-cid="{c["id"]}"][data-uid=""]'); pg.wait_for_selector('.fcab')
+            carta = pg.locator(f'.ccard[data-cid="{c["id"]}"][data-uid=""]')
+            src = carta.locator('img').first.get_attribute('src') if carta.locator('img').count() else ''
+            nat = pg.evaluate("(s) => new Promise(r => { const i = new Image(); i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); i.src = s; })", src) if src else 0
+            ok(f'3c {nombre}: en el roster, con su retrato propio, que carga', (src or '').endswith(propio_png) and nat == 256
+               and carta.locator('.ph').count() == 0, (src, nat))
+            carta.click(); pg.wait_for_selector('.fcab')
+            src = pg.locator('.fcab-face img').first.get_attribute('src') if pg.locator('.fcab-face img').count() else ''
+            ok(f'3c {nombre}: la cabecera de la ficha, con su retrato propio', (src or '').endswith(propio_png), src)
             ok(f'3c {nombre}: la cabecera dice «propio»', pg.locator('.fcab .propio').count() == 1)
             pg.click('[data-a="fichaTab"][data-v="skills"]'); pg.wait_for_timeout(200)
             slots = json.load(open(os.path.join(PROP, 'skills', fila['portrait'] + '.json'), encoding='utf-8'))['slots']
@@ -117,6 +133,7 @@ try:
         ok('4 Agatha en la comparativa: ignorar esquiva de su artefacto y de su definitiva', fila.locator('.slotbadge.art').count() == 1
            and fila.locator('.cpbfu').count() >= 2, fila.inner_text()[:200])
         ok('sin errores de página', not errores, errores[:3])
+        ok('ningún retrato pedido dio error (404)', not fallidas, fallidas[:5])
         b.close()
 finally:
     srv.terminate(); srv.wait()
