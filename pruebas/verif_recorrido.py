@@ -25,7 +25,7 @@ ok = Chequeo()
 # El modelo, escrito aparte de app.js: las áreas en el orden del recorrido completo, cuántos pasos tiene cada una y su
 # nombre en la tarjeta.
 AREAS = [('barra', 6, 'La barra de arriba'), ('roster', 5, 'Roster'), ('ficha', 9, 'Ficha de un personaje'),
-         ('comparativa', 3, 'Comparativa'), ('tierlist', 3, 'Tier lists'), ('modos', 3, 'Modos'), ('cromos', 3, 'Cromos'),
+         ('comparativa', 3, 'Comparativa'), ('tierlist', 3, 'Tier lists'), ('modos', 3, 'Modos'), ('objetos', 9, 'Objetos'),
          ('glosario', 3, 'Glosario'), ('historico', 3, 'Histórico'), ('cuenta', 8, 'Mi cuenta'), ('mesa', 3, 'Mesa')]
 NOMBRE = {k: n for k, _, n in AREAS}
 TOTAL = sum(n for _, n, _ in AREAS)
@@ -175,7 +175,7 @@ with sync_playwright() as p:
         boton('comparativa')
         ok('3 en la comparativa, el tramo muestra los que estaban elegidos', pg.locator('.cpecab .cpepjn b').all_inner_texts() == cmp_antes, cmp_antes)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
-        for accion, area in (('goTier', 'tierlist'), ('goModos', 'modos'), ('goCromos', 'cromos'), ('goGlosario', 'glosario'),
+        for accion, area in (('goTier', 'tierlist'), ('goModos', 'modos'), ('goObjetos', 'objetos'), ('goGlosario', 'glosario'),
                              ('goHistorico', 'historico'), ('goCuenta', 'cuenta'), ('goSettings', 'barra')):
             pg.click(f'nav.topnav [data-a="{accion}"]'); pg.wait_for_timeout(400)
             boton(area); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)

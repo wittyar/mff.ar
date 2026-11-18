@@ -353,8 +353,8 @@
    }
   },
   "sin_restriccion": {
-   "es": "Rige en todo el contenido (sin restricción de modo)",
-   "en": "Applies in all content (unrestricted)"
+   "es": "todo el contenido (sin restricción de modo)",
+   "en": "all content (unrestricted)"
   },
   "obtencion": {
    "multi1_normal": {

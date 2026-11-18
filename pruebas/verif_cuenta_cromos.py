@@ -69,7 +69,7 @@ try:
         pg.select_option('select[data-a="crPoner"][data-m="0"]', OTRO['id']); pg.wait_for_timeout(300)
         pg.select_option('select[data-a="crPoner"][data-m="0"]', TERCERO['id']); pg.wait_for_timeout(300)
         ok('2 el mismo cromo no se ofrece dos veces en un mazo', pg.locator(f'select[data-a="crPoner"][data-m="0"] option[value="{WK3["id"]}"]').count() == 0)
-        pg.click('[data-a="goCromos"]'); pg.wait_for_selector('.crcard')
+        pg.click('[data-a="goObjetos"]'); pg.click('.cutabs [data-a="objTab"][data-v="cromos"]'); pg.wait_for_selector('.crcard')
         pg.click(f'#cromo-{WK3["id"]} [data-a="crMazo"][data-m="1"]'); pg.wait_for_timeout(250)
         ok('2 desde Cromos, el mismo cromo también en el mazo 2', [pg.locator(f'#cromo-{WK3["id"]} [data-a="crMazo"][data-m="{m}"]').get_attribute('aria-pressed') for m in (0, 1)] == ['true', 'true'])
         ir()

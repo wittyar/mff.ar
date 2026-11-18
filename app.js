@@ -505,7 +505,95 @@ const T = {
   nav_new_char:      { es:'+ Personaje',         en:'+ Character' },
   nav_settings:      { es:'Ajustes',             en:'Settings' },
   nav_glossary:      { es:'Glosario',            en:'Glossary' },
-  nav_cromos:        { es:'Cromos',              en:'Cards' },
+  nav_objetos:       { es:'Objetos',             en:'Items' },
+  ob_tab_ctp:        { es:'C.T.P.',              en:'C.T.P.' },
+  ob_tab_iso:        { es:'ISO-8',               en:'ISO-8' },
+  ob_tab_odin:       { es:'Bendiciones de Odín', en:"Odin's Blessings" },
+  ob_tab_emblemas:   { es:'Emblemas',            en:'Emblems' },
+  ob_tab_jarvis:     { es:'J.A.R.V.I.S.',        en:'J.A.R.V.I.S.' },
+  ob_tab_cromos:     { es:'Cromos',              en:'Cards' },
+  ob_busca:          { es:'Buscar por nombre o por lo que da', en:'Search by name or by what it gives' },
+  ob_n:              { es:'{n} de {total}',      en:'{n} of {total}' },
+  ob_nada:           { es:'Nada cumple con lo elegido.', en:'Nothing matches what you chose.' },
+  ob_como:           { es:'Cómo funciona',       en:'How it works' },
+  ob_da:             { es:'Da',                  en:'Gives' },
+  ob_stat:           { es:'Stat',                en:'Stat' },
+  ob_grado:          { es:'Grado',               en:'Grade' },
+  ob_grado_normal:   { es:'Normal',              en:'Normal' },
+  ob_grado_poderoso: { es:'Poderoso',            en:'Mighty' },
+  ob_grado_brillante:{ es:'Brillante',           en:'Brilliant' },
+  ob_ctp_title:      { es:'C.T.P.',              en:'C.T.P.' },
+  ob_ctp_note:       { es:'Los C.T.P. que publica thanosvibs (y el de Ascenso, propio, de la nota del 14 de octubre de 2026), con sus opciones y los valores de cada grado: normal, poderoso y brillante (los dos reforjados). Elegí el grado arriba: los valores de todas las fichas pasan a ser los de ese grado. El grupo es el del ranking de la guía de principiantes de thanosvibs; para qué sirve, su descripción. Abajo de cada uno, a qué personajes se lo pone la guía de armado.',
+                       en:'The C.T.P.s thanosvibs publishes (and the own Ascent one, from the October 14, 2026 notes), with their options and the values of each grade: normal, mighty and brilliant (the two reforged ones). Choose the grade above: every card shows that grade\'s values. The group is the ranking of thanosvibs\' beginner\'s guide; what it is for, its description. Under each one, which characters the build guide gives it to.' },
+  ob_ctp_grupo:      { es:'Grupo',               en:'Group' },
+  ob_ctp_g_pve:      { es:'PvE',                 en:'PvE' },
+  ob_ctp_g_pvp:      { es:'PvP',                 en:'PvP' },
+  ob_ctp_g_otros:    { es:'Otros',               en:'Other' },
+  ob_ctp_g_inutil:   { es:'Inútil',              en:'Useless' },
+  ob_ctp_g_sin:      { es:'Sin grupo en la guía', en:'Not in the guide' },
+  ob_ctp_juego:      { es:'En el juego',         en:'In the game' },
+  ob_ctp_fija:       { es:'Opción bloqueada',    en:'Locked option' },
+  ob_ctp_reforja:    { es:'Opción de reforja',   en:'Reforge option' },
+  ob_ctp_sin_reforja:{ es:'solo en poderoso y brillante: elegí uno de los dos arriba', en:'only on mighty and brilliant: choose one of them above' },
+  ob_ctp_armado:     { es:'La guía de armado se lo pone a {n} personajes', en:'The build guide gives it to {n} characters' },
+  ob_ctp_armado_n:   { es:'Guía de armado: {n}', en:'Build guide: {n}' },
+  ob_ctp_armado_t:   { es:'A cuántos personajes se lo pone la guía de armado de Cynicalex, en alguna de sus columnas', en:'How many characters Cynicalex\'s build guide gives it to, in any of its columns' },
+  ob_ctp_armado_nadie: { es:'La guía de armado no se lo pone a nadie.', en:'The build guide gives it to no one.' },
+  ob_ctp_sistema:    { es:'Los C.T.P. son equipo personalizado. Se reforjan con el mismo C.T.P. y un núcleo de reforja de C.T.P.: con éxito sale el poderoso y con superéxito el brillante, con estadísticas más altas; se pueden usar C.T.P. adicionales para aumentar el índice de superéxito. Solo se pueden reforjar C.T.P. determinados.',
+                       en:'C.T.P.s are custom gear. They are reforged with the same C.T.P. and a C.T.P. Reforging Core: a success gives the Mighty one and a super success the Brilliant one, with higher stats; extra C.T.P.s raise the super success rate. Only certain C.T.P.s can be reforged.' },
+  ob_iso_title:      { es:'ISO-8',               en:'ISO-8' },
+  ob_iso_note:       { es:'Las piedras de ISO-8 (de la guía: color, nombre y qué stat conviene) y los sets de la tabla de la wiki, con sus piezas, lo que dan y su activación. thanosvibs no publica ISO-8. Los valores de la wiki no dicen a qué rango ni despertar corresponden.',
+                       en:'The ISO-8 stones (from the guide: colour, name and which stat to roll) and the sets of the wiki\'s table, with their pieces, what they give and their activation. thanosvibs does not publish ISO-8. The wiki\'s values do not say which rank or awakening they belong to.' },
+  ob_iso_npiezas:    { es:'Piezas',              en:'Pieces' },
+  ob_iso_piezas:     { es:'{n} piezas',          en:'{n} pieces' },
+  ob_iso_piedras:    { es:'Las piedras',         en:'The stones' },
+  ob_iso_sets:       { es:'Los sets',            en:'The sets' },
+  ob_iso_da:         { es:'Da',                  en:'Gives' },
+  ob_iso_valores:    { es:'(los valores de la wiki, sin rango ni despertar)', en:'(the wiki\'s values, no rank or awakening given)' },
+  ob_iso_act:        { es:'Activación',          en:'Activation' },
+  ob_iso_guia:       { es:'La guía de principiantes lo propone para {m}.', en:'The beginner\'s guide suggests it for {m}.' },
+  ob_iso_armado:     { es:'La guía de armado lo pone en «{c}»: {n} personajes.', en:'The build guide lists it under "{c}": {n} characters.' },
+  ob_odin_title:     { es:'Bendiciones de Odín', en:"Odin's Blessings" },
+  ob_odin_note:      { es:'Las bendiciones de Odín que publica thanosvibs: urus con dos stats, cada uno con su valor, el bono de amplificación y el total; su color, su forma y de dónde caen.',
+                       en:"The Odin's Blessings thanosvibs publishes: Urus with two stats, each with its value, the amplification bonus and the total; their colour, shape and where they drop." },
+  ob_odin_nom:       { es:'Bendición de Odín: {n}', en:"Odin's Blessing: {n}" },
+  ob_odin_color:     { es:'Color',               en:'Colour' },
+  ob_odin_forma:     { es:'Forma',               en:'Shape' },
+  ob_odin_valor:     { es:'Valor',               en:'Value' },
+  ob_odin_amp:       { es:'Bono de amplificación', en:'Amp bonus' },
+  ob_odin_total:     { es:'Total',               en:'Total' },
+  ob_odin_drop:      { es:'Cae en',              en:'Drops in' },
+  ob_odin_sin_drop:  { es:'thanosvibs no dice de dónde cae.', en:'thanosvibs does not say where it drops.' },
+  ob_em_title:       { es:'Emblemas',            en:'Emblems' },
+  ob_em_note:        { es:'Los emblemas que publica thanosvibs: rareza, colección y el modo en que rige, qué da y cuánto en cada uno de sus 60 niveles. Solo dan su efecto en el contenido de su colección, salvo los que rigen en todo.',
+                       en:'The emblems thanosvibs publishes: rarity, collection and the mode it applies in, what it gives and how much at each of its 60 levels. They only apply in their collection\'s content, except the unrestricted ones.' },
+  ob_em_col:         { es:'Colección',           en:'Collection' },
+  ob_em_sin_col:     { es:'Sin colección',       en:'No collection' },
+  ob_em_rareza:      { es:'Rareza',              en:'Rarity' },
+  ob_em_tipo:        { es:'Tipo',                en:'Type' },
+  ob_em_libre:       { es:'Rige en todo',        en:'Unrestricted' },
+  ob_em_rige:        { es:'Rige en',             en:'Applies in' },
+  ob_em_sin_modo:    { es:'thanosvibs no dice en qué modo rige', en:'thanosvibs does not say which mode it applies in' },
+  ob_em_nv1:         { es:'en el nivel 1',       en:'at level 1' },
+  ob_em_nv60:        { es:'en el nivel 60',      en:'at level 60' },
+  ob_em_por_nivel:   { es:'Valor en cada nivel (marcados, los niveles en que sube de estrellas)', en:'Value at each level (marked, the levels where it gains a star)' },
+  ob_em_nivel:       { es:'Nivel {n}',           en:'Level {n}' },
+  ob_em_costos:      { es:'Lo que cuesta cada nivel', en:'What each level costs' },
+  ob_em_nv:          { es:'Nivel',               en:'Level' },
+  ob_em_datos:       { es:'Datos',               en:'Data' },
+  ob_em_kits:        { es:'Kits',                en:'Kits' },
+  ob_em_oro:         { es:'Oro',                 en:'Gold' },
+  ob_jv_title:       { es:'J.A.R.V.I.S.',        en:'J.A.R.V.I.S.' },
+  ob_jv_note:        { es:'El sistema de potenciadores de equipo J.A.R.V.I.S. (desde septiembre de 2026): qué es, sus chips y en qué modos rige, según las notas oficiales y la guía del juego. thanosvibs no lo publica, y ninguna fuente da los valores de los chips.',
+                       en:'The J.A.R.V.I.S. team buff system (since September 2026): what it is, its chips and the modes it applies in, from the official notes and the in-game guide. thanosvibs does not publish it, and no source gives the chips\' values.' },
+  ob_jv_cat:         { es:'Chip',                en:'Chip' },
+  ob_jv_modos:       { es:'Rige en',             en:'Applies in' },
+  ob_jv_ex:          { es:'Opciones adicionales posibles de un chip EX', en:'Possible additional options of an EX chip' },
+  ob_jv_sin_valores: { es:'Sin valores: la lista de chips de la nota pone «N» en cada opción, y las capturas de ejemplo muestran chips sueltos sin decir su nivel. Para tenerlos harían falta capturas del juego, chip por chip.',
+                       en:'No values: the notes\' chip list writes "N" in every option, and the example screenshots show single chips without their level. Getting them would need in-game screenshots, chip by chip.' },
+  ob_jv_nota_en:     { es:'En la nota, en inglés', en:'In the notes' },
+  ob_jv_valor:       { es:'Valor por grado y nivel: sin dato en las fuentes.', en:'Value per grade and level: not in the sources.' },
+  ob_jv_imagen:      { es:'La lista de chips de la nota (imagen)', en:'The notes\' chip list (image)' },
   cr_title:          { es:'Cromos de cómic',     en:'Comic cards' },
   cr_note:           { es:'Los cromos de cómic que publica thanosvibs, con sus opciones fijas y las cinco posibles de cada grado (de 3★ a 6★; los Premium, de 4★ a 6★ y con una tercera fija). Al equiparlos, sus estadísticas se suman a todos los personajes (la guía del juego). Se equipan en dos mazos de 5 lugares, y un mismo cromo va una sola vez en cada mazo. thanosvibs no publica cuánto da cada opción: solo los de la nota del 17 de noviembre de 2026 traen sus valores, a la máxima calidad y grado.',
                        en:'The comic cards thanosvibs publishes, with their fixed options and the five possible ones for each grade (3★ to 6★; Premium cards, 4★ to 6★ with a third fixed one). When equipped, their stats are added to every character (the in-game guide). They go in two decks of 5 slots, and a card goes only once in each deck. thanosvibs does not publish how much each option gives: only the cards from the November 17, 2026 notes carry their values, at the highest quality and grade.' },
@@ -722,15 +810,15 @@ const T = {
   rc_area_comparativa: { es:'Comparativa',       en:'Comparison' },
   rc_area_tierlist:  { es:'Tier lists',          en:'Tier lists' },
   rc_area_modos:     { es:'Modos',               en:'Modes' },
-  rc_area_cromos:    { es:'Cromos',              en:'Cards' },
+  rc_area_objetos:   { es:'Objetos',             en:'Items' },
   rc_area_glosario:  { es:'Glosario',            en:'Glossary' },
   rc_area_historico: { es:'Histórico',           en:'History' },
   rc_area_cuenta:    { es:'Mi cuenta',           en:'My account' },
   rc_area_mesa:      { es:'Mesa',                en:'Desk' },
   // Los pasos (RECORRIDO): el título (_t) y qué mirar ahí y cómo llegar (_x).
   rc_barra_juego_t:  { es:'Las secciones del juego', en:'The game sections' },
-  rc_barra_juego_x:  { es:'Todo lo que sale de los datos del juego: el Roster con todos los personajes, las Tier lists, los Modos, los Cromos, el Glosario y el Histórico. Tocá una para ir; la que estás viendo queda marcada.',
-                       en:'Everything that comes from the game data: the Roster with every character, Tier lists, Modes, Cards, the Glossary and the History. Tap one to go there; the one you are on stays highlighted.' },
+  rc_barra_juego_x:  { es:'Todo lo que sale de los datos del juego: el Roster con todos los personajes, las Tier lists, los Modos, los Objetos (C.T.P., ISO-8, bendiciones de Odín, emblemas, J.A.R.V.I.S. y cromos), el Glosario y el Histórico. Tocá una para ir; la que estás viendo queda marcada.',
+                       en:'Everything that comes from the game data: the Roster with every character, Tier lists, Modes, Items (C.T.P., ISO-8, Odin\'s Blessings, emblems, J.A.R.V.I.S. and cards), the Glossary and the History. Tap one to go there; the one you are on stays highlighted.' },
   rc_barra_cuenta_t: { es:'Lo tuyo, aparte',     en:'Your things, apart' },
   rc_barra_cuenta_x: { es:'«Mi cuenta» junta lo que anotás vos (tus equipos, tu progreso, tus mazos de cromos), con su propio color para no confundirlo con lo del juego. «Mesa» abre al costado la mesa donde se arma un equipo; el número dice cuántos tiene y cuántos entran.',
                        en:'«My account» gathers what you note down yourself (your teams, your progress, your card decks), in its own color so it is not mixed up with the game. «Desk» opens, on the side, the desk where a team is built; the number says how many it has and how many fit.' },
@@ -814,6 +902,24 @@ const T = {
   rc_modos_armado_t: { es:'Armado general',      en:'General build' },
   rc_modos_armado_x: { es:'Al final de la página, el armado de PvE y de PvP para todos: C.T.P., ISO-8 y artefactos.',
                        en:'At the end of the page, the PvE and PvP build for everyone: C.T.P., ISO-8 and artifacts.' },
+  rc_obj_tabs_t:     { es:'Un apartado por sistema', en:'One tab per system' },
+  rc_obj_tabs_x:     { es:'Objetos junta el equipamiento del juego: C.T.P., ISO-8, bendiciones de Odín, emblemas, J.A.R.V.I.S. y cromos. Cada pestaña es una lista para consultar, con su búsqueda y sus filtros; el número dice cuántos hay.',
+                       en:'Items gathers the game\'s gear: C.T.P., ISO-8, Odin\'s Blessings, emblems, J.A.R.V.I.S. and cards. Each tab is a list to look things up, with its search and filters; the number says how many there are.' },
+  rc_obj_ctp_t:      { es:'Un C.T.P.',           en:'A C.T.P.' },
+  rc_obj_ctp_x:      { es:'Cada C.T.P. en una línea; tocalo para ver sus opciones con los valores del grado elegido arriba (normal, poderoso o brillante), de dónde se consigue y a qué personajes se lo pone la guía de armado.',
+                       en:'Each C.T.P. on one line; tap it to see its options with the values of the grade chosen above (normal, mighty or brilliant), where to get it and which characters the build guide gives it to.' },
+  rc_obj_iso_t:      { es:'Piedras y sets de ISO-8', en:'ISO-8 stones and sets' },
+  rc_obj_iso_x:      { es:'Arriba, las piedras con su color y qué stat conviene; abajo, cada set con sus piezas (los puntos de color), lo que da y su activación. «Da» filtra los sets que suben un stat.',
+                       en:'Above, the stones with their colour and which stat to roll; below, each set with its pieces (the colour dots), what it gives and its activation. "Gives" filters the sets that raise a stat.' },
+  rc_obj_odin_t:     { es:'Una bendición de Odín', en:"An Odin's Blessing" },
+  rc_obj_odin_x:     { es:'Sus dos stats con el total; al abrirla, el valor, el bono de amplificación y de dónde cae. «Cómo funciona» explica el despertar y cuántas se equipan.',
+                       en:'Its two stats with the total; open it for the value, the amplification bonus and where it drops. "How it works" explains awakening and how many can be equipped.' },
+  rc_obj_emblemas_t: { es:'Emblemas por colección', en:'Emblems by collection' },
+  rc_obj_emblemas_x: { es:'Filtrá por colección (cada una rige en un modo), rareza o tipo, o por lo que dan. Cada emblema muestra su valor en el nivel 60 y, al abrirlo, el de cada nivel.',
+                       en:'Filter by collection (each one applies in a mode), rarity or type, or by what they give. Each emblem shows its level 60 value and, opened, the value at every level.' },
+  rc_obj_jarvis_t:   { es:'Qué es J.A.R.V.I.S.', en:'What J.A.R.V.I.S. is' },
+  rc_obj_jarvis_x:   { es:'Los potenciadores de equipo de J.A.R.V.I.S.: cómo se arman los preajustes, en qué modos rigen y abajo los chips de cada tipo. Las fuentes no dan sus valores: la página lo dice.',
+                       en:'The J.A.R.V.I.S. team buffs: how presets are built, which modes they apply in and, below, the chips of each kind. The sources do not give their values: the page says so.' },
   rc_cromos_buscar_t: { es:'Qué cromo da qué',   en:'Which card gives what' },
   rc_cromos_buscar_x: { es:'Los cromos de cómic suman estadísticas a todos tus personajes. Elegí un stat en «Da este stat» para ver cuáles lo dan, fijo o como opción posible; también se busca por nombre.',
                        en:'Comic cards add stats to all your characters. Pick a stat in «Gives this stat» to see which ones give it, fixed or as a possible option; you can also search by name.' },
@@ -1819,7 +1925,7 @@ function refrescarImagenes () {
   });
 }
 /** Recarga la ventana volviendo a la misma sección (la ficha abierta no se conserva). */
-const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'cromos', 'teams', 'cuenta', 'glosario', 'historico', 'settings'];
+const VISTAS_PRINCIPALES = ['roster', 'tierlist', 'modos', 'objetos', 'teams', 'cuenta', 'glosario', 'historico', 'settings'];
 function recargar () {
   try { sessionStorage.setItem('mff_volver', VISTAS_PRINCIPALES.includes(ui.view) ? ui.view : 'roster'); } catch (e) {}
   location.reload();
@@ -1947,6 +2053,11 @@ let ui = {
   // Cromos: búsqueda por nombre, tipo ('', un tipo o 'sin'), el stat que se busca y si fijo, posible o cualquiera, la
   // activación ('', 'con' o cuándo) y el aviso de un mazo lleno
   crBusca: '', crTipo: '', crStat: '', crModo: 'cualquiera', crAct: '', crAviso: null,
+  // Objetos (1.0.56): la pestaña, el elemento que se pidió ver desde otro lado (el id de su ancla: queda abierto) y la
+  // búsqueda y los filtros de cada pestaña (OB_BUSCAS, OB_FILTROS); los C.T.P. se ven con los valores de un grado.
+  objTab: 'ctp', objVer: null,
+  ctpBusca: '', ctpGrupo: '', ctpGrado: 'brillante', isoBusca: '', isoStat: '', isoPiezas: '', odinBusca: '', odinStat: '', odinColor: '',
+  emBusca: '', emCol: '', emRar: '', emTipo: '', emStat: '', jvBusca: '', jvCat: '',
   hiPj: '', hiTipo: 'todos', hiN: 20, // Histórico: personaje, tipo de hecho y cuántas versiones se ven
   // Comparativa (#6): la vista ('efecto' o 'ficha'), qué destino se ve ('todo', 'q', 'r', 'e' o 'i'), si lo igual en todos
   // va en una línea, si lo que tiene uno solo va aparte al final de cada sección y las filas con sus textos abiertos
@@ -5572,6 +5683,282 @@ function renderGlosario () {
 }
 
 // ============================================================================
+// OBJETOS (1.0.56; Ezequiel, 18 de noviembre de 2026: «Arma un modulo para CTPs, donde este el detalle. Bendiciones de
+// Odin, Javis, Emblemas, Sets de Iso e ISOs», como el de Cromos)
+// Una sola sección del juego para el equipamiento («Objetos», como el glosario de objetos del juego, que los nombra a
+// todos), con una pestaña por sistema (OBJ_TABS) y la sub-barra de Mi cuenta (subBarraHtml). Cada pestaña es de consulta:
+// la lista entera, búsqueda y filtros, y cada elemento plegado en una línea (las entradas del Glosario) con su detalle,
+// sus valores donde la fuente los da y su fuente. Los datos: MFF_CTPS (el detalle de cada C.T.P.) y MFF_OBJETOS
+// (scripts/objetos.py); Cromos es la sección de la 1.0.53, adentro tal cual. Lo que nombra un C.T.P. o un set de ISO-8
+// en otro lado de la app (la ficha, Modos, Alliance Battle) lleva a su detalle acá (verObj).
+// ============================================================================
+const OBJ = window.MFF_OBJETOS;
+const OBJ_TABS = ['ctp', 'iso', 'odin', 'emblemas', 'jarvis', 'cromos'];
+const CTP_GRADOS = ['normal', 'poderoso', 'brillante'];
+// Los filtros de Objetos que cambia un chip o un desplegable (obFiltro): la clave de ui de cada uno.
+const OB_FILTROS = ['ctpGrupo', 'ctpGrado', 'isoStat', 'isoPiezas', 'odinStat', 'odinColor', 'emCol', 'emRar', 'emTipo', 'emStat', 'jvCat'];
+const OB_BUSCAS = ['ctpBusca', 'isoBusca', 'odinBusca', 'emBusca', 'jvBusca'];
+function objetosCabHtml () {
+  const n = { ctp: CTPS.length, iso: OBJ.iso.sets.length, odin: OBJ.odin.bendiciones.length, emblemas: OBJ.emblemas.emblemas.length,
+              jarvis: OBJ.jarvis.chips.length, cromos: CROMOS.cromos.length };
+  return subBarraHtml(t('nav_objetos'), OBJ_TABS.map(k => ({ k, txt: t('ob_tab_' + k), n: n[k], attrs: `data-a="objTab" data-v="${k}"` })),
+    ui.objTab, true);
+}
+function renderObjetos () {
+  const cuerpo = { ctp: objCtps, iso: objIso, odin: objOdin, emblemas: objEmblemas, jarvis: objJarvis, cromos: renderCromos }[ui.objTab];
+  if (!cuerpo) throw new Error('apartado de Objetos desconocido: ' + ui.objTab);
+  return cuerpo();
+}
+/** El nombre de un stat de Objetos (MFF_OBJETOS.stats), en el idioma activo. */
+function statObj (k) {
+  const n = OBJ.stats[k];
+  if (!n) throw new Error('stat de Objetos sin nombre: ' + k);
+  return n[LANG];
+}
+/** Un elemento de una lista de Objetos, plegado en una línea como las entradas del Glosario: el nombre, lo corto (se
+ *  oculta al abrir y en el celular), las marcas y el detalle. Abierto si es el que se pidió ver desde otro lado (ui.objVer). */
+function objItem (id, nom, corto, marcas, cuerpo) {
+  return `<details class="glitem objitem" id="${id}"${ui.objVer === id ? ' open' : ''}>
+    <summary><span class="glnom"><span class="objnom">${nom}</span></span><span class="glcorto">${corto}</span><span class="glmarcas">${marcas}</span></summary>
+    <div class="glcuerpo">${cuerpo}</div></details>`;
+}
+/** La cabecera de una pestaña: el título con su «?», la búsqueda (q: la clave de ui), extra (el filtro por lo que da) y
+ *  cuántos se ven de cuántos. */
+function objCabeza (titulo, nota, q, n, total, extra) {
+  return `<div class="page-head"><div><h1>${h(titulo)} ${ayudaHtml(nota)}</h1></div></div>
+    <div class="row glbusca">
+      <div class="search"><input id="q" placeholder="${h(t('ob_busca'))}" value="${h(ui[q])}" data-a="${q}"></div>${extra || ''}
+      <span class="count">${h(t('ob_n').replace('{n}', n).replace('{total}', total))}</span>
+    </div>`;
+}
+/** Un grupo de filtros como chips (los de Cromos): k, la clave de ui; ops, [valor, texto]. */
+function objChips (lbl, k, ops) {
+  return `<div class="filtergroup"><div class="lbl">${h(lbl)}</div><div class="row">${ops.map(([v, n]) =>
+    `<button class="chip ${ui[k] === v ? 'on' : ''}" data-a="obFiltro" data-k="${k}" data-v="${h(v)}">${h(n)}</button>`).join('')}</div></div>`;
+}
+/** Un filtro por lo que da: un desplegable con los stats de esa lista. */
+function objSelectStat (k, stats) {
+  return `<select data-a="obFiltro" data-k="${k}" aria-label="${h(t('ob_da'))}"><option value="">${h(t('ob_da') + ': ' + t('cr_stat_todos'))}</option>${
+    stats.sort((a, b) => statObj(a).localeCompare(statObj(b))).map(s => `<option value="${s}" ${ui[k] === s ? 'selected' : ''}>${
+      h(t('ob_da') + ': ' + statObj(s))}</option>`).join('')}</select>`;
+}
+/** Cómo funciona el sistema, plegado arriba de la lista: cada nota con sus fuentes. */
+function objNotas (notas, extra) {
+  return `<details class="usgrupo objnotas"><summary>${h(t('ob_como'))}</summary>
+    ${notas.map(n => `<p>${h(bi(n))} ${fuentesHtml(n.f)}</p>`).join('')}${extra || ''}</details>`;
+}
+function objLista (items, vacio) {
+  return items.length ? `<div class="gllista">${items.join('')}</div>` : `<div class="empty"><div>${h(vacio || t('ob_nada'))}</div></div>`;
+}
+
+// ---- C.T.P. ----
+/** Los personajes a los que la guía de armado les pone un C.T.P. (en alguna de sus columnas), con cuáles y si reforjado. */
+function armadoConCtp (id) {
+  if (!GUIA_ARMADO) return [];
+  return Object.entries(GUIA_ARMADO.pj).map(([p, e]) => ({ v: varDeRetrato(p), xs: (e.ctp || []).filter(x => x.c === id) }))
+    .filter(x => x.v && x.xs.length).sort((a, b) => a.v.name.localeCompare(b.v.name));
+}
+function ctpsFiltrados () {
+  const q = plano(ui.ctpBusca.trim());
+  return CTPS.filter(c => (!q || [c.name, ctpNombre(c), ...(c.es ? Object.values(c.es) : [])].some(n => plano(n).includes(q)))
+    && (!ui.ctpGrupo || (ui.ctpGrupo === 'sin' ? !c.grupo : c.grupo === ui.ctpGrupo)));
+}
+/** Una opción de un C.T.P. en el grado elegido: sus líneas, la primera con viñeta, y cada marcador con su valor. */
+function ctpOpcionHtml (lineas, vals) {
+  return `<div class="artlineas ctpop">${lineas.map((ln, i) => `<div class="artl"${i ? ' style="padding-left:14px"' : ''}>${i ? '' : '• '}${
+    lineaConValores(ln, vals)}</div>`).join('')}</div>`;
+}
+function ctpObjCuerpo (c) {
+  const g = ui.ctpGrado, por = Object.fromEntries(c.op.map(o => [o.k, o]));
+  const reforja = ['esp', 'gen'].filter(k => por[k]);
+  const pjs = armadoConCtp(c.id);
+  return `${c.es && LANG === 'es' ? `<p class="muted">${h(t('ob_ctp_juego'))}: ${[c.es.base, c.es.poderoso, c.es.brillante].map(h).join(' · ')}</p>` : ''}
+    ${dudaCaja('ctp', c.id)}
+    <p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}
+    <div class="objsec"><b>${h(t('ob_ctp_fija'))}</b> <span class="muted">${h(t('ob_grado_' + g))}</span></div>
+    ${por.fija.o.map(ls => ctpOpcionHtml(ls, por.fija.v[g] || [])).join('')}
+    ${reforja.length ? `<div class="objsec"><b>${h(t('ob_ctp_reforja'))}</b> <span class="muted">${h(g === 'normal' ? t('ob_ctp_sin_reforja') : t('ob_grado_' + g))}</span></div>
+      ${g === 'normal' ? '' : reforja.map(k => por[k].o.map(ls => ctpOpcionHtml(ls, por[k].v[g] || [])).join('')).join('')}` : ''}
+    ${c.obt[g] ? `<div class="objsec"><b>${h(t('ar_obtain'))}</b> <span class="muted">${h(t('ob_grado_' + g))}</span></div>
+      <ul class="sopfx">${c.obt[g].map(x => `<li>${trHtml(x)}</li>`).join('')}</ul>` : ''}
+    <details class="usgrupo"><summary>${h(t('ob_ctp_armado').replace('{n}', pjs.length))}</summary>
+      ${pjs.length ? `<div class="objpjs">${pjs.map(x => miniPj(x.v, `${x.xs.some(y => y.r) ? reforjadoTag() : ''}${
+        x.xs.map(y => `<span class="tag ghost">${h(t('ga_ctp_' + y.k))}</span>`).join('')}`)).join('')}</div>${fuenteArmado()}`
+      : `<p class="muted">${h(t(GUIA_ARMADO ? 'ob_ctp_armado_nadie' : 'ga_no_data'))}</p>`}</details>
+    <div class="fuentes">${fuentesHtml([...(c.pr || ['tv-ctps']), ...(c.es ? ['juego-ctp-es'] : [])])}</div>`;
+}
+function objCtps () {
+  const lista = ctpsFiltrados(), grupos = GUIA.ctp_ranking.grupos.map(g => g.id);
+  const grupoTxt = (c) => c.grupo ? t('ob_ctp_g_' + c.grupo) : t('ob_ctp_g_sin');
+  return `${objCabeza(t('ob_ctp_title'), t('ob_ctp_note'), 'ctpBusca', lista.length, CTPS.length)}
+    <div class="crfiltros">
+      ${objChips(t('ob_ctp_grupo'), 'ctpGrupo', [['', t('cr_tipo_todos')], ...grupos.map(g => [g, t('ob_ctp_g_' + g)]),
+        ...(CTPS.some(c => !c.grupo) ? [['sin', t('ob_ctp_g_sin')]] : [])])}
+      ${objChips(t('ob_grado'), 'ctpGrado', CTP_GRADOS.map(g => [g, t('ob_grado_' + g)]))}
+    </div>
+    ${objNotas([], `<p>${h(t('ob_ctp_sistema'))} ${fuentesHtml(['juego-guia', 'tv-ctps'])}</p>`)}
+    ${objLista(lista.map(c => objItem('ctp-' + c.id, `${ctpIcono(c.id)}<b>${h(ctpNombre(c))}</b>`,
+      `${h(grupoTxt(c))} · ${h(trTxt(c.desc))}`, `${c.pr ? propioTag(c.pr) : ''}${dudaTag('ctp', c.id)}<span class="tag dim" title="${h(t('ob_ctp_armado_t'))}">${
+        h(t('ob_ctp_armado_n').replace('{n}', armadoConCtp(c.id).length))}</span>`,
+      ctpObjCuerpo(c))))}`;
+}
+
+// ---- ISO-8 ----
+/** El set de ISO-8 de un nombre (como lo escriben la guía y la guía de armado: «Spider Sense» es «Spider-Sense»). */
+function isoSetDe (nombre) {
+  const k = plano(nombre).replace(/-/g, ' '), s = OBJ.iso.sets.find(x => plano(x.n).replace(/-/g, ' ') === k);
+  if (!s) throw new Error('set de ISO-8 desconocido: ' + nombre);
+  return s;
+}
+function isoSetNombre (s) { return LANG === 'es' && s.es ? s.es : s.n; }
+function piedraNombre (k) { return LANG === 'es' && OBJ.iso.piedras_es[k] ? OBJ.iso.piedras_es[k] : GUIA.iso.piedras[k].nombre; }
+/** Las categorías de la guía de armado que nombran un set, y cuántos personajes llevan cada una. */
+function isoEnArmado (s) {
+  if (!GUIA_ARMADO) return [];
+  return Object.entries(GUIA_ARMADO.leyenda.iso).filter(([, ns]) => ns.some(n => isoSetDe(n) === s))
+    .map(([k]) => [k, Object.values(GUIA_ARMADO.pj).filter(e => (e.iso || []).includes(k)).length]);
+}
+function isoSetCuerpo (s) {
+  const guia = [['sets_pve', 'PvE'], ['sets_pvp', 'PvP']].filter(([k]) => GUIA.iso[k].some(x => isoSetDe(x.nombre) === s)).map(([, m]) => m);
+  const cats = isoEnArmado(s);
+  return `${s.es ? `<p class="muted">${h(LANG === 'es' ? s.n : s.es)}</p>` : ''}
+    <div class="objsec"><b>${h(t('ob_iso_piezas').replace('{n}', s.piezas.length))}</b></div>
+    <div class="objpiezas">${[...new Set(s.piezas)].map(k => `<span class="row" style="gap:6px">${piedrasHtml([k])}
+      <b>${h(piedraNombre(k))}</b>${s.piezas.filter(x => x === k).length > 1 ? ` <span class="muted">×${s.piezas.filter(x => x === k).length}</span>` : ''}
+      <span class="muted">${GUIA.iso.piedras[k].stats.map(statNom).join(' / ') || h(bi(GUIA.iso.piedras[k]))}</span></span>`).join('')}</div>
+    <div class="objsec"><b>${h(t('ob_iso_da'))}</b> <span class="muted">${h(t('ob_iso_valores'))}</span></div>
+    <ul class="sopfx">${s.st.map(x => `<li>${h(statObj(x.s))} <b>${h(numTxt(x.v))}%</b>${x.d
+      ? ` <span class="tag solid dudatag" title="${h(bi(x.d))}">${h(t('cr_dudoso'))}</span>` : ''}</li>`).join('')}</ul>
+    <div class="objsec"><b>${h(t('ob_iso_act'))}</b></div>
+    <ul class="sopfx">${s.act.map(x => `<li>${h(bi(x))}</li>`).join('')}</ul>
+    ${guia.length || cats.length ? `<p class="muted">${guia.length ? h(t('ob_iso_guia').replace('{m}', guia.join(' y '))) + ' ' : ''}${
+      cats.map(([k, n]) => h(t('ob_iso_armado').replace('{c}', trTxt(k)).replace('{n}', n))).join(' ')}</p>` : ''}
+    <div class="fuentes">${fuentesHtml([...new Set(['wiki-iso', ...(s.es ? OBJ.iso.piedras_es_fuente.f : []), ...(guia.length ? GUIA.iso.fuente : []),
+      ...(cats.length ? ['cyn-armado'] : [])])])}</div>`;
+}
+function objIso () {
+  const q = plano(ui.isoBusca.trim()), S = OBJ.iso.sets;
+  const lista = S.filter(s => (!q || [s.n, s.es || ''].some(n => plano(n).includes(q)))
+    && (!ui.isoStat || s.st.some(x => x.s === ui.isoStat)) && (!ui.isoPiezas || String(s.piezas.length) === ui.isoPiezas));
+  const P = GUIA.iso.piedras;
+  return `${objCabeza(t('ob_iso_title'), t('ob_iso_note'), 'isoBusca', lista.length, S.length,
+    objSelectStat('isoStat', [...new Set(S.flatMap(s => s.st.map(x => x.s)))]))}
+    <div class="crfiltros">${objChips(t('ob_iso_npiezas'), 'isoPiezas', [['', t('cr_tipo_todos')],
+      ...[...new Set(S.map(s => s.piezas.length))].sort((a, b) => b - a).map(n => [String(n), String(n)])])}</div>
+    ${objNotas(OBJ.iso.notas)}
+    <div class="section objpiedras"><h3>${h(t('ob_iso_piedras'))} ${ayudaHtml(bi(OBJ.iso.piedras_es_fuente))}</h3>
+      <div class="gllista">${Object.keys(P).map(k => `<div class="objpiedra">${piedrasHtml([k])}<b>${h(piedraNombre(k))}</b>
+        <span class="muted">${h(t('iso_' + k))}${LANG === 'es' && OBJ.iso.piedras_es[k] ? ' · ' + h(P[k].nombre) : ''}</span>
+        <span>${P[k].stats.map(statNom).join(' / ') || ''}</span><span class="muted">${h(bi(P[k]))}</span></div>`).join('')}</div>
+      <div class="fuentes">${fuentesHtml([...new Set([...GUIA.iso.fuente, ...OBJ.iso.piedras_es_fuente.f])])}</div></div>
+    <div class="section"><h3>${h(t('ob_iso_sets'))}</h3>
+    ${objLista(lista.map(s => objItem('iso-' + s.id, `<b>${h(isoSetNombre(s))}</b>`,
+      `${piedrasHtml(s.piezas)} <span class="muted">${s.st.map(x => h(statObj(x.s))).join(' · ')}</span>`,
+      `<span class="tag dim">${h(t('ob_iso_piezas').replace('{n}', s.piezas.length))}</span>${s.st.some(x => x.d)
+        ? `<span class="tag solid dudatag">${h(t('cr_dudoso'))}</span>` : ''}`, isoSetCuerpo(s))))}</div>`;
+}
+
+// ---- Bendiciones de Odín ----
+function odinColor (k) { const c = OBJ.odin.colores[k]; return `<i class="objcolor" style="background:${c.css}" title="${h(c[LANG])}"></i>`; }
+function odinImg (b) { const u = imgUrl(b.img); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
+function objOdin () {
+  const q = plano(ui.odinBusca.trim()), B = OBJ.odin.bendiciones;
+  const lista = B.filter(b => (!q || [b.n, ...b.st.map(x => statObj(x.s))].some(n => plano(n).includes(q)))
+    && (!ui.odinStat || b.st.some(x => x.s === ui.odinStat)) && (!ui.odinColor || b.color === ui.odinColor));
+  const val = (x, i) => h(numTxt(x.v[i]) + x.u);
+  return `${objCabeza(t('ob_odin_title'), t('ob_odin_note'), 'odinBusca', lista.length, B.length,
+    objSelectStat('odinStat', [...new Set(B.flatMap(b => b.st.map(x => x.s)))]))}
+    <div class="crfiltros">${objChips(t('ob_odin_color'), 'odinColor', [['', t('cr_tipo_todos')],
+      ...Object.entries(OBJ.odin.colores).filter(([k]) => B.some(b => b.color === k)).map(([k, c]) => [k, c[LANG]])])}</div>
+    ${objNotas(OBJ.odin.notas, `<p>${h(bi(GUIA.urus.odin))} ${fuentesHtml(GUIA.urus.fuente)}</p>`)}
+    ${objLista(lista.map(b => objItem('odin-' + b.id, `${odinImg(b)}<b>${h(t('ob_odin_nom').replace('{n}', b.n))}</b>`,
+      b.st.map(x => `${h(statObj(x.s))} <b>${val(x, 2)}</b>`).join(' · '),
+      `${odinColor(b.color)}<span class="tag dim">${h(OBJ.odin.formas[b.forma][LANG])}</span>`,
+      `<div class="stagewrap"><table class="cutabla objtabla"><thead><tr><th>${h(t('ob_stat'))}</th><th class="num">${h(t('ob_odin_valor'))}</th>
+        <th class="num">${h(t('ob_odin_amp'))}</th><th class="num">${h(t('ob_odin_total'))}</th></tr></thead>
+        <tbody>${b.st.map(x => `<tr><td>${h(statObj(x.s))}</td><td class="num">${val(x, 0)}</td><td class="num">+${val(x, 1)}</td>
+          <td class="num"><b>${val(x, 2)}</b></td></tr>`).join('')}</tbody></table></div>
+      <p class="muted">${h(t('ob_odin_color'))}: ${odinColor(b.color)} ${h(OBJ.odin.colores[b.color][LANG])} · ${h(t('ob_odin_forma'))}: ${
+        h(OBJ.odin.formas[b.forma][LANG])}</p>
+      <p>${b.drop ? `${h(t('ob_odin_drop'))}: ${h(bi(b.drop))}` : `<span class="muted">${h(t('ob_odin_sin_drop'))}</span>`}</p>
+      <div class="fuentes">${fuentesHtml(['tv-odin'])}</div>`)))}`;
+}
+
+// ---- Emblemas ----
+function rarezaEm (id) { return OBJ.emblemas.rarezas.find(r => r.id === id); }
+function rarezaTag (id) {
+  const r = rarezaEm(id);
+  return `<span class="tag dim" style="color:${r.color};border-color:${r.color}">${h(r[LANG])}</span>${r.duda
+    ? `<span class="tag solid dudatag" title="${h(bi(r.duda))}">${h(t('cr_dudoso'))}</span>` : ''}`;
+}
+function emImg (e) { const u = imgUrl(e.img); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
+/** Dónde rige un emblema: en todo o en el modo de su colección (con enlace a Modos); sin colección, sin dato. */
+function emRige (e) {
+  const E = OBJ.emblemas;
+  if (e.libre) return h(bi(E.sin_restriccion));
+  const col = E.colecciones.find(c => c.n === e.col);
+  if (!col) return `<span class="muted">${h(t('ob_em_sin_modo'))}</span>`;
+  const m = MODOS.find(x => x.id === col.modo);
+  return `<a class="objlink" href="#modo-${m.id}" data-a="verModo" data-id="${m.id}">${h(nombreModo(m))}</a>`;
+}
+/** El valor de un emblema en cada nivel, en una grilla; cada nivel en el que sube de estrellas, marcado. */
+function emNiveles (e) {
+  const N = OBJ.emblemas.niveles;
+  return `<div class="emniv">${e.v.map((v, i) => `<span class="${i && N[i][0] !== N[i - 1][0] ? 'st' : ''}" title="${
+    h(t('ob_em_nivel').replace('{n}', i + 1) + ' · ' + N[i][0] + '★')}"><i>${i + 1}</i>${h(numTxt(v))}%</span>`).join('')}</div>`;
+}
+function objEmblemas () {
+  const E = OBJ.emblemas, q = plano(ui.emBusca.trim());
+  const lista = E.emblemas.filter(e => (!q || [e.n, e.col || '', statObj(e.s)].some(n => plano(n).includes(q)))
+    && (!ui.emCol || (ui.emCol === 'sin' ? !e.col : e.col === ui.emCol)) && (!ui.emRar || e.r === ui.emRar)
+    && (!ui.emTipo || (ui.emTipo === 'libre' ? e.libre : e.tipo === ui.emTipo)) && (!ui.emStat || e.s === ui.emStat));
+  const N = E.niveles;
+  return `${objCabeza(t('ob_em_title'), t('ob_em_note'), 'emBusca', lista.length, E.emblemas.length,
+    objSelectStat('emStat', [...new Set(E.emblemas.map(e => e.s))]))}
+    <div class="crfiltros" data-rec="em-filtros">
+      ${objChips(t('ob_em_col'), 'emCol', [['', t('cr_tipo_todos')], ...E.colecciones.map(c => [c.n, c.n]),
+        ...(E.emblemas.some(e => !e.col) ? [['sin', t('ob_em_sin_col')]] : [])])}
+      ${objChips(t('ob_em_rareza'), 'emRar', [['', t('cr_tipo_todos')], ...E.rarezas.map(r => [r.id, r[LANG]])])}
+      ${objChips(t('ob_em_tipo'), 'emTipo', [['', t('cr_tipo_todos')], ...Object.entries(E.tipos).map(([k, x]) => [k, x[LANG]]),
+        ['libre', t('ob_em_libre')]])}
+    </div>
+    ${objNotas(E.notas, `<details class="usgrupo"><summary>${h(t('ob_em_costos'))}</summary><div class="stagewrap">
+      <table class="cutabla objtabla"><thead><tr><th class="num">${h(t('ob_em_nv'))}</th><th class="num">★</th><th class="num">${h(t('ob_em_datos'))}</th>
+        <th class="num">${h(t('ob_em_kits'))}</th><th class="num">${h(t('ob_em_oro'))}</th></tr></thead>
+      <tbody>${N.map(([st, d, k, o], i) => `<tr><td class="num">${i + 1}</td><td class="num">${st}</td><td class="num">${h(numTxt(d))}</td>
+        <td class="num">${k ? h(numTxt(k)) : '—'}</td><td class="num">${h(numTxt(o))}</td></tr>`).join('')}</tbody></table></div>
+      ${fuentesHtml(['tv-emblemas'])}</details>`)}
+    ${objLista(lista.map(e => objItem('emblema-' + e.id, `${emImg(e)}<b>${h(e.n)}</b>`,
+      `${h(statObj(e.s))} <b>${h(numTxt(e.v[59]))}%</b> <span class="muted">${h(t('ob_em_nv60'))}</span>`,
+      `${rarezaTag(e.r)}<span class="tag dim">${h(e.col || t('ob_em_sin_col'))}</span>`,
+      `<p><b>${h(statObj(e.s))}</b>: ${h(numTxt(e.v[0]))}% ${h(t('ob_em_nv1'))} → <b>${h(numTxt(e.v[59]))}%</b> ${h(t('ob_em_nv60'))}</p>
+      <p>${h(t('ob_em_tipo'))}: ${e.tipo ? h(E.tipos[e.tipo][LANG]) : '—'} · ${h(t('ob_em_rige'))}: ${emRige(e)}</p>
+      <p>${h(t('ob_em_col'))}: ${h(e.col || t('ob_em_sin_col'))} · ${h(t('ob_em_rareza'))}: ${rarezaTag(e.r)}</p>
+      <p>${h(t('ar_obtain'))}: ${e.obt.length ? e.obt.map(k => h(bi(E.obtencion[k]))).join(' · ') : '—'}</p>
+      <div class="objsec"><b>${h(t('ob_em_por_nivel'))}</b></div>${emNiveles(e)}
+      <div class="fuentes">${fuentesHtml(['tv-emblemas', ...E.rarezas_fuente.filter(f => rarezaEm(e.r).duda && f !== 'tv-emblemas')])}</div>`)))}`;
+}
+
+// ---- J.A.R.V.I.S. ----
+function objJarvis () {
+  const J = OBJ.jarvis, q = plano(ui.jvBusca.trim());
+  const lista = J.chips.filter(c => (!q || [c.n, c.en, c.es].some(n => plano(n).includes(q))) && (!ui.jvCat || c.cat === ui.jvCat));
+  const modos = J.modos.ids.map(id => MODOS.find(m => m.id === id));
+  return `${objCabeza(t('ob_jv_title'), t('ob_jv_note'), 'jvBusca', lista.length, J.chips.length)}
+    <div class="crfiltros">${objChips(t('ob_jv_cat'), 'jvCat', [['', t('cr_tipo_todos')], ...J.categorias.map(c => [c.id, c[LANG]])])}</div>
+    ${objNotas(J.notas, `<p>${h(t('ob_jv_modos'))}: ${modos.map(m => `<a class="objlink" href="#modo-${m.id}" data-a="verModo" data-id="${m.id}">${
+      h(nombreModo(m))}</a>`).join(' · ')} ${fuentesHtml(J.modos.fuente)}</p>
+      <p>${h(t('ob_jv_ex'))}: ${J.ex_opciones.stats.map(s => h(statObj(s))).join(' · ')}. ${fuentesHtml(J.ex_opciones.fuente)}</p>`)}
+    <p class="muted objaviso">${h(t('ob_jv_sin_valores'))}</p>
+    ${J.categorias.filter(c => lista.some(x => x.cat === c.id)).map(c => `<div class="section"><h3>${h(c[LANG])}</h3>
+      ${objLista(lista.filter(x => x.cat === c.id).map(x => objItem('jarvis-' + x.id, `<b>${h(x.n)}</b>`, h(bi(x)), '',
+        `<p>${h(bi(x))}</p>${LANG === 'es' ? `<p class="muted">${h(t('ob_jv_nota_en'))}: «${h(x.en)}»</p>` : ''}
+        <p class="muted">${h(t('ob_jv_valor'))}</p>
+        <div class="fuentes">${fuentesHtml(J.chips_fuente)} <a class="fuente" href="${h(J.imagen_lista)}" target="_blank" rel="noopener">${h(t('ob_jv_imagen'))}</a></div>`)))}
+    </div>`).join('') || `<div class="empty"><div>${h(t('ob_nada'))}</div></div>`}`;
+}
+
+// ============================================================================
 // CROMOS DE CÓMIC (#35; Ezequiel, 17 de noviembre de 2026: «Arma un modulo sobre cromos donde pongas todos los cromos con
 // sus caractaristicas y en lo que respecta la cuenta personal poder anotar los cromos que tengo en sus dos sets»)
 // Todos los cromos (MFF_CROMOS) con sus fijas, las opciones posibles de cada grado y sus activaciones, para contestar
@@ -7057,20 +7444,22 @@ function armadoUrus (ta) {
     ${GUIA.gear4.notas.map(x => `<p class="muted">${h(bi(x))}</p>`).join('')}
     <div class="fuentes">${fuentesHtml(G.fuente.concat(GUIA.gear4.fuente.filter(x => !G.fuente.includes(x))))}</div>`;
 }
+/** Una línea de la fuente con marcadores [P1]..[Pn] (artefactos y C.T.P.): en el idioma activo (sin traducción, el inglés
+ *  marcado) y cada marcador con su valor, o marcado si la fuente no lo trae. Devuelve HTML. */
+function lineaConValores (en, vals) {
+  const es = LANG === 'en' ? en : TXT[en];
+  const txt = h(es == null ? en : es).replace(/\[P(\d+)\]/g, (_, n) => vals[n - 1] != null ? `<b>${h(vals[n - 1])}</b>`
+    : `<i class="tpl" title="${h(t('ar_nodata_t'))}">${h(t('ar_nodata'))}</i>`);
+  return es == null ? `<span class="sintrad" title="${h(t('untranslated'))}">${txt}</span>` : txt;
+}
 /** Artefacto exclusivo: el texto del juego con los valores del nivel de estrellas elegido. Una línea que el build
  *  corrige con el juego (scripts/fuentes.py) va marcada, con lo que publica thanosvibs, y cita su fuente. */
 function armadoArtefacto (ch) {
   const a = ARTES.find(x => x.p === ch.p);
   if (!a) return `<p class="muted">${h(t('ar_art_none'))}</p>`;
   const est = ui.artEst, vals = a.valores[est] || [];
-  const linea = (ln) => {
-    const es = LANG === 'en' ? ln.t : TXT[ln.t];
-    const txt = h(es == null ? ln.t : es).replace(/\[P(\d+)\]/g, (_, n) => vals[n - 1] != null ? `<b>${h(vals[n - 1])}</b>`
-      : `<i class="tpl" title="${h(t('ar_nodata_t'))}">${h(t('ar_nodata'))}</i>`);
-    return `<div class="artl" style="padding-left:${ln.n * 14}px">${ln.b ? '• ' : ''}${es == null
-      ? `<span class="sintrad" title="${h(t('untranslated'))}">${txt}</span>` : txt}${ln.tv
+  const linea = (ln) => `<div class="artl" style="padding-left:${ln.n * 14}px">${ln.b ? '• ' : ''}${lineaConValores(ln.t, vals)}${ln.tv
       ? ` <span class="corr" title="${h(t('ar_corregida').replace('{tv}', ln.tv))}">⚠</span>` : ''}</div>`;
-  };
   // Uno del contenido propio no tiene puntaje de thanosvibs todavía (null): lo dice.
   const puntaje = (lbl, n) => n == null ? `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${h(t('ar_sin_puntaje'))}</span>`
     : `<span class="tag dim" title="${h(t('ar_score_t'))}">${lbl} ${'★'.repeat(n)}${'☆'.repeat(Math.max(0, 3 - n))}</span>`;
@@ -7612,12 +8001,19 @@ function cuentaCuentas () {
            // Cambios sobre las listas importadas: las ubicaciones de tus listas propias no lo son.
            cambios: Object.entries(U.assign).filter(([id]) => !U.lists.some(l => l.id === id)).reduce((n, [, o]) => n + Object.keys(o).length, 0) };
 }
+/** Una sub-barra de sección (Mi cuenta y Objetos): el rótulo de la sección y una pestaña por apartado, cada una con su
+ *  acción (attrs: los data-a de su botón), su texto y cuántos tiene (n, si no es 0). juego: con el color de las secciones
+ *  del juego (la de Mi cuenta lleva el suyo). */
+function subBarraHtml (rotulo, tabs, actual, juego) {
+  return `<div class="cucab${juego ? ' juego' : ''}"><span class="curot">${h(rotulo)}</span>
+    <div class="cutabs" role="tablist">${tabs.map(x => `<button class="cutab ${actual === x.k ? 'on' : ''}" role="tab" aria-selected="${actual === x.k}"
+      ${x.attrs}>${h(x.txt)}${x.n ? ` <span class="cun">${x.n}</span>` : ''}</button>`).join('')}</div></div>`;
+}
 /** La sub-barra de Mi cuenta, arriba de cada uno de sus apartados. */
 function cuentaCabHtml () {
-  const actual = cuentaTabActual(), n = cuentaCuentas();
-  return `<div class="cucab"><span class="curot">${h(t('nav_cuenta'))}</span>
-    <div class="cutabs" role="tablist">${CUENTA_TABS.map(k => `<button class="cutab ${actual === k ? 'on' : ''}" role="tab" aria-selected="${actual === k}"
-      ${k === 'equipos' ? 'data-a="goTeams"' : `data-a="cuentaTab" data-v="${k}"`}>${h(t('cu_tab_' + k))}${n[k] ? ` <span class="cun">${n[k]}</span>` : ''}</button>`).join('')}</div></div>`;
+  const n = cuentaCuentas();
+  return subBarraHtml(t('nav_cuenta'), CUENTA_TABS.map(k => ({ k, txt: t('cu_tab_' + k), n: n[k],
+    attrs: k === 'equipos' ? 'data-a="goTeams"' : `data-a="cuentaTab" data-v="${k}"` })), cuentaTabActual(), false);
 }
 function renderCuenta () {
   const cuerpo = { resumen: cuentaResumen, progreso: cuentaProgreso, propios: cuentaPropios, marcas: cuentaMarcas, cromos: cuentaCromos,
@@ -7957,7 +8353,7 @@ function renderNav () {
       ${link(VISTAS_ROSTER, 'nav_roster', 'back')}
       ${link(['tierlist'], 'nav_tierlists', 'goTier')}
       ${link(['modos'], 'nav_modes', 'goModos')}
-      ${link(['cromos'], 'nav_cromos', 'goCromos')}
+      ${link(['objetos'], 'nav_objetos', 'goObjetos')}
       ${link(['glosario'], 'nav_glossary', 'goGlosario')}
       ${link(['historico'], 'nav_history', 'goHistorico')}
     </div>
@@ -7994,7 +8390,7 @@ function render () {
     case 'modos':    body = renderModos(); break;
     case 'teams':    body = renderTeams(); break;
     case 'glosario': body = renderGlosario(); break;
-    case 'cromos':   body = renderCromos(); break;
+    case 'objetos':  body = objetosCabHtml() + renderObjetos(); break;
     case 'historico': body = renderHistorico(); break;
     case 'editor':   body = renderEditor(); break;
     case 'cuenta':   body = renderCuenta(); break;
@@ -8041,7 +8437,7 @@ function render () {
 function lugar () { return ui.view === 'detail' ? 'detail:' + ui.charId : ui.view; }
 function fotoLugar () {
   return { lugar: lugar(), view: ui.view, charId: ui.charId, uniformId: ui.uniformId, fichaTab: ui.fichaTab, cuentaTab: ui.cuentaTab,
-           eqPagina: ui.eqPagina, eqCon: ui.eqCon, eqVerDescartados: ui.eqVerDescartados, page: ui.page, tierList: ui.tierList };
+           objTab: ui.objTab, eqPagina: ui.eqPagina, eqCon: ui.eqCon, eqVerDescartados: ui.eqVerDescartados, page: ui.page, tierList: ui.tierList };
 }
 /** Antes de pintar: si cambió el lugar, el anterior queda anotado con su posición y se abre
  *  una entrada nueva que recuerda de dónde se vino. */
@@ -8072,7 +8468,7 @@ function nombreLugar (d, largo) {
     if (!v) return t('nav_roster');
     return largo ? fullLabel(v) + ' · ' + t('ft_' + d.fichaTab) : v.name;
   }
-  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history', cromos: 'nav_cromos',
+  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history', objetos: 'nav_objetos',
              settings: 'nav_settings', editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
 }
 window.addEventListener('popstate', (e) => {
@@ -8081,7 +8477,8 @@ window.addEventListener('popstate', (e) => {
   // «Atrás» con el recorrido abierto lo cierra (la pantalla vuelve a como estaba) y va al lugar anterior, como siempre.
   if (ui.rec) cerrarRecorrido();
   if (ui.pq) cerrarPq(false);
-  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, cuentaTab: s.cuentaTab, eqPagina: s.eqPagina,
+  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, cuentaTab: s.cuentaTab, objTab: s.objTab,
+                      objVer: null, eqPagina: s.eqPagina,
                       eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
                       aliados: null, tip: null, tlPick: null, focusSearch: false, volverY: s.y,
                       volverAbiertos: s.abiertos || [],   // una entrada anotada por una versión anterior no los trae
@@ -8165,10 +8562,16 @@ const RECORRIDO = [
     { an: '[data-rec="modos-filtro"]', k: 'rc_modos_filtro' },
     { an: '.modos .modo', k: 'rc_modos_modo' },
     { an: '#armado > h3', k: 'rc_modos_armado' }] },
-  { k: 'cromos', ir: () => ({ view: 'cromos' }), pasos: [
-    { an: 'main .glbusca', k: 'rc_cromos_buscar' },
-    { an: '.crfiltros', k: 'rc_cromos_filtros' },
-    { an: '.crcard', k: 'rc_cromos_cromo' }] },
+  { k: 'objetos', ir: (aqui) => aqui ? {} : { view: 'objetos' }, pasos: [
+    { an: '.cucab.juego .cutabs', k: 'rc_obj_tabs', ui: { objTab: 'ctp' } },
+    { an: '.objitem', k: 'rc_obj_ctp', ui: { objTab: 'ctp' } },
+    { an: '.objpiedras', k: 'rc_obj_iso', ui: { objTab: 'iso' } },
+    { an: '.objitem', k: 'rc_obj_odin', ui: { objTab: 'odin' } },
+    { an: '[data-rec="em-filtros"]', k: 'rc_obj_emblemas', ui: { objTab: 'emblemas' } },
+    { an: '.objnotas', k: 'rc_obj_jarvis', ui: { objTab: 'jarvis' } },
+    { an: 'main .glbusca', k: 'rc_cromos_buscar', ui: { objTab: 'cromos' } },
+    { an: '.crfiltros', k: 'rc_cromos_filtros', ui: { objTab: 'cromos' } },
+    { an: '.crcard', k: 'rc_cromos_cromo', ui: { objTab: 'cromos' } }] },
   { k: 'glosario', ir: () => ({ view: 'glosario' }), pasos: [
     { an: '.gltabs', k: 'rc_gl_tabs' },
     { an: 'main .glbusca .search', k: 'rc_gl_buscar' },
@@ -8193,7 +8596,7 @@ const RECORRIDO = [
 ];
 /** El tramo del recorrido de una vista. */
 function areaDe (view) {
-  const k = { roster: 'roster', detail: 'ficha', compare: 'comparativa', tierlist: 'tierlist', modos: 'modos', cromos: 'cromos',
+  const k = { roster: 'roster', detail: 'ficha', compare: 'comparativa', tierlist: 'tierlist', modos: 'modos', objetos: 'objetos',
               glosario: 'glosario', historico: 'historico', cuenta: 'cuenta', teams: 'cuenta', editor: 'cuenta', settings: 'barra' }[view];
   if (!k) throw new Error('vista sin tramo en el recorrido: ' + view);
   return k;
@@ -8442,13 +8845,16 @@ document.addEventListener('click', (e) => {
     case 'verModo': ui.view = 'modos'; ui.modoAbierto = d.id; ui.movil = 'centro'; render();
       document.getElementById('modo-' + d.id).scrollIntoView({ block: 'start' }); break;
     case 'goGlosario': ui.view = 'glosario'; ui.focusSearch = false; render(); break;
-    case 'goCromos': ui.view = 'cromos'; ui.focusSearch = false; ui.crAviso = null; render(); window.scrollTo(0, 0); break;
+    case 'goObjetos': ui.view = 'objetos'; ui.objVer = null; ui.focusSearch = false; ui.crAviso = null; render(); window.scrollTo(0, 0); break;
+    case 'objTab': ui.objTab = d.v; ui.objVer = null; ui.focusSearch = false; ui.crAviso = null; render(); window.scrollTo(0, 0); break;
+    case 'obFiltro': if (!OB_FILTROS.includes(d.k)) throw new Error('filtro de Objetos desconocido: ' + d.k);
+      if (el.tagName !== 'SELECT') { ui[d.k] = d.v; ui.focusSearch = false; render(); } break;
     case 'crTipo': ui.crTipo = d.v; render(); break;
     case 'crAct': ui.crAct = d.v; render(); break;
     case 'crModo': ui.crModo = d.v; render(); break;
     case 'crMazo': cromoEnMazo(d.id, +d.m); saveUser(); render(); break;
     case 'crQuitar': U.cromos.mazos[+d.m].splice(+d.l, 1); saveUser(); render(); break;
-    case 'crVer': e.preventDefault(); Object.assign(ui, { view: 'cromos', crBusca: '', crTipo: '', crStat: '', crAct: '', crAviso: null, focusSearch: false });
+    case 'crVer': e.preventDefault(); Object.assign(ui, { view: 'objetos', objTab: 'cromos', objVer: null, crBusca: '', crTipo: '', crStat: '', crAct: '', crAviso: null, focusSearch: false });
       render(); irACromo(d.id); break;
     case 'goHistorico': ui.view = 'historico'; ui.hiPj = d.cid || ''; ui.hiN = 20; render(); window.scrollTo(0, 0); break;
     case 'hiTipo': ui.hiTipo = d.v; ui.hiN = 20; render(); break;
@@ -8616,6 +9022,7 @@ document.addEventListener('input', (e) => {
   if (a === 'search') { ui.search = el.value; ui.page = 0; ui.focusSearch = true; render(); return; }
   if (a === 'glBusca') { ui.glBusca = el.value; ui.focusSearch = true; render(); return; }
   if (a === 'crBusca') { ui.crBusca = el.value; ui.focusSearch = true; render(); return; }
+  if (OB_BUSCAS.includes(a)) { ui[a] = el.value; ui.focusSearch = true; render(); return; }
   if (a === 'newListName') { ui.newListName = el.value; return; }
   if (a === 'rowLabel') { const l = U.lists.find(x => x.id === ui.tierList); const r = l && l.rows.find(x => x.id === d.row);
     if (r) { r.label = el.value; saveUser(); } return; }
@@ -8652,6 +9059,8 @@ document.addEventListener('change', (e) => {
   if (a === 'eqCon') { ui.eqCon = el.value; ui.eqPagina = 0; render(); return; }
   if (a === 'hiPj') { ui.hiPj = el.value; ui.hiN = 20; render(); return; }
   if (a === 'crStat') { ui.crStat = el.value; ui.focusSearch = false; render(); return; }
+  if (a === 'obFiltro') { if (!OB_FILTROS.includes(d.k)) throw new Error('filtro de Objetos desconocido: ' + d.k);
+    ui[d.k] = el.value; ui.focusSearch = false; render(); return; }
   // Mi cuenta › Cromos: poner un cromo en el primer lugar libre de un mazo y anotar la opción de un grado (vacío: sin anotar).
   if (a === 'crPoner') { cromoEnMazo(el.value, +d.m); saveUser(); render(); return; }
   if (a === 'crOp') { const op = U.cromos.mazos[+d.m][+d.l].op;

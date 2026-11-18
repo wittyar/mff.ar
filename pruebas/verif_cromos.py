@@ -1,6 +1,6 @@
-"""La sección Cromos (1.0.53, #35; Ezequiel, 17 de noviembre de 2026: «Arma un modulo sobre cromos donde pongas todos los
+"""La sección Cromos (1.0.53, #35; desde la 1.0.56, la pestaña Cromos de Objetos; Ezequiel, 17 de noviembre de 2026: «Arma un modulo sobre cromos donde pongas todos los
 cromos con sus caractaristicas»). Lo que se espera sale de MFF_CROMOS (data.js), no de app.js:
-  1. La barra la tiene en el grupo del juego; están todos los cromos, cada uno con sus fijas y las cinco opciones de cada
+  1. Objetos (en el grupo del juego de la barra) la tiene como pestaña; están todos los cromos, cada uno con sus fijas y las cinco opciones de cada
      grado (3★ a 6★; los Premium, 4★ a 6★).
   2. «Da este stat»: fijo, posible en un grado (también como activación) o cualquiera, con lo que lo da resaltado y el
      resumen de cuántos; el tipo; la activación (con o cuándo); la búsqueda por nombre.
@@ -8,7 +8,7 @@ cromos con sus caractaristicas»). Lo que se espera sale de MFF_CROMOS (data.js)
      (fijas +11%, cada grado), la activación con su probabilidad, valor y duración, que el #1 no acumula y la colección.
   4. Lo dudoso de la fuente («Rare?»): Raro, con la marca; entra en el filtro de Raro.
   5. En qué mazo tuyo está: ponerlo y sacarlo, con el color de Mi cuenta; un mazo lleno no toma un sexto y lo dice.
-  6. «Atrás» vuelve a Cromos; en inglés; en el celular, sin desbordar. Sin errores de página."""
+  6. «Atrás» vuelve a Objetos › Cromos; en inglés; en el celular, sin desbordar. Sin errores de página."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, SALIDA  # noqa: E401
 from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
 from playwright.sync_api import sync_playwright
@@ -33,8 +33,8 @@ try:
         vistos = lambda: sorted(pg.evaluate(VISTOS))
 
         # 1. la sección, con todos
-        ok('1 la barra: «Cromos» en el grupo del juego', pg.locator('nav.topnav .navgrupo:not(.cuenta) [data-a="goCromos"]').count() == 1)
-        pg.click('[data-a="goCromos"]'); pg.wait_for_selector('.crcard')
+        ok('1 la barra: «Objetos» en el grupo del juego', pg.locator('nav.topnav .navgrupo:not(.cuenta) [data-a="goObjetos"]').count() == 1)
+        pg.click('[data-a="goObjetos"]'); pg.click('.cutabs [data-a="objTab"][data-v="cromos"]'); pg.wait_for_selector('.crcard')
         ok('1 están todos los cromos', vistos() == ids(lambda c: True), (len(vistos()), len(CR)))
         filas = pg.evaluate("Object.fromEntries([...document.querySelectorAll('.crcard')].map(x => [x.id.slice(6), [...x.querySelectorAll('.crfila')].map(f => f.querySelectorAll('.crop').length)]))")
         espera = {c['id']: [len(c['fijas'])] + [5] * len(grados(c)) for c in CR}
@@ -110,8 +110,8 @@ try:
 
         # 6. Atrás, inglés, celular
         pg.click('[data-a="goGlosario"]'); pg.wait_for_timeout(300); pg.go_back(); pg.wait_for_timeout(400)
-        ok('6 «Atrás» desde el Glosario vuelve a Cromos', pg.locator('.crcard').count() > 0
-           and pg.locator('nav.topnav .navlink.on').inner_text() == 'Cromos')
+        ok('6 «Atrás» desde el Glosario vuelve a Objetos › Cromos', pg.locator('.crcard').count() > 0
+           and pg.locator('nav.topnav .navlink.on').inner_text() == 'Objetos' and pg.locator('.cutab.on').inner_text().startswith('Cromos'))
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
         ok('6 en inglés', pg.locator('main h1').inner_text().startswith('Comic cards')
            and 'Deck 1' in pg.locator('.crcard').first.inner_text(), pg.locator('main h1').inner_text())
