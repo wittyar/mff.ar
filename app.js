@@ -5485,6 +5485,8 @@ const HISTORICO = window.MFF_HISTORICO;
 const HI_TIPOS = ['personaje', 'uniforme', 't3', 'tp', 't4', 'balance', 'modo'];
 /** El personaje de un hecho, o «modo:<id>» el de un modo (#4, datos de formato 12). */
 function cidHecho (x) { return x[0].split('::')[0]; }
+/** El nombre de un modo que lo abre en Modos. */
+function modoLink (m) { return `<button class="objlink" data-a="verModo" data-id="${m.id}">${h(nombreModo(m))}</button>`; }
 /** Los hechos de un modo (las secciones de las notas que lo nombran). */
 const MODO_HI = 'modo:';
 /** Para qué variante o personaje es un hecho: su nombre, y el botón que abre su ficha. */
@@ -5492,7 +5494,7 @@ function hechoQuien (x) {
   if (x[0].startsWith(MODO_HI)) {
     const m = MODOS.find(y => 'modo:' + y.id === x[0]);
     if (!m) throw new Error('el histórico nombra un modo que no está en MFF_MODOS: ' + x[0]);
-    return `<button class="objlink" data-a="verModo" data-id="${m.id}">${h(nombreModo(m))}</button>`;
+    return modoLink(m);
   }
   const [cid, uid] = x[0].split('::');
   const v = variant(cid, uid || null);
@@ -5831,7 +5833,7 @@ function isoSetDe (nombre) {
 /** El nombre de un set de ISO-8 que lleva a su detalle en Objetos. */
 function isoSetLink (nombre) {
   const s = isoSetDe(nombre);
-  return `<a class="objlink" href="#iso-${s.id}" data-a="verObj" data-tab="iso" data-id="iso-${s.id}" title="${h(t('ob_ver'))}">${h(isoSetNombre(s))}</a>`;
+  return `<button class="objlink" data-a="verObj" data-tab="iso" data-id="iso-${s.id}" title="${h(t('ob_ver'))}">${h(isoSetNombre(s))}</button>`;
 }
 function isoSetNombre (s) { return LANG === 'es' && s.es ? s.es : s.n; }
 function piedraNombre (k) { return LANG === 'es' && OBJ.iso.piedras_es[k] ? OBJ.iso.piedras_es[k] : GUIA.iso.piedras[k].nombre; }
@@ -5922,7 +5924,7 @@ function emRige (e) {
   const col = E.colecciones.find(c => c.n === e.col);
   if (!col) return `<span class="muted">${h(t('ob_em_sin_modo'))}</span>`;
   const m = MODOS.find(x => x.id === col.modo);
-  return `<a class="objlink" href="#modo-${m.id}" data-a="verModo" data-id="${m.id}">${h(nombreModo(m))}</a>`;
+  return modoLink(m);
 }
 /** El valor de un emblema en cada nivel, en una grilla; cada nivel en el que sube de estrellas, marcado. */
 function emNiveles (e) {
@@ -5969,8 +5971,7 @@ function objJarvis () {
   const modos = J.modos.ids.map(id => MODOS.find(m => m.id === id));
   return `${objCabeza(t('ob_jv_title'), t('ob_jv_note'), 'jvBusca', lista.length, J.chips.length)}
     <div class="crfiltros">${objChips(t('ob_jv_cat'), 'jvCat', [['', t('cr_tipo_todos')], ...J.categorias.map(c => [c.id, c[LANG]])])}</div>
-    ${objNotas(J.notas, `<p>${h(t('ob_jv_modos'))}: ${modos.map(m => `<a class="objlink" href="#modo-${m.id}" data-a="verModo" data-id="${m.id}">${
-      h(nombreModo(m))}</a>`).join(' · ')} ${fuentesHtml(J.modos.fuente)}</p>
+    ${objNotas(J.notas, `<p>${h(t('ob_jv_modos'))}: ${modos.map(modoLink).join(' · ')} ${fuentesHtml(J.modos.fuente)}</p>
       <p>${h(t('ob_jv_ex'))}: ${J.ex_opciones.stats.map(s => h(statObj(s))).join(' · ')}. ${fuentesHtml(J.ex_opciones.fuente)}</p>`)}
     <p class="muted objaviso">${h(t('ob_jv_sin_valores'))}</p>
     ${J.categorias.filter(c => lista.some(x => x.cat === c.id)).map(c => `<div class="section"><h3>${h(c[LANG])}</h3>
@@ -7025,14 +7026,14 @@ function ctpNombre (c) { return LANG === 'es' && c.es ? c.es.base : 'C.T.P. of '
 function ctpNomCorto (c) { if (LANG !== 'es' || !c.es) return c.name; const n = c.es.base.replace(/^C\.T\.P\. de /, ''); return n[0].toUpperCase() + n.slice(1); }
 /** El nombre corto de un C.T.P. que lleva a su detalle en Objetos (sus opciones y valores). */
 function ctpLink (c) {
-  return `<a class="objlink" href="#ctp-${c.id}" data-a="verObj" data-tab="ctp" data-id="ctp-${c.id}" title="${h(t('ob_ver'))}">${h(ctpNomCorto(c))}</a>`;
+  return `<button class="objlink" data-a="verObj" data-tab="ctp" data-id="ctp-${c.id}" title="${h(t('ob_ver'))}">${h(ctpNomCorto(c))}</button>`;
 }
 function ctpIcono (id) { const u = imgUrl('ctp-' + id); return u ? `<img class="ctpico" src="${u}" alt="" loading="lazy">` : ''; }
 /** Un C.T.P. plegable con lo que hace según thanosvibs (normal y reforjado). */
 function ctpDetalle (c, extra) {
   return `<details class="ctp"><summary>${ctpIcono(c.id)}<b>${h(ctpNombre(c))}</b>${dudaTag('ctp', c.id)}${extra || ''}</summary>
     ${dudaCaja('ctp', c.id)}<p>${trHtml(c.desc)}</p>${c.descR ? `<p class="muted"><b>${h(t('md_reforged'))}:</b> ${trHtml(c.descR)}</p>` : ''}
-    <p><a class="objlink" href="#ctp-${c.id}" data-a="verObj" data-tab="ctp" data-id="ctp-${c.id}">${h(t('ob_ctp_ver'))}</a></p></details>`;
+    <p><button class="objlink" data-a="verObj" data-tab="ctp" data-id="ctp-${c.id}">${h(t('ob_ctp_ver'))}</button></p></details>`;
 }
 /** Controles de Alliance Battle que aplican las skills de un retrato, como etiquetas:
  *  "Parálisis: 1/4" = las skills 1 y 4 (6 = la definitiva). */
@@ -8877,7 +8878,7 @@ document.addEventListener('click', (e) => {
     case 'objTab': ui.objTab = d.v; ui.objVer = null; ui.focusSearch = false; ui.crAviso = null; render(); window.scrollTo(0, 0); break;
     case 'obFiltro': if (!OB_FILTROS.includes(d.k)) throw new Error('filtro de Objetos desconocido: ' + d.k);
       if (el.tagName !== 'SELECT') { ui[d.k] = d.v; ui.focusSearch = false; render(); } break;
-    case 'verObj': e.preventDefault(); verObjeto(d.tab, d.id); break;
+    case 'verObj': verObjeto(d.tab, d.id); break;
     case 'crTipo': ui.crTipo = d.v; render(); break;
     case 'crAct': ui.crAct = d.v; render(); break;
     case 'crModo': ui.crModo = d.v; render(); break;
