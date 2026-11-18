@@ -168,7 +168,8 @@ def ctps(guia):
             print(f"AVISO: C.T.P. {c['name']!r}: el juego lo escribe {nombre!r}, y se usa el del juego")
         # Un C.T.P. propio (fuentes/propio/ctps.json, propio.py) trae su nombre en español (es: el del juego, o null si
         # todavía no se vio en el juego en español); los de thanosvibs lo toman de fuentes/juego-es/ctps.json (build.py).
-        propio = {'es_propio': c['es']} if 'es' in c else {}
+        # Lleva sus fuentes (pr), como un artefacto propio: la app lo marca «propio» en Objetos › C.T.P.
+        propio = {'es_propio': c['es'], 'pr': c['fuente']} if 'es' in c else {}
         out.append({'id': cid, 'name': nombre, 'grupo': grupo.get(cid),
                     'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged')),
                     'op': opciones_ctp(c), 'obt': obtencion_ctp(c), **corregido, **propio})
