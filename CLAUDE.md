@@ -75,7 +75,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (17 de noviembre de 2026)
+## Estado (18 de noviembre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
@@ -375,6 +375,19 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     de la hoja. Otra cosa que desborde el ancho en el celular vuelve a sacar la hoja de la vista (se encontraron tres; no se
     revisaron todas las variantes). Los personajes de ejemplo se nombran en `RECORRIDO_EJEMPLO`: si faltan en los datos, el
     recorrido de otra área corta con un error.
+- La 1.0.55 (sin cambio de formato, 19; la etiqueta va sobre el commit de versión), 18 de noviembre de 2026: **retratos
+  temporales** de Vulcan, Lilandra y Deathbird (Ezequiel: «Podes poner lso retratos temporales? Mientras esperamos lso de
+  Thanso Vibs?»; thanosvibs sigue sin publicarlos). `fuentes/propio/retratos/{vulcan,lilandra,deathbird}.png`: la celda
+  «Hero Image» de la ficha de cada uno en la nota foro-1897819 (155 px, la más grande de la nota; la ruta sin «thumbnail»
+  da 403), agrandada a 256x256 y con el fondo blanco transparente (relleno desde los bordes, los huecos encerrados
+  elegidos a mano, alfa del borde por mezcla con el blanco y color descontaminado). Más blandos que los de thanosvibs
+  por el agrandamiento. Sin código nuevo: el mecanismo de la 1.0.40 (`_core.retrato`, `propio.py`, `imagenes.origen`).
+  Son temporales: cuando thanosvibs publique los suyos, se sacan de `fuentes/propio/retratos/` (a mano, como en la 1.0.44
+  y la 1.0.51: mientras el archivo esté, manda el propio). Llegan a la app con el workflow de datos. Pruebas:
+  `verif_propio` (los tres con su retrato, que carga sin 404) y `verif_imagenes` (los retratos propios desde el origen
+  falso, no desde GitHub). Corridas con los datos armados el 18 de noviembre: sin fallas propio, imagenes, humo, ficha,
+  recorrido y ayuda. Pendiente: los íconos de los tres artefactos (la nota los trae, pero lo propio no tiene dónde
+  ponerlos: haría falta código, como `images/propio/` para los retratos).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,

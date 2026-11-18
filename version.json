@@ -1,6 +1,6 @@
 {
- "version": "1.0.54",
+ "version": "1.0.55",
  "formato_datos": 19,
  "python": "3.14.7",
- "notas": "Nuevo: un recorrido guiado para aprender a usar la app. El botón «Recorrido», arriba, muestra paso a paso qué mirar en la parte de la app en la que estás y cómo llegar a cada cosa; desde ahí podés ver otra parte o el recorrido completo, y al salir la app vuelve a donde estabas, sin cambiar nada de lo tuyo. La primera vez que se abre la app, lo ofrece solo. Y en el celular, tres cosas que se salían del ancho de la pantalla (las combinaciones de la ficha, la activación de algunas skills y el selector del Histórico)."
+ "notas": "Vulcan, Lilandra y Deathbird ya tienen retrato: uno provisorio, sacado de las fichas oficiales del juego y sin el fondo blanco, hasta que thanosvibs publique los suyos."
 }
