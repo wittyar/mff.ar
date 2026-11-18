@@ -27,6 +27,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/uniforms.json',
                        'work/updates.json', 'work/ctps.json', 'work/artifacts.json', 'work/abxl.json',
                        'work/supports.json', 'work/rotations.json', 'work/wiki_artifact.json', 'work/cards.json',
+                       'work/odins.json', 'work/emblems.json', 'work/emblems_static.json', 'work/emblems_levels.json',
+                       'work/wiki_iso.json',
                        'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
            if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):
@@ -110,6 +112,17 @@ import cromos
 CROMOS, _img_cromos = cromos.armar(json.load(open('work/cards.json', encoding='utf-8')),
                                    json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8'))['stats'])
 images.update(_img_cromos)
+# Objetos (1.0.56, scripts/objetos.py): las bendiciones de Odín, los emblemas, los sets de ISO-8 y J.A.R.V.I.S., con los
+# íconos de las bendiciones y de los emblemas. El detalle de los C.T.P. viaja en MFF_CTPS (fuentes.ctps).
+import objetos
+def _work(f):
+    return json.load(open(os.path.join('work', f), encoding='utf-8'))
+OBJETOS, _img_objetos = objetos.armar(
+    _work('odins.json'), _work('emblems.json'), _work('emblems_static.json'), _work('emblems_levels.json'), _work('wiki_iso.json'),
+    json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8')),
+    json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'cromos.json'), encoding='utf-8'))['nombres'],
+    FUENTES['modos'])
+images.update(_img_objetos)
 
 
 def _aplica_artefacto(en):
@@ -253,12 +266,17 @@ hoy = hoy.isoformat()
 # 19: los cromos de cómic (MFF_CROMOS, scripts/cromos.py; #35): cada uno con sus fijas, sus opciones por grado y sus
 #     activaciones, los nombres de sus stats, los tipos y las colecciones, y sus imágenes. La app de formato 19 tiene la
 #     sección Cromos y Mi cuenta › Cromos; la de formato 18 no los lee.
-FORMATO = 19
+# 20: Objetos (1.0.56): cada C.T.P. trae sus opciones con los valores de cada grado y de dónde se consigue (MFF_CTPS[].op y
+#     .obt), y MFF_OBJETOS las bendiciones de Odín, los emblemas, los sets de ISO-8 y J.A.R.V.I.S. (scripts/objetos.py), con
+#     los íconos de las bendiciones y de los emblemas. La app de formato 20 tiene la sección Objetos; la de formato 19 no
+#     los lee.
+FORMATO = 20
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
-// soportes, rotaciones, Alliance Battle, cromos, guía, retratos e íconos), future-fight.fandom.com
-// (instintos, bonos de equipo y el contraste de docs/AUDITORIA.md) y la guía de armado de
+// soportes, rotaciones, Alliance Battle, cromos, bendiciones de Odín, emblemas, guía, retratos e íconos),
+// future-fight.fandom.com (instintos, bonos de equipo, sets de ISO-8 y el contraste de docs/AUDITORIA.md), las notas
+// oficiales (J.A.R.V.I.S.) y la guía de armado de
 // Cynicalex Mega Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex
 // Mega Guides.
 // Uso personal.
@@ -318,6 +336,8 @@ parts = [header,
  '// Cromos de cómic (scripts/cromos.py, scripts/contenido/cromos.json): cada uno con sus fijas, sus opciones por grado\n'
  '// y sus activaciones; los valores, solo los de los propios (los de la nota, a la máxima calidad y grado).\n',
  'window.MFF_CROMOS = ' + json.dumps(CROMOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
+ '// Objetos (scripts/objetos.py, scripts/contenido/objetos.json): bendiciones de Odín, emblemas, sets de ISO-8 y J.A.R.V.I.S.\n',
+ 'window.MFF_OBJETOS = ' + json.dumps(OBJETOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Contraste con la wiki y chequeos internos por retrato (scripts/auditar.py; informe en docs/AUDITORIA.md).\n',
  'window.MFF_VERIFICACION = ' + json.dumps(VERIF, ensure_ascii=False) + ';\n',
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',

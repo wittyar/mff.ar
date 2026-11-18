@@ -94,6 +94,9 @@ class Patrones:
 
 
 TXP = Patrones('artefactos.json')
+# Las opciones de los C.T.P. (una línea de la ficha por cada '<br>' de thanosvibs) y de dónde se consiguen, por patrón
+# como las de los artefactos: el español sale de las fichas del juego en español (fuentes/juego-es/ctps_fichas.json).
+TXC = Patrones('ctp_opciones.json')
 
 
 def cargar(ruta):
@@ -116,6 +119,44 @@ def nombre_ctp(nombre):
     return juego, {'tv': nombre, 'f': [f]}
 
 
+# Los grados de un C.T.P. en /api/ctps y en la app (como el juego en español: base, poderoso y brillante).
+GRADOS_CTP = (('regular', 'normal'), ('mighty', 'poderoso'), ('brilliant', 'brillante'))
+
+
+def opciones_ctp(c):
+    """Las opciones de un C.T.P. con sus valores por grado (1.0.56: Objetos › C.T.P.).
+    thanosvibs da las opciones fijas (stats_normal) y las dos de reforja (stats_reforge: special y generic) como texto con
+    marcadores [P1]..[Pn], y en cada grado los valores de cada marcador (los de reforja, solo en poderoso y brillante). Cada
+    opción va como sus líneas (una por '<br>', traducidas por patrón); los valores, por grado. Un grado que no trae todos
+    los valores que usa su texto se avisa, y la app marca cada número que falta, como en los artefactos."""
+    def lineas(texto):
+        return [TXC(x) for x in texto.split('<br>')]
+    partes = [('fija', c['stats_normal'], 'stats_normal', None)]
+    if c.get('stats_reforge'):
+        partes += [(k, [c['stats_reforge'][campo]], 'stats_reforge', campo) for k, campo in (('esp', 'special'), ('gen', 'generic'))]
+    out = []
+    for k, textos, campo, sub in partes:
+        v = {}
+        for g, gid in GRADOS_CTP:
+            vals = (c.get(g) or {}).get(campo)
+            if vals is None:
+                continue
+            v[gid] = vals[sub] if sub else vals
+        usados = {int(x[2:-1]) for t in textos for x in re.findall(r'\[P\d+\]', t)}
+        cortos = [f'{g} ({len(x)} de {max(usados)})' for g, x in v.items() if usados and max(usados) > len(x)]
+        if cortos:
+            print(f"AVISO: C.T.P. {c['name']}, opción {k}: la fuente no trae todos los valores en {', '.join(cortos)}")
+        out.append({'k': k, 'o': [lineas(t) for t in textos], 'v': v})
+    return out
+
+
+def obtencion_ctp(c):
+    """De dónde se consigue cada grado de un C.T.P. thanosvibs escribe en cursiva (<i>) el nombre de la película de una
+    Batalla legendaria: va entre comillas, para traducir por patrón sin HTML."""
+    return {gid: [TXC(re.sub(r'<i>(.*?)</i>', r'«\1»', x)) for x in c[g]['acquisition']]
+            for g, gid in GRADOS_CTP if c.get(g)}
+
+
 def ctps(guia):
     grupo = {c: g['id'] for g in guia['ctp_ranking']['grupos'] for c in g['ctps']}
     out = []
@@ -129,7 +170,8 @@ def ctps(guia):
         # todavía no se vio en el juego en español); los de thanosvibs lo toman de fuentes/juego-es/ctps.json (build.py).
         propio = {'es_propio': c['es']} if 'es' in c else {}
         out.append({'id': cid, 'name': nombre, 'grupo': grupo.get(cid),
-                    'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged')), **corregido, **propio})
+                    'desc': TX(c.get('description')), 'descR': TX(c.get('description_reforged')),
+                    'op': opciones_ctp(c), 'obt': obtencion_ctp(c), **corregido, **propio})
     sobran = set(_CTP_NOMBRE_JUEGO) - {c['name'] for c in datos}
     if sobran:
         print(f'AVISO: /api/ctps ya no publica {sorted(sobran)}: sobra su nombre del juego en fuentes.py (_CTP_NOMBRE_JUEGO)')

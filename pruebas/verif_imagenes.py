@@ -17,7 +17,7 @@ def chequear(nombre, cond, detalle=''):
     print(('OK   ' if cond else 'FALLA'), nombre, '|', detalle)
     if not cond: fallas.append(nombre)
 
-MAPA = {'portraits': '', 'items': 'items/', 'attributes': 'icons/', 'cards': 'cards/'}
+MAPA = {'portraits': '', 'items': 'items/', 'attributes': 'icons/', 'cards': 'cards/', 'ui_item': 'emblemas/'}
 ROTAS = set()          # rutas de origen que responden 500
 LENTAS = set()         # con algo adentro, cada imagen tarda medio segundo
 NO_PNG = set()         # rutas de origen que responden algo que no es PNG
@@ -32,7 +32,8 @@ class Origen(http.server.BaseHTTPRequestHandler):
         elif ruta.startswith('/fuentes/propio/retratos/'):
             # Los retratos propios (imagenes.origen: del repo en GitHub), del repo local.
             archivo = os.path.join(RAIZ, ruta[1:])
-        elif ruta.startswith('/images/'):
+        elif ruta.startswith('/images/') or ruta.startswith('/_game-assets/ui_item/'):
+            # Los emblemas (1.0.56) salen de /_game-assets/ui_item/ (imagenes.origen).
             _, _, carpeta, nombre = ruta.split('/', 3)
             if ruta in ROTAS: return self.send_error(500)
             if LENTAS: __import__('time').sleep(0.5)

@@ -1,0 +1,316 @@
+{
+ "nota": {
+  "es": "J.A.R.V.I.S. (1.0.56, #37: el alcance de esta versión es de consulta). thanosvibs no lo publica: sale de la nota del 2 de septiembre de 2026 que lo introdujo (foro-1895951; la lista de chips es una imagen de esa nota, transcripta acá tal cual: categoría, nombre y opción, con N donde la nota no da el número), de la del 14 de octubre (foro-1896956) y de la guía del juego (en inglés, capturas 24, 25, 75, 76, 117 y 118; en español, 88, 89, 161 y 162). Ninguna fuente da los valores de cada chip por grado ni por nivel de mejora: las imágenes de ejemplo de la nota muestran chips sueltos, sin decir su nivel, y la nota avisa que en un mismo grado las opciones fijas pueden variar. Los nombres de los chips van como los escribe la nota en inglés: no hay captura del juego en español que los nombre.",
+  "en": "J.A.R.V.I.S. (1.0.56, #37), from the official notes and the in-game guide; the chip list is an image of the September 2, 2026 notes, transcribed as is."
+ },
+ "imagen_lista": "https://hedwig-cf.netmarble.com/forum-common/mherosgb/futurefight_en/thumbnail/88c2bd48a5224dbf84b27b2a2d245663_1788238064886_d.jpg",
+ "categorias": [
+  {
+   "id": "ataque",
+   "en": "Attack Chip",
+   "es": "Chip de ataque"
+  },
+  {
+   "id": "defensa",
+   "en": "Defense Chip",
+   "es": "Chip de defensa"
+  },
+  {
+   "id": "especial",
+   "en": "Special Chip",
+   "es": "Chip especial"
+  }
+ ],
+ "chips": [
+  {
+   "cat": "ataque",
+   "n": "Combat",
+   "en": "Increases All Basic Attacks for COMBAT Type Heroes by +N%",
+   "es": "Aumenta todos los ataques básicos de los héroes de tipo COMBATE en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Blast",
+   "en": "Increases All Basic Attacks for BLAST Type Heroes by +N%",
+   "es": "Aumenta todos los ataques básicos de los héroes de tipo DETONACIÓN en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Speed",
+   "en": "Increases All Basic Attacks for SPEED Type Heroes by +N%",
+   "es": "Aumenta todos los ataques básicos de los héroes de tipo VELOCIDAD en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Universal",
+   "en": "Increases All Basic Attacks for UNIVERSAL Type Heroes by +N%",
+   "es": "Aumenta todos los ataques básicos de los héroes de tipo UNIVERSAL en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Physical",
+   "en": "Physical Attack increases by +N%",
+   "es": "Aumenta el ataque físico en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Energy",
+   "en": "Energy Attack increases by +N%",
+   "es": "Aumenta el ataque de energía en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Critical Hit",
+   "en": "Critical Rate increases by +N%",
+   "es": "Aumenta la probabilidad de crítico en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Critical Damage",
+   "en": "Critical Damage increases by +N%",
+   "es": "Aumenta el daño crítico en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "ataque",
+   "n": "Boss Damage",
+   "en": "Increases basic damage dealt to boss types by +N%",
+   "es": "Aumenta el daño básico infligido a jefes en +N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Combat HP",
+   "en": "Increases HP for COMBAT Type Heroes by N%",
+   "es": "Aumenta los PG de los héroes de tipo COMBATE en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Blast HP",
+   "en": "Increases HP for BLAST Type Heroes by N%",
+   "es": "Aumenta los PG de los héroes de tipo DETONACIÓN en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Speed HP",
+   "en": "Increases HP for SPEED Type Heroes by N%",
+   "es": "Aumenta los PG de los héroes de tipo VELOCIDAD en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Universal HP",
+   "en": "Increases HP for UNIVERSAL Type Heroes by N%",
+   "es": "Aumenta los PG de los héroes de tipo UNIVERSAL en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "HP",
+   "en": "HP increases by N%",
+   "es": "Aumenta los PG en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Physical",
+   "en": "Physical Defense increases by N%",
+   "es": "Aumenta la defensa física en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Energy",
+   "en": "Energy Defense increases by N%",
+   "es": "Aumenta la defensa de energía en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Debuff Decrease",
+   "en": "Decreases Debuff Duration by N%",
+   "es": "Reduce la duración de las mermas en N%",
+   "u": "%"
+  },
+  {
+   "cat": "defensa",
+   "n": "Boss Damage",
+   "en": "Decreases basic damage received from boss types by N%",
+   "es": "Reduce el daño básico recibido de los jefes en N%",
+   "u": "%"
+  },
+  {
+   "cat": "especial",
+   "n": "Flame Bonus Damage",
+   "en": "Flame Attack +N Bonus Damage",
+   "es": "Ataque de fuego: +N de daño adicional",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Cold Bonus Damage",
+   "en": "Cold Attack +N Bonus Damage",
+   "es": "Ataque de frío: +N de daño adicional",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Lightning Bonus Damage",
+   "en": "Lightning Attack +N Bonus Damage",
+   "es": "Ataque de rayo: +N de daño adicional",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Poison Bonus Damage",
+   "en": "Poison Attack +N Bonus Damage",
+   "es": "Ataque de veneno: +N de daño adicional",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Mind Bonus Damage",
+   "en": "Mind Attack +N Bonus Damage",
+   "es": "Ataque mental: +N de daño adicional",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Instinct Justice",
+   "en": "Increases Justice by +N",
+   "es": "Aumenta Justicia en +N",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Instinct Cruelty",
+   "en": "Increases Cruelty by +N",
+   "es": "Aumenta Crueldad en +N",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Instinct Order",
+   "en": "Increases Order by +N",
+   "es": "Aumenta Orden en +N",
+   "u": ""
+  },
+  {
+   "cat": "especial",
+   "n": "Instinct Destruction",
+   "en": "Increases Destruction by +N",
+   "es": "Aumenta Destrucción en +N",
+   "u": ""
+  }
+ ],
+ "chips_fuente": [
+  "foro-1895951"
+ ],
+ "ex_opciones": {
+  "en": "Physical Attack, Energy Attack, Decrease Skill Cooldown, Physical Defense, Energy Defense, HP, Recovery Rate, Movement Speed, Decrease Debuff Duration, Attack Speed, Critical Rate, Critical Damage.",
+  "stats": [
+   "patk",
+   "eatk",
+   "cd",
+   "pdef",
+   "edef",
+   "hp",
+   "rec",
+   "mspd",
+   "debuff",
+   "aspd",
+   "crit",
+   "critdmg"
+  ],
+  "fuente": [
+   "foro-1895951"
+  ]
+ },
+ "modos": {
+  "en": "Applicable Contents: World Boss, Alliance Battle, Team Battle Arena, Otherworld Battle, Giant Boss Raid, Zombie Survival.",
+  "ids": [
+   "world-boss",
+   "alliance-battle",
+   "team-battle-arena",
+   "otherworld-battle",
+   "giant-boss-raid",
+   "zombie-survival"
+  ],
+  "fuente": [
+   "foro-1895951"
+  ]
+ },
+ "notas": [
+  {
+   "es": "Un sistema de potenciadores para todo el equipo: se equipa un preajuste de J.A.R.V.I.S. al equipo en la pantalla de elegir personajes, y el equipo recibe los aumentos de estadísticas de sus chips.",
+   "en": "A team buff system: a J.A.R.V.I.S. Preset is equipped to the team on the Select Characters screen, and the team receives the stat increases of its chips.",
+   "f": [
+    "foro-1895951",
+    "juego-capturas-en"
+   ]
+  },
+  {
+   "es": "Hay 10 preajustes. Cada uno lleva hasta 3 chips: uno de ataque, uno de defensa y uno especial. Un mismo chip puede estar en varios preajustes a la vez. Quitar un chip no cuesta nada.",
+   "en": "10 Presets. Each one holds up to 3 Chips (1 Attack, 1 Defense, 1 Special). The same Chip can be equipped in several Presets at the same time. Unequipping costs no currency.",
+   "f": [
+    "foro-1895951",
+    "juego-capturas-en"
+   ]
+  },
+  {
+   "es": "Grados: de 1★ a 6★, y 6★ EX (Premium). Cada chip tiene opciones fijas, más fuertes cuanto más alto el grado; dentro de un mismo grado, el valor de una opción fija puede variar. Los EX dan 1 opción fija y 1 adicional que sale al azar, con probabilidades fijas, de esta lista: ataque físico, ataque de energía, reducir duración de recarga, defensa física, defensa de energía, PG, índice de recuperación, velocidad de movimiento, reducir duración de merma, velocidad de ataque, probabilidad de crítico y daño crítico.",
+   "en": "Grades: 1★ to 6★ / 6★ EX (Premium). Each chip has fixed options, stronger at higher grades; fixed options may vary within the same grade. EX Chips grant 1 fixed option and 1 additional option based on set probabilities.",
+   "f": [
+    "foro-1895951"
+   ]
+  },
+  {
+   "es": "Mejora: hasta el nivel 10, sube la opción fija y la adicional. Cada mejora gasta 1 dato del mismo grado y tipo que el chip, y fragmentos de datos de J.A.R.V.I.S. (normales o avanzados; la cantidad depende del grado).",
+   "en": "Enhancement: up to Level 10, raising the fixed and the additional options. Each enhancement uses 1 Data of the same grade and type as the chip, plus Normal/Advanced J.A.R.V.I.S. Data Fragments (type and quantity depend on the grade).",
+   "f": [
+    "foro-1895951",
+    "juego-capturas-en"
+   ]
+  },
+  {
+   "es": "Cambio de opción: con datos del mismo chip (sin fragmentos). El nivel de mejora se mantiene. En un chip EX también se puede cambiar el tipo de su efecto adicional.",
+   "en": "Option change: uses the chip's own Data (no fragments). The enhancement level is kept. On an EX chip, the type of its bonus effect can also be changed.",
+   "f": [
+    "juego-capturas-en",
+    "juego-guia"
+   ]
+  },
+  {
+   "es": "Un chip repetido se convierte solo en datos de ese chip (por ejemplo, «Rare Defense Chip: Blast HP» de 3★ pasa a «Rare Defense Data: Blast HP» de 3★). Los datos se desmontan en fragmentos: cuanto más alto el grado, más y mejores fragmentos.",
+   "en": "A duplicate chip is converted into Data for that chip (e.g. a 3★ Rare Defense Chip: Blast HP becomes Rare Defense Data: Blast HP). Data can be dismantled into fragments: higher grades give more and better fragments.",
+   "f": [
+    "foro-1895951",
+    "juego-capturas-en"
+   ]
+  },
+  {
+   "es": "Se consiguen en Jefe mundial y en la tienda; en Jefe mundial mítico (Annihilus), cada 10 fases se puede ganar un cofre de chips EX como premio del primer paso.",
+   "en": "Obtained from World Boss and the Store; in World Boss Mythic (Annihilus), every 10th stage can award a J.A.R.V.I.S. Chip Chest (EX) as a First Clear Reward.",
+   "f": [
+    "foro-1895951",
+    "juego-capturas-en"
+   ]
+  },
+  {
+   "es": "Desde la actualización del 14 de octubre de 2026 cada preajuste se puede renombrar. Ese mismo día, al cambiar cómo se aplican los potenciadores al equipo, los efectos de J.A.R.V.I.S. quedaron entre los que se siguen aplicando igual.",
+   "en": "Since October 13, 2026 each preset can be renamed; J.A.R.V.I.S. effects were among the buffs whose application method was kept.",
+   "f": [
+    "foro-1896956"
+   ]
+  }
+ ]
+}

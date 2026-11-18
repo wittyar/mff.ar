@@ -1,0 +1,561 @@
+{
+ "nota": {
+  "es": "Cómo se leen las fuentes de Objetos (1.0.56) para scripts/objetos.py: las bendiciones de Odín y los emblemas de thanosvibs (/api/odins-blessings, /api/emblems y /api/emblems/static), los sets de ISO-8 de la tabla «ISO SET BONUS» de la wiki y J.A.R.V.I.S. de fuentes/objetos/jarvis.json. Cada texto de la fuente que se lee está acá, con su clave o su traducción: uno que no está corta el build. nombres: los stats que no están en guia.json (stats) ni en contenido/cromos.json (nombres). notas: lo que dicen del sistema el juego y las notas oficiales, con su fuente.",
+  "en": "How the Items sources are read (1.0.56), for scripts/objetos.py."
+ },
+ "nombres": {
+  "inst_atk": {
+   "es": "ATQ de instinto",
+   "en": "Instinct Attack"
+  },
+  "dmg_fuego": {
+   "es": "Daño de fuego",
+   "en": "Fire Damage"
+  },
+  "dmg_frio": {
+   "es": "Daño de frío",
+   "en": "Cold Damage"
+  },
+  "dmg_rayo": {
+   "es": "Daño de rayo",
+   "en": "Lightning Damage"
+  },
+  "dmg_veneno": {
+   "es": "Daño de veneno",
+   "en": "Poison Damage"
+  },
+  "dmg_mental": {
+   "es": "Daño mental",
+   "en": "Mind Damage"
+  },
+  "dmg_elementos": {
+   "es": "Todo el daño elemental",
+   "en": "All Element Damage"
+  },
+  "dano_aliens": {
+   "es": "Daño básico infligido a alienígenas",
+   "en": "Basic Damage Dealt to Aliens"
+  },
+  "dano_humanos": {
+   "es": "Daño básico infligido a humanos",
+   "en": "Basic Damage Dealt to Humans"
+  },
+  "dano_mutantes": {
+   "es": "Daño básico infligido a mutantes",
+   "en": "Basic Damage Dealt to Mutants"
+  },
+  "dano_villanos": {
+   "es": "Daño básico infligido a villanos",
+   "en": "Basic Damage Dealt to Villains"
+  },
+  "dano_femeninos": {
+   "es": "Daño básico infligido a personajes femeninos",
+   "en": "Basic Damage Dealt to Females"
+  },
+  "dano_detonacion": {
+   "es": "Daño básico infligido a personajes de tipo Detonación",
+   "en": "Basic Damage Dealt to Blasts"
+  },
+  "dano_jefes": {
+   "es": "Daño básico infligido a jefes",
+   "en": "Basic Damage Dealt to Boss Types"
+  },
+  "dano_fenix": {
+   "es": "Daño básico infligido a personajes con la habilidad Fuerza Fénix",
+   "en": "Basic Damage Dealt to Phoenix Force Ability"
+  },
+  "dano_proyeccion": {
+   "es": "Daño básico infligido a personajes con la habilidad Proyección de Energía",
+   "en": "Basic Damage Dealt to Energy Projection Ability"
+  },
+  "red_aliens": {
+   "es": "Reduce el daño básico recibido de alienígenas",
+   "en": "Decreases Basic Damage Received from Aliens"
+  },
+  "red_humanos": {
+   "es": "Reduce el daño básico recibido de humanos",
+   "en": "Decreases Basic Damage Received from Humans"
+  },
+  "red_masculinos": {
+   "es": "Reduce el daño básico recibido de personajes masculinos",
+   "en": "Decreases Basic Damage Received from Males"
+  },
+  "red_villanos": {
+   "es": "Reduce el daño básico recibido de villanos",
+   "en": "Decreases Basic Damage Received from Villains"
+  },
+  "red_jefes": {
+   "es": "Reduce el daño básico recibido de jefes",
+   "en": "Decreases Basic Damage Received from Boss Types"
+  },
+  "red_combate": {
+   "es": "Reduce el daño básico recibido de personajes de tipo Combate",
+   "en": "Decreases Basic Damage Received from Combats"
+  },
+  "red_fuerza": {
+   "es": "Reduce el daño básico recibido de personajes con la habilidad Fuerza",
+   "en": "Decreases Basic Damage Received from Strong Ability"
+  },
+  "red_maquina": {
+   "es": "Reduce el daño básico recibido de personajes con la habilidad Máquina",
+   "en": "Decreases Basic Damage Received from Machine Ability"
+  },
+  "red_perforacion": {
+   "es": "Reduce el daño de perforación adicional recibido",
+   "en": "Decreases Additional Pierce Damage"
+  }
+ },
+ "odin": {
+  "stats": {
+   "Energy Attack": "eatk",
+   "Physical Attack": "patk",
+   "All Basic Attacks": "allatk",
+   "Critical Damage": "critdmg",
+   "Critical Rate": "crit",
+   "Ignore Defense": "igdef",
+   "HP": "hp",
+   "Skill Cooldown": "cd",
+   "Fire Damage": "dmg_fuego",
+   "Cold Damage": "dmg_frio",
+   "Lightning Damage": "dmg_rayo",
+   "Poison Damage": "dmg_veneno",
+   "Mind Damage": "dmg_mental"
+  },
+  "colores": {
+   "red": {
+    "es": "Rojo",
+    "en": "Red",
+    "css": "#d2332c"
+   },
+   "blue": {
+    "es": "Azul",
+    "en": "Blue",
+    "css": "#1c8fc4"
+   },
+   "green": {
+    "es": "Verde",
+    "en": "Green",
+    "css": "#7fcb21"
+   },
+   "yellow": {
+    "es": "Amarillo",
+    "en": "Yellow",
+    "css": "#d4a81c"
+   },
+   "purple": {
+    "es": "Violeta",
+    "en": "Purple",
+    "css": "#8e1cd4"
+   }
+  },
+  "formas": {
+   "circle": {
+    "es": "Círculo",
+    "en": "Circle"
+   },
+   "square": {
+    "es": "Cuadrado",
+    "en": "Square"
+   },
+   "diamond": {
+    "es": "Rombo",
+    "en": "Diamond"
+   },
+   "heart": {
+    "es": "Corazón",
+    "en": "Heart"
+   },
+   "hexagon": {
+    "es": "Hexágono",
+    "en": "Hexagon"
+   }
+  },
+  "drop": {
+   "False": null,
+   "Ebony Maw WBU": {
+    "es": "Jefe mundial definitivo: Ebony Maw",
+    "en": "World Boss Ultimate: Ebony Maw"
+   },
+   "Proxima Midnight WBU": {
+    "es": "Jefe mundial definitivo: Proxima Midnight",
+    "en": "World Boss Ultimate: Proxima Midnight"
+   },
+   "Scarlet Witch WBU": {
+    "es": "Jefe mundial definitivo: Scarlet Witch",
+    "en": "World Boss Ultimate: Scarlet Witch"
+   },
+   "Corvus Glaive WBU": {
+    "es": "Jefe mundial definitivo: Corvus Glaive",
+    "en": "World Boss Ultimate: Corvus Glaive"
+   },
+   "Apocalypse WBU": {
+    "es": "Jefe mundial definitivo: Apocalypse",
+    "en": "World Boss Ultimate: Apocalypse"
+   },
+   "Thanos WBU": {
+    "es": "Jefe mundial definitivo: Thanos",
+    "en": "World Boss Ultimate: Thanos"
+   },
+   "Cull Obsidian WBU": {
+    "es": "Jefe mundial definitivo: Cull Obsidian",
+    "en": "World Boss Ultimate: Cull Obsidian"
+   },
+   "Quicksilver WBU": {
+    "es": "Jefe mundial definitivo: Quicksilver",
+    "en": "World Boss Ultimate: Quicksilver"
+   },
+   "Cable WBU": {
+    "es": "Jefe mundial definitivo: Cable",
+    "en": "World Boss Ultimate: Cable"
+   },
+   "Supergiant WBU - Regular drop only": {
+    "es": "Jefe mundial definitivo: Supergiant (solo en el botín normal)",
+    "en": "World Boss Ultimate: Supergiant (regular drop only)"
+   },
+   "Supergiant WBU - Conquer Level rewards only": {
+    "es": "Jefe mundial definitivo: Supergiant (solo como recompensa de nivel de conquista)",
+    "en": "World Boss Ultimate: Supergiant (Conquer Level rewards only)"
+   }
+  },
+  "notas": [
+   {
+    "es": "Las bendiciones de Odín son urus encantados con más estadísticas que los demás: dos stats cada una. Se pueden conseguir al combinar dos urus encantados míticos.",
+    "en": "Odin's Blessings are Enchanted Urus with higher stats than the others: two stats each. They can come from combining two Mythic Enchanted Urus.",
+    "f": [
+     "juego-guia",
+     "juego-capturas-en"
+    ]
+   },
+   {
+    "es": "Valor, bono de amplificación y total: así publica thanosvibs cada stat (el total es el valor más el bono de amplificación).",
+    "en": "Value, amplification bonus and total: as thanosvibs publishes each stat (the total is the value plus the amplification bonus).",
+    "f": [
+     "tv-odin"
+    ]
+   },
+   {
+    "es": "Despertar (desde noviembre de 2024): con un uru encantado mítico o mejor, llama eterna (de Supervivencia contra zombis) y oro. Sale una bendición de Odín grabada o, con superéxito, una Gloria de Odín; la grabada se puede volver a despertar, la Gloria no. Despertar mejora sus stats.",
+    "en": "Awakening (since November 2024): with Mythic or higher Enchanted Uru, Eternal Flame (Zombie Survival) and Gold. It gives an Engraved Odin's Blessing or, on a Super Success, Odin's Glory; the Engraved one can be awakened again, Odin's Glory cannot. Awakening upgrades its stats.",
+    "f": [
+     "foro-1827362",
+     "juego-guia",
+     "juego-capturas-en"
+    ]
+   },
+   {
+    "es": "Con bendiciones grabadas o Glorias de Odín equipadas, cada pieza de equipo gana un efecto de despertar según cuántas lleva: hasta +10% de ATQ de instinto por pieza, +40% con las cuatro. Una pieza no puede llevar a la vez una bendición y una despertada del mismo tipo.",
+    "en": "With Engraved Odin's Blessings or Odin's Glory equipped, each gear piece gets an awakening effect based on how many it holds: up to +10% Instinct Attack per piece, +40% with all four. A piece cannot hold an Odin's Blessing and an Awakened one of the same type.",
+    "f": [
+     "foro-1827362"
+    ]
+   },
+   {
+    "es": "Despertar automático (desde el 17 de noviembre de 2026): se eligen los materiales (uru encantado mítico, bendición de Odín, bendición grabada o Gloria de Odín) y cuántos intentos; se gastan en el orden de la lista y para con un superéxito, al terminar los intentos o con «Detener». También desde la pantalla de equipar urus del héroe.",
+    "en": "Auto Awaken (since November 17, 2026): choose the materials (Mythic Enchanted Uru, Odin's Blessing, Engraved Odin's Blessing, Odin's Glory) and the number of attempts; they are used in list order, and it stops on a Super Success, when the attempts run out or with Stop. Also available from the hero's Equip Uru screen.",
+    "f": [
+     "foro-1897819"
+    ]
+   }
+  ]
+ },
+ "emblemas": {
+  "buffs": {
+   "Physical Attack": "patk",
+   "Energy Attack": "eatk",
+   "All Basic Attacks": "allatk",
+   "Instinct Attack": "inst_atk",
+   "Dodge": "dodge",
+   "Ignore Dodge": "igdodge",
+   "Recovery Rate": "rec",
+   "HP": "hp",
+   "All Resistances": "res_todas",
+   "Movement Speed": "mspd",
+   "Lightning Damage": "dmg_rayo",
+   "Poison Damage": "dmg_veneno",
+   "Fire Damage": "dmg_fuego",
+   "Cold Damage": "dmg_frio",
+   "Mind Damage": "dmg_mental",
+   "All Element Damage": "dmg_elementos",
+   "Basic Damage Dealt to Aliens": "dano_aliens",
+   "Basic Damage Dealt to Humans": "dano_humanos",
+   "Basic Damage Dealt to Mutants": "dano_mutantes",
+   "Basic Damage Dealt to Villains": "dano_villanos",
+   "Basic Damage Dealt to Females": "dano_femeninos",
+   "Basic Damage Dealt to Blasts": "dano_detonacion",
+   "Basic Damage Dealt to Boss Types": "dano_jefes",
+   "Basic Damage Dealt to Phoenix Force Ability": "dano_fenix",
+   "Basic Damage Dealt to Energy Projection Ability": "dano_proyeccion",
+   "Decreases Basic Damage Received from Aliens": "red_aliens",
+   "Decreases Basic Damage Received from Humans": "red_humanos",
+   "Decreases Basic Damage Received from Males": "red_masculinos",
+   "Decreases Basic Damage Received from Villains": "red_villanos",
+   "Decreases Basic Damage Received from Boss Types": "red_jefes",
+   "Decreases Basic Damage Received from Combats": "red_combate",
+   "Decreases Basic Damage Received from Strong Ability": "red_fuerza",
+   "Decreases Basic Damage Received from Machine Ability": "red_maquina",
+   "Decreases Additional Pierce Damage": "red_perforacion"
+  },
+  "rarezas": [
+   {
+    "id": "Normal",
+    "es": "Normal",
+    "en": "Normal",
+    "color": "#94a3b8"
+   },
+   {
+    "id": "Advanced",
+    "es": "De lujo",
+    "en": "Advanced",
+    "color": "#4ade80",
+    "duda": {
+     "es": "thanosvibs la llama «Advanced»; la guía del juego en inglés, «Luxury», y en español «de lujo», en el mismo lugar de la lista de rarezas (la segunda): que sean la misma es probable, sin confirmar.",
+     "en": "thanosvibs calls it \"Advanced\"; the in-game guide says \"Luxury\" in the same place of the rarity list (second): probably the same, not confirmed."
+    }
+   },
+   {
+    "id": "Rare",
+    "es": "Excepcional",
+    "en": "Rare",
+    "color": "#60a5fa"
+   },
+   {
+    "id": "Heroic",
+    "es": "Heroica",
+    "en": "Heroic",
+    "color": "#c084fc"
+   },
+   {
+    "id": "Legendary",
+    "es": "Legendaria",
+    "en": "Legendary",
+    "color": "#fb923c"
+   },
+   {
+    "id": "Mythic",
+    "es": "Mítica",
+    "en": "Mythic",
+    "color": "#f87171"
+   }
+  ],
+  "rarezas_fuente": [
+   "juego-guia",
+   "juego-capturas-en",
+   "tv-emblemas"
+  ],
+  "tipos": {
+   "Offensive": {
+    "es": "Ofensivo",
+    "en": "Offensive"
+   },
+   "Defensive": {
+    "es": "Defensivo",
+    "en": "Defensive"
+   }
+  },
+  "sin_restriccion": {
+   "es": "Rige en todo el contenido (sin restricción de modo)",
+   "en": "Applies in all content (unrestricted)"
+  },
+  "obtencion": {
+   "multi1_normal": {
+    "es": "Saga del multiverso (normal)",
+    "en": "Multiverse Saga (Normal)"
+   },
+   "multi1_hidden": {
+    "es": "Saga del multiverso (historia oculta)",
+    "en": "Multiverse Saga (Hidden)"
+   },
+   "nofarm": {
+    "es": "Sin una forma fiable de conseguirlo",
+    "en": "No reliable farm"
+   },
+   "World Boss Legend: Corvus & Proxima (Stage 50+ Drop)": {
+    "es": "Jefe mundial legendario: Corvus y Proxima (botín desde la fase 50)",
+    "en": "World Boss Legend: Corvus & Proxima (Stage 50+ drop)"
+   },
+   "World Boss Legend: Black Dwarf & Ebony Maw (Stage 50+ Drop)": {
+    "es": "Jefe mundial legendario: Black Dwarf y Ebony Maw (botín desde la fase 50)",
+    "en": "World Boss Legend: Black Dwarf & Ebony Maw (Stage 50+ drop)"
+   },
+   "World Boss Legend: Thanos & The Black Order (Stage 60/80 Drop)": {
+    "es": "Jefe mundial legendario: Thanos y la Orden Negra (botín de las fases 60 y 80)",
+    "en": "World Boss Legend: Thanos & The Black Order (Stage 60/80 drop)"
+   }
+  },
+  "modos": {
+   "Timeline Battle": "timeline-battle",
+   "World Boss": "world-boss",
+   "Dimension Rift": "dimension-rift"
+  },
+  "notas": [
+   {
+    "es": "Los emblemas dan su efecto solo en el contenido de su colección, salvo los que rigen en todo. Se registran en la colección de emblemas del menú.",
+    "en": "Emblems apply their effect only in their collection's content, except the unrestricted ones. They are registered in the Emblem Collection menu.",
+    "f": [
+     "foro-1817798",
+     "juego-capturas-en",
+     "tv-emblemas"
+    ]
+   },
+   {
+    "es": "Un emblema no se consigue dos veces: uno repetido se convierte en datos de emblema de su misma rareza.",
+    "en": "An emblem cannot be acquired twice: a duplicate becomes Emblem Data of the same rarity.",
+    "f": [
+     "foro-1817798"
+    ]
+   },
+   {
+    "es": "Se suben de nivel con datos de emblema de la misma rareza, kits de mejora de emblema (solo en ciertos niveles) y oro; al llegar a ciertos niveles sube solo de estrellas, sin más materiales, hasta 6★ en el nivel 60.",
+    "en": "Leveled up with Emblem Data of the same rarity, Emblem Enhancement Kits (only at certain levels) and Gold; at certain levels it advances in stars automatically, up to 6★ at level 60.",
+    "f": [
+     "foro-1817798",
+     "juego-guia",
+     "juego-capturas-en",
+     "tv-emblemas"
+    ]
+   },
+   {
+    "es": "Los datos y los kits salen de la Saga del multiverso; también hay un cofre de emblemas en la tienda (cofre dimensional).",
+    "en": "Data and kits come from the Multiverse Saga; there is also an Emblem Chest in the Store (Dimension Chest).",
+    "f": [
+     "juego-guia",
+     "juego-capturas-en",
+     "foro-1817798"
+    ]
+   },
+   {
+    "es": "Las estrellas de cada colección suben con los emblemas que tenés y su nivel, y dan recompensas de colección y lugares de recompensa diarios.",
+    "en": "Each collection's stars grow with the emblems you own and their levels, and give collection rewards and daily reward slots.",
+    "f": [
+     "foro-1817798"
+    ]
+   }
+  ]
+ },
+ "iso": {
+  "colores": {
+   "White": "blanca",
+   "Red": "roja",
+   "Blue": "azul",
+   "Green": "verde",
+   "Yellow": "amarilla",
+   "Orange": "naranja",
+   "Purple": "violeta",
+   "Chaos": "caos"
+  },
+  "piedras_es": {
+   "blanca": "ISO-8 poderoso",
+   "roja": "ISO-8 amplificador",
+   "azul": "ISO-8 invulnerable",
+   "verde": "ISO-8 absorbente",
+   "amarilla": "ISO-8 feroz",
+   "caos": "ISO-8 caótico"
+  },
+  "piedras_es_fuente": {
+   "captura": 247,
+   "f": [
+    "juego-ficha-es"
+   ],
+   "es": "Los nombres en español, de la pantalla de equipar ISO-8 del juego (captura 247 a 254), cada uno con su stat, que cierra con el de la guía. «Vital» y «Nimble» no aparecen en esas capturas: van en inglés."
+  },
+  "sets_es": {
+   "Power of Angry Hulk": {
+    "es": "Fuerza del Hulk cabreado",
+    "captura": 246
+   }
+  },
+  "stats": {
+   "All Attack ↑": "allatk",
+   "All Defense ↑": "alldef",
+   "Attack Speed ↑": "aspd",
+   "Cooldown Duration ↓": "cd",
+   "Critical Damage ↑": "critdmg",
+   "Critcal Damage ↑": "critdmg",
+   "Critical Rate ↑": "crit",
+   "Crowd Control Time ↓": "cc",
+   "Crowd Control Time ↑": "cc",
+   "Dodge ↑": "dodge",
+   "Ignore Defense": "igdef",
+   "Max HP ↑": "hp",
+   "Movement Speed ↑": "mspd",
+   "Recovery Rate ↑": "rec"
+  },
+  "dudas": {
+   "Crowd Control Time ↑": {
+    "es": "La wiki escribe «Crowd Control Time ↑» (sube) en este set, y «↓» en los demás: es probable que sea la misma reducción, sin confirmar.",
+    "en": "The wiki writes \"Crowd Control Time ↑\" in this set and \"↓\" in the others: probably the same decrease, not confirmed."
+   }
+  },
+  "activaciones": {
+   "+10% Increase of All Attacks.(20 Sec.)": "Todos los ataques +10% (20 s)",
+   "+10% Increase of All Defenses.(20 Sec.)": "Todas las defensas +10% (20 s)",
+   "+40% increase of All Attacks. (20 Sec.)": "Todos los ataques +40% (20 s)",
+   "+40% increase to All Defenses (20 Sec.) ↑": "Todas las defensas +40% (20 s)",
+   "12% rate when attacking": "Probabilidad de activación: 12% al atacar",
+   "15% rate when hit": "Probabilidad de activación: 15% al recibir un golpe",
+   "15% recovery of MAX HP.": "Recupera 15% de los PG máx.",
+   "Activation Rate: 10% rate when hit": "Probabilidad de activación: 10% al recibir un golpe",
+   "Activation Rate: 12% chance when attacking": "Probabilidad de activación: 12% al atacar",
+   "Activation Rate: 5% Chance When Attacking": "Probabilidad de activación: 5% al atacar",
+   "Activation Rate: 5% rate when attacking": "Probabilidad de activación: 5% al atacar",
+   "Activation Rate: 8% rate when hit": "Probabilidad de activación: 8% al recibir un golpe",
+   "All Attack +40% (20 Sec.)": "Todos los ataques +40% (20 s)",
+   "Cooldown Time 54 Seconds": "Tiempo de recarga: 54 s",
+   "Cooldown Time 65 Seconds": "Tiempo de recarga: 65 s",
+   "Cooldown Time 67 Seconds": "Tiempo de recarga: 67 s",
+   "Cooldown Time 70 Seconds": "Tiempo de recarga: 70 s",
+   "Creates a Shield that is 32% of Max HP.": "Crea un escudo del 32% de los PG máx.",
+   "Creates a [[Shield]] that is 13% of Max HP. (20 Sec.)": "Crea un escudo del 13% de los PG máx. (20 s)",
+   "Decrease Skill Cooldown by 10% (20 Sec.)": "Reduce la recarga de las habilidades 10% (20 s)",
+   "Decreases Skill Cooldown by 32% (20 Sec.) ↑": "Reduce la recarga de las habilidades 32% (20 s)",
+   "Decreases Skill Cooldown by 40% (20 Sec.) ↑": "Reduce la recarga de las habilidades 40% (20 s)",
+   "Max HP Recovery 32% ↑": "Recupera 32% de los PG máx.",
+   "Movement Speed increases by +10%. (20 Sec.)": "Velocidad de movimiento +10% (20 s)",
+   "Movement Speed increases by +15%. (20 Sec.)": "Velocidad de movimiento +15% (20 s)",
+   "Movement Speed increases by +40% (20 Sec.) ↑": "Velocidad de movimiento +40% (20 s)"
+  },
+  "notas": [
+   {
+    "es": "Cada personaje lleva hasta 8 ISO-8: se abre 1 lugar al empezar y otro en los niveles 10, 20, 30, 35, 40, 45 y 50. Quitar uno equipado sin romperlo cuesta cristales, más cuanto más alto el nivel.",
+    "en": "Each character holds up to 8 ISO-8: 1 slot at start and one more at levels 10, 20, 30, 35, 40, 45 and 50. Unequipping without destroying costs Crystals, more at higher levels.",
+    "f": [
+     "juego-capturas-en",
+     "wiki-iso"
+    ]
+   },
+   {
+    "es": "Potenciar: con otros ISO-8 como material, hasta +5. Combinar: dos del mismo tipo en +5 dan uno de rango superior, hasta 6★. Despertar: un 6★ en +5 sirve de material para despertar otro 6★, hasta 6 veces; los despertados suben sus estadísticas básicas y hacen más potente la bonificación del set.",
+    "en": "Enhance: using other ISO-8 as material, up to +5. Combine: two of the same type at +5 give one of a higher rank, up to 6★. Awaken: a 6★ at +5 is material to awaken another 6★, up to 6 times; awakened ISO-8 get higher basic stats and a stronger set bonus.",
+    "f": [
+     "juego-guia",
+     "juego-capturas-en"
+    ]
+   },
+   {
+    "es": "Bonificación de conjunto: ciertas combinaciones de ISO-8 equipados dan un set, que se ve en la página de equipar ISO-8 (con su guía); «Cambiar conjunto» lo cambia por otro.",
+    "en": "Set bonus: certain combinations of equipped ISO-8 grant a set, shown on the ISO-8 Equip Page (with its guide); Change Set swaps it.",
+    "f": [
+     "juego-guia",
+     "juego-capturas-en"
+    ]
+   },
+   {
+    "es": "Se consiguen en la Misión dimensional y en la misión de envío.",
+    "en": "Obtained from Dimension Missions and dispatch missions.",
+    "f": [
+     "juego-guia",
+     "juego-capturas-en"
+    ]
+   },
+   {
+    "es": "Los valores de cada set son los de la tabla de la wiki, que no dice a qué rango ni despertar corresponden: el juego muestra la fase de la bonificación («Establecer bonificación de fase 12 activa»), que sube con el rango de las piedras.",
+    "en": "Each set's values are the wiki table's, which does not say which rank or awakening they belong to: the game shows the bonus stage (\"Set Bonus Stage 12 in effect\"), which grows with the stones' rank.",
+    "f": [
+     "wiki-iso",
+     "juego-ficha-es",
+     "juego-capturas-en"
+    ]
+   }
+  ]
+ }
+}
