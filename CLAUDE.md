@@ -75,9 +75,10 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (18 de noviembre de 2026)
+## Estado (19 de noviembre de 2026)
 
-- Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario). La
+- Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario; tampoco la
+  1.0.56: las notas de la 1.0.57 anuncian sus Objetos). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -388,7 +389,8 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
   falso, no desde GitHub). Corridas con los datos armados el 18 de noviembre: sin fallas propio, imagenes, humo, ficha,
   recorrido y ayuda. Pendiente: los íconos de los tres artefactos (la nota los trae, pero lo propio no tiene dónde
   ponerlos: haría falta código, como `images/propio/` para los retratos).
-- La 1.0.56 (formato 20; la etiqueta va sobre el commit de datos), 18 de noviembre de 2026: **Objetos** (Ezequiel: «Por otro
+- La 1.0.56 (formato 20; **no se publicó**: su workflow de datos falló el 19 de noviembre y no tiene etiqueta; sale con la
+  1.0.57, que la lleva en sus notas), 18 de noviembre de 2026: **Objetos** (Ezequiel: «Por otro
   lado, ademas de la parte de cormos... Arma un modulo para * CTPs, donde este el detalle. * Bendiciones de Odin * Javis *
   Emblemas * Sets de Iso e ISOs»). Como Cromos: una sección de consulta por sistema, con todo el detalle que dan las fuentes.
   - **La entrada.** «Objetos» reemplaza a «Cromos» en el grupo del juego (decisión de quien coordinó: cinco entradas más no
@@ -434,6 +436,45 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     recorrido, atras, humo, ayuda, propio, ctp_abx, ficha, modos_juego, historico, glosario, capa, datos y artefacto; imagenes y
     formato, con esos datos puestos en el repo. Fallan igual que la 1.0.55 con datos de su formato del mismo `work/`:
     ctp_equipos (404 de consola), guia_aceptar 15, guia_ajustes y guia_ficha (el bloque de Cynicalex).
+- La 1.0.57 (sin cambio de formato, 20, pero el 20 nunca se publicó: la etiqueta va sobre el commit de datos), 19 de
+  noviembre de 2026: **el build de datos de la 1.0.56 falló y se arregla**; quien actualiza pasa de la 1.0.55 a esta, y
+  las notas cuentan Objetos.
+  - **La falla.** El workflow cortó en `completitud.py` («data.js no trae los liderazgos que scripts/liderazgos.py deriva
+    de sus datos»). thanosvibs publicó dos filas de la 12.4.5 («War of Kings (Part 2)», 3 de diciembre) con el uniforme
+    «???»: `blackbolt5` (`uniformed` False, sin `uniform_id` ni fila en `/api/uniforms`, y la fila y las skills iguales a
+    las de la base) y `karnak2` (uniforme con `uniform_id`, skills nuevas y una pasiva de uniforme «???»). blackbolt5
+    entraba a medias: `_core.py` tomaba la primera fila sin uniforme de cada personaje y salteaba la otra sin decir nada,
+    pero sus skills, su perfil, su análisis y el liderazgo que `liderazgos.py` deriva (fuentes.py le pasa todos los
+    retratos de `work/characters.json`) iban a data.js.
+  - **El criterio** (quien coordinó prefería dejarlos fuera hasta que tengan nombre; los datos lo confirman: blackbolt5
+    es una copia de la base y entrarlo daba dos Black Bolt iguales): una fila cuyo uniforme o personaje es solo «?» es un
+    **adelanto** y no entra a los datos. `fetch_all.py` la deja fuera de `work/characters.json` (y con eso de sus skills,
+    su retrato y todo lo que sale de ahí) y la anota en `work/adelantos.json`; borra las skills de los retratos que ya no
+    están, como las tier lists. El build pide `work/adelantos.json` y `auditar.py` da un AVISO por cada adelanto y su
+    línea en `docs/AUDITORIA.md` (sección 4). karnak2 también queda fuera (el mismo criterio; tampoco estaba en los datos
+    publicados). Sus llegadas de `/api/updates` quedan en `docs/HISTORICO.md` como llegadas sin retrato. Cuando thanosvibs
+    les ponga nombre, entran solos.
+  - **Lo que lo habría detectado** (`completitud.py` lo notó solo porque derivaba un liderazgo): `_core.py` corta si un
+    personaje tiene más de una fila sin uniforme, y `build.py`, si una tabla por retrato (MFF_SKILLS, MFF_BUFFS,
+    MFF_PERFIL, MFF_ANALISIS, MFF_CANCELS, MFF_SOPORTES, MFF_ROTACIONES, MFF_GUIA_PJ, la guía de armado, MFF_VERIFICACION)
+    trae un retrato que el roster no tiene. Probados los dos con el `work/` de la falla.
+  - **Retratos.** thanosvibs ya publica los de Vulcan, Lilandra y Deathbird (256x256, fondo transparente): los temporales
+    de la 1.0.55 salen de `fuentes/propio/retratos/` (hoy no queda ninguno); `verif_propio` espera los de thanosvibs.
+  - **War of Kings en thanosvibs.** Publica a Vulcan (id 297), Lilandra (295) y Deathbird (296), con sus skills y la 12.4
+    («War of Kings», con fecha 19 de noviembre; la nota es del 17). Lo propio sigue mandando y no se tocó: las
+    diferencias (id, habilidad de jefe mundial, stats, striker, valores de skills, golpes, cargas y recargas), en
+    `docs/AUDITORIA.md` sección 13, para que Ezequiel decida qué manda en cada campo. Todavía no publica sus artefactos,
+    los cromos de War of Kings ni el C.T.P. de Ascenso (siguen propios, sin ícono).
+  - Pendiente / a decidir: las diferencias de lo propio contra thanosvibs de los tres (y las de Agatha, Wiccan, Morgan,
+    Dormammu y Clea, que siguen desde octubre). El id propio (9001 de Agatha contra el 294 de thanosvibs) hace que las
+    tier lists de thanosvibs no la crucen (AVISO «entradas sin personaje: Agatha Harkness / Modern» en seis listas); con
+    los ids propios 9002 a 9004 pasará lo mismo con Vulcan, Lilandra y Deathbird cuando entren a una lista.
+    Visto y sin tocar: thanosvibs ya marca a Karnak (base y All-New, All-Different) como Tier-4, la de la 12.4.5, sin su
+    Striker Skill (docs/AUDITORIA.md, sección 4): la app lo muestra T4 desde hoy.
+  - Corridas: la secuencia del workflow, de punta a punta, termina con 0 con Python 3.13 (en el clon) y con 3.12 (en un clon
+    nuevo, sin `work/`, como Actions); `git add` del paso «Commitear» y `construir.py formato` sobre `datos/20/` pasan.
+    Con los datos armados el 19 de noviembre (`MFF_DATOS`): sin fallas propio, humo, ficha, objetos, cromos, recorrido,
+    historico y analisis; imagenes y formato, con esos datos puestos en el repo.
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,
