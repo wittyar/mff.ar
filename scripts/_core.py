@@ -65,7 +65,13 @@ characters, images, uindex, seen = [], {}, {}, set()
 SIN_VERSION_UNI = []   # uniformes cuya versión no trae /api/uniforms y sale solo de /api/updates
 sin_skills = []
 for numid, rows in sorted(byid.items(), key=lambda kv: int(kv[0])):
-    base = next(r for r in rows if r['uniformed']=='False')
+    # Una sola fila sin uniforme: la base. Otra (el adelanto blackbolt5 del 19 de noviembre de 2026, que fetch_all.py ya
+    # deja fuera) no sería ni la base ni un uniforme y quedaría fuera del roster con sus skills en las tablas.
+    bases = [r for r in rows if r['uniformed']=='False']
+    if len(bases) != 1:
+        raise SystemExit(f"/api/characters: el personaje {numid} tiene {len(bases)} filas sin uniforme, no una: "
+                         f"{', '.join(r['portrait'] + ' (' + r['uniform'] + ')' for r in bases)}")
+    base = bases[0]
     cid = slug(base['character'])
     if cid in seen: cid = f"{cid}-{numid}"
     seen.add(cid)

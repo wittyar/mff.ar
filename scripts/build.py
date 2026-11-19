@@ -97,6 +97,17 @@ BONOS = [{**b, 'm': [_CID[n] for n in b['m']]} for b in FUENTES['bonos']]
 # Strikers (scripts/strikers.py), también por id: solo los personajes con la pestaña Striker en la wiki.
 STRIKERS = {_CID[n]: [[_CID[x], p, c] for x, p, c in filas] for n, filas in FUENTES['strikers'].items()}
 VERIF = json.load(open('work/verificacion.json', encoding='utf-8'))['por_retrato']
+# Lo que va por retrato es de un retrato del roster: una fila que entra a medias (sus skills, su liderazgo derivado o su
+# perfil sin la variante; el adelanto blackbolt5, el 19 de noviembre de 2026) corta acá, no en una tabla que la app no usa.
+_retratos = {c['p'] for c in chars} | {u['p'] for c in chars for u in c['uniforms']}
+_a_medias = {k: sorted(set(t) - _retratos) for k, t in (
+    ('MFF_SKILLS', SKILLS), ('MFF_BUFFS', BUFFS), ('MFF_PERFIL', PERFILES), ('MFF_ANALISIS', ANALISIS),
+    ('MFF_CANCELS', FUENTES['cancels']), ('MFF_SOPORTES', FUENTES['soportes']), ('MFF_ROTACIONES', FUENTES['rotaciones']),
+    ('MFF_GUIA_PJ', FUENTES['guia_pj']), ('MFF_GUIA_ARMADO', FUENTES['armado']['pj']),
+    ('MFF_VERIFICACION', VERIF))}
+if any(_a_medias.values()):
+    raise SystemExit('retratos que entran a medias (en esas tablas y no en el roster):\n- '
+                     + '\n- '.join(f'{k}: {", ".join(v)}' for k, v in _a_medias.items() if v))
 # Íconos de C.T.P.s y artefactos: arte de terceros que baja fetch_all --imagenes, igual
 # que los retratos; si falta el archivo la app muestra el nombre sin ícono.
 # Un C.T.P. propio que thanosvibs todavía no publica (el de Ascenso) no tiene ícono allá: va sin ícono, como un artefacto.
