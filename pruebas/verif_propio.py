@@ -84,8 +84,8 @@ try:
         ok('3b Clea es T4 y trae Death of Doctor Strange', cl['t'] == 'T4' and any(u['p'] == 'clea1' for u in cl['uniforms']))
 
         # 3c. la actualización del 17 de noviembre de 2026 (War of Kings): Vulcan, Lilandra y Deathbird, personajes nuevos con su
-        # Tier-3, su Tier-4 y su artefacto; con el retrato propio (fuentes/propio/retratos/, de la ficha de la nota y sin el
-        # fondo blanco; Ezequiel, 18 de noviembre de 2026) hasta que thanosvibs publique el suyo
+        # Tier-3, su Tier-4 y su artefacto; con el retrato de thanosvibs, que lo publica desde el 19 de noviembre de 2026 (el
+        # temporal de fuentes/propio/retratos/, de la 1.0.55, salió)
         for nombre, defin, striker, artefacto in (('Vulcan', 'Vulcan The Emperor', 'Twisted Rage', 'Vulcan the Kingbreaker'),
                                                   ('Lilandra', 'Lux Gloriana', "Majestrix's Strategy", "Empress of the Shi'ar Empire"),
                                                   ('Deathbird', "Shi'ar Spear", 'Violent Rage', 'Exiled Princess')):
@@ -93,18 +93,18 @@ try:
             fila = FILAS[nombre.lower()]
             ok(f'3c {nombre} está en los datos, T4, con lo de la ficha', c is not None and c['t'] == 'T4'
                and c['p'] == fila['portrait'] and c['pr'] == fila['fuente'], c and (c['t'], c['p'], c['pr']))
-            propio_png = f'images/propio/{fila["portrait"]}.png'
-            ok(f'3c {nombre}: el retrato propio está en fuentes/propio/retratos/',
-               os.path.isfile(os.path.join(PROP, 'retratos', fila['portrait'] + '.png')))
+            tv_png = f'images/{fila["portrait"]}.png'
+            ok(f'3c {nombre}: sin retrato propio en fuentes/propio/retratos/',
+               not os.path.isfile(os.path.join(PROP, 'retratos', fila['portrait'] + '.png')))
             pg.click('[data-a="back"]'); pg.fill('#q', nombre); pg.wait_for_timeout(300)
             carta = pg.locator(f'.ccard[data-cid="{c["id"]}"][data-uid=""]')
             src = carta.locator('img').first.get_attribute('src') if carta.locator('img').count() else ''
             nat = pg.evaluate("(s) => new Promise(r => { const i = new Image(); i.onload = () => r(i.naturalWidth); i.onerror = () => r(0); i.src = s; })", src) if src else 0
-            ok(f'3c {nombre}: en el roster, con su retrato propio, que carga', (src or '').endswith(propio_png) and nat == 256
+            ok(f'3c {nombre}: en el roster, con el retrato de thanosvibs, que carga', (src or '').endswith(tv_png) and nat == 256
                and carta.locator('.ph').count() == 0, (src, nat))
             carta.click(); pg.wait_for_selector('.fcab')
             src = pg.locator('.fcab-face img').first.get_attribute('src') if pg.locator('.fcab-face img').count() else ''
-            ok(f'3c {nombre}: la cabecera de la ficha, con su retrato propio', (src or '').endswith(propio_png), src)
+            ok(f'3c {nombre}: la cabecera de la ficha, con el retrato de thanosvibs', (src or '').endswith(tv_png), src)
             ok(f'3c {nombre}: la cabecera dice «propio»', pg.locator('.fcab .propio').count() == 1)
             pg.click('[data-a="fichaTab"][data-v="skills"]'); pg.wait_for_timeout(200)
             slots = json.load(open(os.path.join(PROP, 'skills', fila['portrait'] + '.json'), encoding='utf-8'))['slots']
