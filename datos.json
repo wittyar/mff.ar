@@ -1,15 +1,15 @@
 {
- "formato": 19,
+ "formato": 20,
  "juego": "12.4",
- "generado": "2026-11-17",
+ "generado": "2026-11-19",
  "archivos": {
   "data.js": {
-   "sha256": "8d2a15700ab6deb50b8f371000fa0e5a0b91d74bdeb93c6dee86115a2c64819e",
-   "bytes": 6753838
+   "sha256": "12f608e7c63e2c849b386a2449b87e6ab3b46d4a3e2a9d4086e80a660623d73b",
+   "bytes": 6865763
   },
   "docs/AUDITORIA.md": {
-   "sha256": "fbcec6ce30169a20b0bcbbedd57a7bdc6aca150729e96080a29667455db7e5a5",
-   "bytes": 198763
+   "sha256": "0a524f334f108299699a6d236ca362abbc8f5b617e231bf2a1ad3f3fdbdcb685",
+   "bytes": 212514
   }
  },
  "imagenes": [
@@ -1238,6 +1238,10 @@
    "https://thanosvibs.money/images/portraits/deadpool8.png"
   ],
   [
+   "images/deathbird.png",
+   "https://thanosvibs.money/images/portraits/deathbird.png"
+  ],
+  [
    "images/deathlok.png",
    "https://thanosvibs.money/images/portraits/deathlok.png"
   ],
@@ -1432,6 +1436,258 @@
   [
    "images/elsabloodstone2.png",
    "https://thanosvibs.money/images/portraits/elsabloodstone2.png"
+  ],
+  [
+   "images/emblemas/emblem_1.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_1.png"
+  ],
+  [
+   "images/emblemas/emblem_10.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_10.png"
+  ],
+  [
+   "images/emblemas/emblem_11.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_11.png"
+  ],
+  [
+   "images/emblemas/emblem_12.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_12.png"
+  ],
+  [
+   "images/emblemas/emblem_13.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_13.png"
+  ],
+  [
+   "images/emblemas/emblem_14.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_14.png"
+  ],
+  [
+   "images/emblemas/emblem_15.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_15.png"
+  ],
+  [
+   "images/emblemas/emblem_16.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_16.png"
+  ],
+  [
+   "images/emblemas/emblem_17.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_17.png"
+  ],
+  [
+   "images/emblemas/emblem_18.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_18.png"
+  ],
+  [
+   "images/emblemas/emblem_19.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_19.png"
+  ],
+  [
+   "images/emblemas/emblem_2.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_2.png"
+  ],
+  [
+   "images/emblemas/emblem_20.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_20.png"
+  ],
+  [
+   "images/emblemas/emblem_21.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_21.png"
+  ],
+  [
+   "images/emblemas/emblem_22.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_22.png"
+  ],
+  [
+   "images/emblemas/emblem_23.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_23.png"
+  ],
+  [
+   "images/emblemas/emblem_24.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_24.png"
+  ],
+  [
+   "images/emblemas/emblem_25.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_25.png"
+  ],
+  [
+   "images/emblemas/emblem_26.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_26.png"
+  ],
+  [
+   "images/emblemas/emblem_27.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_27.png"
+  ],
+  [
+   "images/emblemas/emblem_28.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_28.png"
+  ],
+  [
+   "images/emblemas/emblem_29.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_29.png"
+  ],
+  [
+   "images/emblemas/emblem_3.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_3.png"
+  ],
+  [
+   "images/emblemas/emblem_30.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_30.png"
+  ],
+  [
+   "images/emblemas/emblem_31.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_31.png"
+  ],
+  [
+   "images/emblemas/emblem_32.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_32.png"
+  ],
+  [
+   "images/emblemas/emblem_33.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_33.png"
+  ],
+  [
+   "images/emblemas/emblem_34.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_34.png"
+  ],
+  [
+   "images/emblemas/emblem_35.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_35.png"
+  ],
+  [
+   "images/emblemas/emblem_36.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_36.png"
+  ],
+  [
+   "images/emblemas/emblem_37.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_37.png"
+  ],
+  [
+   "images/emblemas/emblem_38.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_38.png"
+  ],
+  [
+   "images/emblemas/emblem_39.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_39.png"
+  ],
+  [
+   "images/emblemas/emblem_4.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_4.png"
+  ],
+  [
+   "images/emblemas/emblem_40.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_40.png"
+  ],
+  [
+   "images/emblemas/emblem_41.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_41.png"
+  ],
+  [
+   "images/emblemas/emblem_42.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_42.png"
+  ],
+  [
+   "images/emblemas/emblem_43.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_43.png"
+  ],
+  [
+   "images/emblemas/emblem_44.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_44.png"
+  ],
+  [
+   "images/emblemas/emblem_45.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_45.png"
+  ],
+  [
+   "images/emblemas/emblem_46.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_46.png"
+  ],
+  [
+   "images/emblemas/emblem_47.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_47.png"
+  ],
+  [
+   "images/emblemas/emblem_48.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_48.png"
+  ],
+  [
+   "images/emblemas/emblem_49.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_49.png"
+  ],
+  [
+   "images/emblemas/emblem_5.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_5.png"
+  ],
+  [
+   "images/emblemas/emblem_50.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_50.png"
+  ],
+  [
+   "images/emblemas/emblem_51.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_51.png"
+  ],
+  [
+   "images/emblemas/emblem_52.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_52.png"
+  ],
+  [
+   "images/emblemas/emblem_53.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_53.png"
+  ],
+  [
+   "images/emblemas/emblem_54.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_54.png"
+  ],
+  [
+   "images/emblemas/emblem_55.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_55.png"
+  ],
+  [
+   "images/emblemas/emblem_56.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_56.png"
+  ],
+  [
+   "images/emblemas/emblem_57.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_57.png"
+  ],
+  [
+   "images/emblemas/emblem_58.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_58.png"
+  ],
+  [
+   "images/emblemas/emblem_59.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_59.png"
+  ],
+  [
+   "images/emblemas/emblem_6.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_6.png"
+  ],
+  [
+   "images/emblemas/emblem_60.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_60.png"
+  ],
+  [
+   "images/emblemas/emblem_61.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_61.png"
+  ],
+  [
+   "images/emblemas/emblem_62.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_62.png"
+  ],
+  [
+   "images/emblemas/emblem_63.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_63.png"
+  ],
+  [
+   "images/emblemas/emblem_7.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_7.png"
+  ],
+  [
+   "images/emblemas/emblem_8.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_8.png"
+  ],
+  [
+   "images/emblemas/emblem_9.png",
+   "https://thanosvibs.money/_game-assets/ui_item/emblem_9.png"
   ],
   [
    "images/emmafrost.png",
@@ -3346,10 +3602,6 @@
    "https://thanosvibs.money/images/items/artifact_zeus.png"
   ],
   [
-   "images/items/ctp_ascent.png",
-   "https://thanosvibs.money/images/items/ctp_ascent.png"
-  ],
-  [
    "images/items/ctp_authority.png",
    "https://thanosvibs.money/images/items/ctp_authority.png"
   ],
@@ -3408,6 +3660,74 @@
   [
    "images/items/ctp_veteran.png",
    "https://thanosvibs.money/images/items/ctp_veteran.png"
+  ],
+  [
+   "images/items/uru_amplify.png",
+   "https://thanosvibs.money/images/items/uru_amplify.png"
+  ],
+  [
+   "images/items/uru_balance.png",
+   "https://thanosvibs.money/images/items/uru_balance.png"
+  ],
+  [
+   "images/items/uru_chill.png",
+   "https://thanosvibs.money/images/items/uru_chill.png"
+  ],
+  [
+   "images/items/uru_flame.png",
+   "https://thanosvibs.money/images/items/uru_flame.png"
+  ],
+  [
+   "images/items/uru_focus.png",
+   "https://thanosvibs.money/images/items/uru_focus.png"
+  ],
+  [
+   "images/items/uru_fortitude.png",
+   "https://thanosvibs.money/images/items/uru_fortitude.png"
+  ],
+  [
+   "images/items/uru_heal.png",
+   "https://thanosvibs.money/images/items/uru_heal.png"
+  ],
+  [
+   "images/items/uru_insight.png",
+   "https://thanosvibs.money/images/items/uru_insight.png"
+  ],
+  [
+   "images/items/uru_lightning.png",
+   "https://thanosvibs.money/images/items/uru_lightning.png"
+  ],
+  [
+   "images/items/uru_magic.png",
+   "https://thanosvibs.money/images/items/uru_magic.png"
+  ],
+  [
+   "images/items/uru_mind.png",
+   "https://thanosvibs.money/images/items/uru_mind.png"
+  ],
+  [
+   "images/items/uru_poison.png",
+   "https://thanosvibs.money/images/items/uru_poison.png"
+  ],
+  [
+   "images/items/uru_resist.png",
+   "https://thanosvibs.money/images/items/uru_resist.png"
+  ],
+  [
+   "images/items/uru_steel.png",
+   "https://thanosvibs.money/images/items/uru_steel.png"
+  ],
+  [
+   "images/items/uru_strike.png",
+   "https://thanosvibs.money/images/items/uru_strike.png"
+  ],
+  [
+   "images/items/uru_toughness.png",
+   "https://thanosvibs.money/images/items/uru_toughness.png"
+  ],
+  [
+   "images/items/uru_will.png",
+   "https://thanosvibs.money/images/items/uru_will.png"
   ],
   [
    "images/janefoster.png",
@@ -3624,6 +3944,10 @@
   [
    "images/leader.png",
    "https://thanosvibs.money/images/portraits/leader.png"
+  ],
+  [
+   "images/lilandra.png",
+   "https://thanosvibs.money/images/portraits/lilandra.png"
   ],
   [
    "images/lincolncampbell.png",
@@ -5140,6 +5464,10 @@
   [
    "images/volstagg.png",
    "https://thanosvibs.money/images/portraits/volstagg.png"
+  ],
+  [
+   "images/vulcan.png",
+   "https://thanosvibs.money/images/portraits/vulcan.png"
   ],
   [
    "images/vulture.png",

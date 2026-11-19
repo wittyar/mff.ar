@@ -2,7 +2,7 @@
 
 Generado por `scripts/historico.py` (lo llama `scripts/build.py`). Las llegadas (personaje, uniforme, Tier-3, Potencial Trascendido, Tier-4) y las versiones con su fecha salen de `/api/updates` de thanosvibs; el texto, de las notas de actualización del foro oficial (`fuentes/foro/`, `scripts/foro.py`). Cada nota va a la versión que nombra su título; si no, a la de 4 días o menos con más llegadas que la nota nombra; si no hay, a la de 45 días o menos con más llegadas nombradas (al menos 2): thanosvibs tiene algunas fechas mal.
 
-- Versiones: 216; con nota: 201. Notas: 210; sin versión: 3.
+- Versiones: 217; con nota: 201. Notas: 210; sin versión: 3.
 - Hechos: personaje 294, uniforme 602, t3 132, tp 156, t4 143, balance 524, modo 132.
 
 ## Llegadas cuya nota no nombra al personaje (121)
@@ -133,11 +133,11 @@ thanosvibs las pone en esa versión, y la nota de esa versión no lo nombra (o l
 | 7.0 | uniforme | mister-fantastic::mister-fantastic-10200179 | [4/20 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1700347) |
 | 7.9 | tp | electro::electro-10100197 | [3/16 Update Details (Updated on 3/22 (Tue) 22:13 (PDT))](https://forum.netmarble.com/futurefight_en/view/2196/1749392) |
 
-## Versiones sin nota (15)
+## Versiones sin nota (16)
 
 La 1.0 es el lanzamiento: no tiene nota. Las notas salen de dos tableros del foro: el de notas (2196) y el de avisos (2213, los parches de mitad de mes de 2020 y 2021); `scripts/foro.py`.
 
-1.0 (2015-03-29), 1.1 (2015-05-15), 1.2 (2015-06-10), 2.1.5 (2016-05-17), 2.9 (2017-02-15), 3.7.5 (2018-01-24), 5.6.5 (2019-12-17), 5.9.5 (2020-04-01), 6.3a (2020-08-18), 6.3b (2020-08-25), 6.4a (2020-09-22), 6.4b (2020-09-29), 6.4c (2020-10-13), 6.5a (2020-11-05), 10.6a (2025-01-01)
+1.0 (2015-03-29), 1.1 (2015-05-15), 1.2 (2015-06-10), 2.1.5 (2016-05-17), 2.9 (2017-02-15), 3.7.5 (2018-01-24), 5.6.5 (2019-12-17), 5.9.5 (2020-04-01), 6.3a (2020-08-18), 6.3b (2020-08-25), 6.4a (2020-09-22), 6.4b (2020-09-29), 6.4c (2020-10-13), 6.5a (2020-11-05), 10.6a (2025-01-01), 12.4.5 (2026-12-03)
 
 ## Notas sin versión (3)
 
@@ -210,4 +210,10 @@ Las notas hablan de estos modos y la app no los tiene en Modos: no van al histó
 - 2023-11-07: [11/7 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1800982) — New Legendary Battle: Masters of Light
 - 2024-12-23: [12/25 Update Details](https://forum.netmarble.com/futurefight_en/view/2196/1829080) — Dispatch Mission Sector 14
 - 2026-05-19: [5/19 Update Details (Updated)](https://forum.netmarble.com/futurefight_en/view/2196/1892117) — Dispatch Mission Sector 15
+
+## Retratos de /api/updates que no están en el roster (3)
+
+- 12.4.5 uniforme: blackbolt5
+- 12.4.5 uniforme: karnak2
+- 12.4.5 t4: karnak2
 

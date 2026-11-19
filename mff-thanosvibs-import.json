@@ -39817,7 +39817,7 @@
    "ins": "Orden",
    "race": "Inhumano",
    "gender": "Masculino",
-   "t": "T3",
+   "t": "T4",
    "abilities": [
     "Sentidos Agudizados"
    ],
@@ -39831,7 +39831,7 @@
     "poison_resist": "0.00",
     "mind_resist": "0.00"
    },
-   "striker": 3,
+   "striker": 0,
    "wba": "Sentidos Agudizados",
    "trans": true,
    "new": false,
@@ -39840,10 +39840,10 @@
     {
      "id": "karnak-10100111",
      "name": "All-New, All-Different",
-     "tier": "T3",
+     "tier": "T4",
      "p": "karnak1",
      "cost": "500000 Gold",
-     "striker": 3,
+     "striker": 0,
      "wba": "Sentidos Agudizados",
      "trans": true,
      "new": false,
@@ -70510,6 +70510,44 @@
    ]
   },
   {
+   "id": "tv-proj-1794952939476-d2u1e",
+   "order": 100,
+   "group": "comunidad",
+   "name": "Smash or Pass",
+   "nameEn": "Smash or Pass",
+   "source": "Smash or Pass",
+   "author": "rigor_erectus",
+   "gameVersion": "12.3.5",
+   "published": "2026-11-17",
+   "description": "",
+   "notes": "",
+   "tags": [],
+   "rating": 2.3,
+   "ratings": 3,
+   "rows": [
+    {
+     "id": "tier-s",
+     "label": "Mega smash"
+    },
+    {
+     "id": "tier-a",
+     "label": "smash"
+    },
+    {
+     "id": "tier-b",
+     "label": "maybe"
+    },
+    {
+     "id": "tier-c",
+     "label": "pass"
+    },
+    {
+     "id": "tier-d",
+     "label": "ew"
+    }
+   ]
+  },
+  {
    "id": "tv-proj-1787634809961-ohych",
    "order": 100,
    "group": "comunidad",
@@ -83280,6 +83318,593 @@
     "tier-b"
    ]
   },
+  "tv-proj-1794952939476-d2u1e": {
+   "captain-america::base": [
+    "tier-a"
+   ],
+   "luke-cage::base": [
+    "tier-a"
+   ],
+   "black-panther::base": [
+    "tier-a"
+   ],
+   "doctor-strange::base": [
+    "tier-a"
+   ],
+   "iron-man::base": [
+    "tier-a"
+   ],
+   "knull::base": [
+    "tier-a"
+   ],
+   "magneto::base": [
+    "tier-a"
+   ],
+   "mister-fantastic::base": [
+    "tier-a"
+   ],
+   "sentry::base": [
+    "tier-a"
+   ],
+   "silver-surfer::base": [
+    "tier-a"
+   ],
+   "spider-man::base": [
+    "tier-a"
+   ],
+   "thor::base": [
+    "tier-a"
+   ],
+   "wolverine::base": [
+    "tier-a"
+   ],
+   "gambit::base": [
+    "tier-a"
+   ],
+   "heimdall::base": [
+    "tier-a"
+   ],
+   "adam-warlock::base": [
+    "tier-a"
+   ],
+   "agent-venom::base": [
+    "tier-a"
+   ],
+   "blade::blade-10100006": [
+    "tier-a"
+   ],
+   "black-dwarf::base": [
+    "tier-a"
+   ],
+   "doctor-doom::base": [
+    "tier-a"
+   ],
+   "fantomex::base": [
+    "tier-a"
+   ],
+   "human-torch::base": [
+    "tier-a"
+   ],
+   "juggernaut::base": [
+    "tier-a"
+   ],
+   "iceman::base": [
+    "tier-a"
+   ],
+   "lash::lash-10100060": [
+    "tier-a"
+   ],
+   "mysterio::base": [
+    "tier-a"
+   ],
+   "scarlet-spider::base": [
+    "tier-a"
+   ],
+   "shang-chi::base": [
+    "tier-a"
+   ],
+   "vision::base": [
+    "tier-a"
+   ],
+   "warpath::base": [
+    "tier-a"
+   ],
+   "wiccan::base": [
+    "tier-a"
+   ],
+   "mephisto::base": [
+    "tier-a"
+   ],
+   "gorr::base": [
+    "tier-a"
+   ],
+   "spot::base": [
+    "tier-a"
+   ],
+   "hercules::base": [
+    "tier-a"
+   ],
+   "galactus::base": [
+    "tier-a"
+   ],
+   "apocalypse::base": [
+    "tier-a"
+   ],
+   "daredevil::base": [
+    "tier-s"
+   ],
+   "cyclops::base": [
+    "tier-s"
+   ],
+   "loki::base": [
+    "tier-s"
+   ],
+   "thanos::base": [
+    "tier-s"
+   ],
+   "venom::base": [
+    "tier-s"
+   ],
+   "nightcrawler::base": [
+    "tier-s"
+   ],
+   "gladiator::base": [
+    "tier-s"
+   ],
+   "mister-sinister::base": [
+    "tier-s"
+   ],
+   "taskmaster::base": [
+    "tier-s"
+   ],
+   "ultron::base": [
+    "tier-s"
+   ],
+   "iron-fist::base": [
+    "tier-b"
+   ],
+   "black-bolt::base": [
+    "tier-b"
+   ],
+   "deadpool::base": [
+    "tier-b"
+   ],
+   "odin::base": [
+    "tier-b"
+   ],
+   "professor-x::base": [
+    "tier-b"
+   ],
+   "star-lord::base": [
+    "tier-b"
+   ],
+   "beta-ray-bill::base": [
+    "tier-b"
+   ],
+   "moon-knight::base": [
+    "tier-b"
+   ],
+   "morbius::base": [
+    "tier-b"
+   ],
+   "sun-bird::base": [
+    "tier-b"
+   ],
+   "angel::base": [
+    "tier-b"
+   ],
+   "baron-zemo::base": [
+    "tier-b"
+   ],
+   "colossus::base": [
+    "tier-b"
+   ],
+   "drax::base": [
+    "tier-b"
+   ],
+   "falcon::base": [
+    "tier-b"
+   ],
+   "hydro-man::base": [
+    "tier-b"
+   ],
+   "hulkling::base": [
+    "tier-b"
+   ],
+   "kingpin::base": [
+    "tier-b"
+   ],
+   "kraven-the-hunter::base": [
+    "tier-b"
+   ],
+   "maximus::base": [
+    "tier-b"
+   ],
+   "nick-fury::base": [
+    "tier-b"
+   ],
+   "nova-richard-rider::base": [
+    "tier-b"
+   ],
+   "war-machine::base": [
+    "tier-b"
+   ],
+   "spider-man-miles-morales::base": [
+    "tier-b"
+   ],
+   "hyperion::base": [
+    "tier-b"
+   ],
+   "malekith::malekith-10100020": [
+    "tier-b"
+   ],
+   "toxin::base": [
+    "tier-b"
+   ],
+   "black-knight::base": [
+    "tier-b"
+   ],
+   "zeus::base": [
+    "tier-b"
+   ],
+   "annihilus::base": [
+    "tier-b"
+   ],
+   "ant-man::base": [
+    "tier-c"
+   ],
+   "cable::base": [
+    "tier-c"
+   ],
+   "carnage::base": [
+    "tier-c"
+   ],
+   "dormammu::base": [
+    "tier-c"
+   ],
+   "ghost-rider::base": [
+    "tier-c"
+   ],
+   "hulk::base": [
+    "tier-c"
+   ],
+   "namor::base": [
+    "tier-c"
+   ],
+   "quicksilver::base": [
+    "tier-c"
+   ],
+   "winter-soldier::base": [
+    "tier-c"
+   ],
+   "ares::base": [
+    "tier-c"
+   ],
+   "bullseye::base": [
+    "tier-c"
+   ],
+   "doctor-octopus::base": [
+    "tier-c"
+   ],
+   "hulk-amadeus-cho::base": [
+    "tier-c"
+   ],
+   "red-guardian::base": [
+    "tier-c"
+   ],
+   "red-skull::base": [
+    "tier-c"
+   ],
+   "war-tiger::base": [
+    "tier-c"
+   ],
+   "abomination::base": [
+    "tier-c"
+   ],
+   "absorbing-man::base": [
+    "tier-c"
+   ],
+   "ancient-one::base": [
+    "tier-c"
+   ],
+   "beast::base": [
+    "tier-c"
+   ],
+   "arachknight::base": [
+    "tier-c"
+   ],
+   "baron-mordo::base": [
+    "tier-c"
+   ],
+   "corvus-glaive::base": [
+    "tier-c"
+   ],
+   "ghost-panther::base": [
+    "tier-c"
+   ],
+   "ghost-rider-robbie-reyes::base": [
+    "tier-c"
+   ],
+   "green-goblin::base": [
+    "tier-c"
+   ],
+   "groot::base": [
+    "tier-c"
+   ],
+   "hawkeye::base": [
+    "tier-c"
+   ],
+   "hellstorm::base": [
+    "tier-c"
+   ],
+   "hulkbuster-iron-man-mark-44::base": [
+    "tier-c"
+   ],
+   "ronan::ronan-10100048": [
+    "tier-c"
+   ],
+   "sandman::base": [
+    "tier-c"
+   ],
+   "stryfe::base": [
+    "tier-c"
+   ],
+   "the-thing::base": [
+    "tier-c"
+   ],
+   "vulture::base": [
+    "tier-c"
+   ],
+   "punisher::base": [
+    "tier-c"
+   ],
+   "wong::base": [
+    "tier-c"
+   ],
+   "kang-the-conqueror::base": [
+    "tier-c"
+   ],
+   "man-thing::base": [
+    "tier-c"
+   ],
+   "havok::base": [
+    "tier-c"
+   ],
+   "u-s-agent::base": [
+    "tier-c"
+   ],
+   "hades-pluto::base": [
+    "tier-c"
+   ],
+   "morph::base": [
+    "tier-s"
+   ],
+   "destroyer::base": [
+    "tier-c"
+   ],
+   "sentinel::base": [
+    "tier-c"
+   ],
+   "sleeper::base": [
+    "tier-b"
+   ],
+   "lizard::base": [
+    "tier-d"
+   ],
+   "gorilla-man::base": [
+    "tier-d"
+   ],
+   "red-hulk::base": [
+    "tier-d"
+   ],
+   "rhino::base": [
+    "tier-d"
+   ],
+   "rocket-raccoon::base": [
+    "tier-d"
+   ],
+   "sabretooth::sabretooth-10100190": [
+    "tier-d"
+   ],
+   "warwolf::base": [
+    "tier-d"
+   ],
+   "m-o-d-o-k::m-o-d-o-k-10100019": [
+    "tier-d"
+   ],
+   "rogue::base": [
+    "tier-s"
+   ],
+   "storm::base": [
+    "tier-s"
+   ],
+   "mystique::base": [
+    "tier-s"
+   ],
+   "spider-gwen::spider-gwen-10200066": [
+    "tier-s"
+   ],
+   "emma-frost::emma-frost-10300160": [
+    "tier-s"
+   ],
+   "gamora::gamora-10500012": [
+    "tier-s"
+   ],
+   "phyla-vell::phyla-vell-10100223": [
+    "tier-s"
+   ],
+   "supergiant::base": [
+    "tier-s"
+   ],
+   "yelena-belova::base": [
+    "tier-s"
+   ],
+   "black-swan::base": [
+    "tier-s"
+   ],
+   "captain-america::captain-america-10200001": [
+    "tier-b"
+   ],
+   "sersi::base": [
+    "tier-b"
+   ],
+   "captain-marvel::base": [
+    "tier-b"
+   ],
+   "jean-grey::base": [
+    "tier-b"
+   ],
+   "scarlet-witch::base": [
+    "tier-b"
+   ],
+   "angela::base": [
+    "tier-b"
+   ],
+   "moonstone::base": [
+    "tier-b"
+   ],
+   "spider-woman::base": [
+    "tier-b"
+   ],
+   "america-chavez::base": [
+    "tier-b"
+   ],
+   "hela::hela-10200106": [
+    "tier-b"
+   ],
+   "mockingbird::base": [
+    "tier-b"
+   ],
+   "squirrel-girl::base": [
+    "tier-b"
+   ],
+   "thor-jane-foster::base": [
+    "tier-b"
+   ],
+   "wasp::wasp-10100051": [
+    "tier-b"
+   ],
+   "white-fox::base": [
+    "tier-b"
+   ],
+   "polaris::base": [
+    "tier-b"
+   ],
+   "sylvie::base": [
+    "tier-b"
+   ],
+   "silver-surfer-shalla-bal::base": [
+    "tier-b"
+   ],
+   "black-widow::base": [
+    "tier-a"
+   ],
+   "jessica-jones::base": [
+    "tier-a"
+   ],
+   "deadpool::deadpool-10200164": [
+    "tier-a"
+   ],
+   "luna-snow::base": [
+    "tier-a"
+   ],
+   "elsa-bloodstone::base": [
+    "tier-a"
+   ],
+   "medusa::base": [
+    "tier-a"
+   ],
+   "sif::sif-10200057": [
+    "tier-a"
+   ],
+   "x-23::x-23-10200151": [
+    "tier-a"
+   ],
+   "agent-13::base": [
+    "tier-a"
+   ],
+   "black-cat::base": [
+    "tier-a"
+   ],
+   "crystal::crystal-10200114": [
+    "tier-a"
+   ],
+   "dazzler::base": [
+    "tier-a"
+   ],
+   "domino::base": [
+    "tier-a"
+   ],
+   "elektra::elektra-10300040": [
+    "tier-a"
+   ],
+   "invisible-woman::base": [
+    "tier-a"
+   ],
+   "magik::base": [
+    "tier-a"
+   ],
+   "morgan-le-fay::base": [
+    "tier-a"
+   ],
+   "minn-erva::base": [
+    "tier-a"
+   ],
+   "mantis::base": [
+    "tier-a"
+   ],
+   "nebula::nebula-10100047": [
+    "tier-a"
+   ],
+   "psylocke::base": [
+    "tier-a"
+   ],
+   "rachel-summers::base": [
+    "tier-a"
+   ],
+   "satana::base": [
+    "tier-a"
+   ],
+   "scream::base": [
+    "tier-a"
+   ],
+   "shuri::shuri-10200154": [
+    "tier-a"
+   ],
+   "singularity::base": [
+    "tier-a"
+   ],
+   "sister-grimm::sister-grimm-10100053": [
+    "tier-a"
+   ],
+   "songbird::base": [
+    "tier-a"
+   ],
+   "titania::base": [
+    "tier-a"
+   ],
+   "madelyne-pryor::base": [
+    "tier-a"
+   ],
+   "clea::base": [
+    "tier-a"
+   ],
+   "captain-america-sharon-rogers::base": [
+    "tier-c"
+   ],
+   "blue-dragon::base": [
+    "tier-c"
+   ],
+   "shadow-shell::base": [
+    "tier-c"
+   ],
+   "ancient-one::ancient-one-10100094": [
+    "tier-c"
+   ],
+   "vision::vision-10400029": [
+    "tier-c"
+   ]
+  },
   "tv-soportes": {
    "valkyrie::valkyrie-10300144": [
     "tier-s"
@@ -85023,6 +85648,9 @@
   "portrait-annihilus": "images/annihilus.png",
   "portrait-galactus": "images/galactus.png",
   "portrait-agatha-harkness": "images/agathaharkness.png",
+  "portrait-vulcan": "images/vulcan.png",
+  "portrait-lilandra": "images/lilandra.png",
+  "portrait-deathbird": "images/deathbird.png",
   "icon-Agente": "images/icons/agent.png",
   "icon-Agilidad": "images/icons/agility.png",
   "icon-Aniquiladores": "images/icons/annihilators.png",
@@ -85097,7 +85725,6 @@
   "ctp-veteran": "images/items/ctp_veteran.png",
   "ctp-conquest": "images/items/ctp_conquest.png",
   "ctp-liberation": "images/items/ctp_liberation.png",
-  "ctp-ascent": "images/items/ctp_ascent.png",
   "art-shangchi": "images/items/artifact_shangchi.png",
   "art-aero": "images/items/artifact_aero.png",
   "art-swordmaster": "images/items/artifact_swordmaster.png",
@@ -85480,7 +86107,87 @@
   "cromo-109": "images/cards/mzr_wolverine.png",
   "cromo-110": "images/cards/mzr_ironman.png",
   "cromo-111": "images/cards/mzr_hulk.png",
-  "cromo-112": "images/cards/mzr.png"
+  "cromo-112": "images/cards/mzr.png",
+  "odin-1": "images/items/uru_amplify.png",
+  "odin-2": "images/items/uru_balance.png",
+  "odin-3": "images/items/uru_focus.png",
+  "odin-4": "images/items/uru_fortitude.png",
+  "odin-5": "images/items/uru_heal.png",
+  "odin-6": "images/items/uru_insight.png",
+  "odin-7": "images/items/uru_magic.png",
+  "odin-8": "images/items/uru_resist.png",
+  "odin-9": "images/items/uru_steel.png",
+  "odin-10": "images/items/uru_strike.png",
+  "odin-11": "images/items/uru_toughness.png",
+  "odin-12": "images/items/uru_will.png",
+  "odin-13": "images/items/uru_flame.png",
+  "odin-14": "images/items/uru_chill.png",
+  "odin-15": "images/items/uru_lightning.png",
+  "odin-16": "images/items/uru_poison.png",
+  "odin-17": "images/items/uru_mind.png",
+  "emblema-1": "images/emblemas/emblem_1.png",
+  "emblema-2": "images/emblemas/emblem_2.png",
+  "emblema-3": "images/emblemas/emblem_3.png",
+  "emblema-4": "images/emblemas/emblem_4.png",
+  "emblema-5": "images/emblemas/emblem_5.png",
+  "emblema-6": "images/emblemas/emblem_6.png",
+  "emblema-7": "images/emblemas/emblem_7.png",
+  "emblema-8": "images/emblemas/emblem_8.png",
+  "emblema-9": "images/emblemas/emblem_9.png",
+  "emblema-10": "images/emblemas/emblem_10.png",
+  "emblema-11": "images/emblemas/emblem_11.png",
+  "emblema-12": "images/emblemas/emblem_12.png",
+  "emblema-13": "images/emblemas/emblem_13.png",
+  "emblema-14": "images/emblemas/emblem_14.png",
+  "emblema-15": "images/emblemas/emblem_15.png",
+  "emblema-16": "images/emblemas/emblem_16.png",
+  "emblema-17": "images/emblemas/emblem_17.png",
+  "emblema-18": "images/emblemas/emblem_18.png",
+  "emblema-19": "images/emblemas/emblem_19.png",
+  "emblema-20": "images/emblemas/emblem_20.png",
+  "emblema-21": "images/emblemas/emblem_21.png",
+  "emblema-22": "images/emblemas/emblem_22.png",
+  "emblema-23": "images/emblemas/emblem_23.png",
+  "emblema-24": "images/emblemas/emblem_24.png",
+  "emblema-25": "images/emblemas/emblem_25.png",
+  "emblema-26": "images/emblemas/emblem_26.png",
+  "emblema-27": "images/emblemas/emblem_27.png",
+  "emblema-28": "images/emblemas/emblem_28.png",
+  "emblema-29": "images/emblemas/emblem_29.png",
+  "emblema-30": "images/emblemas/emblem_30.png",
+  "emblema-31": "images/emblemas/emblem_31.png",
+  "emblema-32": "images/emblemas/emblem_32.png",
+  "emblema-33": "images/emblemas/emblem_33.png",
+  "emblema-34": "images/emblemas/emblem_34.png",
+  "emblema-35": "images/emblemas/emblem_35.png",
+  "emblema-36": "images/emblemas/emblem_36.png",
+  "emblema-37": "images/emblemas/emblem_37.png",
+  "emblema-38": "images/emblemas/emblem_38.png",
+  "emblema-39": "images/emblemas/emblem_39.png",
+  "emblema-40": "images/emblemas/emblem_40.png",
+  "emblema-41": "images/emblemas/emblem_41.png",
+  "emblema-42": "images/emblemas/emblem_42.png",
+  "emblema-43": "images/emblemas/emblem_43.png",
+  "emblema-44": "images/emblemas/emblem_44.png",
+  "emblema-45": "images/emblemas/emblem_45.png",
+  "emblema-46": "images/emblemas/emblem_46.png",
+  "emblema-47": "images/emblemas/emblem_47.png",
+  "emblema-48": "images/emblemas/emblem_48.png",
+  "emblema-49": "images/emblemas/emblem_49.png",
+  "emblema-50": "images/emblemas/emblem_50.png",
+  "emblema-51": "images/emblemas/emblem_51.png",
+  "emblema-52": "images/emblemas/emblem_52.png",
+  "emblema-53": "images/emblemas/emblem_53.png",
+  "emblema-54": "images/emblemas/emblem_54.png",
+  "emblema-55": "images/emblemas/emblem_55.png",
+  "emblema-56": "images/emblemas/emblem_56.png",
+  "emblema-57": "images/emblemas/emblem_57.png",
+  "emblema-58": "images/emblemas/emblem_58.png",
+  "emblema-59": "images/emblemas/emblem_59.png",
+  "emblema-60": "images/emblemas/emblem_60.png",
+  "emblema-61": "images/emblemas/emblem_61.png",
+  "emblema-62": "images/emblemas/emblem_62.png",
+  "emblema-63": "images/emblemas/emblem_63.png"
  },
  "logo": ""
 }

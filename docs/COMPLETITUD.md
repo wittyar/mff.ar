@@ -1,6 +1,6 @@
 # Completitud de los datos
 
-Generado por `scripts/completitud.py` sobre `data.js` (juego 12.4, datos del 2026-11-17, formato 19) y `datos.json`.
+Generado por `scripts/completitud.py` sobre `data.js` (juego 12.4, datos del 2026-11-19, formato 20) y `datos.json`.
 
 Qué le falta a cada variante (un personaje con un uniforme) para tener la información que la app muestra y usa, y de dónde podría salir. Lo que dos fuentes dicen distinto está en `docs/AUDITORIA.md`; esto es lo que no está. Lo que no existe en el juego no es un faltante (un personaje sin artefacto, si ninguna fuente dice que tenga uno), y lo que una fuente dice a propósito va aparte.
 
@@ -27,14 +27,14 @@ Una variante está completa si no le falta nada de esto. Lo del personaje (insti
 
 ## Resumen
 
-261 de 896 variantes completas (29%); 56 de 294 personajes con todas sus variantes completas.
+262 de 896 variantes completas (29%); 57 de 294 personajes con todas sus variantes completas.
 
 Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo que falta en el personaje cuenta en todas sus variantes):
 
 | Faltante | Variantes | Personajes | Casos | De dónde podría salir |
 |---|---|---|---|---|
 | [Strikers](#strikers) | 361 | 126 | 126 | la wiki (pestaña Striker), el juego o foros |
-| [Rotación](#rotación) | 197 | 117 | 197 | thanosvibs (rotaciones), la guía de armado o foros |
+| [Rotación](#rotación) | 194 | 114 | 194 | thanosvibs (rotaciones), la guía de armado o foros |
 | [Fila vacía en la guía de armado](#fila-vacía-en-la-guía-de-armado) | 77 | 36 | 36 | la guía de armado o foros |
 | [«Give Power» sin lo que otorga](#give-power-sin-lo-que-otorga) | 68 | 27 | 78 | thanosvibs (Leads & Supports), la wiki o foros |
 | [Skill sin efectos](#skill-sin-efectos) | 48 | 31 | 48 | la wiki (en la pasiva de uniforme, el «Bonus» del uniforme) o foros |
@@ -45,16 +45,16 @@ Lo que falta, de lo que deja incompletas más variantes a lo que deja menos (lo 
 | [ISO-8 u obelisco sin dato en la guía de armado](#iso-8-u-obelisco-sin-dato-en-la-guía-de-armado) | 23 | 6 | 6 | la guía de armado o foros |
 | [Nombre en Leads & Supports distinto del de la skill](#nombre-en-leads--supports-distinto-del-de-la-skill) | 15 | 14 | 16 | el juego o foros |
 | [Liderazgo sin completar](#liderazgo-sin-completar) | 11 | 5 | 11 | thanosvibs (Leads & Supports), el juego o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
-| [Retrato o ícono](#retrato-o-ícono) | 7 | 5 | 10 | thanosvibs (imágenes) |
+| [Retrato o ícono](#retrato-o-ícono) | 7 | 5 | 7 | thanosvibs (imágenes) |
 | [Soporte que Leads & Supports no publica](#soporte-que-leads--supports-no-publica) | 6 | 4 | 6 | thanosvibs (Leads & Supports) o a mano con su fuente (scripts/contenido/liderazgos_api.json) |
 | [Stats](#stats) | 4 | 4 | 4 | thanosvibs |
 | [Activa sin recarga](#activa-sin-recarga) | 4 | 2 | 4 | la wiki o el juego |
 | [Sin fila en la Ideal CTP List](#sin-fila-en-la-ideal-ctp-list) | 4 | 4 | 4 | thanosvibs (Ideal CTP List) |
 | [Sin lugar en la tier list General](#sin-lugar-en-la-tier-list-general) | 4 | 4 | 4 | thanosvibs (tier list General) |
 | [Bono de equipo sin nombre](#bono-de-equipo-sin-nombre) | 4 | 2 | 2 | capturas del juego o foros |
+| [Skill que falta](#skill-que-falta) | 3 | 2 | 7 | thanosvibs (API de skills), la wiki o foros |
 | [Objetivo sin nombre (Target ID)](#objetivo-sin-nombre-target-id) | 3 | 3 | 3 | thanosvibs (Leads & Supports) o foros |
 | [Sin C.T.P. en la guía de armado](#sin-ctp-en-la-guía-de-armado) | 3 | 2 | 2 | la guía de armado o foros |
-| [Skill que falta](#skill-que-falta) | 1 | 1 | 5 | thanosvibs (API de skills), la wiki o foros |
 
 Sin casos: Dato de identidad vacío; Efecto que el catálogo no clasifica; Duración sin publicar ($TIME); Código en lugar de un nombre; Artefacto que falta; Perfil de combate o roles; Datos del uniforme.
 
@@ -91,11 +91,12 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Skill que falta
 
-5 casos en 1 personaje y 1 variante. La API de skills no trae una skill que la variante tiene en el juego por su tier o por ser uniforme (docs/AUDITORIA.md, sección 4, lista las de Tier-4 sin Striker y las de skill 6 sin Definitiva).
+7 casos en 2 personajes y 3 variantes. La API de skills no trae una skill que la variante tiene en el juego por su tier o por ser uniforme (docs/AUDITORIA.md, sección 4, lista las de Tier-4 sin Striker y las de skill 6 sin Definitiva).
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
 | Black Swan | Pasiva: la API de skills no la trae; Pasiva T2: la API de skills no la trae; Activa 4: la API de skills no la trae; Activa 5: la API de skills no la trae; Definitiva: la API de skills no la trae (es Tier-3 o Trascendido) | thanosvibs (API de skills), la wiki o foros |
+| Karnak (sus 2 variantes) | Striker: la API de skills no la trae (es Tier-4) | thanosvibs (API de skills), la wiki o foros |
 
 ### Skill sin efectos
 
@@ -608,19 +609,19 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 
 ### Retrato o ícono
 
-10 casos en 5 personajes y 7 variantes. La app baja lo que publica datos.json; sin el archivo, no muestra el retrato o el ícono. El ícono del bando Neutral no lo baja el build: que thanosvibs tenga uno es [Conjetura].
+7 casos en 5 personajes y 7 variantes. La app baja lo que publica datos.json; sin el archivo, no muestra el retrato o el ícono. El ícono del bando Neutral no lo baja el build: que thanosvibs tenga uno es [Conjetura].
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
 | Agatha Harkness | el ícono de «Neutral» no está en datos.json | thanosvibs (imágenes) |
-| Deathbird | su retrato no está en datos.json; el ícono de su artefacto no está en datos.json | thanosvibs (imágenes) |
+| Deathbird | el ícono de su artefacto no está en datos.json | thanosvibs (imágenes) |
 | Destroyer (sus 3 variantes) | el ícono de «Neutral» no está en datos.json | thanosvibs (imágenes) |
-| Lilandra | su retrato no está en datos.json; el ícono de su artefacto no está en datos.json | thanosvibs (imágenes) |
-| Vulcan | su retrato no está en datos.json; el ícono de su artefacto no está en datos.json | thanosvibs (imágenes) |
+| Lilandra | el ícono de su artefacto no está en datos.json | thanosvibs (imágenes) |
+| Vulcan | el ícono de su artefacto no está en datos.json | thanosvibs (imágenes) |
 
 ### Rotación
 
-197 casos en 117 personajes y 197 variantes. thanosvibs publica rotaciones por uniforme, y la guía de armado, la del mejor uniforme de cada personaje. Se dice si otro uniforme del personaje tiene la suya.
+194 casos en 114 personajes y 194 variantes. thanosvibs publica rotaciones por uniforme, y la guía de armado, la del mejor uniforme de cada personaje. Se dice si otro uniforme del personaje tiene la suya.
 
 | Variante | Qué falta | De dónde podría salir |
 |---|---|---|
@@ -628,9 +629,7 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Agent 13 (sus 2 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Annihilus | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Captain America (Sharon Rogers) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Star Light Armor, Dark Star Armor, Star Night Armor, Light Sirius Armor, Poseidon Armor y Arctic Warrior; la guía de armado tiene la de Arctic Warrior |
-| Clea — Death of Doctor Strange | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base |
 | Dazzler — X-Song | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base |
-| Deathbird | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Dormammu — The Living Dark Planet | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de la base y Damnation; la guía de armado tiene la de Damnation |
 | Drax (sus 4 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Ebony Maw | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Avengers: Infinity War, Dark Obsidian Armor y General's Hand |
@@ -674,7 +673,6 @@ Las variantes de un personaje con el mismo faltante van en una fila.
 | Killmonger | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Black Panther (Erik Killmonger (Black Panther)); la guía de armado tiene la de Marvel Studios' Black Panther (Erik Killmonger (Black Panther)) |
 | Kingpin (base, Secret Wars: Armor Wars, Marvel Television's Daredevil: Born Again) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Winter Criminal |
 | Lash (sus 2 variantes) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
-| Lilandra | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Lizard | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros |
 | Luke Cage (base, All-New, All-Different) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de Marvel Studios' Luke Cage y Uptown Suit; la guía de armado tiene la de Uptown Suit |
 | M.O.D.O.K. (base, CAPDOC) | ni thanosvibs ni la guía de armado le dan rotación | thanosvibs (rotaciones), la guía de armado o foros; thanosvibs publica la de SPIDOC y Ant-Man and the Wasp: Quantumania; la guía de armado tiene la de Ant-Man and the Wasp: Quantumania |
@@ -980,12 +978,6 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Clea: 1 faltante, 1 de 2 variantes incompletas</summary>
-
-- **Death of Doctor Strange:** rotación
-
-</details>
-
 <details><summary>Colossus: 1 faltante, 4 de 4 variantes incompletas</summary>
 
 - **Personaje:** strikers
@@ -1030,10 +1022,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Deathbird: 10 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Deathbird: 8 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** stats; valores del artefacto; strikers; bonos de equipo; Ideal CTP List; fila vacía en la guía de armado; tier list General
-- **Base:** retrato o ícono; rotación
+- **Base:** retrato o ícono
 
 </details>
 
@@ -1491,10 +1483,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Karnak: 2 faltantes, 2 de 2 variantes incompletas</summary>
+<details><summary>Karnak: 4 faltantes, 2 de 2 variantes incompletas</summary>
 
-- **Base:** rotación
-- **All-New, All-Different:** rotación
+- **Base:** falta la skill: Striker; rotación
+- **All-New, All-Different:** falta la skill: Striker; rotación
 
 </details>
 
@@ -1552,10 +1544,10 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Lilandra: 11 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Lilandra: 9 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** stats; valores del artefacto; strikers; bonos de equipo; Ideal CTP List; fila vacía en la guía de armado; tier list General
-- **Base:** soporte sin Leads & Supports: Pasiva; retrato o ícono; rotación
+- **Base:** soporte sin Leads & Supports: Pasiva; retrato o ícono
 
 </details>
 
@@ -2295,7 +2287,7 @@ Los personajes con algún faltante, en orden alfabético: primero lo del persona
 
 </details>
 
-<details><summary>Vulcan: 11 faltantes, 1 de 1 variante incompleta</summary>
+<details><summary>Vulcan: 10 faltantes, 1 de 1 variante incompleta</summary>
 
 - **Personaje:** stats; valores del artefacto; strikers; bonos de equipo; Ideal CTP List; fila vacía en la guía de armado; tier list General
 - **Base:** liderazgo sin completar: Liderazgo; retrato o ícono; rotación
