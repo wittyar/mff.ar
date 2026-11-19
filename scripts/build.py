@@ -28,7 +28,7 @@ _faltan = [f for f in ('work/characters.json', 'work/instintos.json', 'work/unif
                        'work/updates.json', 'work/ctps.json', 'work/artifacts.json', 'work/abxl.json',
                        'work/supports.json', 'work/rotations.json', 'work/wiki_artifact.json', 'work/cards.json',
                        'work/odins.json', 'work/emblems.json', 'work/emblems_static.json', 'work/emblems_levels.json',
-                       'work/wiki_iso.json',
+                       'work/wiki_iso.json', 'work/adelantos.json',
                        'work/guia/changelog.json', 'work/guia/parte1.txt', 'work/guia/parte2.txt')
            if not os.path.exists(f)]
 if not os.path.isdir('work/skills_api') or not os.listdir('work/skills_api'):

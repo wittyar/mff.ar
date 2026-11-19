@@ -9,7 +9,7 @@ Uso:
   python scripts/fetch_all.py --no-portraits  # todo menos los retratos (lo que usa el CI)
 
 Las partes se pueden pedir sueltas para que cada boton de Ajustes actualice solo lo suyo.
-Deja: work/characters.json, work/updates.json, work/tierlists/*.json,
+Deja: work/characters.json (sin los adelantos, que van a work/adelantos.json), work/updates.json, work/tierlists/*.json,
       work/skills_api/*.json, work/uniforms.json, work/ctps.json, work/artifacts.json,
       work/abxl.json, work/supports.json, work/rotations.json, work/cards.json (los cromos de
       cómic), work/guia/*, work/wikitext/*.json, images/icons/*.png (insumo del build),
@@ -47,8 +47,17 @@ def wiki_api(params):
 # Los personajes son insumo de casi todo lo demas, asi que se bajan siempre.
 # 1) personajes
 chars = get_json(TV + '/api/characters')
+# Los adelantos: thanosvibs publica a veces la fila de un uniforme o de un personaje que todavía no tiene nombre («???»;
+# el 19 de noviembre de 2026, blackbolt5 y karnak2, de la 12.4.5, con una copia de las skills de la base o con una pasiva
+# de uniforme «???»). No entran a work/ (ni sus skills): no son del roster hasta que tengan nombre, y una fila que entra a
+# medias deja tablas con un retrato que el roster no tiene. Van a work/adelantos.json, que el build lista con aviso
+# (auditar.py, docs/AUDITORIA.md sección 4).
+adelantos = [r for r in chars if re.fullmatch(r'\?+', r['uniform'] or '') or re.fullmatch(r'\?+', r['character'] or '')]
+chars = [r for r in chars if r not in adelantos]
 json.dump(chars, open('work/characters.json', 'w'))
-print('characters:', len(chars), 'filas')
+json.dump([{k: r[k] for k in ('id', 'portrait', 'character', 'uniform')} for r in adelantos], open('work/adelantos.json', 'w'))
+print('characters:', len(chars), 'filas', f'| AVISO: {len(adelantos)} adelantos sin nombre, fuera: '
+      + ', '.join(r['portrait'] for r in adelantos) if adelantos else '')
 
 
 if HACER_TIERLISTS:
@@ -99,6 +108,11 @@ if HACER_DATOS:
     # uniforme tiene su propio set (incluidas Uniform Passive y Striker Skill).
     os.makedirs('work/skills_api', exist_ok=True)
     ports_sk = sorted({r['portrait'] for r in chars} | {r['base_portrait'] for r in chars})
+    # Las de un retrato que ya no está en work/characters.json (un adelanto, o uno que thanosvibs sacó) no pueden seguir
+    # entrando al build desde un archivo viejo, como las tier lists.
+    for viejo in glob.glob('work/skills_api/*.json'):
+        if os.path.basename(viejo)[:-5] not in ports_sk:
+            os.remove(viejo)
     fallos_sk = []
     # Se bajan siempre, aunque ya haya copia: un rebalanceo cambia skills de retratos que
     # ya existían, y saltear los archivos presentes dejaba esos cambios afuera para siempre.

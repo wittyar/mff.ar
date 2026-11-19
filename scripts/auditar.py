@@ -517,6 +517,10 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
              f"{R['marcadores_patrones']} patrones, usados por {R['marcadores_retratos']} retratos. La facción, el "
              f"tipo o la raza se completan como dice la sección 8; lo que no, la app lo muestra \"sin especificar\" "
              f"en vez de inventar el valor.")
+    adelantos = cargar('work/adelantos.json')
+    s.append(f"- Adelantos (filas de un uniforme o un personaje sin nombre, «???»), fuera de los datos hasta que lo tengan "
+             f"(scripts/fetch_all.py): {len(adelantos)}"
+             + (': ' + '; '.join(f"{r['character']} — {r['uniform']} (`{r['portrait']}`)" for r in adelantos) if adelantos else '.'))
     s.append('')
 
     s += correcciones_seccion(L, fuentes)
@@ -955,6 +959,8 @@ def main():
     por = {p: v for p, v in A.por_retrato.items() if v['ok'] or v['nd'] or v['dif']}
     json.dump({'resumen': dict(A.res), 'por_retrato': por}, open('work/verificacion.json', 'w', encoding='utf-8'),
               ensure_ascii=False)
+    for r in cargar('work/adelantos.json'):
+        print(f"AVISO: adelanto de thanosvibs sin nombre, fuera de los datos: {r['character']} — {r['uniform']} ({r['portrait']})")
     R = A.res
     print(f"auditoría: skills en la wiki {R['skills_en_wiki']}/{R['skills']} | daño distinto {R['dano_dif']} | "
           f"recarga distinta {R['cd_dif']} | infobox distinto {sum(R[k + '_dif'] for k in ('type', 'side', 'gender', 'allies', 'atk'))} | "
