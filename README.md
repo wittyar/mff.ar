@@ -266,7 +266,7 @@ retratos e íconos (77 MB de thanosvibs), con el avance a la vista.
 
 ### Actualizaciones
 Al abrir, la app consulta GitHub:
-- **Datos del juego**: el workflow semanal (ver abajo) publica los datos de cada formato en su
+- **Datos del juego**: la actualización de datos (ver abajo) publica los datos de cada formato en su
   carpeta, `datos/<formato>/`, y la app consulta la del suyo: su `datos.json` dice qué hay. Si hay
   datos nuevos, se bajan solos, se verifican contra su sha256 y un botón recarga la ventana para
   usarlos. Cuando sube el formato, la carpeta del anterior queda como estaba: una versión vieja de la
@@ -306,20 +306,26 @@ abiertas a la vez la del repo y la instalada (la segunda lo dice y no arranca).
 1. En `version.json`: subir `version`, escribir `notas` (es lo que ve el usuario antes de
    actualizar). Si cambia `python`, agregar su sha256 en `PYTHON_SHA256` de
    `desktop/construir.py`: esa versión ya no se puede parchar y pide el instalador completo.
-2. Commit, etiqueta `vX.Y.Z` y push de la etiqueta:
+2. Commit, y armar la release sobre la punta de main (sin GitHub Actions: en Linux, con Wine,
+   `wine32:i386` y `xvfb`; Inno Setup 6.7.3 se baja de su release oficial y se verifica solo):
    ```
-   git tag v1.0.1
-   git push origin v1.0.1
+   python3 desktop/construir.py release v1.0.1
    ```
-3. El workflow **Publicar versión** arma en Windows el programa, el parche y el instalador (Inno
-   Setup) y publica la release con `latest.json`. Si la etiqueta no coincide con `version.json`,
-   falla sin publicar.
+   Verifica la etiqueta contra `version.json` y el formato de los datos, y deja en `dist/` el
+   instalador, el parche, `latest.json` y `notas.md`.
+3. Empujar main y subir la release con esos archivos en `dist/` (crea la etiqueta sobre el commit):
+   ```
+   python desktop/construir.py subir v1.0.1 <commit>
+   ```
+   Verifica el instalador y el parche contra `latest.json` y que el commit esté en origin/main, y
+   corre `gh release create`. Mientras el workflow `publicar.yml` siga activo, la etiqueta nueva lo
+   dispara (ver `CLAUDE.md`).
 
 `formato_datos` (en `version.json`) y `FORMATO` (en `scripts/build.py`) van juntos: se suben cuando
 una app y unos datos de versiones distintas ya no se entienden (a la app nueva le falta algo que los
 datos viejos no traen, o la anterior leería mal los nuevos). La app solo usa datos de su formato: con
 otros, baja al arrancar los de la carpeta de su formato. Una versión con formato nuevo sale recién cuando main ya
-publica su carpeta (`publicar.yml` lo verifica). Formato 2: el perfil de combate viene
+publica su carpeta (`construir.py release` lo verifica). Formato 2: el perfil de combate viene
 calculado en `data.js` (ver *Modelo del juego*). Formato 3: también el análisis de cada variante y el
 catálogo de efectos para mostrarlo, y cada uniforme trae sus roles.
 
@@ -396,14 +402,14 @@ No cambia los puntos de la sinergia. Lo que no está en ninguna categoría (velo
 daño a héroes o villanos...) sigue a la vista en la ficha, sin categoría.
 
 ## Datos del juego (pipeline)
-El pipeline corre en GitHub: el workflow **Actualizar datos MFF** (los lunes, o a mano desde
-Actions → Run workflow) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
+El pipeline corre en la PC de Ezequiel, sin GitHub Actions: `scripts/actualizar_datos.py` (o
+`ActualizarDatos.bat`; semanal si se lo programa, ver `CLAUDE.md`) baja todo de thanosvibs, la wiki y la guía de armado de Cynicalex,
 regenera `data.js`, `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md`, `docs/COMPLETITUD.md`
 y el import, copia `datos.json` y los archivos que lista a `datos/<formato>/` (`scripts/carpeta_formato.py`) y los
-commitea junto con la copia en uso de la guía de armado (ver abajo). La app instalada baja los de la carpeta de su
-formato.
+commitea junto con la copia en uso de la guía de armado (ver abajo) y los empuja. La app instalada baja los de la
+carpeta de su formato.
 
-A mano (Linux o macOS; en Windows ver Limitaciones):
+Paso por paso (en Windows, con `PYTHONUTF8=1`, que `actualizar_datos.py` pone solo):
 ```
 python scripts/fetch_all.py        # datos, tier lists e imágenes (images/ no se versiona)
 python scripts/parse_instinto.py
@@ -433,8 +439,8 @@ aceptan solo si este lector las entiende:
   contra thanosvibs) y de cada columna que se interpreta (C.T.P., ISO-8, obelisco, artefacto,
   emojis).
 
-Si se acepta, pasa a ser la **copia en uso**, `fuentes/guia-armado/` (versionada; el workflow
-semanal la commitea con los datos). Si no se acepta, o no se pudo bajar, la copia en uso queda
+Si se acepta, pasa a ser la **copia en uso**, `fuentes/guia-armado/` (versionada; la actualización
+de datos la commitea con los datos). Si no se acepta, o no se pudo bajar, la copia en uso queda
 como está y `estado.json` anota la fecha y los motivos; la app lo muestra en **Ajustes** y
 sigue con la última versión compatible. Un valor suelto que no se entiende (un C.T.P. nuevo, un
 emoji sin leyenda) no la rechaza: viaja tal cual, la app lo marca y Ajustes lo lista.
@@ -598,7 +604,7 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
   juego) y `liderazgos.py` los liderazgos que Leads & Supports no publica, desde la Leader Skill.
 - `fuentes/guia-armado/` — la copia en uso de la guía de armado y su estado.
 - `fuentes/foro/` — las notas de actualización del foro oficial (las baja `scripts/foro.py`, de a una
-  cada 6 s; el workflow de datos baja las nuevas).
+  cada 6 s; la actualización de datos baja las nuevas).
 - `scripts/traducciones/` — las tablas de traducción, editables a mano.
 - `scripts/contenido/` — lo curado a mano, con fuentes.
 - `docs/AUDITORIA.md` — el informe de la auditoría entre fuentes (se regenera en cada build).
@@ -622,16 +628,18 @@ ser de personajes, de C.T.P., de artefactos o de tus equipos.
 - `desktop/` — `lanzador.py` (entrada: instancia única, ventana, apagado, reinicio tras un parche, pantalla de
   rescate si la app no arranca), `servidor.py` (sirve la app y la API local), `rescate.py` (la pantalla de rescate,
   sin `app.js` ni `data.js`), `actualizador.py` (datos, imágenes, parches y la vuelta al programa anterior, todo
-  verificado), `construir.py` + `instalador.iss` (lo que publica cada versión) y el ícono.
-- `.github/workflows/` — `actualizar.yml` (datos, semanal) y `publicar.yml` (release al etiquetar; corta si los datos
-  del commit etiquetado o los publicados no son del formato que pide `version.json`).
-- `MFF.bat` / `MFF.sh` — lanzadores desde el repo.
+  verificado), `construir.py` + `instalador.iss` (lo que publica cada versión: `release` arma todo con Wine, `subir`
+  crea la release con gh) y el ícono.
+- `.github/workflows/` — `actualizar.yml` y `publicar.yml`, de cuando los datos y la release salían de GitHub Actions.
+  El proceso ya no los usa, pero siguen activos hasta que Ezequiel decida qué hacer con ellos (ver `CLAUDE.md`).
+- `MFF.bat` / `MFF.sh` — lanzadores desde el repo. `ActualizarDatos.bat` — la actualización de datos desde Windows.
 - `mff-thanosvibs-import.json` — export del estado completo (backup / re-import manual).
 
 ## Limitaciones conocidas
-- El pipeline de datos no corre en Windows: los scripts leen y escriben texto con la codificación
-  del sistema (cp1252) y los datos traen caracteres que no entran (★, ↑). Corre en GitHub (Linux);
-  la app instalada ya no lo necesita.
+- El pipeline de datos en Windows necesita el modo UTF-8 de Python (`PYTHONUTF8=1`): sin él, los scripts leen y
+  escriben texto en cp1252 y los datos traen caracteres que no entran (★, ↑). `scripts/actualizar_datos.py` lo pone.
+  Probado: el build con el Python de Windows bajo Wine da el mismo `data.js` que en Linux (con la misma
+  `PYTHONHASHSEED`); la bajada de las fuentes y git no se probaron en un Windows real.
 - Probado en Linux y bajo Wine (instalador compilado con Inno Setup, Python embebido de Windows):
   instalación, arranque, carpeta de datos, instancia única, capa, apagado y desinstalación. **No
   probado en un Windows real**: la ventana de Edge en modo app, el cuadro de error y el aviso de

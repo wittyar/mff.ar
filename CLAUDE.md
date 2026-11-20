@@ -13,29 +13,97 @@ variante, en `docs/COMPLETITUD.md`.
 - Código: una sola ruta (sin caminos alternativos ni capas de compatibilidad), nada silencioso
   (nada se degrada ni cambia sin error o aviso), simple antes que defensivo, commits atómicos (una
   intención por commit; el que cambia una firma lleva sus llamadas), la causa y no el síntoma.
+- **GitHub Actions: no usar** (Ezequiel, 20 de noviembre de 2026), literal:
+  > ## GitHub Actions: no usar
+  > - No crees, edites ni actives workflows de GitHub Actions (`.github/workflows/*`): ni jobs nuevos, ni triggers
+  >   (`push`, `pull_request`, `schedule`, `workflow_dispatch`), ni matrices.
+  > - No dispares workflows: nada de «Run workflow», `gh workflow run`, re-runs ni llamadas de dispatch por API.
+  > - No uses el CI de GitHub para validar. Corré tests, lint, typecheck y build dentro de la sesión y reportá el resultado.
+  > - No hagas push "para ver si pasa CI". Juntá los cambios en pocos commits y pocos pushes.
+  > - Si una tarea parece necesitar Actions (cron, deploy, respaldo, chequeos programados), PARÁ y proponé una alternativa
+  >   sin Actions, con trade-offs […]. La decisión es mía.
+  > - Si encontrás workflows que se disparan solos, no los borres ni los edites: listalos (archivo, nombre, triggers) y avisame.
+
+  Claude no toca `.github/`. **Siguen activos** (20 de noviembre de 2026) los dos workflows de antes:
+  `.github/workflows/actualizar.yml` («Actualizar datos MFF»: `schedule` lunes 06:00 UTC y `workflow_dispatch`; commitea
+  datos como mff-bot en main) y `.github/workflows/publicar.yml` («Publicar versión»: `push` de etiquetas `v*`). Mientras
+  sigan activos, `actualizar.yml` sigue corriendo solo cada lunes, y **crear la release crea la etiqueta `vX.Y.Z` y
+  dispara `publicar.yml`** [Probable: una etiqueta creada con la credencial de Ezequiel dispara `push`], que arma todo de
+  nuevo en Windows (gasta minutos) y corta al crear una release que ya existe [Probable]. Qué hacer con
+  ellos lo decide Ezequiel: desactivarlos (en GitHub, Actions → cada workflow → «Disable workflow», o Settings → Actions →
+  General → «Disable actions») o borrarlos él del repo.
 - Entregas: el push desde el contenedor de Claude está bloqueado (el proxy no le da credencial porque el repo no
-  está entre los autorizados de la sesión), y no se esquiva. Se commitea en un clon y se entrega un `git bundle`
-  (`origin/main..main`, después de `git fetch`) en la carpeta del repo, con un nombre nuevo cada vez:
-  `mff-AAAAMMDD-HHMM-<tema>-<versión>.bundle` (fecha y hora UTC). Cada entrega lleva versión, para no perder el
-  rastro (Ezequiel, 16 de octubre de 2026): el último commit del bundle es el de la versión. El push y las
-  etiquetas los hace Ezequiel. No se reescribe historia ya entregada. En su carpeta, solo git
-  de lectura. Los pasos de cada entrega van con esta sintaxis (Ezequiel, 10 de octubre de 2026), en PowerShell:
+  está entre los autorizados de la sesión), y no se esquiva; tampoco hay credencial para crear releases. Se commitea en
+  un clon y se entrega un `git bundle` (`origin/main..main`, después de `git fetch`) en la carpeta del repo, con un nombre
+  nuevo cada vez: `mff-AAAAMMDD-HHMM-<tema>-<versión>.bundle` (fecha y hora UTC). Cada entrega lleva versión, para no
+  perder el rastro (Ezequiel, 16 de octubre de 2026): el último commit del bundle es el de la versión. Con el bundle van
+  los cuatro archivos de la release que Claude arma en la sesión (`python3 desktop/construir.py release vX.Y.Z`, ver
+  «Release»), para `dist\` de la carpeta del repo (git no la sigue): `TA-GUIANAEL-MFF-X.Y.Z.exe`, `mff-parche-X.Y.Z.zip`,
+  `latest.json` y `notas.md`, y el commit sobre el que se armó. Los archivos de `dist/` no se commitean. El push, los datos
+  y la release los hace Ezequiel. No se reescribe historia ya entregada. En su carpeta, solo git de lectura. Los pasos de
+  cada entrega van con esta sintaxis (Ezequiel, 10 de octubre de 2026), en PowerShell:
   «1. Código» (`cd C:\Users\ezequ\dev\MFF.ar`, `git pull --ff-only`, `git pull --ff-only .\<bundle> main`, `git push`);
-  «2. Build de datos» (Actions → «Actualizar datos MFF» → Run workflow sobre main, o `gh workflow run actualizar.yml` y
-  `gh run watch`; termina con un commit «Datos actualizados» nuevo en main); «3. Etiqueta», cuando termina bien
-  (`git pull --ff-only`, `git tag vX.Y.Z <commit>`, `git push origin vX.Y.Z`, con el commit explícito). Los tres
-  pasos van siempre. Sin formato nuevo, la etiqueta va sobre el commit de la versión y no espera al de datos.
+  «2. Datos» (`python scripts\actualizar_datos.py`, o doble clic en `ActualizarDatos.bat`; termina con «Listo: «Datos
+  actualizados AAAA-MM-DD» empujado a origin/main.» o «Sin cambios»); «3. Release» (los cuatro archivos en `dist\`,
+  `python desktop\construir.py subir vX.Y.Z <commit>`, con el commit que dio Claude: verifica y crea la release con `gh`,
+  con la etiqueta sobre ese commit; ya no hay `git tag`). Los tres pasos van siempre. Sin formato nuevo, van en ese orden
+  en una sola entrega: la release se arma sobre el commit de la versión y no espera al de datos. Con formato nuevo, ver
+  «Versiones».
+- Datos: los arma y los publica `scripts/actualizar_datos.py` en la PC de Ezequiel (Windows), con la secuencia del
+  workflow `actualizar.yml`: `fetch_all.py --no-portraits`, `parse_instinto.py`, `foro.py`, `cafe.py` y `build.py`, el
+  `git add` de las mismas rutas y, si hay cambios, commit «Datos actualizados AAAA-MM-DD» (fecha UTC) con su identidad
+  git y `git push`. Antes exige la rama main sin cambios ni archivos nuevos, que siga a origin/main y que quede igual
+  después de `git pull --ff-only`; corta con el motivo ante el primer error, sin commitear, y también si el build toca
+  algo fuera de esas rutas. Lo que muestra queda también en `work\actualizar_datos.log`. Necesita Python 3.12 o más (de
+  python.org, con el lanzador `py`; los scripts usan solo la biblioteca estándar), Git para Windows con la credencial
+  para empujar a GitHub y red; los scripts corren en modo UTF-8 (`PYTHONUTF8=1`, que pone el script: sin él se caen en
+  cp1252). **Deuda**: los pasos y las rutas están copiados de `actualizar.yml`, que no se toca; si cambia uno, se cambia
+  el otro, hasta que Ezequiel decida qué hacer con el workflow. El build no es determinista entre corridas (el orden de
+  algunas listas depende de `PYTHONHASHSEED`): cada corrida cambia `data.js` aunque las fuentes no cambien, y hay commit.
+  Semanal (no registrada; la crea Ezequiel si quiere), en PowerShell, los lunes a las 3:00 de Buenos Aires (las 6:00 UTC
+  del workflow):
+  ```
+  $accion = New-ScheduledTaskAction -Execute (Get-Command py).Source -Argument '-3 scripts\actualizar_datos.py' -WorkingDirectory 'C:\Users\ezequ\dev\MFF.ar'
+  $cuando = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Monday -At 3:00
+  Register-ScheduledTask -TaskName 'MFF actualizar datos' -Action $accion -Trigger $cuando -Settings (New-ScheduledTaskSettingsSet -StartWhenAvailable)
+  ```
+  No probado en Windows. Trade-offs: corre solo con la PC prendida y la sesión de Ezequiel iniciada (así se registra; con
+  `StartWhenAvailable`, si a esa hora estaba apagada, corre apenas se pueda); abre una ventana de consola mientras dura;
+  el push usa la credencial guardada de Git para Windows (Git Credential Manager), que anda en su sesión: «correr aunque
+  el usuario no haya iniciado sesión» pide su contraseña de Windows y puede dejar a git sin credencial; si sus commits van
+  firmados con una clave con frase, la tarea se queda esperándola. Si la carpeta tiene cambios sin commitear, corta y no
+  toca nada. Una falla se ve en la ventana, en `work\actualizar_datos.log` y en el Programador de tareas (último
+  resultado 0x1). Si la tarea commitea entre que Claude arma un bundle y Ezequiel lo aplica, `git pull --ff-only
+  .\<bundle> main` no puede avanzar (main y el bundle se separaron) y hace falta otro bundle sobre el main nuevo.
+  Quitarla: `Unregister-ScheduledTask -TaskName 'MFF actualizar datos'`.
+- Release: `python3 desktop/construir.py release vX.Y.Z` en la sesión de Claude (Linux) hace lo que hacía
+  `publicar.yml`: la etiqueta coincide con `version.json`; los datos del commit (`datos.json`) y los de
+  `datos/<formato>/` son del formato que pide; el programa y el parche (con el Python embebido de python.org, verificado);
+  Inno Setup 6.7.3 de su release oficial, verificado por sha256 antes de ejecutarlo, en el prefijo de Wine
+  `/tmp/wine64pfx`, y el instalador compilado con ISCC bajo Wine; `latest.json` y `notas.md`. Se arma sobre la punta de
+  main, sin cambios y con origin/main adentro (después de `git fetch`): es lo que Ezequiel empuja antes de subirla, así
+  que los datos publicados de su formato van a ser los de ese commit. Al final imprime el sha256 y el tamaño de cada
+  archivo y el comando de «3. Release». En el contenedor hace falta Wine con soporte de 32 bits (el instalador de Inno
+  Setup lo es) y una pantalla virtual: `dpkg --add-architecture i386`, `apt-get update`, `apt-get install wine64
+  wine32:i386 xvfb` (Wine 9.0 de Ubuntu 24.04). Wine se corre sin `TMPDIR` (Wine 9.0 se cae al arrancar con ella). Frente a
+  lo que armaba Actions en Windows (comparado con la v1.0.57 publicada el 20 de noviembre de 2026): los mismos 51
+  archivos instalados y el mismo `latest.json` salvo sha256 y tamaños; los archivos de texto del programa van con LF
+  (Actions, con el git de Windows, los ponía con CRLF; mismo contenido), y el `.exe` (y su desinstalador) guarda además
+  los íconos por defecto de Inno Setup (el `UpdateResource` de Wine no los borra; unos 86 KB más): el que se ve es el
+  mismo, el nuestro. `latest.json` no depende del commit: depende del instalador, del parche y de `version.json`; la
+  etiqueta la pone `subir` sobre el commit que se le da, que tiene que estar en origin/main.
 - Versiones: `version.json` (versión, notas para el usuario, formato de datos). El formato sube
   cuando la app nueva necesita algo que los datos viejos no traen (`FORMATO` en `scripts/build.py`,
-  con la historia de cada uno). Los datos publicados salen de main. Con un formato nuevo, primero va el
-  push de main, después se corre a mano el workflow de datos y, cuando termina bien, la etiqueta `vX.Y.Z`
-  va sobre ese commit de datos: así la release ya sale con los datos que pide (con la 1.0.17, la etiqueta
-  salió antes y la app quedó esperando). Sin formato nuevo, la etiqueta va sobre el commit de la versión. Una
-  versión por vez: con un formato nuevo, los datos y la etiqueta de esa versión van antes de entregar o empujar la
-  siguiente (con la 1.0.22, dos bundles empujados juntos dejaron la etiqueta sobre datos de otro formato). Publicar
-  es solo empujar la etiqueta: el workflow «Publicar versión» arma la release con ella y no se corre a mano.
-  `publicar.yml` corta si los datos del commit etiquetado o los de main en `datos/<formato>/` no son del formato de
-  `version.json`. Desde la 1.0.30 (#1) la app baja los datos de `datos/<formato>/` (los copia ahí
+  con la historia de cada uno). Los datos publicados salen de main. Con un formato nuevo, la release tiene que armarse
+  sobre un commit «Datos actualizados» de ese formato que ya esté en main, así que la entrega va en dos vueltas:
+  «1. Código» (el push de main, con el commit de la versión) y «2. Datos» (`actualizar_datos.py` commitea y empuja los
+  datos del formato nuevo, en `datos/<formato>/`); recién entonces Claude, con `git fetch`, arma la release sobre ese
+  commit de datos y Ezequiel corre «3. Release» con lo que le deja: así la release ya sale con los datos que pide (con la
+  1.0.17, la etiqueta salió antes y la app quedó esperando). `construir.py release` corta si los datos del commit o los
+  de `datos/<formato>/` no son del formato de `version.json`. Sin formato nuevo, la release va sobre el commit de la
+  versión. Una versión por vez: con un formato nuevo, los datos y la release de esa versión van antes de entregar o
+  empujar la siguiente (con la 1.0.22, dos bundles empujados juntos dejaron la etiqueta sobre datos de otro formato).
+  Desde la 1.0.30 (#1) la app baja los datos de `datos/<formato>/` (los copia ahí
   `scripts/carpeta_formato.py`, que corre el build); la raíz se sigue publicando para las versiones hasta la 1.0.29.
 - Build: `python3 scripts/build.py`, sobre lo bajado en `work/` (sin red). Regenera `data.js`,
   `datos.json`, `docs/AUDITORIA.md`, `docs/CATALOGO.md` y `docs/COMPLETITUD.md`; para con un mensaje
