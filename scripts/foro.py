@@ -53,7 +53,7 @@ def pedir(url, negado_ok=False):
 
 
 def guardar(indice, ruta):
-    json.dump(sorted(indice.values(), key=lambda n: n['fecha']), open(ruta, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(sorted(indice.values(), key=lambda n: n['fecha']), open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 
 
 def main(todo):
@@ -84,7 +84,7 @@ def main(todo):
         x = d['article']
         nota = {'id': x['id'], 'titulo': x['title'], 'fecha': x['regDate'], 'modificada': x.get('modDate'),
                 'url': VER.format(menu, x['id']), 'html': x['content']}
-        json.dump(nota, open(os.path.join(DIR, f"{x['id']}.json"), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        json.dump(nota, open(os.path.join(DIR, f"{x['id']}.json"), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
         indice[x['id']] = {k: nota[k] for k in ('id', 'titulo', 'fecha', 'url')}
         print(f"  {x['id']} {x['title']}", flush=True)
         guardar(indice, ruta_indice)   # después de cada nota: si algo corta, no se vuelve a pedir lo ya bajado

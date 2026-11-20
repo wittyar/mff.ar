@@ -389,7 +389,7 @@ state = {
     'skillTags': [{'value':v,'icon':images.get('icon-'+v,'')} for v in SEED['SKILL_TAGS']],
   },
   'images': images, 'logo': ''}
-json.dump(state, open('mff-thanosvibs-import.json','w'), ensure_ascii=False, indent=1)
+json.dump(state, open('mff-thanosvibs-import.json', 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 from imagenes import origen
 def huella(ruta):
     with open(ruta, 'rb') as f:

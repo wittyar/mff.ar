@@ -97,7 +97,7 @@ def par(nota_en, vistas):
 
 
 def guardar(indice, ruta):
-    json.dump(sorted(indice.values(), key=lambda n: n['fecha']), open(ruta, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(sorted(indice.values(), key=lambda n: n['fecha']), open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
 
 
 def main(todo):
@@ -130,12 +130,12 @@ def main(todo):
                 ruta = os.path.join(DIR, f'{kid}.json')
                 nota = json.load(open(ruta, encoding='utf-8'))
                 nota['en'] = indice[kid]['en'] = ens
-                json.dump(nota, open(ruta, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+                json.dump(nota, open(ruta, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
             continue
         x = pedir(ARTICULO.format(kid))['result']['article']
         nota = {'id': x['id'], 'titulo': x['subject'], 'fecha': x['writeDate'], 'url': VER.format(x['id']), 'en': ens,
                 'lineas': lineas(x['contentHtml']), 'imagenes': len(re.findall(r'<img\b|\[\[\[CONTENT-ELEMENT-', x['contentHtml']))}
-        json.dump(nota, open(os.path.join(DIR, f"{x['id']}.json"), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        json.dump(nota, open(os.path.join(DIR, f"{x['id']}.json"), 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
         indice[x['id']] = {k: nota[k] for k in ('id', 'titulo', 'fecha', 'url', 'en')}
         print(f"  {x['id']} {x['subject']}", flush=True)
         guardar(indice, ruta_indice)   # después de cada nota: si algo corta, no se vuelve a pedir lo ya bajado
