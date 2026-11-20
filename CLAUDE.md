@@ -52,9 +52,11 @@ variante, en `docs/COMPLETITUD.md`.
 - Datos: los arma y los publica `scripts/actualizar_datos.py` en la PC de Ezequiel (Windows), con la secuencia del
   workflow `actualizar.yml`: `fetch_all.py --no-portraits`, `parse_instinto.py`, `foro.py`, `cafe.py` y `build.py`, el
   `git add` de las mismas rutas y, si hay cambios, commit «Datos actualizados AAAA-MM-DD» (fecha UTC) con su identidad
-  git y `git push`. Antes exige la rama main sin cambios ni archivos nuevos, que siga a origin/main y que quede igual
-  después de `git pull --ff-only`; corta con el motivo ante el primer error, sin commitear, y también si el build toca
-  algo fuera de esas rutas. Lo que muestra queda también en `work\actualizar_datos.log`. Necesita Python 3.12 o más (de
+  git y `git push`. Antes exige la rama main sin cambios en archivos seguidos ni archivos sin seguir en esas rutas (irían
+  al commit), que siga a origin/main y que quede igual después de `git pull --ff-only`; los archivos sin seguir de otras
+  partes (el bundle de la entrega en la raíz, por ejemplo) no lo frenan: los lista en un aviso y no los toca. Corta con
+  el motivo ante el primer error, sin commitear, y también si el build toca algo fuera de esas rutas; para volver atrás
+  dice el comando (`git reset --hard HEAD` y `git clean -fd` solo sobre esas rutas). Lo que muestra queda también en `work\actualizar_datos.log`. Necesita Python 3.12 o más (de
   python.org, con el lanzador `py`; los scripts usan solo la biblioteca estándar), Git para Windows con la credencial
   para empujar a GitHub y red; los scripts corren en modo UTF-8 (`PYTHONUTF8=1`, que pone el script: sin él se caen en
   cp1252). **Deuda**: los pasos y las rutas están copiados de `actualizar.yml`, que no se toca; si cambia uno, se cambia
