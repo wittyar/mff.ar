@@ -9,6 +9,8 @@ def chequear(n, c, d=''):
     if not c: fallas.append(n)
 D = tempfile.mkdtemp(prefix='mff-inst-')
 os.symlink(f'{RAIZ}/images', os.path.join(D, 'images'))
+# Con una capa guardada (vacía): sin capa, la app abre la bienvenida del recorrido encima de todo (1.0.54).
+open(os.path.join(D, 'capa.json'), 'w').write('{}')
 p = subprocess.Popen([sys.executable, os.path.join(PROG, 'desktop', 'lanzador.py'), '--datos', D, '--sin-ventana'],
                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 url = None
