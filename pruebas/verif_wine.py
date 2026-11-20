@@ -4,8 +4,8 @@ LOCALAPPDATA como carpeta de datos por defecto, candado con msvcrt, codificació
 el Python embebido sin la carpeta del script en el path, y el apagado por falta de latidos.
 """
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, PRUEBAS, SALIDA  # noqa: E401
-import http.server, json, os, shutil, subprocess, threading, time
-from harness import ir_a_equipos
+import datetime, http.server, json, os, shutil, subprocess, threading, time
+from harness import abrir_mesa
 from playwright.sync_api import sync_playwright
 
 PFX = '/tmp/wine64pfx'
@@ -23,6 +23,9 @@ shutil.rmtree(PUB, ignore_errors=True); os.makedirs(PUB)
 m = json.load(open(os.path.join(RAIZ, 'datos.json'), encoding='utf-8'))
 m['imagenes'] = [[r, u] for r, u in m['imagenes'] if os.path.exists(os.path.join(RAIZ, r))]
 json.dump(m, open(os.path.join(PUB, 'datos.json'), 'w'))
+# Desde la 1.0.30 la app consulta los de su formato, en datos/<formato>/ (#1).
+os.makedirs(os.path.join(PUB, 'datos', str(m['formato'])))
+json.dump(m, open(os.path.join(PUB, 'datos', str(m['formato']), 'datos.json'), 'w'))
 v = json.load(open(os.path.join(RAIZ, 'version.json'), encoding='utf-8'))
 json.dump({'version': v['version'], 'python': v['python'], 'notas': '', 'formato_datos': v['formato_datos'],
            'parche': {'url': 'x', 'sha256': '0' * 64, 'bytes': 1}, 'instalador': {'url': 'x', 'sha256': '0' * 64, 'bytes': 1}},
@@ -43,8 +46,14 @@ os.symlink(os.path.join(RAIZ, 'images'), os.path.join(DATOS, 'images'))
 shutil.copy(os.path.join(RAIZ, 'data.js'), DATOS)
 os.makedirs(os.path.join(DATOS, 'docs')); shutil.copy(os.path.join(RAIZ, 'docs', 'AUDITORIA.md'), os.path.join(DATOS, 'docs'))
 json.dump(m, open(os.path.join(DATOS, 'datos.json'), 'w'))
+# Con una capa guardada (vacía): sin capa, la app abre la bienvenida del recorrido encima de todo (1.0.54).
+open(os.path.join(DATOS, 'capa.json'), 'w').write('{}')
+# Y con su respaldo del día ya hecho: el de la primera escritura del día es un shutil.copy2 (CopyFile2, como arriba).
+os.makedirs(os.path.join(DATOS, 'respaldos'))
+open(os.path.join(DATOS, 'respaldos', f'capa-{datetime.date.today().isoformat()}.json'), 'w').write('{}')
 
-env = dict(os.environ, WINEDEBUG='-all', WINEPREFIX=PFX)
+# Wine 9.0 (Ubuntu 24.04) se cae al arrancar si está definida TMPDIR (como en desktop/construir.py).
+env = dict({k: x for k, x in os.environ.items() if k != 'TMPDIR'}, WINEDEBUG='-all', WINEPREFIX=PFX)
 cmd = ['/usr/lib/wine/wine64', PROG_WIN + r'\python\python.exe', PROG_WIN + r'\desktop\lanzador.py',
        '--sin-ventana', '--espera-latido', '12', '--origen-datos', BASE, '--origen-app', BASE + 'latest.json']
 p = subprocess.Popen(cmd, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, errors='replace')
@@ -65,15 +74,18 @@ with sync_playwright() as pw:
     pg.goto(url); pg.wait_for_selector('.ccard', timeout=60000)
     chequear('la página carga servida desde Windows', pg.locator('.ccard').count() > 0)
     # un cambio con caracteres fuera de cp1252 en la capa
-    ir_a_equipos(pg); pg.click('[data-a="teamOpen"]')
-    pg.fill('[data-a="teamName"]', 'Equipo ★ ↑ ñandú')
-    for i in range(2): pg.locator('[data-a="teamToggle"]').nth(i).click()
-    pg.click('[data-a="teamSave"]'); pg.wait_for_timeout(1500)
+    # (desde la 1.0.25 los equipos se arman en la mesa: dos personajes de la lista de la ficha y guardar)
+    abrir_mesa(pg); pg.locator('main [data-a="open"]').first.click(); pg.wait_for_selector('.plista')
+    dos = pg.evaluate("""() => { const ks = [...document.querySelectorAll('.plista [data-a="mesaPoner"]')].map(x => x.dataset.key);
+        return [ks[0], ks.find(k => k.split('::')[0] !== ks[0].split('::')[0])]; }""")
+    for k in dos: pg.click(f'.plista [data-a="mesaPoner"][data-key="{k}"]'); pg.wait_for_timeout(200)
+    pg.fill('[data-a="mesaNombre"]', 'Equipo ★ ↑ ñandú')
+    pg.click('[data-a="mesaGuardar"]'); pg.wait_for_timeout(1500)
     capa = json.load(open(os.path.join(DATOS, 'capa.json'), encoding='utf-8'))
     chequear('capa.json en UTF-8 con ★ y ↑', [t['name'] for t in capa['teams']] == ['Equipo ★ ↑ ñandú'], capa['teams'][:1])
     pg.click('[data-a="goSettings"]'); pg.wait_for_timeout(1500)
     sec = pg.evaluate("document.querySelector('#seccion-actualizaciones').innerText")
-    chequear('Ajustes: versión, al día y carpeta de datos de Windows', '1.0.0' in sec and 'estás al día' in sec.lower()
+    chequear('Ajustes: versión, al día y carpeta de datos de Windows', v['version'] in sec and 'estás al día' in sec.lower()
              and 'AppData\\Local\\TA GUIANAEL MFF' in sec, [l for l in sec.splitlines() if 'Carpeta' in l or 'AL DÍA' in l])
     # segunda instancia: reusa (candado con msvcrt)
     p2 = subprocess.run(cmd, env=env, capture_output=True, text=True, errors='replace', timeout=90)
