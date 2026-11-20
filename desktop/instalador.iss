@@ -1,6 +1,7 @@
 ; Instalador de TA GUIANAEL MFF (Inno Setup 6).
 ;
-; Lo arma el workflow publicar.yml en Windows, después de `python desktop/construir.py programa`:
+; Lo arma `python desktop/construir.py release vX.Y.Z` en la sesión de Claude, con ISCC bajo Wine, después
+; de armar dist/programa:
 ;   iscc /DAppVersion=X.Y.Z desktop\instalador.iss
 ;
 ; Se instala en la carpeta del usuario (%LOCALAPPDATA%\Programs\TA GUIANAEL MFF), sin pedir
