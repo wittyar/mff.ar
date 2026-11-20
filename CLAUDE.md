@@ -145,7 +145,7 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (19 de noviembre de 2026)
+## Estado (20 de noviembre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario; tampoco la
   1.0.56: las notas de la 1.0.57 anuncian sus Objetos). La
@@ -545,6 +545,33 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     nuevo, sin `work/`, como Actions); `git add` del paso «Commitear» y `construir.py formato` sobre `datos/20/` pasan.
     Con los datos armados el 19 de noviembre (`MFF_DATOS`): sin fallas propio, humo, ficha, objetos, cromos, recorrido,
     historico y analisis; imagenes y formato, con esos datos puestos en el repo.
+- La 1.0.58 (sin cambio de formato, 20; la release va sobre el commit de versión), 20 de noviembre de 2026: **sin GitHub
+  Actions** (Ezequiel: «GitHub Actions: no usar», la regla literal en «Cómo trabajamos»). Sin cambios a la vista en la
+  app: cambia cómo se publican los datos y las versiones.
+  - **Datos, desde la PC de Ezequiel**: `scripts/actualizar_datos.py` (con doble clic, `ActualizarDatos.bat`) hace lo de
+    `actualizar.yml` y empuja; la tarea semanal queda escrita, sin registrar (ver «Datos»). Para Windows: los scripts
+    corren en modo UTF-8, y los archivos que se commitean y se escribían en modo texto sin `newline`
+    (`mff-thanosvibs-import.json`, las notas de `fuentes/foro` y `fuentes/cafe`) van con LF.
+  - **Release, en la sesión**: `construir.py release vX.Y.Z` (con Inno Setup bajo Wine) y `construir.py subir vX.Y.Z
+    <commit>` para Ezequiel (ver «Release»).
+  - Corridas: `actualizar_datos.py` de punta a punta con Python 3.12 en un clon nuevo sin `work/` (3 min 35 s; el commit y
+    el push, a un repo local), y otra vez con un bundle sin seguir en la raíz (aviso, no va al commit), y sus cortes:
+    un cambio o un borrado en un archivo seguido, un archivo sin seguir en `fuentes/foro`, otra rama, sin upstream, main
+    adelantado, main y origin/main separados, sin red en el primer paso, el build roto después de traer origin/main, un
+    archivo nuevo fuera de las rutas después del build, y «Sin cambios». `build.py` con el Python 3.14.7 de Windows bajo Wine: con la misma `PYTHONHASHSEED`, `data.js` igual
+    byte a byte al de Linux; sin `PYTHONUTF8`, se cae en `skills_api.py` (cp1252). Con Wine 9.0 (Ubuntu
+    9.0~repack-4build3, con wine32:i386) e Inno Setup 6.7.3, la v1.0.57 armada así frente a la publicada: lo de
+    «Release» (mismos 51 archivos; LF en lugar de CRLF; los íconos de más). Con la 1.0.58: `verif_wine` y
+    `verif_programa` sin fallas (las dos al día: la mesa, `datos/<formato>/`, la capa guardada, el respaldo del día y
+    `TMPDIR`); la 1.0.57 publicada (el programa que instaló el instalador de Actions) se actualiza con el parche 1.0.58
+    y queda con los archivos del commit (prueba suelta fuera del repo, con el Python de Linux: el parche usa
+    `shutil.copy2`, que Wine 9 no tiene); el instalador 1.0.58 se instala encima de la 1.0.57 publicada y desinstala
+    dejando la carpeta de datos (bajo Wine). `verif_actualizacion_real` y `verif_parche_1xx` son de la 1.0.1 a la 1.0.19
+    y no corren con la versión de hoy. **No probado en un Windows real**: el script de datos (git, la bajada de las
+    fuentes, el Programador de tareas), `subir` y el instalador.
+  - Pendiente / a decidir (Ezequiel): qué hacer con `actualizar.yml` y `publicar.yml`, que siguen activos; registrar o no
+    la tarea semanal; la lista de pasos y rutas duplicada con `actualizar.yml`. Ajustes sigue diciendo que los datos «se
+    arman cada lunes»: vale si se registra la tarea. El build no es determinista entre corridas (`PYTHONHASHSEED`).
 - Entregado sin versión (solo datos), 9 de octubre: la progresión de stats de Mephisto y Galactus
   (`fuentes/progresion/`, #8, en pausa hasta que Ezequiel pueda sacar capturas: lo que falta está en el issue) y 25 de
   los 35 slots de liderazgo derivados que no tenían stat (#10): stats nuevos en el catálogo (escudos de energía y físico,

@@ -1,6 +1,6 @@
 {
- "version": "1.0.57",
+ "version": "1.0.58",
  "formato_datos": 20,
  "python": "3.14.7",
- "notas": "Nuevo: «Objetos», en la barra en lugar de «Cromos», con una pestaña por sistema del equipamiento: C.T.P. (las opciones con los valores de cada grado, de dónde se consiguen y a qué personajes se los pone la guía de armado), ISO-8 (las piedras y los 26 sets con sus piezas, lo que dan y su activación), Bendiciones de Odín (cada stat con su valor, bono y total), Emblemas (los 63, con su valor en cada nivel y dónde rigen), J.A.R.V.I.S. (qué es, sus chips y en qué modos rige) y los Cromos, como estaban. Desde la ficha y desde Modos, el nombre de un C.T.P. o de un set de ISO-8 lleva a su detalle. El recorrido guiado tiene sus pasos. Además: Vulcan, Lilandra y Deathbird ya tienen el retrato de thanosvibs en lugar del provisorio, y los dos uniformes de la 12.4.5 que thanosvibs adelanta sin nombre (de Black Bolt y de Karnak) no aparecen hasta que lo tengan."
+ "notas": "Sin cambios a la vista en la app: cambia cómo se arman y se publican las versiones y los datos, que ya no salen de GitHub Actions."
 }
