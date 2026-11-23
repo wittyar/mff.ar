@@ -315,6 +315,11 @@
    "nombre": "mffguide.fyi — Guía MFF de la comunidad (v1.2 del 23 de noviembre de 2026; hecha por un jugador, no es oficial): las tablas de los cromos de cómic que dice sacar de los archivos del juego v12.4.0 (bajada el 23 de noviembre de 2026; en fuentes/mffguide/cromos.json)",
    "url": "https://mffguide.fyi/"
   },
+  "mffguide-jm": {
+   "corto": "mffguide.fyi",
+   "nombre": "mffguide.fyi — Guía MFF de la comunidad (v1.2 del 23 de noviembre de 2026; hecha por un jugador, no es oficial): las tablas de Jefe mundial (jefes, consejos del juego, restricciones por fase, lo que pide cada dificultad) que dice sacar de los archivos del juego v12.4.0 (bajada el 23 de noviembre de 2026; en fuentes/mffguide/jefe_mundial.json)",
+   "url": "https://mffguide.fyi/"
+  },
   "foro-1895951": {
    "nombre": "Foro oficial de MARVEL Future Fight — 9/1 Update Details (notas del 2 de septiembre de 2026: Annihilus y Galactus, Jefe mundial mítico y el sistema J.A.R.V.I.S., con la lista de sus chips)",
    "url": "https://forum.netmarble.com/futurefight_en/view/2196/1895951"

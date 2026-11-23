@@ -1,0 +1,2256 @@
+{
+ "fuente": {
+  "url": "https://mffguide.fyi/",
+  "nombre": "Guía MFF de la comunidad (mffguide.fyi)",
+  "version_guia": "1.2",
+  "fecha_guia": "2026-11-23",
+  "version_juego": "12.4.0",
+  "bajada": "2026-11-23",
+  "que_es": "Tablas de Jefe mundial según mffguide.fyi: la guía, hecha por un jugador (no es oficial), dice sacarlas de los archivos del juego (v12.4.0). Solo hechos del juego: los jefes con su nombre del juego en inglés y en español, su dificultad, los consejos que da el juego de cada uno, las restricciones de personajes por rango de fases, qué categoría pide cada dificultad a los principales y a los aliados, y quién se puede repetir. Fuera, lo que es criterio de la guía: sus equipos calculados (WB_PLAN), quién «juega» y qué aliados elige, sus veredictos por personaje (NIVEL_JEFE, RAZON_JEFE), su lectura de los consejos (las claves «p») y su prosa.",
+  "de_donde": "Los objetos WB_INFO (dif y t: la dificultad y los consejos del juego de cada jefe, en los dos idiomas) y WB_R (las restricciones por rango de fases, con las palabras de las tablas del juego) de los scripts de la página; la tabla «Tipos de incursión y qué pide cada uno», el párrafo «Quién se puede repetir», los nombres de los jefes en español y los de las habilidades únicas en español, de su sección «Jefe mundial a fondo».",
+  "sin_confirmar": [
+   "Las restricciones por fase: ninguna fuente nuestra las trae (ni la guía del juego en sus tres idiomas, ni las notas de los foros, ni thanosvibs).",
+   "Lo que piden a los aliados Leyenda+ (Categoría 2, 6★, maestría 6, nivel 60) y Mítico (Categoría 3 o potencial trascendido, 6★, maestría 6, nivel 70), el nivel 70 de los principales de Leyenda y el 6★ de Normal y Definitivo: solo la guía (la guía del juego dice que Definitivo «es ideal» para personajes de categoría 2 o más: una recomendación, no un requisito). La categoría de los principales de Leyenda, Leyenda+ y Mítico y lo de los aliados de Leyenda coinciden con la guía del juego (captura 100) y con NamuWiki (modos.json).",
+   "Los consejos del juego: la guía los toma de los archivos; hasta su v1.1 los de Corvus Glaive y Quicksilver estaban cruzados (lo dice su historial). En la v1.2, contra Quicksilver (tipo Velocidad en la guía, la wiki y thanosvibs) rinde el tipo Combate, el que le gana a Velocidad (MFF_SEED.VENTAJA_TIPO): coincide. El de Corvus Glaive (Universal; rinde Velocidad) no se puede contrastar así."
+  ],
+  "no_esta": "Qué día del ciclo de Batalla de alianza es hoy (la guía tampoco lo tiene: la rotación de 28 días sale de thanosvibs, MFF_ABX, y coincide fila por fila con la de la guía). Valor, Resistencia y perforación recomendados por fase: la guía los da, no entran (no dependen de los personajes)."
+ },
+ "campos": {
+  "dificultades": "Las de 1 o 99 fases que piden categoría: fases, qué piden a los 3 que juegan (principal) y a los aliados, con el paso de la hoja de ruta de la guía de thanosvibs (MFF_GUIA.progresion) que lo cumple; si los aliados se repiten.",
+  "habilidades_es": "Cómo escribe el juego en español cada habilidad única que nombran las restricciones (según la guía); la app usa los de thanosvibs (dominio.ABIL) y la auditoría compara.",
+  "jefes": "id, nombre del juego (en, es), dificultad, consejos del juego (es, en) y restricciones: [desde, hasta, [palabras de las tablas del juego]]: el personaje tiene que cumplirlas todas; vacío, sin restricción. Los de Definitivo no tienen (son los mismos 10 de Principiante y Normal)."
+ },
+ "dificultades": [
+  {
+   "id": "normal",
+   "es": "Normal",
+   "en": "Normal",
+   "fases": 1,
+   "jefes": "definitivo",
+   "principal": {
+    "paso": "t1",
+    "es": "6★",
+    "en": "6★"
+   },
+   "aliados": {
+    "paso": "t1",
+    "es": "6★ o más",
+    "en": "6★ or higher"
+   },
+   "repiten_aliados": true
+  },
+  {
+   "id": "definitivo",
+   "es": "Definitivo",
+   "en": "Ultimate",
+   "fases": 99,
+   "jefes": "definitivo",
+   "principal": {
+    "paso": "t1",
+    "es": "6★",
+    "en": "6★"
+   },
+   "aliados": {
+    "paso": "t1",
+    "es": "6★ o más",
+    "en": "6★ or higher"
+   },
+   "repiten_aliados": true
+  },
+  {
+   "id": "leyenda",
+   "es": "Leyenda",
+   "en": "Legend",
+   "fases": 99,
+   "jefes": "leyenda",
+   "principal": {
+    "paso": "t3",
+    "es": "Categoría 3 o potencial trascendido, nivel 70",
+    "en": "Tier-3 or Transcended Potential, Lv.70"
+   },
+   "aliados": {
+    "paso": "t2",
+    "es": "Categoría 2, 6★, maestría 6, nivel 60",
+    "en": "Tier-2, 6★, Mastery 6, Lv.60"
+   },
+   "repiten_aliados": false
+  },
+  {
+   "id": "leyenda+",
+   "es": "Leyenda+",
+   "en": "Legend+",
+   "fases": 99,
+   "jefes": "leyenda+",
+   "principal": {
+    "paso": "t4",
+    "es": "Categoría 4",
+    "en": "Tier-4"
+   },
+   "aliados": {
+    "paso": "t2",
+    "es": "Categoría 2, 6★, maestría 6, nivel 60",
+    "en": "Tier-2, 6★, Mastery 6, Lv.60"
+   },
+   "repiten_aliados": false,
+   "nota": {
+    "es": "El texto del juego en español añade «o trascender potencial» a los principales; el inglés y el requisito para abrir el modo dicen solo Categoría 4.",
+    "en": "The game's Spanish text adds «or Transcend Potential» for the mains; the English text and the unlock requirement say only Tier-4."
+   }
+  },
+  {
+   "id": "mitico",
+   "es": "Mítico",
+   "en": "Mythic",
+   "fases": 99,
+   "jefes": "mitico",
+   "principal": {
+    "paso": "t4",
+    "es": "Categoría 4",
+    "en": "Tier-4"
+   },
+   "aliados": {
+    "paso": "t3",
+    "es": "Categoría 3 o potencial trascendido, 6★, maestría 6, nivel 70",
+    "en": "Tier-3 or Transcended Potential, 6★, Mastery 6, Lv.70"
+   },
+   "repiten_aliados": false
+  }
+ ],
+ "repetir": {
+  "es": "Los 3 que juegan entran una vez hasta el reinicio (tras ganar), en cualquier dificultad. Los aliados se pueden repetir, salvo en Leyenda, Leyenda+ y Mítico: ahí quien participa, principal o aliado, no vuelve a entrar en ninguna dificultad hasta el reinicio, y quien fue aliado no puede ir de principal.",
+  "en": "The 3 who play enter once until the reset (after a win), in any difficulty. Allies can repeat, except in Legend, Legend+ and Mythic: there whoever takes part, main or ally, cannot enter again in any difficulty until the reset, and an ally cannot go as a main."
+ },
+ "habilidades_es": {
+  "Agility": "Agilidad",
+  "Durability": "Durabilidad",
+  "Leadership": "Liderazgo",
+  "Weapons Master": "Maestro de armas",
+  "Command": "Mando",
+  "Energy Projection": "Proyección de energía",
+  "Pure Evil": "Malvado",
+  "Fast Movement": "Movimiento rápido",
+  "Strong": "Fuerte",
+  "Healing": "Curación",
+  "Magic": "Mágico",
+  "Machine": "Máquina",
+  "Mind Resist": "Resistencia mental"
+ },
+ "jefes": [
+  {
+   "id": "proxima-midnight",
+   "en": "Proxima Midnight",
+   "es": "Medianoche Próxima",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una DEF. de energía elevada.",
+     "en": "This boss has high Energy DEF."
+    },
+    {
+     "es": "Los personajes con un ATQ. físico elevado pueden ser efectivos.",
+     "en": "Characters with high Physical ATK can be effective."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "cull-obsidian",
+   "en": "Cull Obsidian",
+   "es": "Enano Negro",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una DEF. física elevada.",
+     "en": "This boss has high Physical DEF."
+    },
+    {
+     "es": "Los personajes con ATQ. de Energía elevado pueden ser efectivos.",
+     "en": "Characters with high Energy ATK can be effective."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "corvus-glaive",
+   "en": "Corvus Glaive",
+   "es": "Corvus Glaive",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una probabilidad de esquiva elevada.",
+     "en": "This boss has a high Dodge Rate."
+    },
+    {
+     "es": "Los efectos de ignorar esquiva y los efectos del equipo personalizado pueden ser efectivos.",
+     "en": "Ignore Dodge effects including leader skill, striker, and custom gear effects can be effective."
+    },
+    {
+     "es": "Los personajes de tipo Velocidad también pueden ser efectivos.",
+     "en": "Speed type characters can be effective."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "supergiant",
+   "en": "Supergiant",
+   "es": "Supergiganta",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una DEF. de energía elevada.",
+     "en": "This boss has high Energy DEF."
+    },
+    {
+     "es": "Los personajes con un ATQ. físico elevado pueden ser efectivos.",
+     "en": "Characters with high Physical ATK can be effective."
+    },
+    {
+     "es": "Los personajes de tipo Universal pueden ser efectivos.",
+     "en": "Universal type characters can be effective."
+    },
+    {
+     "es": "Este jefe tiene resistencia mental alta y es complicado combatirlo con personajes de daño mental.",
+     "en": "This boss has a high Mind Resistance and is hard to fight with Mind Damage dealers."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "ebony-maw",
+   "en": "Ebony Maw",
+   "es": "Fauces Negras",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe activa pilares de luz de forma periódica que atrapan a los enemigos.",
+     "en": "This boss periodically activates light pillars that snare enemies."
+    },
+    {
+     "es": "Lucha en lugares en los que los pilares de luz no se activan para tener ventaja.",
+     "en": "Fight in places where the light pillars don't activate to fight effectively."
+    },
+    {
+     "es": "Este jefe reduce el daño físico y el daño no elemental recibido.",
+     "en": "This boss decreases physical damage and non-elemental damage received."
+    },
+    {
+     "es": "Los personajes con ATQ. de energía y daño elemental elevados pueden ser efectivos.",
+     "en": "Characters with high Energy ATK and elemental damage can be effective."
+    },
+    {
+     "es": "Fauces Negras activa pilares de luz de forma periódica que atrapan a sus enemigos.",
+     "en": "Ebony Maw periodically activates light pillars that snare his enemies."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "thanos",
+   "en": "Thanos",
+   "es": "Thanos",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe es más poderoso que el resto de jefes mundiales de la Orden Negra.",
+     "en": "This boss is more powerful than any other Black Order world bosses."
+    },
+    {
+     "es": "Forma un equipo con tus mejores personajes para combatir.",
+     "en": "Form a team with your best characters to battle."
+    },
+    {
+     "es": "Con patrones de ataque rápidos y poderosos, difíciles de esquivar, selecciona a los personajes para esquivar con éxito.",
+     "en": "With fast and powerful patterns that are harder to dodge, tag characters to effectively dodge."
+    },
+    {
+     "es": "No lo olvides: Thanos se vuelve inmune a todas las mermas cuando sus PV son inferiores a una cantidad determinada.",
+     "en": "Remember, Thanos becomes immune to all debuffs when his HP drops below a set amount."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "quicksilver",
+   "en": "Quicksilver",
+   "es": "Quicksilver",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una probabilidad de esquiva elevada.",
+     "en": "This boss has a high Dodge Rate."
+    },
+    {
+     "es": "Los efectos de ignorar esquiva y los efectos del equipo personalizado pueden ser efectivos.",
+     "en": "Ignore Dodge effects including leader skill, striker, and custom gear effects can be effective."
+    },
+    {
+     "es": "Los personajes de tipo Combate también pueden ser efectivos.",
+     "en": "Combat type characters can be effective."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "cable",
+   "en": "Cable",
+   "es": "Cable",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una resistencia elemental elevada.",
+     "en": "This boss has a high elemental resist."
+    },
+    {
+     "es": "Los personajes con daño no elemental elevado pueden ser efectivos.",
+     "en": "Characters with high non-elemental damage can be effective."
+    },
+    {
+     "es": "Los personajes de tipo Velocidad pueden ser efectivos.",
+     "en": "Speed type characters can be effective."
+    },
+    {
+     "es": "La meditación de Cable se puede interrumpir con mermas.",
+     "en": "Cable's meditation can be interrupted with debuffs."
+    },
+    {
+     "es": "Los personajes con mermas pueden ser efectivos.",
+     "en": "Characters with debuffs can be effective."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "scarlet-witch",
+   "en": "Scarlet Witch",
+   "es": "Bruja Escarlata",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Este jefe tiene una resistencia elemental elevada.",
+     "en": "This boss has a high elemental resist."
+    },
+    {
+     "es": "Los personajes con daño no elemental elevado pueden ser efectivos.",
+     "en": "Characters with high non-elemental damage can be effective."
+    },
+    {
+     "es": "Los personajes de tipo Velocidad pueden ser efectivos.",
+     "en": "Speed type characters can be effective."
+    },
+    {
+     "es": "Tiene patrones de ataque en los que tendrás que moverte a la zona segura que hay en medio. Choca contra el cubo que se crea justo antes del ataque para reducir al personaje y esquivar el ataque con éxito.",
+     "en": "With patterns where you need to move to the safe spot in the middle, collide with the cube created right before the attack to miniaturize the character and dodge the attack effectively."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "apocalypse",
+   "en": "Apocalypse",
+   "es": "Apocalipsis",
+   "dif": "definitivo",
+   "consejos": [
+    {
+     "es": "Los personajes de tipo Detonación pueden ser efectivos.",
+     "en": "Blast type characters can be effective."
+    },
+    {
+     "es": "Con patrones de ataque rápidos y poderosos, difíciles de esquivar, selecciona a los personajes para esquivar con éxito.",
+     "en": "With fast and powerful patterns that are harder to dodge, tag characters to effectively dodge."
+    },
+    {
+     "es": "Durante un patrón de ataque con estatuas de piedra, destrúyelas todas para evitar que Apocalipsis se vuelva más fuerte.",
+     "en": "During a stone statue pattern, destroy all statues to stop Apocalypse from becoming stronger."
+    }
+   ],
+   "restricciones": []
+  },
+  {
+   "id": "knull",
+   "en": "Knull",
+   "es": "Knull",
+   "dif": "leyenda",
+   "consejos": [
+    {
+     "es": "La posesión simbiótica se acumula cuando los ataques de Knull te golpean.",
+     "en": "Symbiote Takeover stacks when hit by Knull's powerful attack."
+    },
+    {
+     "es": "Cuando las acumulaciones de posesión llegan a cierta cantidad, el personaje muere.",
+     "en": "When the takeover stacks to a certain amount, it eventually kills the character."
+    },
+    {
+     "es": "Las acumulaciones de posesión disminuyen automáticamente si no aumentan durante un tiempo determinado.",
+     "en": "The takeover stacks decrease automatically if not increased for a set duration."
+    },
+    {
+     "es": "Cuando Thor aparezca como aliado y aturda a Knull, céntrate en atacarle para derrotarlo.",
+     "en": "When Thor shows up as an ally and makes Knull groggy, focus all your character attacks to defeat Knull."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Male"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Human"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Hero",
+      "Male"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Female"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Blast"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Agility"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Speed",
+      "Hero"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Mutant"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Combat",
+      "Human"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Universal",
+      "Male"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Durability"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Alien"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Hero",
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Combat",
+      "Hero",
+      "Male",
+      "Human"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Villain",
+      "Male",
+      "Human"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Speed",
+      "Hero",
+      "Female",
+      "Human"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "mephisto",
+   "en": "Mephisto",
+   "es": "Mefisto",
+   "dif": "leyenda",
+   "consejos": [
+    {
+     "es": "Cuando atacan a Mefisto se llena su medidor de rabia. Usa su ataque Rabioso cuando se llena su medidor de rabia.",
+     "en": "Mephisto's rage gauge fills up when attacked. He uses his Enraged attack when the rage gauge is full."
+    },
+    {
+     "es": "Cuando se usa Rabioso, se lanzan múltiples discos de hechizo. Písalos de forma secuencial para activarlos.",
+     "en": "Multiple spell discs are cast when Enraged is used. Step on them sequentially to activate them."
+    },
+    {
+     "es": "Cuando se activen todos los discos de hechizo, aparecerá el Doctor Extraño para ayudarte.",
+     "en": "When all of the spell discs have been activated, Doctor Strange will appear as support."
+    },
+    {
+     "es": "Si no consigues activar todos sus discos de hechizo, el ataque Rabioso matará a tu personaje.",
+     "en": "If you have failed to activate all of his spell discs in time, your character will be killed by the Enraged attack."
+    },
+    {
+     "es": "Mefisto tiene alta resistencia a todos los elementos, excepto al frío.",
+     "en": "Mephisto has a high resistance to all elements except Cold."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Hero"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Male"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Combat"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Hero",
+      "Female"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Blast"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Speed",
+      "Hero"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Villain",
+      "Male"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Hero",
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Alien"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Universal",
+      "Hero"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Weapons Master"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Combat",
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Command"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Speed",
+      "Female"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Blast",
+      "Male",
+      "Mutant"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "infinity-ultron",
+   "en": "Infinity Ultron",
+   "es": "Ultrón del Infinito",
+   "dif": "leyenda",
+   "consejos": [
+    {
+     "es": "Ultrón está activando carga de optimización para usar las gemas del infinito.",
+     "en": "Ultron is activating Optimization Charging to use the Infinity Stones."
+    },
+    {
+     "es": "Ataca a Ultrón para interrumpirlo.",
+     "en": "Attack Ultron to disrupt him."
+    },
+    {
+     "es": "Cuando esté cargado del todo, Ultrón entrará en modo optimizado y usará ataques potentes con las gemas del infinito.",
+     "en": "When fully charged, Ultron will enter Optimization Mode and launch powerful attacks using the Infinity Stones."
+    },
+    {
+     "es": "Cada ataque usa una gema del infinito, y todos los héroes morirán si usa todas las gemas.",
+     "en": "Each attack uses 1 Infinity Stone and all heroes will die when all Infinity Stones are used."
+    },
+    {
+     "es": "Los héroes deben atacar a Ultrón para interrumpir la carga antes de que pueda usar todas las gemas del infinito.",
+     "en": "Heroes must attack Ultron to disrupt his optimization charging before he can use all the Infinity Stones."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Hero"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Human"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Hero",
+      "Female"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Blast",
+      "Hero"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Energy Projection"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Male",
+      "Alien"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Universal",
+      "Hero"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Pure Evil"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Speed",
+      "Hero",
+      "Female"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Universal",
+      "Male",
+      "Alien"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Male",
+      "Mutant"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Fast Movement"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Villain",
+      "Alien"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Female",
+      "Alien"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Blast",
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Combat",
+      "Hero",
+      "Female"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "gorr",
+   "en": "Gorr",
+   "es": "Gorr",
+   "dif": "leyenda",
+   "consejos": [
+    {
+     "es": "La sombra de Gorr invade el mapa en el intervalo fijado.",
+     "en": "Gorr's shadow encroaches the map at the set interval."
+    },
+    {
+     "es": "Pelear en la zona de sombras de Gorr reduce el daño adicional perforante del personaje.",
+     "en": "Fighting in the Gorr's shadow area decreases character's Additional Pierce Damage."
+    },
+    {
+     "es": "Una vez todo el mapa esté cubierto por sombras, Gorr invoca monstruos de las sombras.",
+     "en": "Once the entire map is covered by the shadow, Gorr summons Shadow Monsters."
+    },
+    {
+     "es": "Derrota a todos los monstruos de las sombras dentro de la duración de la invasión. Al final de la duración, Gorr infligirá graves daños, matando a los personajes.",
+     "en": "Defeat all Shadow Monsters within the Encroachment duration. At the end of the duration, Gorr will inflict powerful damage, killing the characters."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Male"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Female"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Alien"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Speed"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Combat",
+      "Human"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Strong"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Universal",
+      "Alien"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Blast",
+      "Male"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Villain",
+      "Male",
+      "Human"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Healing"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Blast",
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Magic"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Villain",
+      "Female"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Blast",
+      "Hero",
+      "Female",
+      "Mutant"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "dark-phoenix",
+   "en": "Dark Phoenix",
+   "es": "Fénix Oscura",
+   "dif": "leyenda",
+   "consejos": [
+    {
+     "es": "Si te golpea el ataque poderoso de Fénix Oscura Conforme el tiempo pasa, a Fénix Oscura le domina la Fuerza del fénix.",
+     "en": "If hit by Dark Phoenix's powerful attack As time passes, Dark Phoenix becomes dominated by the Phoenix Force."
+    },
+    {
+     "es": "Ataca a héroes con Destruir mente cuando se encuentren totalmente dominados por la Fuera del fénix.",
+     "en": "Attacks Heroes with Destroy Mind when completely dominated by Phoenix Force."
+    },
+    {
+     "es": "Si se puede mantener el equilibrio entre rabia y locura hasta el final de Destruir mente, se puede aturdir a Fénix Oscura con la ayuda del Profesor X.",
+     "en": "If the balance between Rage and Madness can be maintained until the end of Destroy Mind, Dark Phoenix can be made groggy with Professor X's help."
+    },
+    {
+     "es": "Los héroes con mente destruida que sean consumidos por la rabia y la locura morirán.",
+     "en": "Mind Destroyed Heroes that are consumed by Rage and Madness will die."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Female"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Male",
+      "Human"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Universal"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Agility"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Combat",
+      "Male"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Speed"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Blast",
+      "Hero"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Fast Movement"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Speed",
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Villain",
+      "Human"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Hero",
+      "Alien"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Durability"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Blast",
+      "Female"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Combat",
+      "Villain"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Hero",
+      "Male",
+      "Mutant"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Machine"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Universal",
+      "Hero",
+      "Male",
+      "Alien"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Villain",
+      "Mutant"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "kang-the-conqueror",
+   "en": "Kang the Conqueror",
+   "es": "Kang el Conquistador",
+   "dif": "leyenda",
+   "consejos": [
+    {
+     "es": "Kang se traslada a diferentes dimensiones con los jugadores durante el combate.",
+     "en": "Kang moves to different dimensions with players during combat."
+    },
+    {
+     "es": "Kang se mueve de forma aleatoria a 1 de entre 3 dimensiones, y cuenta con patrones de ataque distintos en cada dimensión.",
+     "en": "Kang randomly moves to 1 of 3 dimensions, and has different attack patterns in each dimension."
+    },
+    {
+     "es": "Kang regresa a la dimensión original cuando se agota su Campo de fuerza.",
+     "en": "Kang returns to the original dimension when his Force Field Gauge is depleted."
+    },
+    {
+     "es": "Cuando regresa, Kang se une a Kangs de otras dimensiones para atacar a los jugadores.",
+     "en": "Upon returning, Kang works together with Kangs from other dimensions to attack players."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Alien"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Speed"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Villain",
+      "Male"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Mutant"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Weapons Master"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Universal",
+      "Hero"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Blast",
+      "Hero",
+      "Female"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Energy Projection"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Speed",
+      "Male",
+      "Human"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Male",
+      "Mutant"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Universal",
+      "Human"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Combat",
+      "Villain",
+      "Human"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Command"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Hero",
+      "Female",
+      "Alien"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Speed",
+      "Mutant"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "black-swan",
+   "en": "Black Swan",
+   "es": "Cisne Negro",
+   "dif": "leyenda+",
+   "consejos": [
+    {
+     "es": "Cisne Negro es muy resistente al daño básico. El daño de instinto es muy efectivo contra ella.",
+     "en": "Black Swan is highly resistant to basic damage. Instinct damage will be greatly effective against her."
+    },
+    {
+     "es": "Cuando Cisne Negro activa su campo de fuerza, se vuelve inmune a todo el daño básico.",
+     "en": "When Black Swan deploys her Force Field, she becomes completely immune to all basic damage."
+    },
+    {
+     "es": "Cuando ataques su campo de fuerza, el daño se acumulará y llenará una barra.",
+     "en": "When you attack into her Force Field, the damage will accumulate and charge a gauge."
+    },
+    {
+     "es": "Cuando la barra esté llena, Cisne Negro recibirá daño básico y el campo de fuerza quedará destruido.",
+     "en": "When the gauge is full, Black Swan will take basic damage and her Force Field will be destroyed."
+    },
+    {
+     "es": "No obstante, si no atacas el campo de fuerza durante un cierto periodo de tiempo, la barra empezará a vaciarse. Sigue atacando para evitarlo.",
+     "en": "However, if you don't attack into the Force Field for a certain amount of time, the gauge will start to decrease. Don't stop your attacks in order to prevent this."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Hero"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Male"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Human"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Blast"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Mutant"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Hero",
+      "Female"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Universal"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Combat",
+      "Male"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Speed"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Agility"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Combat",
+      "Human"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Universal",
+      "Alien"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Blast",
+      "Mutant"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Villain",
+      "Male"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "corvus-proxima",
+   "en": "Corvus & Proxima",
+   "es": "Corvus y Próxima",
+   "dif": "leyenda+",
+   "consejos": [
+    {
+     "es": "Tienes que esquivar los ataques a distancia de Próxima mientras peleas contra Corvus.",
+     "en": "You need to avoid Proxima's ranged attacks while fighting against Corvus."
+    },
+    {
+     "es": "Los ataques de Próxima impactarán contra las zonas de peligro marcadas en amarillo, e infligirán daño tanto a tus personajes como a Corvus.",
+     "en": "Proxima's attacks will be land in the danger zones marked in yellow, and deal damage to both your characters as well as Corvus."
+    },
+    {
+     "es": "Encajar el impacto de uno de los ataques de Próxima conllevará recibir 1 punto de sobretensión, y los objetivos que acumulen un total de 3 puntos de sobretensión morirán al instante.",
+     "en": "Being hit by one of Proxima's attacks will result in gaining 1 stack of Electric, and targets that have reached 3 stacks of Electric will die instantly."
+    },
+    {
+     "es": "Si bien esquivar los ataques de Próxima es de gran importancia, también debes buscar oportunidades de hacer que los ataques de Próxima impacten en Corvus.",
+     "en": "While avoiding Proxima's attacks is of utmost importance, you should also look for opportunities to bait Proxima's attacks into hitting Corvus."
+    },
+    {
+     "es": "Si Corvus muere como resultado de acumular demasiados puntos de sobretensión, revivirá tras un tiempo determinado, durante el cual Próxima se unirá a la batalla en su lugar.",
+     "en": "If Corvus dies as a result of having too many Electric stacks, he will revive after a set duration, during which Proxima will join the battle in his place."
+    },
+    {
+     "es": "Las capacidades de combate directo de Próxima son un tanto limitadas, por lo que es una gran oportunidad para infligirle cantidades gigantescas de daño mientras está en el campo de batalla.",
+     "en": "Proxima's direct combat capabilities are rather weak, so it is a great opportunity to deal massive amounts of damage to her while she is on the field."
+    },
+    {
+     "es": "Trata de utilizar los ataques de Próxima en tu favor para alcanzar la victoria cuanto antes.",
+     "en": "Try using Proxima's attacks to your advantage in order to speed your way to victory."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Male"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Human"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Female"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Blast",
+      "Hero"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Universal"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Mutant"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Agility"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Speed"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Alien"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Combat"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Blast",
+      "Female"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Villain",
+      "Male"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Hero",
+      "Alien"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Speed",
+      "Human"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Female",
+      "Mutant"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "black-dwarf-ebony-maw",
+   "en": "Black Dwarf & Ebony Maw",
+   "es": "Enano Negro y Fauces",
+   "dif": "leyenda+",
+   "consejos": [
+    {
+     "es": "Se genera éter de forma periódica durante la batalla.",
+     "en": "Aether is generated periodically during battle."
+    },
+    {
+     "es": "Tanto el jefe como el jugador pueden obtener éter.",
+     "en": "Both the boss and player can obtain Aether."
+    },
+    {
+     "es": "Cuando obtienes éter, consigues un potenciador, y este se puede mejorar hasta 3 veces.",
+     "en": "You get a buff when you obtain Aether and the buff can be enhanced up to 3 times."
+    },
+    {
+     "es": "Cuando obtienes éter 3 veces, consigues un poder monumental.",
+     "en": "When you obtain Aether 3 times, you obtain a mighty power."
+    },
+    {
+     "es": "Vigila que Enano Negro no te robe tu éter, y así puedas ganar la batalla.",
+     "en": "Be careful not to let Black Dwarf steal your Aether so you can win the battle."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Hero"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Male"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Hero",
+      "Human"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Male",
+      "Human"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Female"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Speed",
+      "Hero"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Universal"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Weapons Master"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Blast",
+      "Female"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Male",
+      "Alien"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Universal",
+      "Hero"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Pure Evil"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Command"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Universal",
+      "Villain"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "thanos-the-black-order",
+   "en": "Thanos & The Black Order",
+   "es": "Thanos y la Orden Negra",
+   "dif": "leyenda+",
+   "consejos": [
+    {
+     "es": "Thanos dirige a la Orden Negra durante la batalla.",
+     "en": "Thanos orders the Black Order during the battle."
+    },
+    {
+     "es": "La Orden Negra lanza un ataque coordinado devastador y se retira.",
+     "en": "The Black Order launches a devastating coordinated attack and then withdraws."
+    },
+    {
+     "es": "Cuando los PG de Thanos disminuyen, aparece el rey Thanos.",
+     "en": "When Thanos's HP drops, King Thanos appears."
+    },
+    {
+     "es": "El rey Thanos usa ataques más poderosos que Thanos.",
+     "en": "King Thanos uses more powerful attacks than Thanos."
+    },
+    {
+     "es": "Ten cuidado con los ataques de la Orden Negra y del rey Thanos para tener la ventaja durante la batalla.",
+     "en": "Be cautious of attacks from the Black Order and King Thanos to gain an advantage in battle."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Human"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Leadership"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Female"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Blast",
+      "Hero"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Combat",
+      "Male"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Mutant"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Agility"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Weapons Master"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Universal"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Villain",
+      "Male"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Female",
+      "Human"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Speed",
+      "Male"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Fast Movement"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Speed",
+      "Female"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Universal",
+      "Alien"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Strong"
+     ]
+    ]
+   ]
+  },
+  {
+   "id": "annihilus",
+   "en": "Annihilus",
+   "es": "Annihilus",
+   "dif": "mitico",
+   "consejos": [
+    {
+     "es": "Aumenta la barra de poder cósmico al sufrir un ataque de Annihilus.",
+     "en": "The Cosmic Power Gauge increases when you are hit by Annihilus's attacks."
+    },
+    {
+     "es": "Usa un ataque poderoso al acumularse la barra de poder cósmico.",
+     "en": "As the Cosmic Power Gauge fills, Annihilus will unleash powerful attacks."
+    },
+    {
+     "es": "Y cuando el poder cósmico se llena al máximo, lanza un ataque de muerte instantánea que se puede esquivar con relevo.",
+     "en": "When the Cosmic Power Gauge is full, Annihilus will use an instant-kill attack that can be avoided by tagging."
+    },
+    {
+     "es": "En esta fase aumenta el tiempo de invencibilidad por relevo.",
+     "en": "Tag Invincibility duration is increased in this stage."
+    }
+   ],
+   "restricciones": [
+    [
+     1,
+     9,
+     []
+    ],
+    [
+     10,
+     14,
+     [
+      "Female"
+     ]
+    ],
+    [
+     15,
+     19,
+     [
+      "Villain"
+     ]
+    ],
+    [
+     20,
+     24,
+     [
+      "Combat"
+     ]
+    ],
+    [
+     25,
+     29,
+     [
+      "Alien"
+     ]
+    ],
+    [
+     30,
+     34,
+     [
+      "Hero",
+      "Mutant"
+     ]
+    ],
+    [
+     35,
+     39,
+     [
+      "Speed",
+      "Human"
+     ]
+    ],
+    [
+     40,
+     44,
+     [
+      "Universal",
+      "Alien"
+     ]
+    ],
+    [
+     45,
+     49,
+     [
+      "Strong"
+     ]
+    ],
+    [
+     50,
+     54,
+     [
+      "Villain",
+      "Human"
+     ]
+    ],
+    [
+     55,
+     59,
+     [
+      "Female",
+      "Mutant"
+     ]
+    ],
+    [
+     60,
+     64,
+     [
+      "Healing"
+     ]
+    ],
+    [
+     65,
+     69,
+     [
+      "Blast",
+      "Human"
+     ]
+    ],
+    [
+     70,
+     74,
+     [
+      "Machine"
+     ]
+    ],
+    [
+     75,
+     79,
+     [
+      "Villain",
+      "Alien"
+     ]
+    ],
+    [
+     80,
+     84,
+     [
+      "Universal",
+      "Human"
+     ]
+    ],
+    [
+     85,
+     89,
+     [
+      "Magic"
+     ]
+    ],
+    [
+     90,
+     94,
+     [
+      "Villain",
+      "Mutant"
+     ]
+    ],
+    [
+     95,
+     99,
+     [
+      "Mind Resist"
+     ]
+    ]
+   ]
+  }
+ ]
+}
