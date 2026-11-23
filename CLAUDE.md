@@ -600,6 +600,45 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 - La 1.0.22 salió mal: la etiqueta fue sobre 4a14974 (el commit de la versión, con datos de formato 8) mientras el
   workflow publicaba los de formato 10; los de formato 9 nunca se publicaron y la 1.0.22 instalada quedó trabada en
   la pantalla de datos hasta reinstalar. De ahí la 1.0.24 y la regla de una versión por vez.
+- **1.0.59 (en curso; formato 21; la cierra quien haga el commit de versión)**, 23 de noviembre de 2026. Primera parte,
+  **los cromos con mffguide.fyi** (Ezequiel aprobó, «Dale con todo», completarlos con la «Guía MFF de la comunidad»,
+  https://mffguide.fyi/, v1.2 del 23 de noviembre de 2026, hecha por un jugador, que dice sacar sus números de los
+  archivos del juego v12.4.0, citándola):
+  - **La fuente**: `fuentes/mffguide/cromos.json`, solo hechos del juego (nombres del juego en español e inglés de cromos,
+    stats y colecciones; valores; casillas; efecto propio con su texto del juego; obtención; colecciones), sacados de su
+    objeto `CROMOS` y de la tabla «Cromos de cómic» de su catálogo, con cabecera (URL, versiones, fechas, qué no está
+    confirmado). Fuera, su criterio (mazo ideal, puestos, reemplazos, mazos puente y JcJ), sus nombres propios de los
+    stats y su prosa; ni su HTML ni sus scripts van al repo. La fuente «mffguide» en `guia.json` (con `corto`: las
+    fuentes pueden llevar un nombre corto, que `fuentesHtml` muestra con el completo al pasar el mouse).
+  - **El cruce** (`cromos.cruce`, también la sección 14 de `docs/AUDITORIA.md`): los 117 (112 de thanosvibs y 5 propios)
+    emparejan con la guía (62 por `contenido/cromos.json` › `mffguide.nombres`: la guía escribe sin el año o con «&»);
+    113 coinciden en fijas, opciones de cada casilla y activación; 4 difieren (manda thanosvibs, con «≠» en la app):
+    AMAZING SPIDER-MAN (1999) #653 casilla 5, SECRET WARS: BATTLEWORLD (2015) #3 casilla 6, WAR OF THE REALMS: NEW AGENTS
+    OF ATLAS casilla 6 y ARMOR WARS #1 la activación (thanosvibs, ignorar defensa al asestar un crítico; la guía,
+    velocidad de movimiento). 7 solo en la guía, entran con lo de ella (`mg`, ids `mg<id del juego>`, sin imagen):
+    DEATH OF DOCTOR STRANGE: WHITE FOX (2021) #1, FANTASTIC FOUR (1961) #4, #5, #46, #49 y #52, MARVEL RIVALS INFINITY
+    COMIC (2024) #19. Los cinco de War of Kings coinciden al 100 % con la nota oficial (opciones, valores a la máxima
+    calidad, activación y colección); el build corta si dejan de coincidir.
+  - **CROWD CONTROL TIME = DEBUFF DURATION**: en las tablas de la guía es un solo stat (el 20, «CROWD CONTROL TIME ↓»,
+    «TIEMPO DE CONTROL DE MASAS ↓»), justo donde thanosvibs escribe DEBUFF DURATION y donde la nota escribe CROWD CONTROL
+    TIME; misma clave (`debuff`), sin marca de dudoso. Cómo escribe el juego cada stat en el cromo va en
+    `terminos_es.json` › `cromos` (lo valida `terminos_es.py` contra la guía y, en 8 de 24, contra la captura); puede no
+    ser como en la ficha del héroe («RESISTENCIA AL FUEGO ↑» / «RESISTENCIA A FUEGO»): los nombres de la app no cambian.
+  - **Datos (formato 21)**: `MFF_CROMOS` con una sola tabla de valores (`valores`: fijas de un 6★ por calidad, cada
+    casilla, efecto propio con recarga de 45 s) y, por cromo, `fijas[].cal`/`.v`, `act` (texto del juego), `vf` (fuentes
+    de los valores: la guía y, en los de War of Kings, la nota), `es`, `p`, `col`, `obt`, `dif`, `mg`; las 35
+    colecciones de la guía (la de War of Kings, también de la nota); `stats[].j`. Los valores de la nota en
+    `fuentes/propio/cromos.json` quedan como confirmación. `version.json` › `formato_datos` ya está en 21 (lo pide la app).
+  - **App**: Objetos › Cromos con valores (selector «Calidad de las fijas»), efecto propio, colección, de dónde sale y
+    fuentes en cada cromo; filtros de premium y de colección; la vista «Colecciones» (`ui.crVista`). Los sin tipo
+    publicado dicen premium o no premium según la guía (no se inventa Raro ni De apoyo). Mi cuenta › Cromos: la calidad
+    por lugar (`cal`, opcional en la capa: una capa de la 1.0.58 carga igual) y la suma de porcentajes por stat (a 6★),
+    con lo que no entra dicho. Las colecciones no se infieren de los mazos. Arreglo: el botón «Cromos de cómic» de Mi
+    cuenta › Cromos no hacía nada desde la 1.0.56 (`goCromos`). Recorrido: 56 pasos (Objetos, 10).
+  - Pendiente / a decidir: las 4 diferencias con thanosvibs (verlas en el juego); las etapas de creación de un Premium y
+    los bonos de color de sus estrellas (la guía los da; no entran a la suma); el grado de cada cromo (hoy se suma a 6★);
+    a qué grado corresponden los seis valores de perforación de la guía; los textos de obtención los copia la guía del
+    juego tal cual (el del 11.º aniversario dice «décimo» en español).
 
 ## Pendiente
 
