@@ -24,6 +24,10 @@ ABIL = {
  'Thunderbolts':'Thunderbolts','Time Freezing Immunity':'Inmunidad a Detención del Tiempo',
  'Warriors of the Sky':'Guerreros del Cielo','Weapons Master':'Maestro de Armas','Young Avengers':'Jóvenes Vengadores','Zombie':'Zombi'}
 
+# Palabras de las restricciones de personajes de los modos (Alliance Battle, de thanosvibs; Jefe mundial, de las tablas
+# del juego según mffguide.fyi) -> valor del dominio en la app: clase, género, raza, bando o habilidad.
+RESTRICCION = {**TYPE, **GENDER, **ALLIES, 'Hero': SIDE['Super Hero'], 'Villain': SIDE['Super Villain'], **ABIL}
+
 # Objetivos de skill (el texto de la API de skills) que son un grupo de aliados -> la
 # restricción que lo define, con la forma de las de líder y soporte de /api/supports
 # (r en MFF_SOPORTES). La app la usa para listar quiénes lo cumplen. Cada una está

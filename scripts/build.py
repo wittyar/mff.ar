@@ -138,6 +138,10 @@ OBJETOS, _img_objetos = objetos.armar(
     json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'cromos.json'), encoding='utf-8'))['nombres'],
     FUENTES['modos'])
 images.update(_img_objetos)
+# Jefe mundial para el planificador de Mi cuenta (1.0.59, scripts/jefe_mundial.py): los jefes, sus restricciones por fase y
+# lo que pide cada dificultad, de las tablas del juego según mffguide.fyi.
+import jefe_mundial
+JEFE_MUNDIAL = jefe_mundial.armar(json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8')))
 
 
 def _aplica_artefacto(en):
@@ -290,13 +294,15 @@ hoy = hoy.isoformat()
 #     las 35 colecciones (n con es y en, sin grado), de dónde sale cada cromo (obt, obtencion), su nombre del juego en
 #     español (es), si es premium (p), lo que la guía dice distinto (dif), los siete que solo tiene la guía (mg) y cómo
 #     escribe el juego cada stat en el cromo (stats[].j). La app de formato 20 se cae con las colecciones nuevas (lee el
-#     nombre y el grado de antes) y no tiene dónde mostrar lo demás.
+#     nombre y el grado de antes) y no tiene dónde mostrar lo demás. Y MFF_JEFE_MUNDIAL (scripts/jefe_mundial.py, de las
+#     mismas tablas): los 21 jefes con sus consejos del juego, las restricciones por rango de fases de Leyenda, Leyenda+ y
+#     Mítico, y lo que pide cada dificultad a los principales y a los aliados, para el planificador de Mi cuenta.
 FORMATO = 21
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
 // soportes, rotaciones, Alliance Battle, cromos, bendiciones de Odín, emblemas, guía, retratos e íconos), mffguide.fyi
-// (valores, colecciones y obtención de los cromos),
+// (valores, colecciones y obtención de los cromos; jefes, restricciones por fase y requisitos de Jefe mundial),
 // future-fight.fandom.com (instintos, bonos de equipo, sets de ISO-8 y el contraste de docs/AUDITORIA.md), las notas
 // oficiales (J.A.R.V.I.S.) y la guía de armado de
 // Cynicalex Mega Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex
@@ -360,6 +366,10 @@ parts = [header,
  'window.MFF_CROMOS = ' + json.dumps(CROMOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Objetos (scripts/objetos.py, scripts/contenido/objetos.json): bendiciones de Odín, emblemas, sets de ISO-8 y J.A.R.V.I.S.\n',
  'window.MFF_OBJETOS = ' + json.dumps(OBJETOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
+ '// Jefe mundial (scripts/jefe_mundial.py, de las tablas del juego según mffguide.fyi): dificultades con lo que piden a los\n'
+ '// principales y a los aliados (y el paso de la hoja de ruta que lo cumple), jefes con sus consejos del juego y sus\n'
+ '// restricciones por rango de fases ([desde, hasta, [valores]]: hay que cumplirlas todas).\n',
+ 'window.MFF_JEFE_MUNDIAL = ' + json.dumps(JEFE_MUNDIAL, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Contraste con la wiki y chequeos internos por retrato (scripts/auditar.py; informe en docs/AUDITORIA.md).\n',
  'window.MFF_VERIFICACION = ' + json.dumps(VERIF, ensure_ascii=False) + ';\n',
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',

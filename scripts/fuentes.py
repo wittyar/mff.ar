@@ -26,7 +26,7 @@ inglés, como los de personaje: son el identificador del juego.
 """
 import glob, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL
+from dominio import TYPE, ALLIES, GENDER, SIDE, ABIL, RESTRICCION
 import guia_armado as GA
 from bonos import bonos as bonos_de_equipo
 from strikers import strikers as strikers_de
@@ -472,18 +472,15 @@ def rotaciones(retratos):
     return out
 
 
-# Palabras de las restricciones de Alliance Battle -> valor del dominio en la app.
-_RESTR = {**TYPE, **GENDER, **ALLIES, 'Hero': SIDE['Super Hero'], 'Villain': SIDE['Super Villain']}
-
-
 def restriccion(texto):
+    """Una restricción de Alliance Battle («Speed Hero Female») -> los valores del dominio que pide (dominio.RESTRICCION)."""
     if texto == 'No Restriction':
         return []
     tokens = texto.split()
-    faltan = [t for t in tokens if t not in _RESTR]
+    faltan = [t for t in tokens if t not in RESTRICCION]
     if faltan:
         raise SystemExit(f'restricción de Alliance Battle con palabras desconocidas: {texto!r} ({faltan})')
-    return [_RESTR[t] for t in tokens]
+    return [RESTRICCION[t] for t in tokens]
 
 
 def abx(retratos):

@@ -16,7 +16,8 @@ Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la secci�
 catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierra en los bonos de
 equipo de la wiki; la 11, en los strikers, y la 12, los liderazgos que Leads & Supports no publica y
 el build deriva de la Leader Skill de la API, de work/fuentes.json). La 14, los cromos de cómic de thanosvibs y los
-propios contra las tablas del juego según mffguide.fyi (cromos.cruce, sobre work/cards.json).
+propios contra las tablas del juego según mffguide.fyi (cromos.cruce, sobre work/cards.json); la 15, las tablas de Jefe
+mundial según mffguide.fyi contra lo nuestro (jefe_mundial.py).
 """
 import collections, datetime, difflib, json, os, re, sys
 
@@ -25,6 +26,7 @@ from version_juego import ultima
 from catalogo import fuente_md
 from liderazgos import A_MANO, LIDERAZGOS, ROTULOS, motivo_txt, slot_txt
 import cromos
+import jefe_mundial
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 WIKI = 'https://future-fight.fandom.com/wiki/'
@@ -579,6 +581,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     s += liderazgos_seccion(liderazgos, A.chars, fuentes)
     s += propio_seccion(cargar('work/propio.json'))
     s += cromos_seccion(cargar('work/cards.json'))
+    s += jefe_mundial_seccion()
     return '\n'.join(s)
 
 
@@ -634,6 +637,42 @@ def cromos_seccion(cards):
                 s.append(f"| {n} | {campo.get(d['k']) or 'Casilla ' + d['g']} | {val(d, d['tv'])} | {val(d, d['mg'])} |")
     else:
         s.append('Nada.')
+    s.append('')
+    return s
+
+
+def jefe_mundial_seccion():
+    """Sección 15: las tablas de Jefe mundial según mffguide.fyi (fuentes/mffguide/jefe_mundial.json) contra lo nuestro:
+    lo que se pudo contrastar, lo que choca y lo que no tiene otra fuente."""
+    from dominio import ABIL
+    F = jefe_mundial.fuente()
+    s = ['## 15. Jefe mundial: mffguide.fyi contra lo nuestro\n']
+    s.append('Las tablas de Jefe mundial según la guía de mffguide.fyi (fuentes/mffguide/jefe_mundial.json; la guía dice sacarlas '
+             'de los archivos del juego v12.4.0): las usa el planificador de Mi cuenta. Nada de esto se resuelve solo: lo que '
+             'choca queda acá para decidirlo o verlo en el juego.\n')
+    s.append('### Sin otra fuente\n')
+    s += [f'- {x}' for x in F['fuente']['sin_confirmar']]
+    s.append('')
+    s.append('### Choca con lo nuestro\n')
+    s.append('- Definitivo: scripts/contenido/modos.json (World Boss) dice «Ultimate (Tier-2 o más)», de la guía del juego, que '
+             'dice que Definitivo «es ideal para los jugadores que hayan desarrollado a sus personajes a la categoría 2 o '
+             'superior» (captura 100): es una recomendación. La guía de mffguide.fyi pide 6★ a los principales y a los aliados. '
+             'El planificador usa el 6★ y muestra las dos cosas.')
+    # Cómo escribe el juego en español cada habilidad única (según la guía) contra el nombre de la app (thanosvibs, dominio.ABIL).
+    dif = [(ABIL[en], es) for en, es in sorted(F['habilidades_es'].items()) if ABIL[en].lower() != es.lower()]
+    s.append(f'- Nombres de las habilidades únicas: {len(dif)} de {len(F["habilidades_es"])} los escribe el juego en español '
+             'distinto que la app (#45; la app no los cambia): '
+             + '; '.join(f'{a} (el juego: {b})' for a, b in dif) + '.' if dif else '- Nombres de las habilidades únicas: iguales.')
+    s.append('')
+    s.append('### Contrastado\n')
+    s.append('- Batalla de alianza: la rotación de 28 días de la guía coincide fila por fila con la de thanosvibs (76 filas de '
+             'día y modo; comparado sobre la página bajada el 23 de noviembre de 2026). La guía dice sacarla de thanosvibs: no '
+             'es una confirmación independiente, y ninguna de las dos dice qué día del ciclo es hoy.')
+    s.append('- La categoría que piden a los principales Leyenda, Leyenda+ y Mítico: como la guía del juego (captura 100); lo '
+             'que piden a los aliados de Leyenda, como NamuWiki (modos.json).')
+    s.append('- Consejos de Corvus Glaive y Quicksilver (la guía los tuvo cruzados hasta su v1.1): contra Quicksilver, de tipo '
+             'Velocidad, rinde Combate, el tipo que le gana a Velocidad: coincide con la v1.2. El de Corvus Glaive no se '
+             'puede contrastar así.')
     s.append('')
     return s
 
