@@ -8444,9 +8444,9 @@ function casoPlan () {
   return { modo: 'ab', modeId: 'alliance-battle', dias, del, r, restr: r.r, principal: 'desbloqueo', aliados: null, lista: 'tv-alianza' };
 }
 function cumpleTodo (v, restr) { return restr.every(x => cumpleRestriccion(v, x)); }
-/** De tu roster, con el uniforme con que usás a cada uno: los que cumplen la restricción y llegan a lo que pide para jugar
- *  (si), los que llegan solo como aliados (aliados), los que la cumplen y no llegan (falta), los que la cumplirían con otro
- *  uniforme (otroUni) y los que ya usaste en esta sesión (usados); y cuántos del juego la cumplen con alguna versión y no
+/** De tu roster, con el uniforme con que usás a cada uno: los que ya usaste en esta sesión (usados, cumplan o no lo de
+ *  ahora), los que cumplen la restricción y llegan a lo que pide para jugar (si), los que llegan solo como aliados (aliados),
+ *  los que la cumplen y no llegan (falta) y los que la cumplirían con otro uniforme (otroUni); y cuántos del juego la cumplen con alguna versión y no
  *  están en tu roster (noTenes). Cada fila: { v, x (tu paso), perdido (el uniforme anotado ya no está) }. */
 function evaluarPlan (c) {
   const out = { si: [], aliados: [], falta: [], otroUni: [], usados: [], noTenes: 0 };
@@ -8454,13 +8454,13 @@ function evaluarPlan (c) {
     const x = pasoDe(ch.id);
     if (!x) { if (variantesDe(ch).some(y => cumpleTodo(y, c.restr))) out.noTenes++; continue; }
     const { v, perdido } = varUsada(ch), fila = { v, x, perdido };
+    if (ui.plan.usados[c.modo].includes(ch.id)) { out.usados.push(fila); continue; }
     if (!cumpleTodo(v, c.restr)) {
       const otros = variantesDe(ch).filter(y => y.key !== v.key && cumpleTodo(y, c.restr));
       if (otros.length) out.otroUni.push(Object.assign(fila, { otros }));
       continue;
     }
-    if (ui.plan.usados[c.modo].includes(ch.id)) out.usados.push(fila);
-    else if (llegaA(x, c.principal)) out.si.push(fila);
+    if (llegaA(x, c.principal)) out.si.push(fila);
     else if (c.aliados && llegaA(x, c.aliados)) out.aliados.push(fila);
     else out.falta.push(fila);
   }
@@ -8550,7 +8550,7 @@ function cuentaPlan () {
   // pueden entrar).
   const filaPj = (f, extra, acc) => `<div class="plfila${P.pega === f.v.key ? ' on' : ''}">
       <div class="plpj">${miniPj(f.v)}<span class="tag dim" title="${h(t('pl_tu_cat'))}">${h(pasoCorto(f.x, f.v))}</span></div>
-      <div class="plinfo">${enListaHtml(l, f.v)}${f.perdido ? ` <span class="aviso">${h(t('ro_uni_perdido_x'))}</span>` : ''}${extra || ''}</div>
+      <div class="plinfo">${enListaHtml(l, f.v)}${f.perdido ? ` <span class="aviso">${h(t('ro_uni_perdido_x'))}</span>` : ''}${extra ? `<div>${extra}</div>` : ''}</div>
       <div class="placc">${acc || ''}</div></div>`;
   const pideTxt = (paso, v) => rotuloPaso(TOQUE_DE[paso], v);
   const falta = (f) => {

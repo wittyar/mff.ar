@@ -1467,7 +1467,7 @@ button.tlchip,button.tlchip:active{cursor:pointer}
 .plsel select{max-width:100%}
 .plpide{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0 0 8px;font-size:13.5px}
 .plpide dt{color:var(--text-3);font:600 11px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;padding-top:3px}
-.plpide dd{margin:0}
+.plpide dd{margin:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center;min-width:0}
 .plpaso > p{margin:6px 0}
 .plcuenta{font-weight:600}
 .plgrupo{margin-top:12px}
@@ -1493,4 +1493,6 @@ button.tlchip,button.tlchip:active{cursor:pointer}
   .plfila,.plda{grid-template-columns:minmax(0,1fr)}
   .placc{justify-content:flex-start}
   .plda-g + .plda-g{grid-column:auto}
+  .plpide{grid-template-columns:minmax(0,1fr);gap:2px}
+  .plpide dd{margin-bottom:6px}
 }
