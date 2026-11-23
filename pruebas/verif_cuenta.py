@@ -72,23 +72,23 @@ try:
         pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
         tabs = [x[0] for x in pg.evaluate(SUB)]
         ok('2 Mi cuenta: marcada en la barra, con su sub-barra', marcado() == ['Mi cuenta'] and sub() == 'Resumen'
-           and tabs == ['Resumen', 'Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', 'Cromos', 'Mi capa'], (marcado(), tabs))
+           and tabs == ['Resumen', 'Tu roster', 'Planificador', 'Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', 'Cromos', 'Mi capa'], (marcado(), tabs))
         cuentas = {x[0]: x[1] for x in pg.evaluate(SUB) if x[1]}
-        ok('2 la sub-barra dice cuánto hay en cada apartado', cuentas == {'Equipos': '1', 'Progreso': '1', 'Personajes propios': '1', 'Atributos marcados': '1'}, cuentas)
+        ok('2 la sub-barra dice cuánto hay en cada apartado', cuentas == {'Tu roster': '1', 'Equipos': '1', 'Progreso': '1', 'Personajes propios': '1', 'Atributos marcados': '1'}, cuentas)
         tiles = pg.locator('.cuhub .cutile')
         valores = [tiles.nth(i).locator('.v').inner_text() if tiles.nth(i).locator('.v').count() else None for i in range(tiles.count())]
-        ok('2 el resumen: una tarjeta por apartado, con lo que hay (equipos, progreso, propios, marcas, listas, cromos) y la capa',
-           tiles.count() == 7 and valores == ['1', '1', '1', '1', '1', '0', None], valores)
+        ok('2 el resumen: una tarjeta por apartado, con lo que hay (roster, equipos, progreso, propios, marcas, listas, cromos), el planificador y la capa',
+           tiles.count() == 9 and valores == ['1', None, '1', '1', '1', '1', '1', '0', None], valores)
         destinos = []
-        for i, espera in enumerate(('Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', None, 'Cromos', 'Mi capa')):
+        for i, espera in enumerate(('Tu roster', 'Planificador', 'Equipos', 'Progreso', 'Personajes propios', 'Atributos marcados', None, 'Cromos', 'Mi capa')):
             pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
             pg.locator('.cuhub .cutile').nth(i).click(); pg.wait_for_timeout(300)
             destinos.append((espera, sub(), marcado()))
         ok('2 cada tarjeta lleva a su apartado (la de las listas, a Tier lists)',
-           all(s == e and m == ['Mi cuenta'] for e, s, m in destinos if e) and destinos[4][1:] == (None, ['Tier lists']), destinos)
+           all(s == e and m == ['Mi cuenta'] for e, s, m in destinos if e) and destinos[6][1:] == (None, ['Tier lists']), destinos)
 
         # 7. Tier lists propias desde Mi cuenta: para editar, en la propia
-        pg.click('nav.topnav [data-a="goCuenta"]'); pg.locator('.cuhub .cutile').nth(4).click(); pg.wait_for_timeout(300)
+        pg.click('nav.topnav [data-a="goCuenta"]'); pg.locator('.cuhub .cutile').nth(6).click(); pg.wait_for_timeout(300)
         ok('7 «Tier lists propias»: abre las tier lists editando, en la lista propia', pg.locator('.tledit').count() == 1
            and pg.locator('.tlbar .chip.on').inner_text() == 'Mi lista' and pg.locator('.tlchip[draggable="true"]').count() == 1
            and pg.locator('[data-a="tlEditar"]').get_attribute('aria-pressed') == 'true', pg.locator('.tlbar .chip.on').all_inner_texts())
