@@ -8882,6 +8882,9 @@ document.addEventListener('click', (e) => {
     case 'obFiltro': if (!OB_FILTROS.includes(d.k)) throw new Error('filtro de Objetos desconocido: ' + d.k);
       if (el.tagName !== 'SELECT') { ui[d.k] = d.v; ui.focusSearch = false; render(); } break;
     case 'verObj': verObjeto(d.tab, d.id); break;
+    // Desde Mi cuenta › Cromos: la pestaña Cromos de Objetos.
+    case 'goCromos': Object.assign(ui, { view: 'objetos', objTab: 'cromos', objVer: null, crAviso: null, focusSearch: false });
+      render(); window.scrollTo(0, 0); break;
     case 'crTipo': ui.crTipo = d.v; render(); break;
     case 'crAct': ui.crAct = d.v; render(); break;
     case 'crModo': ui.crModo = d.v; render(); break;
