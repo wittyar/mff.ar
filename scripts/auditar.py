@@ -15,7 +15,8 @@ Deja:
 Lo llama build.py después de skills_api.py, fuentes.py y catalogo.py (la sección 9 lista lo que el
 catálogo de efectos no clasifica, de work/catalogo.json; la 10, lo que no cierra en los bonos de
 equipo de la wiki; la 11, en los strikers, y la 12, los liderazgos que Leads & Supports no publica y
-el build deriva de la Leader Skill de la API, de work/fuentes.json).
+el build deriva de la Leader Skill de la API, de work/fuentes.json). La 14, los cromos de cómic de thanosvibs y los
+propios contra las tablas del juego según mffguide.fyi (cromos.cruce, sobre work/cards.json).
 """
 import collections, datetime, difflib, json, os, re, sys
 
@@ -23,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from version_juego import ultima
 from catalogo import fuente_md
 from liderazgos import A_MANO, LIDERAZGOS, ROTULOS, motivo_txt, slot_txt
+import cromos
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 WIKI = 'https://future-fight.fandom.com/wiki/'
@@ -576,6 +578,7 @@ def informe(A, version, hallazgos, fuentes, catalogo, bonos, strikers, liderazgo
     s += strikers_seccion(strikers)
     s += liderazgos_seccion(liderazgos, A.chars, fuentes)
     s += propio_seccion(cargar('work/propio.json'))
+    s += cromos_seccion(cargar('work/cards.json'))
     return '\n'.join(s)
 
 
@@ -590,6 +593,48 @@ def propio_seccion(P):
         s.append(f'### {titulo} ({len(P[clave])})\n')
         s += [f'- {x}' for x in P[clave]] or ['Nada.']
         s.append('')
+    return s
+
+
+def cromos_seccion(cards):
+    """Sección 14: los cromos (thanosvibs y propios) contra las tablas del juego según mffguide.fyi. Manda thanosvibs (y
+    lo propio, que tiene que coincidir con la guía: si no, corta el build); la guía completa lo que no publican."""
+    X = cromos.cruce(cards)
+    M, C = cromos.guia()
+    juego = {C['mffguide']['stats'][i]: v['en'] for i, v in M['stats'].items() if i in C['mffguide']['stats']}
+    nom = lambda k: juego.get(k) or (C['nombres'].get(k) or {}).get('en') or k
+    cuando = {v['id']: v['en'] for v in C['cuando'].values()}
+    def val(d, v):
+        if d['k'] == 'premium':
+            return 'premium' if v else 'no premium'
+        if d['k'] == 'act':
+            return '; '.join(f'{nom(s)} ({cuando.get(c, c)})' for s, c in ([v] if v and isinstance(v[0], str) else v)) or '—'
+        return ', '.join('activación' if k == 'act' else nom(k) for k in v)
+    coinciden = len(X['pares']) - len(X['dif'])
+    s = ['## 14. Cromos de cómic: thanosvibs contra mffguide.fyi\n']
+    s.append('Las tablas del juego según la guía de mffguide.fyi (fuentes/mffguide/cromos.json; la guía dice sacarlas de los '
+             'archivos del juego) contra los cromos de thanosvibs y los propios. La app usa thanosvibs donde lo publica; la '
+             'guía da los valores, las colecciones, de dónde sale cada uno y su nombre en español, y los cromos que '
+             'thanosvibs no tiene. Lo propio (War of Kings) tiene que decir lo mismo que la guía o el build corta. Lo que '
+             'difiere es para revisarlo en el juego.\n')
+    s.append(f"- Emparejados: {len(X['pares'])} ({coinciden} coinciden en fijas, opciones de cada casilla y activación; "
+             f"{len(X['dif'])} difieren). El orden de las opciones de una casilla no se compara.")
+    s.append(f"- En la guía y no en thanosvibs (entran con lo de la guía): {len(X['solo_guia'])}"
+             + (': ' + '; '.join(g['en'] for g in X['solo_guia']) if X['solo_guia'] else '.'))
+    s.append(f"- En thanosvibs y no en la guía (sin valores, colección ni obtención): {len(X['sin_guia'])}"
+             + (': ' + '; '.join(X['sin_guia']) if X['sin_guia'] else '.'))
+    s.append('')
+    s.append(f"### Distinto en la guía ({len(X['dif'])})\n")
+    if X['dif']:
+        s.append('| Cromo | Campo | thanosvibs (lo que usa la app) | mffguide |')
+        s.append('|---|---|---|---|')
+        campo = {'premium': 'Premium', 'fijas': 'Fijas', 'act': 'Activación (stat y cuándo)'}
+        for n, ds in sorted(X['dif'].items()):
+            for d in ds:
+                s.append(f"| {n} | {campo.get(d['k']) or 'Casilla ' + d['g']} | {val(d, d['tv'])} | {val(d, d['mg'])} |")
+    else:
+        s.append('Nada.')
+    s.append('')
     return s
 
 

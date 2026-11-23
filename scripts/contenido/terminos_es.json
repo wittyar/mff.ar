@@ -1,5 +1,5 @@
 {
- "_doc": "Los términos del juego en español (#32): mandan sobre las traducciones propias. Cada uno con su captura (fuentes/juego-es/). Lo valida scripts/terminos_es.py en el build: el glosario (contenido/glosario.json, contra fuentes/juego-es/glosario.json), los stats (contenido/guia.json), las etiquetas de las skills (traducciones/etiquetas.json) y los efectos del catálogo (contenido/catalogo.json) tienen que decir lo que dice esta tabla. La fuente es la captura donde está el término tal cual, o una lista de términos del juego que lo componen (cada uno tiene que estar en alguna captura).",
+ "_doc": "Los términos del juego en español (#32): mandan sobre las traducciones propias. Cada uno con su captura (fuentes/juego-es/). Lo valida scripts/terminos_es.py en el build: el glosario (contenido/glosario.json, contra fuentes/juego-es/glosario.json), los stats (contenido/guia.json), las etiquetas de las skills (traducciones/etiquetas.json) y los efectos del catálogo (contenido/catalogo.json) tienen que decir lo que dice esta tabla. cromos: cómo escribe el juego cada stat en el cromo de cómic, según las tablas del juego de mffguide.fyi (fuentes/mffguide/cromos.json; fuente «mffguide», o la captura donde también está). Puede no ser como lo escribe la ficha del héroe (el cromo, «RESISTENCIA AL FUEGO ↑»; la ficha, «RESISTENCIA A FUEGO»): la app muestra en cada cromo cómo lo escribe el cromo. La fuente es la captura donde está el término tal cual, o una lista de términos del juego que lo componen (cada uno tiene que estar en alguna captura).",
  "stats": {
   "patk": [
    "Atq. físico",
@@ -182,6 +182,32 @@
    "Daño de perforación adicional",
    "glosario"
   ]
+ },
+ "cromos": {
+  "allatk": ["MEJORA LOS ATAQUES BÁSICOS", "ficha"],
+  "alldef": ["MEJORA TODAS LAS DEFENSAS BÁSICAS", "ficha"],
+  "aspd": ["VELOCIDAD ATAQUE ↑", "mffguide"],
+  "cd": ["TIEMPO DE RECARGA ↓", "ctps"],
+  "crit": ["ÍNDICE CRÍTICO ↑", "ficha"],
+  "critdmg": ["DAÑO CRÍTICO ↑", "ficha"],
+  "debuff": ["TIEMPO DE CONTROL DE MASAS ↓", "mffguide"],
+  "dodge": ["ESQUIVA ↑", "ficha"],
+  "eatk": ["ATAQUE DE ENERGÍA ↑", "mffguide"],
+  "edef": ["DEFENSA DE ENERGÍA ↑", "mffguide"],
+  "hpmax": ["PG MÁX. ↑", "ficha"],
+  "igdef": ["IGNORAR DEFENSA", "ficha"],
+  "igdodge": ["IGNORAR ESQUIVAR", "ficha"],
+  "mspd": ["VELOCIDAD MOVIMIENTO ↑", "mffguide"],
+  "patk": ["ATAQUE FÍSICO ↑", "mffguide"],
+  "pdef": ["DEFENSA FÍSICA ↑", "mffguide"],
+  "perforacion": ["AUMENTO DE DAÑO DE PERFORACIÓN ADICIONAL", "mffguide"],
+  "rec": ["ÍNDICE DE RECUPERACIÓN ↑", "ficha"],
+  "res_frio": ["RESISTE FRÍO ↑", "ficha"],
+  "res_fuego": ["RESISTENCIA AL FUEGO ↑", "mffguide"],
+  "res_mente": ["RESISTE MENTAL ↑", "mffguide"],
+  "res_rayo": ["RESISTE RAYO ↑", "mffguide"],
+  "res_todas": ["POTENCIADOR DE TODAS LAS RESISTENCIAS", "mffguide"],
+  "res_veneno": ["RESISTE VENENO ↑", "mffguide"]
  },
  "vocabulario": [
   {

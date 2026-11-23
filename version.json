@@ -1,6 +1,6 @@
 {
  "version": "1.0.58",
- "formato_datos": 20,
+ "formato_datos": 21,
  "python": "3.14.7",
  "notas": "Sin cambios a la vista en la app: cambia cómo se arman y se publican las versiones y los datos, que ya no salen de GitHub Actions."
 }

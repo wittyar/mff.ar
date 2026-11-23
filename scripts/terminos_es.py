@@ -11,6 +11,8 @@ validar() devuelve lo que no cierra:
 - cada término del glosario (contenido/glosario.json) lleva como nombre en español el del juego;
 - cada stat, etiqueta y efecto de la tabla lleva en guia.json, traducciones/etiquetas.json y catalogo.json lo que dice
   la tabla, y la tabla dice lo que dicen las capturas (el término, sin mayúsculas, en el texto transcripto);
+- los stats de los cromos (sección cromos de la tabla): cómo los escribe el juego en el cromo según las tablas del juego de
+  mffguide.fyi (fuentes/mffguide/cromos.json), todos; si la fuente es una captura, el término también está ahí;
 - cada modo (contenido/modos.json) lleva en nombre_es el nombre del glosario de contenidos del juego (objetos.json);
 - el vocabulario (sección vocabulario de la tabla, #44 y #45): cada término del juego está en la captura que cita, y
   ningún texto en español usa la traducción propia que reemplazó (propias: expresiones regulares sobre el texto en
@@ -79,7 +81,29 @@ def validar():
     modos_juego = {c['nombre'].lower() for c in cargar(CAPTURAS, 'objetos.json')['contenidos']}
     mal += [f"modos: {m['id']} se llama «{m['nombre_es']}» y no está en el glosario de contenidos del juego"
             for m in cargar(_DIR, 'contenido', 'modos.json')['modos'] if m['nombre_es'].split(' (')[0].lower() not in modos_juego]
-    return mal + validar_vocabulario(tabla['vocabulario'])
+    return mal + validar_cromos(tabla['cromos'], capt) + validar_vocabulario(tabla['vocabulario'])
+
+
+def validar_cromos(tabla, capt):
+    """Los stats de los cromos de cómic: cómo los escribe el juego en el cromo (mffguide).
+
+    Puede no ser como en la ficha del héroe: el cromo dice «RESISTENCIA AL FUEGO ↑» y la ficha «RESISTENCIA A FUEGO»."""
+    mal = []
+    M = cargar(RAIZ, 'fuentes', 'mffguide', 'cromos.json')
+    C = cargar(_DIR, 'contenido', 'cromos.json')
+    juego = {C['mffguide']['stats'][i]: v['es'] for i, v in M['stats'].items() if i in C['mffguide']['stats']}
+    mal += [f'terminos_es: cromos {k}: falta (en el cromo, según mffguide, «{juego[k]}»)' for k in sorted(set(juego) - set(tabla))]
+    for k, (es, fuente) in tabla.items():
+        if juego.get(k) != es:
+            mal.append(f'terminos_es: cromos {k} dice «{es}» y el cromo, según mffguide, «{juego.get(k)}»')
+        if fuente == 'mffguide':
+            continue
+        nucleo = es.replace(' ↑', '').replace(' ↓', '').lower()
+        if fuente not in capt:
+            mal.append(f'terminos_es: cromos {k}: fuente desconocida {fuente!r}')
+        elif nucleo not in capt[fuente]:
+            mal.append(f'terminos_es: cromos {k}: «{nucleo}» no está en la captura {fuente}')
+    return mal
 
 
 # Dónde está cada fuente del vocabulario (fuentes/juego-es/<archivo>.json). ficha.json no lleva captura por línea: es la

@@ -285,11 +285,18 @@ hoy = hoy.isoformat()
 #     .obt), y MFF_OBJETOS las bendiciones de Odín, los emblemas, los sets de ISO-8 y J.A.R.V.I.S. (scripts/objetos.py), con
 #     los íconos de las bendiciones y de los emblemas. La app de formato 20 tiene la sección Objetos; la de formato 19 no
 #     los lee.
-FORMATO = 20
+# 21: los cromos con las tablas del juego según mffguide.fyi (1.0.59; Ezequiel, 23 de noviembre de 2026): MFF_CROMOS trae
+#     los valores (fijas por calidad, cada casilla y el efecto propio, en valores y en cada cromo: fijas[].cal o .v, act, vf),
+#     las 35 colecciones (n con es y en, sin grado), de dónde sale cada cromo (obt, obtencion), su nombre del juego en
+#     español (es), si es premium (p), lo que la guía dice distinto (dif), los siete que solo tiene la guía (mg) y cómo
+#     escribe el juego cada stat en el cromo (stats[].j). La app de formato 20 se cae con las colecciones nuevas (lee el
+#     nombre y el grado de antes) y no tiene dónde mostrar lo demás.
+FORMATO = 21
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
 // Fuentes: thanosvibs.money (personajes, uniformes, skills, tier lists, C.T.P., artefactos,
-// soportes, rotaciones, Alliance Battle, cromos, bendiciones de Odín, emblemas, guía, retratos e íconos),
+// soportes, rotaciones, Alliance Battle, cromos, bendiciones de Odín, emblemas, guía, retratos e íconos), mffguide.fyi
+// (valores, colecciones y obtención de los cromos),
 // future-fight.fandom.com (instintos, bonos de equipo, sets de ISO-8 y el contraste de docs/AUDITORIA.md), las notas
 // oficiales (J.A.R.V.I.S.) y la guía de armado de
 // Cynicalex Mega Guides (Google Sheets). Crédito: THANO$VIB$, Future Fight Wiki y Cynicalex
@@ -349,7 +356,7 @@ parts = [header,
  'window.MFF_SOPORTES = ' + json.dumps(FUENTES['soportes'], ensure_ascii=False) + ';\n',
  'window.MFF_ROTACIONES = ' + json.dumps(FUENTES['rotaciones'], ensure_ascii=False) + ';\n',
  '// Cromos de cómic (scripts/cromos.py, scripts/contenido/cromos.json): cada uno con sus fijas, sus opciones por grado\n'
- '// y sus activaciones; los valores, solo los de los propios (los de la nota, a la máxima calidad y grado).\n',
+ '// y sus activaciones; los valores, las colecciones y de dónde sale, de las tablas del juego según mffguide.fyi.\n',
  'window.MFF_CROMOS = ' + json.dumps(CROMOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Objetos (scripts/objetos.py, scripts/contenido/objetos.json): bendiciones de Odín, emblemas, sets de ISO-8 y J.A.R.V.I.S.\n',
  'window.MFF_OBJETOS = ' + json.dumps(OBJETOS, ensure_ascii=False, separators=(',', ':')) + ';\n',
