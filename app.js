@@ -38,6 +38,7 @@ const CTPS           = window.MFF_CTPS || [];     // C.T.P.s (scripts/fuentes.py
 const DUDAS          = window.MFF_DUDAS;          // lo que un idioma del juego dice distinto de otro (scripts/contenido/dudas.json)
 const ARTES          = window.MFF_ARTEFACTOS || []; // artefactos exclusivos, por retrato base
 const CROMOS         = window.MFF_CROMOS;         // cromos de cómic (scripts/cromos.py, #35)
+const JEFE_MUNDIAL   = window.MFF_JEFE_MUNDIAL;   // jefes, restricciones por fase y requisitos de Jefe mundial (scripts/jefe_mundial.py)
 // El juego tiene dos mazos de cromos de 5 lugares, y un mismo cromo va una sola vez en cada uno (la guía del juego, «Equipar
 // cromo de cómic»: «Only one of a card type can be equipped at a time»; en coreano, «같은 종류의 카드는 1개만»).
 const MAZOS = 2, LUGARES_MAZO = 5, GRADOS_CROMO = ['3', '4', '5', '6'];
@@ -66,7 +67,8 @@ function blankUser () {
     images: {},                       // 'portrait-x' / 'fullbody-x' / 'brand-logo' subidos
     marcas: {},                       // '<retrato>::<tipo de skill>' -> {it:1, gb:1, ...}
     modes: [],                        // modos propios: {id, name, teamSize}; los del juego salen de MFF_MODOS
-    ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
+    ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo: tu roster (lo tenés y su categoría, NIVEL_PASO)
+    uniforme: {},                     // personaje -> id del uniforme con que lo usás (sin él, la base): lo mira el planificador
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
     cromos: { mazos: [[], []] },      // tus dos mazos de cromos (MAZOS): en cada uno, hasta 5 {id del cromo, op: {grado: opción}, cal?: calidad 1 a 7}
@@ -106,7 +108,14 @@ function normalizarCapa (saved) {
   // Los equipos se guardan en orden canónico (mesaGuardar); los de antes, en el orden en que se armaron.
   for (const tt of u.teams) tt.members = tt.members.slice().sort();
   validarMazos(u.cromos);
+  validarUniformes(u.uniforme);
   return u;
+}
+/** El uniforme con que usás a cada personaje (Mi cuenta › Tu roster) es {personaje: id de uniforme}: si no, la capa no se
+ *  carga. Uno que ya no está en los datos sí se carga: Tu roster y el planificador lo muestran con aviso. */
+function validarUniformes (x) {
+  if (!x || typeof x !== 'object' || Array.isArray(x)) throw new Error('uniformes: tiene que ser {personaje: uniforme}');
+  for (const [cid, uid] of Object.entries(x)) if (typeof uid !== 'string' || !uid) throw new Error(`uniformes: el de ${cid} no es un id de uniforme`);
 }
 /** Los mazos de cromos de una capa tienen la forma que guarda la app: si no, la capa no se carga (un import roto no pisa
  *  la tuya). Un cromo o una opción que ya no están en los datos sí se cargan: Mi cuenta › Cromos los muestra con aviso. */
@@ -691,6 +700,121 @@ const T = {
   cu_marcas_d:       { es:'Lo que los datos todavía no traen y marcaste a mano.', en:'What the data does not carry yet and you marked by hand.' },
   cu_capa_d:         { es:'Exportar, importar o borrar todo lo tuyo', en:'Export, import or delete everything of yours' },
   cu_tab_cromos:     { es:'Cromos',              en:'Cards' },
+  // Mi cuenta › Tu roster y Planificador (1.0.59)
+  cu_tab_roster:     { es:'Tu roster',           en:'Your roster' },
+  cu_tab_plan:       { es:'Planificador',        en:'Planner' },
+  cu_ros_t:          { es:'Personajes que tenés', en:'Characters you own' },
+  cu_ros_d:          { es:'de {n}: a quién tenés y en qué categoría, un toque por personaje', en:'of {n}: who you own and at what tier, one tap per character' },
+  cu_plan_d:         { es:'Jefe mundial y Batalla de alianza: quiénes de tu roster cumplen lo que pide la fase o el día', en:'World Boss and Alliance Battle: who in your roster meets what the stage or the day asks for' },
+  ro_note:           { es:'Marcá a quién tenés y en qué categoría: un toque por personaje. Es su hoja de ruta, la misma de su ficha (pestaña «Mi cuenta»): marcar acá la cambia allá. Si lo usás con un uniforme, elegilo: la clase, el bando, la raza y las habilidades pueden cambiar con el uniforme, y el planificador mira ese.',
+                       en:'Mark who you own and at what tier: one tap per character. It is their roadmap, the same one as on their page («My account» tab): marking it here changes it there. If you use them with a uniform, pick it: class, side, race and abilities can change with the uniform, and the planner looks at that one.' },
+  ro_ten_todos:      { es:'Todos',               en:'All' },
+  ro_ten_si:         { es:'Los que tenés',       en:'Owned' },
+  ro_ten_no:         { es:'Los que no',          en:'Not owned' },
+  ro_cuenta:         { es:'Tenés {n} de {t} · {l} en la lista', en:'You own {n} of {t} · {l} listed' },
+  ro_no:             { es:'No',                  en:'No' },
+  ro_no_t:           { es:'No lo tengo',         en:'I do not own it' },
+  ro_p_desbloqueo:   { es:'T1',                  en:'T1' },
+  ro_p_t1:           { es:'6★',                  en:'6★' },
+  ro_p_t2:           { es:'T2',                  en:'T2' },
+  ro_p_t3:           { es:'T3',                  en:'T3' },
+  ro_p_t4:           { es:'T4',                  en:'T4' },
+  ro_max_t:          { es:'Hasta dónde llega en el juego (TP: trasciende su potencial)', en:'How far it goes in the game (TP: transcends its potential)' },
+  ro_cat_de:         { es:'Categoría de {x}',    en:'Tier of {x}' },
+  ro_uni_de:         { es:'Uniforme con que usás a {x}', en:'Uniform you use {x} with' },
+  ro_uni_base:       { es:'Base',                en:'Base' },
+  ro_uni_perdido:    { es:'{u} (ya no está en los datos)', en:'{u} (no longer in the data)' },
+  ro_uni_perdido_x:  { es:'El uniforme anotado ya no está en los datos: se usa la base.', en:'The noted uniform is no longer in the data: the base is used.' },
+  ro_perdido:        { es:'paso «{p}» que la hoja de ruta ya no tiene', en:'step «{p}» the roadmap no longer has' },
+  pl_note:           { es:'Elegí el modo y lo que pide (la fase del jefe o el día de la alianza): en pasos, quiénes de tu roster lo cumplen, en qué orden los pone la lista de la comunidad para ese modo y quiénes le dan algo al que elijas para pegar.',
+                       en:'Pick the mode and what it asks for (the boss stage or the alliance day): step by step, who in your roster meets it, how the community list for that mode orders them and who gives something to the one you pick to deal damage.' },
+  pl_consulta:       { es:'Es una consulta sobre tu roster y las listas de la comunidad, no un equipo probado.', en:'It is a query over your roster and the community lists, not a tested team.' },
+  pl_wb:             { es:'Jefe mundial',        en:'World Boss' },
+  pl_ab:             { es:'Batalla de alianza',  en:'Alliance Battle' },
+  pl_p1:             { es:'Qué pide',            en:'What it asks for' },
+  pl_p2:             { es:'Quiénes de tu roster', en:'Who in your roster' },
+  pl_p3:             { es:'En qué orden',        en:'In what order' },
+  pl_p4:             { es:'Quién le da algo al que pega', en:'Who gives something to the damage dealer' },
+  pl_dif:            { es:'Dificultad',          en:'Difficulty' },
+  pl_jefe:           { es:'Jefe',                en:'Boss' },
+  pl_fase:           { es:'Fases',               en:'Stages' },
+  pl_fases:          { es:'{a} a {b}',           en:'{a} to {b}' },
+  pl_dia:            { es:'Día del ciclo',       en:'Day of the cycle' },
+  pl_modo:           { es:'Modo',                en:'Mode' },
+  pl_restr:          { es:'Restricción',         en:'Restriction' },
+  pl_sin_fases:      { es:'(esta dificultad no tiene restricciones por fase)', en:'(this difficulty has no stage restrictions)' },
+  pl_principales:    { es:'Los 3 que juegan',    en:'The 3 who play' },
+  pl_aliados:        { es:'Aliados (los strikers de Jefe mundial)', en:'Allies (the World Boss strikers)' },
+  pl_no_repiten:     { es:'· no se repiten', en:'· they do not repeat' },
+  pl_def_nota:       { es:'La guía del juego dice además que Definitivo es ideal para personajes de Tier-2 o más: es una recomendación, no lo que pide para entrar.', en:'The in-game guide also says Ultimate is ideal for Tier-2 or higher characters: it is a recommendation, not what it requires to enter.' },
+  pl_consejos:       { es:'Lo que dice el juego de {j}', en:'What the game says about {j}' },
+  pl_categoria:      { es:'Categoría',           en:'Tier' },
+  pl_ab_sin_cat:     { es:'No pide (la guía del juego no dice ninguna): alcanza con tenerlo.', en:'None (the in-game guide states none): owning it is enough.' },
+  pl_ab_dia:         { es:'El juego no dice qué día del ciclo de 28 es hoy: elegilo vos, mirando la restricción que te muestra el juego.', en:'The game does not say which day of the 28-day cycle today is: pick it yourself, looking at the restriction the game shows you.' },
+  pl_ab_repite:      { es:'Según la guía del juego, el que hizo la mayor puntuación en un modo no puede jugar los otros modos.', en:'According to the in-game guide, whoever set the highest score in a mode cannot play the other modes.' },
+  pl_cuenta_wb:      { es:'{s} pueden jugar · {a} solo como aliados · {f} la cumplen y les falta categoría · {o} la cumplirían con otro uniforme · {u} ya usados', en:'{s} can play · {a} only as allies · {f} meet it and lack tier · {o} would meet it with another uniform · {u} already used' },
+  pl_cuenta_ab:      { es:'{s} pueden jugar · {o} la cumplirían con otro uniforme · {u} ya usados', en:'{s} can play · {o} would meet it with another uniform · {u} already used' },
+  pl_sin_roster:     { es:'Todavía no marcaste tu roster: en Mi cuenta › Tu roster marcás a quién tenés y en qué categoría, un toque por personaje. Mientras tanto, acá arriba ves qué pide.', en:'You have not marked your roster yet: in My account › Your roster you mark who you own and at what tier, one tap per character. Meanwhile, above you see what it asks for.' },
+  pl_sin_roster_corto: { es:'Sin roster marcado, no hay a quién ordenar.', en:'With no roster marked, there is nobody to order.' },
+  pl_ir_roster:      { es:'Marcar tu roster',    en:'Mark your roster' },
+  pl_no_tenes:       { es:'Del juego, {n} personajes que no están en tu roster la cumplen con alguna versión.', en:'In the game, {n} characters not in your roster meet it with some version.' },
+  pl_dia_op:         { es:'{d} — {r}',           en:'{d} — {r}' },
+  pl_g_si_wb:        { es:'Pueden jugar (cumplen y llegan a lo que piden los 3 que juegan)', en:'Can play (meet it and reach what the 3 who play need)' },
+  pl_g_si_ab:        { es:'Pueden jugar (cumplen la restricción)', en:'Can play (meet the restriction)' },
+  pl_g_aliados:      { es:'Solo como aliados',   en:'Only as allies' },
+  pl_g_aliados_x:    { es:'Cumplen y llegan a lo que piden los aliados, no a lo de los 3 que juegan.', en:'They meet it and reach what allies need, not what the 3 who play need.' },
+  pl_g_falta:        { es:'La cumplen y les falta categoría', en:'Meet it and lack tier' },
+  pl_g_falta_x:      { es:'Con su paso de la hoja de ruta no llegan. Cuánto falta, en cada uno.', en:'With their roadmap step they do not get there. How much is missing, on each one.' },
+  pl_falta_aliado:   { es:'de aliado pide {p}', en:'as an ally it needs {p}' },
+  pl_falta_principal: { es:'para jugar pide {p}', en:'to play it needs {p}' },
+  pl_no_llega:       { es:'pide {p} y no llega: su máximo es {m}', en:'needs {p} and cannot reach it: its maximum is {m}' },
+  pl_g_otro:         { es:'La cumplirían con otro uniforme', en:'Would meet it with another uniform' },
+  pl_g_otro_x:       { es:'Con el uniforme que anotaste no la cumplen; con estos sí (si los tenés, anotalo en Tu roster).', en:'With the uniform you noted they do not meet it; with these they do (if you own them, note it in Your roster).' },
+  pl_con_otro:       { es:'la cumple con: {u}', en:'meets it with: {u}' },
+  pl_g_usados:       { es:'Ya usados',           en:'Already used' },
+  pl_usados_wb:      { es:'Los 3 que juegan no vuelven a entrar hasta el reinicio; en Leyenda, Leyenda+ y Mítico, tampoco los aliados. Se olvida al cerrar la app.', en:'The 3 who play cannot enter again until the reset; in Legend, Legend+ and Mythic, neither can the allies. It is forgotten when the app closes.' },
+  pl_usados_ab:      { es:'El que hizo la mayor puntuación en un modo no juega los otros. Se olvida al cerrar la app.', en:'Whoever set the highest score in a mode does not play the others. It is forgotten when the app closes.' },
+  pl_usado:          { es:'Ya lo usé',           en:'Already used' },
+  pl_devolver:       { es:'Devolver',            en:'Put back' },
+  pl_tu_cat:         { es:'Tu categoría, de su hoja de ruta', en:'Your tier, from their roadmap' },
+  pl_orden:          { es:'Ordenar por',         en:'Sort by' },
+  pl_orden_rol:      { es:'Rol en la lista',     en:'Role in the list' },
+  pl_orden_fila:     { es:'Fila de la lista',    en:'List row' },
+  pl_orden_nombre:   { es:'Nombre',              en:'Name' },
+  pl_orden_x_rol:    { es:'Primero los que la lista pone para pegar (de su mejor fila a la peor), después líderes, apoyos y strikers, después los que la lista deja fuera y al final los que no están en ella. A igual lugar, por nombre.',
+                       en:'First those the list ranks to deal damage (from its best row to its worst), then leaders, supports and strikers, then those the list leaves out and last those not in it. On a tie, by name.' },
+  pl_orden_x_fila:   { es:'En el orden de las filas de la lista, de arriba abajo, como la publicó su autor (mezcla roles); los que no están, al final. A igual fila, por nombre.',
+                       en:'In the order of the list rows, top to bottom, as its author published it (it mixes roles); those not in it, last. On a tie, by name.' },
+  pl_orden_x_nombre: { es:'Por nombre, sin mirar la lista.', en:'By name, without looking at the list.' },
+  pl_rol_dps:        { es:'pega',                en:'deals damage' },
+  pl_rol_soporte:    { es:'apoyo',               en:'support' },
+  pl_rol_lider:      { es:'líder',               en:'leader' },
+  pl_rol_striker:    { es:'striker',             en:'striker' },
+  pl_rol_fuera:      { es:'la lista lo deja fuera', en:'the list leaves it out' },
+  pl_no_lista:       { es:'no está en la lista', en:'not in the list' },
+  pl_no_lista_nuevo: { es:'no está en la lista: salió después ({f})', en:'not in the list: released after it ({f})' },
+  pl_otro_en_lista:  { es:'· con otro uniforme sí: {u}', en:'· with another uniform it is: {u}' },
+  pl_lista_vieja:    { es:'La lista es de la versión {v} del juego y el juego va por la {j}: lo que salió o cambió después no está.', en:'The list is from game version {v} and the game is at {j}: whatever came out or changed later is not in it.' },
+  pl_lista_otra_dif: { es:'La lista es de Jefe mundial Leyenda y Leyenda+: para esta dificultad es la más cercana que hay.', en:'The list is for World Boss Legend and Legend+: for this difficulty it is the closest there is.' },
+  pl_nadie:          { es:'Nadie de tu roster cumple esto todavía.', en:'Nobody in your roster meets this yet.' },
+  pl_pega:           { es:'El que pega',         en:'Damage dealer' },
+  pl_pega_si:        { es:'El que pega ✓',       en:'Damage dealer ✓' },
+  pl_elegi_pega:     { es:'Elegí en el paso 3 quién pega («El que pega»): acá aparecen los de tu roster que pueden jugar y le dan algo.', en:'Pick in step 3 who deals damage («Damage dealer»): here show up those in your roster who can play and give them something.' },
+  pl_le_dan:         { es:'Le dan algo a {x} (le llega y le sirve):', en:'They give {x} something (it reaches them and it helps them):' },
+  pl_le_dan_x:       { es:'De Leads & Supports y de los liderazgos derivados de las skills: a quiénes llega cada uno y qué da, con su texto. No se suma ni se ordena por cuánto da: por nombre. Lo que no se suma con otra fuente lo dice la mesa.',
+                       en:'From Leads & Supports and the leaderships derived from the skills: who each one reaches and what it gives, with its text. It is not added up or sorted by how much it gives: by name. What does not stack with another source, the desk tells you.' },
+  pl_si_lider:       { es:'Si lo llevás de líder:', en:'If you bring them as leader:' },
+  pl_de_apoyo:       { es:'De apoyo:',           en:'As support:' },
+  pl_nadie_da:       { es:'Nadie más de tu roster que pueda jugar le da algo que le llegue y le sirva.', en:'Nobody else in your roster who can play gives them something that reaches them and helps them.' },
+  pl_con:            { es:'Sumar',               en:'Add' },
+  pl_con_si:         { es:'Sumado ✓',            en:'Added ✓' },
+  pl_mesa:           { es:'Poner en la mesa ({n})', en:'Put on the desk ({n})' },
+  pl_mesa_x:         { es:'El que pega y hasta dos que sumes, con este modo. Reemplaza lo que haya en la mesa.', en:'The damage dealer and up to two you add, with this mode. It replaces whatever is on the desk.' },
+  pl_mesa_puesto:    { es:'Puesto en la mesa desde el planificador.', en:'Put on the desk from the planner.' },
+  pl_mesa_reemplaza: { es:'Puesto en la mesa desde el planificador, en lugar de los {n} que había.', en:'Put on the desk from the planner, replacing the {n} that were there.' },
+  md_plan_t:         { es:'Con tu roster',       en:'With your roster' },
+  md_plan_x:         { es:'Quiénes de tu roster cumplen lo que pide la fase o el día, en pasos (Mi cuenta › Planificador).', en:'Who in your roster meets what the stage or the day asks for, step by step (My account › Planner).' },
+  md_plan_ir:        { es:'Planificar con tu roster', en:'Plan with your roster' },
   cu_cr_t:           { es:'Cromos en tus mazos', en:'Cards in your decks' },
   cu_cr_d:           { es:'Mazo 1: {a} de 5 · mazo 2: {b} de 5', en:'Deck 1: {a} of 5 · deck 2: {b} of 5' },
   cu_cr_note:        { es:'Tus dos mazos de cromos, de 5 lugares cada uno: qué cromo pusiste y, si querés, su calidad (1 a 7) y qué opción le salió en cada grado. Con eso, abajo de cada mazo se suma cuánto da de cada stat. Lo que no anotes queda sin anotar. Los cromos también se ponen y se sacan desde Objetos › Cromos.',
@@ -2096,6 +2220,12 @@ let ui = {
   tip: null,                         // «Cómo funciona» abierto: { key de la variante, si: skill, ti y fi: el efecto tocado o null }
   fichaTab: 'resumen',               // pestaña de la ficha; se conserva al pasar de un personaje a otro
   cuentaTab: 'resumen',              // apartado de Mi cuenta (CUENTA_TABS); Equipos y el editor son vistas propias
+  rosTen: 'todos',                   // Mi cuenta › Tu roster: todos, los que tenés ('si') o los que no ('no')
+  // Mi cuenta › Planificador (casoPlan): el modo ('wb' Jefe mundial, 'ab' Batalla de alianza); en Jefe mundial, dificultad, jefe
+  // (null: el primero) y rango de fases (su índice); en Batalla de alianza, día y modo ('' : el primero del día); el orden de
+  // la lista (ORDENES_PLAN); el que pega (su clave) y los que se suman (claves); y los que ya usaste en esta sesión, por modo
+  // (no se guardan: el juego los devuelve al reiniciar).
+  plan: { modo: 'wb', dif: 'leyenda', jefe: null, fase: 0, abDia: 1, abModo: '', orden: 'rol', pega: null, con: [], usados: { wb: [], ab: [] } },
   kitCon: null,                      // pestaña Skills: la otra versión del personaje contra la que se marca lo que cambia (su uid o 'base')
   cmpRef: null,                      // comparativa skill por skill de un mismo personaje: la clave de la versión de referencia (sin ella, la primera)
   cmpCambios: true,                  // ...y si se ve solo lo que cambia
@@ -4913,14 +5043,11 @@ function rolEn (v, ctx) {
   let r = _ROL.get(k);
   if (r) return r;
   r = { dps: 0, soporte: 0, lider: false, striker: false, fuera: false, filas: [], puesto: 0 };
-  for (const [lid, roles] of Object.entries(ROLES_LISTAS[ctx])) {
+  for (const lid of Object.keys(ROLES_LISTAS[ctx])) {
     const l = listById(lid);
     if (!l) throw new Error('falta la tier list ' + lid);
     r.puesto += puesto(l, v.key);
-    for (const fid of filasDe(lid, v.key)) {
-      const rf = roles[fid];
-      if (!rf) throw new Error(`fila ${fid} de ${lid} sin rol en roles_listas.json`);
-      const [rol, nivel] = rf;
+    for (const { fid, rol, nivel } of filasConRol(l, v, ctx)) {
       if (rol === 'dps' || rol === 'soporte') r[rol] = Math.max(r[rol], nivel);
       else r[rol] = true;
       r.filas.push([l, fid]);
@@ -4928,6 +5055,17 @@ function rolEn (v, ctx) {
   }
   _ROL.set(k, r);
   return r;
+}
+/** Las filas de la lista l (una de las del contexto ctx en MFF_ROLES_LISTAS) en las que está v, con el rol que da cada una:
+ *  [{ fid, rol, nivel }], en el orden de la lista. */
+function filasConRol (l, v, ctx) {
+  const roles = ROLES_LISTAS[ctx][l.id];
+  if (!roles) throw new Error(`la lista ${l.id} no tiene roles en el contexto ${ctx}`);
+  return filasDe(l.id, v.key).map(fid => {
+    const rf = roles[fid];
+    if (!rf) throw new Error(`fila ${fid} de ${l.id} sin rol en roles_listas.json`);
+    return { fid, rol: rf[0], nivel: rf[1] };
+  });
 }
 /** ¿Tiene función en el contexto? Según Ezequiel, quien no figura en las tier lists del contexto, o
  *  solo en una fila que lo deja fuera («Not for wbl»), no la tiene (Thor base, en PvP y en PvE), y
@@ -5183,12 +5321,7 @@ function puestoHtml (l, key) { const f = filaEn(l, key); return f ? `<span title
 // id: deadpool-10800164, Deadpool & Wolverine, va antes que deadpool-10700164, Nicepool). Desde los datos de formato 9,
 // todos los uniformes traen su versión (el build la saca de /api/updates de thanosvibs).
 /** La versión del juego en que salió un uniforme, para comparar: { n: [números], l: letra o '' }. */
-function versionUniforme (u) {
-  const s = u.up.update;
-  const m = /^(\d+(?:\.\d+)*)([a-z]?)$/.exec(s);
-  if (!m) throw new Error(`versión de juego que la app no sabe leer en el uniforme ${u.id}: ${s}`);
-  return { n: m[1].split('.').map(Number), l: m[2] };
-}
+function versionUniforme (u) { return leerVersion(u.up.update, 'el uniforme ' + u.id); }
 /** Orden de dos versiones (versionUniforme): los números, de a uno (12.0 = 12.0.0), y después la letra. */
 function cmpVersion (a, b) {
   for (let i = 0; i < Math.max(a.n.length, b.n.length); i++) { const d = (a.n[i] || 0) - (b.n[i] || 0); if (d) return d; }
@@ -7632,12 +7765,16 @@ function armadoOpciones (v) {
 /** Hoja de ruta de la guía para esta variante: los pasos que le tocan según su tier
  *  máximo y si sube a Tier-3 o trasciende, con los requisitos de la wiki. El usuario
  *  marca hasta dónde llegó con ese personaje. */
+/** Los pasos de la hoja de ruta que le tocan a v: un T2 llega hasta el de antes de subir a Tier-3; un T3, hasta el de antes
+ *  de Tier-4 (el orden de la guía). */
+function pasosRuta (v) {
+  const P = GUIA.progresion, corte = { T2: 't3', T3: 't4' }[v.t], fin = corte ? P.pasos.findIndex(p => p.id === corte) : P.pasos.length;
+  if (fin < 0) throw new Error('la hoja de ruta de la guía no tiene el paso ' + corte);
+  return P.pasos.slice(0, fin);
+}
 function armadoRuta (ch, v) {
   const P = GUIA.progresion, R = Object.fromEntries(P.requisitos.items.map(x => [x.id, x]));
-  // Un T2 llega hasta el paso de antes de subir a Tier-3; un T3, hasta el de antes de Tier-4 (el orden de la guía).
-  const corte = { T2: 't3', T3: 't4' }[v.t], fin = corte ? P.pasos.findIndex(p => p.id === corte) : P.pasos.length;
-  if (fin < 0) throw new Error('la hoja de ruta de la guía no tiene el paso ' + corte);
-  const pasos = P.pasos.slice(0, fin);
+  const pasos = pasosRuta(v);
   // El avance es del personaje: si marcó un paso que esta variante no tiene (Tier-4 en
   // una sin Tier-4), todos los que sí tiene quedan hechos.
   const hecho = Math.min(P.pasos.findIndex(p => p.id === U.ruta[ch.id]), pasos.length - 1);
@@ -7772,6 +7909,8 @@ function renderModos () {
     </div>`;
 }
 
+/** Los modos que tienen planificador en Mi cuenta (cuentaPlan). */
+const PLAN_DE_MODO = { 'world-boss': 'wb', 'alliance-battle': 'ab' };
 /** El nombre del modo: en español, el del glosario de contenidos del juego (#45). */
 function nombreModo (m) { return LANG === 'es' ? m.nombre_es : m.nombre; }
 function modoCard (m) {
@@ -7792,6 +7931,8 @@ function modoCard (m) {
         ${m.corrobora ? `<p class="muted">${h(bi(m.corrobora))}</p><div class="fuentes">${fuentesHtml(m.corrobora_fuente)}</div>` : ''}
       </div>
       ${eq ? `<div class="bloque"><h4>${h(t('md_team'))}</h4><p>${h(bi(eq))}</p><div class="fuentes">${fuentesHtml(eq.fuente)}</div></div>` : ''}
+      ${PLAN_DE_MODO[m.id] ? `<div class="bloque plenlace"><h4>${h(t('md_plan_t'))}</h4><p class="muted">${h(t('md_plan_x'))}</p>
+        <button class="btn primary" data-a="irPlan" data-v="${PLAN_DE_MODO[m.id]}">${h(t('md_plan_ir'))}</button></div>` : ''}
       ${(m.avisos || []).length ? `<div class="bloque aviso">${m.avisos.map(x => `<p>${h(bi(x))}</p>`).join('')}<div class="fuentes">${fuentesHtml(m.avisos_fuente)}</div></div>` : ''}
       ${m.abx ? panelABX(m) : ''}
       ${panelRecomendados(m)}
@@ -8000,13 +8141,15 @@ function restriccionMesa () {
   const del = ABX.restricciones.filter(r => r.d === U.mesa.abxDia);
   return del.find(r => r.m === U.mesa.abxDif) || del[0];
 }
-/** ¿v cumple un valor de una restricción de Alliance Battle? Cada valor es una clase, un bando, un género o una raza. */
+/** ¿v cumple un valor de una restricción de un modo (Alliance Battle, Jefe mundial)? Cada valor es una clase, un bando, un
+ *  género, una raza o una habilidad (dominio.RESTRICCION). */
 function cumpleRestriccion (v, x) {
   if (SEED.CLASSES.includes(x)) return v.c === x;
   if (SEED.FACTIONS.includes(x)) return v.f === x;
   if (SEED.GENDERS.includes(x)) return v.gender === x;
   if (SEED.RACES.includes(x)) return v.race === x;
-  throw new Error('restricción de Alliance Battle que no es clase, bando, género ni raza: ' + x);
+  if (SEED.SKILL_TAGS.includes(x)) return v.ab.includes(x);
+  throw new Error('restricción de un modo que no es clase, bando, género, raza ni habilidad: ' + x);
 }
 /** Pone una variante en la mesa: al final, o en el lugar del mismo personaje si ya estaba con otro uniforme (el
  *  juego no deja dos veces al mismo). Con la mesa llena no suma: lo dice. */
@@ -8133,13 +8276,13 @@ function movilTabsHtml (conLista, conMesa, derecha) {
 // que marcaste y tu capa. Lo que es de un personaje se sigue cargando en su ficha (pestaña «Mi cuenta»); acá se lista.
 // Tus tier lists quedan en Tier lists, junto a las públicas (decisión de la arquitectura: un solo lugar para cada cosa).
 // ============================================================================
-const CUENTA_TABS = ['resumen', 'equipos', 'progreso', 'propios', 'marcas', 'cromos', 'capa'];
+const CUENTA_TABS = ['resumen', 'roster', 'plan', 'equipos', 'progreso', 'propios', 'marcas', 'cromos', 'capa'];
 /** El apartado de Mi cuenta en el que se está: Equipos y el editor de personajes son vistas propias. */
 function cuentaTabActual () { return ui.view === 'teams' ? 'equipos' : ui.view === 'editor' ? 'propios' : ui.cuentaTab; }
 /** Cuánto hay en cada apartado, para la sub-barra y el resumen. */
 function cuentaCuentas () {
   const conRuta = Object.keys(U.ruta), conTopes = Object.keys(U.topes);
-  return { equipos: U.teams.length, progreso: new Set(conRuta.concat(conTopes)).size, ruta: conRuta.length, topes: conTopes.length,
+  return { roster: conRuta.length, equipos: U.teams.length, progreso: new Set(conRuta.concat(conTopes)).size, ruta: conRuta.length, topes: conTopes.length,
            creados: U.charNew.length, editados: Object.keys(U.charEdits).length, propios: U.charNew.length + Object.keys(U.charEdits).length,
            marcas: Object.keys(U.marcas).length, listas: U.lists.length, cromos: U.cromos.mazos.reduce((n, m) => n + m.length, 0),
            // Cambios sobre las listas importadas: las ubicaciones de tus listas propias no lo son.
@@ -8160,7 +8303,7 @@ function cuentaCabHtml () {
     attrs: k === 'equipos' ? 'data-a="goTeams"' : `data-a="cuentaTab" data-v="${k}"` })), cuentaTabActual(), false);
 }
 function renderCuenta () {
-  const cuerpo = { resumen: cuentaResumen, progreso: cuentaProgreso, propios: cuentaPropios, marcas: cuentaMarcas, cromos: cuentaCromos,
+  const cuerpo = { resumen: cuentaResumen, roster: cuentaRoster, plan: cuentaPlan, progreso: cuentaProgreso, propios: cuentaPropios, marcas: cuentaMarcas, cromos: cuentaCromos,
                    capa: cuentaCapa }[ui.cuentaTab];
   if (!cuerpo) throw new Error('apartado de Mi cuenta desconocido: ' + ui.cuentaTab);
   return cuerpo();
@@ -8172,6 +8315,8 @@ function cuentaResumen () {
     ${valor != null ? `<span class="v">${valor}</span>` : ''}<span class="d">${h(detalle)}</span></button>`;
   return `<div class="page-head"><div><h1>${h(t('nav_cuenta'))}</h1><div class="sub">${h(t('cu_note'))}</div></div></div>
     <div class="cuhub">
+      ${tarjeta('data-a="cuentaTab" data-v="roster"', t('cu_ros_t'), n.roster, t('cu_ros_d').replace('{n}', CHARS.length))}
+      ${tarjeta('data-a="cuentaTab" data-v="plan"', t('cu_tab_plan'), null, t('cu_plan_d'))}
       ${tarjeta('data-a="goTeams"', t('cu_eq_t'), n.equipos, t('cu_eq_d').replace('{f}', U.favoritos.length).replace('{d}', U.descartados.length).replace('{m}', U.mesa.members.length))}
       ${tarjeta('data-a="cuentaTab" data-v="progreso"', t('cu_prog_t'), n.progreso, t('cu_prog_d').replace('{r}', n.ruta).replace('{c}', n.topes))}
       ${tarjeta('data-a="cuentaTab" data-v="propios"', t('cu_tab_propios'), n.propios, t('cu_prop_d').replace('{n}', n.creados).replace('{e}', n.editados))}
@@ -8196,6 +8341,292 @@ function cuentaProgreso () {
     ${cids.length ? `<div class="stagewrap"><table class="cutabla"><thead><tr><th>${h(t('cu_prog_pj'))}</th><th>${h(t('cu_prog_ruta'))}</th><th>${h(t('cu_prog_topes'))}</th><th></th></tr></thead>
       <tbody>${cids.map(fila).join('')}</tbody></table></div>`
     : `<div class="empty"><div class="big">◇</div><div>${h(t('cu_prog_vacio'))}</div></div>`}`;
+}
+// TU ROSTER Y EL PLANIFICADOR (1.0.59; Ezequiel, 23 de noviembre de 2026, «Dale con todo» a «Planificador de Jefe mundial y
+// Batalla de alianza con tu roster: qué equipo armar con lo que tenés para la restricción del día»). Tu roster es la hoja de
+// ruta de cada personaje (U.ruta, la misma de su ficha: una sola fuente): lo tenés si marcaste un paso, y el paso dice su
+// categoría (NIVEL_PASO); el uniforme con que lo usás va en U.uniforme. El planificador es una consulta en pasos a la vista y
+// sin puntajes que no se ven (#34): qué pide la fase o el día, quiénes de tu roster lo cumplen, en qué orden (uno que se ve y
+// se cambia) y quiénes le dan algo al que pega. No elige el equipo ni dice cuál es el mejor.
+/** La categoría que deja cada paso de la hoja de ruta (3: Tier-3 o potencial trascendido). iniciarDatos() comprueba que
+ *  estén todos los pasos de la guía. */
+const NIVEL_PASO = { desbloqueo: 1, t1: 1, t2: 2, n70: 2, t3: 3, n80: 3, t4: 4 };
+/** Lo que se marca de un toque en Tu roster: los pasos que cambian la categoría, y el 6★ (lo piden Normal y Definitivo). Un
+ *  paso intermedio (Nv. 70, Nv. 80) se marca en la ficha y cuenta como el toque de su categoría (TOQUE_DE). */
+const PASOS_TOQUE = ['desbloqueo', 't1', 't2', 't3', 't4'];
+const TOQUE_DE = { desbloqueo: 'desbloqueo', t1: 't1', t2: 't2', n70: 't2', t3: 't3', n80: 't3', t4: 't4' };
+function indicePaso (id) {
+  const i = GUIA.progresion.pasos.findIndex(p => p.id === id);
+  if (i < 0) throw new Error('paso que la hoja de ruta no tiene: ' + id);
+  return i;
+}
+/** Tu paso con un personaje: { id, i (su lugar en la hoja de ruta), nivel } o null si no lo marcaste (no lo tenés). Uno que la
+ *  hoja de ruta ya no tiene queda con perdido (y nivel 0): Tu roster lo dice. */
+function pasoDe (cid) {
+  const id = U.ruta[cid]; if (!id) return null;
+  const i = GUIA.progresion.pasos.findIndex(p => p.id === id);
+  return i < 0 ? { id, i, nivel: 0, perdido: true } : { id, i, nivel: NIVEL_PASO[id] };
+}
+/** ¿Llega tu paso x al paso pedido? */
+function llegaA (x, paso) { return !!x && !x.perdido && x.i >= indicePaso(paso); }
+/** Cómo se nombra un paso del toque para v: T1, 6★, T2, T3 o TP (si trasciende), T4. */
+function rotuloPaso (id, v) { return id === 't3' && v.trans ? 'TP' : t('ro_p_' + id); }
+/** Tu paso, en corto: el rótulo de su toque y, si es intermedio, el paso. */
+function pasoCorto (x, v) {
+  if (x.perdido) return t('ro_perdido').replace('{p}', x.id);
+  const p = GUIA.progresion.pasos[x.i];
+  return rotuloPaso(TOQUE_DE[x.id], v) + (PASOS_TOQUE.includes(x.id) ? '' : ' · ' + bi(p).replace(/\.$/, ''));
+}
+/** La variante con que usás a un personaje: su uniforme anotado o la base. perdido: el uniforme anotado ya no está en los
+ *  datos (se usa la base y se dice). */
+function varUsada (ch) {
+  const uid = U.uniforme[ch.id], u = uid ? findUniform(ch, uid) : null;
+  return { v: variant(ch.id, u ? uid : null), perdido: !!uid && !u };
+}
+
+/** Mi cuenta › Tu roster: a quién tenés y en qué categoría, un toque por personaje, con la búsqueda y los filtros del roster
+ *  (rosterData: un personaje está si alguna de sus versiones pasa los filtros), por nombre. */
+function cuentaRoster () {
+  const vistos = new Set();
+  for (const v of rosterData()) vistos.add(v.cid);
+  const ten = ui.rosTen;
+  const lista = [...vistos].map(c => CHAR_BY_ID[c]).filter(ch => ten === 'todos' || (ten === 'si') === !!U.ruta[ch.id])
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const tenes = CHARS.filter(ch => U.ruta[ch.id]).length, activos = filtrosActivos();
+  const fila = (ch) => {
+    const base = variant(ch.id, null), x = pasoDe(ch.id), ps = pasosRuta(base);
+    const toques = PASOS_TOQUE.filter(id => ps.some(p => p.id === id)), actual = x && !x.perdido ? TOQUE_DE[x.id] : null;
+    const uid = U.uniforme[ch.id], usada = varUsada(ch);
+    const boton = (id, txt, titulo) => `<button class="${(id === '' ? !x : id === actual) ? 'on' : ''}" data-a="rosPaso" data-cid="${ch.id}" data-v="${id}"
+      title="${h(titulo)}" aria-pressed="${id === '' ? !x : id === actual}">${h(txt)}</button>`;
+    return `<div class="rosfila${x ? ' tengo' : ''}">
+      <div class="rospj">${miniPj(base)}<span class="tag dim" title="${h(t('ro_max_t'))}">${h(base.t)}${base.trans ? ' · TP' : ''}</span></div>
+      <div class="seg rospasos" role="group" aria-label="${h(t('ro_cat_de').replace('{x}', ch.name))}">${boton('', t('ro_no'), t('ro_no_t'))}${
+        toques.map(id => boton(id, rotuloPaso(id, base), bi(GUIA.progresion.pasos[indicePaso(id)]))).join('')}</div>
+      <div class="rosuni">${x && ch.uniforms.length ? `<select data-a="rosUni" data-cid="${ch.id}" aria-label="${h(t('ro_uni_de').replace('{x}', ch.name))}">
+          <option value="">${h(t('ro_uni_base'))}</option>${ch.uniforms.map(u => `<option value="${h(u.id)}" ${u.id === uid ? 'selected' : ''}>${h(u.name)}</option>`).join('')}
+          ${usada.perdido ? `<option value="${h(uid)}" selected>${h(t('ro_uni_perdido').replace('{u}', uid))}</option>` : ''}</select>` : ''}
+        ${x && !PASOS_TOQUE.includes(x.id) ? `<small class="muted">${h(pasoCorto(x, base))}</small>` : ''}
+        ${usada.perdido ? `<div class="aviso">${h(t('ro_uni_perdido_x'))}</div>` : ''}</div>
+    </div>`;
+  };
+  return `<div class="page-head"><div><h1>${h(t('cu_tab_roster'))}</h1><div class="sub">${h(t('ro_note'))}</div></div>
+      <button class="btn" data-a="cuentaTab" data-v="plan">${h(t('cu_tab_plan'))} →</button></div>
+    <div class="rosbarra" data-rec="ros-barra">
+      <div class="search"><input id="q" placeholder="${h(t('search_ph'))}" value="${h(ui.search)}" data-a="search" aria-label="${h(t('search_ph'))}"></div>
+      <button class="btn sm ${ui.plFiltros ? 'primary' : ''}" data-a="plFiltros" aria-expanded="${ui.plFiltros}">${h(t('filters'))}${activos ? ' · ' + activos : ''}</button>
+      ${activos || ui.search ? `<button class="btn sm" data-a="clearFilters">${h(t('clear'))}</button>` : ''}
+      <div class="seg">${['todos', 'si', 'no'].map(k => `<button class="${ten === k ? 'on' : ''}" data-a="rosTen" data-v="${k}">${h(t('ro_ten_' + k))}</button>`).join('')}</div>
+      <span class="muted">${h(t('ro_cuenta').replace('{n}', tenes).replace('{t}', CHARS.length).replace('{l}', lista.length))}</span>
+    </div>
+    ${ui.plFiltros ? `<div class="filterpanel plpanel">${filtrosHtml()}</div>` : ''}
+    ${lista.length ? `<div class="roslista">${lista.map(fila).join('')}</div>` : `<div class="empty"><div>${h(t('no_match'))}</div></div>`}
+    <div class="fuentes">${fuentesHtml(GUIA.progresion.fuente)}</div>`;
+}
+
+/** El caso del planificador: qué se eligió y qué pide. Jefe mundial: dificultad (d), sus jefes, el jefe (j), el rango de
+ *  fases (rango: [desde, hasta, restricción] o null si la dificultad no tiene) y lo que pide a los principales y a los
+ *  aliados (pasos de la hoja de ruta). Batalla de alianza: el día y el modo (r, de MFF_ABX) y su restricción; no pide
+ *  categoría (la guía del juego no dice ninguna). lista: la tier list de thanosvibs del modo. */
+function casoPlan () {
+  const P = ui.plan;
+  if (P.modo === 'wb') {
+    const d = JEFE_MUNDIAL.dificultades.find(x => x.id === P.dif);
+    if (!d) throw new Error('dificultad de Jefe mundial desconocida: ' + P.dif);
+    const jefes = JEFE_MUNDIAL.jefes.filter(j => j.dif === d.jefes), j = jefes.find(x => x.id === P.jefe) || jefes[0];
+    const rango = j.r.length ? j.r[Math.min(P.fase, j.r.length - 1)] : null;
+    return { modo: 'wb', modeId: 'world-boss', d, jefes, j, rango, restr: rango ? rango[2] : [], principal: d.principal.paso,
+             aliados: d.aliados.paso, lista: 'tv-wbl' };
+  }
+  const dias = [...new Set(ABX.restricciones.map(r => r.d))].sort((a, b) => a - b);
+  const del = ABX.restricciones.filter(r => r.d === P.abDia), r = del.find(x => x.m === P.abModo) || del[0];
+  if (!r) throw new Error('día de Batalla de alianza sin restricciones: ' + P.abDia);
+  return { modo: 'ab', modeId: 'alliance-battle', dias, del, r, restr: r.r, principal: 'desbloqueo', aliados: null, lista: 'tv-alianza' };
+}
+function cumpleTodo (v, restr) { return restr.every(x => cumpleRestriccion(v, x)); }
+/** De tu roster, con el uniforme con que usás a cada uno: los que cumplen la restricción y llegan a lo que pide para jugar
+ *  (si), los que llegan solo como aliados (aliados), los que la cumplen y no llegan (falta), los que la cumplirían con otro
+ *  uniforme (otroUni) y los que ya usaste en esta sesión (usados); y cuántos del juego la cumplen con alguna versión y no
+ *  están en tu roster (noTenes). Cada fila: { v, x (tu paso), perdido (el uniforme anotado ya no está) }. */
+function evaluarPlan (c) {
+  const out = { si: [], aliados: [], falta: [], otroUni: [], usados: [], noTenes: 0 };
+  for (const ch of CHARS) {
+    const x = pasoDe(ch.id);
+    if (!x) { if (variantesDe(ch).some(y => cumpleTodo(y, c.restr))) out.noTenes++; continue; }
+    const { v, perdido } = varUsada(ch), fila = { v, x, perdido };
+    if (!cumpleTodo(v, c.restr)) {
+      const otros = variantesDe(ch).filter(y => y.key !== v.key && cumpleTodo(y, c.restr));
+      if (otros.length) out.otroUni.push(Object.assign(fila, { otros }));
+      continue;
+    }
+    if (ui.plan.usados[c.modo].includes(ch.id)) out.usados.push(fila);
+    else if (llegaA(x, c.principal)) out.si.push(fila);
+    else if (c.aliados && llegaA(x, c.aliados)) out.aliados.push(fila);
+    else out.falta.push(fila);
+  }
+  return out;
+}
+/** El lugar de v en la lista del modo, para ordenar por rol: el que pega (de la mejor fila a la peor), líder, apoyo, striker,
+ *  la fila que lo deja fuera («Not for wbl») y, al final, los que no están en la lista. */
+function ordenRol (fs) {
+  const k = (f) => f.rol === 'dps' ? 3 - f.nivel : f.rol === 'lider' ? 3 : f.rol === 'soporte' ? 6 - f.nivel : f.rol === 'striker' ? 6 : 7;
+  return fs.length ? Math.min(...fs.map(k)) : 8;
+}
+const ORDENES_PLAN = ['rol', 'fila', 'nombre'];
+function ordenarPlan (filas, l) {
+  const key = { rol: (f) => ordenRol(filasConRol(l, f.v, 'pve')), fila: (f) => puesto(l, f.v.key), nombre: () => 0 }[ui.plan.orden];
+  if (!key) throw new Error('orden del planificador desconocido: ' + ui.plan.orden);
+  return filas.slice().sort((a, b) => key(a) - key(b) || fullLabel(a.v).localeCompare(fullLabel(b.v)));
+}
+/** Una versión de juego («12.1.5») en partes, para comparar con cmpVersion. */
+function leerVersion (s, donde) {
+  const m = /^(\d+(?:\.\d+)*)([a-z]?)$/.exec(s || '');
+  if (!m) throw new Error(`versión de juego que la app no sabe leer en ${donde}: ${s}`);
+  return { n: m[1].split('.').map(Number), l: m[2] };
+}
+/** Qué dice la lista del modo de v: su fila y su rol, o que no está (y si salió después de la lista); si no está con este
+ *  uniforme pero sí con otro, cuál. */
+function enListaHtml (l, v) {
+  const fs = filasConRol(l, v, 'pve'), rows = rowsOf(l);
+  if (fs.length) return fs.map(f => { const r = rows.find(x => x.id === f.fid);
+    return `<span class="tag ghost plrol" title="${h(listName(l))}">${h(r.label)} · ${h(t('pl_rol_' + f.rol))}</span>`; }).join(' ');
+  const llego = lanzamientoDe(v), nuevo = llego && l.published && llego > l.published;
+  const otros = variantesDe(v.ch).filter(y => y.key !== v.key && filasDe(l.id, y.key).length);
+  return `<span class="muted">${h(t(nuevo ? 'pl_no_lista_nuevo' : 'pl_no_lista').replace('{f}', llego || ''))}</span>${otros.length
+    ? ` <span class="muted">${h(t('pl_otro_en_lista').replace('{u}', otros.map(y => y.sub + ' (' + filasConRol(l, y, 'pve').map(f => rows.find(r => r.id === f.fid).label).join(', ') + ')').join('; ')))}</span>` : ''}`;
+}
+/** Lo que le da y le aplica al que pega (p) cada uno de los que pueden jugar (si): sus liderazgos (si lo llevás de líder) y
+ *  sus soportes, de Leads & Supports y los derivados (MFF_SOPORTES), los que le llegan (aplicaA) y le sirven (leSirve). */
+function lesDanAlQuePega (p, si) {
+  const out = [];
+  for (const f of si) {
+    if (f.v.cid === p.cid) continue;
+    const so = SOPORTES[f.v.p] || {}, lid = [], sop = [];
+    for (const [k, clave] of TIPOS_SOPORTE) {
+      const x = so[k];
+      if (x && aplicaA(x, p) && leSirve(x, p)) (LIDERAZGOS.includes(k) ? lid : sop).push({ k, clave, x });
+    }
+    if (lid.length || sop.length) out.push({ f, lid, sop });
+  }
+  return out.sort((a, b) => fullLabel(a.f.v).localeCompare(fullLabel(b.f.v)));
+}
+
+/** Mi cuenta › Planificador. */
+function cuentaPlan () {
+  const P = ui.plan, c = casoPlan(), l = listById(c.lista);
+  if (!l) throw new Error('falta la tier list ' + c.lista);
+  const hayRoster = Object.keys(U.ruta).length > 0, ev = evaluarPlan(c);
+  const restr = (r) => r.length ? r.map(x => `<span class="tag dim">${icon(x)}${h(dom(x))}</span>`).join(' ') : `<span class="muted">${h(t('md_no_restr'))}</span>`;
+  const sel = (accion, ops, actual, rotulo) => `<label class="plsel"><span class="muted">${h(rotulo)}</span><select data-a="${accion}">${
+    ops.map(([v, txt]) => `<option value="${h(v)}" ${String(v) === String(actual) ? 'selected' : ''}>${h(txt)}</option>`).join('')}</select></label>`;
+  const nomJefe = (j) => LANG === 'es' ? j.es : j.en;
+  // Paso 1: qué pide.
+  const eleccion = c.modo === 'wb'
+    ? sel('planDif', JEFE_MUNDIAL.dificultades.map(d => [d.id, bi(d)]), P.dif, t('pl_dif'))
+      + sel('planJefe', c.jefes.map(j => [j.id, nomJefe(j)]), c.j.id, t('pl_jefe'))
+      + (c.j.r.length ? sel('planFase', c.j.r.map(([a, b], i) => [i, t('pl_fases').replace('{a}', a).replace('{b}', b)]), Math.min(P.fase, c.j.r.length - 1), t('pl_fase')) : '')
+    : sel('planDia', c.dias.map(d => [d, t('pl_dia_op').replace('{d}', d).replace('{r}', ABX.restricciones.filter(r => r.d === d)
+        .map(r => r.m + ': ' + (r.r.map(dom).join(' ') || t('md_no_restr'))).join(' · '))]), P.abDia, t('pl_dia'))
+      + sel('planModo', c.del.map(r => [r.m, r.m]), c.r.m, t('pl_modo'));
+  const pide = c.modo === 'wb' ? `
+      <dl class="plpide"><dt>${h(t('pl_restr'))}</dt><dd>${restr(c.restr)}${c.rango ? '' : ` <span class="muted">${h(t('pl_sin_fases'))}</span>`}</dd>
+        <dt>${h(t('pl_principales'))}</dt><dd>${h(bi(c.d.principal))}</dd>
+        <dt>${h(t('pl_aliados'))}</dt><dd>${h(bi(c.d.aliados))}${c.d.repiten_aliados ? '' : ` <span class="muted">${h(t('pl_no_repiten'))}</span>`}</dd></dl>
+      ${c.d.nota ? `<p class="muted">${h(bi(c.d.nota))}</p>` : ''}
+      ${['normal', 'definitivo'].includes(c.d.id) ? `<p class="muted">${h(t('pl_def_nota'))}</p>` : ''}
+      <p class="muted">${h(bi(JEFE_MUNDIAL.repetir))}</p>
+      ${c.j.consejos.length ? `<details class="usgrupo"><summary>${h(t('pl_consejos').replace('{j}', nomJefe(c.j)))}</summary>
+        <ul class="sopfx">${c.j.consejos.map(x => `<li>${h(bi(x))}</li>`).join('')}</ul></details>` : ''}
+      <div class="fuentes">${fuentesHtml(JEFE_MUNDIAL.f)}</div>`
+    : `<dl class="plpide"><dt>${h(t('pl_restr'))}</dt><dd>${restr(c.restr)}</dd>
+        <dt>${h(t('pl_categoria'))}</dt><dd>${h(t('pl_ab_sin_cat'))}</dd></dl>
+      <p class="muted">${h(t('pl_ab_dia'))}</p><p class="muted">${h(t('pl_ab_repite'))}</p>
+      <div class="fuentes">${fuentesHtml(['tv-abxl', 'juego-guia', 'juego-guia-ko'])}</div>`;
+  // Paso 2 y 3: de tu roster, en el orden elegido.
+  const usar = (f) => `<button class="btn sm" data-a="planUsado" data-cid="${f.v.cid}">${h(t('pl_usado'))}</button>`;
+  const pegaBtn = (f) => { const on = P.pega === f.v.key;
+    return `<button class="btn sm ${on ? 'primary' : ''}" data-a="planPega" data-key="${f.v.key}" aria-pressed="${on}">${h(t(on ? 'pl_pega_si' : 'pl_pega'))}</button>`; };
+  // Una fila de un personaje de tu roster; acc: sus botones (el que pega, solo los que pueden jugar; ya lo usé, los que
+  // pueden entrar).
+  const filaPj = (f, extra, acc) => `<div class="plfila${P.pega === f.v.key ? ' on' : ''}">
+      <div class="plpj">${miniPj(f.v)}<span class="tag dim" title="${h(t('pl_tu_cat'))}">${h(pasoCorto(f.x, f.v))}</span></div>
+      <div class="plinfo">${enListaHtml(l, f.v)}${f.perdido ? ` <span class="aviso">${h(t('ro_uni_perdido_x'))}</span>` : ''}${extra || ''}</div>
+      <div class="placc">${acc || ''}</div></div>`;
+  const pideTxt = (paso, v) => rotuloPaso(TOQUE_DE[paso], v);
+  const falta = (f) => {
+    const ps = pasosRuta(f.v), max = (paso) => ps.some(p => p.id === paso);
+    const partes = [[c.aliados, 'pl_falta_aliado'], [c.principal, 'pl_falta_principal']].filter(([paso]) => paso && !llegaA(f.x, paso))
+      .map(([paso, k]) => max(paso) ? t(k).replace('{p}', pideTxt(paso, f.v)) : t('pl_no_llega').replace('{p}', pideTxt(paso, f.v)).replace('{m}', f.v.t));
+    return `<span class="muted plfalta">${h(partes.join(' · '))}</span>`;
+  };
+  const otroUni = (f) => `<span class="muted">${h(t('pl_con_otro').replace('{u}', f.otros.map(y => y.uid ? y.sub : t('ro_uni_base')).join(', ')))}</span>`;
+  const grupo = (titulo, filas, nota, filaHtml) => filas.length ? `<div class="plgrupo"><h4>${h(titulo)} <span class="cun">${filas.length}</span></h4>
+      ${nota ? `<p class="muted">${h(nota)}</p>` : ''}${filas.map(filaHtml).join('')}</div>` : '';
+  const si = ordenarPlan(ev.si, l), aliados = ordenarPlan(ev.aliados, l);
+  const viejaLista = cmpVersion(leerVersion(l.gameVersion, 'la lista ' + l.id), leerVersion(window.MFF_VERSION.juego, 'los datos')) < 0;
+  const p = P.pega && variant(...P.pega.split('::'));
+  const pegaVigente = p && si.some(f => f.v.key === p.key);
+  const dan = pegaVigente ? lesDanAlQuePega(p, si) : [];
+  const ordenes = ORDENES_PLAN.map(k => `<button class="${P.orden === k ? 'on' : ''}" data-a="planOrden" data-v="${k}">${h(t('pl_orden_' + k))}</button>`).join('');
+  return `<div class="page-head"><div><h1>${h(t('cu_tab_plan'))}</h1><div class="sub">${h(t('pl_note'))}</div></div>
+      <button class="btn" data-a="cuentaTab" data-v="roster">${h(t('cu_tab_roster'))} →</button></div>
+    <p class="plaviso" data-rec="plan-aviso">${h(t('pl_consulta'))}</p>
+    <div class="seg plmodo">${[['wb', 'pl_wb'], ['ab', 'pl_ab']].map(([k, c2]) => `<button class="${P.modo === k ? 'on' : ''}" data-a="planModoJuego" data-v="${k}">${h(t(c2))}</button>`).join('')}</div>
+    <div class="plpasos" data-rec="plan-pasos">
+    <section class="plpaso"><h3><span class="pln">1</span>${h(t('pl_p1'))}</h3>
+      <div class="row plsels">${eleccion}</div>${pide}</section>
+    <section class="plpaso"><h3><span class="pln">2</span>${h(t('pl_p2'))}</h3>
+      ${hayRoster ? `<p class="plcuenta">${h(t(c.modo === 'wb' ? 'pl_cuenta_wb' : 'pl_cuenta_ab').replace('{s}', ev.si.length).replace('{a}', ev.aliados.length)
+          .replace('{f}', ev.falta.length).replace('{o}', ev.otroUni.length).replace('{u}', ev.usados.length))}</p>`
+        : `<div class="empty plvacio"><div>${h(t('pl_sin_roster'))}</div><button class="btn primary" data-a="cuentaTab" data-v="roster">${h(t('pl_ir_roster'))}</button></div>`}
+      <p class="muted">${h(t('pl_no_tenes').replace('{n}', ev.noTenes))}</p>
+      ${grupo(t('pl_g_falta'), ev.falta, t('pl_g_falta_x'), f => filaPj(f, falta(f)))}
+      ${grupo(t('pl_g_otro'), ev.otroUni, t('pl_g_otro_x'), f => filaPj(f, otroUni(f)))}
+      ${ev.usados.length ? `<div class="plgrupo"><h4>${h(t('pl_g_usados'))} <span class="cun">${ev.usados.length}</span></h4><p class="muted">${h(t(c.modo === 'wb' ? 'pl_usados_wb' : 'pl_usados_ab'))}</p>
+        <div class="row">${ev.usados.map(f => `<span class="plusado">${miniPj(f.v)}<button class="btn sm" data-a="planDevolver" data-cid="${f.v.cid}">${h(t('pl_devolver'))}</button></span>`).join('')}</div></div>` : ''}
+    </section>
+    <section class="plpaso"><h3><span class="pln">3</span>${h(t('pl_p3'))}</h3>
+      <div class="row pllista"><span class="muted">${h(t('pl_orden'))}</span><div class="seg">${ordenes}</div></div>
+      <p class="muted">${h(t('pl_orden_x_' + P.orden))}</p>
+      <p class="pllistacab"><b>${h(listName(l))}</b> <span class="muted">${h(l.author || '')} · ${h(t('tl_game'))} ${h(l.gameVersion)} · ${h(t('tl_published'))} ${h(l.published)}</span>
+        <button class="btn sm" data-a="verLista" data-id="${l.id}">${h(t('md_see_list'))}</button></p>
+      ${viejaLista ? `<p class="aviso">${h(t('pl_lista_vieja').replace('{v}', l.gameVersion).replace('{j}', window.MFF_VERSION.juego))}</p>` : ''}
+      ${c.modo === 'wb' && !['leyenda', 'leyenda+'].includes(c.d.id) ? `<p class="muted">${h(t('pl_lista_otra_dif'))}</p>` : ''}
+      ${si.length || aliados.length ? grupo(t(c.modo === 'wb' ? 'pl_g_si_wb' : 'pl_g_si_ab'), si, '', f => filaPj(f, '', pegaBtn(f) + usar(f)))
+        + grupo(t('pl_g_aliados'), aliados, t('pl_g_aliados_x'), f => filaPj(f, '', usar(f)))
+        : `<p class="muted">${h(t(hayRoster ? 'pl_nadie' : 'pl_sin_roster_corto'))}</p>`}
+      <div class="fuentes">${fuentesHtml(['tv-listas'])}</div>
+    </section>
+    <section class="plpaso"><h3><span class="pln">4</span>${h(t('pl_p4'))}</h3>
+      ${!pegaVigente ? `<p class="muted">${h(t('pl_elegi_pega'))}</p>` : `<p>${h(t('pl_le_dan').replace('{x}', fullLabel(p)))}</p>
+        <p class="muted">${h(t('pl_le_dan_x'))}</p>
+        ${dan.length ? dan.map(({ f, lid, sop }) => { const on = P.con.includes(f.v.key);
+          return `<div class="plda${on ? ' on' : ''}"><div class="plpj">${miniPj(f.v)}<span class="tag dim">${h(pasoCorto(f.x, f.v))}</span>
+              <button class="btn sm ${on ? 'primary' : ''}" data-a="planCon" data-key="${f.v.key}" aria-pressed="${on}" ${!on && P.con.length >= 2 ? 'disabled' : ''}>${h(t(on ? 'pl_con_si' : 'pl_con'))}</button></div>
+            ${lid.length ? `<div class="plda-g"><span class="muted">${h(t('pl_si_lider'))}</span>${lid.map(y => soporteHtml(y.k, y.clave, y.x)).join('')}</div>` : ''}
+            ${sop.length ? `<div class="plda-g"><span class="muted">${h(t('pl_de_apoyo'))}</span>${sop.map(y => soporteHtml(y.k, y.clave, y.x)).join('')}</div>` : ''}
+            <div class="fuentes">${fuentesHtml(fuentesSop(lid.concat(sop).map(y => y.x)))}</div></div>`; }).join('')
+          : `<p class="muted">${h(t('pl_nadie_da'))}</p>`}
+        <div class="row plmesa"><button class="btn primary" data-a="planMesa">${h(t('pl_mesa').replace('{n}', 1 + P.con.length))}</button>
+          <span class="muted">${h(t('pl_mesa_x'))}</span></div>`}
+    </section>
+    </div>`;
+}
+/** Cambia el caso del planificador: suelta al que pega y a los que se suman (pueden no cumplir lo nuevo). */
+function planCambia (cambios) { Object.assign(ui.plan, cambios, { pega: null, con: [] }); }
+/** «Poner en la mesa»: el que pega y los que sumaste, con el modo (y el día, en Batalla de alianza), en lugar de lo que había
+ *  en la mesa (se dice). Primero va uno de los sumados que le da su liderazgo al que pega, si hay (la mesa lo toma de líder;
+ *  se cambia con ↑); si no, el que pega. */
+function planEnMesa () {
+  const P = ui.plan, c = casoPlan(), m = U.mesa, p = variant(...P.pega.split('::'));
+  const dan = lesDanAlQuePega(p, evaluarPlan(c).si);
+  const lider = P.con.find(k => dan.some(x => x.f.v.key === k && x.lid.length));
+  const orden = lider ? [lider, p.key, ...P.con.filter(k => k !== lider)] : [p.key, ...P.con];
+  const antes = m.members.length;
+  m.members = []; m.name = ''; m.modeId = c.modeId;
+  if (c.modo === 'ab') { m.abxDia = c.r.d; m.abxDif = c.r.m; }
+  for (const k of orden) ponerEnMesa(k);
+  ui.avisoMesa = { txt: t(antes ? 'pl_mesa_reemplaza' : 'pl_mesa_puesto').replace('{n}', antes), ok: true };
 }
 /** Los personajes que creaste a mano y los del juego que editaste, con el botón para crear otro. */
 function cuentaPropios () {
@@ -9004,6 +9435,22 @@ document.addEventListener('click', (e) => {
     // «Mi cuenta» de la barra abre siempre su resumen; a cada apartado se va desde ahí o desde la sub-barra.
     case 'goCuenta': ui.view = 'cuenta'; ui.cuentaTab = 'resumen'; render(); window.scrollTo(0, 0); break;
     case 'cuentaTab': ui.view = 'cuenta'; ui.cuentaTab = d.v; render(); window.scrollTo(0, 0); break;
+    // Mi cuenta › Tu roster: un toque marca la categoría (el paso de la hoja de ruta); el de la que ya tiene no cambia un paso
+    // intermedio (Nv. 70) que se marcó en la ficha; «No» lo saca de tu roster, con su uniforme.
+    case 'rosPaso': if (!d.v) { delete U.ruta[d.cid]; delete U.uniforme[d.cid]; }
+      else if (TOQUE_DE[U.ruta[d.cid]] !== d.v) U.ruta[d.cid] = d.v;
+      ui.focusSearch = false; saveUser(); render(); break;
+    case 'rosTen': ui.rosTen = d.v; ui.focusSearch = false; render(); break;
+    // El planificador: lo que cambia el caso (modo, dificultad, jefe, fases, día) suelta al que pega y a los que se suman.
+    case 'irPlan': ui.view = 'cuenta'; ui.cuentaTab = 'plan'; if (ui.plan.modo !== d.v) planCambia({ modo: d.v }); render(); window.scrollTo(0, 0); break;
+    case 'planModoJuego': planCambia({ modo: d.v }); render(); break;
+    case 'planOrden': ui.plan.orden = d.v; render(); break;
+    case 'planPega': ui.plan.pega = ui.plan.pega === d.key ? null : d.key; ui.plan.con = []; render(); break;
+    case 'planCon': { const P = ui.plan; P.con = P.con.includes(d.key) ? P.con.filter(k => k !== d.key) : P.con.concat(d.key); render(); break; }
+    case 'planUsado': { const P = ui.plan, cid = d.cid, sale = (k) => k.split('::')[0] === cid;
+      P.usados[P.modo].push(cid); if (P.pega && sale(P.pega)) { P.pega = null; P.con = []; } P.con = P.con.filter(k => !sale(k)); render(); break; }
+    case 'planDevolver': ui.plan.usados[ui.plan.modo] = ui.plan.usados[ui.plan.modo].filter(c => c !== d.cid); render(); break;
+    case 'planMesa': planEnMesa(); saveUser(); render(); break;
     case 'mesaToggle': U.prefs.mesa = !U.prefs.mesa; commit(); break;
     // Abre la ficha de un personaje en una pestaña (desde Mi cuenta: su progreso, sus skills marcadas).
     case 'abrirEn': ui.fichaTab = d.tab; abrirFicha(d.cid, d.uid || null); break;
@@ -9270,6 +9717,12 @@ document.addEventListener('change', (e) => {
   if (a === 'restr') { U.prefs.restr = el.value; ui.page = 0; commit(); return; }
   // Un modo más chico que el equipo no le saca a nadie: la mesa dice cuántos sobran y no guarda hasta que se quiten.
   if (a === 'teamLider') { U.teams.find(x => x.id === d.id).lider = el.value; ui.avisoLideres = null; commit(); return; }
+  if (a === 'rosUni') { if (el.value) U.uniforme[d.cid] = el.value; else delete U.uniforme[d.cid]; saveUser(); render(); return; }
+  if (a === 'planDif') { planCambia({ dif: el.value, jefe: null, fase: 0 }); render(); return; }
+  if (a === 'planJefe') { planCambia({ jefe: el.value, fase: 0 }); render(); return; }
+  if (a === 'planFase') { planCambia({ fase: parseInt(el.value, 10) }); render(); return; }
+  if (a === 'planDia') { planCambia({ abDia: parseInt(el.value, 10), abModo: '' }); render(); return; }
+  if (a === 'planModo') { planCambia({ abModo: el.value }); render(); return; }
   if (a === 'mesaModo') { U.mesa.modeId = el.value; ui.avisoMesa = null; saveUser(); render(); return; }
   if (a === 'mesaDia') { U.mesa.abxDia = parseInt(el.value, 10); U.mesa.abxDif = ''; saveUser(); render(); return; }
   if (a === 'mesaDif') { U.mesa.abxDif = el.value; saveUser(); render(); return; }
@@ -9446,6 +9899,11 @@ function iniciarDatos () {
     if (!m) return;
     for (const id of new Set((m.por_patron ? Object.values(m.por_patron) : [m]).flatMap(y => y.efectos))) GL_DE[id].etiquetas.push(i);
   });
+  // Tu roster y el planificador leen la categoría de cada paso de la hoja de ruta de la guía (NIVEL_PASO).
+  for (const p of GUIA.progresion.pasos) if (!(p.id in NIVEL_PASO)) throw new Error('paso de la hoja de ruta sin categoría (NIVEL_PASO): ' + p.id);
+  for (const id of PASOS_TOQUE) indicePaso(id);
+  if (!JEFE_MUNDIAL) throw new Error('los datos no traen Jefe mundial (MFF_JEFE_MUNDIAL)');
+  for (const d of JEFE_MUNDIAL.dificultades) { indicePaso(d.principal.paso); indicePaso(d.aliados.paso); }
   LISTAS_PVP = Object.keys(ROLES_LISTAS.pvp);
   LISTAS_PVE = Object.keys(ROLES_LISTAS.pve);
   STRIKER_SET = Object.fromEntries(Object.entries(STRIKERS).map(([c, filas]) => [c, new Set(filas.map(f => f[0]))]));

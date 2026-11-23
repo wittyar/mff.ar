@@ -1442,3 +1442,55 @@ button.tlchip,button.tlchip:active{cursor:pointer}
   .objpiedra > :nth-child(n+3){grid-column:2}
   .emniv{grid-template-columns:repeat(5,minmax(0,1fr))}
 }
+/* Mi cuenta › Tu roster y Planificador (1.0.59) */
+.rosbarra{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
+.rosbarra .search{flex:1 1 220px;min-width:0}
+.roslista{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface)}
+.rosfila{display:grid;grid-template-columns:minmax(0,260px) auto minmax(0,1fr);gap:10px;align-items:center;padding:6px 10px;border-top:1px solid var(--line)}
+.rosfila:first-child{border-top:0}
+.rosfila.tengo{box-shadow:inset 3px 0 0 var(--cuenta)}
+.rospj{display:flex;align-items:center;gap:6px;min-width:0}
+.rospj .minipj{min-width:0;overflow:hidden}
+.rospasos button{padding:6px 10px;min-width:38px}
+.rospasos button.on{background:var(--cuenta-soft);color:var(--cuenta)}
+.rosuni{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
+.rosuni select{max-width:100%}
+.plaviso{border-left:3px solid var(--cuenta);background:var(--cuenta-soft);padding:8px 12px;border-radius:4px;font-size:13.5px;margin:0 0 12px}
+.plmodo{margin-bottom:12px}
+.plpasos{display:flex;flex-direction:column;gap:14px}
+.plpaso{border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);padding:12px 14px}
+.plpaso > h3{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+.pln{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--cuenta-soft);
+  color:var(--cuenta);font:600 12px var(--font-mono);flex:none}
+.plsels{gap:10px;margin-bottom:10px}
+.plsel{display:flex;flex-direction:column;gap:3px;font-size:12px;min-width:0}
+.plsel select{max-width:100%}
+.plpide{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0 0 8px;font-size:13.5px}
+.plpide dt{color:var(--text-3);font:600 11px var(--font-mono);text-transform:uppercase;letter-spacing:.05em;padding-top:3px}
+.plpide dd{margin:0}
+.plpaso > p{margin:6px 0}
+.plcuenta{font-weight:600}
+.plgrupo{margin-top:12px}
+.plgrupo > h4{margin:0 0 6px}
+.plfila,.plda{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+.plfila.on,.plda.on{background:var(--cuenta-soft)}
+.plpj{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}
+.plinfo{min-width:0;font-size:12.5px}
+.placc{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.plda{grid-template-columns:minmax(0,280px) minmax(0,1fr)}
+.plda > .fuentes{grid-column:1 / -1}
+.plda-g{display:flex;flex-direction:column;gap:4px;min-width:0}
+.plda-g + .plda-g{grid-column:2}
+.plusado{display:inline-flex;align-items:center;gap:4px;margin:0 8px 6px 0}
+.pllista{gap:8px;margin-bottom:6px}
+.pllistacab{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.plmesa{gap:10px;margin-top:12px}
+.plvacio{padding:22px 16px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.plenlace .btn{margin-top:4px}
+@media (max-width:760px){
+  .rosfila{grid-template-columns:minmax(0,1fr);gap:6px}
+  .rospasos{max-width:100%;overflow-x:auto}
+  .plfila,.plda{grid-template-columns:minmax(0,1fr)}
+  .placc{justify-content:flex-start}
+  .plda-g + .plda-g{grid-column:auto}
+}
