@@ -8578,7 +8578,7 @@ function cuentaPlan () {
       <button class="btn" data-a="cuentaTab" data-v="roster">${h(t('cu_tab_roster'))} →</button></div>
     <p class="plaviso" data-rec="plan-aviso">${h(t('pl_consulta'))}</p>
     <div class="seg plmodo">${[['wb', 'pl_wb'], ['ab', 'pl_ab']].map(([k, c2]) => `<button class="${P.modo === k ? 'on' : ''}" data-a="planModoJuego" data-v="${k}">${h(t(c2))}</button>`).join('')}</div>
-    <div class="plpasos" data-rec="plan-pasos">
+    <div class="plpasos">
     <section class="plpaso"><h3><span class="pln">1</span>${h(t('pl_p1'))}</h3>
       <div class="row plsels">${eleccion}</div>${pide}</section>
     <section class="plpaso"><h3><span class="pln">2</span>${h(t('pl_p2'))}</h3>
@@ -9185,7 +9185,7 @@ const RECORRIDO = [
     { an: '.cutabs', k: 'rc_cu_tabs', ui: { cuentaTab: 'resumen' } },
     { an: '.cuhub .cutile', k: 'rc_cu_resumen', ui: { cuentaTab: 'resumen' } },
     { an: '.roslista .rosfila', k: 'rc_cu_roster', ui: { cuentaTab: 'roster' } },
-    { an: '[data-rec="plan-pasos"]', k: 'rc_cu_plan', ui: { cuentaTab: 'plan' } },
+    { an: '.plpasos > .plpaso', k: 'rc_cu_plan', ui: { cuentaTab: 'plan' } },
     { an: 'main .page-head', k: 'rc_cu_equipos', ui: { view: 'teams' } },
     { an: 'main .page-head', k: 'rc_cu_progreso', ui: { cuentaTab: 'progreso' } },
     { an: 'main .page-head', k: 'rc_cu_propios', ui: { cuentaTab: 'propios' } },
