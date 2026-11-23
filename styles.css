@@ -1385,6 +1385,15 @@ button.tlchip,button.tlchip:active{cursor:pointer}
 .crcobertura h4{margin:10px 0 6px;color:var(--text-2);display:flex;align-items:center;gap:6px}
 .crcobertura .cutabla{max-width:520px}
 .crcobertura ul{margin:0;padding-left:18px;font-size:13px}
+.crnomen{font-size:11px;margin-top:-3px}
+.crcal button{min-width:28px}
+.crdif{margin:0;font-size:12px;color:var(--text-2);display:flex;gap:6px;align-items:baseline}
+.crcol{margin:0;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline}
+.crobt summary{cursor:pointer;font-size:12px;color:var(--text-2)}
+.crobt ul{margin:4px 0 0;padding-left:18px;font-size:12px;color:var(--text-2)}
+.crfuente{margin:0;font-size:11px;color:var(--text-3);display:flex;flex-wrap:wrap;gap:4px;align-items:baseline}
+.crcollista{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 14px}
+.crfalta{margin:4px 0}
 .cutabla .num{text-align:right;font-variant-numeric:tabular-nums}
 @media (max-width:600px){
   .crcard{grid-template-columns:56px minmax(0,1fr);gap:9px}
