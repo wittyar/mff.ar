@@ -2265,7 +2265,7 @@ let ui = {
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
   glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
-  guiaTab: GUIA_CORTA.temas[0].id,   // el tema de la Guía que se lee (MFF_GUIA_CORTA)
+  guiaTab: null,                     // el tema de la Guía que se lee (MFF_GUIA_CORTA; el primero lo pone iniciarDatos)
   // Cromos: búsqueda por nombre, tipo ('', un tipo o 'sin'), premium ('', 'si' o 'no'), colección ('', su id o 'sin'), el
   // stat que se busca y si fijo, posible o cualquiera, la activación ('', 'con' o cuándo), la calidad con que se ven las
   // fijas (1 a 7), la vista (los cromos o las colecciones) y el aviso de un mazo lleno
@@ -5929,7 +5929,6 @@ function renderGlosario () {
 // valida scripts/guia_corta.py). Cada enlace (guiaIr) lleva a lo que la app ya tiene, en una entrada nueva del historial:
 // «Atrás» vuelve a la Guía, a la misma altura.
 // ============================================================================
-const GUIA_TABS = GUIA_CORTA.temas.map(x => x.id);
 function guiaCabHtml () {
   return subBarraHtml(t('nav_guia'), GUIA_CORTA.temas.map(x => ({ k: x.id, txt: bi(x), attrs: `data-a="guiaTab" data-v="${x.id}"` })), ui.guiaTab, true);
 }
@@ -9336,10 +9335,10 @@ const RECORRIDO = [
     { an: '[data-rec="hi-pj"]', k: 'rc_hi_pj' },
     { an: '[data-rec="hi-tipo"]', k: 'rc_hi_tipo' },
     { an: '.hiversion > summary', k: 'rc_hi_version' }] },
-  { k: 'guia', ir: () => ({ view: 'guia' }), pasos: [
-    { an: '.cucab.juego .cutabs', k: 'rc_guia_temas', ui: { guiaTab: GUIA_TABS[0] } },
-    { an: '[data-rec="guia-marcas"]', k: 'rc_guia_marcas', ui: { guiaTab: GUIA_TABS[0] } },
-    { an: '.guiair', k: 'rc_guia_ir', ui: { guiaTab: GUIA_TABS[1] } }] },
+  { k: 'guia', ir: () => ({ view: 'guia', guiaTab: GUIA_CORTA.temas[0].id }), pasos: [
+    { an: '.cucab.juego .cutabs', k: 'rc_guia_temas' },
+    { an: '[data-rec="guia-marcas"]', k: 'rc_guia_marcas' },
+    { an: '.guiair', k: 'rc_guia_ir' }] },
   { k: 'cuenta', ir: () => ({ view: 'cuenta' }), pasos: [
     { an: '.cutabs', k: 'rc_cu_tabs', ui: { cuentaTab: 'resumen' } },
     { an: '.cuhub .cutile', k: 'rc_cu_resumen', ui: { cuentaTab: 'resumen' } },
@@ -9994,6 +9993,7 @@ function fallaArranque (titulo, detalle) {
 /** Lo que se deriva de data.js. Lo llama arrancar() cuando ya confirmó que los datos son del
  *  formato de esta versión. */
 function iniciarDatos () {
+  ui.guiaTab = GUIA_CORTA.temas[0].id;
   PIDE = {};
   for (const [stat, x] of Object.entries(CATALOGO.soporte)) { const q = reglaStat(stat, x.sirve); if (q) PIDE[stat] = q; }
   for (const [p, so] of Object.entries(SOPORTES)) for (const [k] of TIPOS_SOPORTE) {
