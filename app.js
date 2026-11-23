@@ -6999,10 +6999,12 @@ function statNom (k) { const s = GUIA.stats[k]; return s ? bi(s) : k; }
 function statHtml (k) { return h(statNom(k)) + dudaHtml('stat', k); }
 /** Chips con las fuentes citadas: con su enlace, o sin él si la fuente no tiene dirección (la
  *  guía dentro del juego). */
+/** Las fuentes, cada una con su nombre (o, si tiene, su nombre corto, con el completo al pasar el mouse) y su enlace. */
 function fuentesHtml (claves) {
   return (claves || []).map(k => { const f = GUIA.fuentes[k]; if (!f) throw new Error('fuente desconocida: ' + k);
-    return f.url ? `<a class="fuente" href="${h(f.url)}" target="_blank" rel="noopener" title="${h(t('md_source'))}">${h(f.nombre)}</a>`
-                 : `<span class="fuente" title="${h(t('md_source'))}">${h(f.nombre)}</span>`; }).join('');
+    const tit = h(f.corto ? f.nombre : t('md_source')), txt = h(f.corto || f.nombre);
+    return f.url ? `<a class="fuente" href="${h(f.url)}" target="_blank" rel="noopener" title="${tit}">${txt}</a>`
+                 : `<span class="fuente" title="${tit}">${txt}</span>`; }).join('');
 }
 /** Retrato de la API -> variante del roster (base o uniforme). */
 let _PORT = null;
