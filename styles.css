@@ -1496,3 +1496,19 @@ button.tlchip,button.tlchip:active{cursor:pointer}
   .plpide{grid-template-columns:minmax(0,1fr);gap:2px}
   .plpide dd{margin-bottom:6px}
 }
+
+/* Guía (1.0.59): un tema por pestaña (la sub-barra de Objetos) con sus bloques de puntos (.gllista, como el Glosario), a un
+   ancho de lectura. Cada parte empieza con su marca (dato, criterio, mffguide, ≠, la app) y termina con sus fuentes; los
+   enlaces, abajo. */
+.guia{max-width:780px}
+.guiaitem{padding:10px 14px;border-top:1px solid var(--line);scroll-margin-top:calc(var(--nav-h) + 12px)}
+.guiaitem:first-child{border-top:0}
+.guiatit{font-weight:600;margin-bottom:2px}
+.guiap{margin:5px 0;font-size:13.5px;line-height:1.55}
+.guiap .tag{margin-right:3px;vertical-align:1px;white-space:normal}
+.guiap .fuente{margin-left:3px;display:inline-block}
+.tag.guiacrit{color:var(--accent)}
+.guiaol{margin:4px 0 2px;padding-left:22px}
+.guiaol li{margin:2px 0}
+.guiair{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:6px;font-size:13px}
+.guiair .objlink{text-align:left}

@@ -39,6 +39,7 @@ const DUDAS          = window.MFF_DUDAS;          // lo que un idioma del juego 
 const ARTES          = window.MFF_ARTEFACTOS || []; // artefactos exclusivos, por retrato base
 const CROMOS         = window.MFF_CROMOS;         // cromos de cómic (scripts/cromos.py, #35)
 const JEFE_MUNDIAL   = window.MFF_JEFE_MUNDIAL;   // jefes, restricciones por fase y requisitos de Jefe mundial (scripts/jefe_mundial.py)
+const GUIA_CORTA     = window.MFF_GUIA_CORTA;     // la Guía: progreso, rutina y cómo decidir (scripts/guia_corta.py)
 // El juego tiene dos mazos de cromos de 5 lugares, y un mismo cromo va una sola vez en cada uno (la guía del juego, «Equipar
 // cromo de cómic»: «Only one of a card type can be equipped at a time»; en coreano, «같은 종류의 카드는 1개만»).
 const MAZOS = 2, LUGARES_MAZO = 5, GRADOS_CROMO = ['3', '4', '5', '6'];
@@ -518,6 +519,22 @@ const T = {
   nav_settings:      { es:'Ajustes',             en:'Settings' },
   nav_glossary:      { es:'Glosario',            en:'Glossary' },
   nav_objetos:       { es:'Objetos',             en:'Items' },
+  nav_guia:          { es:'Guía',                en:'Guide' },
+  // La Guía (GUÍA, MFF_GUIA_CORTA): qué es cada parte de un punto y los enlaces.
+  gu_marcas:         { es:'Para leer entera en pocos minutos. Cada punto dice de dónde sale: «Dato», del juego, con su fuente; «Criterio», una recomendación, y de quién; «mffguide · sin confirmar», un hecho que da solo esa guía de un jugador; «≠», dos fuentes que no coinciden, y van las dos. Los botones llevan a donde la app lo tiene; «Atrás» vuelve acá.',
+                       en:'Meant to be read in full in a few minutes. Each point says where it comes from: «Fact», from the game, with its source; «View», a recommendation, and whose; «mffguide · unconfirmed», a fact only that player-made guide gives; «≠», two sources that disagree, and both are given. The buttons take you to where the app has it; «Back» returns here.' },
+  gu_k_dato:         { es:'Dato',                en:'Fact' },
+  gu_k_dato_t:       { es:'Un dato del juego, con su fuente', en:'A fact about the game, with its source' },
+  gu_k_criterio:     { es:'Criterio de {x}',     en:'{x}\'s view' },
+  gu_k_criterio_t:   { es:'Una recomendación, no un dato del juego', en:'A recommendation, not a fact about the game' },
+  gu_de_thanosvibs:  { es:'thanosvibs',          en:'thanosvibs' },
+  gu_de_app:         { es:'la app',              en:'the app' },
+  gu_k_mg:           { es:'mffguide · sin confirmar', en:'mffguide · unconfirmed' },
+  gu_k_mg_t:         { es:'Lo da solo mffguide.fyi, una guía hecha por un jugador que dice sacarlo de los archivos del juego: ninguna otra fuente lo confirma', en:'Only mffguide.fyi gives it, a player-made guide that says it comes from the game files: no other source confirms it' },
+  gu_k_dif:          { es:'≠ no coinciden',      en:'≠ sources differ' },
+  gu_k_dif_t:        { es:'Dos fuentes dicen cosas distintas: van las dos', en:'Two sources say different things: both are given' },
+  gu_k_app:          { es:'En la app',           en:'In the app' },
+  gu_cap:            { es:'captura {c}',         en:'screenshot {c}' },
   ob_tab_ctp:        { es:'C.T.P.',              en:'C.T.P.' },
   ob_tab_iso:        { es:'ISO-8',               en:'ISO-8' },
   ob_tab_odin:       { es:'Bendiciones de Odín', en:"Odin's Blessings" },
@@ -972,8 +989,8 @@ const T = {
                        en:'Pick an area: the tour takes you there and shows you what to look at. The full tour goes through all of them, in order. When you leave, the app goes back to where you were.' },
   rc_completo:       { es:'Recorrido completo',  en:'Full tour' },
   rc_bienv_t:        { es:'Esto es MFF.ar',      en:'This is MFF.ar' },
-  rc_bienv_x:        { es:'Un comparador de los personajes de MARVEL Future Fight: qué hace cada uno con sus skills, cómo armarlo, con quién rinde, y lo que vos anotás de tu cuenta. El recorrido te muestra cada parte en pocos pasos. Lo podés ver cuando quieras con el botón «Recorrido» de arriba.',
-                       en:'A comparison tool for MARVEL Future Fight characters: what each one does with its skills, how to build it, who it works with, and what you note down about your account. The tour shows you each part in a few steps. You can see it any time with the «Tour» button at the top.' },
+  rc_bienv_x:        { es:'Un comparador de los personajes de MARVEL Future Fight: qué hace cada uno con sus skills, cómo armarlo, con quién rinde, y lo que vos anotás de tu cuenta. El recorrido te muestra cada parte en pocos pasos. Lo podés ver cuando quieras con el botón «Recorrido» de arriba. Si recién empezás con el juego o volvés después de un tiempo, la sección «Guía» cuenta en pocos minutos cómo progresa un personaje y qué jugar cada día.',
+                       en:'A comparison tool for MARVEL Future Fight characters: what each one does with its skills, how to build it, who it works with, and what you note down about your account. The tour shows you each part in a few steps. You can see it any time with the «Tour» button at the top. If you are new to the game or coming back after a while, the «Guide» section explains in a few minutes how a character grows and what to play each day.' },
   rc_bienv_si:       { es:'Empezar el recorrido', en:'Start the tour' },
   rc_bienv_no:       { es:'Ahora no',            en:'Not now' },
   rc_area_barra:     { es:'La barra de arriba',  en:'The top bar' },
@@ -985,12 +1002,13 @@ const T = {
   rc_area_objetos:   { es:'Objetos',             en:'Items' },
   rc_area_glosario:  { es:'Glosario',            en:'Glossary' },
   rc_area_historico: { es:'Histórico',           en:'History' },
+  rc_area_guia:      { es:'Guía',                en:'Guide' },
   rc_area_cuenta:    { es:'Mi cuenta',           en:'My account' },
   rc_area_mesa:      { es:'Mesa',                en:'Desk' },
   // Los pasos (RECORRIDO): el título (_t) y qué mirar ahí y cómo llegar (_x).
   rc_barra_juego_t:  { es:'Las secciones del juego', en:'The game sections' },
-  rc_barra_juego_x:  { es:'Todo lo que sale de los datos del juego: el Roster con todos los personajes, las Tier lists, los Modos, los Objetos (C.T.P., ISO-8, bendiciones de Odín, emblemas, J.A.R.V.I.S. y cromos), el Glosario y el Histórico. Tocá una para ir; la que estás viendo queda marcada.',
-                       en:'Everything that comes from the game data: the Roster with every character, Tier lists, Modes, Items (C.T.P., ISO-8, Odin\'s Blessings, emblems, J.A.R.V.I.S. and cards), the Glossary and the History. Tap one to go there; the one you are on stays highlighted.' },
+  rc_barra_juego_x:  { es:'Todo lo que sale de los datos del juego: el Roster con todos los personajes, las Tier lists, los Modos, los Objetos (C.T.P., ISO-8, bendiciones de Odín, emblemas, J.A.R.V.I.S. y cromos), el Glosario, el Histórico y la Guía (cómo progresa un personaje y qué jugar cada día, con sus fuentes). Tocá una para ir; la que estás viendo queda marcada.',
+                       en:'Everything that comes from the game data: the Roster with every character, Tier lists, Modes, Items (C.T.P., ISO-8, Odin\'s Blessings, emblems, J.A.R.V.I.S. and cards), the Glossary, the History and the Guide (how a character grows and what to play each day, with its sources). Tap one to go there; the one you are on stays highlighted.' },
   rc_barra_cuenta_t: { es:'Lo tuyo, aparte',     en:'Your things, apart' },
   rc_barra_cuenta_x: { es:'«Mi cuenta» junta lo que anotás vos (tus equipos, tu progreso, tus mazos de cromos), con su propio color para no confundirlo con lo del juego. «Mesa» abre al costado la mesa donde se arma un equipo; el número dice cuántos tiene y cuántos entran.',
                        en:'«My account» gathers what you note down yourself (your teams, your progress, your card decks), in its own color so it is not mixed up with the game. «Desk» opens, on the side, the desk where a team is built; the number says how many it has and how many fit.' },
@@ -1122,6 +1140,15 @@ const T = {
   rc_hi_version_t:   { es:'Cada versión',        en:'Each version' },
   rc_hi_version_x:   { es:'La más nueva arriba: tocala para abrirla o cerrarla. Adentro, los links a las notas oficiales y una fila por personaje.',
                        en:'The newest on top: tap it to open or close it. Inside, the links to the official notes and one row per character.' },
+  rc_guia_temas_t:   { es:'Tres temas cortos',   en:'Three short topics' },
+  rc_guia_temas_x:   { es:'Cómo progresa un personaje (los pasos, cómo armarlo y los topes), qué jugar cada día y cada semana, y cómo decidir con la app. Cada pestaña se lee entera en pocos minutos.',
+                       en:'How a character grows (the steps, how to build it and the caps), what to play each day and each week, and how to decide with the app. Each tab can be read in full in a few minutes.' },
+  rc_guia_marcas_t:  { es:'De dónde sale cada cosa', en:'Where each thing comes from' },
+  rc_guia_marcas_x:  { es:'Cada punto dice si es un dato del juego (con su fuente: tocala para verla), el criterio de alguien, algo que solo da una guía de un jugador sin confirmar, o dos fuentes que no coinciden.',
+                       en:'Each point says whether it is a fact about the game (with its source: tap it to see it), someone\'s view, something only a player-made guide gives, unconfirmed, or two sources that disagree.' },
+  rc_guia_ir_t:      { es:'Y adónde ir',         en:'And where to go' },
+  rc_guia_ir_x:      { es:'Los botones de cada punto llevan a donde la app lo tiene: el modo, el objeto, tu roster o el planificador. «Atrás» (Alt+← o el botón de volver del mouse) vuelve a la Guía.',
+                       en:'Each point\'s buttons take you to where the app has it: the mode, the item, your roster or the planner. «Back» (Alt+← or the mouse back button) returns to the Guide.' },
   rc_cu_tabs_t:      { es:'Mi cuenta',           en:'My account' },
   rc_cu_tabs_x:      { es:'Todo lo que anotás vos, separado de los datos del juego. Se guarda en tu computadora y ninguna actualización lo pisa. Cada pestaña es una parte; el número dice cuánto tenés.',
                        en:'Everything you note down yourself, apart from the game data. It is saved on your computer and no update overwrites it. Each tab is one part; the number says how much you have.' },
@@ -2238,6 +2265,7 @@ let ui = {
   modoFiltro: 'todos', modoAbierto: null, abxDia: 1,
   glBusca: '',                       // búsqueda del glosario
   glTab: 'juego',                    // pestaña del glosario: 'juego' (sus términos) o 'app' (el catálogo de efectos)
+  guiaTab: GUIA_CORTA.temas[0].id,   // el tema de la Guía que se lee (MFF_GUIA_CORTA)
   // Cromos: búsqueda por nombre, tipo ('', un tipo o 'sin'), premium ('', 'si' o 'no'), colección ('', su id o 'sin'), el
   // stat que se busca y si fijo, posible o cualquiera, la activación ('', 'con' o cuándo), la calidad con que se ven las
   // fijas (1 a 7), la vista (los cromos o las colecciones) y el aviso de un mazo lleno
@@ -5781,6 +5809,20 @@ function otrosNombresGl (x) { return [LANG === 'es' && x.en !== x.es ? x.en : ''
 function enlaceGl (destino, texto, titulo) {
   return `<a href="#${destino}" class="tag ghost" data-a="irGlos" data-v="${destino}"${titulo ? ` title="${h(titulo)}"` : ''}>${h(texto)}</a>`;
 }
+/** Con el Glosario a la vista, lleva a una entrada (gl-<término> o ef-<efecto>): su pestaña, los plegados que la contienen
+ *  abiertos y la marca un momento. Si la búsqueda la deja afuera, se vacía para que aparezca (sin volver a poner el foco en
+ *  la búsqueda: en el celular abriría el teclado). */
+function irAGlosario (id) {
+  const tab = id.startsWith('ef-') ? 'app' : 'juego';
+  if (ui.glTab !== tab) { ui.glTab = tab; render(); }
+  if (!document.getElementById(id)) { ui.glBusca = ''; ui.focusSearch = false; render(); }
+  const destino = document.getElementById(id);
+  if (!destino) throw new Error('el Glosario no tiene ' + id);
+  for (let x = destino; x; x = x.parentElement.closest('details')) if (x.tagName === 'DETAILS') x.open = true;
+  destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  destino.classList.add('glfoco');
+  setTimeout(() => destino.classList.remove('glfoco'), 1600);
+}
 /** Un término del juego, plegado (#24): a la vista sus nombres, lo que dice en una línea y sus marcas (el inglés
  *  difiere, lo da un C.T.P.); al abrirlo, el texto entero, lo que el inglés traduce distinto, qué C.T.P. lo da y de
  *  qué opción sale, la nota y a qué efectos del catálogo corresponde. */
@@ -5874,6 +5916,115 @@ function renderGlosario () {
           ${g.pve || g.pvp ? `<details class="ayuda"><summary title="${h(t('ay_label'))}" aria-label="${h(t('ay_label'))}">?</summary><div class="ayudatx">${lecturasAn(g.pve, g.pvp)}</div></details>` : ''}</div>
         <div class="gllista">${efectos.filter(e => e.grupo === g.id).map(efectoGl).join('')}</div>
       </div>`).join('')}</div>` : ''}`}`;
+}
+
+// ============================================================================
+// GUÍA (1.0.59; Ezequiel, 23 de noviembre de 2026, aprobó «Guía corta de progreso y rutina dentro de la app, enlazada a
+// las secciones que ya existen, en vez de un texto de un millón de caracteres»)
+// Para quien abre la app sin conocer el juego a fondo o vuelve después de un tiempo: un tema por pestaña (la sub-barra de
+// Objetos, que hace de índice), cada uno con sus bloques de puntos. Cada parte de un punto dice qué es (k): un dato (con
+// sus fuentes), el criterio de alguien (thanosvibs o la app), un hecho que solo da mffguide.fyi (sin confirmar), dos
+// fuentes que no coinciden (≠, con las dos) o qué hace la app; el orden de armado y los topes salen de MFF_GUIA (los de la
+// hoja de ruta y la calculadora de la ficha). Los textos son de MFF_GUIA_CORTA (scripts/contenido/guia_corta.json, que
+// valida scripts/guia_corta.py). Cada enlace (guiaIr) lleva a lo que la app ya tiene, en una entrada nueva del historial:
+// «Atrás» vuelve a la Guía, a la misma altura.
+// ============================================================================
+const GUIA_TABS = GUIA_CORTA.temas.map(x => x.id);
+function guiaCabHtml () {
+  return subBarraHtml(t('nav_guia'), GUIA_CORTA.temas.map(x => ({ k: x.id, txt: bi(x), attrs: `data-a="guiaTab" data-v="${x.id}"` })), ui.guiaTab, true);
+}
+function renderGuia () {
+  const tm = GUIA_CORTA.temas.find(x => x.id === ui.guiaTab);
+  if (!tm) throw new Error('tema de la Guía desconocido: ' + ui.guiaTab);
+  return `<div class="guia">
+    <div class="page-head"><div><h1>${h(bi(tm))}</h1></div></div>
+    <p class="glaviso" data-rec="guia-marcas">${h(t('gu_marcas'))}</p>
+    ${tm.bloques.map(b => `<div class="section guiabloque" id="gu-${b.id}"><h3>${h(bi(b))}</h3>
+      <div class="gllista">${b.items.map(guiaItemHtml).join('')}</div></div>`).join('')}</div>`;
+}
+function modoDeGuia (id) {
+  const m = MODOS.find(x => x.id === id);
+  if (!m) throw new Error('la Guía nombra un modo que no está: ' + id);
+  return m;
+}
+/** Un punto: su título (el del modo, si es de un modo), sus partes y sus enlaces (el del modo primero). */
+function guiaItemHtml (it) {
+  const ir = (it.modo ? [{ a: 'modo', id: it.modo }] : []).concat(it.ir || []);
+  return `<div class="guiaitem" id="gu-${it.id}"><div class="guiatit">${h(it.modo ? nombreModo(modoDeGuia(it.modo)) : bi(it))}</div>
+    ${it.partes.map(guiaParteHtml).join('')}
+    ${ir.length ? `<div class="guiair">${ir.map(guiaEnlaceHtml).join('')}</div>` : ''}</div>`;
+}
+/** La marca de cada tipo de parte: qué es y, en un criterio, de quién. */
+function guiaMarca (k, de) {
+  if (k === 'dato') return `<span class="tag dim" title="${h(t('gu_k_dato_t'))}">${h(t('gu_k_dato'))}</span>`;
+  if (k === 'criterio') return `<span class="tag ghost guiacrit" title="${h(t('gu_k_criterio_t'))}">${h(t('gu_k_criterio').replace('{x}', t('gu_de_' + de)))}</span>`;
+  if (k === 'mg') return `<span class="tag dim propio" title="${h(t('gu_k_mg_t'))}">${h(t('gu_k_mg'))}</span>`;
+  if (k === 'dif') return `<span class="tag solid dudatag" title="${h(t('gu_k_dif_t'))}">${h(t('gu_k_dif'))}</span>`;
+  if (k === 'app') return `<span class="tag dim">${h(t('gu_k_app'))}</span>`;
+  throw new Error('parte de la Guía de un tipo desconocido: ' + k);
+}
+function guiaParteHtml (p) {
+  if (p.k === 'orden') {
+    const O = GUIA.orden_build;
+    return `<div class="guiap">${guiaMarca('criterio', 'thanosvibs')} ${fuentesHtml(O.fuente, GUIA_CORTA.fuentes_cortas)}
+      <ol class="guiaol">${O.pasos.map(x => `<li>${h(bi(x))}</li>`).join('')}</ol></div>`;
+  }
+  if (p.k === 'topes') {
+    const T2 = GUIA.topes, con = T2.items.filter(x => x.tope != null), sin = T2.items.filter(x => x.tope == null).flatMap(x => x.stats);
+    return `<div class="guiap">${guiaMarca('dato')} ${fuentesHtml(T2.fuente, GUIA_CORTA.fuentes_cortas)}
+      <ul class="guiaol">${con.map(x => `<li>${h(x.stats.map(statNom).join(', '))}: <b>${x.tope}%</b>${
+        x.base ? ` <span class="muted">(${h(t('cap_base').replace('{n}', x.base))})</span>` : ''}</li>`).join('')}
+        <li>${h(t('cap_none'))} ${h(sin.map(statNom).join(', '))}.</li></ul></div>`;
+  }
+  const cap = p.cap ? ` title="${h(t('gu_cap').replace('{c}', p.cap))}"` : '';
+  return `<p class="guiap"${cap}>${guiaMarca(p.k, p.de)} ${h(bi(p))} ${fuentesHtml(p.fuente, GUIA_CORTA.fuentes_cortas)}</p>`;
+}
+/** Adónde lleva un enlace de la Guía, en palabras (el nombre de lo que abre, como lo dice la app). */
+function guiaDestino (d) {
+  const cuenta = (tab) => t('nav_cuenta') + ' › ' + t('cu_tab_' + tab);
+  switch (d.a) {
+    case 'modo': return t('nav_modes') + ' › ' + nombreModo(modoDeGuia(d.id));
+    case 'objetos': return t('nav_objetos') + ' › ' + t('ob_tab_' + d.tab);
+    case 'cuenta': return cuenta(d.tab);
+    case 'plan': return cuenta('plan') + ' · ' + nombreModo(modoDeGuia(Object.keys(PLAN_DE_MODO).find(k => PLAN_DE_MODO[k] === d.modo)));
+    case 'ficha': { const v = variant(d.pj, null);
+      if (!v) throw new Error('la Guía lleva a la ficha de un personaje que no está: ' + d.pj);
+      return v.name + ' › ' + t('ft_' + d.tab); }
+    case 'glosario': { const x = d.id.startsWith('ef-') ? CATALOGO.efectos.find(e => 'ef-' + e.id === d.id) : GLOSARIO.terminos.find(e => 'gl-' + e.id === d.id);
+      if (!x) throw new Error('la Guía lleva a una entrada del glosario que no está: ' + d.id);
+      return t('nav_glossary') + ' › ' + (d.id.startsWith('ef-') ? bi(x) : nombreGl(x)); }
+    case 'vista': return t({ tierlist: 'nav_tierlists', roster: 'nav_roster' }[d.v]);
+    case 'recorrido': return d.area === '*' ? t('rc_completo') : t('rc_btn') + ' · ' + t('rc_area_' + d.area);
+  }
+  throw new Error('enlace de la Guía de un tipo desconocido: ' + d.a);
+}
+function guiaEnlaceHtml (d) {
+  return `<button class="objlink" data-a="guiaIr" data-ir="${h(JSON.stringify(d))}">→ ${h(guiaDestino(d))}</button>`;
+}
+/** Sigue un enlace de la Guía. Lo que abre es otro lugar (anotarLugar lo anota): «Atrás» vuelve a la Guía. */
+function irDesdeGuia (d) {
+  Object.assign(ui, { focusSearch: false, movil: 'centro' });
+  switch (d.a) {
+    case 'modo': { modoDeGuia(d.id); Object.assign(ui, { view: 'modos', modoFiltro: 'todos', modoAbierto: d.id }); render();
+      // Debajo de la barra de arriba, que queda fija (scrollIntoView lo dejaba tapado por ella).
+      const el = document.getElementById('modo-' + d.id);
+      window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - document.querySelector('nav.topnav').offsetHeight - 14, behavior: 'instant' });
+      return; }
+    case 'objetos': if (!OBJ_TABS.includes(d.tab)) throw new Error('Objetos no tiene la pestaña ' + d.tab);
+      Object.assign(ui, { view: 'objetos', objTab: d.tab, objVer: null, crAviso: null }); break;
+    case 'cuenta': if (!CUENTA_TABS.includes(d.tab)) throw new Error('Mi cuenta no tiene la pestaña ' + d.tab);
+      if (d.tab === 'equipos') ui.view = 'teams'; else Object.assign(ui, { view: 'cuenta', cuentaTab: d.tab }); break;
+    case 'plan': if (!Object.values(PLAN_DE_MODO).includes(d.modo)) throw new Error('el planificador no tiene el modo ' + d.modo);
+      Object.assign(ui, { view: 'cuenta', cuentaTab: 'plan' }); if (ui.plan.modo !== d.modo) planCambia({ modo: d.modo }); break;
+    case 'ficha': if (!FICHA_TABS.includes(d.tab) || !CHAR_BY_ID[d.pj]) throw new Error('la Guía lleva a una ficha que no está: ' + d.pj + ' › ' + d.tab);
+      ui.fichaTab = d.tab; abrirFicha(d.pj, null); return;
+    case 'glosario': ui.view = 'glosario'; render(); irAGlosario(d.id); return;
+    case 'vista': if (!['tierlist', 'roster'].includes(d.v)) throw new Error('la Guía lleva a una vista que no está: ' + d.v);
+      Object.assign(ui, { view: d.v, charId: null }); break;
+    case 'recorrido': empezarRecorrido(d.area === '*' ? RECORRIDO.map(tr => tr.k) : [d.area]); return;
+    default: throw new Error('enlace de la Guía de un tipo desconocido: ' + d.a);
+  }
+  render(); window.scrollTo({ top: 0, behavior: 'instant' });   // sin la animación de html{scroll-behavior}: «Atrás» en medio la arrastraba
 }
 
 // ============================================================================
@@ -7251,10 +7402,12 @@ function statNom (k) { const s = GUIA.stats[k]; return s ? bi(s) : k; }
 function statHtml (k) { return h(statNom(k)) + dudaHtml('stat', k); }
 /** Chips con las fuentes citadas: con su enlace, o sin él si la fuente no tiene dirección (la
  *  guía dentro del juego). */
-/** Las fuentes, cada una con su nombre (o, si tiene, su nombre corto, con el completo al pasar el mouse) y su enlace. */
-function fuentesHtml (claves) {
+/** Las fuentes, cada una con su nombre (o, si tiene, su nombre corto, con el completo al pasar el mouse) y su enlace.
+ *  cortos: los nombres cortos de un lugar que los necesita ({clave: {es, en}}: la Guía, MFF_GUIA_CORTA.fuentes_cortas). */
+function fuentesHtml (claves, cortos) {
   return (claves || []).map(k => { const f = GUIA.fuentes[k]; if (!f) throw new Error('fuente desconocida: ' + k);
-    const tit = h(f.corto ? f.nombre : t('md_source')), txt = h(f.corto || f.nombre);
+    const corto = f.corto || (cortos && cortos[k] ? bi(cortos[k]) : '');
+    const tit = h(corto ? f.nombre : t('md_source')), txt = h(corto || f.nombre);
     return f.url ? `<a class="fuente" href="${h(f.url)}" target="_blank" rel="noopener" title="${tit}">${txt}</a>`
                  : `<span class="fuente" title="${tit}">${txt}</span>`; }).join('');
 }
@@ -8953,6 +9106,7 @@ function renderNav () {
       ${link(['objetos'], 'nav_objetos', 'goObjetos')}
       ${link(['glosario'], 'nav_glossary', 'goGlosario')}
       ${link(['historico'], 'nav_history', 'goHistorico')}
+      ${link(['guia'], 'nav_guia', 'goGuia')}
     </div>
     <span class="navspace"></span>
     <div class="navgrupo cuenta" role="group" aria-label="${h(t('nav_cuenta'))}" data-rec="nav-cuenta">
@@ -8988,6 +9142,7 @@ function render () {
     case 'teams':    body = renderTeams(); break;
     case 'glosario': body = renderGlosario(); break;
     case 'objetos':  body = objetosCabHtml() + renderObjetos(); break;
+    case 'guia':     body = guiaCabHtml() + renderGuia(); break;
     case 'historico': body = renderHistorico(); break;
     case 'editor':   body = renderEditor(); break;
     case 'cuenta':   body = renderCuenta(); break;
@@ -9037,7 +9192,7 @@ function render () {
 function lugar () { return ui.view === 'detail' ? 'detail:' + ui.charId : ui.view; }
 function fotoLugar () {
   return { lugar: lugar(), view: ui.view, charId: ui.charId, uniformId: ui.uniformId, fichaTab: ui.fichaTab, cuentaTab: ui.cuentaTab,
-           objTab: ui.objTab, eqPagina: ui.eqPagina, eqCon: ui.eqCon, eqVerDescartados: ui.eqVerDescartados, page: ui.page, tierList: ui.tierList };
+           objTab: ui.objTab, guiaTab: ui.guiaTab, eqPagina: ui.eqPagina, eqCon: ui.eqCon, eqVerDescartados: ui.eqVerDescartados, page: ui.page, tierList: ui.tierList };
 }
 /** Antes de pintar: si cambió el lugar, el anterior queda anotado con su posición y se abre
  *  una entrada nueva que recuerda de dónde se vino. */
@@ -9068,7 +9223,7 @@ function nombreLugar (d, largo) {
     if (!v) return t('nav_roster');
     return largo ? fullLabel(v) + ' · ' + t('ft_' + d.fichaTab) : v.name;
   }
-  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history', objetos: 'nav_objetos',
+  return t({ tierlist: 'nav_tierlists', modos: 'nav_modes', teams: 'nav_teams', cuenta: 'nav_cuenta', glosario: 'nav_glossary', historico: 'nav_history', objetos: 'nav_objetos', guia: 'nav_guia',
              settings: 'nav_settings', editor: 'nav_new_char', compare: 'cmp_title' }[d.view] || 'nav_roster');
 }
 window.addEventListener('popstate', (e) => {
@@ -9077,7 +9232,7 @@ window.addEventListener('popstate', (e) => {
   // «Atrás» con el recorrido abierto lo cierra (la pantalla vuelve a como estaba) y va al lugar anterior, como siempre.
   if (ui.rec) cerrarRecorrido();
   if (ui.pq) cerrarPq(false);
-  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, cuentaTab: s.cuentaTab, objTab: s.objTab,
+  Object.assign(ui, { view: s.view, charId: s.charId, uniformId: s.uniformId, fichaTab: s.fichaTab, cuentaTab: s.cuentaTab, objTab: s.objTab, guiaTab: s.guiaTab,
                       objVer: null, eqPagina: s.eqPagina,
                       eqCon: s.eqCon, eqVerDescartados: s.eqVerDescartados, page: s.page, tierList: s.tierList,
                       aliados: null, tip: null, tlPick: null, focusSearch: false, volverY: s.y,
@@ -9181,6 +9336,10 @@ const RECORRIDO = [
     { an: '[data-rec="hi-pj"]', k: 'rc_hi_pj' },
     { an: '[data-rec="hi-tipo"]', k: 'rc_hi_tipo' },
     { an: '.hiversion > summary', k: 'rc_hi_version' }] },
+  { k: 'guia', ir: () => ({ view: 'guia' }), pasos: [
+    { an: '.cucab.juego .cutabs', k: 'rc_guia_temas', ui: { guiaTab: GUIA_TABS[0] } },
+    { an: '[data-rec="guia-marcas"]', k: 'rc_guia_marcas', ui: { guiaTab: GUIA_TABS[0] } },
+    { an: '.guiair', k: 'rc_guia_ir', ui: { guiaTab: GUIA_TABS[1] } }] },
   { k: 'cuenta', ir: () => ({ view: 'cuenta' }), pasos: [
     { an: '.cutabs', k: 'rc_cu_tabs', ui: { cuentaTab: 'resumen' } },
     { an: '.cuhub .cutile', k: 'rc_cu_resumen', ui: { cuentaTab: 'resumen' } },
@@ -9200,7 +9359,7 @@ const RECORRIDO = [
 /** El tramo del recorrido de una vista. */
 function areaDe (view) {
   const k = { roster: 'roster', detail: 'ficha', compare: 'comparativa', tierlist: 'tierlist', modos: 'modos', objetos: 'objetos',
-              glosario: 'glosario', historico: 'historico', cuenta: 'cuenta', teams: 'cuenta', editor: 'cuenta', settings: 'barra' }[view];
+              glosario: 'glosario', historico: 'historico', guia: 'guia', cuenta: 'cuenta', teams: 'cuenta', editor: 'cuenta', settings: 'barra' }[view];
   if (!k) throw new Error('vista sin tramo en el recorrido: ' + view);
   return k;
 }
@@ -9487,22 +9646,13 @@ document.addEventListener('click', (e) => {
     case 'crVer': e.preventDefault(); Object.assign(ui, { view: 'objetos', objTab: 'cromos', objVer: null, crVista: 'cromos', crBusca: '', crTipo: '',
       crPrem: '', crCol: '', crStat: '', crAct: '', crAviso: null, focusSearch: false });
       render(); irACromo(d.id); break;
+    case 'goGuia': ui.view = 'guia'; render(); window.scrollTo(0, 0); break;
+    case 'guiaTab': ui.guiaTab = d.v; render(); window.scrollTo(0, 0); break;
+    case 'guiaIr': irDesdeGuia(JSON.parse(d.ir)); break;
     case 'goHistorico': ui.view = 'historico'; ui.hiPj = d.cid || ''; ui.hiN = 20; render(); window.scrollTo(0, 0); break;
     case 'hiTipo': ui.hiTipo = d.v; ui.hiN = 20; render(); break;
     case 'hiMas': ui.hiN += 20; render(); break;
-    case 'irGlos': {
-      // Si la búsqueda deja afuera el destino, se vacía para que aparezca (sin volver a poner el
-      // foco en la búsqueda: en el celular abriría el teclado).
-      e.preventDefault();
-      const tab = d.v.startsWith('ef-') ? 'app' : 'juego';
-      if (ui.glTab !== tab) { ui.glTab = tab; render(); }
-      if (!document.getElementById(d.v)) { ui.glBusca = ''; ui.focusSearch = false; render(); }
-      const destino = document.getElementById(d.v);
-      for (let x = destino; x; x = x.parentElement.closest('details')) if (x.tagName === 'DETAILS') x.open = true;
-      destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      destino.classList.add('glfoco');
-      setTimeout(() => destino.classList.remove('glfoco'), 1600);
-      break; }
+    case 'irGlos': e.preventDefault(); irAGlosario(d.v); break;
     case 'modoFiltro': ui.modoFiltro = d.v; render(); break;
     case 'modoAbrir': ui.modoAbierto = ui.modoAbierto === d.id ? null : d.id; render(); break;
     case 'verLista': ui.view = 'tierlist'; ui.tierList = d.id; render(); window.scrollTo(0, 0); break;
