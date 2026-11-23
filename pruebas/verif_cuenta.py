@@ -59,7 +59,7 @@ try:
 
         # 1. la barra
         juego = pg.locator('nav.topnav .navgrupo:not(.cuenta) .navlink').all_inner_texts()
-        ok('1 barra: el grupo del juego (Roster, Tier lists, Modos, Objetos, Glosario, Histórico)', juego == ['Roster', 'Tier lists', 'Modos', 'Objetos', 'Glosario', 'Histórico'], juego)
+        ok('1 barra: el grupo del juego (Roster, Tier lists, Modos, Objetos, Glosario, Histórico, Guía)', juego == ['Roster', 'Tier lists', 'Modos', 'Objetos', 'Glosario', 'Histórico', 'Guía'], juego)
         ok('1 barra: el grupo de Mi cuenta, con el botón de la mesa; sin «Equipos» ni «+ Personaje»',
            pg.locator('nav.topnav .navgrupo.cuenta .navlink').all_inner_texts() == ['Mi cuenta']
            and pg.locator('nav.topnav .navgrupo.cuenta [data-a="mesaToggle"]').count() == 1

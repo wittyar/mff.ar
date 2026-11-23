@@ -5,7 +5,7 @@ te aparece un tutorial de cada area de la aplicacion explicando que cosas ver y 
   2. Con una capa ya guardada (quien la usaba antes de la 1.0.54) no sale.
   3. El botón «Recorrido» arranca el tramo del área en la que se está, en cada área, con lo que se tiene abierto (en la
      ficha, el mismo personaje); su primer paso resalta su elemento.
-  4. El recorrido completo (desde «Otras áreas») pasa por las 11 áreas con sus pasos, en orden, y termina; cada paso
+  4. El recorrido completo (desde «Otras áreas») pasa por las 12 áreas con sus pasos, en orden, y termina; cada paso
      resalta su elemento, dentro de la ventana, y la tarjeta no lo tapa (en el celular, la hoja de abajo deja ver su
      comienzo). Escritorio (con la mesa abierta, una búsqueda y lo elegido para comparar) y celular.
   5. Al salir, la app vuelve adonde estaba: la misma sección y altura, la búsqueda, la bandeja de comparar con lo mismo y la
@@ -26,7 +26,8 @@ ok = Chequeo()
 # nombre en la tarjeta.
 AREAS = [('barra', 6, 'La barra de arriba'), ('roster', 5, 'Roster'), ('ficha', 9, 'Ficha de un personaje'),
          ('comparativa', 3, 'Comparativa'), ('tierlist', 3, 'Tier lists'), ('modos', 3, 'Modos'), ('objetos', 10, 'Objetos'),
-         ('glosario', 3, 'Glosario'), ('historico', 3, 'Histórico'), ('cuenta', 10, 'Mi cuenta'), ('mesa', 3, 'Mesa')]
+         ('glosario', 3, 'Glosario'), ('historico', 3, 'Histórico'), ('guia', 3, 'Guía'), ('cuenta', 10, 'Mi cuenta'),
+         ('mesa', 3, 'Mesa')]
 NOMBRE = {k: n for k, _, n in AREAS}
 TOTAL = sum(n for _, n, _ in AREAS)
 TARJETA = """() => { const t = document.getElementById('rc-tarjeta'), l = document.getElementById('rc-luz');
@@ -176,7 +177,7 @@ with sync_playwright() as p:
         ok('3 en la comparativa, el tramo muestra los que estaban elegidos', pg.locator('.cpecab .cpepjn b').all_inner_texts() == cmp_antes, cmp_antes)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         for accion, area in (('goTier', 'tierlist'), ('goModos', 'modos'), ('goObjetos', 'objetos'), ('goGlosario', 'glosario'),
-                             ('goHistorico', 'historico'), ('goCuenta', 'cuenta'), ('goSettings', 'barra')):
+                             ('goHistorico', 'historico'), ('goGuia', 'guia'), ('goCuenta', 'cuenta'), ('goSettings', 'barra')):
             pg.click(f'nav.topnav [data-a="{accion}"]'); pg.wait_for_timeout(400)
             boton(area); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         pg.click('nav.topnav [data-a="goCuenta"]'); pg.click('.cutabs [data-a="goTeams"]'); pg.wait_for_timeout(300)
@@ -274,7 +275,7 @@ with sync_playwright() as p:
         pg.click('nav.topnav [data-a="recorrido"]'); pg.wait_for_timeout(300)
         pg.click('#rc-tarjeta [data-a="recOtras"]'); pg.click('#rc-tarjeta [data-a="recCompleto"]')
         vistos_es = recorrer(pg, False, 'escritorio')
-        ok('4 escritorio: las 11 áreas, en orden, con sus pasos', areas_de(vistos_es) == [(n, c) for _, c, n in AREAS], areas_de(vistos_es))
+        ok('4 escritorio: las 12 áreas, en orden, con sus pasos', areas_de(vistos_es) == [(n, c) for _, c, n in AREAS], areas_de(vistos_es))
         ok('4 «Paso n de m» cuenta el completo', [m['n'] for m in vistos_es] == [f'Paso {i} de {TOTAL}' for i in range(1, TOTAL + 1)])
         pg.click('#rc-tarjeta [data-a="recSig"]'); pg.wait_for_timeout(500)
         despues = pg.evaluate("""() => ({ y: scrollY, q: document.getElementById('q').value, mesa: document.querySelector('nav.topnav [data-a="mesaToggle"] b').textContent,
@@ -310,7 +311,7 @@ with sync_playwright() as p:
         pg.click('nav.topnav [data-a="recorrido"]'); pg.wait_for_timeout(300)
         pg.click('#rc-tarjeta [data-a="recOtras"]'); pg.click('#rc-tarjeta [data-a="recCompleto"]')
         vistos_cel = recorrer(pg, True, 'celular')
-        ok('4 celular: las 11 áreas, en orden, con sus pasos', areas_de(vistos_cel) == [(n, c) for _, c, n in AREAS], areas_de(vistos_cel))
+        ok('4 celular: las 12 áreas, en orden, con sus pasos', areas_de(vistos_cel) == [(n, c) for _, c, n in AREAS], areas_de(vistos_cel))
         pg.click('#rc-tarjeta [data-a="recSig"]'); pg.wait_for_timeout(400)
         ok('5 celular: termina, en el roster, y la capa no cambió', not abierto(pg) and pg.locator('.ccard').count() > 0 and capa_txt(D) == capa2)
         pg.close()
