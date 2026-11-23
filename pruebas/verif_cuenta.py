@@ -172,7 +172,7 @@ try:
         pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
         tabs_en = [x[0] for x in pg.evaluate(SUB)]
         ok('8 inglés: la barra y la sub-barra', pg.locator('nav.topnav .navgrupo.cuenta .navlink').inner_text() == 'My account'
-           and tabs_en == ['Overview', 'Teams', 'Progress', 'Own characters', 'Marked attributes', 'Cards', 'My layer'], tabs_en)
+           and tabs_en == ['Overview', 'Your roster', 'Planner', 'Teams', 'Progress', 'Own characters', 'Marked attributes', 'Cards', 'My layer'], tabs_en)
         resto = [x for x in ('Progreso', 'Personajes propios', 'Mi capa', 'Equipos', 'Tier lists propias') if x in pg.locator('main').inner_text()]
         ok('8 inglés: el resumen sin restos en castellano', not resto, resto)
         pg.click('[data-a="lang"]'); pg.wait_for_timeout(300)
