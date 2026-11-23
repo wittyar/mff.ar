@@ -145,6 +145,9 @@
   "juego-guia": {
    "nombre": "MARVEL Future Fight — guía dentro del juego (contenidos, crecimiento e ítems, octubre de 2026)"
   },
+  "juego-guia-es": {
+   "nombre": "MARVEL Future Fight — la guía dentro del juego en español (guías de equipo y de crecimiento, glosario de contenidos y de objetos: capturas 64 a 162 de Ezequiel, octubre de 2026; transcripto en fuentes/juego-es/objetos.json)"
+  },
   "wiki-bonos": {
    "nombre": "Future Fight Wiki — Team Bonus"
   },
@@ -318,6 +321,11 @@
   "mffguide-jm": {
    "corto": "mffguide.fyi",
    "nombre": "mffguide.fyi — Guía MFF de la comunidad (v1.2 del 23 de noviembre de 2026; hecha por un jugador, no es oficial): las tablas de Jefe mundial (jefes, consejos del juego, restricciones por fase, lo que pide cada dificultad) que dice sacar de los archivos del juego v12.4.0 (bajada el 23 de noviembre de 2026; en fuentes/mffguide/jefe_mundial.json)",
+   "url": "https://mffguide.fyi/"
+  },
+  "mffguide-guia": {
+   "corto": "mffguide.fyi",
+   "nombre": "mffguide.fyi — Guía MFF de la comunidad (v1.2 del 23 de noviembre de 2026; hecha por un jugador, no es oficial): sus secciones «Cómo progresar», «Lo que cuesta subir» y «Modos y rutina», que dice sacar sus números de los archivos del juego v12.4.0 (leída el 23 de noviembre de 2026; los hechos que usa la Guía de la app están en scripts/contenido/guia_corta.json, marcados «sin confirmar»)",
    "url": "https://mffguide.fyi/"
   },
   "foro-1895951": {
