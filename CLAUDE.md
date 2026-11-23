@@ -112,7 +112,7 @@ variante, en `docs/COMPLETITUD.md`.
   si el contenido curado (`scripts/contenido/`) no cierra con los datos. El contenido curado llega a
   los datos recién cuando corre el build: sin `work/`, se valida con `catalogo.validar` (con
   `contenido/guia.json`, por los topes), `catalogo.validar_glosario`, `catalogo.validar_valor` (la
-  tabla de valor de los equipos) y `fuentes.validar_contenido`;
+  tabla de valor de los equipos), `fuentes.validar_contenido` y `python3 scripts/guia_corta.py` (la Guía);
   `scripts/contenido/liderazgos_api.json` lo valida `liderazgos.validar` contra las tablas de la API
   (sin `work/`, con el `MFF_TABLAS` de data.js: `liderazgos_api/prueba.py`).
 - Pruebas: en `pruebas/` desde el 9 de octubre de 2026 (#31); cómo correrlas y cuáles no corren solas, en
@@ -145,10 +145,11 @@ Para bajarlas: la página del álbum trae las primeras 300 (`["AF1Qip…",["http
 token `AH_uQ4…` de la página, por `photos.google.com/_/PhotosUi/data/batchexecute` (rpc `snAcKc`, `[álbum, token, null,
 key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 
-## Estado (20 de noviembre de 2026)
+## Estado (23 de noviembre de 2026)
 
 - Publicadas: de la 1.0.14 a la 1.0.40 (la 1.0.13 no se publicó; las notas de la 1.0.14 anuncian su Glosario; tampoco la
-  1.0.56: las notas de la 1.0.57 anuncian sus Objetos). La
+  1.0.56: las notas de la 1.0.57 anuncian sus Objetos). La 1.0.59 (formato 21)
+  **todavía no**: va en dos vueltas (ver su entrada). La
   1.0.26 (a65f7c4): la lista de la izquierda con la búsqueda y los filtros del roster, también en Equipos. La 1.0.27
   (3aa6beb), primera parte de #24 (la ficha): el Resumen con dónde rinde, qué le da al equipo y qué necesita arriba;
   cinco pestañas (Análisis fuera hasta #33, Progreso dentro de Armado, Más → Fuentes); las explicaciones a un «?»
@@ -600,7 +601,11 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
 - La 1.0.22 salió mal: la etiqueta fue sobre 4a14974 (el commit de la versión, con datos de formato 8) mientras el
   workflow publicaba los de formato 10; los de formato 9 nunca se publicaron y la 1.0.22 instalada quedó trabada en
   la pantalla de datos hasta reinstalar. De ahí la 1.0.24 y la regla de una versión por vez.
-- **1.0.59 (en curso; formato 21; la cierra quien haga el commit de versión)**, 23 de noviembre de 2026. Primera parte,
+- La 1.0.59 (formato 21; **sin publicar**: la release va sobre el commit «Datos actualizados» de formato 21), 23 de
+  noviembre de 2026. Pedido de Ezequiel, sobre https://mffguide.fyi/: «Revisa los cambios que hibieron en el juego. Y suma
+  a la revision todo lo que muestra esta web. Evalua que cosas hace mal eaa guia y propone una mejor opcion»; y, sobre las
+  tres propuestas de quien coordinó, «Dale con todo.». El relevamiento de la guía (qué trae, qué hace mal, qué se propuso),
+  en el doc del proyecto de Claude «claude/mff-revision-mffguide.md». Primera parte,
   **los cromos con mffguide.fyi** (Ezequiel aprobó, «Dale con todo», completarlos con la «Guía MFF de la comunidad»,
   https://mffguide.fyi/, v1.2 del 23 de noviembre de 2026, hecha por un jugador, que dice sacar sus números de los
   archivos del juego v12.4.0, citándola):
@@ -692,6 +697,51 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     fase (la guía los da; no entraron). La lista de Jefe mundial (12.1.5) es de Leyenda y Leyenda+ y está vieja; muchas
     bases no están en las listas (están sus uniformes): el planificador lo dice, no lo resuelve. Las tablas por personaje
     de la guía (`wb`, `ab`, `abm`) no se usaron: son su criterio.
+  Tercera parte, **la Guía** (Ezequiel aprobó, «Dale con todo», la propuesta literal: «Guía corta de progreso y rutina
+  dentro de la app, enlazada a las secciones que ya existen, en vez de un texto de un millón de caracteres.»; es para quien
+  abre la app sin conocer el juego a fondo o vuelve después de un tiempo, como el recorrido de la 1.0.54):
+  - **Dónde**: «Guía», al final del grupo del juego de la barra: en 1400 y en 1280 entra sin desbordar (en el celular la
+    barra ya se desplaza). Dentro de otra entrada (Glosario, Modos) sumaba un clic y quedaba escondida para quien empieza.
+  - **El contenido** (`scripts/contenido/guia_corta.json`, `MFF_GUIA_CORTA`, formato 21: se amplió su línea; lo valida
+    `scripts/guia_corta.py` en el build y solo, sin `work/`): tres temas en pestañas (la sub-barra de Objetos): cómo
+    progresa un personaje (nivel, rango, maestría, equipo, skills, Tier-2, potencial, Tier-3 o potencial trascendido,
+    Tier-4, nivel 90, lo que cuesta; cómo armarlo: el orden de thanosvibs, C.T.P., ISO-8, uru y Odín, artefacto, lo de la
+    cuenta y los topes), qué jugar cada día y cada semana (un punto por modo, con su enlace a Modos y al planificador) y
+    cómo decidir con la app (remite al recorrido). Unas 1.300 palabras de texto (2.135 en pantalla, con marcas, fuentes y
+    enlaces). Cada parte de un punto lleva su marca: Dato (con fuentes), Criterio de thanosvibs, mffguide · sin confirmar,
+    ≠ no coinciden (con las dos) o En la app (sin fuente); el orden de armado y los topes salen de `guia.json` (los de la
+    ficha). En la Guía las fuentes van con nombre corto (`fuentes_cortas`; el completo al pasar el mouse). El validador
+    pide fuentes registradas y con nombre corto, y enlaces que existan (modos, pestañas de Objetos, Mi cuenta y la ficha
+    leídas de app.js, términos del glosario y efectos del catálogo, tramos del recorrido, el personaje de ejemplo).
+  - **Fuentes nuevas** (`guia.json`): `juego-guia-es`, las capturas 64 a 162 del álbum en español (ya transcriptas en
+    `fuentes/juego-es/objetos.json`, sin clave hasta ahora), y `mffguide-guia` (sus secciones «Cómo progresar», «Lo que
+    cuesta subir» y «Modos y rutina»). De mffguide solo hechos, marcados sin confirmar: los costos de un personaje
+    estándar, quién no se repite desde Leyenda (`mffguide-jm`) y qué topes marca ella como dato de la comunidad. Lo demás:
+    la guía del juego (crecimiento de personaje, capturas 50 a 65 de `crudo/en`; contenidos y objetos en español), las
+    guías 1, 3 y 4 de thanosvibs, su Alliance Battle y sus tier lists, la wiki y las notas oficiales del nivel 90
+    (foro-1896956, foro-1897450 y foro-1897819: 3.er potencial en Leyenda+ o más, Cosmic Seed de Galactus o más, hasta 300
+    por día).
+  - **No elige en silencio** (≠): Definitivo (la guía del juego, «es ideal» para Tier-2 o más; mffguide, 6★), la bendición
+    de Odín (una por pieza según el foro; una, sin decir por pieza, según la guía del juego; una del mismo tipo por pieza
+    según thanosvibs) y Tierra de sombras (semanal en thanosvibs; por temporadas, sin duración en los datos, en mffguide).
+  - **App**: la vista `guia` (`ui.guiaTab`, en el historial; el primero lo pone `iniciarDatos`), `renderGuia`, `guiaIr` e
+    `irDesdeGuia`: cada enlace abre un lugar nuevo del historial y «Atrás» vuelve a la Guía a la misma altura (el modo
+    queda debajo de la barra, no tapado; sin la animación de `scroll-behavior`, que «Atrás» arrastraba); el salto a una
+    entrada del Glosario sale a `irAGlosario` (también para `irGlos`). Recorrido: el tramo de la Guía (3 pasos; 61 en 12
+    tramos), y la bienvenida y el paso de la barra la nombran.
+  - Pendiente / a decidir: los textos los corrige Ezequiel (en `guia_corta.json`); los nombres en español de Cosmic Seed y
+    Alliance Tokens (no están en las capturas); la Guía no tiene fecha de revisión propia: cuando cambie el juego, se
+    revisa a mano; el tema de progreso tiene unas 760 palabras (más de dos pantallas).
+  - Corridas (todo el código de la versión): la secuencia de cinco scripts del proceso de datos terminó con 0 (datos en
+    `/home/claude/mff-datos`, formato 21, 23 de noviembre). Con esos datos (`MFF_DATOS`) y el código
+    final, sin fallas: guia (nueva: `verif_guia.py`), cromos, cuenta_cromos, objetos, roster, planificador, recorrido, humo,
+    capa, cuenta, atras, propio, modos_juego, mesa, ctp_abx, ayuda, ficha, historico, glosario, analisis y datos; formato e
+    imagenes, con esos datos puestos en el repo (después, sacados). verif_capa encontró que la app se caía al cargar con
+    datos sin `MFF_GUIA_CORTA` (antes de la pantalla que lo explica): arreglado. No se corrieron programa ni wine (la
+    release se arma después, sobre el commit de datos) ni las que fallaban desde antes por datos o entorno.
+  - Entrega (formato nuevo, dos vueltas): «1. Código» (el bundle con el commit de esta versión, y `git push`), «2. Datos»
+    (`actualizar_datos.py`: «Datos actualizados» de formato 21 en `datos/21/`); recién entonces Claude, con `git fetch`, arma
+    la release sobre ese commit de datos, y Ezequiel corre «3. Release» con el commit que le dé.
 
 ## Pendiente
 

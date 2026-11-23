@@ -1,6 +1,6 @@
 {
- "version": "1.0.58",
+ "version": "1.0.59",
  "formato_datos": 21,
  "python": "3.14.7",
- "notas": "Sin cambios a la vista en la app: cambia cómo se arman y se publican las versiones y los datos, que ya no salen de GitHub Actions."
+ "notas": "Cromos completos: lo que vale cada uno según su calidad, su efecto propio, su colección y de dónde sale, con una vista de colecciones; en Mi cuenta › Cromos, la calidad de cada cromo y cuánto suma cada mazo. Mi cuenta › Tu roster: marcá a quién tenés, hasta dónde llegó y con qué uniforme lo usás. El planificador de Jefe mundial y Batalla de alianza: qué podés jugar con tu roster para la restricción del día (también desde Modos). Y la Guía, nueva en la barra: cómo progresa un personaje, qué jugar cada día y cada semana, y cómo decidir con la app, cada cosa con su fuente y un botón a donde la app lo tiene."
 }
