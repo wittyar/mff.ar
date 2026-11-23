@@ -4,10 +4,14 @@ espera sale de MFF_CROMOS (data.js) y de la capa guardada (/api/capa), no de app
   1. Vacío: los dos mazos sin cromos, para poner uno; la sub-barra y el resumen de Mi cuenta lo cuentan.
   2. Poner cromos en los dos mazos (desde acá y desde la sección Cromos; el mismo cromo en los dos), anotar la opción de
      algunos grados (también una activación) y sacar uno.
-  3. Qué cubre cada mazo: por stat, cuántos cromos lo dan fijo y cuántos en una opción anotada; las activaciones anotadas.
-  4. Se guarda en la capa (mazos con {id, op}) y vuelve al recargar.
+  3. La calidad de cada lugar (1.0.59) y qué cubre cada mazo: por stat, cuánto suma (valores de un 6★ según mffguide: las
+     fijas según la calidad, cada grado anotado lo que vale su casilla); un cromo sin calidad no se suma y se dice, lo que
+     falta anotar también; las activaciones anotadas, con su texto del juego.
+  4. Se guarda en la capa (mazos con {id, op, cal}) y vuelve al recargar.
   5. Exportar «Mi capa» los trae; importar una capa los reemplaza; una capa de antes (sin cromos) entra con los mazos
-     vacíos; una con un cromo repetido en un mazo no entra y lo dice; un cromo que ya no está en los datos queda con aviso.
+     vacíos; una de la 1.0.58 con mazos anotados (sin calidad) entra y conserva todo; una con un cromo repetido en un
+     mazo o una calidad fuera de 1 a 7 no entra y lo dice; un cromo que ya no está en los datos queda con aviso.
+  7. El botón «Cromos de cómic» lleva a Objetos › Cromos.
   6. En el celular, sin desbordar. Sin errores de página."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, SALIDA  # noqa: E401
 import json, tempfile
@@ -17,6 +21,7 @@ from playwright.sync_api import sync_playwright
 ok = Chequeo()
 C = datos_js('MFF_CROMOS')['MFF_CROMOS']
 POR = {c['id']: c for c in C['cromos']}
+nom = lambda c: c['es'] or c['n']
 WK3 = next(c for c in C['cromos'] if c['n'] == 'WAR OF KINGS (2009) #3')
 OTRO = next(c for c in C['cromos'] if c['t'] == 'Premium' and not c.get('pr'))
 TERCERO = next(c for c in C['cromos'] if c['t'] == 'Support')
@@ -26,22 +31,25 @@ OP3 = WK3['grados']['3'][0]
 OP6 = OTRO['grados']['6'][2]
 
 
+V = C['valores']
 def cobertura(mazo):
-    """{stat: [fijos, anotados]} y las activaciones anotadas, de un mazo de la capa."""
-    por, acts = {}, []
+    """{stat: [% de las fijas, % de los grados]}, las activaciones anotadas y los cromos sin calidad, de un mazo de la capa."""
+    por, acts, sin_cal = {}, [], []
     for x in mazo:
         c = POR.get(x['id'])
         if not c:
             continue
+        if 'cal' not in x:
+            sin_cal.append(c); continue
         for f in c['fijas']:
-            por.setdefault(f['s'], [0, 0])[0] += 1
+            por.setdefault(f['s'], [0, 0])[0] += V['calidad'][x['cal'] - 1] if f.get('cal') else f['v']
         for g, k in x['op'].items():
             o = next((y for y in c['grados'].get(g, []) if clave(y) == k), None)
             if o and o.get('act'):
                 acts.append(o)
             elif o:
-                por.setdefault(o['s'], [0, 0])[1] += 1
-    return por, acts
+                por.setdefault(o['s'], [0, 0])[1] += V['casilla'][g]
+    return por, acts, sin_cal
 
 
 srv, url = levantar(carpeta_datos(), origen_local())
@@ -83,19 +91,27 @@ try:
            == [clave(OP3), clave(ACT4), clave(OP6), ''])
         pg.click('[data-a="crQuitar"][data-m="0"][data-l="2"]'); pg.wait_for_timeout(300)
         ok('2 sacar uno', [x['id'] for x in capa()['cromos']['mazos'][0]] == [WK3['id'], OTRO['id']])
+        cal = lambda m, l: f'select[data-a="crCalMazo"][data-m="{m}"][data-l="{l}"]'
+        ok('3 cada lugar con su calidad, sin anotar', pg.locator('select[data-a="crCalMazo"]').count() == 3 and pg.locator(cal(0, 0)).input_value() == '')
+        sinc = pg.locator('.crcobertura').first.inner_text()
+        ok('3 sin calidad, no se suman y se dice', 'Sin calidad anotada, no se suman' in sinc and nom(WK3) in sinc and nom(OTRO) in sinc
+           and pg.locator('.crcobertura').first.locator('tbody tr').count() == 0, sinc[:300])
+        pg.select_option(cal(0, 0), '4'); pg.wait_for_timeout(200)
+        pg.select_option(cal(0, 1), '7'); pg.wait_for_timeout(200)
 
         # 3. qué cubre
-        esperado, acts = cobertura(capa()['cromos']['mazos'][0])
-        filas = pg.evaluate("""[...document.querySelectorAll('.crcobertura')][0].querySelectorAll('tbody tr').length""")
+        esperado, acts, _ = cobertura(capa()['cromos']['mazos'][0])
         tabla = pg.evaluate("""Object.fromEntries([...[...document.querySelectorAll('.crcobertura')][0].querySelectorAll('tbody tr')]
-          .map(tr => [tr.cells[0].textContent, [tr.cells[1].textContent.trim(), tr.cells[2].textContent.trim()]]))""")
-        nombres = {k: v['es'] for k, v in C['stats'].items()}
-        espera_tabla = {nombres[k]: [str(f) if f else '—', str(a) if a else '—'] for k, (f, a) in esperado.items()}
-        ok('3 el mazo 1: por stat, cuántos lo dan fijo y cuántos anotado', tabla == espera_tabla and filas == len(esperado), (tabla, espera_tabla))
+          .map(tr => [tr.cells[0].textContent, [...tr.cells].slice(1).map(c => c.textContent.trim())]))""")
+        nombres = {k: (v.get('j') or v)['es'] for k, v in C['stats'].items()}
+        n = lambda v: (f'{v:.2f}'.rstrip('0').rstrip('.')).replace('.', ',') + '%' if v else '—'
+        espera_tabla = {nombres[k]: [n(f), n(a), n(f + a)] for k, (f, a) in esperado.items()}
+        ok('3 el mazo 1: por stat, cuánto suma de las fijas, de los grados y en total', tabla == espera_tabla, (tabla, espera_tabla))
+        txt = pg.locator('.crcobertura').first.inner_text()
+        ok('3 lo que falta anotar, dicho', 'Falta anotar la opción de' in txt and nom(WK3) + ' (5★, 6★)' in txt, txt[:400])
         li = pg.locator('.crcobertura').first.locator('li').all_inner_texts()
-        ok('3 la activación anotada, con su cromo y su grado', len(li) == len(acts) == 1 and nombres[ACT4['s']] in li[0]
-           and WK3['n'] in li[0] and '4★' in li[0], li)
-        ok('3 sin sumar porcentajes', '%' not in pg.locator('.crcobertura').first.inner_text())
+        ok('3 la activación anotada, con su texto del juego, su cromo y su grado', len(li) == len(acts) == 1 and WK3['act']['txt']['es'] in li[0]
+           and nom(WK3) in li[0] and '4★' in li[0], li)
         pg.click('nav.topnav [data-a="goCuenta"]'); pg.wait_for_selector('.cuhub')
         tile = pg.locator('.cuhub .cutile', has_text='Cromos en tus mazos')
         ok('1 el resumen de Mi cuenta cuenta los cromos y los mazos', tile.locator('.v').inner_text() == '3'
@@ -105,11 +121,12 @@ try:
 
         # 4. la capa y al recargar
         c = capa()['cromos']
-        ok('4 en la capa: los dos mazos con {id, op}', c == {'mazos': [[{'id': WK3['id'], 'op': {'3': clave(OP3), '4': clave(ACT4)}},
-                                                                         {'id': OTRO['id'], 'op': {'6': clave(OP6)}}],
+        ok('4 en la capa: los dos mazos con {id, op, cal}', c == {'mazos': [[{'id': WK3['id'], 'op': {'3': clave(OP3), '4': clave(ACT4)}, 'cal': 4},
+                                                                         {'id': OTRO['id'], 'op': {'6': clave(OP6)}, 'cal': 7}],
                                                                         [{'id': WK3['id'], 'op': {}}]]}, c)
         pg.reload(); pg.wait_for_selector('.ccard'); ir()
-        ok('4 al recargar, siguen', pg.locator(sel(0, 0, '4')).input_value() == clave(ACT4) and pg.locator('select[data-a="crOp"][data-m="1"]').count() == 4)
+        ok('4 al recargar, siguen', pg.locator(sel(0, 0, '4')).input_value() == clave(ACT4) and pg.locator('select[data-a="crOp"][data-m="1"]').count() == 4
+           and pg.locator(cal(0, 1)).input_value() == '7')
 
         # 5. exportar e importar
         pg.click('.cutabs [data-a="cuentaTab"][data-v="capa"]'); pg.wait_for_timeout(300)
@@ -128,9 +145,17 @@ try:
         vieja = {k: v for k, v in exp.items() if k != 'cromos'}
         importar(vieja)
         ok('5 una capa de antes, sin cromos, entra con los mazos vacíos', capa()['cromos'] == {'mazos': [[], []]} and not alertas, (capa()['cromos'], alertas))
+        # Una capa de la 1.0.58 (formato de capa sin calidad) con los mazos anotados: entra y conserva todo.
+        de58 = dict(exp); de58['cromos'] = {'mazos': [[{'id': WK3['id'], 'op': {'3': clave(OP3), '4': clave(ACT4)}}, {'id': OTRO['id'], 'op': {'6': clave(OP6)}}],
+                                                       [{'id': TERCERO['id'], 'op': {}}]]}
+        importar(de58)
+        ok('5 una capa de la 1.0.58 con mazos anotados (sin calidad) entra y conserva todo', capa()['cromos'] == de58['cromos'] and not alertas, (capa()['cromos'], alertas))
+        malcal = dict(exp); malcal['cromos'] = {'mazos': [[{'id': WK3['id'], 'op': {}, 'cal': 8}], []]}
+        importar(malcal)
+        ok('5 una calidad fuera de 1 a 7 no entra y lo dice', alertas and 'calidad' in alertas[-1] and capa()['cromos'] == de58['cromos'], alertas)
         rota = dict(exp); rota['cromos'] = {'mazos': [[{'id': WK3['id'], 'op': {}}, {'id': WK3['id'], 'op': {}}], []]}
         importar(rota)
-        ok('5 una con un cromo dos veces en un mazo no entra y lo dice', alertas and 'dos veces' in alertas[-1] and capa()['cromos'] == {'mazos': [[], []]}, alertas)
+        ok('5 una con un cromo dos veces en un mazo no entra y lo dice', alertas and 'dos veces' in alertas[-1] and capa()['cromos'] == de58['cromos'], alertas)
         perdido = dict(exp); perdido['cromos'] = {'mazos': [[{'id': 'no-existe', 'op': {}}, {'id': WK3['id'], 'op': {'5': 'no-esta'}}], []]}
         importar(perdido)
         pg.click('.cutabs [data-a="cuentaTab"][data-v="cromos"]'); pg.wait_for_timeout(300)
@@ -139,6 +164,10 @@ try:
         pg.click('[data-a="crQuitar"][data-m="0"][data-l="0"]'); pg.wait_for_timeout(300)
         ok('5 y el que no está se puede sacar', [x['id'] for x in capa()['cromos']['mazos'][0]] == [WK3['id']])
         pg.screenshot(path=f'{SALIDA}/cuenta_cromos_1400.png', full_page=True)
+        pg.click('[data-a="goCromos"]'); pg.wait_for_timeout(400)
+        ok('7 «Cromos de cómic» lleva a Objetos › Cromos', pg.locator('.crcard').count() == len(C['cromos'])
+           and pg.locator('nav.topnav .navlink.on').inner_text() == 'Objetos' and pg.locator('.cutab.on').inner_text().startswith('Cromos'))
+        ir()
 
         # 6. celular
         pg.click('.cutabs [data-a="cuentaTab"][data-v="capa"]'); pg.wait_for_timeout(300)

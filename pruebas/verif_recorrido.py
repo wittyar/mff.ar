@@ -25,7 +25,7 @@ ok = Chequeo()
 # El modelo, escrito aparte de app.js: las áreas en el orden del recorrido completo, cuántos pasos tiene cada una y su
 # nombre en la tarjeta.
 AREAS = [('barra', 6, 'La barra de arriba'), ('roster', 5, 'Roster'), ('ficha', 9, 'Ficha de un personaje'),
-         ('comparativa', 3, 'Comparativa'), ('tierlist', 3, 'Tier lists'), ('modos', 3, 'Modos'), ('objetos', 9, 'Objetos'),
+         ('comparativa', 3, 'Comparativa'), ('tierlist', 3, 'Tier lists'), ('modos', 3, 'Modos'), ('objetos', 10, 'Objetos'),
          ('glosario', 3, 'Glosario'), ('historico', 3, 'Histórico'), ('cuenta', 8, 'Mi cuenta'), ('mesa', 3, 'Mesa')]
 NOMBRE = {k: n for k, _, n in AREAS}
 TOTAL = sum(n for _, n, _ in AREAS)

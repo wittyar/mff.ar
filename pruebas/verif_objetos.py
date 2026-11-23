@@ -14,7 +14,7 @@ de app.js:
   7. Enlaces: desde la ficha (Armado) un C.T.P. y un set de ISO-8 abren su detalle en Objetos, y «Atrás» vuelve a la ficha;
      desde Modos, un set de ISO-8.
   8. El historial: la pestaña de Objetos se recuerda al volver con «Atrás».
-  9. En inglés; en el celular, ninguna pestaña desborda el ancho. Sin errores de página ni 404."""
+  9. En inglés; en el celular, ninguna pestaña desborda el ancho (tampoco las colecciones de cromos). Sin errores de página ni 404."""
 import os, sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from rutas import RAIZ, SALIDA  # noqa: E401
 import re
 from harness import origen_local, carpeta_datos, levantar, Chequeo, datos_js
@@ -188,6 +188,13 @@ try:
             anchos = pg.evaluate("[document.documentElement.scrollWidth, innerWidth]")
             ok(f'9 celular: {k} no desborda el ancho', anchos[0] <= anchos[1], anchos)
             pg.screenshot(path=f'{SALIDA}/objetos_{k}_390.png')
+        # Cromos › Colecciones (1.0.59), con una abierta.
+        pg.click('[data-a="crVista"][data-v="col"]'); pg.wait_for_timeout(300)
+        pg.locator('main details.objitem > summary').first.click(); pg.wait_for_timeout(200)
+        anchos = pg.evaluate("[document.documentElement.scrollWidth, innerWidth]")
+        ok('9 celular: las colecciones de cromos no desbordan el ancho', anchos[0] <= anchos[1]
+           and pg.locator('main details.objitem').count() == len(datos_js('MFF_CROMOS')['MFF_CROMOS']['colecciones']), anchos)
+        pg.screenshot(path=f'{SALIDA}/objetos_cromos_col_390.png')
         ok('sin errores de página', not errores, errores[:3])
         ok('sin imágenes que den 404', not recursos, recursos[:3])
         b.close()
