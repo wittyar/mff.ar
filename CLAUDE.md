@@ -639,6 +639,59 @@ key]`). Cada foto en tamaño original: `<url>=w<ancho>-h<alto>`.
     los bonos de color de sus estrellas (la guía los da; no entran a la suma); el grado de cada cromo (hoy se suma a 6★);
     a qué grado corresponden los seis valores de perforación de la guía; los textos de obtención los copia la guía del
     juego tal cual (el del 11.º aniversario dice «décimo» en español).
+  Segunda parte, **tu roster y el planificador de Jefe mundial y Batalla de alianza** (Ezequiel aprobó, «Dale con todo»,
+  la propuesta literal: «Planificador de Jefe mundial y Batalla de alianza con tu roster: qué equipo armar con lo que tenés
+  para la restricción del día. Las restricciones por fase habría que tomarlas de la guía o del juego.»; la crítica a la
+  guía: sus equipos son un cálculo y no un equipo publicado, con una tier list vieja, y recomiendan lo tengas o no):
+  - **La fuente**: `fuentes/mffguide/jefe_mundial.json` (fuente «mffguide-jm» en `guia.json`), solo hechos del juego de sus
+    objetos `WB_INFO` y `WB_R` y de su sección «Jefe mundial a fondo»: los 21 jefes (nombre del juego en inglés y español,
+    dificultad, consejos del juego), las restricciones por rango de fases de Leyenda, Leyenda+ y Mítico (11 jefes, 1 a 9
+    sin restricción y de a 5 fases después), lo que pide cada dificultad (Normal, Definitivo, Leyenda, Leyenda+, Mítico)
+    a los 3 que juegan y a los aliados, con el paso de la hoja de ruta que lo cumple, quién se repite y cómo escribe el
+    juego en español cada habilidad única. Fuera su criterio (`WB_PLAN`, quién juega, los aliados elegidos, sus
+    veredictos, su lectura de los consejos) y su prosa. `scripts/jefe_mundial.py` arma `MFF_JEFE_MUNDIAL` (formato 21,
+    no publicado: se amplió su línea); las palabras de las restricciones se leen con `dominio.RESTRICCION`, una tabla para
+    Alliance Battle y Jefe mundial (salió de `fuentes.py`); lo que no cierra corta el build.
+  - **Contrastado / choca** (`docs/AUDITORIA.md` sección 15): la rotación de 28 días de Alliance Battle de la guía es
+    igual fila por fila a la de thanosvibs (76; la guía la saca de ahí: no confirma nada) y nadie dice qué día es hoy (se
+    elige). La categoría de los principales de Leyenda a Mítico, como la guía del juego (captura 100); los aliados de
+    Leyenda, como NamuWiki. Corvus Glaive / Quicksilver (cruzados hasta la v1.1 de la guía): contra Quicksilver (tipo
+    Velocidad) rinde Combate, el que le gana a Velocidad: coincide; el de Corvus no se puede contrastar así. Sin otra
+    fuente: las restricciones por fase, los aliados de Leyenda+ y Mítico, el nivel 70 de Leyenda y el 6★ de Normal y
+    Definitivo. Choca: `modos.json` dice «Ultimate (Tier-2 o más)», que en la guía del juego es una recomendación («es
+    ideal»), y la guía pide 6★ (el planificador usa el 6★ y muestra la nota); y el juego en español escribe Malvado,
+    Mágico y Fuerte donde la app dice Maldad Pura, Magia y Fuerza (#45; sin tocar).
+  - **Tu roster** (Mi cuenta › Tu roster): la hoja de ruta de cada personaje (`U.ruta`, la misma de su ficha: una sola
+    fuente) dice si lo tenés (un paso marcado) y su categoría (`NIVEL_PASO`: 1 a 4; 3 es Tier-3 o potencial trascendido).
+    Se marca en lote, un toque por personaje (No, T1, 6★, T2, T3 o TP, T4, hasta donde llega: `pasosRuta`), con la
+    búsqueda y los filtros del roster (`rosterData`); un paso intermedio (Nv. 70, Nv. 80) marcado en la ficha no se pisa
+    con el toque de su categoría. El uniforme con que lo usás: `U.uniforme` ({personaje: uniforme}; `validarUniformes` al
+    cargar e importar; uno que ya no está, con aviso; una capa de antes entra sin él; exportar lo lleva).
+  - **El planificador** (Mi cuenta › Planificador; «Planificar con tu roster» en Modos › Jefe mundial y Batalla de
+    alianza, `irPlan`), en pasos a la vista y sin puntajes ocultos (#34): 1. qué pide (`casoPlan`: dificultad, jefe y fases,
+    o día y modo de `MFF_ABX`, con la restricción de cada modo en la lista de días; lo que piden a los 3 que juegan y a los
+    aliados, con su fuente); 2. de tu roster (`evaluarPlan`, con el uniforme anotado): pueden jugar, solo como aliados, les
+    falta categoría (cuánto, o que no llegan por su máximo), la cumplirían con otro uniforme, ya usados, y cuántos del
+    juego la cumplen y no tenés; 3. el orden, a la vista y a elección (`ORDENES_PLAN`: rol en la lista del modo, fila de
+    la lista o nombre), con la lista de thanosvibs del modo (tv-wbl, tv-alianza), autor, versión y fecha, el aviso de
+    lista vieja, «salió después de la lista» y si otro uniforme sí está; 4. para el que pega, los liderazgos y soportes de
+    los que pueden jugar que le llegan y le sirven (`lesDanAlQuePega`: `aplicaA` y `leSirve`, con `soporteHtml`, por
+    nombre). «Ya lo usé» y «Devolver» (en `ui.plan`, por modo; no se guarda). «Poner en la mesa» (`planEnMesa`): el que
+    pega y hasta dos sumados, con el modo y el día, en lugar de lo que había (lo dice). Texto fijo: «Es una consulta
+    sobre tu roster y las listas de la comunidad, no un equipo probado». `cumpleRestriccion` mira también las habilidades;
+    `filasConRol` sale de `rolEn` y `leerVersion` de `versionUniforme`.
+  - **Clics**: el `switch` de los clics corta con un error ante una acción sin caso (antes la ignoraba sin aviso); no
+    cuentan los campos ni `CLIC_SIN_ACCION` (soltar en tier lists, el cuerpo de las ventanas modales).
+  - **Recorrido**: 58 pasos (Mi cuenta, 10: Tu roster y el planificador).
+  - Pruebas nuevas: `verif_roster.py` y `verif_planificador.py` (modelo aparte de app.js); `verif_cuenta` y
+    `verif_recorrido` con las pestañas y los pasos nuevos. Corridas con los datos armados el 23 de noviembre (formato 21,
+    la secuencia de cinco scripts terminó con 0): sin fallas roster, planificador, humo, recorrido, capa, cuenta,
+    cuenta_cromos, cromos, objetos, modos_juego, mesa, atras y ctp_abx.
+  - Pendiente / a decidir: las restricciones por fase y los requisitos sin otra fuente (verlos en el juego); el requisito
+    de Definitivo en `modos.json`; los nombres de las habilidades en español (#45); Valor, Resistencia y perforación por
+    fase (la guía los da; no entraron). La lista de Jefe mundial (12.1.5) es de Leyenda y Leyenda+ y está vieja; muchas
+    bases no están en las listas (están sus uniformes): el planificador lo dice, no lo resuelve. Las tablas por personaje
+    de la guía (`wb`, `ab`, `abm`) no se usaron: son su criterio.
 
 ## Pendiente
 
