@@ -1,0 +1,3556 @@
+{
+ "fuente": {
+  "url": "https://mffguide.fyi/",
+  "nombre": "Guía MFF de la comunidad (mffguide.fyi)",
+  "version_guia": "1.2",
+  "fecha_guia": "2026-11-23",
+  "version_juego": "12.4.0",
+  "bajada": "2026-11-23",
+  "que_es": "Tablas del juego según mffguide.fyi: la guía, hecha por un jugador (no es oficial), dice sacarlas de los archivos del juego (v12.4.0). Solo hechos del juego: nombres del juego en español e inglés, valores, casillas, efecto propio, obtención y colecciones. Fuera, lo que es criterio de la guía (su mazo ideal, puestos, reemplazos y recomendaciones), sus nombres propios de los stats y su prosa.",
+  "de_donde": "El objeto CROMOS de los scripts de la página (cromos: id, es, en, p, c, f, a, o, k, t, s, m; stats, valores, obtencion, colecciones) y la tabla «Cromos de cómic» de su sección Catálogos (el texto del efecto propio de cada cromo y cuándo se activa, en los dos idiomas).",
+  "sin_confirmar": [
+   "Todo: es lo que la guía dice que traen los archivos del juego; los cinco de War of Kings coinciden al 100 % con la nota oficial del 17 de noviembre de 2026 (foro-1897819).",
+   "valores.perforacion: la guía da seis valores (1,0 a 1,5) sin decir de qué dependen; dice que no cambian con la calidad. A 6★ los cromos traen 1,5.",
+   "Cuántas casillas activa cada grado: la guía dice que los datos traen las 6 en todos."
+  ]
+ },
+ "campos": {
+  "stats": "id del stat en el juego -> cómo lo escribe el juego en el cromo, en español y en inglés.",
+  "valores": "fijas_6e_por_calidad: valor de las casillas fijas (1 y 2) de un cromo 6★ por calidad 1 a 7; azar: valor de las casillas 3 a 6 por casilla (no depende de la calidad ni de la opción); perforacion: la perforación adicional fija de los cinco de Doctor Strange; efecto: el efecto propio (prob %, dura_s, enfria_s).",
+  "obtencion": "código -> de dónde sale, con el texto del juego.",
+  "colecciones": "n (número de colección), nombre del juego (es, en), stat (id) y v (%) del bono al completarla, y cromos: cuántos la forman.",
+  "cromos": "id_juego, nombre del juego (es, en), premium, clase (normal, limitado: libro de arte; exclusivo: de evento), fijas [[stat, valor a 6★ con calidad 7]] (la tercera de un premium vale 5,1 por su casilla; la perforación, 1,5), casillas {3..6: las cinco opciones; «efecto» es el efecto propio}, efecto (el texto del juego y cuándo se activa), obtencion (código), tienda_envio (cristales por cromo de 6★ en la Tienda de envío), selector_premium (está entre los 14 del Selector: cromo de cómic premium), mision_creacion (se elige en la misión de creación de cromo) y coleccion (n, o null)."
+ },
+ "stats": {
+  "4": {
+   "es": "VELOCIDAD ATAQUE ↑",
+   "en": "ATTACK SPEED ↑"
+  },
+  "5": {
+   "es": "VELOCIDAD MOVIMIENTO ↑",
+   "en": "MOVEMENT SPEED ↑"
+  },
+  "6": {
+   "es": "ÍNDICE CRÍTICO ↑",
+   "en": "CRITICAL RATE ↑"
+  },
+  "7": {
+   "es": "DAÑO CRÍTICO ↑",
+   "en": "CRITICAL DAMAGE ↑"
+  },
+  "8": {
+   "es": "ESQUIVA ↑",
+   "en": "DODGE ↑"
+  },
+  "9": {
+   "es": "MEJORA LOS ATAQUES BÁSICOS",
+   "en": "ALL BASIC ATTACKS INCREASE"
+  },
+  "10": {
+   "es": "MEJORA TODAS LAS DEFENSAS BÁSICAS",
+   "en": "ALL BASIC DEFENSES INCREASE"
+  },
+  "11": {
+   "es": "PG MÁX. ↑",
+   "en": "MAX HP ↑"
+  },
+  "19": {
+   "es": "TIEMPO DE RECARGA ↓",
+   "en": "COOLDOWN DURATION ↓"
+  },
+  "20": {
+   "es": "TIEMPO DE CONTROL DE MASAS ↓",
+   "en": "CROWD CONTROL TIME ↓"
+  },
+  "25": {
+   "es": "ATAQUE FÍSICO ↑",
+   "en": "PHYSICAL ATTACK ↑"
+  },
+  "26": {
+   "es": "ATAQUE DE ENERGÍA ↑",
+   "en": "ENERGY ATTACK ↑"
+  },
+  "27": {
+   "es": "DEFENSA FÍSICA ↑",
+   "en": "PHYSICAL DEFENSE ↑"
+  },
+  "28": {
+   "es": "DEFENSA DE ENERGÍA ↑",
+   "en": "ENERGY DEFENSE ↑"
+  },
+  "29": {
+   "es": "ÍNDICE DE RECUPERACIÓN ↑",
+   "en": "RECOVERY RATE ↑"
+  },
+  "32": {
+   "es": "RESISTENCIA AL FUEGO ↑",
+   "en": "FLAME RESIST ↑"
+  },
+  "33": {
+   "es": "RESISTE FRÍO ↑",
+   "en": "COLD RESIST ↑"
+  },
+  "34": {
+   "es": "RESISTE RAYO ↑",
+   "en": "LIGHTNING RESIST ↑"
+  },
+  "35": {
+   "es": "RESISTE VENENO ↑",
+   "en": "POISON RESIST ↑"
+  },
+  "36": {
+   "es": "RESISTE MENTAL ↑",
+   "en": "MIND RESIST ↑"
+  },
+  "38": {
+   "es": "POTENCIADOR DE TODAS LAS RESISTENCIAS",
+   "en": "ALL RESISTANCE ↑"
+  },
+  "103": {
+   "es": "IGNORAR DEFENSA",
+   "en": "IGNORE DEFENSE"
+  },
+  "112": {
+   "es": "IGNORAR ESQUIVAR",
+   "en": "IGNORE DODGE"
+  },
+  "124": {
+   "es": "AUMENTO DE DAÑO DE PERFORACIÓN ADICIONAL",
+   "en": "ADDITIONAL PIERCE DAMAGE INCREASE"
+  }
+ },
+ "valores": {
+  "fijas_6e_por_calidad": [7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 11.0],
+  "azar": {
+   "3": 5.1,
+   "4": 5.4,
+   "5": 5.7,
+   "6": 6.0
+  },
+  "perforacion": [1.0, 1.1, 1.2, 1.3, 1.4, 1.5],
+  "efecto": {
+   "prob": 5,
+   "dura_s": 15,
+   "enfria_s": 45
+  }
+ },
+ "obtencion": {
+  "39": {
+   "es": "Se puede conseguir con un cupón conmemorativo del libro de arte de Marvel Future Fight.",
+   "en": "Can be acquired with a Marvel Future Fight Artbook Commemoration Coupon."
+  },
+  "41": {
+   "es": "Se puede conseguir en el cofre de cromos de la tienda.",
+   "en": "Can be acquired from the Card Chest in the Store."
+  },
+  "67": {
+   "es": "Se consigue en el evento del 3.er aniversario.",
+   "en": "Acquire in the 3-year Anniversary Event."
+  },
+  "83": {
+   "es": "Se consigue en el evento del cuarto aniversario.",
+   "en": "Acquire in the 4-year Anniversary Event."
+  },
+  "100": {
+   "es": "Se consigue en el evento del quinto aniversario.",
+   "en": "Acquire in the 5-Year Anniversary Event."
+  },
+  "129": {
+   "es": "Se consigue en el evento del sexto aniversario.",
+   "en": "Acquire in the 6-Year Anniversary Event."
+  },
+  "131": {
+   "es": "Se consigue en misión dimensional y misión de envío.",
+   "en": "Acquire in Dimension Mission and Dispatch Mission."
+  },
+  "132": {
+   "es": "Se puede conseguir en el cofre de cromos de la tienda y en la misión de envío.",
+   "en": "Can be acquired from Card Chest in the Store and from Dispatch Mission."
+  },
+  "133": {
+   "es": "Se puede conseguir en la Tienda de apoyo de la misión dimensional y en la misión de envío.",
+   "en": "Can be acquired from Support Shop in Dimension Mission and from Dispatch Mission."
+  },
+  "157": {
+   "es": "Se consigue en el evento del séptimo aniversario.",
+   "en": "Acquire in the 7-Year Anniversary Event."
+  },
+  "168": {
+   "es": "Se consigue en el evento del 8.º año.",
+   "en": "Acquire in the 8-Year Anniversary Event."
+  },
+  "192": {
+   "es": "Se consigue en el evento del 9.º año.",
+   "en": "Acquire in the 9-Year Anniversary Event."
+  },
+  "210": {
+   "es": "Se consigue en el evento del décimo aniversario.",
+   "en": "Acquire in the 10-Year Anniversary Event."
+  },
+  "224": {
+   "es": "Se consigue en el evento del décimo aniversario.",
+   "en": "Acquire in the 11-Year Anniversary Event."
+  }
+ },
+ "colecciones": [
+  {
+   "n": 0,
+   "es": "SECRET WARS",
+   "en": "SECRET WARS",
+   "stat": 11,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 1,
+   "es": "GUARDIANES DE LA GALAXIA",
+   "en": "GUARDIANS OF THE GALAXY",
+   "stat": 28,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 2,
+   "es": "CIVIL WAR",
+   "en": "CIVIL WAR",
+   "stat": 25,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 3,
+   "es": "S.H.I.E.L.D.",
+   "en": "S.H.I.E.L.D.",
+   "stat": 26,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 4,
+   "es": "IMPOSIBLES VENGADORES",
+   "en": "UNCANNY AVENGERS",
+   "stat": 112,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 5,
+   "es": "ASOMBROSO SPIDERMAN",
+   "en": "AMAZING SPIDER-MAN",
+   "stat": 9,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 6,
+   "es": "ANT-MAN Y LA AVISPA",
+   "en": "ANT-MAN & WASP",
+   "stat": 7,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 7,
+   "es": "AVENGERS: ORIGINS",
+   "en": "AVENGERS ORIGIN",
+   "stat": 19,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 8,
+   "es": "LA INCREÍBLE GWENPOOL",
+   "en": "THE UNBELIEVABLE GWENPOOL",
+   "stat": 103,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 9,
+   "es": "CHOQUE DE IDEAS",
+   "en": "CLASH OF IDEAS",
+   "stat": 4,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 10,
+   "es": "CASTIGADOR",
+   "en": "PUNISHER",
+   "stat": 29,
+   "v": 3.0,
+   "cromos": 3
+  },
+  {
+   "n": 11,
+   "es": "VIUDA NEGRA",
+   "en": "BLACK WIDOW",
+   "stat": 6,
+   "v": 3.0,
+   "cromos": 3
+  },
+  {
+   "n": 12,
+   "es": "SECRET WARS: 2099",
+   "en": "SECRET WARS: 2099",
+   "stat": 10,
+   "v": 3.0,
+   "cromos": 3
+  },
+  {
+   "n": 13,
+   "es": "LOKI",
+   "en": "LOKI",
+   "stat": 8,
+   "v": 3.0,
+   "cromos": 3
+  },
+  {
+   "n": 14,
+   "es": "SECRET WARS: MUNDO DE BATALLA",
+   "en": "SECRET WARS: BATTLEWORLD",
+   "stat": 20,
+   "v": 3.0,
+   "cromos": 3
+  },
+  {
+   "n": 15,
+   "es": "1872",
+   "en": "1872",
+   "stat": 5,
+   "v": 3.0,
+   "cromos": 2
+  },
+  {
+   "n": 16,
+   "es": "MARVEL ZOMBIES",
+   "en": "MARVEL ZOMBIES",
+   "stat": 27,
+   "v": 3.0,
+   "cromos": 2
+  },
+  {
+   "n": 17,
+   "es": "LIBRO DE ARTE",
+   "en": "ARTBOOK",
+   "stat": 9,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 18,
+   "es": "PANTERA NEGRA",
+   "en": "BLACK PANTHER",
+   "stat": 7,
+   "v": 3.0,
+   "cromos": 2
+  },
+  {
+   "n": 19,
+   "es": "TERCER ANIVERSARIO DE MARVEL FUTURE FIGHT",
+   "en": "MARVEL FUTURE FIGHT’S 3RD ANNIVERSARY",
+   "stat": 20,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 20,
+   "es": "MONSTERS UNLEASHED!",
+   "en": "MONSTERS UNLEASHED!",
+   "stat": 9,
+   "v": 5.0,
+   "cromos": 5
+  },
+  {
+   "n": 21,
+   "es": "CUARTO ANIVERSARIO DE MARVEL FUTURE FIGHT",
+   "en": "MARVEL FUTURE FIGHT 4 YEAR ANNIVERSARY",
+   "stat": 29,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 22,
+   "es": "FUTURE FIGHT FIRSTS",
+   "en": "FUTURE FIGHT FIRSTS",
+   "stat": 4,
+   "v": 3.0,
+   "cromos": 3
+  },
+  {
+   "n": 23,
+   "es": "QUINTO ANIVERSARIO DE MARVEL FUTURE FIGHT",
+   "en": "MARVEL FUTURE FIGHT 5-YEAR ANNIVERSARY",
+   "stat": 8,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 24,
+   "es": "SEXTO ANIVERSARIO DE MARVEL FUTURE FIGHT",
+   "en": "MARVEL FUTURE FIGHT 6-YEAR ANNIVERSARY",
+   "stat": 10,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 25,
+   "es": "Séptimo aniversario de Marvel Future Fight",
+   "en": "MARVEL Future Fight 7-Year Anniversary",
+   "stat": 5,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 26,
+   "es": "8.º aniversario de MARVEL Future Fight",
+   "en": "MARVEL Future Fight 8-Year Anniversary",
+   "stat": 4,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 27,
+   "es": "DOCTOR EXTRAÑO",
+   "en": "DOCTOR STRANGE",
+   "stat": 9,
+   "v": 4.0,
+   "cromos": 5
+  },
+  {
+   "n": 28,
+   "es": "¿Y SI?",
+   "en": "WHAT IF?",
+   "stat": 11,
+   "v": 4.0,
+   "cromos": 5
+  },
+  {
+   "n": 29,
+   "es": "9.º aniversario de MARVEL Future Fight",
+   "en": "MARVEL Future Fight 9-Year Anniversary",
+   "stat": 25,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 30,
+   "es": "MARVEL ZOMBIES: EL REGRESO",
+   "en": "MARVEL ZOMBIES RETURN",
+   "stat": 9,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 31,
+   "es": "10.º aniversario de MARVEL Future Fight",
+   "en": "MARVEL Future Fight 10-Year Anniversary",
+   "stat": 11,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 32,
+   "es": "Clásico de los Fantastic Four",
+   "en": "Fantastic Four Classic",
+   "stat": 26,
+   "v": 3.0,
+   "cromos": 5
+  },
+  {
+   "n": 33,
+   "es": "11.º aniversario de MARVEL Future Fight",
+   "en": "MARVEL Future Fight 11-Year Anniversary",
+   "stat": 26,
+   "v": 1.0,
+   "cromos": 1
+  },
+  {
+   "n": 34,
+   "es": "GUERRA DE REYES",
+   "en": "WAR OF KINGS",
+   "stat": 29,
+   "v": 3.0,
+   "cromos": 5
+  }
+ ],
+ "cromos": [
+  {
+   "id_juego": 1001,
+   "es": "1872 nº. 1",
+   "en": "1872 #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[4, 11.0], [5, 11.0]],
+   "casillas": {
+    "3": [8, 11, 7, 32, 36],
+    "4": [33, 19, 20, 103, "efecto"],
+    "5": [28, 10, 27, 29, 34],
+    "6": [35, 9, 25, 26, 6]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de ataque en 20%. (15 s)",
+    "en": "Attack Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 15
+  },
+  {
+   "id_juego": 1002,
+   "es": "LAS GUERRAS DE LAS ARMADURAS nº. 1",
+   "en": "ARMOR WARS #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[5, 11.0], [36, 11.0]],
+   "casillas": {
+    "3": [11, 8, 7, 32, 33],
+    "4": [4, 103, 19, 20, "efecto"],
+    "5": [27, 10, 28, 29, 34],
+    "6": [35, 9, 25, 26, 6]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 0
+  },
+  {
+   "id_juego": 1003,
+   "es": "CAPITANA MARVEL Y LOS CAROL CORPS nº. 2",
+   "en": "CAPTAIN MARVEL & THE CAROL CORPS #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[6, 11.0], [35, 11.0]],
+   "casillas": {
+    "3": [32, 8, 11, 7, 36],
+    "4": [4, 10, 19, 20, "efecto"],
+    "5": [27, 5, 28, 9, 34],
+    "6": [25, 29, 26, 33, 103]
+   },
+   "efecto": {
+    "es": "Aumenta el daño crítico en 20%. (15 s)",
+    "en": "Critical Damage increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 0
+  },
+  {
+   "id_juego": 1004,
+   "es": "1602 ANGELA CAZADORA DE BRUJAS nº. 1",
+   "en": "1602 WITCH HUNTER ANGELA #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[7, 11.0], [33, 11.0]],
+   "casillas": {
+    "3": [34, 27, 103, 9, 36],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [29, 10, 8, 28, 11],
+    "6": [25, 32, 26, 6, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 0
+  },
+  {
+   "id_juego": 1005,
+   "es": "MARVEL ZOMBIES nº. 2",
+   "en": "MARVEL ZOMBIES #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[8, 11.0], [19, 11.0]],
+   "casillas": {
+    "3": [7, 27, 35, 32, 36],
+    "4": [4, 10, 103, 26, "efecto"],
+    "5": [34, 5, 33, 28, 29],
+    "6": [20, 9, 25, 6, 11]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 131,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 16
+  },
+  {
+   "id_juego": 1006,
+   "es": "SECRET WARS 2099 nº. 1",
+   "en": "SECRET WARS 2099 #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[29, 11.0], [34, 11.0]],
+   "casillas": {
+    "3": [36, 8, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 27, 28, 33, 103],
+    "6": [6, 9, 25, 26, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en la defensa física. (15 s)",
+    "en": "20% increase of Physical Defense. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 12
+  },
+  {
+   "id_juego": 1007,
+   "es": "VIUDA NEGRA nº. 20",
+   "en": "BLACK WIDOW #20",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[10, 11.0], [11, 11.0]],
+   "casillas": {
+    "3": [8, 33, 7, 32, 36],
+    "4": [4, 29, 19, 20, "efecto"],
+    "5": [5, 103, 35, 28, 34],
+    "6": [27, 9, 25, 26, 6]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 11
+  },
+  {
+   "id_juego": 1008,
+   "es": "SECRET WARS: MUNDO DE BATALLA nº. 2",
+   "en": "SECRET WARS: BATTLEWORLD #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [32, 11.0]],
+   "casillas": {
+    "3": [7, 8, 103, 33, 36],
+    "4": [4, 27, 6, 20, "efecto"],
+    "5": [28, 25, 5, 29, 34],
+    "6": [9, 10, 26, 19, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 14
+  },
+  {
+   "id_juego": 1009,
+   "es": "LOKI: AGENTE DE ASGARD nº. 17",
+   "en": "LOKI: AGENT OF ASGARD #17",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [19, 11.0]],
+   "casillas": {
+    "3": [103, 8, 11, 7, 36],
+    "4": [4, 5, 33, 20, "efecto"],
+    "5": [29, 10, 27, 28, 34],
+    "6": [25, 32, 26, 6, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 131,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 13
+  },
+  {
+   "id_juego": 1010,
+   "es": "MODOK ASESINO nº. 1",
+   "en": "M.O.D.O.K. ASSASSIN #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[20, 11.0], [36, 11.0]],
+   "casillas": {
+    "3": [11, 8, 7, 32, 103],
+    "4": [4, 5, 19, 33, "efecto"],
+    "5": [34, 10, 27, 28, 29],
+    "6": [26, 9, 25, 6, 35]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 0
+  },
+  {
+   "id_juego": 1011,
+   "es": "EL CASTIGADOR nº. 19",
+   "en": "THE PUNISHER #19",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[103, 11.0], [4, 11.0]],
+   "casillas": {
+    "3": [36, 8, 11, 7, 32],
+    "4": [33, 5, 19, 20, "efecto"],
+    "5": [10, 27, 28, 29, 34],
+    "6": [6, 9, 25, 26, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 10
+  },
+  {
+   "id_juego": 1012,
+   "es": "1872 nº. 1 (VARIANTE DE SHANER)",
+   "en": "1872 #1 (SHANER VARIANT)",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [6, 11.0]],
+   "casillas": {
+    "3": [19, 8, 11, 32, 36],
+    "4": [4, 5, 7, 20, "efecto"],
+    "5": [27, 10, 28, 29, 34],
+    "6": [35, 9, 33, 26, 103]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 15
+  },
+  {
+   "id_juego": 1013,
+   "es": "THORS nº. 2 (VARIANTE DE KEOWN)",
+   "en": "THORS #2 (KEOWN VARIANT)",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [7, 8, 11, 103, 32],
+    "4": [4, 5, 19, 36, "efecto"],
+    "5": [28, 10, 27, 29, 34],
+    "6": [9, 25, 33, 6, 35]
+   },
+   "efecto": {
+    "es": "Aumenta el daño crítico en 20%. (15 s)",
+    "en": "Critical Damage increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 0
+  },
+  {
+   "id_juego": 1014,
+   "es": "SECRET WARS 2099 nº. 1 (VARIANTE DE LIM)",
+   "en": "SECRET WARS 2099 #1 (LIM VARIANT)",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[4, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [27, 11, 7, 32, 36],
+    "4": [8, 5, 26, 20, "efecto"],
+    "5": [29, 10, 33, 28, 34],
+    "6": [25, 9, 19, 6, 35]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 12
+  },
+  {
+   "id_juego": 1015,
+   "es": "MARVEL ZOMBIES nº. 2 (VARIANTE DE WALTA)",
+   "en": "MARVEL ZOMBIES #2 (WALTA VARIANT)",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[28, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [5, 33, 11, 7, 36],
+    "4": [4, 32, 19, 20, "efecto"],
+    "5": [34, 10, 27, 103, 29],
+    "6": [26, 9, 25, 6, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de esquiva en 20%. (15 s)",
+    "en": "Dodge Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 16
+  },
+  {
+   "id_juego": 1016,
+   "es": "S.H.I.E.L.D. (2014) nº. 1 (VARIANTE DE YOUNG)",
+   "en": "S.H.I.E.L.D. #1 (YOUNG VARIANT)",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[32, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [27, 8, 7, 11, 36],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 33, 28, 29, 34],
+    "6": [6, 9, 25, 26, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 3
+  },
+  {
+   "id_juego": 1017,
+   "es": "S.H.I.E.L.D. (2014) nº. 6 (VARIANTE DE NYC)",
+   "en": "S.H.I.E.L.D. #6 (NYC VARIANT)",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[33, 11.0], [6, 11.0]],
+   "casillas": {
+    "3": [28, 8, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [27, 10, 103, 29, 34],
+    "6": [26, 9, 25, 36, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 3
+  },
+  {
+   "id_juego": 1018,
+   "es": "S.H.I.E.L.D. (2014) nº. 7",
+   "en": "S.H.I.E.L.D. #7",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[34, 11.0], [7, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [26, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "Reduce la duración de mermas 20% (15 s)",
+    "en": "Decreases Debuff Duration by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 3
+  },
+  {
+   "id_juego": 1019,
+   "es": "S.H.I.E.L.D. (2014) nº. 8",
+   "en": "S.H.I.E.L.D. #8",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[35, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [26, 103, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 27, 28, 29, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de ataque en 20%. (15 s)",
+    "en": "Attack Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 3
+  },
+  {
+   "id_juego": 1020,
+   "es": "ASOMBROSO SPIDERMAN (1999) n.º 535",
+   "en": "AMAZING SPIDER-MAN #535",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [4, 11.0]],
+   "casillas": {
+    "3": [25, 8, 7, 33, 32],
+    "4": [34, 5, 19, 20, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [26, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de ataque en 20%. (15 s)",
+    "en": "Attack Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 5
+  },
+  {
+   "id_juego": 1021,
+   "es": "ASOMBROSO SPIDERMAN (1999) n.º 533",
+   "en": "AMAZING SPIDER-MAN #533",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[4, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [26, 103, 11, 7, 32],
+    "4": [35, 5, 19, 20, "efecto"],
+    "5": [10, 27, 28, 29, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de esquiva en 20%. (15 s)",
+    "en": "Dodge Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 5
+  },
+  {
+   "id_juego": 1022,
+   "es": "CIVIL WAR: LA INICIATIVA (2007) n.º 1",
+   "en": "CIVIL WAR: THE INITIATIVE #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[28, 11.0], [7, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [34, 10, 27, 29, 36],
+    "6": [26, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 2
+  },
+  {
+   "id_juego": 1023,
+   "es": "CAPITÁN AMÉRICA (2004) n.º 22",
+   "en": "CAPTAIN AMERICA #22",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[27, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [26, 8, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 35, 28, 29, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 9
+  },
+  {
+   "id_juego": 1024,
+   "es": "CASTIGADOR: DIARIO DE GUERRA (2006) n.º 1",
+   "en": "PUNISHER WAR JOURNAL #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[103, 11.0], [5, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 32],
+    "4": [4, 34, 19, 20, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [26, 9, 7, 6, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 10
+  },
+  {
+   "id_juego": 1025,
+   "es": "CIVIL WAR (2006) n.º 7",
+   "en": "CIVIL WAR #7",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[29, 11.0], [6, 11.0]],
+   "casillas": {
+    "3": [26, 103, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 27, 28, 35, 34],
+    "6": [8, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 9
+  },
+  {
+   "id_juego": 1026,
+   "es": "CIVIL WAR (2006) n.º 4",
+   "en": "CIVIL WAR #4",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [27, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [28, 10, 7, 29, 36],
+    "6": [26, 34, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 2
+  },
+  {
+   "id_juego": 1027,
+   "es": "IRON MAN (2004) n.º 14",
+   "en": "IRON MAN #14",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[29, 11.0], [10, 11.0]],
+   "casillas": {
+    "3": [26, 103, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [8, 27, 28, 35, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 9
+  },
+  {
+   "id_juego": 1028,
+   "es": "CIVIL WAR (2006) n.º 3",
+   "en": "CIVIL WAR #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 32],
+    "4": [4, 5, 34, 7, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [26, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 2
+  },
+  {
+   "id_juego": 1029,
+   "es": "IRON MAN (2004) n.º 13",
+   "en": "IRON MAN #13",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [28, 11.0]],
+   "casillas": {
+    "3": [8, 103, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 27, 35, 29, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 9
+  },
+  {
+   "id_juego": 1030,
+   "es": "LOS VENGADORES (1963) n.º 12",
+   "en": "AVENGERS #12",
+   "premium": true,
+   "clase": "limitado",
+   "fijas": [[19, 11.0], [25, 11.0], [9, 5.1]],
+   "casillas": {
+    "4": [4, 5, 34, 7, "efecto"],
+    "5": [28, 11, 27, 29, 36],
+    "6": [26, 20, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 10%. (15 s)",
+    "en": "Increases all Basic Defenses by 10%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 39,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 17
+  },
+  {
+   "id_juego": 1031,
+   "es": "CAPITÁN AMÉRICA (1968) n.º 109",
+   "en": "CAPTAIN AMERICA #109",
+   "premium": true,
+   "clase": "limitado",
+   "fijas": [[25, 11.0], [27, 11.0], [10, 5.1]],
+   "casillas": {
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [7, 11, 35, 29, 34],
+    "6": [6, 26, 8, 33, 36]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 10%. (15 s)",
+    "en": "Increases all Basic Attacks by 10%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 39,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 17
+  },
+  {
+   "id_juego": 1032,
+   "es": "ASOMBROSO SPIDERMAN (2014) n.º 13",
+   "en": "AMAZING SPIDER-MAN #13",
+   "premium": true,
+   "clase": "limitado",
+   "fijas": [[103, 11.0], [19, 11.0], [9, 5.1]],
+   "casillas": {
+    "4": [4, 5, 34, 7, "efecto"],
+    "5": [28, 8, 27, 29, 36],
+    "6": [26, 11, 32, 6, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 10%. (15 s)",
+    "en": "Increases all Basic Defenses by 10%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 39,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 17
+  },
+  {
+   "id_juego": 1033,
+   "es": "GUARDIANES DE LA GALAXIA (2013) n.º 7",
+   "en": "GUARDIANS OF THE GALAXY #7",
+   "premium": true,
+   "clase": "limitado",
+   "fijas": [[103, 11.0], [26, 11.0], [10, 5.1]],
+   "casillas": {
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [8, 27, 35, 29, 34],
+    "6": [6, 11, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 10%. (15 s)",
+    "en": "Increases all Basic Attacks by 10%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 39,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 17
+  },
+  {
+   "id_juego": 1034,
+   "es": "LOS VENGADORES - TOTALMENTE NUEVOS Y DISTINTOS (2015) n.º 1",
+   "en": "ALL-NEW, ALL-DIFFERENT AVENGERS #1",
+   "premium": true,
+   "clase": "limitado",
+   "fijas": [[25, 11.0], [26, 11.0], [9, 5.1]],
+   "casillas": {
+    "4": [4, 5, 34, 7, "efecto"],
+    "5": [28, 11, 27, 29, 36],
+    "6": [103, 8, 32, 6, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 10%. (15 s)",
+    "en": "Increases all Basic Defenses by 10%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 39,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 17
+  },
+  {
+   "id_juego": 1035,
+   "es": "GUARDIANES DE LA GALAXIA (2013) n.º 1",
+   "en": "GUARDIANS OF THE GALAXY #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[4, 11.0], [35, 11.0]],
+   "casillas": {
+    "3": [26, 8, 11, 7, 32],
+    "4": [27, 5, 19, 20, "efecto"],
+    "5": [10, 103, 28, 29, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 1
+  },
+  {
+   "id_juego": 1036,
+   "es": "STAR-LORD (2015) n.º 2",
+   "en": "STAR-LORD #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[103, 11.0], [6, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 32],
+    "4": [4, 34, 19, 20, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [26, 9, 7, 5, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 131,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 1
+  },
+  {
+   "id_juego": 1037,
+   "es": "GROOT (2015) n.º 5",
+   "en": "GROOT #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[7, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [26, 6, 11, 29, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [10, 27, 28, 35, 34],
+    "6": [8, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 131,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 1
+  },
+  {
+   "id_juego": 1038,
+   "es": "LOS VENGADORES (1963) n.º 318",
+   "en": "AVENGERS #318",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [25, 8, 9, 33, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [28, 10, 7, 29, 36],
+    "6": [26, 34, 27, 6, 35]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 131,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": null
+  },
+  {
+   "id_juego": 1039,
+   "es": "DRAX (2015) n.º 1",
+   "en": "DRAX #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[29, 11.0], [25, 11.0]],
+   "casillas": {
+    "3": [26, 103, 11, 7, 32],
+    "4": [4, 5, 19, 20, "efecto"],
+    "5": [8, 27, 28, 35, 34],
+    "6": [6, 9, 10, 33, 36]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 1
+  },
+  {
+   "id_juego": 1040,
+   "es": "ANIQUILACIÓN: RONAN (2006) n.º 1",
+   "en": "ANNIHILATION: RONAN #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [32, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 20],
+    "4": [4, 5, 34, 7, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [19, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 1
+  },
+  {
+   "id_juego": 1041,
+   "es": "GWENPOOL (2016) n.º 3",
+   "en": "GWENPOOL #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[20, 11.0], [29, 11.0]],
+   "casillas": {
+    "3": [8, 103, 11, 7, 32],
+    "4": [4, 5, 19, 26, "efecto"],
+    "5": [10, 27, 35, 28, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en la defensa de energía. (15 s)",
+    "en": "20% increase of Energy Defense. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 8
+  },
+  {
+   "id_juego": 1042,
+   "es": "IMPOSIBLES VENGADORES (2015) n.º 10",
+   "en": "UNCANNY AVENGERS #10",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[4, 11.0], [7, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 20],
+    "4": [26, 5, 34, 32, "efecto"],
+    "5": [28, 10, 27, 29, 36],
+    "6": [19, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 4
+  },
+  {
+   "id_juego": 1043,
+   "es": "VENGADORES: ORÍGENES DEL HOMBRE HORMIGA Y LA AVISPA (2013) n.º 1",
+   "en": "AVENGERS ORIGINS: ANT-MAN & THE WASP #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[36, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [8, 28, 11, 7, 32],
+    "4": [4, 5, 19, 26, "efecto"],
+    "5": [10, 27, 35, 29, 34],
+    "6": [6, 9, 25, 33, 20]
+   },
+   "efecto": {
+    "es": "Reduce la duración de mermas 20% (15 s)",
+    "en": "Decreases Debuff Duration by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 7
+  },
+  {
+   "id_juego": 1044,
+   "es": "LOS VENGADORES: LA INICIATIVA (2007) n.º 20",
+   "en": "AVENGERS: THE INITIATIVE #20",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[4, 11.0], [10, 11.0]],
+   "casillas": {
+    "3": [25, 8, 11, 33, 20],
+    "4": [26, 5, 34, 7, "efecto"],
+    "5": [28, 32, 27, 29, 36],
+    "6": [19, 9, 103, 6, 35]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 6
+  },
+  {
+   "id_juego": 1045,
+   "es": "HOMBRE HORMIGA (2015) n.º 1",
+   "en": "ANT-MAN #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[7, 11.0], [11, 11.0]],
+   "casillas": {
+    "3": [8, 103, 28, 20, 32],
+    "4": [4, 5, 19, 26, "efecto"],
+    "5": [10, 27, 35, 29, 34],
+    "6": [6, 9, 25, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 6
+  },
+  {
+   "id_juego": 1046,
+   "es": "GUARDIANES DE LA GALAXIA: LA MEJOR HISTORIA SIN DUDA (2015) n.º 1",
+   "en": "GUARDIANS OF THE GALAXY: BEST STORY EVER #1",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [9, 11.0], [4, 5.1]],
+   "casillas": {
+    "4": [7, 19, 6, 32, "efecto"],
+    "5": [26, 28, 103, 8, 36],
+    "6": [10, 25, 27, 20, 34]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": null
+  },
+  {
+   "id_juego": 1047,
+   "es": "CIVIL WAR (2006) n.º 5",
+   "en": "CIVIL WAR #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [7, 5, 6, 27, 35],
+    "4": [19, 20, 8, 36, "efecto"],
+    "5": [11, 10, 33, 26, 34],
+    "6": [9, 32, 27, 29, 28]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 20%. (15 s)",
+    "en": "Increases all Basic Attacks by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 2
+  },
+  {
+   "id_juego": 1048,
+   "es": "CIVIL WAR: PRIMERA LÍNEA (2006) n.º 9",
+   "en": "CIVIL WAR: FRONT LINE #9",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[8, 11.0], [27, 11.0]],
+   "casillas": {
+    "3": [103, 20, 4, 25, 34],
+    "4": [9, 5, 6, 35, "efecto"],
+    "5": [11, 28, 26, 33, 36],
+    "6": [7, 10, 32, 29, 19]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 2
+  },
+  {
+   "id_juego": 1049,
+   "es": "S.H.I.E.L.D. (2014) n.º 12",
+   "en": "S.H.I.E.L.D. #12",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[7, 11.0], [9, 11.0]],
+   "casillas": {
+    "3": [103, 29, 10, 26, 11],
+    "4": [4, 20, 34, 33, "efecto"],
+    "5": [5, 27, 6, 32, 35],
+    "6": [19, 8, 28, 25, 36]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 41,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 3
+  },
+  {
+   "id_juego": 1050,
+   "es": "IMPOSIBLES VENGADORES (2015) n.º 3",
+   "en": "UNCANNY AVENGERS #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[6, 11.0], [28, 11.0]],
+   "casillas": {
+    "3": [19, 8, 103, 33, 34],
+    "4": [9, 20, 7, 36, "efecto"],
+    "5": [11, 27, 5, 25, 35],
+    "6": [4, 10, 26, 29, 32]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 4
+  },
+  {
+   "id_juego": 1051,
+   "es": "IMPOSIBLES VENGADORES (2015) n.º 12",
+   "en": "UNCANNY AVENGERS #12",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[6, 11.0], [27, 11.0]],
+   "casillas": {
+    "3": [103, 11, 10, 29, 32],
+    "4": [9, 8, 28, 33, "efecto"],
+    "5": [19, 4, 25, 35, 34],
+    "6": [7, 20, 26, 5, 36]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 10%. (15 s)",
+    "en": "Increases all Basic Attacks by 10%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 4
+  },
+  {
+   "id_juego": 1052,
+   "es": "IMPOSIBLES VENGADORES (2015) n.º 14",
+   "en": "UNCANNY AVENGERS #14",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [19, 11.0], [103, 5.1]],
+   "casillas": {
+    "4": [25, 11, 6, 34, "efecto"],
+    "5": [20, 26, 28, 7, 33],
+    "6": [4, 10, 29, 32, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 4
+  },
+  {
+   "id_juego": 1053,
+   "es": "IMPOSIBLES VENGADORES (2012) n.º 6",
+   "en": "UNCANNY AVENGERS #6",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [29, 11.0]],
+   "casillas": {
+    "3": [11, 6, 8, 27, 34],
+    "4": [9, 7, 20, 5, "efecto"],
+    "5": [4, 28, 26, 35, 32],
+    "6": [103, 10, 33, 25, 36]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 4
+  },
+  {
+   "id_juego": 1054,
+   "es": "ASOMBROSO SPIDERMAN (1999) n.º 605",
+   "en": "AMAZING SPIDER-MAN #605",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [103, 11.0], [4, 5.1]],
+   "casillas": {
+    "4": [6, 10, 26, 34, "efecto"],
+    "5": [19, 25, 33, 29, 36],
+    "6": [8, 28, 11, 32, 7]
+   },
+   "efecto": {
+    "es": "Reduce la duración de mermas 20% (15 s)",
+    "en": "Decreases Debuff Duration by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 5
+  },
+  {
+   "id_juego": 1055,
+   "es": "ASOMBROSO SPIDERMAN (1999) n.º 653",
+   "en": "AMAZING SPIDER-MAN #653",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[8, 11.0], [9, 11.0]],
+   "casillas": {
+    "3": [4, 10, 19, 26, 36],
+    "4": [11, 20, 5, 25, "efecto"],
+    "5": [103, 28, 6, 33, 34],
+    "6": [32, 7, 29, 27, 35]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 5
+  },
+  {
+   "id_juego": 1056,
+   "es": "ASOMBROSO SPIDERMAN (1999) n.º 674",
+   "en": "AMAZING SPIDER-MAN #674",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [33, 11.0]],
+   "casillas": {
+    "3": [7, 10, 25, 26, 35],
+    "4": [4, 29, 27, 32, "efecto"],
+    "5": [11, 5, 20, 28, 36],
+    "6": [9, 6, 8, 103, 34]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de esquiva en 20%. (15 s)",
+    "en": "Dodge Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 5
+  },
+  {
+   "id_juego": 1057,
+   "es": "HOMBRE HORMIGA (2015) n.º 5",
+   "en": "ANT-MAN #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[10, 11.0], [34, 11.0]],
+   "casillas": {
+    "3": [11, 28, 29, 33, 32],
+    "4": [7, 26, 27, 8, "efecto"],
+    "5": [4, 6, 19, 25, 36],
+    "6": [9, 20, 5, 103, 35]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 6
+  },
+  {
+   "id_juego": 1058,
+   "es": "HOMBRE HORMIGA Y LA AVISPA (2010) n.º 1",
+   "en": "ANT-MAN & THE WASP #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[5, 11.0], [35, 11.0]],
+   "casillas": {
+    "3": [9, 28, 10, 11, 34],
+    "4": [19, 6, 33, 32, "efecto"],
+    "5": [7, 20, 29, 26, 36],
+    "6": [4, 103, 27, 25, 8]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 6
+  },
+  {
+   "id_juego": 1059,
+   "es": "VENGADORES (1998) n.º 71",
+   "en": "AVENGERS #71",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[7, 11.0], [36, 11.0]],
+   "casillas": {
+    "3": [11, 6, 10, 25, 29],
+    "4": [19, 27, 20, 34, "efecto"],
+    "5": [4, 33, 26, 5, 32],
+    "6": [9, 103, 28, 8, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 6
+  },
+  {
+   "id_juego": 1060,
+   "es": "AVENGERS ORIGINS: THOR (2011) n.º 1",
+   "en": "AVENGERS ORIGINS: THOR #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [19, 20, 10, 25, 35],
+    "4": [4, 5, 6, 8, "efecto"],
+    "5": [7, 27, 34, 29, 36],
+    "6": [9, 11, 28, 33, 32]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 7
+  },
+  {
+   "id_juego": 1061,
+   "es": "AVENGERS ORIGINS: LUKE CAGE (2013) n.º 1",
+   "en": "AVENGERS ORIGINS: LUKE CAGE #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [27, 11.0]],
+   "casillas": {
+    "3": [4, 28, 5, 103, 36],
+    "4": [7, 20, 8, 26, "efecto"],
+    "5": [11, 6, 10, 32, 35],
+    "6": [9, 29, 19, 34, 33]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 7
+  },
+  {
+   "id_juego": 1062,
+   "es": "AVENGERS ORIGINS: QUICKSILVER Y LA BRUJA ESCARLATA (2013) n.º 1",
+   "en": "AVENGERS ORIGINS: QUICKSILVER & THE SCARLET WITCH #1",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [103, 11.0], [9, 5.1]],
+   "casillas": {
+    "4": [7, 28, 26, 32, "efecto"],
+    "5": [4, 10, 20, 8, 34],
+    "6": [19, 6, 5, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 7
+  },
+  {
+   "id_juego": 1063,
+   "es": "AVENGERS ORIGINS: VISIÓN (2013) n.º 1",
+   "en": "AVENGERS ORIGINS: VISION #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[32, 11.0], [29, 11.0]],
+   "casillas": {
+    "3": [11, 8, 10, 103, 36],
+    "4": [4, 27, 5, 34, "efecto"],
+    "5": [19, 28, 6, 25, 35],
+    "6": [9, 20, 26, 7, 33]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 7
+  },
+  {
+   "id_juego": 1064,
+   "es": "LA INCREÍBLE GWENPOOL (2016) n.º 1",
+   "en": "THE UNBELIEVABLE GWENPOOL #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [11, 11.0]],
+   "casillas": {
+    "3": [29, 7, 8, 34, 32],
+    "4": [6, 19, 10, 25, "efecto"],
+    "5": [20, 4, 27, 5, 36],
+    "6": [103, 28, 33, 26, 35]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 20%. (15 s)",
+    "en": "Increases all Basic Attacks by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 8
+  },
+  {
+   "id_juego": 1065,
+   "es": "LA INCREÍBLE GWENPOOL (2016) n.º 2",
+   "en": "THE UNBELIEVABLE GWENPOOL #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[20, 11.0], [34, 11.0]],
+   "casillas": {
+    "3": [11, 28, 10, 33, 35],
+    "4": [7, 25, 29, 32, "efecto"],
+    "5": [4, 8, 26, 6, 36],
+    "6": [9, 27, 5, 19, 103]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 8
+  },
+  {
+   "id_juego": 1066,
+   "es": "LA INCREÍBLE GWENPOOL (2016) n.º 6",
+   "en": "THE UNBELIEVABLE GWENPOOL #6",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[33, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [103, 9, 10, 29, 35],
+    "4": [11, 28, 6, 36, "efecto"],
+    "5": [7, 5, 27, 25, 32],
+    "6": [4, 8, 26, 19, 34]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 8
+  },
+  {
+   "id_juego": 1067,
+   "es": "LA INCREÍBLE GWENPOOL (2016) n.º 17",
+   "en": "THE UNBELIEVABLE GWENPOOL #17",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [11, 11.0], [103, 5.1]],
+   "casillas": {
+    "4": [7, 5, 25, 26, "efecto"],
+    "5": [4, 28, 8, 34, 35],
+    "6": [9, 33, 10, 6, 32]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 8
+  },
+  {
+   "id_juego": 1068,
+   "es": "CAPITÁN AMÉRICA (2004) n.º 24",
+   "en": "CAPTAIN AMERICA #24",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [19, 11.0]],
+   "casillas": {
+    "3": [4, 5, 27, 8, 34],
+    "4": [20, 6, 11, 26, "efecto"],
+    "5": [103, 7, 10, 29, 32],
+    "6": [9, 28, 36, 33, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 41,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 9
+  },
+  {
+   "id_juego": 1069,
+   "es": "CASTIGADOR (2004) n.º 60",
+   "en": "PUNISHER #60",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [11, 11.0]],
+   "casillas": {
+    "3": [19, 28, 27, 29, 35],
+    "4": [4, 5, 10, 32, "efecto"],
+    "5": [103, 20, 6, 26, 34],
+    "6": [9, 7, 8, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 10
+  },
+  {
+   "id_juego": 1070,
+   "es": "VIUDA NEGRA (2016) n.º 1",
+   "en": "BLACK WIDOW #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[5, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [7, 8, 10, 26, 35],
+    "4": [11, 25, 29, 32, "efecto"],
+    "5": [103, 28, 27, 6, 34],
+    "6": [9, 4, 19, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 11
+  },
+  {
+   "id_juego": 1071,
+   "es": "VIUDA NEGRA (2016) n.º 10",
+   "en": "BLACK WIDOW #10",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [11, 11.0], [9, 5.1]],
+   "casillas": {
+    "4": [7, 25, 29, 32, "efecto"],
+    "5": [26, 28, 27, 6, 34],
+    "6": [103, 4, 20, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 11
+  },
+  {
+   "id_juego": 1072,
+   "es": "LOKI (2004) n.º 2",
+   "en": "LOKI #2",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [103, 11.0], [19, 5.1]],
+   "casillas": {
+    "4": [4, 6, 11, 34, "efecto"],
+    "5": [7, 20, 33, 29, 32],
+    "6": [9, 28, 27, 5, 35]
+   },
+   "efecto": {
+    "es": "Reduce la duración de mermas 20% (15 s)",
+    "en": "Decreases Debuff Duration by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 13
+  },
+  {
+   "id_juego": 1073,
+   "es": "LOKI (2010) n.º 1",
+   "en": "LOKI #1",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [4, 11.0], [103, 5.1]],
+   "casillas": {
+    "4": [11, 29, 32, 36, "efecto"],
+    "5": [26, 20, 28, 5, 8],
+    "6": [9, 27, 6, 34, 35]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 13
+  },
+  {
+   "id_juego": 1074,
+   "es": "SECRET WARS: MUNDO DE BATALLA (2015) n.º 1",
+   "en": "SECRET WARS: BATTLEWORLD #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[10, 11.0], [27, 11.0]],
+   "casillas": {
+    "3": [19, 20, 6, 4, 35],
+    "4": [11, 5, 8, 34, "efecto"],
+    "5": [25, 7, 28, 29, 32],
+    "6": [9, 103, 26, 33, 36]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de esquiva en 20%. (15 s)",
+    "en": "Dodge Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 14
+  },
+  {
+   "id_juego": 1075,
+   "es": "SECRET WARS: MUNDO DE BATALLA (2015) n.º 3",
+   "en": "SECRET WARS: BATTLEWORLD #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [35, 11.0]],
+   "casillas": {
+    "3": [11, 5, 4, 29, 32],
+    "4": [19, 27, 20, 6, "efecto"],
+    "5": [103, 8, 10, 26, 34],
+    "6": [9, 7, 28, 33, 36]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 14
+  },
+  {
+   "id_juego": 1076,
+   "es": "SECRET WARS 2099 (2015) n.º 2",
+   "en": "SECRET WARS 2099 #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[36, 11.0], [29, 11.0]],
+   "casillas": {
+    "3": [4, 26, 28, 33, 27],
+    "4": [11, 5, 8, 35, "efecto"],
+    "5": [19, 20, 6, 103, 32],
+    "6": [9, 25, 10, 7, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 132,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 12
+  },
+  {
+   "id_juego": 1077,
+   "es": "PANTERA NEGRA, 35",
+   "en": "BLACK PANTHER #35",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [103, 11.0], [19, 5.1]],
+   "casillas": {
+    "4": [4, 6, 11, 34, "efecto"],
+    "5": [7, 20, 33, 29, 32],
+    "6": [9, 28, 27, 5, 35]
+   },
+   "efecto": {
+    "es": "Reduce la duración de mermas 20% (15 s)",
+    "en": "Decreases Debuff Duration by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 18
+  },
+  {
+   "id_juego": 1078,
+   "es": "PANTERA NEGRA, 166",
+   "en": "BLACK PANTHER #166",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [19, 11.0], [7, 5.1]],
+   "casillas": {
+    "4": [25, 11, 6, 34, "efecto"],
+    "5": [20, 26, 28, 103, 33],
+    "6": [4, 10, 29, 32, 35]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 18
+  },
+  {
+   "id_juego": 1079,
+   "es": "X-MEN UNLIMITED, N.º 8",
+   "en": "X-MEN UNLIMITED #8",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [5, 11.0]],
+   "casillas": {
+    "3": [11, 35, 4, 29, 32],
+    "4": [19, 27, 20, 6, "efecto"],
+    "5": [103, 8, 10, 26, 34],
+    "6": [9, 7, 28, 33, 36]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 133,
+   "tienda_envio": 1100,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": null
+  },
+  {
+   "id_juego": 1080,
+   "es": "MARVEL FUTURE FIGHT, 1",
+   "en": "MARVEL FUTURE FIGHT #1",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[103, 11.0], [11, 11.0]],
+   "casillas": {
+    "3": [9, 8, 36, 7, 32],
+    "4": [19, 5, 33, 20, "efecto"],
+    "5": [10, 27, 25, 26, 34],
+    "6": [6, 4, 28, 29, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 67,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 19
+  },
+  {
+   "id_juego": 1081,
+   "es": "LOS NUEVOS VENGADORES, 9",
+   "en": "NEW AVENGERS #9",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[103, 11.0], [11, 11.0], [7, 5.1]],
+   "casillas": {
+    "4": [10, 27, 20, 6, "efecto"],
+    "5": [9, 8, 32, 26, 34],
+    "6": [19, 4, 28, 33, 36]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": null
+  },
+  {
+   "id_juego": 1082,
+   "es": "MONSTERS UNLEASHED (2017) #1",
+   "en": "MONSTERS UNLEASHED (2017) #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [7, 5, 20, 35, 32],
+    "4": [4, 19, 11, 29, "efecto"],
+    "5": [6, 36, 27, 28, 33],
+    "6": [9, 10, 26, 103, 34]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 20
+  },
+  {
+   "id_juego": 1083,
+   "es": "MONSTERS UNLEASHED (2017) #2",
+   "en": "MONSTERS UNLEASHED (2017) #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [5, 8, 10, 103, 32],
+    "4": [4, 19, 11, 35, "efecto"],
+    "5": [6, 7, 27, 28, 33],
+    "6": [29, 25, 26, 36, 34]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 20
+  },
+  {
+   "id_juego": 1084,
+   "es": "MONSTERS UNLEASHED (2017) #3",
+   "en": "MONSTERS UNLEASHED (2017) #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [25, 11.0]],
+   "casillas": {
+    "3": [28, 8, 26, 35, 32],
+    "4": [4, 19, 29, 103, "efecto"],
+    "5": [6, 7, 27, 5, 33],
+    "6": [10, 9, 20, 36, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 20
+  },
+  {
+   "id_juego": 1085,
+   "es": "MONSTERS UNLEASHED (2017) #4",
+   "en": "MONSTERS UNLEASHED (2017) #4",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [26, 11.0]],
+   "casillas": {
+    "3": [103, 8, 20, 6, 32],
+    "4": [4, 19, 29, 5, "efecto"],
+    "5": [7, 27, 28, 36, 33],
+    "6": [9, 10, 25, 35, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 20
+  },
+  {
+   "id_juego": 1086,
+   "es": "MONSTERS UNLEASHED (2017) #5",
+   "en": "MONSTERS UNLEASHED (2017) #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [25, 11.0]],
+   "casillas": {
+    "3": [26, 8, 20, 35, 32],
+    "4": [4, 11, 29, 103, "efecto"],
+    "5": [6, 7, 27, 28, 33],
+    "6": [9, 10, 36, 5, 34]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 20%. (15 s)",
+    "en": "Increases all Basic Attacks by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 20
+  },
+  {
+   "id_juego": 1087,
+   "es": "X-FORCE N.º 24",
+   "en": "X-FORCE #24",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[8, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [26, 11, 20, 6, 32],
+    "4": [4, 19, 29, 5, "efecto"],
+    "5": [7, 27, 28, 36, 33],
+    "6": [9, 10, 25, 35, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en la probabilidad de recuperación. (15 s)",
+    "en": "20% increase of Recovery Rate. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 131,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": null
+  },
+  {
+   "id_juego": 1088,
+   "es": "MARVEL FUTURE FIGHT N.º 2",
+   "en": "MARVEL FUTURE FIGHT #2",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[29, 11.0], [26, 11.0]],
+   "casillas": {
+    "3": [103, 11, 20, 6, 32],
+    "4": [4, 19, 8, 5, "efecto"],
+    "5": [7, 27, 28, 36, 33],
+    "6": [9, 10, 25, 35, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 83,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 21
+  },
+  {
+   "id_juego": 1089,
+   "es": "UNCANNY X-MEN (2018) N.º 8",
+   "en": "UNCANNY X-MEN (2018) #8",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [26, 11, 20, 6, 32],
+    "4": [4, 19, 29, 5, "efecto"],
+    "5": [7, 27, 28, 36, 33],
+    "6": [103, 10, 25, 35, 34]
+   },
+   "efecto": {
+    "es": "Aumenta el daño crítico en 20%. (15 s)",
+    "en": "Critical Damage increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con crítico con una probabilidad de 5%",
+    "cuando_en": "5% rate when dealing critical attack"
+   },
+   "obtencion": 131,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": null
+  },
+  {
+   "id_juego": 1090,
+   "es": "FUTURE FIGHT FIRSTS: CRESCENT E IO",
+   "en": "FUTURE FIGHT FIRSTS: CRESCENT & IO",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [10, 11.0], [11, 5.1]],
+   "casillas": {
+    "4": [4, 32, 29, 103, "efecto"],
+    "5": [6, 7, 27, 28, 33],
+    "6": [25, 8, 26, 20, 34]
+   },
+   "efecto": {
+    "es": "Penetración de defensa 20% (15 s)",
+    "en": "20% Ignore Defense (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 22
+  },
+  {
+   "id_juego": 1091,
+   "es": "FUTURE FIGHT FIRSTS: LUNA SNOW",
+   "en": "FUTURE FIGHT FIRSTS: LUNA SNOW",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [9, 11.0], [6, 5.1]],
+   "casillas": {
+    "4": [25, 19, 33, 103, "efecto"],
+    "5": [4, 34, 11, 32, 7],
+    "6": [10, 36, 29, 5, 27]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 22
+  },
+  {
+   "id_juego": 1092,
+   "es": "FUTURE FIGHT FIRSTS: WHITE FOX",
+   "en": "FUTURE FIGHT FIRSTS: WHITE FOX",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [103, 11.0], [7, 5.1]],
+   "casillas": {
+    "4": [4, 32, 10, 5, "efecto"],
+    "5": [8, 29, 27, 6, 34],
+    "6": [25, 20, 26, 28, 11]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 132,
+   "tienda_envio": 3450,
+   "selector_premium": true,
+   "mision_creacion": true,
+   "coleccion": 22
+  },
+  {
+   "id_juego": 1093,
+   "es": "GUERRA DE LOS REINOS: NUEVOS AGENTES DE ATLAS",
+   "en": "WAR OF THE REALMS: NEW AGENTS OF ATLAS",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[19, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [26, 11, 20, 25, 32],
+    "4": [4, 6, 9, 5, "efecto"],
+    "5": [7, 27, 28, 29, 103],
+    "6": [33, 10, 36, 35, 34]
+   },
+   "efecto": {
+    "es": "Reduce tiempo de recarga de habilidad 20% (15 s)",
+    "en": "Decreases Skill Cooldown by 20%. (15 s)",
+    "cuando_es": "al esquivar con una probabilidad del 5 %",
+    "cuando_en": "5% rate when dodging"
+   },
+   "obtencion": 100,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 23
+  },
+  {
+   "id_juego": 1094,
+   "es": "AGENTES DE ATLAS (2019) Nº. 1 (VARIANTE DE YOUNG)",
+   "en": "AGENTS OF ATLAS (2019) #1 (YOUNG VARIANT)",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[19, 11.0], [29, 11.0]],
+   "casillas": {
+    "3": [26, 11, 20, 25, 33],
+    "4": [4, 6, 9, 5, "efecto"],
+    "5": [7, 27, 28, 8, 32],
+    "6": [10, 36, 35, 34, 103]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 129,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 24
+  },
+  {
+   "id_juego": 1095,
+   "es": "FUTURE FIGHT FIRSTS: LUNA SNOW (VARIANTE PERSUASORA)",
+   "en": "FUTURE FIGHT FIRSTS: LUNA SNOW (COAX VARIANT)",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[9, 11.0], [29, 11.0]],
+   "casillas": {
+    "3": [26, 11, 8, 25, 34],
+    "4": [7, 6, 103, 5, "efecto"],
+    "5": [10, 27, 28, 20, 32],
+    "6": [4, 36, 35, 33, 19]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de ataque en 20%. (15 s)",
+    "en": "Attack Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 157,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 25
+  },
+  {
+   "id_juego": 1096,
+   "es": "DIVISIÓN TIGRE (2022) N.º 1 (VARIANTE ARTGERM)",
+   "en": "TIGER DIVISION (2022) #1 (ARTGERM VARIANT)",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[19, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [26, 11, 20, 25, 33],
+    "4": [6, 4, 5, 36, "efecto"],
+    "5": [7, 27, 28, 8, 32],
+    "6": [10, 9, 29, 34, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 168,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 26
+  },
+  {
+   "id_juego": 1097,
+   "es": "DOCTOR EXTRAÑO: EL JURAMENTO N.º 2",
+   "en": "DOCTOR STRANGE: THE OATH #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [124, 1.5]],
+   "casillas": {
+    "3": [4, 19, 11, 103, 32],
+    "4": [5, 8, 10, 35, "efecto"],
+    "5": [29, 25, 26, 36, 34],
+    "6": [6, 7, 27, 28, 33]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 27
+  },
+  {
+   "id_juego": 1098,
+   "es": "DOCTOR EXTRAÑO (2023) N.º 5",
+   "en": "DOCTOR STRANGE (2023) #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[124, 1.5], [25, 11.0]],
+   "casillas": {
+    "3": [6, 7, 27, 5, 33],
+    "4": [4, 19, 29, 103, "efecto"],
+    "5": [28, 8, 26, 36, 32],
+    "6": [10, 9, 11, 34, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 27
+  },
+  {
+   "id_juego": 1099,
+   "es": "DOCTOR EXTRAÑO (2018) N.º 2",
+   "en": "DOCTOR STRANGE (2018) #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [124, 1.5]],
+   "casillas": {
+    "3": [103, 8, 20, 6, 32],
+    "4": [4, 19, 29, 5, "efecto"],
+    "5": [7, 27, 28, 36, 33],
+    "6": [9, 10, 25, 35, 34]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 27
+  },
+  {
+   "id_juego": 1100,
+   "es": "DOCTOR EXTRAÑO (2018) N.º 10",
+   "en": "DOCTOR STRANGE (2018) #10",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[124, 1.5], [19, 11.0]],
+   "casillas": {
+    "3": [4, 11, 29, 103, 32],
+    "4": [6, 7, 27, 28, "efecto"],
+    "5": [26, 8, 20, 35, 33],
+    "6": [9, 10, 36, 6, 34]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 20%. (15 s)",
+    "en": "Increases all Basic Attacks by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 27
+  },
+  {
+   "id_juego": 1101,
+   "es": "DOCTOR EXTRAÑO: CONDENACIÓN (2018) N.º 4",
+   "en": "DOCTOR STRANGE: DAMNATION (2018) #4",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[103, 11.0], [124, 1.5]],
+   "casillas": {
+    "3": [9, 8, 20, 6, 36],
+    "4": [4, 19, 29, 5, "efecto"],
+    "5": [7, 27, 28, 34, 33],
+    "6": [11, 10, 25, 35, 32]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 27
+  },
+  {
+   "id_juego": 1102,
+   "es": "MOTORISTA FANTASMA DE ¿Y SI? (2018) N.º 1",
+   "en": "WHAT IF? GHOST RIDER (2018) #1",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [25, 11.0], [10, 5.1]],
+   "casillas": {
+    "4": [4, 27, 28, 35, "efecto"],
+    "5": [6, 29, 20, 7, 33],
+    "6": [5, 103, 8, 19, 34]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 20%. (15 s)",
+    "en": "Increases all Basic Attacks by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 28
+  },
+  {
+   "id_juego": 1103,
+   "es": "MAGIK DE ¿Y SI? (2018) N.º 1",
+   "en": "WHAT IF? MAGIK (2018) #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [4, 11, 25, 9, 35],
+    "4": [6, 7, 5, 20, "efecto"],
+    "5": [29, 36, 10, 28, 33],
+    "6": [19, 27, 8, 32, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 28
+  },
+  {
+   "id_juego": 1104,
+   "es": "SPIDERMAN DE ¿Y SI? (2018) N.º 1",
+   "en": "WHAT IF? SPIDER-MAN (2018) #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [7, 11.0]],
+   "casillas": {
+    "3": [4, 9, 20, 8, 35],
+    "4": [6, 11, 32, 29, "efecto"],
+    "5": [5, 19, 27, 28, 33],
+    "6": [103, 10, 26, 36, 34]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 28
+  },
+  {
+   "id_juego": 1105,
+   "es": "CASTIGADOR DE ¿Y SI? (2018) N.º 1",
+   "en": "WHAT IF? THE PUNISHER (2018) #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [27, 11.0]],
+   "casillas": {
+    "3": [6, 103, 25, 9, 35],
+    "4": [5, 4, 26, 8, "efecto"],
+    "5": [20, 29, 28, 32, 33],
+    "6": [11, 36, 7, 10, 34]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 28
+  },
+  {
+   "id_juego": 1106,
+   "es": "THOR DE ¿Y SI? (2018) N.º 1",
+   "en": "WHAT IF? THOR (2018) #1",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[20, 11.0], [28, 11.0]],
+   "casillas": {
+    "3": [8, 26, 25, 29, 35],
+    "4": [6, 19, 5, 7, "efecto"],
+    "5": [9, 4, 27, 32, 33],
+    "6": [11, 10, 103, 36, 34]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 28
+  },
+  {
+   "id_juego": 1107,
+   "es": "MARVEL'S VOICES INFINITY COMIC (2022) N.º 33",
+   "en": "MARVEL'S VOICES INFINITY COMIC (2022) #33",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[25, 11.0], [26, 11.0]],
+   "casillas": {
+    "3": [29, 11, 8, 9, 34],
+    "4": [7, 6, 103, 5, "efecto"],
+    "5": [10, 27, 28, 20, 32],
+    "6": [4, 36, 35, 33, 19]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de movimiento en 20%. (15 s)",
+    "en": "Movement Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 192,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 29
+  },
+  {
+   "id_juego": 1108,
+   "es": "MARVEL ZOMBIES: EL REGRESO (2009) N.º1",
+   "en": "MARVEL ZOMBIES RETURN (2009) #1",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [11, 11.0], [112, 5.1]],
+   "casillas": {
+    "4": [10, 32, 28, 25, "efecto"],
+    "5": [4, 26, 8, 34, 36],
+    "6": [20, 33, 6, 29, 27]
+   },
+   "efecto": {
+    "es": "Aumenta los PG en 20% (15 s)",
+    "en": "HP increases by 20% (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 30
+  },
+  {
+   "id_juego": 1109,
+   "es": "MARVEL ZOMBIES: EL REGRESO (2009) N.º2",
+   "en": "MARVEL ZOMBIES RETURN (2009) #2",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [7, 9, 19, 11, 5],
+    "4": [10, 33, 28, 35, "efecto"],
+    "5": [6, 20, 4, 36, 8],
+    "6": [32, 26, 34, 27, 29]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 30
+  },
+  {
+   "id_juego": 1110,
+   "es": "MARVEL ZOMBIES: EL REGRESO (2009) N.º3",
+   "en": "MARVEL ZOMBIES RETURN (2009) #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[10, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [32, 4, 26, 25, 8],
+    "4": [6, 35, 34, 28, "efecto"],
+    "5": [29, 11, 27, 103, 38],
+    "6": [5, 33, 36, 7, 19]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 30
+  },
+  {
+   "id_juego": 1111,
+   "es": "MARVEL ZOMBIES: EL REGRESO (2009) N.º4",
+   "en": "MARVEL ZOMBIES RETURN (2009) #4",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[19, 11.0], [9, 11.0]],
+   "casillas": {
+    "3": [103, 4, 35, 8, 34],
+    "4": [32, 27, 29, 10, "efecto"],
+    "5": [5, 20, 6, 28, 36],
+    "6": [33, 11, 25, 7, 26]
+   },
+   "efecto": {
+    "es": "Aumenta la probabilidad de crítico en 20%. (15 s)",
+    "en": "Critical Rate increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 30
+  },
+  {
+   "id_juego": 1112,
+   "es": "MARVEL ZOMBIES: EL REGRESO (2009) N.º5",
+   "en": "MARVEL ZOMBIES RETURN (2009) #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [11, 11.0]],
+   "casillas": {
+    "3": [9, 5, 36, 8, 32],
+    "4": [34, 29, 4, 35, "efecto"],
+    "5": [20, 28, 19, 10, 103],
+    "6": [25, 27, 33, 7, 6]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 30
+  },
+  {
+   "id_juego": 1113,
+   "es": "LA MUERTE DEL DOCTOR EXTRAÑO: WHITE FOX (2021) N.º 1",
+   "en": "DEATH OF DOCTOR STRANGE: WHITE FOX (2021) #1",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[25, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [9, 11, 6, 29, 33],
+    "4": [26, 103, 7, 5, "efecto"],
+    "5": [10, 4, 27, 28, 20],
+    "6": [38, 36, 35, 34, 32]
+   },
+   "efecto": {
+    "es": "20% de aumento en la probabilidad de recuperación. (15 s)",
+    "en": "20% increase of Recovery Rate. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 210,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 31
+  },
+  {
+   "id_juego": 1114,
+   "es": "FANTASTIC FOUR (1961) N.º 49",
+   "en": "FANTASTIC FOUR (1961) #49",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[9, 11.0], [10, 11.0], [19, 5.1]],
+   "casillas": {
+    "4": [28, 4, 11, 33, "efecto"],
+    "5": [20, 6, 5, 103, 32],
+    "6": [29, 27, 7, 8, 38]
+   },
+   "efecto": {
+    "es": "Aumenta el ataque de instinto en 20% (15 s)",
+    "en": "Increases Instinct Attack by 20% (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 32
+  },
+  {
+   "id_juego": 1115,
+   "es": "FANTASTIC FOUR (1961) N.º 5",
+   "en": "FANTASTIC FOUR (1961) #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [103, 11.0]],
+   "casillas": {
+    "3": [20, 7, 11, 33, 35],
+    "4": [4, 5, 28, 32, "efecto"],
+    "5": [27, 6, 10, 8, 36],
+    "6": [19, 29, 9, 25, 34]
+   },
+   "efecto": {
+    "es": "Aumenta el daño crítico en 20%. (15 s)",
+    "en": "Critical Damage increases by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 32
+  },
+  {
+   "id_juego": 1116,
+   "es": "FANTASTIC FOUR (1961) N.º 46",
+   "en": "FANTASTIC FOUR (1961) #46",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [20, 11.0]],
+   "casillas": {
+    "3": [5, 19, 27, 4, 112],
+    "4": [103, 32, 28, 26, "efecto"],
+    "5": [8, 11, 9, 10, 29],
+    "6": [7, 33, 6, 36, 35]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque físico. (15 s)",
+    "en": "20% increase of Physical Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 32
+  },
+  {
+   "id_juego": 1117,
+   "es": "FANTASTIC FOUR (1961) N.º 4",
+   "en": "FANTASTIC FOUR (1961) #4",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[11, 11.0], [26, 11.0]],
+   "casillas": {
+    "3": [19, 10, 28, 9, 34],
+    "4": [103, 27, 5, 36, "efecto"],
+    "5": [4, 8, 29, 35, 32],
+    "6": [7, 6, 20, 25, 33]
+   },
+   "efecto": {
+    "es": "20% de aumento en el ataque de energía. (15 s)",
+    "en": "20% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 32
+  },
+  {
+   "id_juego": 1118,
+   "es": "FANTASTIC FOUR (1961) N.º 52",
+   "en": "FANTASTIC FOUR (1961) #52",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[36, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [26, 10, 20, 7, 6],
+    "4": [28, 103, 9, 5, "efecto"],
+    "5": [34, 27, 35, 4, 19],
+    "6": [11, 33, 32, 29, 25]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 32
+  },
+  {
+   "id_juego": 1119,
+   "es": "MARVEL RIVALS INFINITY COMIC (2024) N.º 19",
+   "en": "MARVEL RIVALS INFINITY COMIC (2024) #19",
+   "premium": false,
+   "clase": "exclusivo",
+   "fijas": [[26, 11.0], [8, 11.0]],
+   "casillas": {
+    "3": [9, 11, 6, 29, 33],
+    "4": [25, 103, 7, 5, "efecto"],
+    "5": [10, 4, 27, 28, 20],
+    "6": [38, 36, 35, 34, 32]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de ataque en 20%. (15 s)",
+    "en": "Attack Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 224,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 33
+  },
+  {
+   "id_juego": 1120,
+   "es": "GUERRA DE REYES (2009) N.º 1",
+   "en": "WAR OF KINGS (2009) #1",
+   "premium": true,
+   "clase": "normal",
+   "fijas": [[26, 11.0], [6, 11.0], [11, 5.1]],
+   "casillas": {
+    "4": [27, 7, 33, 20, "efecto"],
+    "5": [25, 10, 5, 19, 35],
+    "6": [103, 28, 4, 8, 9]
+   },
+   "efecto": {
+    "es": "30% de aumento en el ataque de energía. (15 s)",
+    "en": "30% increase of Energy Attack. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 34
+  },
+  {
+   "id_juego": 1121,
+   "es": "GUERRA DE REYES (2009) N.º 3",
+   "en": "WAR OF KINGS (2009) #3",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[8, 11.0], [19, 11.0]],
+   "casillas": {
+    "3": [25, 10, 34, 6, 29],
+    "4": [4, 26, 9, 32, "efecto"],
+    "5": [36, 7, 11, 5, 33],
+    "6": [35, 27, 28, 103, 20]
+   },
+   "efecto": {
+    "es": "Mejora todos los ataques básicos en 20%. (15 s)",
+    "en": "Increases all Basic Attacks by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 34
+  },
+  {
+   "id_juego": 1122,
+   "es": "GUERRA DE REYES (2009) N.º 4",
+   "en": "WAR OF KINGS (2009) #4",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[25, 11.0], [26, 11.0]],
+   "casillas": {
+    "3": [7, 10, 8, 32, 29],
+    "4": [6, 28, 9, 34, "efecto"],
+    "5": [103, 35, 4, 20, 27],
+    "6": [36, 5, 33, 11, 19]
+   },
+   "efecto": {
+    "es": "Aumenta la velocidad de ataque en 20%. (15 s)",
+    "en": "Attack Speed increases by 20%. (15 s)",
+    "cuando_es": "cuando te impactan con una probabilidad del 5 %",
+    "cuando_en": "5% rate when hit"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 34
+  },
+  {
+   "id_juego": 1123,
+   "es": "GUERRA DE REYES (2009) N.º 5",
+   "en": "WAR OF KINGS (2009) #5",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[103, 11.0], [9, 11.0]],
+   "casillas": {
+    "3": [35, 26, 25, 20, 27],
+    "4": [33, 4, 29, 28, "efecto"],
+    "5": [6, 19, 7, 8, 10],
+    "6": [32, 36, 5, 34, 11]
+   },
+   "efecto": {
+    "es": "Mejora todas las defensas básicas en 20%. (15 s)",
+    "en": "Increases all Basic Defenses by 20%. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 34
+  },
+  {
+   "id_juego": 1124,
+   "es": "GUERRA DE REYES (2009) N.º 6",
+   "en": "WAR OF KINGS (2009) #6",
+   "premium": false,
+   "clase": "normal",
+   "fijas": [[29, 11.0], [19, 11.0]],
+   "casillas": {
+    "3": [28, 103, 27, 35, 33],
+    "4": [4, 32, 10, 20, "efecto"],
+    "5": [9, 5, 34, 8, 7],
+    "6": [6, 25, 36, 11, 26]
+   },
+   "efecto": {
+    "es": "20% de aumento en los PG. (15 s)",
+    "en": "20% increase of HP. (15 s)",
+    "cuando_es": "cuando atacas con una probabilidad de 5 %",
+    "cuando_en": "5% chance when attacking"
+   },
+   "obtencion": 41,
+   "tienda_envio": null,
+   "selector_premium": false,
+   "mision_creacion": false,
+   "coleccion": 34
+  }
+ ]
+}
