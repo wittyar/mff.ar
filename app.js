@@ -41,6 +41,8 @@ const CROMOS         = window.MFF_CROMOS;         // cromos de cómic (scripts/c
 // El juego tiene dos mazos de cromos de 5 lugares, y un mismo cromo va una sola vez en cada uno (la guía del juego, «Equipar
 // cromo de cómic»: «Only one of a card type can be equipped at a time»; en coreano, «같은 종류의 카드는 1개만»).
 const MAZOS = 2, LUGARES_MAZO = 5, GRADOS_CROMO = ['3', '4', '5', '6'];
+// La calidad de un cromo va de 1 a 7 (mffguide: las fijas de un 6★ valen de 7,5 a 11%); la capa la anota por lugar (cal).
+const CALIDADES_CROMO = 7;
 const DEFAULT_ROWS   = window.MFF_DEFAULT_TIER_ROWS || [{id:'S',label:'S'},{id:'A',label:'A'},{id:'B',label:'B'},{id:'C',label:'C'},{id:'D',label:'D'}];
 const SLOT_ORDER     = ['Leader Skill','Passive','Tier-2 Passive','Uniform Passive',
                         'Active 1','Active 2','Active 3','Active 4','Active 5','Active Ult','Striker Skill'];
@@ -67,7 +69,7 @@ function blankUser () {
     ruta: {},                         // personaje -> id del último paso de la hoja de ruta que ya hizo
     topes: {},                        // personaje -> {stat: {v: pantalla, b: buffs}} de la calculadora de topes
     mesa: { members: [], modeId: '', abxDia: 1, abxDif: '', name: '' },  // la mesa de trabajo (MESA): claves, el líder primero
-    cromos: { mazos: [[], []] },      // tus dos mazos de cromos (MAZOS): en cada uno, hasta 5 {id del cromo, op: {grado: opción}}
+    cromos: { mazos: [[], []] },      // tus dos mazos de cromos (MAZOS): en cada uno, hasta 5 {id del cromo, op: {grado: opción}, cal?: calidad 1 a 7}
     prefs: { lang:'es', view:'grid', sort:'lanz', dir:1, filtersOpen:false, ayuda:true, mesa:false, refList: (TIERLISTS_SEED[0]||{}).id || '',
              kind:'todo', objetivo:'', atributo:'', para:'', restr:'',
              filters:{ c:[], r:[], t:[], f:[], ins:[], race:[], origin:[], ab:[], lid:[], sop:[], art:[] },
@@ -116,6 +118,7 @@ function validarMazos (cr) {
     for (const x of m) {
       if (!x || typeof x.id !== 'string' || !x.op || typeof x.op !== 'object' || Array.isArray(x.op)) mal(`un lugar del mazo ${i + 1} no es {id, op}`);
       for (const [g, o] of Object.entries(x.op)) if (!GRADOS_CROMO.includes(g) || typeof o !== 'string') mal(`la opción anotada ${g}: ${o} del cromo ${x.id}`);
+      if ('cal' in x && !(Number.isInteger(x.cal) && x.cal >= 1 && x.cal <= CALIDADES_CROMO)) mal(`la calidad anotada ${x.cal} del cromo ${x.id}`);
     }
     if (new Set(m.map(x => x.id)).size !== m.length) mal(`un cromo está dos veces en el mazo ${i + 1}`);
   });
@@ -690,8 +693,8 @@ const T = {
   cu_tab_cromos:     { es:'Cromos',              en:'Cards' },
   cu_cr_t:           { es:'Cromos en tus mazos', en:'Cards in your decks' },
   cu_cr_d:           { es:'Mazo 1: {a} de 5 · mazo 2: {b} de 5', en:'Deck 1: {a} of 5 · deck 2: {b} of 5' },
-  cu_cr_note:        { es:'Tus dos mazos de cromos, de 5 lugares cada uno: qué cromo pusiste y, si querés, qué opción le salió en cada grado. Lo que no anotes queda sin anotar. Los cromos también se ponen y se sacan desde la sección Cromos.',
-                       en:'Your two card decks, 5 slots each: which card you put in and, if you want, which option it rolled in each grade. What you do not note stays unnoted. Cards can also be put in and removed from the Cards section.' },
+  cu_cr_note:        { es:'Tus dos mazos de cromos, de 5 lugares cada uno: qué cromo pusiste y, si querés, su calidad (1 a 7) y qué opción le salió en cada grado. Con eso, abajo de cada mazo se suma cuánto da de cada stat. Lo que no anotes queda sin anotar. Los cromos también se ponen y se sacan desde Objetos › Cromos.',
+                       en:'Your two card decks, 5 slots each: which card you put in and, if you want, its quality (1 to 7) and which option it rolled in each grade. With that, below each deck it adds up how much it gives of each stat. What you do not note stays unnoted. Cards can also be put in and removed from Objects › Cards.' },
   cu_cr_lugar:       { es:'Lugar',               en:'Slot' },
   cu_cr_cromo:       { es:'Cromo',               en:'Card' },
   cu_cr_opciones:    { es:'Opción de cada grado', en:'Option of each grade' },
@@ -702,10 +705,17 @@ const T = {
   cu_cr_no_esta:     { es:'El cromo {id} ya no está en los datos.', en:'Card {id} is no longer in the data.' },
   cu_cr_op_no_esta:  { es:'La opción anotada en {g}★ ({o}) ya no está entre las del cromo.', en:'The option noted at {g}★ ({o}) is no longer among the card’s options.' },
   cu_cr_resumen:     { es:'Qué cubre el mazo {n}', en:'What deck {n} covers' },
-  cu_cr_resumen_nota:{ es:'Cuántos cromos del mazo dan cada stat: fijo, o en un grado si anotaste esa opción. No se suman porcentajes: thanosvibs no publica cuánto da cada opción.', en:'How many cards in the deck give each stat: fixed, or in a grade if you noted that option. Percentages are not added up: thanosvibs does not publish how much each option gives.' },
+  cu_cr_resumen_nota:{ es:'Lo que suma el mazo en cada stat, con los valores de un cromo 6★ según mffguide: las fijas según la calidad que anotaste y cada grado con la opción que anotaste (lo que vale esa casilla). Un cromo sin calidad anotada no se suma. No entran las activaciones (se activan a veces, con 5% de probabilidad), las etapas de creación de un Premium ni las colecciones.',
+                       en:'What the deck adds up in each stat, with the values of a 6★ card according to mffguide: the fixed stats according to the quality you noted and each grade with the option you noted (what that slot is worth). A card without a noted quality is not added. Activations (they trigger sometimes, with a 5% chance), a Premium card\'s crafting stages and collections are not included.' },
+  cu_cr_calidad:     { es:'Calidad',             en:'Quality' },
+  cu_cr_n_casillas:  { es:'Grados',              en:'Grades' },
+  cu_cr_total:       { es:'Total',               en:'Total' },
+  cu_cr_completo:    { es:'Todo anotado: la suma es exacta para cromos 6★.', en:'Everything noted: the sum is exact for 6★ cards.' },
+  cu_cr_sin_cal:     { es:'Sin calidad anotada, no se suman: {c}.', en:'No quality noted, not added: {c}.' },
+  cu_cr_falta_op:    { es:'Falta anotar la opción de: {c}. La suma es exacta solo para lo anotado.', en:'Option still to note for: {c}. The sum is exact only for what is noted.' },
+  cu_cr_sin_valores: { es:'Sin valores en las fuentes, no se suman: {c}.', en:'No values in the sources, not added: {c}.' },
   cu_cr_stat:        { es:'Stat',                en:'Stat' },
   cu_cr_n_fija:      { es:'Fijo',                en:'Fixed' },
-  cu_cr_n_anotada:   { es:'Anotado',             en:'Noted' },
   cu_cr_acts:        { es:'Activaciones anotadas', en:'Noted activations' },
   cu_cr_vacio:       { es:'Este mazo está vacío.', en:'This deck is empty.' },
   st_cromos:         { es:'Cromos en los mazos', en:'Cards in the decks' },
@@ -1005,8 +1015,8 @@ const T = {
   rc_cu_marcas_x:   { es:'Lo que les marcaste a las skills (por ejemplo, rotura de guardia o que ignora objetivo). Se marca en la ficha, pestaña «Mi cuenta», con «Marcar atributos».',
                        en:'What you marked on skills (for example, guard break or ignore targeting). You mark it on the character page, «My account» tab, with «Mark attributes».' },
   rc_cu_cromos_t:    { es:'Tus mazos',           en:'Your decks' },
-  rc_cu_cromos_x:    { es:'Tus dos mazos de cinco cromos: poné un cromo en cada lugar, anotá qué opción le salió en cada grado y abajo ves qué cubre cada mazo.',
-                       en:'Your two decks of five cards: put a card in each slot, note which option you got for each grade and below you see what each deck covers.' },
+  rc_cu_cromos_x:    { es:'Tus dos mazos de cinco cromos: poné un cromo en cada lugar, anotá su calidad y qué opción le salió en cada grado, y abajo ves cuánto suma cada mazo en cada stat y qué falta anotar.',
+                       en:'Your two decks of five cards: put a card in each slot, note its quality and which option you got for each grade, and below you see how much each deck adds up in each stat and what is still to note.' },
   rc_cu_capa_t:      { es:'Tu copia',            en:'Your copy' },
   rc_cu_capa_x:     { es:'Todo lo tuyo vive en un archivo, tu capa. «Exportar» baja una copia; «Importar» carga una (por ejemplo, en otra computadora) y reemplaza la que tenés; «Borrar todo lo mío» la deja vacía.',
                        en:'All your things live in one file, your layer. «Export» downloads a copy; «Import» loads one (for example, on another computer) and replaces the one you have; «Delete everything of mine» empties it.' },
@@ -8234,7 +8244,10 @@ function mazoHtml (m, i) {
     return `<tr><td class="num">${l + 1}</td>
       <td><a class="crmini" href="#cromo-${h(c.id)}" data-a="crVer" data-id="${h(c.id)}"><span class="crimg">${cromoImg(c)}</span><b>${h(nomCromo(c))}</b></a>
         <div class="row">${tipoCromo(c)}${marcaCromo(c)}</div></td>
-      <td class="crtdops"><div class="crops">${gradosDe(c).map(g => `<label class="crsel"><span class="crg">${h(t('cr_grado').replace('{g}', g))}</span>
+      <td class="crtdops"><div class="crops"><label class="crsel crselcal"><span class="crg">${h(t('cu_cr_calidad'))}</span>
+          <select data-a="crCalMazo" data-m="${i}" data-l="${l}"><option value="">${h(t('cu_cr_sin_anotar'))}</option>${
+            Array.from({ length: CALIDADES_CROMO }, (_, k) => `<option value="${k + 1}" ${x.cal === k + 1 ? 'selected' : ''}>${k + 1}</option>`).join('')}</select></label>
+        ${gradosDe(c).map(g => `<label class="crsel"><span class="crg">${h(t('cr_grado').replace('{g}', g))}</span>
         <select data-a="crOp" data-m="${i}" data-l="${l}" data-g="${g}"><option value="">${h(t('cu_cr_sin_anotar'))}</option>${
           c.grados[g].map(o => `<option value="${h(claveOpcion(o))}" ${x.op[g] === claveOpcion(o) ? 'selected' : ''}>${h(opcionTxt(o))}</option>`).join('')}</select></label>`).join('')}</div>
         ${perdidas.map(([g, k]) => `<div class="aviso">${h(t('cu_cr_op_no_esta').replace('{g}', g).replace('{o}', k))}</div>`).join('')}</td>
@@ -8251,27 +8264,40 @@ function mazoHtml (m, i) {
     </tbody></table></div>
     ${m.length ? coberturaMazo(m, i) : `<p class="muted">${h(t('cu_cr_vacio'))}</p>`}</div>`;
 }
-/** Qué cubre un mazo: por stat, cuántos cromos lo dan fijo y cuántos en una opción anotada; y las activaciones anotadas.
- *  Sin sumar porcentajes: thanosvibs no publica cuánto da cada opción. */
+/** Qué cubre un mazo: por stat, cuánto suma (con los valores de un cromo 6★ según mffguide): las fijas según la calidad
+ *  anotada y las casillas con la opción anotada. Un cromo sin calidad anotada (o sin valores en las fuentes) no se suma, y
+ *  se dice; lo que falta anotar, también. Las activaciones anotadas van aparte, con lo que dan. */
 function coberturaMazo (m, i) {
-  const por = {}, acts = [];
+  const V = CROMOS.valores, por = {}, acts = [], sinCal = [], sinVal = [], faltan = [];
+  const suma = (k, campo, v, de) => { const p = por[k] = por[k] || { fijas: 0, casillas: 0, de: [] }; p[campo] += v; p.de.push(de); };
   for (const x of m) {
     const c = CROMO_POR_ID[x.id];
     if (!c) continue;
-    for (const f of c.fijas) (por[f.s] = por[f.s] || { fija: [], anotada: [] }).fija.push(c.n);
-    for (const [g, k] of Object.entries(x.op)) {
-      const o = (c.grados[g] || []).find(y => claveOpcion(y) === k);
-      if (!o) continue;
-      if (o.act) acts.push([c, o, g]); else (por[o.s] = por[o.s] || { fija: [], anotada: [] }).anotada.push(c.n + ' (' + g + '★)');
+    const nom = nomCromo(c);
+    if (!c.vf) { sinVal.push(nom); continue; }
+    if (x.cal == null) { sinCal.push(nom); continue; }
+    for (const f of c.fijas) { const v = valorFija(f, x.cal); suma(f.s, 'fijas', v, `${nom}: ${numTxt(v)}%`); }
+    const sinOp = [];
+    for (const g of gradosDe(c)) {
+      const o = (c.grados[g] || []).find(y => claveOpcion(y) === x.op[g]);
+      if (!o) { sinOp.push(g + '★'); continue; }
+      if (o.act) acts.push([c, o, g]); else suma(o.s, 'casillas', V.casilla[g], `${nom} (${g}★): ${numTxt(V.casilla[g])}%`);
     }
+    if (sinOp.length) faltan.push(`${nom} (${sinOp.join(', ')})`);
   }
-  const ks = Object.keys(por).sort((a, b) => (por[b].fija.length + por[b].anotada.length) - (por[a].fija.length + por[a].anotada.length)
-    || statCromo(a).localeCompare(statCromo(b)));
-  const n = (xs) => xs.length ? `<span title="${h(xs.join(' · '))}">${xs.length}</span>` : '<span class="muted">—</span>';
-  return `<div class="crcobertura"><h4>${h(t('cu_cr_resumen').replace('{n}', i + 1))} ${ayudaHtml(t('cu_cr_resumen_nota'))}</h4>
-    <table class="cutabla"><thead><tr><th>${h(t('cu_cr_stat'))}</th><th class="num">${h(t('cu_cr_n_fija'))}</th><th class="num">${h(t('cu_cr_n_anotada'))}</th></tr></thead>
-      <tbody>${ks.map(k => `<tr><td>${h(statCromo(k))}</td><td class="num">${n(por[k].fija)}</td><td class="num">${n(por[k].anotada)}</td></tr>`).join('')}</tbody></table>
-    ${acts.length ? `<h4>${h(t('cu_cr_acts'))}</h4><ul>${acts.map(([c, o, g]) => `<li>${h(opcionTxt(o))} <span class="muted">— ${h(c.n)} (${g}★)</span></li>`).join('')}</ul>` : ''}
+  const ks = Object.keys(por).sort((a, b) => (por[b].fijas + por[b].casillas) - (por[a].fijas + por[a].casillas) || statCromo(a).localeCompare(statCromo(b)));
+  const n = (v) => v ? h(numTxt(v)) + '%' : '<span class="muted">—</span>';
+  const estado = [
+    sinCal.length ? t('cu_cr_sin_cal').replace('{c}', sinCal.join(' · ')) : '',
+    faltan.length ? t('cu_cr_falta_op').replace('{c}', faltan.join(' · ')) : '',
+    sinVal.length ? t('cu_cr_sin_valores').replace('{c}', sinVal.join(' · ')) : ''].filter(Boolean);
+  const actTxt = (c, o) => c.act ? `${bi(c.act.txt)} ${bi(c.act.cu)}` : opcionTxt(o);
+  return `<div class="crcobertura"><h4>${h(t('cu_cr_resumen').replace('{n}', i + 1))} ${ayudaHtml(t('cu_cr_resumen_nota'))} ${fuentesHtml(V.f)}</h4>
+    ${estado.length ? estado.map(x => `<p class="aviso crfalta">${h(x)}</p>`).join('') : `<p class="muted">${h(t('cu_cr_completo'))}</p>`}
+    ${ks.length ? `<table class="cutabla"><thead><tr><th>${h(t('cu_cr_stat'))}</th><th class="num">${h(t('cu_cr_n_fija'))}</th><th class="num">${h(t('cu_cr_n_casillas'))}</th><th class="num">${h(t('cu_cr_total'))}</th></tr></thead>
+      <tbody>${ks.map(k => `<tr title="${h(por[k].de.join(' · '))}"><td>${h(statCromo(k))}</td><td class="num">${n(por[k].fijas)}</td><td class="num">${n(por[k].casillas)}</td>
+        <td class="num"><b>${n(por[k].fijas + por[k].casillas)}</b></td></tr>`).join('')}</tbody></table>` : ''}
+    ${acts.length ? `<h4>${h(t('cu_cr_acts'))}</h4><ul>${acts.map(([c, o, g]) => `<li>${h(actTxt(c, o))} <span class="muted">— ${h(nomCromo(c))} (${g}★)</span></li>`).join('')}</ul>` : ''}
   </div>`;
 }
 /** Tu capa guardada: cuánto hay de cada cosa y exportarla, importarla o borrarla (antes en Ajustes). */
@@ -9211,6 +9237,9 @@ document.addEventListener('change', (e) => {
     ui[d.k] = el.value; ui.focusSearch = false; render(); return; }
   // Mi cuenta › Cromos: poner un cromo en el primer lugar libre de un mazo y anotar la opción de un grado (vacío: sin anotar).
   if (a === 'crPoner') { cromoEnMazo(el.value, +d.m); saveUser(); render(); return; }
+  if (a === 'crCalMazo') { const x = U.cromos.mazos[+d.m][+d.l];
+    if (el.value) x.cal = +el.value; else delete x.cal;
+    saveUser(); render(); return; }
   if (a === 'crOp') { const op = U.cromos.mazos[+d.m][+d.l].op;
     if (el.value) op[d.g] = el.value; else delete op[d.g];
     saveUser(); render(); return; }
