@@ -142,6 +142,10 @@ images.update(_img_objetos)
 # lo que pide cada dificultad, de las tablas del juego según mffguide.fyi.
 import jefe_mundial
 JEFE_MUNDIAL = jefe_mundial.armar(json.load(open(os.path.join(os.path.dirname(__file__), 'contenido', 'guia.json'), encoding='utf-8')))
+# La Guía de la app (1.0.59, scripts/guia_corta.py): progreso, rutina y cómo decidir, con sus fuentes y enlaces a lo que
+# ya tiene la app; un enlace o una fuente que no existe corta el build.
+import guia_corta
+GUIA_CORTA = guia_corta.armar(c['id'] for c in chars)
 
 
 def _aplica_artefacto(en):
@@ -296,7 +300,9 @@ hoy = hoy.isoformat()
 #     escribe el juego cada stat en el cromo (stats[].j). La app de formato 20 se cae con las colecciones nuevas (lee el
 #     nombre y el grado de antes) y no tiene dónde mostrar lo demás. Y MFF_JEFE_MUNDIAL (scripts/jefe_mundial.py, de las
 #     mismas tablas): los 21 jefes con sus consejos del juego, las restricciones por rango de fases de Leyenda, Leyenda+ y
-#     Mítico, y lo que pide cada dificultad a los principales y a los aliados, para el planificador de Mi cuenta.
+#     Mítico, y lo que pide cada dificultad a los principales y a los aliados, para el planificador de Mi cuenta. Y
+#     MFF_GUIA_CORTA (scripts/guia_corta.py, de contenido/guia_corta.json): la sección Guía, que la app de formato 20 no
+#     tiene.
 FORMATO = 21
 VERSION = {'juego': gv, 'generado': hoy, 'formato': FORMATO}
 header = f"""// data.js — TA GUIANAEL MFF (generado por scripts/build.py el {hoy}; juego {gv})
@@ -370,6 +376,9 @@ parts = [header,
  '// principales y a los aliados (y el paso de la hoja de ruta que lo cumple), jefes con sus consejos del juego y sus\n'
  '// restricciones por rango de fases ([desde, hasta, [valores]]: hay que cumplirlas todas).\n',
  'window.MFF_JEFE_MUNDIAL = ' + json.dumps(JEFE_MUNDIAL, ensure_ascii=False, separators=(',', ':')) + ';\n',
+ '// La Guía de la app (scripts/guia_corta.py, scripts/contenido/guia_corta.json): temas, bloques y puntos; cada parte con\n'
+ '// su tipo (k: dato, criterio, mg, dif, app, orden, topes), sus fuentes (claves de MFF_GUIA.fuentes) y sus enlaces (ir).\n',
+ 'window.MFF_GUIA_CORTA = ' + json.dumps(GUIA_CORTA, ensure_ascii=False, separators=(',', ':')) + ';\n',
  '// Contraste con la wiki y chequeos internos por retrato (scripts/auditar.py; informe en docs/AUDITORIA.md).\n',
  'window.MFF_VERIFICACION = ' + json.dumps(VERIF, ensure_ascii=False) + ';\n',
  'window.MFF_GUIA_PJ = ' + json.dumps(FUENTES['guia_pj'], ensure_ascii=False) + ';\n',

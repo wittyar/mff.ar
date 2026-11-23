@@ -1,0 +1,429 @@
+{
+ "nota": "La Guía de la app (1.0.59; Ezequiel, 23 de noviembre de 2026, aprobó «Guía corta de progreso y rutina dentro de la app, enlazada a las secciones que ya existen, en vez de un texto de un millón de caracteres»): tres temas cortos, cada uno con bloques de puntos. Cada parte de un punto es de un tipo (k): dato (del juego, con su fuente), criterio (de quién: de, thanosvibs o app), mg (un hecho que solo da mffguide.fyi: sin confirmar), dif (dos fuentes que no coinciden: se dicen las dos), app (qué hace la app; sin fuente), orden (el orden de armado de thanosvibs, de guia.json › orden_build) y topes (los topes de guia.json › topes). ir: adónde lleva cada enlace (modo, objetos, cuenta, plan, ficha, glosario, vista o recorrido). fuentes_cortas: el nombre corto con que se ve cada fuente en la Guía (el completo, al pasar el mouse), salvo las que ya tienen el suyo en guia.json. Lo valida scripts/guia_corta.py (lo corre el build): cada fuente registrada en guia.json y con nombre corto, cada destino existente, es y en completos. Los números de captura (cap) son de fuentes/capturas/INDICE.md: en, de crudo/en; es, del álbum en español.",
+ "fuentes_cortas": {
+  "juego-guia": {"es": "guía del juego", "en": "in-game guide"},
+  "juego-guia-es": {"es": "guía del juego en español", "en": "in-game guide, Spanish"},
+  "wiki-gear": {"es": "wiki: Character Gear", "en": "wiki: Character Gear"},
+  "wiki-t3": {"es": "wiki: Tier-3", "en": "wiki: Tier-3"},
+  "wiki-tp": {"es": "wiki: Transcend Potential", "en": "wiki: Transcend Potential"},
+  "wiki-t4": {"es": "wiki: Tier-4", "en": "wiki: Tier-4"},
+  "wiki-zs": {"es": "wiki: Zombie Survival", "en": "wiki: Zombie Survival"},
+  "wiki-rift": {"es": "wiki: Dimension Rift", "en": "wiki: Dimension Rift"},
+  "tv-guia-1": {"es": "thanosvibs, guía 1", "en": "thanosvibs, guide 1"},
+  "tv-guia-3": {"es": "thanosvibs, guía 3", "en": "thanosvibs, guide 3"},
+  "tv-guia-4": {"es": "thanosvibs, guía 4", "en": "thanosvibs, guide 4"},
+  "tv-abxl": {"es": "thanosvibs: Alliance Battle", "en": "thanosvibs: Alliance Battle"},
+  "tv-listas": {"es": "thanosvibs: tier lists", "en": "thanosvibs: tier lists"},
+  "foro-1735745": {"es": "foro oficial: guía de urus, 2021", "en": "official forum: Uru guide, 2021"},
+  "foro-1896956": {"es": "nota oficial, 13/10/2026", "en": "official notes, 10/13/2026"},
+  "foro-1897450": {"es": "nota oficial, 27/10/2026", "en": "official notes, 10/27/2026"}
+ },
+ "temas": [
+  {
+   "id": "progreso",
+   "es": "Cómo progresa un personaje",
+   "en": "How a character grows",
+   "bloques": [
+    {
+     "id": "pasos",
+     "es": "Los pasos, en el orden del juego",
+     "en": "The steps, in the game's order",
+     "items": [
+      {
+       "id": "nivel", "es": "Nivel", "en": "Level",
+       "partes": [
+        {"k": "dato", "cap": "en 50", "fuente": ["juego-guia"],
+         "es": "Sube con la experiencia de las batallas. Cada nivel da stats y sube el nivel máximo de las skills.",
+         "en": "It goes up with battle EXP. Each level adds stats and raises the skills' max level."}
+       ]
+      },
+      {
+       "id": "rango", "es": "Rango (★)", "en": "Rank (★)",
+       "partes": [
+        {"k": "dato", "cap": "en 51; es 64 y 116", "fuente": ["juego-guia", "juego-guia-es"],
+         "es": "Con biometrías del personaje, hasta 6★ (los mutantes, con gen-X). Da stats y sube su nivel máximo.",
+         "en": "With the character's Biometrics, up to 6★ (Mutants use X-Genes). It adds stats and raises the max level."}
+       ]
+      },
+      {
+       "id": "maestria", "es": "Maestría", "en": "Mastery",
+       "partes": [
+        {"k": "dato", "cap": "en 52; es 118", "fuente": ["juego-guia", "juego-guia-es"],
+         "es": "Con piedras Norn, hasta 6 (los mutantes, con fragmentos de M'Kraan). Da stats y el liderazgo.",
+         "en": "With Norn Stones, up to 6 (Mutants use M'Kraan Crystal Shards). It adds stats and the Leader Skill."}
+       ]
+      },
+      {
+       "id": "equipo", "es": "Equipo (gear)", "en": "Gear",
+       "partes": [
+        {"k": "dato", "cap": "es 71", "fuente": ["juego-guia-es", "wiki-gear"],
+         "es": "Las cuatro piezas suben solas hasta +5 con el nivel y, con materiales de las misiones, hasta +30. Solo el último stat de la cuarta se puede volver a sortear.",
+         "en": "The four pieces level up on their own to +5 with the character and, with mission materials, up to +30. Only the last stat of the fourth piece can be rerolled."}
+       ]
+      },
+      {
+       "id": "skills", "es": "Skills", "en": "Skills",
+       "partes": [
+        {"k": "dato", "cap": "en 54", "fuente": ["juego-guia"],
+         "es": "Su nivel máximo sube con el del personaje, hasta el 10.",
+         "en": "Their max level rises with the character's, up to 10."}
+       ]
+      },
+      {
+       "id": "t2", "es": "Tier-2", "en": "Tier-2",
+       "partes": [
+        {"k": "dato", "cap": "en 53", "fuente": ["juego-guia"],
+         "es": "Con maestría y equipo al máximo y Nv. 60: piedras Norn de caos, antimateria negra, piedras Norn y biometrías (los mutantes, cristales M'Kraan y plumas de fénix).",
+         "en": "With max Mastery and gear and Lv.60: Norn Stones of Chaos, Black Anti-Matter, Norn Stones and Biometrics (Mutants use M'Kraan Crystals and Phoenix Feathers)."}
+       ]
+      },
+      {
+       "id": "potencial", "es": "Potencial", "en": "Potential",
+       "partes": [
+        {"k": "dato", "cap": "en 60 y 61", "fuente": ["juego-guia", "tv-guia-1"],
+         "es": "Un Tier-2 busca su potencial y lo realiza ganando en Jefe mundial; el segundo, en Leyenda. Se mejora con fragmentos de cubo cósmico, entre otros materiales, y cada vez sube su nivel máximo.",
+         "en": "A Tier-2 searches for its Potential and realises it by winning World Boss; the 2nd one, in Legend. It is enhanced with Cosmic Cube Fragments, among other materials, and each time its max level goes up."}
+       ],
+       "ir": [{"a": "modo", "id": "world-boss"}]
+      },
+      {
+       "id": "t3", "es": "Tier-3 o potencial trascendido", "en": "Tier-3 or Transcended Potential",
+       "partes": [
+        {"k": "dato", "cap": "en 64", "fuente": ["juego-guia", "wiki-t3"],
+         "es": "Tier-3: Nv. 70 y las cuatro piezas en +25, con registros de Titán de su tipo, fragmentos de cubo cósmico, esencia dimensional y paquetes de componentes de Titán.",
+         "en": "Tier-3: Lv.70 and all four pieces at +25, with Titan's Records of its type, Cosmic Cube Fragments, Essence of Dimension and Titan Component Packs."},
+        {"k": "dato", "cap": "en 62 y 63; es 90", "fuente": ["juego-guia", "wiki-tp", "juego-guia-es"],
+         "es": "La otra vía, solo para algunos: despertar el potencial desde el Nv. 70, subir la skill despertada al máximo (Nv. 6) y el equipo a +25, y trascenderlo con cristales del despertar y gemas de Mandalay. El juego los pide juntos: «categoría 3 o potencial trascendido».",
+         "en": "The other path, only for some: awaken the Potential from Lv.70, take the Awakened skill to max (Lv.6) and gear to +25, and transcend it with Awakening Crystals and Mandalay Gems. The game asks for either: \"Tier-3 or Transcended Potential\"."}
+       ]
+      },
+      {
+       "id": "t4", "es": "Tier-4", "en": "Tier-4",
+       "partes": [
+        {"k": "dato", "cap": "en 65", "fuente": ["juego-guia", "wiki-t4", "tv-guia-1"],
+         "es": "Desde Tier-3 o potencial trascendido, con Nv. 80, las cuatro piezas en +30 y todas las skills en Nv. 10: «libro de los Vishanti» de su tipo, «semilla de vida», «carbonadium» y «alma de los Faltine». Da la skill de striker. No todos los personajes lo tienen.",
+         "en": "From Tier-3 or Transcended Potential, at Lv.80 with all four pieces at +30 and every skill at Lv.10: Book of the Vishanti of its type, Life Seed, Carbonadium and Soul of the Faltine. It unlocks the Striker Skill. Not every character has it."}
+       ],
+       "ir": [{"a": "modo", "id": "giant-boss-raid"}]
+      },
+      {
+       "id": "n90", "es": "Nivel 90", "en": "Level 90",
+       "partes": [
+        {"k": "dato", "fuente": ["foro-1896956", "foro-1897450", "foro-1897819"],
+         "es": "Algunos Tier-4 pasan del Nv. 80 al 90: realizan un 3.er potencial en Jefe mundial Leyenda+ o más y suben con Cosmic Seed, de Incursión de jefe gigante (Galactus o más), hasta 300 por día. Se habilita de a un héroe: Spider-Man y Ghost Rider, después Dormammu y, con la 12.4, Hulk y Vulcan.",
+         "en": "Some Tier-4s go from Lv.80 to 90: they realise a 3rd Potential in World Boss Legend+ or higher and level up with Cosmic Seeds, from Giant Boss Raid (Galactus or higher), up to 300 a day. It opens one hero at a time: Spider-Man and Ghost Rider, then Dormammu and, with 12.4, Hulk and Vulcan."}
+       ]
+      },
+      {
+       "id": "costo", "es": "Lo que cuesta", "en": "What it costs",
+       "partes": [
+        {"k": "mg", "fuente": ["mffguide-guia"],
+         "es": "Un personaje estándar: 315 biometrías de 0 a 6★; 315 piedras Norn de su clase para la maestría 6; 2.500.000 de oro el Tier-2, otro tanto el Tier-3 y 5.000.000 el Tier-4, más sus materiales; los dos potenciales que lo llevan del Nv. 60 al 80, 10.000.000 y 15.000.000. Los nativos y otros pagan distinto.",
+         "en": "A standard character: 315 Biometrics from 0 to 6★; 315 Norn Stones of its class for Mastery 6; 2,500,000 Gold for Tier-2, as much for Tier-3 and 5,000,000 for Tier-4, plus their materials; the two Potentials that take it from Lv.60 to 80, 10,000,000 and 15,000,000. Natives and others pay differently."}
+       ]
+      }
+     ]
+    },
+    {
+     "id": "armado",
+     "es": "Cómo armarlo",
+     "en": "How to build it",
+     "items": [
+      {
+       "id": "orden", "es": "En qué orden", "en": "In what order",
+       "partes": [
+        {"k": "orden"}
+       ],
+       "ir": [{"a": "ficha", "pj": "thor", "tab": "armado"}]
+      },
+      {
+       "id": "ctp", "es": "C.T.P. u obelisco", "en": "C.T.P. or Obelisk",
+       "partes": [
+        {"k": "dato", "cap": "en 56", "fuente": ["juego-guia"],
+         "es": "Es el equipo personalizado: uno por personaje, desde el Nv. 30.",
+         "en": "It is the Custom Gear: one per character, from Lv.30."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-3"],
+         "es": "Probablemente la parte más importante del armado.",
+         "en": "Arguably the most important part of the build."}
+       ],
+       "ir": [{"a": "objetos", "tab": "ctp"}]
+      },
+      {
+       "id": "iso", "es": "ISO-8", "en": "ISO-8",
+       "partes": [
+        {"k": "dato", "cap": "en 55; es 72 a 75", "fuente": ["juego-guia", "juego-guia-es"],
+         "es": "Ocho por personaje; ciertas combinaciones dan una bonificación de conjunto. Se potencian hasta +5, se combinan hasta 6★ y se despiertan hasta 6 veces.",
+         "en": "Eight per character; certain combinations give a Set Bonus. They are enhanced to +5, combined up to 6★ and awakened up to 6 times."}
+       ],
+       "ir": [{"a": "objetos", "tab": "iso"}]
+      },
+      {
+       "id": "uru", "es": "Uru y bendiciones de Odín", "en": "Uru and Odin's Blessings",
+       "partes": [
+        {"k": "dato", "cap": "en 21 y 58", "fuente": ["juego-guia"],
+         "es": "Hasta 5 urus por pieza de equipo, como mucho 2 con la misma opción; las ranuras se abren con el nivel del equipo, y amplificar suma stats.",
+         "en": "Up to 5 Urus per gear piece, at most 2 with the same option; slots open with the gear level, and amplification adds stats."},
+        {"k": "dif", "fuente": ["foro-1735745", "juego-guia", "tv-guia-3"],
+         "es": "Bendición de Odín: la guía de urus del foro oficial dice una por pieza; la del juego, que se puede equipar una, sin decir si por pieza; thanosvibs, una del mismo tipo por pieza.",
+         "en": "Odin's Blessing: the official forum's Uru guide says one per gear piece; the in-game guide, that one can be equipped, without saying per piece; thanosvibs, one of the same type per piece."}
+       ],
+       "ir": [{"a": "objetos", "tab": "odin"}]
+      },
+      {
+       "id": "artefacto", "es": "Artefacto", "en": "Artifact",
+       "partes": [
+        {"k": "dato", "cap": "es 78 y 125", "fuente": ["juego-guia-es"],
+         "es": "Amplía el instinto, y algunos le dan una pasiva a un personaje concreto. Se mejora con esencia celestial hasta +20.",
+         "en": "It boosts Instinct, and some give a passive to one specific character. It is enhanced with Celestial Essence up to +20."}
+       ],
+       "ir": [{"a": "ficha", "pj": "thor", "tab": "armado"}]
+      },
+      {
+       "id": "cuenta", "es": "Cromos, J.A.R.V.I.S. y emblemas", "en": "Cards, J.A.R.V.I.S. and Emblems",
+       "partes": [
+        {"k": "dato", "cap": "en 57, 72 y 75", "fuente": ["juego-guia"],
+         "es": "Son de la cuenta, no de un personaje: hasta 5 cromos equipados, uno de cada tipo, dan sus stats a todos; J.A.R.V.I.S. da al equipo los de sus tres chips (ataque, defensa y especial); los emblemas valen solo en ciertos contenidos.",
+         "en": "They belong to the account, not to one character: up to 5 equipped cards, one of each type, give their stats to everyone; J.A.R.V.I.S. gives the team those of its three chips (Attack, Defense and Special); Emblems work only in certain content."}
+       ],
+       "ir": [{"a": "objetos", "tab": "cromos"}, {"a": "cuenta", "tab": "cromos"}, {"a": "objetos", "tab": "jarvis"}, {"a": "objetos", "tab": "emblemas"}]
+      },
+      {
+       "id": "topes", "es": "Topes de stats", "en": "Stat caps",
+       "partes": [
+        {"k": "topes"},
+        {"k": "mg", "fuente": ["mffguide-guia"],
+         "es": "mffguide marca como dato de la comunidad los topes de probabilidad de crítico y esquiva, velocidad atq. y daño crítico; los de recarga de skills e ignorar defensa, no.",
+         "en": "mffguide marks the Critical Rate and Dodge, Attack Speed and Critical Damage caps as community data; Skill Cooldown and Ignore Defense, not."}
+       ],
+       "ir": [{"a": "ficha", "pj": "thor", "tab": "armado"}, {"a": "glosario", "id": "ef-enfriamiento"}]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "rutina",
+   "es": "Qué jugar y para qué",
+   "en": "What to play and why",
+   "bloques": [
+    {
+     "id": "diario",
+     "es": "Cada día",
+     "en": "Every day",
+     "items": [
+      {
+       "id": "wb", "modo": "world-boss",
+       "partes": [
+        {"k": "dato", "fuente": ["tv-guia-4", "tv-guia-1"],
+         "es": "5 entradas por día. Materiales de Tier-2 y Tier-3 y, desde Leyenda, de Tier-4; ahí se realiza el potencial.",
+         "en": "5 entries a day. Tier-2 and Tier-3 materials and, from Legend, Tier-4 ones; it is where Potential is realised."},
+        {"k": "mg", "fuente": ["mffguide-jm"],
+         "es": "Desde Leyenda, quien juega, como principal o como aliado, no vuelve a entrar en ninguna dificultad hasta el reinicio.",
+         "en": "From Legend on, whoever plays, as a main or as an ally, cannot enter any difficulty again until the reset."},
+        {"k": "dif", "fuente": ["juego-guia-es", "mffguide-jm"],
+         "es": "Definitivo: la guía del juego dice que «es ideal» para Tier-2 o más (una recomendación); mffguide pide 6★.",
+         "en": "Ultimate: the in-game guide says it \"is ideal\" for Tier-2 or higher (a recommendation); mffguide requires 6★."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Cuando puedas hacer Leyenda las 5 veces, casi no hay razón para jugar Definitivo.",
+         "en": "Once you can do Legend 5 times, there is very little reason to play Ultimate."}
+       ],
+       "ir": [{"a": "plan", "modo": "wb"}]
+      },
+      {
+       "id": "ab", "modo": "alliance-battle",
+       "partes": [
+        {"k": "dato", "cap": "es 96", "fuente": ["juego-guia-es", "tv-abxl"],
+         "es": "Solo para los que están en una alianza. Da cristales del despertar y fragmentos de gema de Mandalay, para despertar y trascender. Cada día pide su restricción, en una rotación de 28 días.",
+         "en": "Only for alliance members. It gives Awakening Crystals and Mandalay Gem Fragments, to awaken and transcend. Each day has its restriction, in a 28-day rotation."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Pasá Normal una vez por día y hacé todo el puntaje que puedas en Extremo.",
+         "en": "Clear Normal once a day and score as much as you can in Extreme."}
+       ],
+       "ir": [{"a": "plan", "modo": "ab"}]
+      },
+      {
+       "id": "gbr", "modo": "giant-boss-raid",
+       "partes": [
+        {"k": "dato", "cap": "es 108", "fuente": ["juego-guia-es"],
+         "es": "Materiales de Tier-4 (libros de los Vishanti y almas de los Faltine). Entran hasta 3 jugadores: con más, el jefe es más difícil y da más.",
+         "en": "Tier-4 materials (Book of the Vishanti and Soul of the Faltine). Up to 3 players: with more, the boss is harder and gives more."}
+       ]
+      },
+      {
+       "id": "rift", "modo": "dimension-rift",
+       "partes": [
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4", "wiki-rift"],
+         "es": "Dos por día: la primera da 350 cubos de creación de cromo y la segunda, 400. También dan artefactos exclusivos.",
+         "en": "Two a day: the first gives 350 Card Crafting Cubes and the second, 400. They also give exclusive Artifacts."}
+       ]
+      },
+      {
+       "id": "dm", "modo": "dimension-missions",
+       "partes": [
+        {"k": "criterio", "de": "thanosvibs", "cap": "es 93", "fuente": ["tv-guia-4", "juego-guia-es"],
+         "es": "40 corridas por día en el nivel más alto que pases en automático: 8 recompensas, con insignias de apoyo, oro y gen-X.",
+         "en": "40 runs a day on the highest level you can auto-clear: 8 rewards, with Support Tokens, Gold and X-Genes."}
+       ]
+      },
+      {
+       "id": "tl", "modo": "timeline-battle",
+       "partes": [
+        {"k": "dato", "cap": "es 95", "fuente": ["juego-guia-es", "tv-guia-4"],
+         "es": "Insignias de gloria y cristales cada semana según tu puesto.",
+         "en": "Glory Tokens and Crystals every week by rank."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "10 partidas por día, aunque pierdas.",
+         "en": "10 matches a day, even if you lose."}
+       ]
+      },
+      {
+       "id": "tba", "modo": "team-battle-arena",
+       "partes": [
+        {"k": "dato", "cap": "es 115", "fuente": ["juego-guia-es", "tv-guia-4"],
+         "es": "Insignias de arena, que compran materiales de Tier-4.",
+         "en": "Arena Tokens, which buy Tier-4 materials."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Tus 10 partidas diarias.",
+         "en": "Your 10 daily matches."}
+       ]
+      },
+      {
+       "id": "owb", "modo": "otherworld-battle",
+       "partes": [
+        {"k": "dato", "cap": "es 99", "fuente": ["tv-guia-4", "juego-guia", "juego-guia-es"],
+         "es": "Espadas y recuerdos de guerrero, para su tienda; las temporadas duran 8 semanas.",
+         "en": "Swords and Otherworld Tokens for its shop; seasons last 8 weeks."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Las partidas con recompensa diaria.",
+         "en": "The matches with a daily reward."}
+       ]
+      },
+      {
+       "id": "ms", "modo": "multiverse-saga",
+       "partes": [
+        {"k": "dato", "cap": "es 102", "fuente": ["juego-guia-es"],
+         "es": "Se juega con personajes fijos (no cuenta lo que subiste) y da materiales de emblemas.",
+         "en": "It is played with fixed characters (your growth does not count) and gives Emblem materials."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Las etapas de jefe, 5 veces por día.",
+         "en": "The boss stages, 5 times a day."}
+       ]
+      },
+      {
+       "id": "epic", "modo": "epic-quests",
+       "partes": [
+        {"k": "dato", "cap": "es 92", "fuente": ["juego-guia-es"],
+         "es": "Al completar una misión épica te llevás a su héroe protagonista.",
+         "en": "Completing an Epic Quest gives you its lead hero."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Las que dan materiales mutantes (plumas de fénix, cristales M'Kraan) importan especialmente.",
+         "en": "The ones that give Mutant materials (Phoenix Feathers, M'Kraan Crystals) matter most."}
+       ]
+      },
+      {
+       "id": "story", "modo": "story-ultimate",
+       "partes": [
+        {"k": "dato", "cap": "es 90", "fuente": ["juego-guia-es"],
+         "es": "La dificultad definitiva pide Tier-3 o potencial trascendido de Nv. 70 o más; da biometrías, piedras Norn y kits de mejora de tipo.",
+         "en": "Ultimate difficulty requires Tier-3 or Transcended Potential at Lv.70 or higher; it gives Biometrics, Norn Stones and Type Enhancement Kits."}
+       ]
+      }
+     ]
+    },
+    {
+     "id": "semanal",
+     "es": "Cada semana",
+     "en": "Every week",
+     "items": [
+      {
+       "id": "zs", "modo": "zombie-survival",
+       "partes": [
+        {"k": "dato", "fuente": ["tv-guia-4", "wiki-zs"],
+         "es": "Materiales de Tier-4. Se abre con Jefe mundial Leyenda: Knull pasado una vez y 5 héroes o más Tier-3 o con potencial trascendido de Nv. 70.",
+         "en": "Tier-4 materials. It opens with World Boss Legend: Knull cleared once and 5 or more Tier-3 or Transcended Potential heroes at Lv.70."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Todos los desafíos cada semana, aunque sea pasando solo la etapa 1.",
+         "en": "Every challenge each week, even if only by clearing stage 1."}
+       ]
+      },
+      {
+       "id": "ac", "modo": "alliance-conquest",
+       "partes": [
+        {"k": "dato", "fuente": ["tv-guia-4", "juego-guia"],
+         "es": "Tres días por semana, con tres turnos de una hora por día; las batallas son automáticas.",
+         "en": "Three days a week, with three one-hour windows a day; battles are automatic."},
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "5 entradas por día aunque las pierdas: dan 85 Alliance Tokens, que compran materiales de Tier-4.",
+         "en": "5 entries a day even if you lose them all: they give 85 Alliance Tokens, which buy Tier-4 materials."}
+       ]
+      },
+      {
+       "id": "sl", "modo": "shadowland",
+       "partes": [
+        {"k": "criterio", "de": "thanosvibs", "fuente": ["tv-guia-4"],
+         "es": "Avanzá todo lo que puedas: es la fuente principal de selectores de biometrías.",
+         "en": "Climb as far as you can: it is the main source of Biometric selectors."},
+        {"k": "dif", "fuente": ["tv-guia-4", "mffguide-guia"],
+         "es": "thanosvibs la pone cada semana; mffguide habla de temporadas y dice que su duración no está en los datos del juego.",
+         "en": "thanosvibs puts it every week; mffguide talks about seasons and says their length is not in the game data."}
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "app",
+   "es": "Cómo decidir con la app",
+   "en": "How to decide with the app",
+   "bloques": [
+    {
+     "id": "decidir",
+     "es": "Qué mirar",
+     "en": "What to look at",
+     "items": [
+      {
+       "id": "subir", "es": "A quién subir", "en": "Who to build",
+       "partes": [
+        {"k": "dato", "fuente": ["tv-listas"],
+         "es": "Las Tier lists son las de la comunidad, por modo, cada una con su autor, versión y fecha.",
+         "en": "The Tier lists are the community's, by mode, each with its author, version and date."},
+        {"k": "app",
+         "es": "En Mi cuenta › Tu roster marcás a quién tenés y hasta dónde llegó; eso usan la ficha y el planificador.",
+         "en": "In My account › Your roster you mark who you have and how far they got; the profile and the planner use it."}
+       ],
+       "ir": [{"a": "vista", "v": "tierlist"}, {"a": "cuenta", "tab": "roster"}]
+      },
+      {
+       "id": "comparar", "es": "Cómo comparar", "en": "How to compare",
+       "partes": [
+        {"k": "app",
+         "es": "Desde el Roster, «Comparar» y dos o más personajes; arriba, «Cómo compararlos» propone el método: skill por skill, por efecto, por potenciador, en las listas o para PvP.",
+         "en": "From the Roster, «Compare» and two or more characters; at the top, «How to compare them» suggests the method: skill by skill, by effect, by buff, in the lists or for PvP."}
+       ],
+       "ir": [{"a": "recorrido", "area": "comparativa"}]
+      },
+      {
+       "id": "armar-equipo", "es": "Cómo armar un equipo", "en": "How to build a team",
+       "partes": [
+        {"k": "app",
+         "es": "Para Jefe mundial y Batalla de alianza, el planificador parte de tu roster y de la restricción. Para cualquier modo, la mesa (el botón «Mesa» de arriba) arma el equipo y lo guarda en Mi cuenta › Equipos.",
+         "en": "For World Boss and Alliance Battle, the planner starts from your roster and the restriction. For any mode, the desk (the «Desk» button at the top) builds the team and saves it in My account › Teams."}
+       ],
+       "ir": [{"a": "plan", "modo": "wb"}, {"a": "cuenta", "tab": "equipos"}, {"a": "recorrido", "area": "mesa"}]
+      },
+      {
+       "id": "recorrido", "es": "Paso a paso", "en": "Step by step",
+       "partes": [
+        {"k": "app",
+         "es": "El recorrido guiado muestra cada área de la app con un ejemplo.",
+         "en": "The guided tour shows every area of the app with an example."}
+       ],
+       "ir": [{"a": "recorrido", "area": "*"}]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
