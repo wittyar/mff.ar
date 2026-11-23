@@ -8913,6 +8913,9 @@ document.addEventListener('scroll', reubicarAyudas, true);
 window.addEventListener('resize', reubicarAyudas);
 // El «?» se ubica al abrirse (el evento toggle no burbujea: se escucha en la captura).
 document.addEventListener('toggle', (e) => { if (e.target.matches && e.target.matches('details.ayuda') && e.target.open) ubicarAyuda(e.target); }, true);
+/** Lo que lleva data-a sin ser una acción de clic: el destino de soltar de las tier lists (lo atiende 'drop') y el cuerpo
+ *  de las ventanas modales (un clic adentro no llega al fondo, que las cierra). */
+const CLIC_SIN_ACCION = new Set(['drop', 'aliadosModal', 'tlModal']);
 document.addEventListener('click', (e) => {
   // Con el «Cómo funciona» de una skill abierto, tocar afuera (el fondo de la ventana modal) lo cierra. Si el
   // foco no quedó en otra cosa, vuelve a lo que lo abrió.
@@ -9186,6 +9189,11 @@ document.addEventListener('click', (e) => {
     case 'reintentarGuardado': saveUser(); pintarAvisos(); break;
     case 'exportUser': download('mff-mi-capa.json', JSON.stringify(U, null, 2), 'application/json'); break;
     case 'exportCsv': exportCsv(); break;
+    // Una acción sin caso acá es un error (hasta la 1.0.58 el clic se ignoraba sin aviso). No lo son las de los campos
+    // (los atienden 'input' y 'change') ni CLIC_SIN_ACCION.
+    default:
+      if (el.matches('input, select, textarea') || CLIC_SIN_ACCION.has(a)) break;
+      throw new Error('clic con una acción que la app no atiende: ' + a);
   }
 });
 
