@@ -1,6 +1,6 @@
 # Auditoría de datos
 
-Generado por `scripts/auditar.py` el 2026-11-20, sobre los datos del juego 12.4 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
+Generado por `scripts/auditar.py` el 2026-11-24, sobre los datos del juego 12.4 (thanosvibs) y la wiki de Future Fight bajada en la misma sincronización.
 
 La app muestra thanosvibs, salvo lo que el build corrige con aviso (sección 5). Esto marca dónde otra fuente dice otra cosa, con los dos valores; no corrige nada. La wiki la edita la comunidad y muchas páginas quedaron viejas (uniformes sin sección, valores de antes de un rebalanceo), así que una diferencia es algo para revisar en el juego, no un error confirmado de ninguna de las dos.
 
@@ -12,17 +12,17 @@ En la app, cada ficha muestra lo que le toca en "Verificación entre fuentes".
 |---|---|---|---|
 | Daño de skills (thanosvibs vs wiki) | 1122 (+850 donde la wiki lista menos etapas) | 57 | 57 |
 | Recarga de skills | 1777 | 40 | 86 |
-| Clase (infobox de la wiki) | 541 | 5 | — |
-| Bando (infobox de la wiki) | 528 | 11 | — |
-| Género (infobox de la wiki) | 541 | 3 | — |
-| Raza (infobox de la wiki) | 535 | 13 | — |
-| Tipo de ataque (infobox de la wiki) | 531 | 21 | — |
+| Clase (infobox de la wiki) | 542 | 6 | — |
+| Bando (infobox de la wiki) | 530 | 11 | — |
+| Género (infobox de la wiki) | 543 | 3 | — |
+| Raza (infobox de la wiki) | 537 | 13 | — |
+| Tipo de ataque (infobox de la wiki) | 532 | 22 | — |
 | Instinto (thanosvibs vs infobox y categoría de la wiki) | 286 | 6 | 2 |
-| Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 29 páginas sin la sección |
+| Bonos de equipo (las páginas de la wiki entre sí) | 1588 | 43 por mayoría, 49 empatados | 25 páginas sin la sección |
 | Strikers (pestaña Striker de la wiki) | 7020 filas en 171 páginas | 2 filas que no se pudieron leer; 2 con más de 100% | 123 páginas sin la pestaña |
 | Artefactos a 6★ (thanosvibs vs wiki) | 214 (+31 donde la wiki lista otro nivel de estrellas) | 17 | 10 sin fila en la wiki; 5 con niveles incompletos en thanosvibs |
 
-Cobertura de la wiki: de 5955 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1225 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 552 retratos con pestaña en la wiki, 310 sin pestaña de su uniforme y 34 de personajes sin infobox legible.
+Cobertura de la wiki: de 5955 skills (activas, Definitiva y Striker) de thanosvibs, 2271 (38%) se pudieron comparar; 1225 están en la página pero solo en la sección de otro uniforme, y el resto no aparece (sobre todo uniformes que la wiki no documenta). Infobox: 554 retratos con pestaña en la wiki, 310 sin pestaña de su uniforme y 32 de personajes sin infobox legible.
 
 Catálogo de efectos (docs/CATALOGO.md): 228 etiquetas de skills y 72 stats de Leads & Supports y 26 de bonos de equipo en los datos; todos clasificados.
 
@@ -143,7 +143,7 @@ Método: cada skill de thanosvibs se busca por nombre en la página de la wiki d
 
 El tipo de ataque de thanosvibs no es un campo: se deriva de con qué escalan los % de daño de sus skills activas (igual que en la ficha). Cuando la wiki dice otra cosa, sus propias skills suelen darle la razón a thanosvibs (Ghost Rider Robbie Reyes: infobox "Physical", skills "% of Energy Attack").
 
-### Clase (5)
+### Clase (6)
 
 | Personaje | Uniforme | thanosvibs | wiki |
 |---|---|---|---|
@@ -151,6 +151,7 @@ El tipo de ataque de thanosvibs no es un campo: se deriva de con qué escalan lo
 | Green Goblin | Dark Avengers | Blast | Speed |
 | Green Goblin | Ultimate | Combat | Speed |
 | Jean Grey | X-Men Red | Blast | Universal |
+| Vulcan | War of Kings | Blast | Combat |
 | X-23 | All-New Wolverine | Combat | Speed |
 
 ### Bando (11)
@@ -195,12 +196,13 @@ El tipo de ataque de thanosvibs no es un campo: se deriva de con qué escalan lo
 | Scarlet Witch | Marvel Studios' WandaVision | Human | Other |
 | Scarlet Witch | Uncanny Avengers | Human | Other |
 
-### Tipo de ataque (21)
+### Tipo de ataque (22)
 
 | Personaje | Uniforme | thanosvibs | wiki |
 |---|---|---|---|
 | Ant-Man | Modern | Physical | Energy |
 | Athena | Incredible Hercules | Physical | Energy |
+| Deathbird | Uncanny X-Men | Physical | Energy |
 | Ghost Rider (Robbie Reyes) | Marvel NOW! | Energy | Physical |
 | Giant-Man | Modern | Physical | Energy |
 | Green Goblin | Classic | Energy | Physical |
@@ -228,7 +230,7 @@ La app toma el instinto de thanosvibs, con lo visto en el juego encima (fuentes/
 | Personaje | thanosvibs (lo que usa la app) | Infobox de la wiki | Categoría de la página |
 |---|---|---|---|
 | Agent Venom | Justice | Cruelty | Justice |
-| Deathbird | Destruction | — | Cruelty |
+| Deathbird | Destruction | Destruction | Cruelty |
 | Kahhori | Justice | Order | Justice |
 | Marvel Boy | Order | Order | Justice |
 | Quasar (Wendell Vaughn) | Justice | Order | Justice |
@@ -385,11 +387,11 @@ Ninguno: todo lo que traen los datos está clasificado.
 
 ## 10. Bonos de equipo: la wiki contra sí misma
 
-thanosvibs no publica los bonos de equipo. La app los toma de la sección Team Bonus de la página de cada personaje en la wiki (265 páginas la tienen) y de lo que se vio en el juego (scripts/contenido/bonos.json), que manda sobre la wiki. Un bono aparece en la página de cada integrante: valen el nombre y los stats que dice la mayoría de sus páginas, y si empatan la app muestra todas las versiones empatadas. La wiki redondea los valores a un decimal (scripts/bonos.py).
+thanosvibs no publica los bonos de equipo. La app los toma de la sección Team Bonus de la página de cada personaje en la wiki (269 páginas la tienen) y de lo que se vio en el juego (scripts/contenido/bonos.json), que manda sobre la wiki. Un bono aparece en la página de cada integrante: valen el nombre y los stats que dice la mayoría de sus páginas, y si empatan la app muestra todas las versiones empatadas. La wiki redondea los valores a un decimal (scripts/bonos.py).
 
 1683 bonos: 938 de dos integrantes y 745 de tres; 3 del juego (MARVEL Future Fight — Team Bonus (dentro del juego, octubre de 2026)).
 
-Personajes sin la sección en su página (29): Absorbing Man, Agatha Harkness, Annihilus, Athena, Black Knight, Black Swan, Cassandra Nova, Deathbird, Falcon (Joaquin Torres), Galactus, Havok, Hope Summers, Ikon, Kahhori, Leader, Lilandra, Madelyne Pryor, Man-Thing, Marvel Boy, Morph, Okoye, Omega Red, Silver Surfer (Shalla-Bal), Sleeper, Sunspot, Sylvie, The Hood, Valeria Richards, Vulcan. Sus bonos están solo si la página de otro integrante los lista.
+Personajes sin la sección en su página (25): Absorbing Man, Agatha Harkness, Athena, Black Knight, Black Swan, Cassandra Nova, Falcon (Joaquin Torres), Galactus, Havok, Ikon, Kahhori, Leader, Lilandra, Madelyne Pryor, Man-Thing, Marvel Boy, Morph, Okoye, Omega Red, Silver Surfer (Shalla-Bal), Sleeper, Sunspot, Sylvie, The Hood, Valeria Richards. Sus bonos están solo si la página de otro integrante los lista.
 
 ### Del juego (3)
 
@@ -1267,3 +1269,41 @@ Nada.
 - cromo WAR OF KINGS (2009) #5: type
 - cromo WAR OF KINGS (2009) #6: id
 - cromo WAR OF KINGS (2009) #6: type
+
+## 14. Cromos de cómic: thanosvibs contra mffguide.fyi
+
+Las tablas del juego según la guía de mffguide.fyi (fuentes/mffguide/cromos.json; la guía dice sacarlas de los archivos del juego) contra los cromos de thanosvibs y los propios. La app usa thanosvibs donde lo publica; la guía da los valores, las colecciones, de dónde sale cada uno y su nombre en español, y los cromos que thanosvibs no tiene. Lo propio (War of Kings) tiene que decir lo mismo que la guía o el build corta. Lo que difiere es para revisarlo en el juego.
+
+- Emparejados: 117 (113 coinciden en fijas, opciones de cada casilla y activación; 4 difieren). El orden de las opciones de una casilla no se compara.
+- En la guía y no en thanosvibs (entran con lo de la guía): 7: DEATH OF DOCTOR STRANGE: WHITE FOX (2021) #1; FANTASTIC FOUR (1961) #49; FANTASTIC FOUR (1961) #5; FANTASTIC FOUR (1961) #46; FANTASTIC FOUR (1961) #4; FANTASTIC FOUR (1961) #52; MARVEL RIVALS INFINITY COMIC (2024) #19
+- En thanosvibs y no en la guía (sin valores, colección ni obtención): 0.
+
+### Distinto en la guía (4)
+
+| Cromo | Campo | thanosvibs (lo que usa la app) | mffguide |
+|---|---|---|---|
+| AMAZING SPIDER-MAN (1999) #653 | Casilla 5 | DODGE ↑, COLD RESIST ↑, ALL BASIC DEFENSES INCREASE, IGNORE DEFENSE, LIGHTNING RESIST ↑ | IGNORE DEFENSE, ENERGY DEFENSE ↑, CRITICAL RATE ↑, COLD RESIST ↑, LIGHTNING RESIST ↑ |
+| ARMOR WARS #1 | Activación (stat y cuándo) | IGNORE DEFENSE (when dealing a critical hit) | MOVEMENT SPEED ↑ (when dealing a critical hit) |
+| SECRET WARS: BATTLEWORLD (2015) #3 | Casilla 6 | COLD RESIST ↑, MIND RESIST ↑, ENERGY ATTACK ↑, ALL BASIC ATTACKS INCREASE, CRITICAL DAMAGE ↑ | ALL BASIC ATTACKS INCREASE, CRITICAL DAMAGE ↑, ENERGY DEFENSE ↑, COLD RESIST ↑, MIND RESIST ↑ |
+| WAR OF THE REALMS: NEW AGENTS OF ATLAS | Casilla 6 | POISON RESIST ↑, LIGHTNING RESIST ↑, FLAME RESIST ↑, MIND RESIST ↑, ALL BASIC DEFENSES INCREASE | COLD RESIST ↑, ALL BASIC DEFENSES INCREASE, MIND RESIST ↑, POISON RESIST ↑, LIGHTNING RESIST ↑ |
+
+## 15. Jefe mundial: mffguide.fyi contra lo nuestro
+
+Las tablas de Jefe mundial según la guía de mffguide.fyi (fuentes/mffguide/jefe_mundial.json; la guía dice sacarlas de los archivos del juego v12.4.0): las usa el planificador de Mi cuenta. Nada de esto se resuelve solo: lo que choca queda acá para decidirlo o verlo en el juego.
+
+### Sin otra fuente
+
+- Las restricciones por fase: ninguna fuente nuestra las trae (ni la guía del juego en sus tres idiomas, ni las notas de los foros, ni thanosvibs).
+- Lo que piden a los aliados Leyenda+ (Categoría 2, 6★, maestría 6, nivel 60) y Mítico (Categoría 3 o potencial trascendido, 6★, maestría 6, nivel 70), el nivel 70 de los principales de Leyenda y el 6★ de Normal y Definitivo: solo la guía (la guía del juego dice que Definitivo «es ideal» para personajes de categoría 2 o más: una recomendación, no un requisito). La categoría de los principales de Leyenda, Leyenda+ y Mítico coincide con la guía del juego (captura 100); lo de los aliados de Leyenda, con NamuWiki (modos.json).
+- Los consejos del juego: la guía los toma de los archivos; hasta su v1.1 los de Corvus Glaive y Quicksilver estaban cruzados (lo dice su historial). En la v1.2, contra Quicksilver (tipo Velocidad en la guía, la wiki y thanosvibs) rinde el tipo Combate, el que le gana a Velocidad (MFF_SEED.VENTAJA_TIPO): coincide. El de Corvus Glaive (Universal; rinde Velocidad) no se puede contrastar así.
+
+### Choca con lo nuestro
+
+- Definitivo: scripts/contenido/modos.json (World Boss) dice «Ultimate (Tier-2 o más)», de la guía del juego, que dice que Definitivo «es ideal para los jugadores que hayan desarrollado a sus personajes a la categoría 2 o superior» (captura 100): es una recomendación. La guía de mffguide.fyi pide 6★ a los principales y a los aliados. El planificador usa el 6★ y muestra las dos cosas.
+- Nombres de las habilidades únicas: 3 de 13 los escribe el juego en español distinto que la app (#45; la app no los cambia): Magia (el juego: Mágico); Maldad Pura (el juego: Malvado); Fuerza (el juego: Fuerte).
+
+### Contrastado
+
+- Batalla de alianza: la rotación de 28 días de la guía coincide fila por fila con la de thanosvibs (76 filas de día y modo; comparado sobre la página bajada el 23 de noviembre de 2026). La guía dice sacarla de thanosvibs: no es una confirmación independiente, y ninguna de las dos dice qué día del ciclo es hoy.
+- La categoría que piden a los principales Leyenda, Leyenda+ y Mítico: como la guía del juego (captura 100); lo que piden a los aliados de Leyenda, como NamuWiki (modos.json).
+- Consejos de Corvus Glaive y Quicksilver (la guía los tuvo cruzados hasta su v1.1): contra Quicksilver, de tipo Velocidad, rinde Combate, el tipo que le gana a Velocidad: coincide con la v1.2. El de Corvus Glaive no se puede contrastar así.
